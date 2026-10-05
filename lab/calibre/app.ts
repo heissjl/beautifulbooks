@@ -34,8 +34,8 @@
  */
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { appendFileSync, existsSync, readFileSync, statSync } from 'node:fs';
+import { basename, join } from 'node:path';
 import { isWorkId, makeToken } from './site';
 import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
@@ -46,6 +46,7 @@ import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
 import { AnswerStore, KEEP_DAYS, keptCatalogue, type AskOptions, type Served } from './kept';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
 import { findSyncScript, pocketbookStatus, readSyncConfig, runSync } from './pocketbook';
+import { findReader, ReaderCovers } from './reader';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
 
 const args = process.argv.slice(2);
@@ -77,7 +78,44 @@ const works = new WorkMap(join(writer.root, 'works.json'));
  * the cover: a book changed again is to send again.
  */
 const sent = new FileMap(join(writer.root, 'sent.json'));
-const downloads = new CoverDownloads(SITE);
+/*
+ * The connected PocketBook, when there is one (`reader.ts`, ROADMAP 5.16c).
+ * Its shelves show pictures of their own, which neither Calibre's sending nor
+ * anything else renews; the app can write them — the cover from Calibre as
+ * the reader's picture of the book, in the library and on the home screen.
+ * Looked for anew each time: the reader comes and goes.
+ */
+const readerNow = (): { root: string; covers: ReaderCovers } | null => {
+  const root = findReader();
+  return root ? { root, covers: new ReaderCovers(root, join(writer.root, 'reader')) } : null;
+};
+/*
+ * How long each full image took, one line per download, beside the backups:
+ * the image host is quick most of the time and very slow now and then
+ * (download.ts), and only a note taken in the slow moment says which.
+ */
+/*
+ * Which of Calibre's books are on the reader. Looking costs one question per
+ * file over USB, and the answer only changes when Calibre sends or removes a
+ * book — which rewrites its list there. So: once per state of that list.
+ */
+let shelf: { key: string; ids: Set<number> } | null = null;
+function booksOnShelf(reader: { root: string; covers: ReaderCovers }): Set<number> {
+  const key = `${reader.root}:${statSync(join(reader.root, 'metadata.calibre')).mtimeMs}`;
+  if (shelf?.key !== key) shelf = { key, ids: reader.covers.present() };
+  return shelf.ids;
+}
+
+const downloadTimes = join(defaultBackupRoot(), 'download-times.jsonl');
+const downloads = new CoverDownloads(SITE, {
+  note: (n) => {
+    try {
+      appendFileSync(downloadTimes, `${JSON.stringify({ at: new Date().toISOString(), ...n })}\n`);
+    } catch {
+      // A note that could not be written costs a measurement, not a cover.
+    }
+  },
+});
 // Cover ids are the catalogue's, not a library's: one file of sizes for every library.
 const coverSizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), SITE);
 let books = readLibrary(library);
@@ -116,8 +154,21 @@ function state() {
   }
   const stacks = undoStacks(writer.journal());
   const remembered = works.all();
+  const reader = readerNow();
+  let onShelf = new Set<number>();
+  let readerCover = new Map<number, string>();
+  try {
+    if (reader) {
+      onShelf = booksOnShelf(reader);
+      readerCover = reader.covers.lastPut();
+    }
+  } catch {
+    // Its list did not read — unplugged this moment, or Calibre is writing it: then nothing is said about any book.
+  }
   return {
     mode: WRITE ? 'write' : 'preview',
+    // The reader's name when it is connected; per changed book below, whether it is on it.
+    reader: reader ? { name: basename(reader.root) } : null,
     catalogue: SOURCE,
     problems: WRITE ? writer.problems() : [],
     library: { path: library, books: books.length },
@@ -138,6 +189,10 @@ function state() {
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
         // The cover the tool last put there, while that write can still be taken back.
         ...(stack ? { applied: stack[stack.length - 1].coverId, appliedAt: stack[stack.length - 1].at, canUndo: !!stack[stack.length - 1].backup, sent: sent.get(b.id) === stack[stack.length - 1].coverId } : {}),
+        // On the connected reader; the cover whose pictures this app wrote there; and whether that is the cover the book has now.
+        ...(onShelf.has(b.id)
+          ? { onReader: true, ...(readerCover.has(b.id) ? { readerCover: readerCover.get(b.id) } : {}), ...(stack ? { readerHas: readerCover.get(b.id) === stack[stack.length - 1].coverId } : {}) }
+          : {}),
       };
     }),
   };
@@ -258,6 +313,11 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === 'GET' && (path === '/api/new' || path === '/new')) {
       if (!COVER_ID.test(coverId)) return send(res, 400, { error: 'Bad cover id.' });
+      // The pointer rests on this cover: fetch it when there is room, and do not make the page wait.
+      if (path === '/api/new' && url.searchParams.get('ahead') === '1') {
+        downloads.warm(coverId);
+        return send(res, 202, {});
+      }
       const f = await downloads.get(coverId);
       if (f.check.ok) coverSizes.remember(coverId, f.check);
       if (path === '/api/new') return send(res, 200, f.check);
@@ -265,7 +325,7 @@ const server = createServer(async (req, res) => {
       return send(res, 200, f.bytes, `image/${f.check.format}`);
     }
 
-    if (req.method === 'POST' && (path === '/api/work' || path === '/api/sent' || path === '/api/apply' || path === '/api/undo')) {
+    if (req.method === 'POST' && (path === '/api/work' || path === '/api/sent' || path === '/api/reader' || path === '/api/apply' || path === '/api/undo')) {
       const body = await jsonBody(req);
       const book = books.find((b) => b.id === body.bookId);
       if (!book) return send(res, 404, { error: 'No such book in the library.' });
@@ -287,6 +347,37 @@ const server = createServer(async (req, res) => {
       }
 
       if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
+
+      /* The cover Calibre has, as the reader's pictures of this book — or the reader's own pictures back. Never the book file. */
+      if (path === '/api/reader') {
+        const reader = readerNow();
+        if (!reader) return send(res, 409, { error: 'The PocketBook is not connected.' });
+        if (body.back === true) {
+          const result = reader.covers.back(book.id);
+          if (result.ok) sent.delete(book.id);
+          return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+        }
+        const top = undoStacks(writer.journal()).get(book.id)?.at(-1);
+        // A cover from the catalogue straight onto the reader's shelves: Calibre keeps the cover it has (Julian, 2026-10-05:
+        // „i want to decide whether to write to calibre or pocketbook").
+        if (body.coverId !== undefined) {
+          if (typeof body.coverId !== 'string' || !COVER_ID.test(body.coverId)) return send(res, 400, { error: 'Bad cover id.' });
+          const f = await downloads.get(body.coverId);
+          if (!f.check.ok || !f.bytes) return send(res, 409, { error: f.check.ok ? 'No image.' : f.check.reason });
+          const result = reader.covers.put(book.id, f.bytes, body.coverId);
+          // The same cover Calibre has: then the book is as good as sent.
+          if (result.ok && top?.coverId === body.coverId) sent.set(book.id, body.coverId);
+          return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+        }
+        if (!top) return send(res, 409, { error: 'This book’s cover was not changed here.' });
+        const file = coverFile(library, book);
+        if (!existsSync(file)) return send(res, 409, { error: 'The cover file is not on this Mac (iCloud).' });
+        const result = reader.covers.put(book.id, readFileSync(file), top.coverId);
+        // On the reader's shelves now: that is what „sent" was waiting for.
+        if (result.ok) sent.set(book.id, top.coverId);
+        return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+      }
+
       if (path === '/api/undo') {
         const result = writer.undo(book.id);
         if (result.ok) books = result.books;

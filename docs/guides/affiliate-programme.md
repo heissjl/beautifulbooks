@@ -60,6 +60,8 @@ Lies vorher die Klickzahlen aus `/go/` (`vercel logs --query bb.click` innerhalb
 
 Für jedes: Bewerbung durch dich (die Netzwerke verlangen Impressum, Datenschutz, oft eine Seitenbeschreibung und manchmal Mindesttraffic), Kennung an mich, eine Tabellenzeile plus Variable `AFFILIATE_<HÄNDLER>_<MARKT>` plus Test — und `commissionNote` zählt den Shop dann von selbst mit.
 
+**Thalia DE abgelehnt (Awin-Mail, gemeldet 2026-10-05):** „Ihre Bewerbung beim Programm Thalia DE (AID:14158) von BuyItsCovers (PID:3114726) wurde … abgelehnt", Grund: **„aktuell zu geringe organische Sichtbarkeit"**. Das ist kein Nein zur Seite, sondern zum Zeitpunkt: die Domain ist seit dem 2026-10-04 live und erst seit dem Tag in der Search Console (2.5), Google kennt noch kaum Seiten. Folgen: (1) der Thalia-Link in `lib/buylinks.ts` bleibt, wie er ist — ohne Partnerkennung, er funktioniert für den Leser unverändert; (2) **neu bewerben, wenn die Search Console Impressionen zeigt** (der Blick in zwei bis drei Wochen aus 2.16 ist der Anlass), mit einer Zahl im Bewerbungstext (Seiten im Index, Besuche aus der Suche laut 3.1); (3) genialokal (17358) und Waterstones (3787) könnten aus demselben Grund ablehnen — ihre Antwort abwarten, nicht nachschieben. Awin selbst (Konto 3114726) ist davon nicht berührt.
+
 ## 4. Der Umschalttag, als Checkliste
 
 1. Punkte aus Abschnitt 2 abgehakt (0.12, 4.4, Impressum, 4.12), 0.1 entschieden.

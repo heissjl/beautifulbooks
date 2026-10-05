@@ -5058,6 +5058,161 @@ Julian zum Schalter: „stell auf on“; zum Entwurf des Satzes für die Datensc
 
 **Ein Fehler von Claude:** der Worktree war nicht mit dem Vercel-Projekt verknüpft, und `vercel deploy --yes` legte ein neues Projekt `annas-archive-cover-scraping-115241` an, das sich mit dem GitHub-Repository verband und bei Pushes eigene Builds startete (sechs, alle mit Fehler, weil ihm die Umgebungsvariablen fehlen). Git-Verbindung getrennt (`vercel git disconnect`); das Projekt selbst steht noch, ohne Domain — löschen nur mit Julians Ja. Die Vorschau entstand danach über einen Push des Branches. Als Erinnerung für spätere Sitzungen notiert: vor `vercel deploy` im Worktree `vercel link --project beautifulbooks --yes`.
 
+## 2026-10-04 · Calibre-App: Cover erschienen manchmal nicht — Maße aus dem Cover-Datensatz, Kacheln bleiben (ROADMAP 5.16a)
+
+Julian, mit einem Bild von *Ender's Game* (80 Cover): leere Kacheln mit Maßen darunter, im Vergleich „…" statt des Covers aus Calibre und „fetching the full image…" — „manchmal lädt es die cover nicht oder zeigt sie zumindest nicht an".
+
+**Ursachen**, am Code und am Netz nachgesehen: (1) `CoverSizes` holte für das Maß jedes Original — 80 Dateien für dieses Werk, vier gleichzeitig. `covers.openlibrary.org` reicht die meisten Bilder an Zip-Archive des Internet Archive weiter (`…/view_archive.php?archive=…zip&file=…`); gemessen an dem Abend mit curl: Originale 611 KB in 9,6 s und 858 KB in 4,2 s, ein mittleres Bild 0,07 s (vom Cover-Host selbst) bis 5,9 s (über das Archiv). (2) `renderCovers` baute bei jedem Maß (alle 250 ms) alle Kacheln samt `<img>` neu — ein noch ladendes Bild wurde verworfen und neu angefragt. (3) `pick()` wartete mit dem Calibre-Cover auf das große Bild (`Promise.all`). Keine Sperre: `openlibrary.org` und der Cover-Host antworteten.
+
+**Gefunden:** `https://covers.openlibrary.org/b/id/<n>.json` — der Datensatz des Covers, mit `width` und `height`, in 0,05–0,3 s. Geprüft an 40 zufälligen der 652 Maße, die Julians App aus den Bildern selbst gelesen hatte (0,4 s Pause je Anfrage): 39 identisch, 0 abweichend, 1 Datensatz ohne Maß (`ol:1008445`). Steht jetzt bei den API-Fakten in CLAUDE.md.
+
+**Gebaut:** `CoverSizes` fragt erst den Datensatz (`sizeFromRecord`), das Bild nur noch, wenn er kein Maß nennt (und für Google-Bilder); `CoverFacts` nimmt dafür eine Liste von Quellen mit je eigener Leseart. Davon hat auch die Suche nach dem größten Scan im Sammlungs-Modus etwas. `app.html`: eine Kachel je Cover für die Dauer des geöffneten Werks (`coverTile`, in `open.tiles`), nur Klasse und Text ändern sich; `thumb()` fragt ein gescheitertes kleines Bild zweimal neu an und schreibt dann „picture did not load"; das Calibre-Cover im Vergleich kommt unabhängig vom großen Bild; bis das da ist, steht das kleine verblasst an seiner Stelle.
+
+**Nachgemessen** (echte Bibliothek, nur schauend, leere Speicher): *Ender's Game* — Werk nach 1,0 s, alle 80 Maße 2,5 s nach dem Klick, 80 von 80 kleinen Bildern geladen, 0 gescheitert; Vergleich mit `ol:8186457`: Calibre-Cover nach 0,3 s, großes Bild (639 × 1000, 625 KB) nach 0,5 s, Maß aus dem Datensatz gleich dem des geholten Bilds. Die Browser-Fläche der Sitzung war verdeckt, verzögertes Laden griff dort nicht; die Bilder wurden für die Messung auf sofortiges Laden gestellt. Ein Vorher-Wert für die Wand ist nicht gemessen.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/` und ein Satz in CLAUDE.md.
+
+1.203 Tests (76 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Die Cover auf den PocketBook: das Vorschaubild, nicht die Buchdatei (ROADMAP 5.16c)
+
+Julian: „can we push the new covers onto the pocketbook ourselves? without using calibre?" — und, nachdem die Antwort den Plan „Cover in die EPUB auf dem Gerät schreiben, erst an einem Buch" genannt hatte: „der reader ist jetzt angeschlossen".
+
+**Ohne Gerät:** im installierten Calibre 7.26 kommen bei allen PocketBook-Treibern `upload_cover`, `sync_booklists` und `upload_books` unverändert aus `USBMS`; `CAN_SET_METADATA` ist leer, `THUMBNAIL_HEIGHT` 68, `WANTS_UPDATED_THUMBNAILS` falsch. Senden heißt: Datei kopieren, `metadata.calibre` schreiben.
+
+**Am Gerät** (`/Volumes/PB626`, FAT, Touch Lux 3, „SW Version W5.12.692"; nur gelesen, die Datenbanken als Kopie): `metadata.calibre` hat 452 Einträge, 422 Buchnummern aus Calibre. `system/explorer-3/explorer-3.db` (mit WAL): `files` (Ordner, Name, Größe, Änderungszeit → `book_id`), `books_impl` (999 Bücher, 444 Dateien), `books_uids` (je Buch ein „QuickHash", 16 Bytes), `books_settings` (Lesestand je Buch). `system/config/books.db`: `Books`/`Items` mit `HashUUID` gleich dem QuickHash, `Files` mit Pfad, Name, Länge; Markierungen als Kinder des Buchs. `system/cover_chache/1/`: 483 PNG, alle 8-Bit-Grau, keins breiter als 260, keins höher als 393, benannt `<Pfad des Buchs>.png`.
+
+**Der Zufallsversuch *Ubik*.** Julian hatte es am 3. Oktober 17:14 aus Calibre neu gesendet. Auf dem Reader: Datei 309.502 Bytes mit dem neuen Cover darin (996 × 1500); `books_impl` 971 (212.557 Bytes, QuickHash C761…, Lesestand 999/1000, geöffnet im April) hat keine Datei mehr; `books_impl` 995 (309.502 Bytes, QuickHash F887…, hinzugefügt am 4. Oktober) hat sie und keinen Lesestand. `books.db` kennt nur den alten Eintrag (654, Länge 212.557, ein Kind). Das Vorschaubild `…/Ubik - Philip K. Dick.epub.png` trägt das Datum 20. April und zeigt, angesehen, das alte Cover. Drei Schlüsse: der Reader erkennt ein Buch am Inhalt der Datei; eine geänderte Datei ist ein neues Buch ohne Lesestand; das Bild der Bibliotheksansicht wird bei einer geänderten Datei nicht neu gemacht. Der angekündigte Plan (Cover in die EPUB schreiben) hätte also Lesestand und Markierungen gekostet und das Bild in der Bibliothek trotzdem nicht geändert — verworfen.
+
+**Gebaut:** `lab/calibre/reader.ts` — `makeThumb` (dekodieren mit dem Dekoder der Seite, Rec.-601-Grau, Flächenmittel auf höchstens 260 × 393, PNG Farbtyp 0 mit `pngjs`), `booksOnReader`/`readBooksOnReader` (`metadata.calibre`, ohne Einträge unter `system/`), `thumbFile` (lehnt Pfade ab, die den Bilder-Ordner verließen), `ReaderCovers` (`put`: altes Bild sichern und vergleichen, neues daneben schreiben, zurücklesen, darüberschieben, Eintrag in `reader.jsonl`; `back`: das Bild von vor dem ersten `put`; `status`). `reader-covers.ts` als Kommando. Sieben Tests auf einem nachgebauten Reader-Ordner, ohne Gerät.
+
+**Ein Bild geschrieben:** *Roadside Picnic* (#403; Datei seit November 2025 unverändert, also mit altem Cover darin — an ihm zeigt sich, ob der Reader unser Bild nimmt und behält; an *Ubik* hätte man es nicht unterscheiden können). Vorher/nachher: Buchdatei `d98442a5…`, `books.db` `047cbfdf…`, `explorer-3.db` `7f1aedb9…` — gleich. Das Bild 254 × 393 (20 KB) → 232 × 393 (57 KB; die Bilder des Readers sind kleiner, vermutlich auf weniger Graustufen gebracht — nicht nachgebaut). macOS schrieb `._<Name>` daneben (das Attribut `com.apple.provenance`, auf FAT als zweite Datei); gelöscht, und `write` räumt es künftig weg.
+
+**Nicht bekannt:** ob der Reader das Bild zeigt und ob er es behält, wenn das Buch geöffnet wird. Das sieht nur Julian am Gerät. Die anderen elf Bücher und der Knopf in der App sind nicht gemacht.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.283 Tests (117 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: drei Bilder je Buch — Bibliothek und Startseite geschrieben, Ruhezustand nicht (ROADMAP 5.16c)
+
+Julian, nach dem Blick auf den Reader: „in der library auf dem reader wurde es mit dem neuen angezeigt, auf der startseite und im standby nicht. was heißt das?" Reader wieder angeschlossen, nur gelesen:
+
+- Das Bild der Bibliothek war noch das geschriebene (57.166 Bytes, 232 × 393), obwohl *Roadside Picnic* inzwischen geöffnet worden war (`cache.dat`: `rb.1` ist das Buch) — der Reader nimmt es und behält es.
+- **Startseite:** `system/cache/desktop/` mit `cache.dat` (787 Zeilen `rb.<n>.…` und `t.<n>.…`: Pfad, Titel, Buchnummer, Prüfsumme je Platz), `1/<Pfad>_<B>x<H>.png` (142 Dateien: 40 × 123x184, 33 × 234x343, 33 × 250x368, 36 × 268x396), `rb/` (9 Bilder: Platz 1 in 268×396, Platz 2 in 250×368, Platz 3 in 234×343) und `t/` (40 Kacheln, 123 × 184). Die vier Größen von *Roadside Picnic* trugen das Datum November 2025; `rb/1.png` das dieses Abends, gleiche Maße wie die 268×396-Datei, andere Bytes.
+- **Ruhezustand:** `system/cache/bookcover/` mit 11 Dateien `<32 Hex>.<295…305>`, jede 389.238 Bytes: BMP, 758 × 1024, 4 Bit. `system/logo/bookcover.lnk` zeigt auf `….305`; angesehen ist es das alte Cover von *Roadside Picnic* aus der Datei. `global.cfg`: `offlogo=@cover_logo`. Je Öffnen eine neue Nummer; woraus der Name gebildet wird, ist nicht gefunden (kein MD5 von Pfad, Name, Titel oder Prüfsumme).
+
+**Gebaut:** `picturesOf` (Bibliothek; jede vorhandene Größe der Startseite; die Plätze aus `cache.dat`, die den Pfad des Buchs tragen, mit der Größe, deren Maß sie haben), `homePositions`, `makeThumb` mit Rahmen; `put` und `back` gehen über alle Bilder, das Journal nennt jedes; ein Eintrag aus der ersten Fassung (ohne Dateiname) wird weiter richtig zurückgelegt. `cache.dat` wird nur gelesen. Vier Tests dazu.
+
+**Geschrieben:** *Roadside Picnic*, 6 Bilder — Bibliothek 232 × 393, Startseite 108 × 184, 202 × 343, 217 × 368, 233 × 396 und `rb/1.png` 233 × 396. Vorher/nachher gleich: Buchdatei `d98442a5…`, `books.db` `6a71361a…`, `explorer-3.db` `7f1aedb9…`, `cache.dat` `9f3a7f60…`; keine `._`-Dateien.
+
+**Der Ruhezustand ist nicht gemacht und so nicht zu machen:** das Bild entsteht bei jedem Öffnen aus der Datei; es zu überschreiben hielte bis zum nächsten Öffnen. **Nicht bekannt:** ob die Startseite die neuen Bilder zeigt und behält.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: die Startseite bestätigt, der Knopf in der App (ROADMAP 5.16c)
+
+Julian: „startseite zeigt jetzt auch das neue cover, mach die übrigen". Der Reader zeigt also in Bibliothek und Startseite die geschriebenen Bilder von *Roadside Picnic*; das Buch ist in `sent.json` abgehakt.
+
+**Gebaut:** `app.ts` sucht bei jedem Zustand nach dem Reader (`findReader`) und sagt je geändertem Buch, ob es darauf liegt (`onReader`) und ob die dort geschriebenen Bilder vom jetzigen Cover sind (`readerHas`); `POST /api/reader` schreibt die Bilder eines Buchs oder legt die alten zurück (`back`), nur mit `--write`, und setzt oder löscht den Haken „gesendet". `app.html`: über der Gruppe der Name des Readers und „Put n covers on the reader" (eins nach dem anderen, hält beim ersten Fehler); im geöffneten Buch „Put this cover on the reader" / „Put the reader's old pictures back". `reader-covers.ts` setzt den Haken ebenfalls. Der Satz in der App, der Reader zeige das Cover nach erneutem Senden, ist gestrichen.
+
+**Geprüft** mit einem nachgebauten Reader-Ordner und einer Kopie des Journals in einem Testordner (die echte Bibliothek nur gelesen): 14 geänderte Bücher, 3 „auf dem Reader"; der Knopf schrieb 3 Bilder, die Gruppe zählte danach 11; ein Buch zurückgelegt — das Bild bytegleich das alte, Haken weg, Gruppe 12.
+
+**Nicht gemacht:** die übrigen elf Bücher auf dem echten Reader — er war nach Julians Blick auf die Startseite nicht wieder eingebunden.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: die übrigen elf Bücher geschrieben (ROADMAP 5.16c)
+
+Julian: „jetzt ist er im finder zu sehen, mach du es". (Zweimal davor hieß es „eingebunden", während der Mac kein Laufwerk und kein USB-Gerät sah; `/Volumes` und `system_profiler` zeigten nur Hub und Telefon.)
+
+**Vor dem Schreiben gefunden:** `metadata.calibre` führt jetzt 418 von Calibres Büchern. Von den neun zuletzt gelesenen Büchern haben nur zwei die vier Größen-Dateien unter `desktop/1/`; für die anderen gibt es allein die Plätze. Deren Maße: `rb/1,4,7` 268 × 396, `rb/2,5,8` 250 × 368, `rb/3,6,9` 234 × 343 (bei Büchern ohne Größen-Dateien füllt das Bild des Readers den Rahmen genau: 250 × 368, 234 × 343, 268 × 396), `t/<n>` 123 × 184. `picturesOf` nimmt die Größe eines Platzes deshalb aus dieser Regel (`positionBox`) statt aus dem Maß einer Größen-Datei.
+
+**Geschrieben**, eins nach dem anderen mit `reader-covers.ts --put`: #457 *Ubik* (2 Bilder), #364 *Invisible Man* (1), #333 *Count Zero* (2), #481 *Nocturno de Chile* (7), #431 *Berlin Alexanderplatz* (1), #334 *Mona Lisa Overdrive* (3), #445 *Olympos* (3), #330 *Endymion* (1), #473 *East of Eden* (3), #315 *Snow Crash* (1), #363 *Montauk* (2) — 26 Bilder. Vorher/nachher gleich: Größe und Änderungszeit jeder Buchdatei unter `Books/` (eine Prüfsumme über die Liste), SHA-256 dreier Buchdateien, `books.db`, `explorer-3.db`, `cache.dat`, `metadata.calibre`; keine `._`- oder `.new`-Dateien. Alle zwölf in `sent.json` abgehakt; 33 gesicherte Bilder liegen unter `reader/pictures/` (die 26 von heute und die sieben von *Roadside Picnic*).
+
+**Nicht bekannt:** ob der Reader einen Platz der Startseite aus dem Cover in der Datei neu zeichnet, wenn sich die Reihe verschiebt. Julian hat die elf noch nicht am Gerät angesehen.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Calibre-App: das volle Bild zuerst, und wie groß die Bilder sind (ROADMAP 5.16a)
+
+Julian, mit einem Bild des Vergleichs für *Foundation* (rechts die verblasste Vorschau, „fetching the full image…"): „das ist sehr langsam, kann man den download priorisieren?" und „überfordern wir jetzt das gerät, wenn wir so viele hochauflösende bilder reinladen?"
+
+**Gemessen, wo die Zeit bleibt** (abends, ein ruhiger Moment der Bildquelle; eine zweite, nur schauende Instanz der App auf einer Kopie ihrer eigenen Dateien):
+
+| Was | Zeit |
+|---|---|
+| sechs Originale einzeln mit `curl`, erste Anfrage (32 KB bis 3,2 MB) | 0,15–0,31 s |
+| dieselben, zweite Anfrage | 0,08–0,44 s |
+| in Node: bis zu den Kopfzeilen / der Rest / Prüfen (Dekodieren) | 19–293 ms / 1–109 ms / 21–190 ms |
+| sieben Originale durch `CoverDownloads`, zwei gleichzeitig | 0,79 s zusammen |
+| in der App, Klick auf ein 3,2-MB-Cover (1464 × 2200), während die Wand lädt: Anfrage geht hinaus nach | 11 ms |
+| … Bild geholt und geprüft nach | 0,41 s |
+| 42 Vorschaubilder der Wand, vom Browser geholt | alle in 0,5 s (Median 0,37 s) |
+
+In der App wartet das angeklickte Bild also auf nichts als die Quelle. Die schwankt: am Vormittag desselben Tages brauchte ein Original 4–10 s (Eintrag „Cover, die nicht erschienen"). Den langsamen Moment konnte ich abends nicht nachstellen — alles Folgende ist deshalb gegen die Schwankung gebaut, nicht an ihr gemessen. Neuere Cover (Nummern um 15 Millionen) liefert `covers.openlibrary.org` selbst aus, ältere leitet es an eine Zip-Datei beim Internet Archive weiter; für dieselbe Zip-Datei nannte die Weiterleitung einmal `ia800506` und einmal `ia600506` — zwei Maschinen mit derselben Kopie.
+
+**Gebaut** (`download.ts`, `app.ts`, `app.html`):
+
+- `CoverDownloads.get` — das Bild, auf das jemand wartet — steht nie an. `warm` holt voraus: ruht der Zeiger 0,15 s auf einer Kachel, fragt die Seite `/api/new?…&ahead=1`; zwei solche Downloads gleichzeitig, höchstens drei wartend (der älteste gibt auf), und ein wartendes Bild, das angeklickt wird, startet sofort.
+- Eine Adresse, die `SECOND_ASK_MS` (2,5 s) nicht geantwortet hat, wird ein zweites Mal gefragt; die erste Antwort gilt, die andere Anfrage wird abgebrochen. Eine Absage (404) wird nicht wiederholt.
+- Jeder Download steht mit Dauer, Bytes, „voraus", „zweite Anfrage" und „welche gewann" als Zeile in `download-times.jsonl` neben den Backups.
+- Im Vergleich steht das Pixelmaß sofort (aus dem Cover-Datensatz, den die Wand schon hat), die Warnung „weniger Pixel" ebenso, und „Use this cover" ist klickbar, sobald Maß und das Cover in Calibre bekannt sind — der Server holt und prüft das Bild beim Schreiben selbst. Während er noch holt, heißt der Knopf „Fetching the image, then writing…".
+
+**Geprüft** auf einer Probe-Kopie der Bibliothek im Testordner, schreibend: Zeiger 0,7 s auf einer Kachel, dann Klick — Bild 56 ms nach dem Klick da (voraus geholt in 271 ms). Ein anderes Cover angeklickt und sofort „Use this cover": Knopf frei nach 16 ms, Cover in Calibre 1,09 s nach dem Klick auf die Kachel (Download 160 ms, der Rest `calibredb`); das Buch hat danach 1225 × 2200 aus einem Original von 1351 × 2425. Sieben neue Tests ohne Netz (`__tests__/download.test.ts`).
+
+**Nicht gemessen:** ob die zweite Anfrage in einem langsamen Moment früher ankommt als die erste. Die Notizen sagen es beim nächsten.
+
+**Wie groß die Bilder sind** (echte Bibliothek und angeschlossener Reader, nur gelesen):
+
+| Was | Gemessen |
+|---|---|
+| Cover, die die App bis dahin gesetzt hat | 26 Bücher |
+| davon aus dem Katalog größer als 1650 × 2200 | 11 (bis 3402 × 5032) |
+| … in Calibre danach | alle auf 2200 px Höhe oder 1650 px Breite verkleinert — Calibres `maximum_cover_size` |
+| größte Cover-Datei in Calibre | 891 KB (*Motherless Brooklyn*, 1375 × 2200) |
+| die 26 Cover vorher / jetzt | 2,4 MB / 8,9 MB |
+| alle 425 Cover der Bibliothek | 70,8 MB |
+| vom Werkzeug geschriebene Bilder auf dem Reader | 32, zusammen 1.050 KB (die des Readers an ihrer Stelle: 448 KB) |
+| alle Bibliotheksbilder des Readers | 483 Dateien, 7,1 MB |
+| freier Speicher des Readers | 2,61 von 3,46 GB |
+
+Auf den Reader kommt durch das Werkzeug kein großes Bild und keine geänderte Buchdatei. Nicht gemessen ist, wie der Reader ein Cover von 1650 × 2200 in einer neu gesendeten Datei verarbeitet (er verkleinert es beim Öffnen für den Ruhezustand); *Ubik* mit 996 × 1500 wird angezeigt.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.294 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: der Ruhezustand zeigt weiter das alte Cover — am Gerät gesehen (ROADMAP 5.16c)
+
+Julian, spät am Abend: „beim standby bild wurde gerade immer noch das alte cover von roadside picnic angezeigt". Das ist der Befund, den die Dateien des Readers vorhergesagt hatten: das Bild im Ruhezustand (`system/cache/bookcover/`) zeichnet der Reader bei jedem Öffnen des Buchs neu aus dem Cover in der Buchdatei, und die Buchdatei fasst das Werkzeug nicht an. Der Reader war bei dieser Meldung nicht eingebunden; nachgesehen wurde nichts Neues.
+
+**Was es ändern würde, und was es kostet** (nichts davon gebaut): (1) das Buch aus Calibre neu senden und danach die Bilder schreiben — neues Cover überall, aber der Reader hält die neue Datei für ein neues Buch, Lesestand und Markierungen bleiben am alten Eintrag (an *Ubik* gesehen); ohne Verlust nur bei Büchern, die nicht angefangen sind. (2) Dem Reader in seiner Datenbank sagen, dass die neue Datei das alte Buch ist — nicht untersucht, und es hieße, eine Datenbank des Readers zu schreiben, was das Werkzeug bisher nie tut. (3) Das Bild im Ruhezustand überschreiben — hält nur bis zum nächsten Öffnen des Buchs.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur Dokumente.
+
+## 2026-10-05 · Calibre-App: Calibre und PocketBook als zwei Ziele; der Weg für neue Bücher (ROADMAP 5.16a, 5.16c)
+
+Julian: „können wir das cover der buchdatei auch ohne probleme ändern?", „i added new books to my calibre library, what is the right pipeline now to get a nice picture all around" und „i don't [want] the app to write automatically, but after a push. and i want to decide whether to write to calibre or pocketbook".
+
+**Gebaut** (`app.ts`, `app.html`, `reader.ts`): im Vergleich zwei Knöpfe statt „Use this cover" — „Write to Calibre" und „Write to the PocketBook" —, darunter „Nothing is written until you press a button" und der Stand des Readers. `/api/reader` nimmt neben `{bookId}` (Calibres Cover) jetzt `{bookId, coverId}`: das Katalog-Cover wird geholt, geprüft und als Bilder des Readers geschrieben; Calibre wird nicht angefasst, der Haken „sent" nur gesetzt, wenn es dasselbe Cover ist, das Calibre hat. Der Zustand sagt für jedes Buch `onReader` (vorher nur für geänderte) und `readerCover`; welche Bücher auf dem Reader liegen, wird einmal je Änderungszeit von `metadata.calibre` nachgesehen (`ReaderCovers.present`), nicht bei jeder Anfrage. Die Reader-Knöpfe hängen nicht mehr daran, dass Calibre geschlossen ist. Die Seite fragt beim Öffnen des Vergleichs den Zustand neu, damit ein inzwischen angeschlossener Reader gesehen wird.
+
+**Geprüft** an der Probe-Kopie im Testordner und einem nachgebauten Reader-Ordner (zwei Bücher, Regalbilder, ein Platz der Startseite), während Calibre lief: beide Bücher als „auf dem Reader" erkannt; *Foundation and Empire* (#308), Cover `ol:12585750` (1459 × 2447, 913 KB, geholt in 568 ms) → „Write to the PocketBook" fertig nach 0,44 s, zwei Bilder geschrieben, Cover in der Probe-Bibliothek unverändert 281 × 475, „Write to Calibre" derweil gesperrt (Calibre läuft); „Put the reader's old pictures back" → `shasum` über jede Datei des Reader-Ordners gleich wie vor dem Schreiben. Das Schreiben in Calibre selbst ist der Weg vom Vorabend (dort an der Probe-Kopie gelaufen); heute nicht wiederholt, weil Calibre offen war.
+
+**Nicht geprüft:** der neue Knopf am echten Reader (nicht angeschlossen). Und der Weg für neue Bücher — erst Cover in Calibre, dann senden, der Reader macht alle drei Bilder aus der gesendeten Datei — ist aus dem Befund an *Ubik* geschlossen, nicht an einem neuen Buch gesehen.
+
+**Zur Buchdatei:** ändern lässt sie sich; der Reader hält sie dann für ein neues Buch (Prüfsumme der Datei), Lesestand und Markierungen bleiben am alten Eintrag. Nicht untersucht ist, worüber die Prüfsumme geht und ob die Zuordnung in `explorer-3.db` umzuschreiben wäre.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.331 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
+
 ## 2026-10-05 · 2.18o in Produktion; Redis 250 MB mit Backup; das Fehlprojekt gelöscht
 
 **2.18o deployt** (Julian: „ja"): `origin/main` von `df77809` auf `fb5ea95`, nach einem Merge der 5.18b-Commits einer anderen Sitzung (ein Konflikt am Ende der Historie, beide Seiten behalten). Der lokale Build lief bei einer Last von 11–15 (iCloud synchronisierte) nicht durch und wurde nach 30 min abgebrochen, im TypeScript-Schritt; `tsc --noEmit` und Lint waren grün, der volle Testlauf hatte einen wechselnden Ausfall durch Zeitüberschreitung (`Test timed out in 5000ms`, je Lauf ein anderer Test in `integration.test.ts`, ein Lauf ganz grün). Als Nachweis des Builds diente Vercels Vorschau desselben Commits (Status „success"). **Einmal gegen die Produktion geprüft:** `/collections` trägt `/_next/image?url=https%3A%2F%2Fbuyitscovers.com%2Fimg%2FM%2Fol-683284&w=384`, und diese Adresse kam als `image/webp` mit **`x-vercel-cache: HIT`** — das Cover hatte die Vorschau in den Cache gelegt, die Produktion las es von dort: **der Cache der Bildoptimierung gilt über Deploys und Deploy-Arten hinweg**, was 2.18o sollte.
