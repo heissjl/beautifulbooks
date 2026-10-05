@@ -4628,3 +4628,23 @@ Julian, mit einem Bild von *Ender's Game* (80 Cover): leere Kacheln mit Maßen d
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/` und ein Satz in CLAUDE.md.
 
 1.203 Tests (76 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Die Cover auf den PocketBook: das Vorschaubild, nicht die Buchdatei (ROADMAP 5.16c)
+
+Julian: „can we push the new covers onto the pocketbook ourselves? without using calibre?" — und, nachdem die Antwort den Plan „Cover in die EPUB auf dem Gerät schreiben, erst an einem Buch" genannt hatte: „der reader ist jetzt angeschlossen".
+
+**Ohne Gerät:** im installierten Calibre 7.26 kommen bei allen PocketBook-Treibern `upload_cover`, `sync_booklists` und `upload_books` unverändert aus `USBMS`; `CAN_SET_METADATA` ist leer, `THUMBNAIL_HEIGHT` 68, `WANTS_UPDATED_THUMBNAILS` falsch. Senden heißt: Datei kopieren, `metadata.calibre` schreiben.
+
+**Am Gerät** (`/Volumes/PB626`, FAT, Touch Lux 3, „SW Version W5.12.692"; nur gelesen, die Datenbanken als Kopie): `metadata.calibre` hat 452 Einträge, 422 Buchnummern aus Calibre. `system/explorer-3/explorer-3.db` (mit WAL): `files` (Ordner, Name, Größe, Änderungszeit → `book_id`), `books_impl` (999 Bücher, 444 Dateien), `books_uids` (je Buch ein „QuickHash", 16 Bytes), `books_settings` (Lesestand je Buch). `system/config/books.db`: `Books`/`Items` mit `HashUUID` gleich dem QuickHash, `Files` mit Pfad, Name, Länge; Markierungen als Kinder des Buchs. `system/cover_chache/1/`: 483 PNG, alle 8-Bit-Grau, keins breiter als 260, keins höher als 393, benannt `<Pfad des Buchs>.png`.
+
+**Der Zufallsversuch *Ubik*.** Julian hatte es am 3. Oktober 17:14 aus Calibre neu gesendet. Auf dem Reader: Datei 309.502 Bytes mit dem neuen Cover darin (996 × 1500); `books_impl` 971 (212.557 Bytes, QuickHash C761…, Lesestand 999/1000, geöffnet im April) hat keine Datei mehr; `books_impl` 995 (309.502 Bytes, QuickHash F887…, hinzugefügt am 4. Oktober) hat sie und keinen Lesestand. `books.db` kennt nur den alten Eintrag (654, Länge 212.557, ein Kind). Das Vorschaubild `…/Ubik - Philip K. Dick.epub.png` trägt das Datum 20. April und zeigt, angesehen, das alte Cover. Drei Schlüsse: der Reader erkennt ein Buch am Inhalt der Datei; eine geänderte Datei ist ein neues Buch ohne Lesestand; das Bild der Bibliotheksansicht wird bei einer geänderten Datei nicht neu gemacht. Der angekündigte Plan (Cover in die EPUB schreiben) hätte also Lesestand und Markierungen gekostet und das Bild in der Bibliothek trotzdem nicht geändert — verworfen.
+
+**Gebaut:** `lab/calibre/reader.ts` — `makeThumb` (dekodieren mit dem Dekoder der Seite, Rec.-601-Grau, Flächenmittel auf höchstens 260 × 393, PNG Farbtyp 0 mit `pngjs`), `booksOnReader`/`readBooksOnReader` (`metadata.calibre`, ohne Einträge unter `system/`), `thumbFile` (lehnt Pfade ab, die den Bilder-Ordner verließen), `ReaderCovers` (`put`: altes Bild sichern und vergleichen, neues daneben schreiben, zurücklesen, darüberschieben, Eintrag in `reader.jsonl`; `back`: das Bild von vor dem ersten `put`; `status`). `reader-covers.ts` als Kommando. Sieben Tests auf einem nachgebauten Reader-Ordner, ohne Gerät.
+
+**Ein Bild geschrieben:** *Roadside Picnic* (#403; Datei seit November 2025 unverändert, also mit altem Cover darin — an ihm zeigt sich, ob der Reader unser Bild nimmt und behält; an *Ubik* hätte man es nicht unterscheiden können). Vorher/nachher: Buchdatei `d98442a5…`, `books.db` `047cbfdf…`, `explorer-3.db` `7f1aedb9…` — gleich. Das Bild 254 × 393 (20 KB) → 232 × 393 (57 KB; die Bilder des Readers sind kleiner, vermutlich auf weniger Graustufen gebracht — nicht nachgebaut). macOS schrieb `._<Name>` daneben (das Attribut `com.apple.provenance`, auf FAT als zweite Datei); gelöscht, und `write` räumt es künftig weg.
+
+**Nicht bekannt:** ob der Reader das Bild zeigt und ob er es behält, wenn das Buch geöffnet wird. Das sieht nur Julian am Gerät. Die anderen elf Bücher und der Knopf in der App sind nicht gemacht.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.283 Tests (117 davon in `lab/calibre/`), tsc und Lint grün.
