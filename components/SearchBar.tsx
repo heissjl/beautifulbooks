@@ -4,9 +4,16 @@ import { useEffect, useRef, useState } from 'react';
 import { preloadMosaic } from './MosaicLoader';
 import { useRecentSearches } from './useRecentSearches';
 import { useT } from './i18n';
+import { shapeOf } from '@/lib/queryshape';
 
-/** What the field searches (ROADMAP 6.60): titles and authors together, or one author's books. */
-export type SearchMode = 'any' | 'author';
+/**
+ * What the field searches (ROADMAP 6.60): titles and authors together, or one
+ * author's books — or one printing by its ISBN (6.91). An ISBN goes the way a
+ * pasted one always went (6.29: `?q=<isbn>`, one card, the printing's cover
+ * preselected); the mode only says the field takes one, and checks the digits
+ * before asking.
+ */
+export type SearchMode = 'any' | 'author' | 'isbn';
 
 interface SearchBarProps {
   searchQuery: string;
@@ -31,6 +38,7 @@ export const POPULAR_SEARCHES = [
 export const MODES: { mode: SearchMode; label: string }[] = [
   { mode: 'any', label: 'Titles & authors' },
   { mode: 'author', label: 'Author only' },
+  { mode: 'isbn', label: 'ISBN' },
 ];
 
 export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: SearchBarProps) {
@@ -49,6 +57,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
     setCurrentMode(mode);
   }
   const [showSuggestions, setShowSuggestions] = useState(false);
+  // A typo in an ISBN, told before asking: the catalogue would answer "no book", which is the wrong fact (N12).
+  const [badIsbn, setBadIsbn] = useState(false);
   const [recentSearches, saveRecentSearch] = useRecentSearches();
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -69,6 +79,11 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
   const submit = (query: string, asMode: SearchMode = currentMode) => {
     const q = query.trim();
     if (!q) return;
+    if (asMode === 'isbn' && shapeOf(q).kind !== 'isbn') {
+      setBadIsbn(true);
+      setShowSuggestions(false);
+      return;
+    }
     setInputValue(q);
     setSearchQuery(q, asMode);
     saveRecentSearch(q);
@@ -82,11 +97,15 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
   */
   const switchMode = (next: SearchMode) => {
     setCurrentMode(next);
-    if (searchQuery && next !== mode && inputValue.trim()) submit(inputValue, next);
+    setBadIsbn(false);
+    // Words are not an ISBN and an ISBN reads the same as words: switching to or from it only changes the next search.
+    if (searchQuery && next !== mode && next !== 'isbn' && mode !== 'isbn' && inputValue.trim()) submit(inputValue, next);
     else inputRef.current?.focus();
   };
 
-  const filteredSuggestions = POPULAR_SEARCHES.filter(
+  const isbnMode = currentMode === 'isbn';
+  // Popular titles are no help to someone typing a number.
+  const filteredSuggestions = isbnMode ? [] : POPULAR_SEARCHES.filter(
     s => !inputValue || s.query.toLowerCase().includes(inputValue.toLowerCase()) || s.author.toLowerCase().includes(inputValue.toLowerCase()),
   ).slice(0, 4);
   const authorMode = currentMode === 'author';
@@ -122,6 +141,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
           value={inputValue}
           onChange={e => {
             setInputValue(e.target.value);
+            setBadIsbn(false);
             /*
               The loading mosaic is fetched here, not when the search is sent:
               the file is about 90 KB and takes two to four tenths of a second
@@ -132,8 +152,10 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
             preloadMosaic();
           }}
           onFocus={() => setShowSuggestions(true)}
-          placeholder={authorMode ? t('An author’s name') : t('A title, or a title and author')}
-          aria-label={authorMode ? t('Search an author') : t('Search a book title')}
+          placeholder={isbnMode ? t('The ISBN of your copy') : authorMode ? t('An author’s name') : t('A title, or a title and author')}
+          aria-label={isbnMode ? t('Search an ISBN') : authorMode ? t('Search an author') : t('Search a book title')}
+          inputMode={isbnMode ? 'numeric' : undefined}
+          aria-invalid={badIsbn || undefined}
           autoComplete="off"
           /*
             On a phone the hero field is set a size smaller and gives the
@@ -199,6 +221,11 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
           </button>
         ))}
       </div>
+      {badIsbn && (
+        <p className="mt-2 text-sm text-ink-2" role="status">
+          {t('That is not an ISBN — check the digits. It has 10 or 13 of them.')}
+        </p>
+      )}
     </form>
   );
 }

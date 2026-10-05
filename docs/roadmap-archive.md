@@ -1064,4 +1064,8 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 
 **2.18p Die Jahrzehnte-Seite rendert bei jedem Aufruf.** (Befund aus 2.18b, 2026-10-05.) `/book/[id]/decades` hat `revalidate = 86400`, aber kein `generateStaticParams`; der Build stuft sie als dynamisch ein (ƒ), und `next start` antwortet zweimal hintereinander mit `Cache-Control: private, no-cache, no-store`. Jeder Aufruf rendert also in einer Funktion und liest den Katalog aus dem Datencache — bei 322 Seiten, die `robots.txt` den Crawlern freigibt. Dasselbe gilt für die deutsche Spiegelseite und vermutlich für `/book/[id]/cover/[coverId]`. **Vorschlag:** `generateStaticParams` mit leerer Liste (Rendern beim ersten Abruf, dann ISR) und mit `lab/visitcost` nachmessen. Claude, 1 h. Thema: Betrieb.
 
+## 6.91
+
+**6.91 Ein Chip „ISBN“ unter der Hauptsuche.** (Julian, 2026-10-05, zum Vergleich mit my9books.com: „ja, einbauen mit drittem feld unter der suche "ISBN"“, dann „ich wollte es nur in der hauptsuche einbauen, nicht für das shelfportrait“.) Die Suche erkannte eine eingegebene ISBN schon seit 6.29 an der Prüfziffer und führte bei genau einem Treffer auf ihre Ausgabe — nur sah das niemand: das Feld fragt nach „A title, or a title and author“. my9books.com zeigt ein eigenes ISBN-Feld (docs/vergleich-my9books.md). Ein dritter Chip neben den beiden Modi aus 6.60 macht den Weg sichtbar, ohne einen neuen zu bauen. Zuerst irrtümlich als drittes Feld im Shelf-Portrait-Editor gebaut und vor dem Push wieder entfernt.
+
 **Erledigt 2026-10-05.** → [Historie](history.md)
