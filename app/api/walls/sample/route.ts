@@ -5,6 +5,7 @@ import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { drawSample, topShare, type SampleCandidate } from '@/lib/walls/sample';
 import { json, openWalls } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/walls/sample — six random covers to start a wall with (ROADMAP
@@ -14,6 +15,7 @@ import { json, openWalls } from '../guard';
  * and says so.
  */
 export async function GET(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
 

@@ -9,6 +9,7 @@ import { marketFromRequest } from '@/app/api/works/[id]/route';
 import { later } from '@/app/api/count';
 import { countClick } from '@/lib/insights/store';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /go/<provider>/<isbn13>?market=<us|uk|de> — records the click and
@@ -24,6 +25,7 @@ import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
  * searches and catalogues stay plain links: they are not shops.
  */
 export async function GET(request: NextRequest, context: { params: Promise<{ provider: string; isbn: string }> }) {
+  measure('go', request);
   const { provider, isbn } = await context.params;
   const home = new URL('/', request.nextUrl.origin);
   if (provider === 'local') return localShop(request, isbn, home);

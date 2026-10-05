@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
 import { SITE_NAME } from '@/lib/seo';
+import { isHiddenCoverUrl } from '@/lib/hiddencovers';
 
 /**
  * What the shared-link cards have in common (ROADMAP 6.61): the site's two
@@ -95,6 +96,8 @@ export async function loadCovers(urls: string[], want: number, timeoutMs = 5000)
       return null;
     }
   };
+  // A cover taken off the site (2.18k) is not drawn into a card either.
+  urls = urls.filter(url => !isHiddenCoverUrl(url));
   const out: string[] = [];
   // In batches of `want`: the first batch is usually enough, and the next
   // only asks for as many as are still missing.

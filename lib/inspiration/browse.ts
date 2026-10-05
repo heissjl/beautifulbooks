@@ -13,6 +13,7 @@
  *   editions on record — below that the list is single records with no wall
  *   behind them (50 of 995 rows, docs/history.md).
  */
+import { isHiddenCover } from '../hiddencovers';
 import popularFile from '@/data/popular-works.json';
 import { CURATED_LIST } from '../curated';
 import { browsable, type PopularFile } from '../popularworks';
@@ -36,7 +37,7 @@ export interface BrowseList {
 
 const popular = popularFile as PopularFile;
 
-export const BROWSE_LISTS: BrowseList[] = [
+const LISTS: BrowseList[] = [
   { id: 'curated', works: CURATED_LIST.map(w => ({ id: w.id, title: w.title, author: w.author, coverId: `ol:${w.coverId}` })) },
   {
     id: 'popular',
@@ -46,7 +47,12 @@ export const BROWSE_LISTS: BrowseList[] = [
 ];
 
 /** What the lists already say about a work, so a browsed book costs no request for its title. Where both name a work, the curated spelling stands. */
-const LISTED = new Map([...BROWSE_LISTS].reverse().flatMap(l => l.works).map(w => [w.id, { title: w.title, author: w.author }]));
+/** The lists as the editor shows them: without a work whose cover was taken off the site on request (2.18k). */
+export function browseLists(): BrowseList[] {
+  return LISTS.map(l => ({ ...l, works: l.works.filter(w => !isHiddenCover(w.coverId)) }));
+}
+
+const LISTED = new Map([...LISTS].reverse().flatMap(l => l.works).map(w => [w.id, { title: w.title, author: w.author }]));
 
 export function listedWork(workId: string): { title: string; author: string } | undefined {
   return LISTED.get(workId);

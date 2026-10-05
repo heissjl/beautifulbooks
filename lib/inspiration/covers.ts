@@ -11,6 +11,7 @@
  * passed around must not spend the quota the verdicts live on (E10), which is
  * why it does not go through `getWorkPage`.
  */
+import { isHiddenCover } from '../hiddencovers';
 import type { SourceEdition } from '../model';
 import { getEditionsPage, getWork } from '../sources/openlibrary';
 import { parseEditions, type OlEditionEntry } from '../sources/openlibrary-parse';
@@ -27,7 +28,8 @@ export function coversOfEditions(editions: readonly SourceEdition[]): EditionCov
   for (const e of editions) {
     if (e.format === 'ebook') continue;
     for (const c of e.covers) {
-      if (!/^ol:\d+$/.test(c.id)) continue;
+      // A cover taken off the site on request (2.18k) is not offered for a board either.
+      if (!/^ol:\d+$/.test(c.id) || isHiddenCover(c.id)) continue;
       const known = byCover.get(c.id);
       // The newest printing names the cover; one without a year never replaces one with.
       if (!known || (e.year ?? 0) > (known.year ?? 0)) {

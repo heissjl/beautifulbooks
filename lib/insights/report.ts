@@ -11,6 +11,8 @@ import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summariz
 import { readDays } from './store';
 import { emptySearches, summarizePhotos, summarizeBooks, summarizeSearches, topWorks, type BookSummary, type PhotoSummary, type SearchSummary, type WorkRow } from './visits';
 import { costUsd } from './prices';
+import { summarizeCpu, type CpuSummary } from './cpu';
+import { summarizeCosts, type CostSummary } from './costs';
 import { PUBLISHED_WORKS } from '../published';
 
 export const RANGES = [7, 30, 90] as const;
@@ -48,6 +50,10 @@ export type InsightsReport =
       empty: Array<{ q: string; n: number }>;
       /** K13: shelf photos read by the image model, and what they cost. */
       photos: PhotoSummary;
+      /** K14: CPU time of the functions per route and caller (ROADMAP 2.18l). */
+      cpu: CpuSummary;
+      /** K15: fixed costs and the measured costs of use (ROADMAP 2.18m). */
+      costs: CostSummary;
     }
   | { ok: false; reason: 'no-store' | 'failed' };
 
@@ -90,12 +96,15 @@ export async function buildReport(
     readDays(current, 'works', commands),
     readDays(current, 'empty', commands),
     readDays(current, 'photos', commands),
+    readDays(current, 'cpu', commands),
   ]);
   const failed = reads.find(r => !r.ok);
   if (failed && !failed.ok) return { ok: false, reason: failed.reason };
-  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead] = reads.map(r => (r.ok ? r.hashes : []));
+  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead, cpuRead] = reads.map(r => (r.ok ? r.hashes : []));
   const clicks = summarizeClicks(current, clickRead, market);
   const previousTotal = summarizeClicks(previous, previousRead, market).total;
+  const photos = summarizePhotos(current, photoRead, costUsd);
+  const cpu = summarizeCpu(current, cpuRead);
   const titles = new Map(PUBLISHED_WORKS.map(w => [w.id, w.title]));
   return {
     ok: true,
@@ -114,6 +123,8 @@ export async function buildReport(
     searches: summarizeSearches(searchRead),
     works: topWorks(worksRead).map(w => ({ ...w, title: titles.get(w.work) })),
     empty: emptySearches(emptyRead),
-    photos: summarizePhotos(current, photoRead, costUsd),
+    photos,
+    cpu,
+    costs: summarizeCosts(current, cpu, photos.costUsd),
   };
 }

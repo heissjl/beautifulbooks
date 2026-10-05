@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { rateLimited } from '@/app/api/rate';
 import { buildReport, parseMarket, parseRange } from '@/lib/insights/report';
 import { ADMIN_COOKIE, adminMatches, adminTokenValid } from '@/lib/suggest/auth';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/insights?days=7|30|90&market=us|uk|de — the analytics as JSON
@@ -22,6 +23,7 @@ function isAdmin(request: NextRequest): boolean {
 }
 
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   if (!isAdmin(request)) {
     return rateLimited(request, 'login') ?? NextResponse.json({ error: 'Not found' }, { status: 404, headers: NO_STORE });
   }

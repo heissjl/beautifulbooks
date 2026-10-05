@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import BookGrid from '@/components/BookGrid';
 import HeroSlot from '@/components/HeroSlot';
 import HomeSearchBar from '@/components/HomeSearchBar';
@@ -12,6 +12,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 import { liveCollections } from '@/lib/collections-live';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -57,6 +58,7 @@ export async function generateMetadata({ searchParams }: HomeProps): Promise<Met
 }
 
 export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: HomeProps) {
+  measure('page-home');
   const t = translator(locale);
   const params = await searchParams;
   const searchQuery = first(params.q);

@@ -1,9 +1,10 @@
-import Link from 'next/link';
+import Link from './Link';
 import CoverImage from './CoverImage';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
 import { CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
+import { isHiddenCover } from '@/lib/hiddencovers';
 import { SIZE_WORD } from '@/lib/inspiration/board';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
 import { shareTargets, shareText, subtitleOf, titleOf } from '@/lib/inspiration/share';
@@ -63,7 +64,8 @@ export default function InspirationShared({ board, query, link, walls, versus }:
 
         <ul className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
           {board.books.map((b, i) => {
-            const src = b ? coverUrlFor(b.coverId, 'M') : null;
+            // A cover taken off the site on request (2.18k) leaves its place empty; the book stays in the list below.
+            const src = b && !isHiddenCover(b.coverId) ? coverUrlFor(b.coverId, 'M') : null;
             const label = b ? [b.title, b.author].filter(Boolean).join(' by ') : '';
             return (
               <li key={i}>
@@ -127,7 +129,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           </summary>
           <ol className="mt-3 divide-y divide-line">
             {books.map((b) => {
-              const src = coverUrlFor(b.coverId, 'S');
+              const src = isHiddenCover(b.coverId) ? null : coverUrlFor(b.coverId, 'S');
               return (
                 <li key={b.workId} className="flex items-center gap-3 py-2">
                   <span className="relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">{src && <CoverImage src={src} alt="" sizes="32px" />}</span>

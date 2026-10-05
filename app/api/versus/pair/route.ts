@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { nextPairFor, secretForEnv } from '@/lib/hotornot/game';
 import { StoreUnavailableError } from '@/lib/hotornot/store';
 import { json, openGame, storeDown } from '../guard';
+import { measure } from '@/app/api/measure';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +18,7 @@ const COVER_ID = /^(ol|gb):[\w.-]{1,64}$/;
  * browser and is not stored here (N11). Never cached: every answer is for one click.
  */
 export async function GET(request: NextRequest) {
+  measure('versus', request);
   const game = openGame(request, 'versus');
   if ('response' in game) return game.response;
   const params = request.nextUrl.searchParams;

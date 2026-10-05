@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regal nach Farben</title>
+<style>
+  :root {
+    --paper: #fbfaf7; --ink: #1d1b18; --ink-2: #4a453e; --ink-3: #746c62;
+    --line: #e2ddd4; --accent: #945138; --wall: #e9e4da;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #171614; --ink: #eeeae3; --ink-2: #c4bdb2; --ink-3: #a39b8f;
+      --line: #34312c; --accent: #dbac94; --wall: #24221f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171614; --ink: #eeeae3; --ink-2: #c4bdb2; --ink-3: #a39b8f;
+    --line: #34312c; --accent: #dbac94; --wall: #24221f;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font: 600 26px/1.2 Georgia, serif; margin: 0 0 6px; }
+  h2 { font: 600 17px/1.3 Georgia, serif; margin: 28px 0 8px; }
+  p { margin: 0 0 10px; color: var(--ink-2); }
+  .lede { max-width: 62ch; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  button, .file {
+    font: inherit; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    border-radius: 999px; padding: 7px 14px; cursor: pointer;
+  }
+  .file.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .file input { display: none; }
+  button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  button:focus-visible, .file:focus-within, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #status { color: var(--ink-3); font-size: 13px; min-height: 1.5em; margin-top: 10px; }
+  canvas { display: block; width: 100%; height: auto; border-radius: 6px; background: var(--wall); }
+  #photo { cursor: crosshair; touch-action: manipulation; }
+  .grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .options { display: grid; gap: 10px 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin: 12px 0; }
+  .options label { display: grid; gap: 2px; font-size: 13px; color: var(--ink-2); }
+  .options output { color: var(--ink-3); }
+  select, input[type=range] { width: 100%; font: inherit; }
+  select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+  #start-sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-left: 4px; }
+  #strip { display: flex; height: 22px; border-radius: 4px; overflow: hidden; margin: 12px 0 4px; }
+  #strip span { min-width: 2px; }
+  #summary { color: var(--ink-3); font-size: 13px; }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--ink-2); }
+  #moves { columns: 2 260px; padding: 0; list-style: none; font-size: 13px; color: var(--ink-2); }
+  #moves li { break-inside: avoid; padding: 2px 0; display: flex; gap: 6px; align-items: center; }
+  #moves li.stays { color: var(--ink-3); }
+  .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; border: 1px solid var(--line); }
+  .hint { font-size: 13px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Regal nach Farben</h1>
+  <p class="lede">Ein Foto vom eigenen Regal, und die Seite zeigt dieselben Bücher nach Farben sortiert — aus den Buchrücken des Fotos zusammengesetzt, mit der Liste, was wohin wandert. Das Foto bleibt auf diesem Gerät; nichts wird hochgeladen.</p>
+  <div class="row">
+    <label class="file primary">Foto aufnehmen<input id="camera" type="file" accept="image/*" capture="environment"></label>
+    <label class="file">Foto wählen<input id="file" type="file" accept="image/*"></label>
+    <button id="sample" type="button">Gemaltes Beispielregal</button>
+  </div>
+  <p class="hint">Am besten gerade von vorn, eine oder mehrere Reihen, Rücken senkrecht. Liegende und schräg lehnende Bücher erkennt es nicht.</p>
+  <div id="status" role="status"></div>
+
+  <div id="work" hidden>
+    <div class="grid">
+      <section>
+        <h2>Das Foto</h2>
+        <div class="row" role="group" aria-label="Werkzeug">
+          <button type="button" data-tool="line">Trennlinie setzen/entfernen</button>
+          <button type="button" data-tool="exclude">Kein Buch</button>
+          <button type="button" data-tool="row">Regalboden</button>
+          <button type="button" id="redetect">Neu erkennen</button>
+        </div>
+        <p class="hint">Weiße Linien trennen Bücher, blaue gestrichelte die Reihen. Tippen setzt eine Linie oder nimmt die nächste weg; „Kein Buch“ graut eine Lücke, eine Stütze oder ein Stück Wand aus. Die Zahl im Punkt ist der neue Platz.</p>
+        <canvas id="photo"></canvas>
+      </section>
+      <section>
+        <h2>Nach Farben</h2>
+        <div class="options">
+          <label>Ordnung
+            <select id="mode">
+              <option value="rainbow">Regenbogen: Weiß, Farben, Grau, Schwarz</option>
+              <option value="light-dark">Hell nach dunkel</option>
+            </select>
+          </label>
+          <label>Der Kreis beginnt bei <output id="start-v"></output><span id="start-sw"></span>
+            <input id="start" type="range" min="0" max="359" value="10">
+          </label>
+          <label>Unter dieser Buntheit gilt ein Buch als grau: <output id="neutral-v"></output>
+            <input id="neutral" type="range" min="0" max="120" value="40">
+          </label>
+          <label>Farbton-Stufen, je hell nach dunkel: <output id="bucket-v"></output>
+            <input id="bucket" type="range" min="0" max="90" step="5" value="30">
+          </label>
+        </div>
+        <canvas id="sorted"></canvas>
+        <div id="strip" aria-hidden="true"></div>
+        <div id="summary"></div>
+        <div class="row" style="margin-top:8px"><button type="button" id="download">Bild sichern</button></div>
+        <details>
+          <summary>Was wohin wandert</summary>
+          <ol id="moves"></ol>
+        </details>
+      </section>
+    </div>
+  </div>
+</main>
+<script>/*APP*/</script>
+</body>
+</html>

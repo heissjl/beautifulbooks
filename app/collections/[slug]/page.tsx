@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import CoverWall from '@/components/CoverWall';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -13,6 +13,7 @@ import { SITE_URL } from '@/lib/seo';
 import { friendSignedIn } from '@/lib/suggest/session';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator, type Translate } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * One thematic collection (ROADMAP 5.10, SPEC F8): a title, a paragraph and
@@ -71,6 +72,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }: PageProps) {
+  measure('page-collections');
   const t = translator(locale);
   const { slug } = await params;
   const c = await findCollection(slug);

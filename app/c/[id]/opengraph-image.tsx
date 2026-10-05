@@ -1,9 +1,10 @@
 import SiteCard from '@/app/opengraph-image';
 import { asJpeg, coverWallCard } from '@/app/og';
 import { coverUrlFor } from '@/lib/coverurl';
-import { isWallId, tileCoverId } from '@/lib/walls/model';
+import { isWallId, tileCoverId, visibleTiles } from '@/lib/walls/model';
 import { wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
+import { measure } from '@/app/api/measure';
 
 /**
  * The card of a reader's shared collection (ROADMAP 6.61, 5.13a; Julian
@@ -31,13 +32,15 @@ function cardTitle(title: string): string {
 }
 
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
+  measure('og');
   const { id } = await params;
   const store = wallsEnabled() && isWallId(id) ? wallStoreFromEnv() : null;
   const wall = store ? await store.get(id).catch(() => null) : null;
-  if (!wall || wall.hiddenBy || wall.tiles.length === 0) return asJpeg(await SiteCard());
+  const tiles = wall ? visibleTiles(wall.tiles) : [];
+  if (!wall || wall.hiddenBy || tiles.length === 0) return asJpeg(await SiteCard());
 
-  const coverUrls = wall.tiles.map(t => coverUrlFor(tileCoverId(t), 'M')).filter((u): u is string => !!u);
-  const count = `${wall.tiles.length} ${wall.tiles.length === 1 ? 'cover' : 'covers'}`;
+  const coverUrls = tiles.map(t => coverUrlFor(tileCoverId(t), 'M')).filter((u): u is string => !!u);
+  const count = `${tiles.length} ${tiles.length === 1 ? 'cover' : 'covers'}`;
   return coverWallCard({
     coverUrls,
     title: cardTitle(wall.title),

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useEffect, useRef, useState } from 'react';
 import type { Cover, EditionView } from '@/lib/model';
 import { MAX_PRINTINGS, storedCoverId, type Printing, type PublicWall, type Tile } from '@/lib/walls/model';

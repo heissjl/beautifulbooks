@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import { randomInt } from 'node:crypto';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -12,6 +12,7 @@ import { readersPage, wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * Walls readers made and chose to show (ROADMAP 5.13d; Julian, 2026-09-28:
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function ReadersWallsPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  measure('page-collections');
   const t = translator(locale);
   if (!wallsEnabled()) notFound();
   const store = wallStoreFromEnv();

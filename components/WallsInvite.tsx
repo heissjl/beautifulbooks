@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/Link';
 
 /**
  * The way to a reader's own wall (ROADMAP 5.13b), where a page shows walls

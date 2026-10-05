@@ -77,6 +77,14 @@ Die Frage aus 2.4, ob der Monitor eine Ausnahme braucht: **auf Hobby gibt es kei
 
 - Ziel bleibt `/api/search?q=1984`: kostet keine Google-Anfrage, fällt nicht unter Regel 1, und sagt, ob Open Library antwortet.
 - Als **Keyword-Monitor** einrichten (Stichwort `Nineteen Eighty-Four`), nicht als bloßer Statuscheck — sonst zählte auch eine leere Trefferliste als „up", und genau das ist der Fehler aus 1.4.
+- **Fortgeschrieben 2026-10-05 (Plan 2.18): zwei Monitore statt einem.** Die Suche ist einen Tag im CDN gecacht, dazu einen Tag `stale-while-revalidate` — ein Monitor nur auf ihr sähe ein **pausiertes Projekt** (das Risiko aus 2.18 §1) unter Umständen erst nach einem Tag. Die Startseite rendert bei jedem Abruf in einer Funktion (`searchParams`), ihr Monitor sagt also, ob die Funktionen laufen. Kosten: 288 Aufrufe am Tag, je drei Redis-Lesungen, unter einer CPU-Minute — Rauschen. Ein Monitor führt kein JavaScript aus, zählt also in der Analyse nicht als Besuch (K1–K13), nur in K14 als Abrufer „Seite".
+
+  | Monitor | Typ | Adresse | Stichwort (muss vorkommen) | Intervall |
+  |---|---|---|---|---|
+  | `buyitscovers – Startseite` | Keyword | `https://buyitscovers.com/` | `Buy Its Covers` | 5 min |
+  | `buyitscovers – Suche` | Keyword | `https://buyitscovers.com/api/search?q=1984` | `Nineteen Eighty-Four` | 5 min |
+
+  Benachrichtigung: E-Mail und die UptimeRobot-App aufs Telefon (Push). Kein Abruf mit wechselndem Parameter, um den Cache zu umgehen: das wären 288 Open-Library-Anfragen am Tag von unserer Adresse, und Open Library sperrt Stöße. Auf Pro gibt es jetzt den System-Bypass der Firewall; nötig wird er erst, wenn der Monitor `x-vercel-mitigated` sieht.
 - Meldet er in der ersten Woche einen Ausfall, zuerst im Firewall-Log nachsehen, ob die Antwort `x-vercel-mitigated` trug. Wenn ja, ist das der Befund für 2.4, und die Wege sind Pro (System-Bypass) oder ein anderer Dienst — nicht eine Regel, die auf Hobby nichts ausrichtet.
 
 ## 4. Warum die Regeln nicht in `vercel.json` stehen

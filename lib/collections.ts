@@ -17,6 +17,7 @@
 import { english, type Translate } from './i18n/translate';
 import collectionsFile from '@/data/collections.json';
 import type { CuratedWork } from './curated';
+import { isHiddenCover } from './hiddencovers';
 
 export type CollectionKind = 'authors' | 'series';
 
@@ -173,7 +174,7 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       // Once per cover, not once per work: a series can print one work in two
       // designs (Tolkien's green paperbacks and the 1980 edition, Julian 2026-09-26).
       const key = `${p.id}|${p.coverId}`;
-      if ((coverId === null && !image) || seen.has(key)) continue;
+      if ((coverId === null && !image) || seen.has(key) || isHiddenCover(p.coverId)) continue;
       seen.add(key);
       const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists }
         : r.coverCredits === 'artwork' && p.coverArt ? { coverArt: p.coverArt } : {};

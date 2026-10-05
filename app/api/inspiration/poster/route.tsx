@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server';
 import sharp from 'sharp';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
+import { isHiddenCover } from '@/lib/hiddencovers';
 import { coverUrlFor } from '@/lib/coverurl';
 import { type BoardSize, filledCount, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
@@ -303,8 +304,10 @@ export async function GET(request: NextRequest) {
   const look: Look = rawLook === 'paper' || rawLook === 'plain' ? rawLook : 'ambient';
   // Titles and authors under the covers, when the reader asks for them; a link card has no room for them.
   const withTitles = params.get('titles') === '1' && format !== 'card';
-  const board = parseBoard(params);
-  if (filledCount(board) === 0) return json({ error: 'An empty board has no picture.' }, 400);
+  const asked = parseBoard(params);
+  if (filledCount(asked) === 0) return json({ error: 'An empty board has no picture.' }, 400);
+  // A cover taken off the site on request (2.18k) is not drawn: its place stays empty, as on the page.
+  const board = { ...asked, slots: asked.slots.map((s) => (s && isHiddenCover(s.coverId) ? null : s)) };
 
   const count = sizeOf(board);
   const layout = format === 'card' ? null : posterLayout(format, count, withTitles);

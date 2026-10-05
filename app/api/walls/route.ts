@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { MAX_TILES, toPublic, validTile, WallError, type Tile } from '@/lib/walls/model';
 import { newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
 import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from './guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/walls {title?, tiles?} — a new wall owned by this browser
@@ -10,6 +11,7 @@ import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from './g
  * filled wall in one step.
  */
 export async function POST(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const body = await readJson(request);

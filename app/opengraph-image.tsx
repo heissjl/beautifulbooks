@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { Display, OG, Wordmark, ogFonts } from '@/app/og';
 import { SITE_CARD } from '@/lib/seo';
+import { measure } from '@/app/api/measure';
 
 /**
  * The card for every page that has none of its own: the home page, About,
@@ -31,6 +32,7 @@ function tone(col: number, row: number): string {
 }
 
 export default async function Image() {
+  measure('og');
   const rows = Array.from({ length: ROWS }, (_, row) =>
     Array.from({ length: COLS }, (_, col) => ({ col, row })),
   );

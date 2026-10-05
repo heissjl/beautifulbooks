@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery from '@/components/CoverGallery';
 import DecadeLink from '@/components/DecadeLink';

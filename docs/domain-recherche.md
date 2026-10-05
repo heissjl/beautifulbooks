@@ -639,3 +639,39 @@ Bei INWX für `buyitscovers.com` dafür zu löschen: MX `@` 0 `.` (Null-MX) und 
 
 **Offen bei Proton:** MX und SPF zeigte Proton um 07:20 MESZ noch rot (Protons Resolver hält die alten Antworten bis zu einer Stunde); bis Proton sie grün zeigt, kann Mail an die neuen Adressen noch an der Prüfung scheitern. DKIM auch noch zu bestätigen. Einmal ansehen frühestens um 08:20 MESZ.
 
+## 23. Stand der Konten, Bluesky und GitHub umgestellt, Catch-all, Profilbilder (2026-10-04)
+
+Julian, 2026-10-04 vormittags: „lets do a catch all thing for all byitscovers.com mails in case someone uses the wrong domain · i have gotten @buyitscovers at X with the mail@ address · i got the same for insta, but i think i fucked up and they banned it for being a bot and for the appeal i accidentally sent a normal photo instead of a selfie · finish the domain switch for bsky that's open · come up with profile pictures and avatars. i am not entirely happy with the current logo so we might need an alternative for now · tiktok had a hangup, i need to try again tomorrow · haven't done any of the byitscovers versions, but they remain important · you can rename github. and we don't need a byitscovers account there · i am not sure we need youtube? · i set up mastodon".
+
+**Stand je Plattform**
+
+| Plattform | `buyitscovers` | `byitscovers` |
+|---|---|---|
+| X | **angelegt** von Julian, `mail@` | vergeben (gesperrt) |
+| Instagram | angelegt, **von Instagram als Bot gesperrt**; Julians Einspruch ging mit einem normalen Foto statt eines Selfies raus — Ausgang offen. Kein zweites Konto anlegen, solange der Einspruch läuft (gilt sonst als Umgehung der Sperre) | vergeben (privat) |
+| Bluesky | **angelegt**, `mail@`; **Handle `@buyitscovers.com` seit 2026-10-04 um 09:50 MESZ** (PLC-Verzeichnis: `at://buyitscovers.com`); E-Mail-Bestätigung bei Bluesky noch offen | offen — Handle `@byitscovers.com` nur per DNS-TXT `_atproto.byitscovers.com`, weil die Domain mit 308 weiterleitet |
+| Mastodon (mastodon.social) | **angelegt**, `@buyitscovers` | offen |
+| TikTok | hängte bei der Anmeldung, Julian versucht es am 2026-10-05 erneut | offen |
+| GitHub | **Organisation `OtherCovers` in `buyitscovers` umbenannt** (`github.com/buyitscovers` 200, `OtherCovers` 404) | nicht nötig (Julian) |
+| YouTube | Julian unsicher; Empfehlung: jetzt nicht — ein Kanal ohne Videos bringt nichts, der Name ist frei, und anlegen geht später in Minuten, falls `lab/video` einen Film liefert | — |
+
+**Bluesky über die Seite statt über INWX.** INWX meldete wieder ab, Bluesky bietet neben dem DNS-Eintrag eine Datei: `https://buyitscovers.com/.well-known/atproto-did` mit der DID `did:plc:5kqatm7r3zvyoxykuorrabia`. Sie kommt jetzt aus `app/.well-known/atproto-did/route.ts` (statisch, `proxy.ts` lässt Pfade mit Punkt in Ruhe); gepusht als einzelner Commit auf `origin/main` (`40febdf..73bfe00`, ohne die lokal wartenden 5.16a-Commits einer anderen Sitzung), Deployment `dpl_EHZm6H3QCGf3hBSVPWPB4MB457Qc`, einmal abgerufen: 200, `text/plain`, die DID. **Die Datei muss bleiben** — Bluesky prüft den Handle von Zeit zu Zeit neu.
+
+**Catch-all für `byitscovers.com`.** Protons Catch-all gilt nur für Domains, die bei Proton angelegt sind, und Julians Tarif hat eine Domain (`buyitscovers.com`). Wege, in der Reihenfolge, die ich empfehle:
+1. **Ein Weiterleitungsdienst** (Forward Email, ImprovMX): MX von `byitscovers.com` auf den Dienst, alles an `*@byitscovers.com` geht an `mail@buyitscovers.com`. Kostenlos; Null-MX und `v=spf1 -all` von `byitscovers.com` müssen dafür weichen; Werte von der Seite des Dienstes ablesen. Ein Konto beim Dienst legt Julian an.
+2. **Proton Unlimited** (drei Domains): `byitscovers.com` zu Proton, dort Catch-all. Kostet den Aufpreis.
+3. **INWX Mail-Easy** (bezahltes Paket mit Weiterleitung und Catch-all).
+Noch nicht entschieden, nichts geändert. Der Schutz auf `byitscovers.com` (Null-MX, SPF `-all`, DMARC `reject`) bleibt bis dahin — Mail an die Domain wird abgewiesen, nicht verschluckt.
+
+**Profilbilder.** Vier Entwürfe in den Farben der Seite (Papier `#f4f0e8`, Rost `#945138`, die Graureihe des Zeichens), je groß, im Kreis und bei 40 und 24 px in einer Zeitleiste: A die heutige Kachelwand fürs Rund, B drei gefächerte Umschläge, der oberste in Rost, C ein heller Umschlag mit dunklem Preisschild auf Rost, D die Wortmarke „Buy Its Covers" in Xanh kursiv auf Rost. Bild lokal unter `docs/tests/2026-10-04-avatars-v1.png`. Befund am Bild: A wird im Kreis an den Ecken beschnitten und ist bei 24 px Rauschen; D ist bei 40 px kaum, bei 24 px nicht lesbar; B und C halten auch klein. Auswahl bei Julian; danach Banner (X 1500 × 500, Bluesky 3000 × 1000).
+
+**Profilbilder, zweite Runde (2026-10-04)** (Julian zu D: „mach eine wortmarke aber mit judge a book, buy its covers und in den fonts wie auf der website · nimm sonst noch den logo vorschlag aus der calibre covers app auf"). Bild lokal unter `docs/tests/2026-10-04-avatars-v2.png`; die Zeichnungen liegen als SVG in der Sitzung und sind schnell neu gesetzt.
+
+- **W1–W3, Wortmarke:** der Satz der Startseite in Xanh Proportional (`assets/fonts/`), wie in `app/page.tsx`: „Judge a book," aufrecht, „buy its covers." kursiv in der Akzentfarbe; W1 auf Papier (`#f4f0e8`, Tinte `#1f1b18`, Rost `#945138`), W2 Papier auf Rost, W3 wie der Dunkelmodus (`#1a1714`, `#efe8dd`, `#dbac94`). Im großen Kreis gut, bei 40 px nur noch als Form zu erkennen, bei 24 px nicht lesbar.
+- **E1/E2, das Calibre-App-Logo** (`lab/calibre/macos/icon.ts`, ROADMAP 5.16b): drei Umschläge nebeneinander auf Terrakotta — hell, schwarz mit Titelzeilen, senfgelb. E1 in seinen eigenen Farben (`#b5532f`, `#f6f3ee`, `#1d1b19`, `#e2b25c`), E2 in denen der Seite (Rost, Papier, Tinte, `#d9cfc1`). Hält auch bei 24 px.
+- **Banner 1500 × 500:** die Wortmarke groß links auf Papier, rechts zwei Reihen Kacheln mit einer in Rost (das Zeichen der Seite), `buyitscovers.com` unten rechts — unten links bleibt frei, weil X dort das Profilbild darüberlegt.
+
+Vorschlag: **Profilbild E2 (oder E1), Banner mit der Wortmarke** — der Satz braucht Platz, das Bildzeichen nicht. Auswahl bei Julian.
+
+**Gewählt: W1 als Profilbild, der Banner mit der Wortmarke** (Julian, 2026-10-04: „vorerst W1 und das banner wie unten, mir war nicht klar, dass es das calibre-logo ist"). Fertige Dateien im Repository unter `assets/social/` (mit README und den SVG-Vorlagen): `avatar-400.png`, `avatar-1000.png`, `banner-1500x500.png` (X, Mastodon), `banner-3000x1000.png` (Bluesky). Hochladen ist Julians Schritt, im jeweiligen Konto angemeldet. Beim ersten Setzen kamen zwei Kacheln des Banners schwarz heraus (zsh zählt Listen ab 1, eine Farbe blieb leer) — vor dem Commit gesehen und behoben.
+

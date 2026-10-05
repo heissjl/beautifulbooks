@@ -17,7 +17,8 @@
 export { pickWork, sameAuthor, titleScore, type WorkReason } from '../../lib/bookmatch';
 export type { CollectionRecord } from '../../lib/collections';
 export { coverRefFromUrl, coverUrlFor } from '../../lib/coverurl';
-export { decode } from '../../lib/imagehash';
+export { decode, signature } from '../../lib/imagehash';
+export { hamming } from '../../lib/imagesig';
 export type { SourceEdition, Work, WorkSummary } from '../../lib/model';
 export { cleanIsbn, isbn10to13, toIsoLanguage } from '../../lib/normalize';
 export { search } from '../../lib/search';
