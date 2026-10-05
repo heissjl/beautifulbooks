@@ -4445,6 +4445,126 @@ Alle vier: „URL has no enhancements" — das Book-JSON-LD ist kein Typ, den di
 
 **Offen:** 2.5 abhaken, sobald die Search Console „Success" und gefundene Seiten meldet; nach zwei bis drei Wochen Leistung und Seiten lesen (Buchseiten „Gecrawlt – zurzeit nicht indexiert" wären der Auslöser für 5.2); Core Web Vitals erst nach 28 Tagen Felddaten; IndexNow erst, wenn Seiten in Mengen entstehen (5.3/5.4).
 
+## 2026-10-04 · Zwei Fotos in Produktion: Umschläge gelesen, nicht zugeordnet; der Editor öffnet auf den neuen Covern (ROADMAP 5.11a, 5.13m)
+
+Julian, am Telefon in der Homescreen-Web-App: einmal fand das Foto kaum Werke, einmal fand er „another cover“ nicht. Aus `bb.photo` innerhalb der Log-Stunde: **Foto 1** las 8 Umschläge (4,3 s, 1,0 ct) und ordnete **keinen** zu — 7 „not in the catalogue“, 1 „maybe“, kein Suchausfall; **Foto 2** las 29 Bücher, 18 gefunden, 8 „maybe“, 3 nicht gefunden (9,6 s Modell, 13,2 s Suche, 2,0 ct). Der Testsatz misst nur das Lesen; die Zuordnung ist ungemessen, und „not in the catalogue“ fasst „keine Treffer“, „keine Übereinstimmung“ und „Werk ohne Cover“ zusammen. Das fehlende „another cover“: auf `/create` gibt es den Link nicht (noch keine Sammlung), und der Editor öffnete danach auf „Add covers“ statt auf den Covern; der Tausch per Tipp war nur als Tooltip benannt. Geändert: Ziel Arrange nach einem Commit mit Covern, ein Satz über dem Raster; angesehen bei 390 und 1280. Bericht: [docs/tests/2026-10-04-regalfoto-produktion.md](tests/2026-10-04-regalfoto-produktion.md).
+
+**Nachtrag am selben Abend:** „another cover“ gibt es jetzt schon in der Fotoliste auf `/create`, bevor die Sammlung existiert (Julian: „i want a user to be able to change covers in the from photo funnel before they create a collection“) — die Wahl bleibt in der Liste, bis „Make a collection“ sie schreibt; nachgestellt mit gestubbter Foto-Antwort und den Gatsby-Fixtures bei 390 und 1280 (Einzelheiten im Bericht).
+
+**Nachtrag 2:** Julian sah den Link am Telefon nicht. Gemessen mit einem langen Titel bei 390 px: die Liste war 630 px breit, „another cover“ lag rechts außerhalb des Bildschirms — das Grid in `WallProposal` hatte keine Spaltenangabe, und eine implizite Spur wächst mit dem längsten nicht umbrechenden Titel. `grid-cols-1` und `min-w-0`: 390 px, Link sichtbar. Das Foto im Editor benutzt jetzt dasselbe Fenster wie `/create` statt in die Suche zu springen.
+
+**Nachtrag 3:** ein „maybe“ in der Fotoliste hat „Accept“ („Stimmt“); danach ist die Zeile angehakt und hat „find another cover“ — so heißt der Link jetzt überall (Julian). Nachgestellt auf `/create` und im Editor bei 390 und 1280.
+
+## 2026-10-03 · Die Calibre-Bibliothek als eigene Sammlung, Lab (ROADMAP 5.17)
+
+Julian: „geh das projekt Calibre → Sammlung (5.17) an". Umgesetzt nach [PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md), Schritte 1–5 und 7; Schritt 6 (einmal gegen die echte Seite) ist Julians. Der Plan und `lab/calibre/` lagen nur auf `claude/calibre-book-covers-df06e1` und sind in diesen Branch gemergt.
+
+**Gebaut:** `lab/calibre-import/` — `clean.ts`, `lookup.ts`, `assign.ts`, `review.ts`, `upload.ts`, `measure.ts`, `serve.ts` (Port 4328, 127.0.0.1, Token), `index.html`; dazu in `lab/calibre/` die Zuordnungsdatei (`map.ts`) und die sichere Art `mapped` in `match.ts`, `serve.ts --map`. 50 neue Tests (42 im Import, 8 für die Zuordnungsdatei), ohne Netz, eine aufgezeichnete ISBN-Antwort als Fixture. Die Website ist unverändert.
+
+**Vor der Messung:** Open Library lehnte am Abend etwa eine halbe Stunde lang jede Verbindung ab (`ECONNREFUSED` auf 207.241.234.205:443, auch von außerhalb; `covers.openlibrary.org` und archive.org antworteten). In der Zeit entstand, was kein Netz braucht.
+
+**Was in Calibre-Titeln steht** (gelesen, nie geschrieben): von 445 Büchern haben 24 keinen brauchbaren Autor (Lizenztexte, READMEs, Aufsätze unter ihrem Dateinamen) und werden übersprungen; bei 115 ändert das Glätten Titel oder Autor. Die Formen: Reihe davor („[Philip K. Dick 04] • …", „Foundation 1 - …", „Hey 3318 – …"), Jahr davor („1974-Rendezvous With Rama"), Autor im Titel davor oder dahinter („Crichton, Michael - Sphere"), Titel und Autor vertauscht („1954 Ray Bradbury - Fahrenheit 451" unter dem Autor „Fahrenheit 451"), Herkunfts-Etikett einer Schattenbibliothek mit „by <Autor>", Dateiendung, Untertitel. Autoren stehen als „Nachname, Vorname", mit Lebensdaten, mit Titeln („Preston, Psy.D., ABPP, John D.") oder zu zweit in einem Feld.
+
+**Die Messung** (`measure.ts`, 2026-10-03, die ganze Bibliothek, drei Anfragen gleichzeitig): **593 Anfragen an Open Library in 240 s, keine ohne Antwort**; 132 ISBN-Abrufe (22 kennt Open Library nicht, 33 Ausgaben ohne Cover) und 478 Suchen; der Cache ist 584 KB groß, ein zweiter Lauf stellt keine Anfrage.
+
+| | Bücher | Anteil an 421 fragbaren |
+|---|---|---|
+| Treffer | 328 | 78 % (74 % aller 445) |
+| – über die ISBN | 102 | |
+| – über Autor und Titel | 226 | |
+| Vorschlag | 69 | 16 % |
+| – gleicher Autor, anderer Titel | 27 | |
+| – nur der Titel | 33 | |
+| – gleicher Autor, längerer Werktitel | 7 | |
+| – ISBN, sonst stimmt nichts | 2 | |
+| nicht gefunden | 24 | 6 % |
+| übersprungen | 24 | |
+
+Aus den 328 Treffern werden 319 Kacheln (zwei Ausgaben eines Buchs sind eine Kachel; „Winnetou 1–3" liegen auf einem Werk). 75 der 102 ISBN-Treffer tragen das Cover genau ihres Drucks und die ISBN als Druck an der Kachel. **Das Erfolgsmaß des Plans (≥ 70 % der Bücher) ist erreicht.**
+
+**Stichprobe:** 40 Treffer mit festem Zufall (Seed 517), jeder von Hand gegen Titel und Autor geprüft: **39 richtig, 1 falsch** — „MaddAddam" traf *MADDADDAM TRILOGY BOX*. Daraufhin alle zwölf Treffer angesehen, bei denen der Titel nur enthalten war: ist der **Werktitel** der längere, waren von 7 zwei ein anderes Buch (die Box; „Pippi Langstrumpf" → *Guck mal, Pippi Langstrumpf*), zwei fraglich („Sherlock Holmes" → *The Adventures of …*, „Südamerika" → *Aus Nord- und Südamerika*), drei richtig; ist der **Buchtitel** der längere (Bandnummer, Untertitel ohne Doppelpunkt), waren 5 von 5 richtig. Die erste Form ist seitdem ein Vorschlag (`author+part`); die Tabelle oben ist der Stand danach (vorher 335 Treffer).
+
+**Die Vorschläge, durchgesehen:** von 27 „gleicher Autor, anderer Titel" sind rund 23 das richtige Werk — es sind die **übersetzten Titel** („Der Schnupfen" → *Katar*, „Die Stimme des Herrn" → *Głos pana*, „By Night in Chile" → *Nocturno de Chile*, „Das Lied von Vogel und Schlange" → *The Ballad of Songbirds and Snakes*) und Schreibvarianten („Effie Briest"). Die Sorge des Plans, deutsche Titel fänden ihr Werk nicht, trifft so nicht zu: Open Librarys Suche findet sie über die Ausgabentitel, nur bestätigen kann der Titelvergleich sie nicht. Sie bleiben Vorschläge (vier waren falsch: eine Erzählung traf den Sammelband, zwei Sachbücher ein anderes Buch desselben Autors). Von 33 „nur der Titel" sind rund 20 richtig — der Autor steht bei Open Library in anderer Schrift (刘慈欣, Аркадий Стругацкий) oder Form („Juan Valera y Alcalá-Galiano") — und 13 falsch („Quick Start Guide" → *Hadoop 2 Quick-Start Guide*). Die beiden „ISBN, sonst stimmt nichts" sind richtig (japanisches und chinesisches Original). Nicht gefunden: vor allem deutsche Abenteuerromane des 19. Jahrhunderts und abgeschnittene Dateinamen.
+
+**Wie viel es auf der Seite zu wählen gibt:** von den 328 Werken haben 167 zwanzig oder mehr Ausgaben, 106 fünf bis neunzehn, 38 zwei bis vier, 17 eine einzige. Bei 55 Werken (17 %) ist die Wand also dünn. Ein Teil davon sind verirrte Einzelwerke: „Der Prozess" traf OL42602621W (eine Ausgabe) statt Kafkas *Der Proceß* (OL498463W), weil der Titel dort genau stimmt. Die Suche von Hand auf der Prüfseite behebt das je Zeile; gezählt, wie viele der 55 so ein Fall sind, ist nicht.
+
+**Hochladen, gegen `npm run dev`** (eigener Dev-Server auf Port 3017 ohne `.env.local`, also mit dem Speicher im Prozess und nie der Produktions-Redis; Wegwerf-ID): 329 angehakte Bücher → eine Anfrage → 320 Kacheln, „My Calibre library", nicht gespeichert. Der Browser übernahm die ID über `/create#id=…` und zeigte die Sammlung unter „Your collections". **Die Seite trägt sie:** `/c/<id>` liefert 36 KB HTML, 320 Bilder mit `loading=lazy` (ohne Scrollen 25 geladen bei 1280 px, 97 bei 390 px), kein waagrechter Überlauf; 5 Spalten und 23.920 px Höhe bei 1280 × 800, 3 Spalten und 20.147 px bei 390 × 844; der Editor in „Arrange" 18.778 px (1280) und 23.749 px (390), 2.733 DOM-Knoten. Zeiten im Dev-Modus (1,3–2,2 s bis zur ersten Antwort) sagen nichts über Produktion. **Befund:** in einer Sammlung dieser Größe findet man ein Buch nur durch Scrollen — die Kacheln im Editor tragen keinen Titel, und es gibt keine Suche in der Sammlung.
+
+**Der Rückweg, auf einer Probe-Kopie:** im Editor das Cover von *The Ballad of Songbirds and Snakes* gegen das deutsche getauscht (Oetinger 2020, `ol:14858983`; das Werk der Kachel bleibt dasselbe). `lab/calibre/serve.ts` gegen die Probe-Kopie: ohne Zuordnungsdatei 300 von 320 Kacheln sicher, und die Datei wird abgelehnt („made for another library" — die Kopie hat einen anderen Schlüssel); mit `--map` **314 sicher, alle 314 über `mapped`**, die 6 übrigen sind Werke mit zwei oder drei Büchern. Buch 277, „Das Lied von Vogel und Schlange", bekam das Oetinger-Cover (1052 × 1500 statt 713 × 1024), die Rücknahme gab das alte zurück; danach **alle 423 Cover der Kopie bytegleich mit dem Original**. Die echte Bibliothek wurde nur gelesen.
+
+**Die Besucher-ID:** `upload.ts` nimmt sie aus `BB_VISITOR` (Umgebung, sonst `.env.local` des Hauptordners) und setzt sie nur in den Cookie-Kopf der einen Anfrage. Ein Test führt acht Wege durch (Erfolg, 404, 429, 503 mit der ID im Antworttext, Antwort mit der ID als Sammlungs-ID, Netzfehler mit den Köpfen in der Meldung, keine Kachel, zu viele) und findet sie in keiner Rückgabe, Meldung oder Spur.
+
+**Aufgeräumt:** die Entscheidungen, der Upload-Vermerk und die Zuordnungsdatei des Tests sowie die Probe-Kopie sind wieder gelöscht; geblieben sind Cache und Ergebnis der Messung unter `~/Library/Application Support/BuyItsCovers/calibre/import/`, damit Julians erster Lauf keine Anfrage stellt.
+
+**Offen:** Julians Entscheidungen (Plan §6) und danach der eine Lauf gegen die echte Seite; die 69 Vorschläge durchsehen; die echte Bibliothek schreibt `lab/calibre` (5.16). Nicht gemacht: die Cover-Erkennung des vorhandenen Covers (Plan §5, optional).
+
+1.089 Tests, tsc und Lint grün. `npm run build` lief nicht — `app/`, `components/` und `lib/` sind unverändert.
+
+## 2026-10-03 · 5.17 einmal gegen die echte Seite, als Test-Besucher
+
+Julian zur Frage, ob die Liste seiner Bücher in den Speicher der Seite darf: „ja, aber benutze vielleicht eine dedizierte test-user ID, mit der wir in production testen". Und zum Befund über den Editor: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet / was ist an deiner version anders?"
+
+**Die Test-ID:** `BB_TEST_VISITOR` in der `.env.local` des Hauptordners, einmal erzeugt (`newVisitorId()`), nie ausgegeben; `serve.ts --as-test` liest sie statt `BB_VISITOR` und nennt die Sammlung „My Calibre library (test)". Ein Test hält fest, dass das Werkzeug, nach dem Test-Besucher gefragt, nie auf die eigene ID ausweicht. Die Regel gilt über dieses Werkzeug hinaus: was auf der echten Seite zum Ausprobieren angelegt wird, gehört dem Test-Besucher.
+
+**Der Lauf:** eine Anfrage, `POST https://buyitscovers.com/api/walls`, 328 angehakte Bücher (nur die Treffer, kein Vorschlag) → **319 Kacheln, Antwort nach 1,0 s**, Sammlung `y3lsl27ot5`, nicht gespeichert — sie verfällt nach 48 Stunden (2026-10-05), wenn niemand „Keep it" drückt. Die Zuordnungsdatei liegt unter `…/calibre/maps/y3lsl27ot5.json`. Produktion danach **einmal** angesehen (`/c/y3lsl27ot5`): Titel und „319 covers." stehen, die Bilder kommen, erste Antwort nach 133 ms, 29 KB HTML. Breite und Höhe sind dabei nicht gemessen (das Browserfenster hatte in dem Moment keine Breite); dafür gelten die Zahlen vom Dev-Server oben.
+
+**Was an der gebauten Fassung anders ist als „eine Calibre-Datei hochladen":** das Ergebnis ist dasselbe, der Weg nicht. Gebaut ist ein Kommando auf Julians Mac, das den Bibliotheksordner liest, eine Prüfseite zeigt und die Sammlung über die Schnittstelle anlegt; es braucht seine ID in einer Datei und merkt sich für den Rückweg, welches Buch welches Werk ist. Auf der Seite gibt es dafür keinen Knopf, und ein anderer Leser kann es nicht benutzen. Der Befund über den Editor (ein Buch unter 320 Kacheln nur durch Scrollen zu finden) betrifft das Wählen danach, nicht das Anlegen. Die Fassung für die Seite steht als Vorschlag 5.17a in der Roadmap; die Zahlen dieser Messung sagen, was sie kostet: 421 Bücher sind 593 Anfragen an Open Library und vier Minuten — der Foto-Import der Seite hört heute bei 80 Büchern auf.
+
+43 Tests im Import, tsc und Lint grün.
+
+## 2026-10-04 · Eine Calibre-Bibliothek auf der Seite (ROADMAP 5.17a)
+
+Julian: „ja, bau 5.17a“. Vorher `origin/main` (26 Commits) hereingeholt; in `docs/history.md` hatten beide Seiten nur angehängt, beide Einträge behalten.
+
+**Die Datei im Browser lesen.** `lib/calibre/sqlite.ts` liest Tabellen aus dem SQLite-Format selbst — Kopf, Tabellen-B-Bäume, Überlaufseiten, Datensätze, UTF-8 und UTF-16 —, statt sql.js (rund 600 KB WebAssembly) für vier Tabellenscans zu laden. An Julians `metadata.db` (1,1 MB, Seitengröße 4096, UTF-8, kein WAL): **445 von 445 Büchern gleich wie `sqlite3`** — Titel, Autoren in Calibres Reihenfolge, ISBNs —, gelesen in 8 ms. Die erste Fassung brach an der echten Datei ab: Calibre 7 hat vier Tabellen `WITHOUT ROWID` (`annotations_fts_*`, der Volltextindex der Anmerkungen); sie werden jetzt übersprungen. Getestet an zwei kleinen Datenbanken aus `lib/__fixtures__/calibre/library.sql` (Seitengröße 512, damit 300 Bücher innere Seiten und ein Titel von 3.005 Zeichen Überlaufseiten brauchen; eine davon UTF-16), dazu eine abgeschnittene Datei und eine Seite, die auf sich selbst zeigt.
+
+**Umgezogen aus dem Lab:** `clean.ts` nach `lib/calibre/clean.ts` (läuft im Browser), die Zuordnung nach `lib/walls/calibre.ts` (Server), der ISBN-Abruf nach `lib/sources/openlibrary.ts` (`getEditionByIsbn`, fragt Schweigen einmal nach, wirft dann `SourceUnavailableError`). `lab/calibre-import` benutzt dieselben Regeln und hat keine eigene Kopie mehr.
+
+**Gegen `npm run dev`** (eigener Server auf 3017 ohne `.env.local`, also Speicher im Prozess), Julians `metadata.db` über einen lokalen Dateiserver und `DataTransfer` ins Dateifeld gegeben, weil das Browserfenster keine Dateiauswahl bedienen kann:
+
+| | |
+|---|---|
+| Bücher in der Datei | 445 |
+| ohne Autor oder Titel ausgelassen | 24 |
+| doppelt (gleicher Titel und Autor) | 7 |
+| gefragt | 414, in 52 Anfragen |
+| Treffer / maybe / nicht gefunden / ohne Antwort | 321 / 69 / 24 / 0 |
+| Dauer, kalt | 4 min 16 s (je Anfrage Median 5,0 s, höchstens 9,3 s) |
+| Dauer, zweiter Lauf (Next-Datencache) | etwa 15 s |
+| angehakt → Sammlung | 321 → 319 Cover (zwei Treffer teilten ein Cover) |
+
+Das deckt sich mit der Lab-Messung (328 Treffer bei 421 Fragen, darin die 7 doppelten). Die Seite stellte dabei nur die 52 Anfragen an `/api/walls/calibre`; die Datei selbst ging nirgendwohin.
+
+**Zwei Dinge, die der Blick zeigte:** die Liste mit 418 Zeilen machte `/create` 12.181 px hoch und schob „Make a collection of 321“ ans Ende — sie scrollt jetzt in einem eigenen Kasten (`WallProposal scroll`), die Seite ist 1.473 px hoch. Und am Telefon lief der Kasten waagrecht über, weil ein Grid in einem scrollenden Kasten auf die Breite seiner längsten Zeile wächst; mit `grid-cols-[minmax(0,1fr)]` kürzen die Zeilen wieder (390 px: kein Überlauf, 82 Zeilen mit Auslassungspunkten). Das gilt auch für die Liste des Fotos.
+
+**Fehlerwege im Browser:** eine Textdatei → „This is not a Calibre library file…“; die ersten 5.000 Byte der echten Datei → „The file could not be read — it may be damaged or cut off…“. Eine SQLite-Datei ohne Calibre-Tabellen deckt ein Test ab.
+
+**Nicht gebaut:** „Verbinden“ mit Calibres Content-Server; ein Weg aus dem Editor (`/c/<id>/edit`, „Add covers“) — die Liste bietet aber schon „Add to <Sammlung>“ neben „A new collection“; der Rückweg der gewählten Cover nach Calibre bleibt lokal (5.16). Nicht deployt.
+
+1.186 Tests, tsc, Lint und `npm run build` grün.
+
+**Nachtrag 2026-10-04 — hochladen statt im Browser lesen?** Julian fragte, ob das Senden der Datei weniger eingreife und welche Berechtigungen Leser dafür freigeben müssten. Keine, in beiden Fällen: der Dateidialog gibt der Seite genau die gewählte Datei und nichts sonst. Hochladen ist dieselbe Lesung plus das Senden der ganzen Datei; Julians `metadata.db` enthält außer Titeln und Autoren 170 Klappentexte, 300 Schlagwörter, 128 Verlage und 5 Bewertungen (gezählt, nur gelesen; Anmerkungen 0, eigene Spalten 0). Deshalb bleibt es beim Lesen im Browser; die Begründung steht in SPEC F9.4 (e).
+
+## 2026-10-04 · `/create` neu geordnet (ROADMAP 5.17b)
+
+(Julian, 2026-10-04: „überarbeite die oberfläche dieser seite. from a book sollte fokus oder erstes sein, sich klarer abgrenzen von from a collection. die beispielcollection sollte wyssberger sein, und 6 statt 4 cover zeigen. wahrscheinlich dann 4 wege zum anlegen, davon from a book herausgestellt. wenn man bei from a book eines anklickt, muss die seite automatisch runterscrollen zur coverauswahl“.)
+
+**Gebaut:** „From a book“ zuerst, auf getöntem Grund und größer gesetzt; die Coverauswahl (`WallPicker`) steht direkt darunter statt am Seitenende. Darunter „Or start another way“ mit drei Karten (bei 1280 px nebeneinander, je rund 400 px breit; bei 390 px untereinander): „From a collection“, „From a photo“, „From your Calibre library“. Das sind vier Wege, wie Julian schätzte — die sechs Zufallscover sind kein eigener Weg mehr, sondern stehen in der Sammlungs-Karte unter der Auswahl, weil sie dasselbe tun: mit fertig gewählten Covern beginnen.
+
+**Wyss:** „wyssberger“ verstanden als die Sammlung *Ex Libris — covers by Hanspeter Wyss* (`ex-libris-covers-by-hanspeter-wyss`, 58 Cover). In `data/collections.json` ist sie ein Entwurf, auf der echten Seite online veröffentlicht (`/collections/ex-libris-…` antwortete 200, einmal abgefragt). `StartFromPicker` wählt sie vor, wenn sie angeboten wird, sonst die erste. Damit sie auch unter `next dev` ohne Redis erscheint, nehmen `startOptions` und `/api/walls/from` jetzt die Voreinstellung der übrigen Seite (`draftsVisible()`: Entwürfe nur in dev); in Produktion ändert sich nichts. Vorschau **6 statt 4** Cover (`PREVIEW_COVERS`), als Reihe über die Kartenbreite statt 44 px kleiner Kacheln. Die Auswahlliste hat die volle Kartenbreite — daneben gequetscht las sie „Ex Libris — covers …“.
+
+**Der Sprung zur Coverauswahl:** `WallsStart` rief bisher `scrollIntoView` in `requestAnimationFrame` direkt nach dem Wechsel der Adresse — da gab es die Auswahl noch nicht, der Sprung ging ins Leere. Jetzt holt sich `WallPicker` mit `focus` beim Erscheinen selbst ins Bild (`scroll-mt-20` gegen den Kopf). Gemessen bei 1280 × 800: von Seitenanfang auf 428 px gerollt, „Pick covers“ 80 px unter dem oberen Rand. Weil Open Library während des Tests wieder jede Verbindung ablehnte (`ECONNREFUSED`, auch die Suche „Dune“ antwortete 503), lief der Test über denselben Adresswechsel, den ein Klick auf ein Suchergebnis auslöst (`router.push('/create?q=Dune&work=OL893415W')`), nicht über einen echten Klick.
+
+**Die Ankreuzlisten** (Foto, Calibre, Zufallscover, Sammlung) teilen sich in zwei Spalten jetzt nach der Breite ihrer Karte (`@container`, ab 42rem), nicht nach der des Bildschirms — in einer Drittel-Karte wären zwei Spalten zu schmal.
+
+**Lokal mit Foto:** der Dev-Server lief diesmal mit `ANTHROPIC_API_KEY` aus der `.env.local` des Hauptordners (nur diese Variable), damit „From a photo“ erscheint; Julian musste daran erinnern.
+
+Kein waagrechter Überlauf bei 390 und 1280 px; Seite 1.228 px hoch bei 1280. 1.186 Tests, tsc und Lint grün. Nicht deployt.
+
+**Nachtrag 2026-10-04 — der echte Klick.** Mit Open Library wieder erreichbar: auf `/create?q=Dune` „Dune Messiah“ angeklickt, die Seite rollte von 0 auf 840 px, „Pick covers“ 80 px unter dem oberen Rand, 56 Cover aus 101 Ausgaben geladen. Ein erster Versuch landete 1.150 px zu tief — das Browserfenster des Tests wurde währenddessen eingeblendet und wechselte die Breite, die Trefferliste sprang von einer in zwei Spalten und die Auswahl rückte nach oben; bei gleichbleibender Breite (1024 px vor und nach dem Klick) stimmt der Sprung.
+
+**Nachtrag 2026-10-04 — die Treffer über die ganze Breite.** Julian, mit einem Bildschirmfoto der Suche „dune“: „use the space better“ — die Treffer standen in zwei Spalten in der linken Hälfte des Blocks, weil sie mit dem Suchfeld in derselben `max-w-2xl`-Spalte steckten. Jetzt bleibt nur das Feld so schmal (`BookSearch wide`); die Treffer füllen den Block: bei 1280 px vier Spalten, 1.152 px breit, zwölf Treffer in 260 px Höhe statt sechs Reihen, Cover 48 statt 40 px breit; gekürzt nur „Dune, Dune Messiah, Children of Dune“. Bei 390 px eine Spalte, kein Überlauf, der Platzhalter passt. Im Editor (`CollectionEditor`) bleibt die Suche, wie sie war.
+
 ## 2026-10-04 · Die Calibre-App fragt über die Website, ohne Google (ROADMAP 5.16a)
 
 Julian nach der Sperre durch Open Library: „vielleicht wär es deshalb doch besser die lokale app mit der website zu verbinden und von dort die abfrage machen zu lassen?" Auf die Abwägung drei Rückfragen — was von Google geholt wird („klappentext brauchen wir ja nicht. google können wir doch für diese app weglassen"), was an der Website zu ändern wäre, und ob Open Library so viele gute Bilder fehlen — und dann: „überarbeite das jetzt ohne google und mit verbindung über die website".

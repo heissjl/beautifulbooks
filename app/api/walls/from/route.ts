@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   const reader = params.get('reader');
   try {
     if (curated) {
-      const c = await liveCollectionBySlug(curated, { includeDrafts: false });
+      const c = await liveCollectionBySlug(curated);
       if (!c) return json({ error: 'No such collection.' }, 404);
       return json({ title: c.title, ...tilesFromCurated(c.works) });
     }
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
   let started;
   try {
     if (typeof body.curated === 'string') {
-      const c = await liveCollectionBySlug(body.curated, { includeDrafts: false });
+      const c = await liveCollectionBySlug(body.curated);
       if (!c) return json({ error: 'No such collection.' }, 404);
       title = c.title;
       started = tilesFromCurated(c.works);

@@ -96,6 +96,14 @@ export const RATE_RULES = {
    */
   wallsPhoto: { capacity: 3, refillPerMinute: 1 },
   /**
+   * A Calibre library looked up at Open Library (5.17a): one request is 8
+   * books, about 11 catalogue requests. The burst holds a whole library of
+   * 500 books (63 requests); after it, 12 a minute is ~130 catalogue requests
+   * a minute for one reader — so a second library at once waits instead of
+   * taking Open Library from everyone else. The page waits and goes on by itself.
+   */
+  wallsCalibre: { capacity: 64, refillPerMinute: 12 },
+  /**
    * The analytics' signals from the browser (ROADMAP 3.1b): one per page a
    * reader leaves. Generous for a reader, tight for someone feeding numbers.
    */

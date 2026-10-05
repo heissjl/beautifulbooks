@@ -22,6 +22,8 @@ export interface Proposal {
   unsure?: boolean;
   /** Its catalogue search has not answered yet (5.11a): the row is there, the tile is not. */
   pending?: boolean;
+  /** What a "maybe" row says instead of what the photo read — a library import has no photo (5.17a). */
+  why?: string;
 }
 
 /** Where the ticked covers go: an existing collection, or a new one with this title. */
@@ -48,6 +50,7 @@ export default function WallProposal({
   onCommit,
   onOtherCover,
   onSearchFor,
+  scroll = false,
 }: {
   proposals: Proposal[];
   defaultTitle: string;
@@ -55,19 +58,37 @@ export default function WallProposal({
   target?: PublicWall;
   walls?: PublicWall[];
   onCommit: (dest: Destination, tiles: Tile[]) => Promise<void>;
-  /** Show all covers of this tile's book (the editor's search). */
-  onOtherCover?: (tile: Tile) => void;
+  /** Show all covers of this tile's book: the editor's search, or on /create a picker that swaps the row's cover (`index`). */
+  onOtherCover?: (tile: Tile, index: number) => void;
   /** Search for a title that was read but not found. */
   onSearchFor?: (label: string) => void;
+  /** A long list scrolls in its own box, so the button stays near (a Calibre library is hundreds of rows, 5.17a). */
+  scroll?: boolean;
 }) {
   const t = useT();
   const standing = (p: Proposal): Standing | null => (p.tile ? standingOf(p.tile, target) : null);
   // Ticked by default: a found cover that is new to the collection and not a guess. The reader's
   // choices are kept as exceptions to that rule, so a row that arrives later — the list grows
   // while the catalogue is still answering (Julian, 2026-10-01) — gets the default too.
-  const byDefault = (p: Proposal) => !!p.tile && standing(p) === 'new' && !p.unsure;
+  /*
+    A "maybe" the reader has confirmed (Julian, 2026-10-04: „can we add an accept-button there and
+    once accepted, we show the another cover link“): from then on the row is a found book — ticked,
+    with its author and "find another cover" — and only this list knows it; nothing is sent.
+  */
+  const [accepted, setAccepted] = useState(() => new Set<number>());
+  const guess = (p: Proposal, i: number) => !!p.unsure && !accepted.has(i);
+  const byDefault = (p: Proposal, i: number) => !!p.tile && standing(p) === 'new' && !guess(p, i);
   const [flipped, setFlipped] = useState(() => new Set<number>());
-  const ticked = (p: Proposal, i: number) => byDefault(p) !== flipped.has(i);
+  const ticked = (p: Proposal, i: number) => byDefault(p, i) !== flipped.has(i);
+  const accept = (i: number) => {
+    setAccepted((prev) => new Set(prev).add(i));
+    // Accepting means "this one": it goes in ticked, whatever the box said while it was a guess.
+    setFlipped((prev) => {
+      const next = new Set(prev);
+      next.delete(i);
+      return next;
+    });
+  };
   const [title, setTitle] = useState(defaultTitle);
   const [chosen, setChosen] = useState(NEW);
   const [asNew, setAsNew] = useState(false);
@@ -104,23 +125,29 @@ export default function WallProposal({
   const count = tiles.length;
 
   return (
-    <div className="mt-4">
+    <div className="@container mt-4">
       <p className="text-sm text-ink-2" aria-live="polite">{summary}</p>
       {proposals.length > 8 && (
         <button
           type="button"
-          onClick={() => setFlipped(anyTicked ? new Set(proposals.flatMap((p, i) => (byDefault(p) ? [i] : []))) : new Set())}
+          onClick={() => setFlipped(anyTicked ? new Set(proposals.flatMap((p, i) => (byDefault(p, i) ? [i] : []))) : new Set())}
           className="mt-1 text-xs text-ink-2 underline underline-offset-2 hover:text-accent"
         >
           {anyTicked ? t('Untick all') : t('Tick all new ones')}
         </button>
       )}
-      {/* Two columns on a wide screen (Julian, 2026-10-01: „on desktop there's too much empty space here“); the link stays at the row's end, now half as far away. */}
-      <ul className="mt-3 grid gap-x-8 gap-y-1.5 lg:grid-cols-2">
+      {/*
+        Two columns where there is room (Julian, 2026-10-01: „on desktop there's too much empty space here“) — measured on the box, not the screen, since 5.17a put the list into a third of a row.
+        minmax(0, 1fr), never the implicit column: an implicit track is as wide as the longest `truncate`
+        title, so on a phone one long title pushed every row's "find another cover" off the right edge
+        (Julian, 2026-10-04: „i didn't see this link on mobile“; measured 614 px rows on a 390 px screen).
+      */}
+      <ul className={`mt-3 grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-1.5 @2xl:grid-cols-2 ${scroll ? 'max-h-[32rem] overflow-y-auto overscroll-contain rounded-card border border-line p-3' : ''}`}>
         {proposals.map((p, i) => {
           const st = standing(p);
+          const maybe = guess(p, i);
           return (
-            <li key={i} className="flex items-center gap-3">
+            <li key={i} className="flex min-w-0 items-center gap-3">
               {p.number !== undefined && <span className="w-5 shrink-0 text-right text-xs tabular-nums text-accent">{p.number}</span>}
               {p.tile ? (
                 <>
@@ -131,19 +158,27 @@ export default function WallProposal({
                     </span>
                     <span className="min-w-0">
                       <span className={`block truncate text-sm ${st === 'in' ? 'text-ink-2' : 'text-ink'}`}>{p.tile.title}</span>
-                      <span className={`block truncate text-xs ${st === 'new' && !p.unsure ? 'text-ink-3' : 'text-accent'}`}>
-                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : p.unsure ? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` }) : (p.sub ?? p.tile.author)}
+                      <span className={`block truncate text-xs ${st === 'new' && !maybe ? 'text-ink-3' : 'text-accent'}`}>
+                        {st === 'in' ? t('already in this collection') : st === 'work' ? t('in this collection with another cover') : maybe ? (p.why ?? t('maybe — the photo reads “{read}”', { read: `${p.label}${p.sub ? `, ${p.sub}` : ''}` })) : p.unsure ? p.tile.author : (p.sub ?? p.tile.author)}
                       </span>
                     </span>
                   </label>
-                  {p.unsure && onSearchFor ? (
-                    <button type="button" onClick={() => onSearchFor(p.label)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
-                      {t('search instead')}
-                    </button>
+                  {maybe ? (
+                    // Stacked, so a long title keeps its room on a phone.
+                    <span className="flex shrink-0 flex-col items-end gap-1">
+                      <button type="button" onClick={() => accept(i)} className="rounded-full border border-line px-2.5 py-0.5 text-xs text-ink hover:border-accent hover:text-accent">
+                        {t('Accept')}
+                      </button>
+                      {onSearchFor && (
+                        <button type="button" onClick={() => onSearchFor(p.label)} className="text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
+                          {t('search instead')}
+                        </button>
+                      )}
+                    </span>
                   ) : (
                     onOtherCover && (
-                      <button type="button" onClick={() => onOtherCover(p.tile as Tile)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
-                        {t('another cover')}
+                      <button type="button" onClick={() => onOtherCover(p.tile as Tile, i)} className="shrink-0 text-xs text-ink-2 underline underline-offset-2 hover:text-accent">
+                        {t('find another cover')}
                       </button>
                     )
                   )}
