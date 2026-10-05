@@ -14,7 +14,8 @@ import SearchBar, { type SearchMode } from './SearchBar';
  * someone types, so that lives here: the field's value comes down as a prop,
  * and every change pushes a new URL — the URL stays the single source of
  * truth for the search (SPEC §3 F1.5). The author mode (ROADMAP 6.60) is
- * `?author=<name>`. There are no language pills any more (6.60, §6.1); an
+ * `?author=<name>`; the ISBN mode (6.91) is `?q=<isbn>`, as a pasted ISBN
+ * always was. There are no language pills any more (6.60, §6.1); an
  * existing `?lang=` travels on with a new search as the detail page's tab
  * wish, as the header search already does (F1.4a), and filters nothing.
  */
@@ -30,8 +31,9 @@ export default function HomeSearchBar({ searchQuery, mode, language, hero }: Hom
   const navigate = useCallback((q: string, lang: string, nextMode: SearchMode) => {
     const params = new URLSearchParams();
     if (q && nextMode === 'author') params.set('author', q);
-    if (q && nextMode === 'any') params.set('q', q);
-    if (lang && lang !== 'all' && nextMode === 'any') params.set('lang', lang);
+    // An ISBN is asked as a pasted one always was (6.29); the page reads the mode back from its shape.
+    if (q && (nextMode === 'any' || nextMode === 'isbn')) params.set('q', q);
+    if (lang && lang !== 'all' && nextMode !== 'author') params.set('lang', lang);
     const qs = params.toString();
     /*
       A new search starts at the top of the page (ROADMAP 6.79). `scroll:

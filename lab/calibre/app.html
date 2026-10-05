@@ -154,6 +154,8 @@ const isSmall = (b) => b.size && b.size.width < SMALL_WIDTH;
 const toSend = (b) => !!b.applied && !b.sent;
 const dayOf = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 const canWrite = () => S.mode === 'write' && S.problems.length === 0;
+// The reader's pictures are not Calibre's library: they can be written while Calibre is open — which it is, when books were just sent.
+const canWriteReader = () => S.mode === 'write';
 // Calibre writes an author as "Philip K. Dick" or as "Dick, Philip K."; both sort under D.
 const sortName = (b) => { const a = (b.authors[0] ?? '').trim(); return (a.includes(',') ? a.split(',')[0] : a.split(/\s+/).pop()).toLowerCase(); };
 
@@ -184,7 +186,7 @@ function tile(b) {
   return el('button', { class: 'book', id: `book-${b.id}`, onclick: () => openBook(b.id) },
     el('div', { class: 'frame' },
       b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
-      b.applied ? el('span', { class: `mark${toSend(b) ? ' todo' : ''}`, title: toSend(b) ? `Changed here on ${dayOf(b.appliedAt)}. The reader still has the old cover until the book is sent again.` : `Changed here on ${dayOf(b.appliedAt)}, marked as sent to the reader.` }, toSend(b) ? 'to send' : 'changed · sent') : null),
+      b.applied ? el('span', { class: `mark${toSend(b) ? ' todo' : ''}`, title: toSend(b) ? `Changed here on ${dayOf(b.appliedAt)}. The reader still shows the old cover.` : `Changed here on ${dayOf(b.appliedAt)}, marked as sent to the reader.` }, toSend(b) ? 'to send' : 'changed · sent') : null),
     el('div', { class: 't' }, b.title),
     el('div', { class: 'a' }, b.authors.join(', ') || '—'),
     el('div', { class: `s${isSmall(b) ? ' small' : ''}` }, b.size ? px(b.size) : ''));
@@ -215,11 +217,49 @@ function renderGrid() {
   fill($('grid'),
     el('div', { class: 'group' },
       el('b', {}, `Changed here — ${todo.length} to send to the reader`),
-      el('span', { class: 'meta' }, 'The new cover is in Calibre. The reader shows it once the book is sent to the device again.'),
+      readerLine(todo),
       el('button', { class: 'chip', onclick: () => markSent(todo.map((b) => b.id), true) }, todo.length === 1 ? 'Mark as sent' : `Mark all ${todo.length} as sent`)),
     todo.map(tile),
     rest.length ? el('div', { class: 'group rest' }, `${rest.length} other book${rest.length === 1 ? '' : 's'}`) : null,
     rest.map(tile));
+}
+
+/*
+ * The reader's shelves show pictures of their own, which Calibre's sending
+ * does not renew (lab/calibre/README, 5.16c). With the PocketBook connected
+ * the app writes them: library and home screen. The sleeping screen and the
+ * book's first page come from the book file and stay.
+ */
+let putting = null;                 // { done, of, error } while covers go to the reader
+function readerLine(todo) {
+  if (!S.reader) return el('span', { class: 'meta' }, 'The new cover is in Calibre. Connect the PocketBook and the app can put it on the reader’s shelves.');
+  const there = todo.filter((b) => b.onReader);
+  const absent = todo.length - there.length;
+  return [
+    el('span', { class: 'meta' }, putting ? `Putting covers on the reader: ${putting.done} of ${putting.of}…`
+      : `${S.reader.name} is connected.${absent ? ` ${absent} of these ${absent === 1 ? 'is' : 'are'} not on it.` : ''}`),
+    there.length && !putting ? el('button', { class: 'primary', disabled: !canWriteReader(), title: canWriteReader() ? 'Writes the reader’s own pictures of each book — library and home screen. No book file is touched; the old pictures are kept on this Mac.' : 'Start the app with --write.', onclick: () => putOnReader(there.map((b) => b.id)) },
+      there.length === 1 ? 'Put the cover on the reader' : `Put ${there.length} covers on the reader`) : null,
+    readerError ? el('span', { class: 'note bad' }, readerError) : null,
+  ];
+}
+
+let readerError = null;
+async function putOnReader(ids, back) {
+  readerError = null;
+  putting = { done: 0, of: ids.length };
+  renderGrid();
+  for (const bookId of ids) {
+    const r = await api('/api/reader', back ? { bookId, back: true } : { bookId });
+    if (r.status !== 200) { readerError = `${bookOf(bookId)?.title ?? 'A book'}: ${r.body.error ?? 'the reader did not take the pictures.'}`; break; }
+    S = r.body.state;
+    putting.done++;
+    renderGrid();
+  }
+  putting = null;
+  renderTop();
+  renderGrid();
+  if (open) renderHead();
 }
 
 async function markSent(ids, sent) {
@@ -235,7 +275,7 @@ async function markSent(ids, sent) {
 
 async function openBook(id) {
   // t0: answers the catalogue gave before this moment are "kept"; since: the moment of „Ask the catalogue again", sent along.
-  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false, t0: Date.now(), since: 0, kept: null };
+  open = { id, found: null, workId: null, covers: [], editions: 0, next: null, pages: 0, loading: false, lang: null, error: null, query: '', others: false, bigOnly: false, t0: Date.now(), since: 0, kept: null, tiles: new Map() };
   $('shade').hidden = false;
   $('drawer').hidden = false;
   $('drawer').scrollTop = 0;
@@ -272,6 +312,7 @@ async function chooseWork(workId, remember) {
   const mine = open;
   mine.workId = workId;
   mine.covers = [];
+  mine.tiles = new Map();
   mine.editions = 0;
   mine.next = 0;
   mine.pages = 0;
@@ -395,8 +436,14 @@ function renderHead() {
         el('p', { class: 'meta' }, b.authors.join(', ') || 'no author'),
         el('p', { class: 'meta' }, [b.formats.join(', '), b.languages.map(langName).join(', '), b.isbns[0] ? `ISBN ${b.isbns[0]}` : 'no ISBN', `#${b.id}`].filter(Boolean).join(' · ')),
         b.applied ? el('p', { class: 'note ok' }, `This cover was put here by the app on ${dayOf(b.appliedAt)}. `,
-          toSend(b) ? 'The reader still has the old one until the book is sent to the device again.' : 'Marked as sent to the reader.') : null,
-        b.applied ? el('button', { class: 'chip', onclick: () => markSent([b.id], toSend(b)) }, toSend(b) ? 'Mark as sent to the reader' : 'Not sent after all') : null,
+          b.readerHas ? 'The reader’s shelves show it.' : toSend(b) ? 'The reader still shows the old one.' : 'Marked as sent to the reader.') : null,
+        // A cover written to the reader alone: its shelves and Calibre show different covers, on purpose.
+        b.onReader && b.readerCover && b.readerCover !== b.applied ? el('p', { class: 'note ok' }, 'The reader’s shelves show a cover the app put there — not the one in Calibre.') : null,
+        // With the reader connected the app writes its pictures itself; without it, the mark is Julian's word.
+        b.applied && b.onReader && !b.readerHas ? el('button', { class: 'chip', disabled: !canWriteReader(), onclick: () => putOnReader([b.id]) }, 'Put Calibre’s cover on the reader') : null,
+        b.onReader && b.readerCover ? el('button', { class: 'chip', disabled: !canWriteReader(), onclick: () => putOnReader([b.id], true) }, 'Put the reader’s old pictures back') : null,
+        b.applied && !b.readerHas ? el('button', { class: 'chip', onclick: () => markSent([b.id], toSend(b)) }, toSend(b) ? 'Mark as sent to the reader' : 'Not sent after all') : null,
+        readerError && open ? el('p', { class: 'note bad' }, readerError) : null,
         open.undoError ? el('p', { class: 'note bad' }, open.undoError) : null,
         b.canUndo ? el('button', { disabled: !canWrite(), onclick: undo }, 'Put the previous cover back') : null)));
 }
@@ -429,6 +476,48 @@ function renderWork() {
   box.replaceChildren(...kids);
 }
 
+/*
+ * A small picture from Open Library. The cover host hands most of them on to
+ * the Internet Archive, where one takes anything from a tenth of a second to
+ * six and now and then fails; a failed one is asked for twice more before the
+ * tile says so.
+ */
+function thumb(src) {
+  const img = el('img', { src, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' });
+  let tries = 0;
+  img.addEventListener('error', () => {
+    if (++tries > 2) { img.replaceWith(el('span', { class: 'none' }, 'picture did not load')); return; }
+    setTimeout(() => { img.src = `${src}${src.includes('?') ? '&' : '?'}again=${tries}`; }, 1500 * tries);
+  });
+  return img;
+}
+
+/*
+ * One tile per cover for as long as the work is open. The wall is laid out
+ * anew whenever a size arrives or a filter changes; a new <img> each time
+ * would drop the picture that was still on its way and ask for it again —
+ * while the sizes came in, most pictures never arrived (Julian, 2026-10-04:
+ * „manchmal lädt es die cover nicht oder zeigt sie zumindest nicht an").
+ * Moving the same element keeps its picture.
+ */
+function coverTile(c, b, mine) {
+  let t = open.tiles.get(c.coverId);
+  if (!t) {
+    t = el('button', { onclick: () => pick(c) }, el('div', { class: 'frame' }, thumb(c.thumb)), el('div', { class: 'z' }), el('div', { class: 'c' }));
+    // The pointer rests on a cover: its full image is asked for now, so a click finds it there or on its way.
+    let resting = null;
+    t.addEventListener('pointerenter', () => { if (!c.ahead) resting = setTimeout(() => { c.ahead = true; api(`/api/new?cover=${encodeURIComponent(c.coverId)}&ahead=1`); }, 150); });
+    t.addEventListener('pointerleave', () => clearTimeout(resting));
+    open.tiles.set(c.coverId, t);
+  }
+  const own = mine.has(c.coverId);
+  t.className = `cover${own ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`;
+  t.title = [own ? 'Open Library lists this cover under the ISBN that Calibre has for the book. An ISBN names a printing, not a picture: it need not be the cover your file came with.' : '', c.publishers.join(', ')].filter(Boolean).join('\n');
+  t.children[1].textContent = (c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…') + (tier(c, b.size) === 4 ? ' · too small' : '');
+  t.children[2].textContent = [own ? 'same ISBN' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—';
+  return t;
+}
+
 function renderCovers() {
   if (!open) return;
   const box = $('d-covers');
@@ -447,7 +536,6 @@ function renderCovers() {
   const chip = (key, label) => el('button', { class: 'chip', 'aria-pressed': String(lang === key), onclick: () => { open.lang = key; renderCovers(); } }, label);
   const seen = Math.min(open.pages * 100, open.editions);
   const against = b.size ? `the cover in Calibre (${px(b.size)})` : 'a cover needs (200 × 280 px)';
-  const sizeLine = (c) => c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…';
   fill(box,
     el('h3', {}, 'Covers of this work'),
     el('div', { class: 'row', style: 'margin:0 0 10px' }, chip('all', `All (${open.covers.length})`), langs.map((l) => chip(l, `${langName(l)} (${count(l)})`)),
@@ -455,10 +543,7 @@ function renderCovers() {
     el('p', { class: 'meta', style: 'margin:0 0 10px' },
       pending ? `Measuring… ${inLang.length - pending} of ${inLang.length} covers; ${large.length} so far at least as large as ${against}.`
         : `${large.length} of ${inLang.length} are at least as large as ${against}. They come first; the faded ones have fewer pixels.`),
-    el('div', { class: 'covers' }, list.map((c) => el('button', { class: `cover${mine.has(c.coverId) ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`, onclick: () => pick(c), title: [mine.has(c.coverId) ? 'Open Library lists this cover under the ISBN that Calibre has for the book. An ISBN names a printing, not a picture: it need not be the cover your file came with.' : '', c.publishers.join(', ')].filter(Boolean).join('\n') },
-      el('div', { class: 'frame' }, el('img', { src: c.thumb, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' })),
-      el('div', { class: 'z' }, sizeLine(c) + (tier(c, b.size) === 4 ? ' · too small' : '')),
-      el('div', { class: 'c' }, [mine.has(c.coverId) ? 'same ISBN' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—')))),
+    el('div', { class: 'covers' }, list.map((c) => coverTile(c, b, mine))),
     open.bigOnly && !list.length && !pending ? el('p', { class: 'meta' }, 'None of the covers seen so far is large enough.') : null,
     open.error ? el('p', { class: 'note bad' }, open.error) : null,
     el('p', { class: 'meta', style: 'margin-top:12px' },
@@ -470,14 +555,17 @@ function renderCovers() {
 /* ---------- one cover against the one in Calibre ---------- */
 
 async function pick(cover) {
-  const mine = { cover, bookId: open.id, check: null, old: null, error: null, done: false, busy: false };
+  const mine = { cover, bookId: open.id, check: null, old: null, error: null, inCalibre: false, onReader: false, busy: null };
   picked = mine;
   $('compare').hidden = false;
   renderCompare();
-  const [fresh, old] = await Promise.all([api(`/api/new?cover=${encodeURIComponent(cover.coverId)}`), api(`/api/old/${mine.bookId}`)]);
+  // The reader may have been connected since the page last asked.
+  refresh().then(() => { if (picked === mine) renderCompare(); });
+  // The cover in Calibre is a file on this Mac and there at once; it does not wait for the full image, which takes seconds.
+  api(`/api/old/${mine.bookId}`).then((old) => { if (picked === mine) { mine.old = old.body; renderCompare(); } });
+  const fresh = await api(`/api/new?cover=${encodeURIComponent(cover.coverId)}`);
   if (picked !== mine) return;
   mine.check = fresh.status === 200 ? fresh.body : { ok: false, reason: fresh.body.error };
-  mine.old = old.body;
   renderCompare();
 }
 
@@ -490,7 +578,9 @@ function closeCompare() {
 function renderCompare() {
   const p = picked;
   const b = bookOf(p.bookId);
-  const smaller = p.check?.ok && p.old && !p.old.missing && p.check.width * p.check.height < 0.9 * p.old.width * p.old.height; // 0.9: SMALLER_BELOW in image.ts
+  // The size is known before the image is here: Open Library's record of the cover states it (the wall sorted by it).
+  const size = p.check?.ok ? p.check : !p.check ? p.cover.size : null;
+  const smaller = size && p.old && !p.old.missing && size.width * size.height < 0.9 * p.old.width * p.old.height; // 0.9: SMALLER_BELOW in image.ts
   const facts = [p.cover.year, p.cover.languages.map(langName).join(', '), p.cover.publishers.slice(0, 2).join(', ')].filter(Boolean).join(' · ');
   $('compare').replaceChildren(el('div', { class: 'box' },
     el('div', { class: 'pair' },
@@ -499,16 +589,50 @@ function renderCompare() {
         el('figcaption', {}, 'in Calibre now', el('br'), p.old && !p.old.missing ? px(p.old) : '')),
       el('span', { class: 'arrow' }, '→'),
       el('figure', {},
-        el('div', { class: 'frame' }, p.check?.ok ? el('img', { src: `/new?cover=${encodeURIComponent(p.cover.coverId)}&t=${token}`, alt: 'the chosen cover' }) : el('span', { class: 'none' }, p.check ? p.check.reason : 'fetching the full image…')),
-        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : ''))),
+        // Until the full image is here, the small one the wall already has stands in, faded.
+        el('div', { class: 'frame' }, p.check?.ok ? el('img', { src: `/new?cover=${encodeURIComponent(p.cover.coverId)}&t=${token}`, alt: 'the chosen cover' })
+          : p.check ? el('span', { class: 'none' }, p.check.reason)
+          : el('img', { src: p.cover.thumb, alt: '', referrerpolicy: 'no-referrer', style: 'opacity:.4' })),
+        el('figcaption', {}, facts || 'from the catalogue', el('br'), p.check?.ok ? px(p.check) : p.check ? '' : `${size ? `${px(size)} · ` : ''}fetching the full image…`))),
     el('h2', { style: 'font-size:17px;margin:14px 0 0' }, b.title),
-    smaller ? el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(p.check)} against ${px(p.old)}). It will look softer on a full screen.`) : null,
+    smaller ? el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(size)} against ${px(p.old)}). It will look softer on a full screen.`) : null,
     p.error ? el('p', { class: 'note bad' }, p.error) : null,
-    p.done ? el('p', { class: 'note ok' }, 'This cover is in Calibre now.') : null,
+    p.inCalibre ? el('p', { class: 'note ok' }, 'This cover is in Calibre now.') : null,
+    p.onReader ? el('p', { class: 'note ok' }, 'The reader’s shelves show this cover now — library and home screen. Its sleeping screen is drawn from the book file and stays as it was.') : null,
     S.mode !== 'write' ? el('p', { class: 'meta' }, 'Looking only: start the app with --write to change the library.') : null,
+    /*
+     * Two places a cover can go, and each is a button of its own (Julian,
+     * 2026-10-05: „i want to decide whether to write to calibre or
+     * pocketbook"). Nothing is written by choosing a cover.
+     */
     el('div', { class: 'row' },
-      p.done ? null : el('button', { class: 'primary', disabled: !canWrite() || !p.check?.ok || p.busy, onclick: () => use(smaller) }, p.busy ? 'Writing…' : smaller ? 'Use it anyway' : 'Use this cover'),
-      el('button', { onclick: closeCompare }, p.done ? 'Done' : 'Cancel'))));
+      // The choice does not wait for the full image: the write does, on the server, and checks the image there before it touches the library.
+      p.inCalibre ? null : el('button', { class: 'primary', disabled: !canWrite() || !size || !p.old || !!p.busy, onclick: () => use(smaller) },
+        p.busy === 'calibre' ? (p.check?.ok ? 'Writing…' : 'Fetching the image, then writing…') : smaller ? 'Write to Calibre anyway' : 'Write to Calibre'),
+      p.onReader ? null : el('button', { class: p.inCalibre ? 'primary' : '', disabled: !canWriteReader() || !size || !S.reader || !b.onReader || !!p.busy, title: readerWhy(b), onclick: toReader },
+        p.busy === 'reader' ? (p.check?.ok ? 'Writing…' : 'Fetching the image, then writing…') : 'Write to the PocketBook'),
+      el('button', { onclick: closeCompare }, p.inCalibre || p.onReader ? 'Done' : 'Cancel')),
+    p.inCalibre || p.onReader || S.mode !== 'write' ? null : el('p', { class: 'meta', style: 'margin:8px 0 0' },
+      `Nothing is written until you press a button. ${S.problems.length ? 'Calibre cannot be written to right now (see the top of the window). ' : ''}${!S.reader ? 'The PocketBook is not connected.' : !b.onReader ? 'This book is not on the PocketBook.' : `${S.reader.name} is connected.`}`)));
+}
+
+/* What the PocketBook button does, or why it cannot. */
+function readerWhy(b) {
+  if (!S.reader) return 'Connect the PocketBook: the app can then write this cover as the reader’s pictures of the book.';
+  if (!b.onReader) return 'Calibre has not sent this book to the reader.';
+  return 'Writes the reader’s own pictures of this book — library and home screen — from this cover. Calibre keeps the cover it has, no book file is touched, and the reader’s old pictures are kept on this Mac.';
+}
+
+async function toReader() {
+  const p = picked;
+  p.busy = 'reader';
+  p.error = null;
+  renderCompare();
+  const { status, body } = await api('/api/reader', { bookId: p.bookId, coverId: p.cover.coverId });
+  p.busy = null;
+  if (status === 200) { p.onReader = true; refreshAfterWrite(body.state, p.bookId); }
+  else p.error = body.error ?? 'The reader did not take the pictures.';
+  if (picked === p) renderCompare();
 }
 
 function refreshAfterWrite(state, bookId) {
@@ -521,12 +645,12 @@ function refreshAfterWrite(state, bookId) {
 
 async function use(allowSmaller) {
   const p = picked;
-  p.busy = true;
+  p.busy = 'calibre';
   p.error = null;
   renderCompare();
   const { status, body } = await api('/api/apply', { bookId: p.bookId, coverId: p.cover.coverId, allowSmaller: !!allowSmaller });
-  p.busy = false;
-  if (status === 200) { p.done = true; refreshAfterWrite(body.state, p.bookId); const old = await api(`/api/old/${p.bookId}`); p.old = old.body; }
+  p.busy = null;
+  if (status === 200) { p.inCalibre = true; refreshAfterWrite(body.state, p.bookId); const old = await api(`/api/old/${p.bookId}`); p.old = old.body; }
   else { p.error = body.error ?? 'The write failed.'; if (body.halted) { S = (await api('/api/state')).body; renderTop(); } }
   if (picked === p) renderCompare();
 }
@@ -596,9 +720,11 @@ async function refresh() {
   if (!S || document.hidden || picked?.busy) return;
   const { status, body } = await api('/api/state');
   if (status !== 200) return;
-  const before = JSON.stringify(S.books.map((b) => [b.id, b.v, b.applied, b.title]));
+  // What the overview shows of each book, and whether the reader is there.
+  const seen = () => JSON.stringify([S.reader?.name, S.books.map((b) => [b.id, b.v, b.applied, b.title, b.onReader, b.readerCover])]);
+  const before = seen();
   S = body;
-  if (before === JSON.stringify(S.books.map((b) => [b.id, b.v, b.applied, b.title]))) return;
+  if (before === seen()) return;
   renderTop();
   renderGrid();
   if (open && bookOf(open.id)) { renderHead(); renderCovers(); } else if (open) closeBook();

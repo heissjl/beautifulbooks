@@ -77,15 +77,27 @@ export async function countOp(op: Op, options: CountOptions = {}): Promise<Count
  * What the CPU meter of this instance gathered since its last flush (ROADMAP
  * 2.18l, K14): one increment per field, one expiry for the day. Called every
  * thirty seconds at most (`app/api/measure.ts`), not per request.
+ *
+ * As one command where the store can (2.18d): measured 2026-10-05, a flush
+ * was 14–35 HINCRBYs, one per route × caller × measure. A store without the
+ * script (a test double, the dev memory) still gets them one by one.
  */
 export async function countCpu(increments: ReadonlyArray<[field: string, by: number]>, options: CountOptions = {}): Promise<CountResult> {
   if (increments.length === 0) return 'counted';
   const commands = setup(options);
   if (commands === 'off') return 'off';
   if (!commands) return 'no-store';
+  const key = insightsKey(dayOf(options.now ?? new Date()), 'cpu');
+  if (commands.hIncrByMany) {
+    try {
+      await commands.hIncrByMany(key, increments, RETENTION_SECONDS);
+      return 'counted';
+    } catch {
+      return 'failed';
+    }
+  }
   const hIncrBy = commands.hIncrBy;
   if (!hIncrBy) return 'no-store';
-  const key = insightsKey(dayOf(options.now ?? new Date()), 'cpu');
   try {
     await Promise.all(increments.map(([field, by]) => hIncrBy(key, field, by)));
     await commands.expire?.(key, RETENTION_SECONDS);

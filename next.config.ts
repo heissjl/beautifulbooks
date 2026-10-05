@@ -1,6 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // lab/visitcost (ROADMAP 2.18b) builds into a directory of its own, so its fake catalogue never mixes with a real build.
+  ...(process.env.NEXT_DIST_DIR ? { distDir: process.env.NEXT_DIST_DIR } : {}),
+  // Covers through Vercel's image optimization (ROADMAP 2.18o, lib/coverurl.ts):
+  // on in a Vercel build unless COVER_CDN=off; `next dev` asks /img directly.
+  env: {
+    NEXT_PUBLIC_COVER_CDN: process.env.VERCEL_ENV && process.env.COVER_CDN !== "off" ? "on" : "off",
+  },
+  images: {
+    // Only our own image route may be a source: the optimizer is not an open proxy.
+    remotePatterns: [{ protocol: "https", hostname: "buyitscovers.com", pathname: "/img/**" }],
+    // 128, 384 and 828 are OPTIMIZED_WIDTH in lib/coverurl.ts; 828 is a default device size.
+    imageSizes: [32, 48, 64, 96, 128, 256, 384],
+    // A cover under one id does not change; the optimizer keeps it thirty days, across deploys.
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+  },
   // The shared-link cards read their fonts from disk (app/og.tsx), which the
   // file tracer cannot see from a path built at run time.
   outputFileTracingIncludes: {
