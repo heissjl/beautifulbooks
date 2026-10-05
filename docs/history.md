@@ -4666,3 +4666,17 @@ Julian, nach dem Blick auf den Reader: „in der library auf dem reader wurde es
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: die Startseite bestätigt, der Knopf in der App (ROADMAP 5.16c)
+
+Julian: „startseite zeigt jetzt auch das neue cover, mach die übrigen". Der Reader zeigt also in Bibliothek und Startseite die geschriebenen Bilder von *Roadside Picnic*; das Buch ist in `sent.json` abgehakt.
+
+**Gebaut:** `app.ts` sucht bei jedem Zustand nach dem Reader (`findReader`) und sagt je geändertem Buch, ob es darauf liegt (`onReader`) und ob die dort geschriebenen Bilder vom jetzigen Cover sind (`readerHas`); `POST /api/reader` schreibt die Bilder eines Buchs oder legt die alten zurück (`back`), nur mit `--write`, und setzt oder löscht den Haken „gesendet". `app.html`: über der Gruppe der Name des Readers und „Put n covers on the reader" (eins nach dem anderen, hält beim ersten Fehler); im geöffneten Buch „Put this cover on the reader" / „Put the reader's old pictures back". `reader-covers.ts` setzt den Haken ebenfalls. Der Satz in der App, der Reader zeige das Cover nach erneutem Senden, ist gestrichen.
+
+**Geprüft** mit einem nachgebauten Reader-Ordner und einer Kopie des Journals in einem Testordner (die echte Bibliothek nur gelesen): 14 geänderte Bücher, 3 „auf dem Reader"; der Knopf schrieb 3 Bilder, die Gruppe zählte danach 11; ein Buch zurückgelegt — das Bild bytegleich das alte, Haken weg, Gruppe 12.
+
+**Nicht gemacht:** die übrigen elf Bücher auf dem echten Reader — er war nach Julians Blick auf die Startseite nicht wieder eingebunden.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.

@@ -184,7 +184,7 @@ function tile(b) {
   return el('button', { class: 'book', id: `book-${b.id}`, onclick: () => openBook(b.id) },
     el('div', { class: 'frame' },
       b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
-      b.applied ? el('span', { class: `mark${toSend(b) ? ' todo' : ''}`, title: toSend(b) ? `Changed here on ${dayOf(b.appliedAt)}. The reader still has the old cover until the book is sent again.` : `Changed here on ${dayOf(b.appliedAt)}, marked as sent to the reader.` }, toSend(b) ? 'to send' : 'changed · sent') : null),
+      b.applied ? el('span', { class: `mark${toSend(b) ? ' todo' : ''}`, title: toSend(b) ? `Changed here on ${dayOf(b.appliedAt)}. The reader still shows the old cover.` : `Changed here on ${dayOf(b.appliedAt)}, marked as sent to the reader.` }, toSend(b) ? 'to send' : 'changed · sent') : null),
     el('div', { class: 't' }, b.title),
     el('div', { class: 'a' }, b.authors.join(', ') || '—'),
     el('div', { class: `s${isSmall(b) ? ' small' : ''}` }, b.size ? px(b.size) : ''));
@@ -215,11 +215,49 @@ function renderGrid() {
   fill($('grid'),
     el('div', { class: 'group' },
       el('b', {}, `Changed here — ${todo.length} to send to the reader`),
-      el('span', { class: 'meta' }, 'The new cover is in Calibre. The reader shows it once the book is sent to the device again.'),
+      readerLine(todo),
       el('button', { class: 'chip', onclick: () => markSent(todo.map((b) => b.id), true) }, todo.length === 1 ? 'Mark as sent' : `Mark all ${todo.length} as sent`)),
     todo.map(tile),
     rest.length ? el('div', { class: 'group rest' }, `${rest.length} other book${rest.length === 1 ? '' : 's'}`) : null,
     rest.map(tile));
+}
+
+/*
+ * The reader's shelves show pictures of their own, which Calibre's sending
+ * does not renew (lab/calibre/README, 5.16c). With the PocketBook connected
+ * the app writes them: library and home screen. The sleeping screen and the
+ * book's first page come from the book file and stay.
+ */
+let putting = null;                 // { done, of, error } while covers go to the reader
+function readerLine(todo) {
+  if (!S.reader) return el('span', { class: 'meta' }, 'The new cover is in Calibre. Connect the PocketBook and the app can put it on the reader’s shelves.');
+  const there = todo.filter((b) => b.onReader);
+  const absent = todo.length - there.length;
+  return [
+    el('span', { class: 'meta' }, putting ? `Putting covers on the reader: ${putting.done} of ${putting.of}…`
+      : `${S.reader.name} is connected.${absent ? ` ${absent} of these ${absent === 1 ? 'is' : 'are'} not on it.` : ''}`),
+    there.length && !putting ? el('button', { class: 'primary', disabled: !canWrite(), title: canWrite() ? 'Writes the reader’s own pictures of each book — library and home screen. No book file is touched; the old pictures are kept on this Mac.' : 'Start the app with --write.', onclick: () => putOnReader(there.map((b) => b.id)) },
+      there.length === 1 ? 'Put the cover on the reader' : `Put ${there.length} covers on the reader`) : null,
+    readerError ? el('span', { class: 'note bad' }, readerError) : null,
+  ];
+}
+
+let readerError = null;
+async function putOnReader(ids, back) {
+  readerError = null;
+  putting = { done: 0, of: ids.length };
+  renderGrid();
+  for (const bookId of ids) {
+    const r = await api('/api/reader', back ? { bookId, back: true } : { bookId });
+    if (r.status !== 200) { readerError = `${bookOf(bookId)?.title ?? 'A book'}: ${r.body.error ?? 'the reader did not take the pictures.'}`; break; }
+    S = r.body.state;
+    putting.done++;
+    renderGrid();
+  }
+  putting = null;
+  renderTop();
+  renderGrid();
+  if (open) renderHead();
 }
 
 async function markSent(ids, sent) {
@@ -396,8 +434,11 @@ function renderHead() {
         el('p', { class: 'meta' }, b.authors.join(', ') || 'no author'),
         el('p', { class: 'meta' }, [b.formats.join(', '), b.languages.map(langName).join(', '), b.isbns[0] ? `ISBN ${b.isbns[0]}` : 'no ISBN', `#${b.id}`].filter(Boolean).join(' · ')),
         b.applied ? el('p', { class: 'note ok' }, `This cover was put here by the app on ${dayOf(b.appliedAt)}. `,
-          toSend(b) ? 'The reader still has the old one until the book is sent to the device again.' : 'Marked as sent to the reader.') : null,
-        b.applied ? el('button', { class: 'chip', onclick: () => markSent([b.id], toSend(b)) }, toSend(b) ? 'Mark as sent to the reader' : 'Not sent after all') : null,
+          b.readerHas ? 'The reader’s shelves show it.' : toSend(b) ? 'The reader still shows the old one.' : 'Marked as sent to the reader.') : null,
+        // With the reader connected the app writes its pictures itself; without it, the mark is Julian's word.
+        b.applied && b.onReader ? el('button', { class: 'chip', disabled: !canWrite(), onclick: () => putOnReader([b.id], b.readerHas) }, b.readerHas ? 'Put the reader’s old pictures back' : 'Put this cover on the reader') : null,
+        b.applied && !b.readerHas ? el('button', { class: 'chip', onclick: () => markSent([b.id], toSend(b)) }, toSend(b) ? 'Mark as sent to the reader' : 'Not sent after all') : null,
+        readerError && open ? el('p', { class: 'note bad' }, readerError) : null,
         open.undoError ? el('p', { class: 'note bad' }, open.undoError) : null,
         b.canUndo ? el('button', { disabled: !canWrite(), onclick: undo }, 'Put the previous cover back') : null)));
 }

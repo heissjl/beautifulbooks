@@ -12,6 +12,7 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { FileMap } from './filemap';
 import { imageSizeFast } from './image';
 import { coverFile, findLibrary, readLibrary } from './library';
 import { findReader, picturesOf, ReaderCovers, readBooksOnReader, thumbFile } from './reader';
@@ -51,6 +52,10 @@ if (put || back) {
     console.error(result.error);
     process.exit(1);
   }
+  // The app's own mark „sent to the reader" follows what is on the reader.
+  const sent = new FileMap(join(writer.root, 'sent.json'));
+  if (put && top) sent.set(book.id, top.coverId);
+  if (back) sent.delete(book.id);
   console.log(`#${book.id} „${book.title}": ${result.pictures.length} picture${result.pictures.length === 1 ? '' : 's'} ${put ? 'written' : 'put back as the reader had them'}`);
   for (const file of result.pictures) console.log(`   ${file} (${px(join(root, file))})`);
   console.log(`kept:   ${join(writer.root, 'reader')}`);

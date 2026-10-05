@@ -35,7 +35,7 @@
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { existsSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { isWorkId, makeToken } from './site';
 import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
@@ -46,6 +46,7 @@ import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
 import { AnswerStore, KEEP_DAYS, keptCatalogue, type AskOptions, type Served } from './kept';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
 import { findSyncScript, pocketbookStatus, readSyncConfig, runSync } from './pocketbook';
+import { findReader, ReaderCovers } from './reader';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
 
 const args = process.argv.slice(2);
@@ -77,6 +78,17 @@ const works = new WorkMap(join(writer.root, 'works.json'));
  * the cover: a book changed again is to send again.
  */
 const sent = new FileMap(join(writer.root, 'sent.json'));
+/*
+ * The connected PocketBook, when there is one (`reader.ts`, ROADMAP 5.16c).
+ * Its shelves show pictures of their own, which neither Calibre's sending nor
+ * anything else renews; the app can write them — the cover from Calibre as
+ * the reader's picture of the book, in the library and on the home screen.
+ * Looked for anew each time: the reader comes and goes.
+ */
+const readerNow = (): { root: string; covers: ReaderCovers } | null => {
+  const root = findReader();
+  return root ? { root, covers: new ReaderCovers(root, join(writer.root, 'reader')) } : null;
+};
 const downloads = new CoverDownloads(SITE);
 // Cover ids are the catalogue's, not a library's: one file of sizes for every library.
 const coverSizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), SITE);
@@ -116,8 +128,17 @@ function state() {
   }
   const stacks = undoStacks(writer.journal());
   const remembered = works.all();
+  const reader = readerNow();
+  let onReader = new Map<number, { onReader: boolean; put?: string }>();
+  try {
+    if (reader) onReader = reader.covers.status([...stacks.keys()]);
+  } catch {
+    // Its list did not read — unplugged this moment, or Calibre is writing it: then nothing is said about any book.
+  }
   return {
     mode: WRITE ? 'write' : 'preview',
+    // The reader's name when it is connected; per changed book below, whether it is on it.
+    reader: reader ? { name: basename(reader.root) } : null,
     catalogue: SOURCE,
     problems: WRITE ? writer.problems() : [],
     library: { path: library, books: books.length },
@@ -138,6 +159,8 @@ function state() {
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
         // The cover the tool last put there, while that write can still be taken back.
         ...(stack ? { applied: stack[stack.length - 1].coverId, appliedAt: stack[stack.length - 1].at, canUndo: !!stack[stack.length - 1].backup, sent: sent.get(b.id) === stack[stack.length - 1].coverId } : {}),
+        // On the connected reader, and whether the pictures this app wrote there are of the cover the book has now.
+        ...(stack && onReader.get(b.id)?.onReader ? { onReader: true, readerHas: onReader.get(b.id)?.put === stack[stack.length - 1].coverId } : {}),
       };
     }),
   };
@@ -265,7 +288,7 @@ const server = createServer(async (req, res) => {
       return send(res, 200, f.bytes, `image/${f.check.format}`);
     }
 
-    if (req.method === 'POST' && (path === '/api/work' || path === '/api/sent' || path === '/api/apply' || path === '/api/undo')) {
+    if (req.method === 'POST' && (path === '/api/work' || path === '/api/sent' || path === '/api/reader' || path === '/api/apply' || path === '/api/undo')) {
       const body = await jsonBody(req);
       const book = books.find((b) => b.id === body.bookId);
       if (!book) return send(res, 404, { error: 'No such book in the library.' });
@@ -287,6 +310,26 @@ const server = createServer(async (req, res) => {
       }
 
       if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
+
+      /* The cover Calibre has, as the reader's pictures of this book — or the reader's own pictures back. Never the book file. */
+      if (path === '/api/reader') {
+        const reader = readerNow();
+        if (!reader) return send(res, 409, { error: 'The PocketBook is not connected.' });
+        if (body.back === true) {
+          const result = reader.covers.back(book.id);
+          if (result.ok) sent.delete(book.id);
+          return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+        }
+        const top = undoStacks(writer.journal()).get(book.id)?.at(-1);
+        if (!top) return send(res, 409, { error: 'This book’s cover was not changed here.' });
+        const file = coverFile(library, book);
+        if (!existsSync(file)) return send(res, 409, { error: 'The cover file is not on this Mac (iCloud).' });
+        const result = reader.covers.put(book.id, readFileSync(file), top.coverId);
+        // On the reader's shelves now: that is what „sent" was waiting for.
+        if (result.ok) sent.set(book.id, top.coverId);
+        return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+      }
+
       if (path === '/api/undo') {
         const result = writer.undo(book.id);
         if (result.ok) books = result.books;
