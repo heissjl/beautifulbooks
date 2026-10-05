@@ -7,6 +7,7 @@ import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
 import { commerceEnabled } from '@/lib/sitemode';
 import { versusEnabled } from '@/lib/hotornot/switch';
+import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { suggestEnabled } from '@/lib/suggest/auth';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
@@ -14,8 +15,8 @@ import { translator } from '@/lib/i18n/translate';
 /**
  * The privacy notice (SPEC F6, ROADMAP 2.3; basis docs/recht-hobbyseite.md).
  * Every processing the site does is listed, in full, because a short list is
- * easier to check than a reassuring sentence. Sections for the game and the
- * friends' suggestions appear only where those are switched on, so the notice
+ * easier to check than a reassuring sentence. Sections for the game, the
+ * Shelf-Portrait and the friends' suggestions appear only where those are switched on, so the notice
  * never names a setting that is not set (N12).
  *
  * German since 6.85 through `t`; the German is a translation of this text,
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   description: 'What this site does with data, which is little, and who is responsible for it.',
 };
 
-const UPDATED = '4 October 2026';
+const UPDATED = '5 October 2026';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -116,6 +117,13 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         {game && (
           <Section title={t('The cover game')}>
             <p>{t('Picking a cover in the game writes one line to a database: the two covers that were shown, which of them you picked, and the day — not the minute. Nothing about you is written with it: no IP address, no cookie, no browser details, no identifier of any kind, so two picks of yours cannot be recognised as yours or as belonging together. Reporting a cover as “not a cover” writes the cover and the reason, again with nothing about you, and the game stores nothing in your browser. These lines are what the ranking is counted from; they are kept while the game runs, because deleting them would delete the ranking. They live in a Redis database that this site rents from Redis through Vercel’s marketplace; it holds the lines on this site’s behalf. Legal basis: legitimate interest in a ranking that reflects what readers picked (Art. 6(1)(f) GDPR).')}</p>
+          </Section>
+        )}
+
+        {/* The sentence Julian approved on 2026-10-05, as he approved it (ROADMAP 5.18b). */}
+        {inspirationEnabled() && (
+          <Section title={t('Your Shelf-Portrait')}>
+            <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
           </Section>
         )}
 
