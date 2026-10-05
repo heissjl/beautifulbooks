@@ -2,6 +2,19 @@
 
 Geschrieben 2026-09-26 für Julian (ROADMAP 4.1). Stand der Quellen: Bookshop.orgs Hilfeseiten und Bewerbungsseite, am selben Tag gelesen; die Affiliate-Übersichtsseite selbst antwortete dem Abruf mit 403.
 
+## Stand 2026-10-04: die Bewerbung läuft, und das Formular sieht anders aus als unten beschrieben
+
+Julian hat das Konto bei Bookshop.org (US) angelegt und die E-Mail bestätigt; Claude hat im Chrome mitgelesen. Was die Seite an dem Tag wirklich zeigte:
+
+- „Join the Affiliate Program" führt zuerst auf `/signup` (Konto mit E-Mail und Passwort; das Häkchen für den Newsletter ist vorbelegt). Vor der bestätigten E-Mail zeigt `/affiliates/profile` nur „Verify Your Account".
+- **Es gibt keine Wahl „Non-bookstore affiliate" und kein Feld für die Website.** Das Profil ist eine öffentliche Shop-Seite: *Shop Name*, *URL For Your Shop* (`bookshop.org/shop/<name>`, nur Buchstaben, Ziffern, Binde- und Unterstrich), *About* (Rich Text), Profilbild (180 × 180), Banner (2048 × 600), Links zu Threads, Bluesky, Instagram, TikTok, Facebook, YouTube, X, Substack, eine *Libro ID*, ein Häkchen für den wöchentlichen Verkaufsbericht per Mail (vorbelegt) und *My Book Lists*. Ein Feld für Mastodon gibt es nicht.
+- Die Prüfung ist ein eigener Schritt: oben auf der Seite „In order to complete your profile, you must request for verification" mit dem Link *Request Verification* (`/affiliates/profile/request`).
+- **Vorgeschlagene Einträge** (Name und Adresse der Seite, wie sie seit 2026-10-02 heißen): Shop Name „Buy Its Covers", URL `buyitscovers`, About: „Buy Its Covers (https://buyitscovers.com) shows the covers a book has been printed with, side by side, so you can pick the edition whose cover you like. Each cover links to that printing's ISBN at bookshops, Bookshop.org among them." Bluesky `https://bsky.app/profile/buyitscovers.com`, X `https://x.com/buyitscovers`; Instagram bleibt leer, solange das Konto gesperrt ist (domain-recherche §23), TikTok bis es das Konto gibt.
+- **Bilder:** `assets/social/avatar-360.png` und `assets/social/banner-2048x600.png`, am selben Tag für dieses Formular gesetzt.
+- **Idee (Julian): ein paar Buchlisten aus den Sammlungen.** Sinnvoll vor *Request Verification*, weil die Prüfung eine Shop-Seite sieht; nur aus Sammlungen, die auf der Seite öffentlich sind und deren Ausgaben Bookshop US führt. Kandidaten mit `coverIsbn` je Band: Penguin Clothbound Classics (63), NYRB Children's Collection (21), Library of America (72). Stand: vorgeschlagen, noch nicht angelegt.
+
+Die Abschnitte darunter sind der Stand vom 2026-09-26 und nennen noch den alten Namen und die alte Adresse.
+
 ## Worum es geht
 
 Bookshop.org zahlt Affiliates **10 % des Kaufpreises** für Bücher, die innerhalb von 48 Stunden nach einem Klick auf einen Affiliate-Link gekauft werden (zählt der letzte Klick). Die Seite hat die Anbindung schon: `lib/buylinks.ts` baut mit einer ID den Link `https://bookshop.org/a/<ID>/<ISBN>` auf die Produktseite, ohne ID nur eine Suchseite. Der Mehrwert ist also doppelt — Provision und ein besserer Link.
