@@ -70,7 +70,10 @@ describe('counting photos', () => {
 describe('the analytics keep up with the page', () => {
   it('has a class for every verdict the sidebar can show (K8)', () => {
     // A new IsbnVerdict status fails to compile here until VERDICTS knows it.
-    const all: Record<VerdictStatus, true> = { verified: true, differs: true, uncompared: true, unknown: true, unavailable: true, pending: true };
+    const all: Record<VerdictStatus, true> = {
+      verified: true, differs: true, uncompared: true, unknown: true, unavailable: true, pending: true,
+      catalogueVerified: true, catalogueDiffers: true, catalogueUncompared: true, catalogueUnknown: true,
+    };
     for (const status of Object.keys(all)) expect(VERDICTS as readonly string[]).toContain(status);
   });
 });

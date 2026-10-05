@@ -398,6 +398,7 @@ function BookDetail() {
         isbnCovers.asked.has(isbn13),
         isbnCovers.unavailable.has(isbn13),
         view.signatures,
+        isbnCovers.catalogue.has(isbn13),
       )}
     />
   );
@@ -962,7 +963,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
           publisher's image stands in the same place for the reader to weigh
           before clicking; the buttons stay the ISBN's (ROADMAP 6.32).
         */}
-        {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared') && (
+        {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared'
+          || verdict.status === 'catalogueDiffers' || verdict.status === 'catalogueUncompared') && (
           <VerdictNote verdict={verdict} hint={hint} />
         )}
         {/* The pills sit right after the heading, not pushed to the far edge (Julian, 2026-09-26: „less gap before the pills"). */}
@@ -1152,15 +1154,25 @@ function IsbnText({ isbn }: { isbn: string }) {
 }
 
 function VerdictNote({ verdict, hint }: {
-  verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;
+  verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' | 'catalogueDiffers' | 'catalogueUncompared' }>;
   hint: string;
 }) {
   const t = useT();
+  // Open Library stood in for Google (ROADMAP 1.12): the picture is the catalogue's scan, and the labels must not call it the publisher's.
+  const catalogue = verdict.status === 'catalogueDiffers' || verdict.status === 'catalogueUncompared';
   return (
     <div className="mb-4 flex items-start gap-3">
-      <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label={t('See the publisher’s current image for this ISBN')}>
+      <a
+        href={`?cover=${encodeURIComponent(verdict.cover.id)}`}
+        className="shrink-0"
+        aria-label={catalogue ? t('See Open Library’s cover for this ISBN') : t('See the publisher’s current image for this ISBN')}
+      >
         <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
-          <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt={t('The publisher’s current image for this ISBN')} sizes="55px" />
+          <CoverImage
+            src={verdict.cover.urlSmall ?? verdict.cover.url}
+            alt={catalogue ? t('Open Library’s cover for this ISBN') : t('The publisher’s current image for this ISBN')}
+            sizes="55px"
+          />
         </span>
       </a>
       <p className="text-xs leading-relaxed text-ink-3">
@@ -1170,6 +1182,8 @@ function VerdictNote({ verdict, hint }: {
             {t('It is the one beside this note, so that is what a new copy is likely to be.')}
             {hint ? ` ${t('The searches below look for {hint} second-hand instead.', { hint })}` : ` ${t('The searches below look for this printing instead.')}`}
           </>
+        ) : verdict.status === 'catalogueDiffers' ? (
+          t('It is the one beside this note.')
         ) : (
           t('It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.')
         )}

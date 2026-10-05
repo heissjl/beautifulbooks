@@ -13,12 +13,14 @@ export interface IsbnCoverResult {
   asked: Set<string>;
   /** ISBNs whose lookup failed, so "not known" is never worded as "no cover". */
   unavailable: Set<string>;
+  /** ISBNs Open Library answered for because Google could not be asked (ROADMAP 1.12). */
+  catalogue: Set<string>;
   /** Cover ids the shop shows, per ISBN; empty when it shows none. */
   byIsbn: Map<string, string[]>;
 }
 
 const EMPTY: IsbnCoverResult = {
-  covers: [], signatures: new Map(), asked: new Set(), unavailable: new Set(), byIsbn: new Map(),
+  covers: [], signatures: new Map(), asked: new Set(), unavailable: new Set(), catalogue: new Set(), byIsbn: new Map(),
 };
 
 interface Store {
@@ -101,12 +103,14 @@ export function useIsbnCovers(resetKey: string, isbns: readonly string[], editio
   const covers: Cover[] = [];
   const signatures = new Map<string, ImageSignature>();
   const byIsbn = new Map<string, string[]>();
+  const catalogue = new Set<string>();
   for (const [isbn, data] of store.byIsbn) {
     const editionIds = store.editionsByIsbn.get(isbn) ?? [];
     byIsbn.set(isbn, data.covers.map(c => c.id));
+    if (data.source === 'openlibrary') catalogue.add(isbn);
     if (editionIds.length === 0) continue;
     for (const cover of data.covers) covers.push({ ...cover, editionIds });
     for (const [id, sig] of Object.entries(data.signatures ?? {})) signatures.set(id, sig);
   }
-  return { covers, signatures, asked: new Set(store.byIsbn.keys()), unavailable: store.failed, byIsbn };
+  return { covers, signatures, asked: new Set(store.byIsbn.keys()), unavailable: store.failed, catalogue, byIsbn };
 }

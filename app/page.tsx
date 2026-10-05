@@ -7,6 +7,7 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import CollectionsShelf from '@/components/CollectionsShelf';
 import WallsInvite from '@/components/WallsInvite';
+import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { liveCollections } from '@/lib/collections-live';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
@@ -119,7 +120,8 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                   reader who knows the site should reach it without passing two
                   links first. One line where it fits, two on a phone. The way
                   into the cover game (5.8a, SPEC F7) and the reader's own
-                  collection (5.13b, behind its switch).
+                  collection (5.13b, behind its switch). A third since 5.18b,
+                  behind its switch too: three lines on a phone.
                 */}
                 {isHero && (
                   <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
@@ -130,6 +132,15 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                       {t('Help us find the prettiest cover of all time!')}
                     </Link>
                     {wallsEnabled() && <WallsInvite>{t('Create your own collection of covers')}</WallsInvite>}
+                    {/* The way to the Shelf-Portrait (ROADMAP 5.18b; Julian, 2026-10-05), only where the page is on — a dead link in production otherwise. */}
+                    {inspirationEnabled() && (
+                      <Link
+                        href="/shelfportrait"
+                        className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                      >
+                        {t('Take your Shelf-Portrait: the books that inspire you')}
+                      </Link>
+                    )}
                   </div>
                 )}
               </div>
