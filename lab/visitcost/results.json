@@ -1,0 +1,885 @@
+{
+  "measuredAt": "2026-10-05T15:54:25.784Z",
+  "viewport": "1280x800",
+  "buildCalls": 149,
+  "results": [
+    {
+      "pass": "cold",
+      "id": "home",
+      "path": "/",
+      "note": "Startseite",
+      "requests": 83,
+      "failed": [],
+      "bytes": 639551,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 13365
+        },
+        "static": {
+          "n": 21,
+          "bytes": 388957
+        },
+        "img": {
+          "n": 61,
+          "bytes": 237229
+        }
+      },
+      "model": {
+        "cdn": 21,
+        "cdn-after-first": 61,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 61,
+      "blocked": [],
+      "redis": {
+        "GET": 3
+      },
+      "redisKeys": {
+        "GET collections:content": 1,
+        "GET collections:published": 1,
+        "GET collections:order": 1
+      },
+      "redisCommands": 3,
+      "cpuFlush": 5,
+      "catalogue": {},
+      "functionList": {
+        "function document /": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "search",
+      "path": "/?q=the%20great%20gatsby",
+      "note": "Suche mit Trefferliste und Mosaiken",
+      "requests": 38,
+      "failed": [],
+      "bytes": 524775,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 6331
+        },
+        "static": {
+          "n": 23,
+          "bytes": 472730
+        },
+        "api": {
+          "n": 4,
+          "bytes": 6824
+        },
+        "img": {
+          "n": 10,
+          "bytes": 38890
+        }
+      },
+      "model": {
+        "cdn": 23,
+        "cdn-after-first": 14,
+        "function": 1
+      },
+      "openLibrary": 7,
+      "google": 0,
+      "images": 10,
+      "blocked": [],
+      "redis": {
+        "HINCRBY": 1,
+        "EXPIRE": 1
+      },
+      "redisKeys": {
+        "HINCRBY ins:<day>:search": 1,
+        "EXPIRE ins:<day>:search": 1
+      },
+      "redisCommands": 2,
+      "cpuFlush": 0,
+      "catalogue": {
+        "openlibrary /search.json": 3,
+        "openlibrary /works/<id>/editions.json": 2,
+        "openlibrary /works/<id>.json": 2
+      },
+      "functionList": {
+        "function document /?q=the%20great%20gatsby": 1,
+        "cdn-after-first api /api/search?q=the+great+gatsby": 1,
+        "cdn-after-first api /api/works/<work>?summary=1": 3
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "book",
+      "path": "/book/OL468431W",
+      "note": "Buchseite, kuratiert (Gatsby, drei Ausgabenseiten)",
+      "requests": 66,
+      "failed": [],
+      "bytes": 732353,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 3889
+        },
+        "static": {
+          "n": 24,
+          "bytes": 464786
+        },
+        "api": {
+          "n": 6,
+          "bytes": 127563
+        },
+        "img": {
+          "n": 35,
+          "bytes": 136115
+        }
+      },
+      "model": {
+        "cdn": 25,
+        "cdn-after-first": 41,
+        "function": 0
+      },
+      "openLibrary": 5,
+      "google": 1,
+      "images": 35,
+      "blocked": [],
+      "redis": {
+        "HINCRBY": 2,
+        "EXPIRE": 2
+      },
+      "redisKeys": {
+        "HINCRBY ins:<day>:book": 1,
+        "HINCRBY ins:<day>:works": 1,
+        "EXPIRE ins:<day>:book": 1,
+        "EXPIRE ins:<day>:works": 1
+      },
+      "redisCommands": 4,
+      "cpuFlush": 0,
+      "catalogue": {
+        "google /books/v1/volumes": 1,
+        "openlibrary /works/<id>/editions.json": 3,
+        "openlibrary /search/authors.json": 1,
+        "openlibrary /search.json": 1
+      },
+      "functionList": {
+        "cdn-after-first api /api/works/<work>": 1,
+        "cdn-after-first api /api/works/<work>?signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=100&signatures=1": 1,
+        "cdn-after-first api /api/authors/OL27349A/works?name=F.%20Scott%20Fitzgerald": 1,
+        "cdn-after-first api /api/works/<work>?offset=200&signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=300&signatures=1": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "book-cover",
+      "path": "/book/OL468431W?cover=ol%3A14369845",
+      "note": "Buchseite mit gewähltem Cover (Vermerk; ISBN 9783730600009)",
+      "requests": 53,
+      "failed": [],
+      "bytes": 687275,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 3889
+        },
+        "static": {
+          "n": 25,
+          "bytes": 481126
+        },
+        "api": {
+          "n": 8,
+          "bytes": 128369
+        },
+        "img": {
+          "n": 19,
+          "bytes": 73891
+        }
+      },
+      "model": {
+        "cdn": 26,
+        "cdn-after-first": 27,
+        "function": 0
+      },
+      "openLibrary": 0,
+      "google": 1,
+      "images": 19,
+      "blocked": [],
+      "redis": {
+        "HINCRBY": 2,
+        "EXPIRE": 2
+      },
+      "redisKeys": {
+        "HINCRBY ins:<day>:book": 1,
+        "HINCRBY ins:<day>:works": 1,
+        "EXPIRE ins:<day>:book": 1,
+        "EXPIRE ins:<day>:works": 1
+      },
+      "redisCommands": 4,
+      "cpuFlush": 0,
+      "catalogue": {
+        "google /books/v1/volumes": 1
+      },
+      "functionList": {
+        "cdn-after-first api /api/works/<work>": 1,
+        "cdn-after-first api /api/works/<work>?signatures=1": 1,
+        "cdn-after-first api /api/isbn/9783730600009?signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=100&signatures=1": 1,
+        "cdn-after-first api /api/similar/ol%3A14369845": 1,
+        "cdn-after-first api /api/authors/OL27349A/works?name=F.%20Scott%20Fitzgerald": 1,
+        "cdn-after-first api /api/works/<work>?offset=200&signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=300&signatures=1": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "decades",
+      "path": "/book/OL1168083W/decades",
+      "note": "Jahrzehnte-Seite",
+      "requests": 43,
+      "failed": [],
+      "bytes": 424869,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 13548
+        },
+        "static": {
+          "n": 20,
+          "bytes": 329274
+        },
+        "img": {
+          "n": 21,
+          "bytes": 81669
+        },
+        "api": {
+          "n": 1,
+          "bytes": 378
+        }
+      },
+      "model": {
+        "cdn": 20,
+        "cdn-after-first": 22,
+        "function": 1
+      },
+      "openLibrary": 6,
+      "google": 0,
+      "images": 21,
+      "blocked": [],
+      "redis": {},
+      "redisKeys": {},
+      "redisCommands": 0,
+      "cpuFlush": 0,
+      "catalogue": {
+        "openlibrary /search.json": 2,
+        "openlibrary /works/<id>/editions.json": 2,
+        "openlibrary /works/<id>.json": 1,
+        "openlibrary /search/authors.json": 1
+      },
+      "functionList": {
+        "function document /book/<work>/decades": 1,
+        "cdn-after-first api /api/authors/OL118077A/works?name=George%20Orwell": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "collections",
+      "path": "/collections",
+      "note": "Sammlungen, Übersicht",
+      "requests": 135,
+      "failed": [],
+      "bytes": 805156,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 37198
+        },
+        "static": {
+          "n": 17,
+          "bytes": 312945
+        },
+        "img": {
+          "n": 117,
+          "bytes": 455013
+        }
+      },
+      "model": {
+        "cdn": 17,
+        "cdn-after-first": 117,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 117,
+      "blocked": [],
+      "redis": {
+        "GET": 3,
+        "LRANGE": 1,
+        "HGETALL": 2
+      },
+      "redisKeys": {
+        "GET collections:content": 1,
+        "GET collections:published": 1,
+        "GET collections:order": 1,
+        "LRANGE walls:showcase": 1,
+        "HGETALL walls:views": 1,
+        "HGETALL walls:reports": 1
+      },
+      "redisCommands": 6,
+      "cpuFlush": 35,
+      "catalogue": {},
+      "functionList": {
+        "function document /collections": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "collection",
+      "path": "/collections/sf-masterworks",
+      "note": "Eine Sammlung",
+      "requests": 92,
+      "failed": [],
+      "bytes": 621367,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 14682
+        },
+        "static": {
+          "n": 18,
+          "bytes": 322788
+        },
+        "img": {
+          "n": 73,
+          "bytes": 283897
+        }
+      },
+      "model": {
+        "cdn": 18,
+        "cdn-after-first": 73,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 73,
+      "blocked": [],
+      "redis": {
+        "GET": 6
+      },
+      "redisKeys": {
+        "GET collections:content": 2,
+        "GET collections:published": 2,
+        "GET collections:order": 2
+      },
+      "redisCommands": 6,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "function document /collections/sf-masterworks": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "versus",
+      "path": "/versus",
+      "note": "Das Spiel",
+      "requests": 25,
+      "failed": [],
+      "bytes": 357501,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 11176
+        },
+        "static": {
+          "n": 18,
+          "bytes": 322991
+        },
+        "img": {
+          "n": 6,
+          "bytes": 23334
+        }
+      },
+      "model": {
+        "cdn": 18,
+        "cdn-after-first": 6,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 6,
+      "blocked": [],
+      "redis": {},
+      "redisKeys": {},
+      "redisCommands": 0,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "function document /versus": 1
+      }
+    },
+    {
+      "pass": "cold",
+      "id": "about",
+      "path": "/about",
+      "note": "About (statisch)",
+      "requests": 17,
+      "failed": [],
+      "bytes": 298753,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 6745
+        },
+        "static": {
+          "n": 16,
+          "bytes": 292008
+        }
+      },
+      "model": {
+        "cdn": 17,
+        "cdn-after-first": 0,
+        "function": 0
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 0,
+      "blocked": [],
+      "redis": {},
+      "redisKeys": {},
+      "redisCommands": 0,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {}
+    },
+    {
+      "pass": "warm",
+      "id": "home",
+      "path": "/",
+      "note": "Startseite",
+      "requests": 83,
+      "failed": [],
+      "bytes": 639551,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 13365
+        },
+        "static": {
+          "n": 21,
+          "bytes": 388957
+        },
+        "img": {
+          "n": 61,
+          "bytes": 237229
+        }
+      },
+      "model": {
+        "cdn": 21,
+        "cdn-after-first": 61,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 61,
+      "blocked": [],
+      "redis": {
+        "GET": 3
+      },
+      "redisKeys": {
+        "GET collections:content": 1,
+        "GET collections:published": 1,
+        "GET collections:order": 1
+      },
+      "redisCommands": 3,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "function document /": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "search",
+      "path": "/?q=the%20great%20gatsby",
+      "note": "Suche mit Trefferliste und Mosaiken",
+      "requests": 38,
+      "failed": [],
+      "bytes": 518682,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 6331
+        },
+        "static": {
+          "n": 23,
+          "bytes": 466637
+        },
+        "api": {
+          "n": 4,
+          "bytes": 6824
+        },
+        "img": {
+          "n": 10,
+          "bytes": 38890
+        }
+      },
+      "model": {
+        "cdn": 23,
+        "cdn-after-first": 14,
+        "function": 1
+      },
+      "openLibrary": 2,
+      "google": 0,
+      "images": 10,
+      "blocked": [],
+      "redis": {
+        "HINCRBY": 1,
+        "EXPIRE": 1
+      },
+      "redisKeys": {
+        "HINCRBY ins:<day>:search": 1,
+        "EXPIRE ins:<day>:search": 1
+      },
+      "redisCommands": 2,
+      "cpuFlush": 14,
+      "catalogue": {
+        "openlibrary /works/<id>.json": 2
+      },
+      "functionList": {
+        "function document /?q=the%20great%20gatsby": 1,
+        "cdn-after-first api /api/search?q=the+great+gatsby": 1,
+        "cdn-after-first api /api/works/<work>?summary=1": 3
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "book",
+      "path": "/book/OL468431W",
+      "note": "Buchseite, kuratiert (Gatsby, drei Ausgabenseiten)",
+      "requests": 66,
+      "failed": [],
+      "bytes": 731729,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 3889
+        },
+        "static": {
+          "n": 24,
+          "bytes": 464162
+        },
+        "api": {
+          "n": 6,
+          "bytes": 127563
+        },
+        "img": {
+          "n": 35,
+          "bytes": 136115
+        }
+      },
+      "model": {
+        "cdn": 25,
+        "cdn-after-first": 41,
+        "function": 0
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 35,
+      "blocked": [],
+      "redis": {
+        "HINCRBY": 2,
+        "EXPIRE": 2
+      },
+      "redisKeys": {
+        "HINCRBY ins:<day>:book": 1,
+        "HINCRBY ins:<day>:works": 1,
+        "EXPIRE ins:<day>:book": 1,
+        "EXPIRE ins:<day>:works": 1
+      },
+      "redisCommands": 4,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "cdn-after-first api /api/works/<work>": 1,
+        "cdn-after-first api /api/works/<work>?signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=100&signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=200&signatures=1": 1,
+        "cdn-after-first api /api/authors/OL27349A/works?name=F.%20Scott%20Fitzgerald": 1,
+        "cdn-after-first api /api/works/<work>?offset=300&signatures=1": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "book-cover",
+      "path": "/book/OL468431W?cover=ol%3A14369845",
+      "note": "Buchseite mit gewähltem Cover (Vermerk; ISBN 9783730600009)",
+      "requests": 53,
+      "failed": [],
+      "bytes": 695324,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 3889
+        },
+        "static": {
+          "n": 25,
+          "bytes": 489175
+        },
+        "api": {
+          "n": 8,
+          "bytes": 128369
+        },
+        "img": {
+          "n": 19,
+          "bytes": 73891
+        }
+      },
+      "model": {
+        "cdn": 26,
+        "cdn-after-first": 27,
+        "function": 0
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 19,
+      "blocked": [],
+      "redis": {
+        "HINCRBY": 2,
+        "EXPIRE": 2
+      },
+      "redisKeys": {
+        "HINCRBY ins:<day>:book": 1,
+        "HINCRBY ins:<day>:works": 1,
+        "EXPIRE ins:<day>:book": 1,
+        "EXPIRE ins:<day>:works": 1
+      },
+      "redisCommands": 4,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "cdn-after-first api /api/works/<work>": 1,
+        "cdn-after-first api /api/works/<work>?signatures=1": 1,
+        "cdn-after-first api /api/isbn/9783730600009?signatures=1": 1,
+        "cdn-after-first api /api/works/<work>?offset=100&signatures=1": 1,
+        "cdn-after-first api /api/similar/ol%3A14369845": 1,
+        "cdn-after-first api /api/works/<work>?offset=200&signatures=1": 1,
+        "cdn-after-first api /api/authors/OL27349A/works?name=F.%20Scott%20Fitzgerald": 1,
+        "cdn-after-first api /api/works/<work>?offset=300&signatures=1": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "decades",
+      "path": "/book/OL1168083W/decades",
+      "note": "Jahrzehnte-Seite",
+      "requests": 43,
+      "failed": [],
+      "bytes": 423096,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 11775
+        },
+        "static": {
+          "n": 20,
+          "bytes": 329274
+        },
+        "img": {
+          "n": 21,
+          "bytes": 81669
+        },
+        "api": {
+          "n": 1,
+          "bytes": 378
+        }
+      },
+      "model": {
+        "cdn": 20,
+        "cdn-after-first": 22,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 21,
+      "blocked": [],
+      "redis": {},
+      "redisKeys": {},
+      "redisCommands": 0,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "function document /book/<work>/decades": 1,
+        "cdn-after-first api /api/authors/OL118077A/works?name=George%20Orwell": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "collections",
+      "path": "/collections",
+      "note": "Sammlungen, Übersicht",
+      "requests": 135,
+      "failed": [],
+      "bytes": 805156,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 37198
+        },
+        "static": {
+          "n": 17,
+          "bytes": 312945
+        },
+        "img": {
+          "n": 117,
+          "bytes": 455013
+        }
+      },
+      "model": {
+        "cdn": 17,
+        "cdn-after-first": 117,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 117,
+      "blocked": [],
+      "redis": {
+        "GET": 3,
+        "LRANGE": 1,
+        "HGETALL": 2
+      },
+      "redisKeys": {
+        "GET collections:content": 1,
+        "GET collections:published": 1,
+        "GET collections:order": 1,
+        "LRANGE walls:showcase": 1,
+        "HGETALL walls:views": 1,
+        "HGETALL walls:reports": 1
+      },
+      "redisCommands": 6,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "function document /collections": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "collection",
+      "path": "/collections/sf-masterworks",
+      "note": "Eine Sammlung",
+      "requests": 92,
+      "failed": [],
+      "bytes": 621367,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 14682
+        },
+        "static": {
+          "n": 18,
+          "bytes": 322788
+        },
+        "img": {
+          "n": 73,
+          "bytes": 283897
+        }
+      },
+      "model": {
+        "cdn": 18,
+        "cdn-after-first": 73,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 73,
+      "blocked": [],
+      "redis": {
+        "GET": 6
+      },
+      "redisKeys": {
+        "GET collections:content": 2,
+        "GET collections:published": 2,
+        "GET collections:order": 2
+      },
+      "redisCommands": 6,
+      "cpuFlush": 32,
+      "catalogue": {},
+      "functionList": {
+        "function document /collections/sf-masterworks": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "versus",
+      "path": "/versus",
+      "note": "Das Spiel",
+      "requests": 25,
+      "failed": [],
+      "bytes": 357594,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 11269
+        },
+        "static": {
+          "n": 18,
+          "bytes": 322991
+        },
+        "img": {
+          "n": 6,
+          "bytes": 23334
+        }
+      },
+      "model": {
+        "cdn": 18,
+        "cdn-after-first": 6,
+        "function": 1
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 6,
+      "blocked": [],
+      "redis": {},
+      "redisKeys": {},
+      "redisCommands": 0,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {
+        "function document /versus": 1
+      }
+    },
+    {
+      "pass": "warm",
+      "id": "about",
+      "path": "/about",
+      "note": "About (statisch)",
+      "requests": 17,
+      "failed": [],
+      "bytes": 298753,
+      "byKlass": {
+        "document": {
+          "n": 1,
+          "bytes": 6745
+        },
+        "static": {
+          "n": 16,
+          "bytes": 292008
+        }
+      },
+      "model": {
+        "cdn": 17,
+        "cdn-after-first": 0,
+        "function": 0
+      },
+      "openLibrary": 0,
+      "google": 0,
+      "images": 0,
+      "blocked": [],
+      "redis": {},
+      "redisKeys": {},
+      "redisCommands": 0,
+      "cpuFlush": 0,
+      "catalogue": {},
+      "functionList": {}
+    }
+  ]
+}
