@@ -1029,3 +1029,7 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 5.17b
 
 **5.17b `/create` neu geordnet: ein Weg vorn, drei daneben.** (Julian, 2026-10-04: „überarbeite die oberfläche dieser seite. from a book sollte fokus oder erstes sein, sich klarer abgrenzen von from a collection. die beispielcollection sollte wyssberger sein, und 6 statt 4 cover zeigen. wahrscheinlich dann 4 wege zum anlegen, davon from a book herausgestellt. wenn man bei from a book eines anklickt, muss die seite automatisch runterscrollen zur coverauswahl“.) „From a book“ als abgesetzter erster Block auf getöntem Grund, die Coverauswahl direkt darunter; „Or start another way“ mit drei Karten nebeneinander (am Telefon untereinander): „From a collection“ (Hanspeter Wyss’ Ex-Libris-Umschläge vorgewählt, sechs Vorschau-Cover, darunter „Or start with 6 random favourites“), „From a photo“, „From your Calibre library“. Ein Klick auf ein Suchergebnis rollt die Seite zur Coverauswahl.
+
+## 2.18a
+
+**2.18a Vorladen aus.** Gemessen am 2026-10-05: ein Besuch von 81 s ließ 14 Buchseiten rendern, die niemand geöffnet hat, und je 4–6 Mal `/`, `/create`, `/versus` — `next/link` holt jeden sichtbaren Link, 39 Dateien nutzen es, nur `DecadeLink` schaltet es ab. Buchlinks und die Links in Kopf- und Fußzeile laden nur noch beim Zeigen mit der Maus vor; vorher und nachher an einer Sammlung zählen. Claude, 2 h, **zuerst**. Thema: Betrieb.

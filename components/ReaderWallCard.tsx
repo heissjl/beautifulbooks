@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import CoverImage from './CoverImage';
 import { useT } from './i18n';
 import { coverUrlFor } from '@/lib/coverurl';

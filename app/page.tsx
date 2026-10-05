@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import BookGrid from '@/components/BookGrid';
 import HeroSlot from '@/components/HeroSlot';
 import HomeSearchBar from '@/components/HomeSearchBar';

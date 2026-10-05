@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useT } from '@/components/i18n';
 import { commerceEnabled } from '@/lib/sitemode';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useEffect, useState } from 'react';
 import { rememberWall, tileAnchor } from './cameFrom';
 import CoverImage from './CoverImage';

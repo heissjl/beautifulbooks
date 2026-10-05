@@ -4637,3 +4637,11 @@ Julian am 2026-10-04: „i want to plan for virality and have everything either 
 **Veraltet im Befund der anderen Sitzung** (aus dem Chat): die Domain antwortet seit dem 2026-10-04, die Parkseite ist kein Blocker mehr.
 
 **Entschieden von Julian am 2026-10-05** (im Chat gefragt, Plan §6): J1 jetzt auf Pro; J2 Ausgabenlimit 100 USD mit Pause; J3 Fotos schließen, wenn die Redis schweigt; J4 die Redis jetzt auf 250 MB; J5 Sammlungen der Leser werden im Ernstfall nie gesperrt; J6 ein Cover auf Zuruf ausblenden wird sofort gebaut (2.18k). **Dazu gelesen:** Vercel-Preise für Frankfurt — CDN-Anfragen 2,60 USD je Million, Fast Data Transfer 0,15 USD je GB, Fast Origin Transfer 0,06 USD je GB, Fluid Active CPU 0,184 USD je Stunde, Provisioned Memory 0,0152 USD je GB-Stunde, ISR 5,20 / 0,52 USD je Million Schreib- / Leseeinheiten; Redis Essentials 0,007 USD je Stunde, mindestens 5 USD im Monat. Alle Cover laufen mit `unoptimized`, Vercels Bildoptimierung kostet also nichts.
+
+## 2026-10-05 · Kein Vorladen mehr (ROADMAP 2.18a)
+
+Gebaut, nicht deployt. `components/Link.tsx` ist `next/link` mit `prefetch={false}`; alle 39 Dateien, die `next/link` einbanden, binden jetzt diese Komponente ein, und `lib/__tests__/link.test.ts` schlägt bei einem zweiten Importeur fehl. `DecadeLink` wärmt sein Ziel weiter beim Zeigen mit der Maus.
+
+**Gemessen am lokalen Produktions-Build** (`next build`, `next start`, im Browser über `performance.getEntriesByType('resource')`; unter `next dev` lädt Next ohnehin nichts vor): `/collections/sf-masterworks` mit 73 Buchlinks, bis ans Ende gescrollt — 0 Abrufe mit `_rsc`, 0 auf `/book/`; Startseite mit 34 Links — 0; ein Klick auf eine Kachel — genau 1 Abruf (`/book/OL271163W`), die Seite öffnet. **Vorher, in Produktion am selben Tag:** ein Besuch von 81 s, 14 neu gerenderte Buchseiten und 4–6 Abrufe je dynamischer Seite aus Kopf- und Fußzeile.
+
+**Was es kostet:** der erste Klick auf ein Buch wartet auf den Server, statt aus dem Vorrat zu kommen; die Vorschau aus `storeWorkPreview` zeigt Titel und Cover in der Zwischenzeit. An der Oberfläche ändert sich kein Pixel, deshalb keine Messung bei 390 und 1280 px. **Analyse (3.1):** nicht berührt — die Signale lesen die Kacheln und die Herkunft, nicht das Vorladen. 1.277 Tests, tsc und Build grün.
