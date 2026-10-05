@@ -12,8 +12,8 @@
 
 /**
  * `#shelfportrait` since the page is called "My Shelf-Portrait" (2026-10-05);
- * it was `#booksthatinspiredme`. Claude's choice to follow the name — Julian
- * settled the name, not yet the hashtag.
+ * it was `#booksthatinspiredme`. Claude followed the name, and Julian kept
+ * it („ist gut so").
  */
 export const HASHTAG = '#shelfportrait';
 

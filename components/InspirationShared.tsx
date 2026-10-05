@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import CoverImage from './CoverImage';
 import InspirationMine from './InspirationMine';
-import { CopyLink, SharePicture } from './InspirationShareTools';
+import InspirationToCollection from './InspirationToCollection';
+import { CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
 import { SIZE_WORD } from '@/lib/inspiration/board';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
-import { shareTargets, shareText } from '@/lib/inspiration/share';
+import { shareTargets, shareText, subtitleOf, titleOf } from '@/lib/inspiration/share';
 import { SITE_NAME } from '@/lib/seo';
 
 /**
@@ -23,10 +24,11 @@ import { SITE_NAME } from '@/lib/seo';
  * English only for now, like the editor (ROADMAP 5.18b).
  */
 export default function InspirationShared({ board, query, link, walls, versus }: { board: DescribedBoard; query: string; link: string; walls: boolean; versus: boolean }) {
-  const title = board.by ? `The books that inspired ${board.by}` : 'The books that inspired me';
+  const title = titleOf(board.by);
   const books = board.books.flatMap((b) => (b ? [b] : []));
-  const word = SIZE_WORD[board.books.length === 6 ? 6 : 9];
-  const picture = (format: 'story' | 'feed' | 'card') => `/api/inspiration/poster?${query}&format=${format}`;
+  const size = board.books.length === 3 ? 3 : board.books.length === 6 ? 6 : 9;
+  const word = SIZE_WORD[size];
+  const fresh = size === 9 ? '/inspiration' : `/inspiration?n=${size}`;
   const pill = 'rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent';
   const accentPill = 'rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90';
   const more = 'text-accent underline decoration-line underline-offset-4 hover:decoration-accent';
@@ -34,7 +36,10 @@ export default function InspirationShared({ board, query, link, walls, versus }:
     <div className="grid gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)]">
       <div className="min-w-0">
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
-          <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{title}</h1>
+          <div className="min-w-0">
+            <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{title}</h1>
+            <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{subtitleOf(board.by)}</p>
+          </div>
           {/* At the top, where the collection page has "Edit collection": the way back into the board, or into one's own. */}
           <div className="flex flex-wrap gap-2">
             <InspirationMine
@@ -42,14 +47,14 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               maker={<Link href={`/inspiration?${query}`} className={accentPill}>Change it</Link>}
               visitor={
                 <>
-                  <Link href={board.books.length === 6 ? '/inspiration?n=6' : '/inspiration'} className={accentPill}>Make your own</Link>
+                  <Link href={fresh} className={accentPill}>Make your own</Link>
                   <Link href={`/inspiration?${query}`} className={pill}>Start from this one</Link>
                 </>
               }
             />
           </div>
         </div>
-        <p className="mt-3 text-base text-ink-2">{word} books, each with a favourite cover. What inspired you?</p>
+        <p className="mt-3 text-base text-ink-2">{word} books, each with a favourite cover. What’s yours?</p>
 
         <ul className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
           {board.books.map((b, i) => {
@@ -80,16 +85,12 @@ export default function InspirationShared({ board, query, link, walls, versus }:
 
           <h3 className="mt-4 text-lg text-ink">As a picture</h3>
           <p className="mt-1 text-sm text-ink-2">For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <a href={picture('story')} download="books-that-inspired-me-story.jpg" className="btn btn-accent">Save for a story</a>
-            <a href={picture('feed')} download="books-that-inspired-me.jpg" className="btn">Save for a post</a>
-            <SharePicture storyHref={picture('story')} link={link} text={shareText(board.by)} />
-          </div>
+          <PictureShare query={query} link={link} text={shareText(board.by)} />
 
           <h3 className="mt-7 text-lg text-ink">As a link</h3>
           <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
           {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself, at the size it is shown; next/image would transform it again */}
-          <img src={picture('card')} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
+          <img src={`/api/inspiration/poster?${query}&format=card`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
           <div className="mt-3 flex flex-wrap items-center gap-1.5">
             {shareTargets(link, board.by).map((s) => (
               <a key={s.id} href={s.href} target="_blank" rel="noopener" className={pill}>{s.label}</a>
@@ -98,8 +99,12 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           </div>
         </section>
 
-        {/* Folded, and plainer than a collection's list: who wants the books opens it, nobody else scrolls past nine rows. */}
-        <details className="group mt-10 border-t border-line pt-5">
+        {/*
+          Open, and plainer than a collection's list (Julian, 2026-10-05: „aufklappen" — it was folded
+          for one round, and where to find the editions is half of what the page is for). It can
+          still be folded away.
+        */}
+        <details open className="group mt-10 border-t border-line pt-5">
           <summary className="cursor-pointer list-none text-base text-ink transition-colors hover:text-accent">
             <span className="mr-1.5 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
             Are any of these missing from your library?{' '}
@@ -122,12 +127,15 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           </ol>
         </details>
 
+        {/* The way on from a board: the same covers as a collection one keeps, adds to and arranges (5.13a). */}
+        {walls && <InspirationToCollection title={title} books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author }] : []))} />}
+
         <InspirationMine
           query={query}
           maker={null}
           visitor={
             <div className="mt-10 border-t border-line pt-6">
-              <Link href={board.books.length === 6 ? '/inspiration?n=6' : '/inspiration'} className="btn btn-accent">What inspired you? Make your own</Link>
+              <Link href={fresh} className="btn btn-accent">What inspires you? Make your own</Link>
             </div>
           }
         />

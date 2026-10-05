@@ -64,9 +64,31 @@ export function emptyBoard(size: BoardSize = SLOTS): Board {
 
 export const sizeOf = (board: Board): BoardSize => (board.slots.length === 3 ? 3 : board.slots.length === 6 ? 6 : 9);
 
-/** The same books on a board of another size: the first ones stay when a board shrinks. */
-export function resize(board: Board, size: BoardSize): Board {
-  return { ...board, slots: Array.from({ length: size }, (_, i) => board.slots[i] ?? null) };
+/**
+ * The same books on a board of another size. A smaller board keeps the first
+ * books and hands the others back as `spare`, in their order; a bigger one
+ * takes `spare` books into its empty places. Nothing is thrown away by
+ * choosing a size: whoever goes from nine to three and back has nine again.
+ * Places are kept where the books fit, and closed up only where they do not.
+ */
+export function resize(board: Board, size: BoardSize, spare: readonly Slot[] = []): { board: Board; spare: Slot[] } {
+  const beyond = board.slots.slice(size).some(Boolean);
+  const books = board.slots.flatMap((s) => (s ? [s] : []));
+  const slots: (Slot | null)[] = beyond
+    ? Array.from({ length: size }, (_, i) => books[i] ?? null)
+    : Array.from({ length: size }, (_, i) => board.slots[i] ?? null);
+  const waiting = beyond ? [...books.slice(size), ...spare] : spare;
+  // A book set aside and since added again is on the board once, not twice.
+  const known = new Set(slots.flatMap((s) => (s ? [s.workId] : [])));
+  const rest: Slot[] = [];
+  for (const book of waiting) {
+    if (known.has(book.workId)) continue;
+    known.add(book.workId);
+    const free = slots.indexOf(null);
+    if (free < 0) rest.push(book);
+    else slots[free] = book;
+  }
+  return { board: { ...board, slots }, spare: rest };
 }
 
 /** A name as the poster can print it: one line, no control characters, at most NAME_MAX. */

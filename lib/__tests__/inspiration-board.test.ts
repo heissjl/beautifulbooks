@@ -115,13 +115,43 @@ describe('the board of six', () => {
     expect(swap(six(), 0, 5).slots[0]).toEqual(dune);
   });
 
-  it('shrinks to the first six and grows back with empty places', () => {
+  const book = (n: number) => ({ workId: `OL${n}W`, coverId: `ol:${n}` });
+
+  it('keeps the places when the books fit the smaller board', () => {
     let nine = emptyBoard();
-    [0, 3, 7].forEach((i, n) => { nine = place(nine, i, { workId: `OL${n + 1}W`, coverId: `ol:${n + 1}` }); });
+    [0, 3, 5].forEach((i, n) => { nine = place(nine, i, book(n + 1)); });
     const small = resize(nine, 6);
-    expect(small.slots).toHaveLength(6);
-    expect(filledCount(small)).toBe(2);
-    expect(resize(small, 9).slots).toHaveLength(9);
-    expect(SIZE_WORD[sizeOf(small)]).toBe('Six');
+    expect(small.board.slots).toEqual([book(1), null, null, book(2), null, book(3)]);
+    expect(small.spare).toEqual([]);
+    expect(SIZE_WORD[sizeOf(small.board)]).toBe('Six');
+  });
+
+  it('sets books aside instead of dropping them, and brings them back', () => {
+    let nine = emptyBoard();
+    for (let i = 0; i < 9; i++) nine = place(nine, i, book(i + 1));
+    const three = resize(nine, 3);
+    expect(three.board.slots).toEqual([book(1), book(2), book(3)]);
+    expect(three.spare).toHaveLength(6);
+    const back = resize(three.board, 9, three.spare);
+    expect(back.board).toEqual(nine);
+    expect(back.spare).toEqual([]);
+  });
+
+  it('closes the gaps when a book sits beyond the smaller board', () => {
+    let nine = emptyBoard();
+    [0, 7].forEach((i, n) => { nine = place(nine, i, book(n + 1)); });
+    const three = resize(nine, 3);
+    expect(three.board.slots).toEqual([book(1), book(2), null]);
+    expect(three.spare).toEqual([]);
+  });
+
+  it('does not bring back a book that was added again meanwhile', () => {
+    let nine = emptyBoard();
+    for (let i = 0; i < 4; i++) nine = place(nine, i, book(i + 1));
+    const three = resize(nine, 3);
+    const swapped = place(remove(three.board, 0), 0, book(4));
+    const six = resize(swapped, 6, three.spare);
+    expect(six.board.slots.filter(Boolean)).toEqual([book(4), book(2), book(3)]);
+    expect(six.spare).toEqual([]);
   });
 });

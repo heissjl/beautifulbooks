@@ -7,6 +7,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { type Board, boardQuery, parseBoard, SIZE_WORD, sizeOf } from '@/lib/inspiration/board';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { describeBoard } from '@/lib/inspiration/describe';
+import { subtitleOf, titleOf } from '@/lib/inspiration/share';
 import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
@@ -34,9 +35,9 @@ export async function origin(): Promise<string> {
 }
 
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
-  const title = board?.by ? `The books that inspired ${board.by}` : 'The books that inspired me';
-  const description = `${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. What inspired you?`;
-  // Not indexed while the page lives behind its switch; the card makes a shared link show the nine covers.
+  const title = titleOf(board?.by ?? '');
+  const description = `${subtitleOf(board?.by ?? '')}: ${(board ? SIZE_WORD[sizeOf(board)] : 'Nine').toLowerCase()} books, each with a favourite cover. What’s yours?`;
+  // Not indexed while the page lives behind its switch; the card makes a shared link show the covers.
   const images = board ? [{ url: `${await origin()}/api/inspiration/poster?${boardQuery(board)}&format=card`, width: 1200, height: 630 }] : undefined;
   return {
     title,

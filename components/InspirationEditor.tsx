@@ -7,8 +7,10 @@ import { coverRefFromUrl, coverUrlFor } from '@/lib/coverurl';
 import { rememberMade } from './inspirationMemory';
 import {
   NAME_MAX,
+  SIZES,
   SIZE_WORD,
   type Board,
+  type Slot,
   boardQuery,
   cleanName,
   filledCount,
@@ -27,8 +29,9 @@ import type { SearchResult } from '@/lib/search';
 import { SITE_NAME } from '@/lib/seo';
 
 /**
- * The editor of "The books that inspired me" (ROADMAP 5.18b), moved here from
- * `lab/inspiration` on 2026-10-05 so that it can be developed on a preview.
+ * The editor of "My Shelf-Portrait" (ROADMAP 5.18b; "The books that inspired
+ * me" until Julian named it on 2026-10-05), moved here from `lab/inspiration`
+ * that day so that it can be developed on a preview.
  *
  * It follows "Arrange" in the collection editor (`CollectionEditor.tsx`): a
  * band that keeps the state and the way out in sight, every cover's tools
@@ -37,7 +40,7 @@ import { SITE_NAME } from '@/lib/seo';
  * bottom on a phone (Julian, 2026-10-05: „mit pop-up im desktop mode, mobil
  * vielleicht anders").
  *
- * **The address is the board.** Nine places fit in a query string
+ * **The address is the board.** Three, six or nine places fit in a query string
  * (`lib/inspiration/board.ts`), so nothing is stored while a board is made
  * and a reload loses nothing; only "Done" asks for a link.
  *
@@ -83,7 +86,7 @@ const pill = (active: boolean) =>
   `rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
 const plain = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
-export default function InspirationEditor({ initialQuery, initialNames }: { initialQuery: string; initialNames: Record<string, Named> }) {
+export default function InspirationEditor({ initialQuery, initialNames, children }: { initialQuery: string; initialNames: Record<string, Named>; children?: React.ReactNode }) {
   const router = useRouter();
   const [board, setBoard] = useState<Board>(() => parseBoard(new URLSearchParams(initialQuery)));
   // What the reader types, kept apart from the cleaned name: cleaning trims, and a trimmed field cannot take a space.
@@ -96,6 +99,8 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
   const [lists, setLists] = useState<Lists>({ state: 'idle' });
   const [covers, setCovers] = useState<Covers | null>(null);
   const [link, setLink] = useState<{ busy: boolean; note: string }>({ busy: false, note: '' });
+  // Books a smaller board had no place for. Kept here, not in the address: a reload forgets them, a bigger board takes them back.
+  const [spare, setSpare] = useState<Slot[]>([]);
 
   useEffect(() => {
     const q = boardQuery(board);
@@ -111,7 +116,7 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
     at a time. A mouse picks a cover up anywhere on it; a finger only by the
     grip, which has `touch-action: none` — on the cover itself a finger must
     still scroll the page. Dropping on another place swaps the two: the board
-    has nine fixed places, so nothing shifts. The press is kept outside
+    has fixed places, so nothing shifts. The press is kept outside
     React's state because it is only read in handlers, never in render.
   */
   const [drag, setDrag] = useState<{ from: number; over: number | null } | null>(null);
@@ -224,6 +229,14 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
     }
   }
 
+  function chooseSize(next: (typeof SIZES)[number]) {
+    if (next === size) return;
+    const fitted = resize(board, next, spare);
+    setBoard(fitted.board);
+    setSpare(fitted.spare);
+    setTarget(firstEmpty(fitted.board));
+  }
+
   const coversSlot = win?.kind === 'covers' ? board.slots[win.index] : null;
 
   return (
@@ -246,17 +259,42 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
         two rows and the top of the third are in view (the board ends 120 px below the fold — narrower
         covers would not hold four tools). On a phone the two stack.
       */}
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-8 sm:px-6 sm:pb-24 lg:grid lg:grid-cols-[minmax(0,1fr)_27rem] lg:items-start lg:gap-x-16 lg:px-8">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-8 sm:px-6 sm:pb-24 lg:px-8">
+        {/* A grid of its own: the words stay in view only as long as the board is, and never slide over what follows. */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_27rem] lg:items-start lg:gap-x-16">
         <div className="max-w-xl lg:sticky lg:top-32">
-          <h1 className="text-3xl leading-tight text-ink sm:text-4xl">The books that inspired me</h1>
+          {/* Two lines, the name above and what it is below (Julian, 2026-10-05: „Oben: My Shelf-Portrait, unten: The books that inspire me"). */}
+          <h1 className="text-3xl leading-tight text-ink sm:text-4xl">My Shelf-Portrait</h1>
+          <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">The books that inspire me</p>
           <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books that changed how you see things, with your favourite covers.</p>
+
+          {/*
+            Three, six or nine (Julian, 2026-10-05: „gib die möglichkeit sich zwischen 3, 6 und 9 zu
+            entscheiden beim erstellen"). Before the steps, because the first step counts the books.
+          */}
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2" role="group" aria-label="How many books">
+            <span className="text-sm text-ink-2">How many books?</span>
+            <span className="flex gap-1.5">
+              {SIZES.map((n) => (
+                <button key={n} type="button" aria-pressed={n === size} aria-label={`${SIZE_WORD[n]} books`} onClick={() => chooseSize(n)} className={`${pill(n === size)} min-w-11 tabular-nums`}>
+                  {n}
+                </button>
+              ))}
+            </span>
+          </div>
+          {spare.length > 0 && (
+            <p className="mt-2 text-sm text-ink-3" role="status">
+              {spare.length === 1 ? 'One book is set aside' : `${spare.length} books are set aside`} — a bigger board brings {spare.length === 1 ? 'it' : 'them'} back.
+            </p>
+          )}
+
           {/*
             The way through it, on the page and not only in the windows (Julian, 2026-10-05): that a cover
             can be changed after the book is placed was said nowhere a reader looked before they clicked.
           */}
-          <ol className="mt-4 space-y-1.5 text-sm text-ink-2">
+          <ol className="mt-5 space-y-1.5 text-sm text-ink-2">
             <li><span className="mr-2 text-ink-3 tabular-nums">1</span>Add {SIZE_WORD[size].toLowerCase()} books — search for them or browse a list.</li>
-            <li><span className="mr-2 text-ink-3 tabular-nums">2</span><strong className="font-medium text-ink">Then change the covers.</strong> Each book arrives with its best-known one; a tap on it shows the others.</li>
+            <li><span className="mr-2 text-ink-3 tabular-nums">2</span><strong className="font-medium text-ink">Then change the covers.</strong> Each book arrives with its best-known one; a tap on it shows the others — pick the one you love.</li>
             <li><span className="mr-2 text-ink-3 tabular-nums">3</span>Share the picture.</li>
           </ol>
           {link.note && <p className="mt-3 text-sm text-accent" role="alert">{link.note}</p>}
@@ -272,31 +310,9 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
             }}
             className="mt-5 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
           />
-          {/*
-            The board of six, to look at beside the board of nine (Julian, 2026-10-05: „mach eine lokale
-            alternative mit nur 6 büchern"). The switch shows under `next dev` only; the address `?n=6`
-            works wherever the page is on, so a board of six can be passed around and compared.
-          */}
-          {process.env.NODE_ENV === 'development' && (
-            <p className="mt-4 text-xs text-ink-3">
-              Local only:{' '}
-              <button
-                type="button"
-                className="underline underline-offset-2 hover:text-accent"
-                onClick={() => {
-                  const next = resize(board, size === 9 ? 6 : 9);
-                  setBoard(next);
-                  setTarget(firstEmpty(next));
-                }}
-              >
-                {size === 9 ? 'try the board with six books' : 'back to the board with nine books'}
-              </button>
-              {size === 9 && filled > 6 && ' (keeps the first six)'}
-            </p>
-          )}
         </div>
 
-        <section className="mt-6 max-w-xl lg:mt-0" aria-label="Your nine books">
+        <section className="mt-6 max-w-xl lg:mt-0" aria-label={`Your ${SIZE_WORD[size].toLowerCase()} books`}>
             {/* Said in words, not only in a tile's `title`: a tooltip never shows on a touch screen (Arrange learnt this on 2026-10-04). */}
             <p className="text-sm text-ink-2">
               {filled === 0 ? (
@@ -369,6 +385,8 @@ export default function InspirationEditor({ initialQuery, initialNames }: { init
               })}
             </ul>
         </section>
+        </div>
+        {children}
       </main>
 
       {win?.kind === 'add' && (
