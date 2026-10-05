@@ -4492,3 +4492,26 @@ Julian: „baue jetzt den größten scan desselben motivs im sammlungs-modus" un
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.202 Tests (75 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-05 · Vor einem Ansturm: die Grenzen gelesen, ein Besuch im Log gezählt (ROADMAP 2.18)
+
+Julian am 2026-10-04: „i want to plan for virality and have everything either robust or prepared for quick change when it happens." Während der Arbeit kam Vercels Mail: **90 % der 4 Stunden „Fluid Active CPU" verbraucht**, bei 100 % „your projects will be automatically paused". Nichts gebaut; der Plan ist [PLAN-2.18-ansturm.md](plans/PLAN-2.18-ansturm.md).
+
+**Gelesen, in der Doku der Anbieter am 2026-10-04/05:**
+
+| Anbieter | Grenze |
+|---|---|
+| Vercel Hobby | 1 Mio. CDN-Anfragen, 1 Mio. Funktionsaufrufe, 4 CPU-Stunden, 360 GB-Stunden Speicher, **10 GB Fast Origin Transfer**, 100 GB Fast Data Transfer, 50.000 Web-Analytics-Ereignisse im Monat, Laufzeit-Logs eine Stunde; über der Grenze „wait until 30 days have passed" |
+| Vercel Pro | CDN pauschal (Flat Rate CDN: 1 Mio. Anfragen und 1 TB eingeschlossen, darüber „served normally … isn't billed (subject to the fair use guidelines)"), 0,60 USD je Mio. Funktionsaufrufe, ab 0,128 USD je CPU-Stunde; Ausgabenlimit mit Meldung bei 50/75/100 % und Pause, geprüft „every few minutes" |
+| Vercel CDN | Cache je Region; `stale-if-error` wird unterstützt; ein Treffer ist nicht garantiert („best-effort") |
+| Redis Cloud, 30 MB frei (`redis-pink-yacht`) | **30 Verbindungen, 100 Befehle je Sekunde, 5 GB Netz im Monat**; 250 MB: 256 Verbindungen, 1.000 je Sekunde, 100 GB |
+
+**Gemessen:**
+
+- `vercel metrics … function_cpu_time_ms --group-by route` antwortet auf Hobby „Observability Plus is required", für jedes Zeitfenster von 1 h bis 30 d; `vercel usage` antwortet „Costs not found (404)". **Wohin die CPU ging, ist aus der Kommandozeile nicht zu lesen.**
+- Laufzeit-Logs der letzten Stunde (`vercel logs --json`, nach `id` entdoppelt — 3.000 Zeilen sind 50 bis 139 Anfragen): 23:43–23:56 UTC 50 Anfragen in 13 Minuten; 00:09–00:11 UTC **ein Besuch, 139 Anfragen in 81 s**: 54 Bilder ohne CDN-Treffer, 56 Abrufe von 14 Buchseiten (14 × `MISS`, also neu gerendert, 14 × `HIT`, 28 × `PRERENDER`) mit benachbarten Werk-IDs (OL1099641W–OL1100007W, die Liste eines Autors), 6 × `/`, 4 × `/create`, 4 × `/versus`, je 4 × `/about` und `/privacy`. Niemand öffnet 14 Bücher in drei Sekunden: das ist das Vorladen von `next/link`. Kein Crawler-Sturm in dieser Stunde.
+- Am Code: Startseite (`searchParams`), `/collections`, `/collections/<slug>`, `/c/<id>`, `/versus`, `/create` rendern bei jedem Aufruf in einer Funktion; die ersten drei lesen drei Schlüssel aus der Redis, darunter ganze Sammlungen (17–41 KB je Sammlung in `data/collections.json`). Ein Seitensignal schreibt 4 Befehle. Die Redis hat eine Verbindung je Funktionsinstanz. Die Fotoroute läuft weiter, wenn Zähler und Budget nicht lesbar sind. `lib/sources/openlibrary.ts` hat keinen Automaten für abgewiesene Verbindungen. 39 Dateien nutzen `<Link>`, eine schaltet das Vorladen ab.
+
+**Nicht gemessen:** der Anteil je Route an den 3,6 CPU-Stunden; ob ein Deploy den Bild-Cache des CDN leert; ob Pro ein pausiertes Hobby-Projekt sofort zurückholt; Verdrängungsregel und Füllstand der Redis.
+
+**Veraltet im Befund der anderen Sitzung** (aus dem Chat): die Domain antwortet seit dem 2026-10-04, die Parkseite ist kein Blocker mehr.
