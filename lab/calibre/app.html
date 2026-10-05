@@ -40,7 +40,10 @@
   .group { grid-column: 1 / -1; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: 14px; }
   .group b { font-size: 15px; }
   .group.rest { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 6px; color: var(--soft); }
+  .group.next { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 6px; }
   .frame .mark.todo { background: var(--accent); }
+  .frame .mark.chosen { background: #555; }
+  .cover.chosen .frame { border-color: #555; box-shadow: 0 0 0 2px #555; }
   #shade { position: fixed; inset: 0; background: var(--shade); z-index: 10; }
   #drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(680px, 100vw); background: var(--bg); z-index: 11; overflow-y: auto; border-left: 1px solid var(--line); padding: 16px 16px 60px; }
   #drawer h2 { font-size: 20px; margin: 0; }
@@ -152,6 +155,9 @@ const bookOf = (id) => S.books.find((b) => b.id === id);
 const isSmall = (b) => b.size && b.size.width < SMALL_WIDTH;
 // Changed here and not yet marked as sent: the cover is in Calibre, the reader still has the old one.
 const toSend = (b) => !!b.applied && !b.sent;
+// A cover chosen for the book and not written anywhere yet: it waits in the batch.
+const inBatch = (b) => !!b.chosen;
+const olThumb = (coverId) => (/^ol:\d+$/.test(coverId) ? `https://covers.openlibrary.org/b/id/${coverId.slice(3)}-M.jpg` : null);
 const dayOf = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 const canWrite = () => S.mode === 'write' && S.problems.length === 0;
 // The reader's pictures are not Calibre's library: they can be written while Calibre is open — which it is, when books were just sent.
@@ -183,10 +189,13 @@ function shown() {
 }
 
 function tile(b) {
+  // In the batch a book shows the cover chosen for it — that is what a push would write.
+  const waiting = inBatch(b) && olThumb(b.chosen);
   return el('button', { class: 'book', id: `book-${b.id}`, onclick: () => openBook(b.id) },
     el('div', { class: 'frame' },
-      b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
-      b.applied ? el('span', { class: `mark${toSend(b) ? ' todo' : ''}`, title: toSend(b) ? `Changed here on ${dayOf(b.appliedAt)}. The reader still shows the old cover.` : `Changed here on ${dayOf(b.appliedAt)}, marked as sent to the reader.` }, toSend(b) ? 'to send' : 'changed · sent') : null),
+      waiting ? thumb(waiting) : b.size ? el('img', { src: `/old/${b.id}?t=${token}&v=${b.v}`, alt: '', loading: 'lazy' }) : el('span', { class: 'none' }, b.hasCover ? 'cover not on this Mac' : 'no cover'),
+      inBatch(b) ? el('span', { class: 'mark chosen', title: `Chosen, not written: Calibre still has ${b.size ? 'its cover' : 'no cover'}.${b.readerCover === b.chosen ? ' The reader’s shelves show it already.' : ''}` }, b.readerCover === b.chosen ? 'chosen · on reader' : 'chosen')
+        : b.applied ? el('span', { class: `mark${toSend(b) ? ' todo' : ''}`, title: toSend(b) ? `Changed here on ${dayOf(b.appliedAt)}. The reader still shows the old cover.` : `Changed here on ${dayOf(b.appliedAt)}, marked as sent to the reader.` }, toSend(b) ? 'to send' : 'changed · sent') : null),
     el('div', { class: 't' }, b.title),
     el('div', { class: 'a' }, b.authors.join(', ') || '—'),
     el('div', { class: `s${isSmall(b) ? ' small' : ''}` }, b.size ? px(b.size) : ''));
@@ -194,7 +203,8 @@ function tile(b) {
 
 function renderTop() {
   const waiting = S.books.filter(toSend).length;
-  $('stats').textContent = `${S.library.books} books · ${S.books.filter((b) => b.size).length} with a cover · ${S.books.filter(isSmall).length} small${waiting ? ` · ${waiting} to send to the reader` : ''}`;
+  const batched = S.books.filter(inBatch).length;
+  $('stats').textContent = `${S.library.books} books · ${S.books.filter((b) => b.size).length} with a cover · ${S.books.filter(isSmall).length} small${batched ? ` · ${batched} chosen, not written` : ''}${waiting ? ` · ${waiting} to send to the reader` : ''}`;
   $('mode').textContent = S.mode === 'write' ? 'writing is on' : 'looking only';
   $('mode').className = `pill${S.mode === 'write' ? ' write' : ''}`;
   $('mode').title = `${S.mode === 'write' ? `Backups and journal: ${S.backupRoot}` : 'Start the app with --write to change the library.'}\nThe catalogue is asked ${S.catalogue === 'site' ? 'through buyitscovers.com' : 'at Open Library directly'}.`;
@@ -211,17 +221,83 @@ function renderTop() {
 function renderGrid() {
   const list = shown();
   if (!list.length) { $('grid').replaceChildren(el('p', { class: 'meta' }, 'No book matches.')); return; }
-  const todo = list.filter(toSend).sort((a, b) => b.appliedAt.localeCompare(a.appliedAt));
-  const rest = list.filter((b) => !toSend(b));
-  if (!todo.length) { $('grid').replaceChildren(...rest.map(tile)); return; }
+  // The batch before everything: covers chosen and written nowhere yet.
+  const batched = list.filter(inBatch);
+  const todo = list.filter((b) => !inBatch(b) && toSend(b)).sort((a, b) => b.appliedAt.localeCompare(a.appliedAt));
+  const rest = list.filter((b) => !inBatch(b) && !toSend(b));
+  // The buttons write the whole batch, so the line counts the whole batch — also the books a filter hides just now.
+  const whole = S.books.filter(inBatch);
+  if (!todo.length && !whole.length) { $('grid').replaceChildren(...rest.map(tile)); return; }
   fill($('grid'),
-    el('div', { class: 'group' },
+    whole.length ? batchLine(whole, whole.length - batched.length) : null,
+    batched.map(tile),
+    !todo.length ? null : el('div', { class: `group${whole.length ? ' next' : ''}` },
       el('b', {}, `Changed here — ${todo.length} to send to the reader`),
       readerLine(todo),
       el('button', { class: 'chip', onclick: () => markSent(todo.map((b) => b.id), true) }, todo.length === 1 ? 'Mark as sent' : `Mark all ${todo.length} as sent`)),
     todo.map(tile),
     rest.length ? el('div', { class: 'group rest' }, `${rest.length} other book${rest.length === 1 ? '' : 's'}`) : null,
     rest.map(tile));
+}
+
+/*
+ * The batch: covers chosen in the compare box with „Add to the batch" and
+ * written nowhere. One push writes all of them to Calibre, another to the
+ * reader's shelves (Julian, 2026-10-05: „aber ich will die möglichkeit auch
+ * für den ganzen batch"). A book leaves the batch when Calibre has its cover.
+ */
+let batch = null;                   // { to, done, of } while a push runs
+let batchFailed = [];               // what the last push could not write, in words
+function batchLine(batched, hidden) {
+  const forReader = batched.filter((b) => b.onReader && b.readerCover !== b.chosen);
+  const there = batched.filter((b) => b.readerCover === b.chosen).length;
+  const absent = S.reader ? batched.filter((b) => !b.onReader).length : 0;
+  return el('div', { class: 'group' },
+    el('b', {}, `Chosen — ${batched.length} not written yet`),
+    hidden ? el('span', { class: 'meta' }, `(${hidden} not shown by the filter)`) : null,
+    batch ? el('span', { class: 'meta' }, `Writing to ${batch.to === 'calibre' ? 'Calibre' : 'the PocketBook'}: ${batch.done} of ${batch.of}…`) : [
+      el('button', { class: 'primary', disabled: !canWrite(), title: canWrite() ? 'Writes each chosen cover into Calibre, one book after the other, with a backup of the cover that was there.' : S.mode === 'write' ? S.problems.join(' ') : 'Start the app with --write.', onclick: () => writeBatch('calibre') },
+        batched.length === 1 ? 'Write it to Calibre' : `Write ${batched.length} to Calibre`),
+      el('button', { disabled: !canWriteReader() || !forReader.length, title: !S.reader ? 'Connect the PocketBook.' : !forReader.length ? 'None of these is waiting for the reader.' : 'Writes each chosen cover as the reader’s pictures of the book — library and home screen. Calibre keeps its covers, no book file is touched.', onclick: () => writeBatch('reader') },
+        !forReader.length ? 'Write to the PocketBook' : forReader.length === 1 ? 'Write 1 to the PocketBook' : `Write ${forReader.length} to the PocketBook`),
+      el('button', { class: 'chip', onclick: emptyBatch }, 'Empty the batch'),
+      el('span', { class: 'meta' }, `Nothing is written until you press a button.${!S.reader ? ' The PocketBook is not connected.' : `${there ? ` ${there} on the reader’s shelves already.` : ''}${absent ? ` ${absent} not on the reader.` : ''}`}`),
+    ],
+    batchFailed.map((line) => el('span', { class: 'note bad', style: 'flex-basis:100%' }, line)));
+}
+
+async function writeBatch(to) {
+  const books = S.books.filter((b) => inBatch(b) && (to === 'calibre' || (b.onReader && b.readerCover !== b.chosen)));
+  batch = { to, done: 0, of: books.length };
+  batchFailed = [];
+  renderGrid();
+  for (const b of books) {
+    const r = to === 'calibre'
+      ? await api('/api/apply', { bookId: b.id, coverId: b.chosen, allowSmaller: !!b.chosenSmaller })
+      : await api('/api/reader', { bookId: b.id, coverId: b.chosen });
+    if (r.status === 200) S = r.body.state;
+    else batchFailed.push(`${b.title}: ${r.body.error ?? 'not written.'}`);
+    batch.done++;
+    // The writer has stopped for this session: the rest would only fail the same way.
+    if (r.body.halted) { S = (await api('/api/state')).body; break; }
+    renderGrid();
+  }
+  batch = null;
+  renderTop();
+  renderGrid();
+  if (open && bookOf(open.id)) { renderHead(); renderCovers(); }
+}
+
+async function setChosen(bookId, coverId, smaller) {
+  const r = await api('/api/chosen', { bookId, coverId, smaller: !!smaller });
+  if (r.status === 200) refreshAfterWrite(r.body.state, bookId);
+  return r;
+}
+
+async function emptyBatch() {
+  for (const b of S.books.filter(inBatch)) await setChosen(b.id, null);
+  batchFailed = [];
+  renderGrid();
 }
 
 /*
@@ -437,6 +513,8 @@ function renderHead() {
         el('p', { class: 'meta' }, [b.formats.join(', '), b.languages.map(langName).join(', '), b.isbns[0] ? `ISBN ${b.isbns[0]}` : 'no ISBN', `#${b.id}`].filter(Boolean).join(' · ')),
         b.applied ? el('p', { class: 'note ok' }, `This cover was put here by the app on ${dayOf(b.appliedAt)}. `,
           b.readerHas ? 'The reader’s shelves show it.' : toSend(b) ? 'The reader still shows the old one.' : 'Marked as sent to the reader.') : null,
+        b.chosen ? el('p', { class: 'note ok' }, 'A cover is chosen for this book and waits in the batch — nothing is written yet. ',
+          el('button', { class: 'chip', onclick: () => setChosen(b.id, null) }, 'Remove from the batch')) : null,
         // A cover written to the reader alone: its shelves and Calibre show different covers, on purpose.
         b.onReader && b.readerCover && b.readerCover !== b.applied ? el('p', { class: 'note ok' }, 'The reader’s shelves show a cover the app put there — not the one in Calibre.') : null,
         // With the reader connected the app writes its pictures itself; without it, the mark is Julian's word.
@@ -511,7 +589,7 @@ function coverTile(c, b, mine) {
     open.tiles.set(c.coverId, t);
   }
   const own = mine.has(c.coverId);
-  t.className = `cover${own ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`;
+  t.className = `cover${own ? ' mine' : ''}${b.applied === c.coverId ? ' inuse' : ''}${b.chosen === c.coverId ? ' chosen' : ''}${tier(c, b.size) >= 2 ? ' less' : ''}`;
   t.title = [own ? 'Open Library lists this cover under the ISBN that Calibre has for the book. An ISBN names a printing, not a picture: it need not be the cover your file came with.' : '', c.publishers.join(', ')].filter(Boolean).join('\n');
   t.children[1].textContent = (c.size ? `${c.size.width} × ${c.size.height}` : c.size === null ? 'size unknown' : '…') + (tier(c, b.size) === 4 ? ' · too small' : '');
   t.children[2].textContent = [own ? 'same ISBN' : '', c.year, c.languages.map((l) => l.toUpperCase()).join(' ')].filter(Boolean).join(' · ') || '—';
@@ -611,6 +689,9 @@ function renderCompare() {
         p.busy === 'calibre' ? (p.check?.ok ? 'Writing…' : 'Fetching the image, then writing…') : smaller ? 'Write to Calibre anyway' : 'Write to Calibre'),
       p.onReader ? null : el('button', { class: p.inCalibre ? 'primary' : '', disabled: !canWriteReader() || !size || !S.reader || !b.onReader || !!p.busy, title: readerWhy(b), onclick: toReader },
         p.busy === 'reader' ? (p.check?.ok ? 'Writing…' : 'Fetching the image, then writing…') : 'Write to the PocketBook'),
+      // Neither now: the choice goes into the batch, and the overview writes the whole batch on one push.
+      p.inCalibre ? null : el('button', { disabled: !!p.busy || b.chosen === p.cover.coverId, title: 'Keeps this choice without writing it. The overview shows the batch first, with one button for Calibre and one for the PocketBook.', onclick: toBatch },
+        b.chosen === p.cover.coverId ? 'In the batch' : 'Add to the batch'),
       el('button', { onclick: closeCompare }, p.inCalibre || p.onReader ? 'Done' : 'Cancel')),
     p.inCalibre || p.onReader || S.mode !== 'write' ? null : el('p', { class: 'meta', style: 'margin:8px 0 0' },
       `Nothing is written until you press a button. ${S.problems.length ? 'Calibre cannot be written to right now (see the top of the window). ' : ''}${!S.reader ? 'The PocketBook is not connected.' : !b.onReader ? 'This book is not on the PocketBook.' : `${S.reader.name} is connected.`}`)));
@@ -621,6 +702,16 @@ function readerWhy(b) {
   if (!S.reader) return 'Connect the PocketBook: the app can then write this cover as the reader’s pictures of the book.';
   if (!b.onReader) return 'Calibre has not sent this book to the reader.';
   return 'Writes the reader’s own pictures of this book — library and home screen — from this cover. Calibre keeps the cover it has, no book file is touched, and the reader’s old pictures are kept on this Mac.';
+}
+
+async function toBatch() {
+  const p = picked;
+  const size = p.check?.ok ? p.check : p.cover.size;
+  // The warning about fewer pixels was on the screen when this was pressed: the batch does not ask again.
+  const smaller = !!(size && p.old && !p.old.missing && size.width * size.height < 0.9 * p.old.width * p.old.height);
+  const r = await setChosen(p.bookId, p.cover.coverId, smaller);
+  if (r.status !== 200) { p.error = r.body.error ?? 'The choice was not kept.'; if (picked === p) renderCompare(); return; }
+  if (picked === p) closeCompare();
 }
 
 async function toReader() {
@@ -721,7 +812,7 @@ async function refresh() {
   const { status, body } = await api('/api/state');
   if (status !== 200) return;
   // What the overview shows of each book, and whether the reader is there.
-  const seen = () => JSON.stringify([S.reader?.name, S.books.map((b) => [b.id, b.v, b.applied, b.title, b.onReader, b.readerCover])]);
+  const seen = () => JSON.stringify([S.reader?.name, S.books.map((b) => [b.id, b.v, b.applied, b.title, b.onReader, b.readerCover, b.chosen])]);
   const before = seen();
   S = body;
   if (before === seen()) return;

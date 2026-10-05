@@ -37,6 +37,7 @@ import type { AddressInfo } from 'node:net';
 import { appendFileSync, existsSync, readFileSync, statSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { isWorkId, makeToken } from './site';
+import { readChoice, writeChoice } from './batch';
 import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
 import { FileMap } from './filemap';
@@ -78,6 +79,8 @@ const works = new WorkMap(join(writer.root, 'works.json'));
  * the cover: a book changed again is to send again.
  */
 const sent = new FileMap(join(writer.root, 'sent.json'));
+// Book number -> a cover chosen for it and not written yet: the batch (`batch.ts`).
+const chosen = new FileMap(join(writer.root, 'chosen.json'));
 /*
  * The connected PocketBook, when there is one (`reader.ts`, ROADMAP 5.16c).
  * Its shelves show pictures of their own, which neither Calibre's sending nor
@@ -176,6 +179,7 @@ function state() {
     books: books.map((b) => {
       const stack = stacks.get(b.id);
       const cover = coverNow(b);
+      const choice = readChoice(chosen.get(b.id));
       return {
         id: b.id,
         title: b.title,
@@ -187,6 +191,8 @@ function state() {
         size: cover?.size ?? null,
         v: cover?.v ?? 0,
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
+        // Chosen for this book and waiting in the batch; nothing is written yet.
+        ...(choice ? { chosen: choice.coverId, ...(choice.smaller ? { chosenSmaller: true } : {}) } : {}),
         // The cover the tool last put there, while that write can still be taken back.
         ...(stack ? { applied: stack[stack.length - 1].coverId, appliedAt: stack[stack.length - 1].at, canUndo: !!stack[stack.length - 1].backup, sent: sent.get(b.id) === stack[stack.length - 1].coverId } : {}),
         // On the connected reader; the cover whose pictures this app wrote there; and whether that is the cover the book has now.
@@ -325,7 +331,7 @@ const server = createServer(async (req, res) => {
       return send(res, 200, f.bytes, `image/${f.check.format}`);
     }
 
-    if (req.method === 'POST' && (path === '/api/work' || path === '/api/sent' || path === '/api/reader' || path === '/api/apply' || path === '/api/undo')) {
+    if (req.method === 'POST' && (path === '/api/work' || path === '/api/chosen' || path === '/api/sent' || path === '/api/reader' || path === '/api/apply' || path === '/api/undo')) {
       const body = await jsonBody(req);
       const book = books.find((b) => b.id === body.bookId);
       if (!book) return send(res, 404, { error: 'No such book in the library.' });
@@ -335,6 +341,14 @@ const server = createServer(async (req, res) => {
         if (typeof body.workId !== 'string' || !isWorkId(body.workId) || !/^OL\d+W$/.test(body.workId)) return send(res, 400, { error: 'Bad work id.' });
         works.set(book.id, body.workId);
         return send(res, 200, { ok: true });
+      }
+
+      // So does the batch: a cover chosen is a note in the tool's own file. `coverId: null` takes the book out again.
+      if (path === '/api/chosen') {
+        if (body.coverId === null) chosen.delete(book.id);
+        else if (typeof body.coverId === 'string' && COVER_ID.test(body.coverId)) chosen.set(book.id, writeChoice({ coverId: body.coverId, ...(body.smaller === true ? { smaller: true as const } : {}) }));
+        else return send(res, 400, { error: 'Bad cover id.' });
+        return send(res, 200, { ok: true, state: state() });
       }
 
       // So does the mark „sent to the reader": it says what Julian did in Calibre, and changes nothing there.
@@ -393,6 +407,11 @@ const server = createServer(async (req, res) => {
       }
       const result = writer.apply(book.id, f.bytes, body.coverId);
       if (result.ok) books = result.books;
+      // Calibre has a cover from here now: whatever waited in the batch for this book is settled.
+      if (result.ok) chosen.delete(book.id);
+      // The reader's shelves got this very cover before Calibre did (the batch, written to the PocketBook first): nothing is left to send.
+      // The record of that is on this Mac, so this holds with the reader unplugged too.
+      if (result.ok && new ReaderCovers(readerNow()?.root ?? '', join(writer.root, 'reader')).lastPut().get(book.id) === body.coverId) sent.set(book.id, body.coverId);
       return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, state: state() } : result);
     }
     /* The PocketBook highlights sync: Julian's own script, started as it is (pocketbook.ts). */

@@ -5212,3 +5212,27 @@ Julian: „können wir das cover der buchdatei auch ohne probleme ändern?", „
 **Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
 
 1.331 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-05 · Calibre-App: der Batch — wählen, dann alle auf einen Knopfdruck schreiben (ROADMAP 5.16a, 5.16c)
+
+Julian, zu „Write to Calibre" und „Write to the PocketBook": „aber ich will die möglichkeit auch für den ganzen batch".
+
+**Gebaut:** `batch.ts` (ein gewähltes Cover je Buch, als Eintrag in `chosen.json` neben den Backups; ein Eintrag, der keine Cover-Nummer ist, zählt nicht), `/api/chosen` (setzen, mit `coverId: null` herausnehmen; geht auch im Schau-Modus, es ist die eigene Datei des Werkzeugs), der Zustand nennt je Buch `chosen`. Seite: dritter Knopf „Add to the batch" im Vergleich; die Übersicht beginnt mit „Chosen — n not written yet", Kacheln mit dem gewählten Cover und der Marke „chosen" bzw. „chosen · on reader", darüber „Write n to Calibre", „Write m to the PocketBook", „Empty the batch" und der Satz „Nothing is written until you press a button". Die Knöpfe schreiben den ganzen Batch, auch Bücher, die ein Filter gerade verbirgt — die Zeile zählt sie und sagt es. Nach `/api/apply` verlässt das Buch den Batch; hatte der Reader dieses Cover schon (aus `reader.jsonl` gelesen, geht also auch ohne angeschlossenen Reader), wird es als gesendet vermerkt.
+
+**Geprüft** an der Probe-Kopie und dem nachgebauten Reader-Ordner, schreibend, Calibre geschlossen:
+
+| Schritt | Ergebnis |
+|---|---|
+| drei Bücher je ein Cover, „Add to the batch" | Vergleich schließt, Kopf des Buchs: „A cover is chosen … nothing is written yet"; Übersicht: „Chosen — 3 not written yet", „1 not on the reader" |
+| „Write 2 to the PocketBook" | 0,58 s; beide „chosen · on reader", Cover in Calibre unverändert (281 × 475, 1225 × 2200), Knopf danach „Write to the PocketBook", gesperrt |
+| „Write 3 to Calibre" | 3,1 s; 1311 × 2200, 1464 × 2200, 1650 × 2136 (aus 2550 × 3301); Batch leer |
+| zweiter Lauf, ein Buch: erst Reader, dann Calibre | Buch gilt als gesendet und steht nicht unter „to send" |
+| „Empty the batch" | 0 gewählt |
+
+Beim ersten Lauf gefunden und behoben: der Knopf hieß „Write 0 to the PocketBook", und Bücher, deren Cover der Reader schon hatte, standen nach dem Schreiben in Calibre wieder unter „to send to the reader".
+
+**Nicht geprüft:** der Batch an der echten Bibliothek und am echten Reader.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.398 Tests (130 davon in `lab/calibre/`), tsc und Lint grün.
