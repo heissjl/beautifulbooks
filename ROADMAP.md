@@ -828,6 +828,8 @@ Die Reihenfolge ist eine Abhängigkeit: **6.6 steht vor 6.7, 6.4 und 6.23**, wei
 
 ### Erledigt in Phase 6
 
+- [x] **6.91 Ein Chip „ISBN“ unter der Hauptsuche.** Erledigt 2026-10-05 (Julian, 2026-10-05, zum Vergleich mit my9books.com: „ja, einbauen mit drittem feld unter der suche "ISBN"“, dann „ich wollte es nur in der hauptsuche einbauen, nicht für das shelfportrait“). Neben „Titles & authors“ und „Author only“; der Platzhalter sagt „The ISBN of your copy“, eine falsche Prüfziffer wird vor der Anfrage benannt, eine gültige geht den Weg aus 6.29 (`?q=<isbn>`, eine Karte, das Cover der Ausgabe vorgewählt). Englisch und Deutsch. → [Historie](docs/history.md), [Archiv](docs/roadmap-archive.md#691)
+
 - [x] **6.84 Die neue Form: keine gesperrten Etiketten, keine Pfeile, keine Mittelpunkt-Zeilen, kein Slogan.** Erledigt 2026-10-02 (Julian zum Mockup `lab/look/`, Fassung „Heutige Farben, neue Form": „stell darauf um, aber schau dass die sprachbuttons die schrift vertikal mittig haben"). Sprachreiter als Wörter, der gewählte mit Tinte gefüllt, Schrift gemessen mittig (bei 2×: 19 px über, 21 px unter dem Versal); `.kicker` in normaler Schreibung, fünf Etiketten gestrichen, vier zu Serifenüberschriften; Pfeile hinter Links weg; Angaben als Sätze oder „Verlag, Jahr (Sprache)"; Ladenknöpfe „Amazon by ISBN". **Die Farben bleiben**; die Farbwahl ist weiter offen (Ideenblock). „See these covers by decade" behält seinen Wortlaut (Julian). → [Befund](docs/gestaltung-ki-anmutung.md) · [Historie](docs/history.md#2026-10-02--die-neue-form-roadmap-684) · [Archiv](docs/roadmap-archive.md#684)
 
 - [x] **6.83 WorldCat nach ISBN statt nach Titel.** Erledigt 2026-10-02 (Julian: „ok", zum Vergleich mit whichedition.com). Hat der Druck eine ISBN, fragt der WorldCat-Link `q=bn:<ISBN-13>` und trifft diese Ausgabe; ohne ISBN bleibt die Suche nach Titel, Autor, Verlag und Jahr. **Nicht von Claude im Browser geprüft:** WorldCat antwortete am 2026-10-02 schon auf die erste Anfrage mit Cloudflare 1015 (Rate Limit) — Julian klickt einmal an einem Druck mit ISBN. → [Historie](docs/history.md#2026-10-02--worldcat-nach-isbn-und-der-provisionshinweis-roadmap-683-411) · [Archiv](docs/roadmap-archive.md#683)
@@ -1290,7 +1292,7 @@ Julian: „see what buttons, apis, or concepts we can take from https://www.my9b
 
 | Idee | Wann |
 |---|---|
-| **ISBN im Suchfeld erkennen** (10/13 Ziffern → Open-Library-Suche nach ISBN, trifft die Ausgabe direkt), im Shelf-Portrait-Editor und im Picker der Sammlungen; kein drittes Feld | jederzeit, Claude, klein |
+| ~~ISBN im Suchfeld~~ → **6.91, erledigt 2026-10-05**: ein dritter Chip „ISBN“ in der Hauptsuche (nicht im Shelf-Portrait, Julian) | — |
 | **Ein Satz je Buch** auf dem Shelf-Portrait — gespeichert im Kurzlink, also neuer Satz in der Datenschutzerklärung, Moderation, Löschwerkzeug (5.18b (6)) | **Julian entscheidet** |
 | **Mitwahlen aus den Kurzlinks auszählen** (`insp:link:*`, keine Kennung nötig), samt gewählter Ausgabe — daraus vielleicht Rangliste und „auf Shelf-Portraits mit diesem Buch auch …" auf der Buchseite | wenn der Store einige hundert Kurzlinks hält; erst ansehen |
 | **Kachel ohne Cover** („Can't find it? Add by title"): Titel und Autor typografisch, statt dass ein Buch fehlt | offen |

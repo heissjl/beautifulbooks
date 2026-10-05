@@ -13,6 +13,7 @@ import { liveCollections } from '@/lib/collections-live';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
 import { measure } from '@/app/api/measure';
+import { shapeOf } from '@/lib/queryshape';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -110,7 +111,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
               <div className="max-w-3xl">
                 <HomeSearchBar
                   searchQuery={authorName || searchQuery}
-                  mode={authorName || authorKey ? 'author' : 'any'}
+                  mode={authorName || authorKey ? 'author' : shapeOf(searchQuery).kind === 'isbn' ? 'isbn' : 'any'}
                   language={language}
                   hero={isHero}
                 />
