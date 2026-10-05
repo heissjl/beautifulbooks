@@ -12,10 +12,12 @@
  * is one of the measurements.
  */
 import { createServer, type ServerResponse } from 'node:http';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import ts from 'typescript';
 import { coverUrlFor, coverIdFromSegment, coverRefFromUrl } from '../../lib/coverurl';
+import { CURATED_LIST } from '../../lib/curated';
+import { browsable, type PopularFile } from '../../lib/popularworks';
 import { SITE_NAME } from '../../lib/seo';
 import { fetchBytes } from '../../lib/sources/http';
 import { getEditionsPage, getWork, searchWorks } from '../../lib/sources/openlibrary';
@@ -50,9 +52,46 @@ const coverCache = new Map<string, unknown>();
 const workCache = new Map<string, { title: string; author?: string } | null>();
 const imageCache = new Map<string, Uint8Array | null>();
 
+/**
+ * The lists a reader can browse instead of searching (Julian, 2026-10-05: „gib noch eine option zum
+ * browsen/scrollen des katalogs, d.h. mindestens von den werken der kuratierten liste"; then: „eine
+ * liste … aus den beliebtesten werken auf … openlibrary"). Both are files in the repository, so
+ * browsing asks Open Library nothing but the cover images:
+ *
+ * - the works Julian picked a cover for (`data/curated.json` through `lib/curated.ts`), and
+ * - the works Open Library's readers marked as read most often (`data/popular-works.json`,
+ *   `scripts/build-popular-works.ts`), cut at five editions on record — below that the list is
+ *   single records with no wall behind them (of 995 rows, 50; docs/history.md).
+ */
+const POPULAR_MIN_EDITIONS = 5;
+interface BrowseWork { id: string; title: string; author: string; coverId: string; year?: number }
+const browseLists = (() => {
+  const lists: Array<{ id: string; label: string; note: string; works: BrowseWork[] }> = [{
+    id: 'curated',
+    label: `Picked by ${SITE_NAME}`,
+    note: 'books the site picked a cover for by eye.',
+    works: CURATED_LIST.map(w => ({ id: w.id, title: w.title, author: w.author, coverId: `ol:${w.coverId}` })),
+  }];
+  const file = join(HERE, '..', '..', 'data', 'popular-works.json');
+  if (existsSync(file)) {
+    const popular = JSON.parse(readFileSync(file, 'utf8')) as PopularFile;
+    lists.push({
+      id: 'popular',
+      label: 'Most read on Open Library',
+      note: `works Open Library’s readers marked as read most often, most read first (list of ${popular.builtAt}).`,
+      works: browsable(popular.works, POPULAR_MIN_EDITIONS).map(w => ({ id: w.id, title: w.title, author: w.author, coverId: w.coverId, year: w.firstPublished })),
+    });
+  }
+  return lists;
+})();
+/** What the lists already say about a work, so that a browsed book costs no request for its title. Where both name a work, the curated spelling stands. */
+const listed = new Map([...browseLists].reverse().flatMap(l => l.works).map(w => [w.id, { title: w.title, author: w.author }]));
+
 /** Title and first author of a work, for the shared page and the shopping list. */
 async function workOf(workId: string) {
   if (workCache.has(workId)) return workCache.get(workId) ?? null;
+  const known = listed.get(workId);
+  if (known) return known;
   const work = await counted(getWork(workId));
   const brief = work ? { title: work.title, author: work.authors[0] } : null;
   workCache.set(workId, brief);
@@ -179,6 +218,8 @@ createServer(async (req, res) => {
       return send(res, 200, await describe(board, link[1]));
     }
     if (path === '/api/board') return send(res, 200, await describe(parseBoard(url.searchParams), null));
+
+    if (path === '/api/browse') return send(res, 200, { lists: browseLists });
 
     if (path === '/api/search') {
       const q = (url.searchParams.get('q') ?? '').trim().toLowerCase();

@@ -4443,3 +4443,35 @@ Julian nach dem ersten Lauf: „mach die GUI eher so wie bei arrange im create m
 **Bilder** (lokal): `docs/tests/2026-10-05-inspiration-arrange-*` — Brett, Suche und Ausgaben je bei 1280 und 375 px.
 
 **Nachtrag am selben Tag — Julians Satz und der Look der Seite.** Julian zum Ausgaben-Fenster: „Pick the cover of the edition you read or the one you love the most“ — so steht es jetzt dort, gefolgt von „: it takes the place of the marked one on your board.“ Damit ist die offene Frage „edition oder cover?“ aus dem ersten Lauf für diesen Satz beantwortet: beides zählt. Der Satz über dem Brett („Click a cover to pick the edition you read…“) und die Überzeile „The edition I read“ sind unverändert. Und: „make the buttons looks like on the website, nicht so kantig“ — die Farben sind jetzt die Tokens aus `app/globals.css` (hell), Knöpfe wie `.btn` (6 px Radius, Haarlinie auf der Flächenfarbe, 14 px halbfett), der Hauptknopf wie `.btn-accent` (Terrakotta statt Schwarz), die Share-Knöpfe und „Close“ als Pillen, Felder mit 6 px Radius, Cover mit `rounded-card` und dem Schatten der Seite, die Überzeile im Fenster in normaler Schreibung wie `.kicker` seit 6.84. Die Schriften der Seite (Xanh, Jost) lädt das Lab nicht; es bleibt bei Georgia und der Systemschrift. Angesehen bei 1280 × 800 und 375 × 812, kein seitliches Rollen; Bilder lokal unter `docs/tests/2026-10-05-inspiration-look-*`.
+
+## 2026-10-05 · Die meistgelesenen Werke bei Open Library als Liste, und „Browse“ im Lab (ROADMAP 5.18a)
+
+Julian: „gib noch eine option zum browsen/scrollen des katalogs, d.h. mindestens von den werken der kuratierten liste“, dann: „vielleicht bauen wir eine liste zum browsen aus den beliebtesten werken auf google books oder openlibrary. die können wir auch für andere sachen im projekt gebrauchen“.
+
+**Welche Quelle.** Google Books scheidet aus: die API ordnet nach Relevanz oder Datum, nicht nach Lesern; sie kennt kein Werk (E5); und jede Anfrage ginge vom Kontingent der Urteile ab (E10). **Open Library kann es** — entgegen dem Kommentar in `scripts/pick-index-works.ts` („Open Library has no such endpoint“), der jetzt einen Verweis trägt. Gemessen mit sechs einzelnen Anfragen, je 4 s Pause:
+
+| Anfrage | Antwort |
+|---|---|
+| `search.json?q=*&sort=…` | 422 — eine Suche braucht mindestens drei Zeichen |
+| `trending/forever.json` | 500 |
+| `search.json?q=*:*&sort=readinglog` | 200 in 3,1 s, 43.631.768 Werke. Vorn, was Leute lesen *wollen*: fünf Ratgeber unter den ersten sechs (*Atomic Habits*, *The 48 Laws of Power*, *Rich Dad, Poor Dad* …), dazu Einträge mit 3 und 15 Ausgaben |
+| `search.json?q=*:*&sort=already_read` | 200 in 3,0 s. Liest sich wie ein Regal: *Harry Potter*, *Animal Farm*, *The Hunger Games*, *Nineteen Eighty-Four* unter den ersten zehn |
+| `search.json?q=*:*&sort=editions` | 200 in 3,8 s. Die Bibel, ein Ausmalbuch, Gesetzessammlungen, Bohrprotokolle |
+
+Genommen ist **`already_read`**: wie viele Leser das Werk als gelesen markiert haben.
+
+**Die Liste:** `scripts/build-popular-works.ts` holt zehn Seiten zu hundert, eine nach der anderen mit 4 s Pause (2,4–5,0 s je Seite, eine 29,1 s), und schreibt `data/popular-works.json` (236 KB): **995 Werke** aus 1.000 Treffern (5 ohne Cover, ohne Autor oder doppelt), je mit Werk-ID, Titel, erstem Autor, Cover (`cover_i`), Erstjahr, Zahl der Ausgaben und den drei Zählern (gelesen, Leseliste, Bewertungen). `lib/popularworks.ts` macht aus Suchtreffern Zeilen (rein, 5 Tests) und lädt selbst keine Daten. **Nichts wird wegen geringer Beliebtheit oder weniger Ausgaben weggelassen** — die Zahlen stehen in jeder Zeile, der Nutzer der Liste schneidet.
+
+**Was drinsteht:** gelesen von 1.726 (*Atomic Habits*) bis 66 Lesern. 945 Werke haben mindestens 5 Ausgaben im Katalog, 878 mindestens 10, 721 mindestens 25. Die 50 unter fünf sind überwiegend Einzeleinträge ohne Wand dahinter (indonesische Lehrbücher, Liebesromane mit einem Datensatz) — aber auch echte Bücher, die dünn katalogisiert sind (*Saga* 3, *Smile* 3). 824 der 995 sind ab 1950 erschienen, 87 zwischen 1900 und 1949. Stephen King steht 48-mal darin, Terry Pratchett 24-mal, Rick Riordan 18-mal. **Überschneidung:** 106 der 185 Zeilen von `data/curated.json`, 243 der 500 von `data/index-works.json` — 752 Werke der Liste kennt der Index noch nicht.
+
+**Im Lab** (`lab/inspiration`): das Fenster „Add a book“ hat zwei Reiter, **Search** und **Browse**. Browse zeigt zwei Listen als Pillen — **„Picked by Buy Its Covers“** (115 Werke: die Zeilen von `curated.json` mit einem Open-Library-Cover, die weder übersprungen noch gestrichen sind, mit Julians Cover) und **„Most read on Open Library“** (945: ab fünf Ausgaben) —, ein Filterfeld über Titel und Autor (im Browser, ohne Anfrage, Akzente egal: „garcia marquez“ findet drei), die Cover in sechs Spalten (Telefon drei) zu je 60, die nächsten beim Rollen oder über „Show more“. Ein Klick legt das Buch aufs Brett, ein zweiter nimmt es wieder herunter; das Fenster bleibt offen und merkt sich den Reiter.
+
+**Kosten:** Browsen fragt den Katalog nichts — die Listen sind Dateien, nur die Bilder kommen von covers.openlibrary.org. Ein gebrowstes Buch kostet auch keine Titel-Anfrage (der Server kennt Titel und Autor aus der Liste; geprüft: `/api/board` mit einem Listenwerk druckt keine Open-Library-Anfrage). Ein Brett nur aus der Liste kostet damit **9 Anfragen** (die Posterbilder) statt 27.
+
+**Geprüft** bei 1280 × 800 und 375 × 812 mit synthetischen Klicks: Reiter, beide Listen, Klick und zweiter Klick, „Show more“ (60 → 120), Filter mit und ohne Treffer, Markierung eines Buchs, das schon auf dem Brett liegt. 27 Tests im Lab und für die Liste grün, `tsc` und ESLint sauber. **Nicht geprüft:** das Nachladen beim Rollen (der Beobachter feuert im verdeckten Fenster nicht; der Knopf ist der Ersatz).
+
+**Wofür die Liste sonst taugt** (nichts davon gebaut, jedes wäre ein eigener Punkt): Kandidaten für den Index und die Sitemap (5.1; 752 neue), für das Cover-Spiel, für „Start from“ auf `/create`. Für eine Seite über Cover ist „oft gelesen“ aber nicht „oft neu eingekleidet“: *Atomic Habits* hat 42 Ausgaben, *Animal Farm* 653 — dafür steht `editionCount` in jeder Zeile.
+
+**Offen:** wo geschnitten wird (5 Ausgaben ist ein erster Wert, an 50 Zeilen angesehen); ob Ratgeber und Liebesromane in einer Liste für „books that inspired me“ richtig stehen oder ob Themen-Listen (`subject:…&sort=already_read`) besser tragen; die Liste altert — neu bauen kostet zehn Anfragen.
+
+**Bilder** (lokal): `docs/tests/2026-10-05-inspiration-browse-*`.

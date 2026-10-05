@@ -88,6 +88,11 @@
   .dialog-head button { background: transparent; color: var(--ink2); border-radius: 999px; padding: 3px 14px; font-weight: 400; flex: none; }
   .dialog-head button:hover { border-color: var(--accent); color: var(--accent); }
   .dialog-body { margin-top: 14px; }
+  /* The editor's pills: "Add covers / Arrange" there, "Search / Browse" and the lists here. */
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .tabs button { border-radius: 999px; padding: 3px 16px; font-weight: 400; color: var(--ink2); }
+  .tabs button:hover { border-color: var(--accent); color: var(--accent); }
+  .tabs button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
   .mini { display: flex; gap: 4px; margin-bottom: 12px; }
   .mini span { width: 28px; height: 42px; background: var(--empty); border-radius: 2px; overflow: hidden; flex: none; }
   .mini span.next { outline: 2px solid var(--accent); outline-offset: 1px; }
@@ -208,12 +213,27 @@
     <div class="dialog-body">
       <div id="dlgsearch">
         <div class="mini" id="mini" aria-hidden="true"></div>
-        <div class="row">
-          <input type="search" id="q" placeholder="Search a title or author" autocomplete="off">
-          <button id="go" class="primary">Search</button>
+        <div class="tabs" role="tablist" aria-label="How to find a book">
+          <button type="button" role="tab" id="tabsearch" aria-selected="true">Search</button>
+          <button type="button" role="tab" id="tabbrowse" aria-selected="false">Browse</button>
         </div>
-        <p class="status" id="status" role="status"></p>
-        <ul class="results" id="results"></ul>
+        <div id="panesearch">
+          <div class="row">
+            <input type="search" id="q" placeholder="Search a title or author" autocomplete="off">
+            <button id="go" class="primary">Search</button>
+          </div>
+          <p class="status" id="status" role="status"></p>
+          <ul class="results" id="results"></ul>
+        </div>
+        <div id="panebrowse" class="hidden">
+          <div class="tabs" role="tablist" aria-label="Which list" id="lists"></div>
+          <div class="row">
+            <input type="search" id="bfilter" placeholder="Filter by title or author" autocomplete="off">
+          </div>
+          <p class="status" id="bstatus" role="status"></p>
+          <div class="editions" id="browse"></div>
+          <p id="bmore" class="hidden" style="text-align:center; margin-top:16px"><button type="button" id="bmorebtn">Show more</button></p>
+        </div>
       </div>
       <div id="dlgcovers">
         <p class="status" id="coverstatus" role="status"></p>
@@ -425,7 +445,7 @@ function mini() {
 function searchHead() {
   $('dlgkicker').textContent = `Book ${filledCount(board) + 1} of 9`;
   $('dlgtitle').textContent = 'Add a book';
-  $('dlgsub').textContent = 'A click puts the book on your board with its best-known cover. You pick the edition afterwards.';
+  $('dlgsub').textContent = 'Search for a book or browse a list. A click puts it on your board; you pick the edition afterwards.';
   mini();
 }
 
@@ -436,8 +456,112 @@ function openSearch(i) {
   $('status').textContent = '';
   $('q').value = '';
   openDialog('search');
-  $('q').focus();
+  showTab(addTab);
 }
+
+/* ---------- browse: scroll a list instead of naming a book ---------- */
+
+let addTab = 'search';        // the tab the window opens on: the one used last
+let browse = null;            // { lists } once loaded
+let listId = 'curated';
+let shown = 0;                // how many rows of the current list are drawn
+const CHUNK = 60;
+
+function showTab(tab) {
+  addTab = tab;
+  $('tabsearch').setAttribute('aria-selected', String(tab === 'search'));
+  $('tabbrowse').setAttribute('aria-selected', String(tab === 'browse'));
+  $('panesearch').classList.toggle('hidden', tab !== 'search');
+  $('panebrowse').classList.toggle('hidden', tab !== 'browse');
+  if (tab === 'search') $('q').focus();
+  else openBrowse();
+}
+$('tabsearch').onclick = () => showTab('search');
+$('tabbrowse').onclick = () => showTab('browse');
+
+const plain = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+function browseRows() {
+  const list = browse.lists.find(l => l.id === listId) ?? browse.lists[0];
+  const f = plain($('bfilter').value.trim());
+  return { list, rows: f ? list.works.filter(w => plain(`${w.title} ${w.author}`).includes(f)) : list.works };
+}
+
+async function openBrowse() {
+  if (!browse) {
+    $('bstatus').textContent = 'Loading the lists…';
+    const res = await fetch('/api/browse').catch(() => null);
+    const body = res?.ok ? await res.json().catch(() => null) : null;
+    if (!body) { $('bstatus').textContent = 'The lists did not load. Try again in a moment.'; return; }
+    browse = body;
+    for (const l of browse.lists) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.dataset.list = l.id;
+      b.textContent = l.label;
+      b.onclick = () => { listId = l.id; drawBrowse(true); };
+      $('lists').append(b);
+    }
+  }
+  drawBrowse(true);
+}
+
+/** Draws the list from its start, or the next rows of it. The rows drawn stay, so the place in the list is kept. */
+function drawBrowse(fromStart) {
+  if (!browse) return;
+  const { list, rows } = browseRows();
+  for (const b of $('lists').children) b.setAttribute('aria-selected', String(b.dataset.list === list.id));
+  if (fromStart) { $('browse').textContent = ''; shown = 0; }
+  const n = rows.length.toLocaleString('en');
+  $('bstatus').textContent = $('bfilter').value.trim()
+    ? (rows.length ? `${n} of ${list.works.length.toLocaleString('en')} match.` : 'Nothing in this list matches. The Search tab asks Open Library’s whole catalogue.')
+    : `${n} ${list.note}`;
+  for (const w of rows.slice(shown, shown + CHUNK)) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.work = w.id;
+    b.innerHTML = '<img alt="" loading="lazy"><span class="cap"></span>';
+    b.querySelector('img').src = `/img/M/${coverSegment(w.coverId)}`;
+    b.querySelector('.cap').textContent = `${w.title} · ${w.author}`;
+    b.setAttribute('aria-label', `${w.title} by ${w.author}`);
+    b.onclick = () => pickBrowsed(w, b);
+    $('browse').append(b);
+    markBrowsed(b);
+  }
+  shown = Math.min(rows.length, shown + CHUNK);
+  $('bmore').classList.toggle('hidden', shown >= rows.length);
+}
+
+function markBrowsed(b) {
+  const on = board.slots.some(s => s?.workId === b.dataset.work);
+  b.classList.toggle('chosen', on);
+  b.querySelector('.tag')?.remove();
+  if (on) b.insertAdjacentHTML('beforeend', '<span class="tag">on your board</span>');
+}
+
+/** A click puts the book on the board, a second click takes it out — as the picker of a collection does. */
+function pickBrowsed(w, b) {
+  const at = board.slots.findIndex(s => s?.workId === w.id);
+  if (at >= 0) {
+    board = remove(board, at);
+  } else {
+    const free = target >= 0 && !board.slots[target] ? target : firstEmpty(board);
+    if (free < 0) return closeDialog();
+    books.set(w.id, { title: w.title, author: w.author });
+    board = place(board, free, { workId: w.id, coverId: w.coverId });
+  }
+  target = firstEmpty(board);
+  render();
+  if (target < 0) return closeDialog();
+  searchHead();
+  markBrowsed(b);
+}
+
+$('bfilter').oninput = () => drawBrowse(true);
+$('bmorebtn').onclick = () => drawBrowse(false);
+// The next rows come on their own when the end of the list scrolls into view; the button is for where that does not fire.
+new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) drawBrowse(false); }, { rootMargin: '600px' }).observe($('bmore'));
 
 async function search() {
   const q = $('q').value.trim();
