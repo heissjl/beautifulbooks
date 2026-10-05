@@ -25,7 +25,7 @@ Stand: 2026-10-03 (Stand, Nächste Schritte und Zählung nachgezogen; die Doppel
 | **Arbeitsregeln** | [CLAUDE.md](CLAUDE.md) |
 | **Anleitungen** | [Partnerprogramme bis zum Umschalttag](docs/guides/affiliate-programme.md) · [Partnerprogramme: Sätze und Netzwerke](docs/guides/affiliate-programme-recherche.md) · [Gewerbe und Steuer](docs/guides/gewerbe-anmeldung.md) · [Bookshop.org](docs/guides/bookshop-affiliate.md) |
 | **Durchsichten des Codes** | [Zuschnitt 2026-10-03](docs/refactoring-2026-10-03.md) · [Sicherheit 2026-10-02](docs/sicherheit-2026-10-02.md) |
-| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Visuelle Identität und Cover-Rechte im Logo](docs/identitaet.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Vergleich whichedition.com und deren Affiliate-Links](docs/vergleich-whichedition.md) · [Was an der Seite nach Claude aussieht](docs/gestaltung-ki-anmutung.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) · [Alltagstauglichkeit, zwei Durchsichten 2026-09-28](docs/tests/2026-09-28-alltagstauglichkeit.md) · [Sicherheit und störungsfreier Betrieb, Durchsicht 2026-10-02](docs/sicherheit-2026-10-02.md) |
+| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Visuelle Identität und Cover-Rechte im Logo](docs/identitaet.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Vergleich whichedition.com und deren Affiliate-Links](docs/vergleich-whichedition.md) · [Vergleich my9books.com](docs/vergleich-my9books.md) · [Was an der Seite nach Claude aussieht](docs/gestaltung-ki-anmutung.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) · [Alltagstauglichkeit, zwei Durchsichten 2026-09-28](docs/tests/2026-09-28-alltagstauglichkeit.md) · [Sicherheit und störungsfreier Betrieb, Durchsicht 2026-10-02](docs/sicherheit-2026-10-02.md) |
 
 ### Stand
 
@@ -1283,6 +1283,19 @@ Julian: „check what we can learn from this website that went viral just now". 
 | ~~„9 books that made you — in the edition you read"~~ → **5.18 „The books that inspired me", Lab gebaut 2026-10-04** (2.2 ist seit 2026-10-04 erledigt; die Warnung „Parkseite" im ersten Befund war veraltet) | — |
 | **„Download image" 1080×1920 mit Adresse** für jede Sammlung, nicht nur die Vorschaukarte 1200×630 (2:3-Kacheln passen in 9:16, nicht ohne Rand in 4:5) | mit der Zeile darüber oder für F9 allein |
 | ~~Picker ohne Google~~ → **6.88**, Julian entscheidet | — |
+
+### Ideen aus my9books.com (2026-10-05), unbewertet
+
+Julian: „see what buttons, apis, or concepts we can take from https://www.my9books.com/en". Befund in [docs/vergleich-my9books.md](docs/vergleich-my9books.md) (diesmal erreichbar und durchgeklickt). my9books ist das japanische Vorbild unseres Shelf-Portraits, rund sieben Monate alt, 18.029 Regale; Daten aus der Rakuten Books API (nur Japan). Kern: **ein Satz je Buch** macht aus dem Raster eine Person, und **die Mitwahlen über alle Regale** füllen Rangliste, „X % wählten auch Y", Empfehlungen und indexierte Buchseiten mit echten Daten. Auslöser wie oben.
+
+| Idee | Wann |
+|---|---|
+| **ISBN im Suchfeld erkennen** (10/13 Ziffern → Open-Library-Suche nach ISBN, trifft die Ausgabe direkt), im Shelf-Portrait-Editor und im Picker der Sammlungen; kein drittes Feld | jederzeit, Claude, klein |
+| **Ein Satz je Buch** auf dem Shelf-Portrait — gespeichert im Kurzlink, also neuer Satz in der Datenschutzerklärung, Moderation, Löschwerkzeug (5.18b (6)) | **Julian entscheidet** |
+| **Mitwahlen aus den Kurzlinks auszählen** (`insp:link:*`, keine Kennung nötig), samt gewählter Ausgabe — daraus vielleicht Rangliste und „auf Shelf-Portraits mit diesem Buch auch …" auf der Buchseite | wenn der Store einige hundert Kurzlinks hält; erst ansehen |
+| **Kachel ohne Cover** („Can't find it? Add by title"): Titel und Autor typografisch, statt dass ein Buch fehlt | offen |
+| Sortierung im Suchfenster (neu/alt/Leser) | niedrig |
+| Amazon-Suchlink nach ISBN als Rückfall, wo `/dp/` nicht auflöst | bei 4.x |
 
 ### Ideen aus dem Vergleich mit whichedition.com (2026-10-01), unbewertet
 
