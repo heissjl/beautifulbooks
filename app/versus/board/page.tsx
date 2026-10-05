@@ -12,6 +12,7 @@ import { SITE_CARD, SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator, type Translate } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * The standings of the cover game (ROADMAP 5.8a). Rendered on the server from
@@ -98,6 +99,7 @@ function Toggle({ href, children }: { href: string; children: React.ReactNode })
 }
 
 export default async function BoardPage({ searchParams, locale = DEFAULT_LOCALE }: { searchParams: Promise<Record<string, string | string[] | undefined>>; locale?: Locale }) {
+  measure('page-versus');
   const t = translator(locale);
   if (!versusEnabled()) notFound();
   const params = await searchParams;

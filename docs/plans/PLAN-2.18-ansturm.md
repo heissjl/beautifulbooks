@@ -4,13 +4,18 @@ Stand: 2026-10-05 nachts. **Nichts gebaut; J1–J6 hat Julian am 2026-10-05 ents
 
 Was hier „gelesen" heißt, stand am 2026-10-04/05 in der Doku des Anbieters (Quellen am Ende); „gemessen" ist am Code oder an den Produktions-Logs dieser Nacht abgelesen; alles andere ist als Überschlag gekennzeichnet.
 
-## 0. Zuerst: die Seite steht vor der Pause
+## 0. Die CPU-Warnung vom 2026-10-04 — erledigt, Ursache gefunden
 
-- **Gelesen:** Vercel Hobby schließt 4 CPU-Stunden ein. Die Mail sagt: bei 100 % „your projects will be automatically paused". Die Doku sagt für Hobby: „you will have to wait until 30 days have passed before you can use the feature again". Ob ein Wechsel auf Pro ein schon pausiertes Projekt sofort zurückholt, steht in keiner der gelesenen Seiten — **also vor den 100 % wechseln, nicht danach.**
-- **Nicht gefunden: wohin die 3,6 Stunden gingen.** Die CLI liest CPU je Route auf Hobby nicht („Observability Plus is required"), `vercel usage` antwortet 404, und die Logs reichen eine Stunde zurück. In dieser Stunde war kaum Verkehr: 50 Anfragen in 13 Minuten, dann ein Besuch. Die Zahl steht nur im Dashboard (Usage → Fluid Active CPU je Tag; Observability → Vercel Functions je Route). **Julian liest sie ab, oder Claude liest sie in Julians Chrome.** Verdächtig, in dieser Reihenfolge: das Hashen von Covern in `/api/works?signatures=1` (jpeg-js, reines JavaScript), Lab-Läufe und die Calibre-App, die seit dem 2026-10-04 über die Website fragen, die Fotoroute (der Server bereitet das Foto auf), die Vorschaukarten (`opengraph-image`), und der Mechanismus der nächsten Zeile.
-- **Gemessen, ein Verstärker:** ein einzelner Besuch von 81 Sekunden (2026-10-05, 00:09–00:11 UTC) erzeugte 139 Einträge im Laufzeit-Log, darunter 54 Bildabrufe ohne CDN-Treffer, **14 Buchseiten, die niemand geöffnet hat** (je einmal `MISS`, also neu gerendert, mit ihren Katalog-Anfragen), und je 4–6 Abrufe von `/`, `/create`, `/versus`, die bei jedem Aufruf in einer Funktion rendern. Ursache ist das Vorladen von `next/link`: jeder sichtbare Link wird geholt, in Next 16 in mehreren Teilen. 39 Dateien nutzen `<Link>`, nur `DecadeLink` schaltet es ab. Eine Sammlung mit 198 Büchern lädt beim Scrollen 198 Buchseiten vor.
+Vercel meldete 90 % der 4 CPU-Stunden des Hobby-Plans; bei 100 % wäre das Projekt pausiert worden, laut Doku bis zu 30 Tage. **Julian ist am 2026-10-05 auf Pro gewechselt** (J1). Auf Hobby las die CLI die CPU je Route nicht („Observability Plus is required"); seit Pro antwortet `vercel metrics`.
 
-**Heute zu tun:** (1) Julian liest die CPU je Tag und je Route ab. (2) Julian wechselt auf Pro (J1, entschieden) und setzt das Ausgabenlimit (J2). (3) Claude baut 2.18a (Vorladen aus), sobald der Stand von `origin/main` in einem Arbeitsbaum liegt.
+**Gemessen aus Vercels Zahlen, 2026-10-05:**
+
+- 30 Tage: 2,14 CPU-Stunden in Funktionsaufrufen (die Differenz zu Vercels 3,6 ist nicht aufgeklärt — der Proxy läuft als eigene Funktion). **49 % Bildroute** `/img` (115.465 Läufe, 32 ms CPU je Bild), **25 % Buchseite** (17.253 Renderings, 106 ms), 7 % `/api/works`, 4 % Sammlungsseiten, 3 % Startseite.
+- Je Tag lagen 20–270 CPU-Sekunden an, am 2026-09-26 994, am 2026-10-03 1.379, am 2026-10-04 1.187.
+- **Wer:** in den zwei Tagen vor der Mail kamen **31.657 von 44.438 Bildabrufen und 6.776 von 8.281 Buchseiten von ClaudeBot**, Anthropics Crawler; dazu MJ12bot mit 719 Buchseiten. Er folgt den Links von Buch zu Buch, und jede Werk-ID ist eine Seite, die beim ersten Abruf gerendert wird. Was mit Crawlern geschieht, ist **2.18n** (Julian entscheidet).
+- **Dazu der Verstärker im Browser:** ein einzelner Besuch von 81 Sekunden ließ 14 Buchseiten rendern, die niemand geöffnet hat (Vorladen von `next/link`) — abgestellt mit **2.18a**.
+
+Damit die Frage nie wieder nur Vercel beantworten kann, misst die Seite seit **2.18l** selbst (CPU je Route und Abrufer-Klasse in `/admin/insights`), und **2.18m** rechnet daraus und aus den festen Kosten, was die Seite kostet.
 
 ## 1. Kurzfassung
 
@@ -76,6 +81,8 @@ In dieser Reihenfolge. Jeder Schritt ist ein Roadmap-Punkt und ein Commit; „An
 | **2.18i** | **Probe unter Last, lokal:** 200 gleichzeitige Leser gegen `next start`, eine Redis mit `maxclients 30` und die Katalog-Attrappe aus 2.18b; bestanden, wenn die Seiten aus §2 ohne Fehler antworten, während Redis und Katalog abweisen. Nie gegen Produktion | ½ Tag | keine |
 | **2.18j** | **Bilder länger im Browser:** `/img` antwortet mit `max-age=3600`; ein Cover unter einer Cover-ID ändert sich nicht, eine Woche spart jede Wiederkehr | 1 h | keine |
 | **2.18k** | **Ein Cover auf Zuruf ausblenden** (J6: „jetzt gleich", also nach 2.18a). Eine Liste von Cover-IDs im Repository (`data/hidden-covers.json`), die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse, an die sich ein Rechteinhaber wendet; ein Test, dass eine ID der Liste auf keinem der Wege erscheint. Wirkt mit einem Deploy | ½ Tag | die Kacheln der Wand (`data-cover-id`) werden weniger — in der Historie nennen |
+| **2.18l**, **2.18m** | gebaut 2026-10-05: Rechenzeit je Route und Abrufer (K14) und Kosten (K15) in `/admin/insights` | — | neue Kennzahlen, Plan 3.1 §3 |
+| **2.18n** | Crawler nur auf die Seiten der Sitemap lassen — Julian entscheidet (Vorschlag im Roadmap-Punkt) | 2 h | K14 zeigt die Wirkung |
 | dazu | Der Picker ohne Google (Vorschlag der Sitzung `claude/sleepy-wozniak-lodegp`, dort als 6.88 notiert — **die Nummer ist auf `main` schon vergeben**), 6.47 (Suche belastet den `google`-Eimer), **2.11** (Sicherung der Redis, vor jedem Tarifwechsel) | | |
 
 ## 5. Was Julian einrichtet

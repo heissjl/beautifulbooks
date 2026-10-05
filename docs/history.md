@@ -4645,3 +4645,32 @@ Gebaut, nicht deployt. `components/Link.tsx` ist `next/link` mit `prefetch={fals
 **Gemessen am lokalen Produktions-Build** (`next build`, `next start`, im Browser über `performance.getEntriesByType('resource')`; unter `next dev` lädt Next ohnehin nichts vor): `/collections/sf-masterworks` mit 73 Buchlinks, bis ans Ende gescrollt — 0 Abrufe mit `_rsc`, 0 auf `/book/`; Startseite mit 34 Links — 0; ein Klick auf eine Kachel — genau 1 Abruf (`/book/OL271163W`), die Seite öffnet. **Vorher, in Produktion am selben Tag:** ein Besuch von 81 s, 14 neu gerenderte Buchseiten und 4–6 Abrufe je dynamischer Seite aus Kopf- und Fußzeile.
 
 **Was es kostet:** der erste Klick auf ein Buch wartet auf den Server, statt aus dem Vorrat zu kommen; die Vorschau aus `storeWorkPreview` zeigt Titel und Cover in der Zwischenzeit. An der Oberfläche ändert sich kein Pixel, deshalb keine Messung bei 390 und 1280 px. **Analyse (3.1):** nicht berührt — die Signale lesen die Kacheln und die Herkunft, nicht das Vorladen. 1.277 Tests, tsc und Build grün.
+
+## 2026-10-05 · Wohin die Rechenzeit ging: ClaudeBot; Messung und Kosten in der Analyse (ROADMAP 2.18l, 2.18m, 2.18n)
+
+Julian wechselte auf Pro; `vercel buy pro` über die CLI war zuvor an „Payment failed … valid payment method on file" gescheitert (keine Karte hinterlegt). Seit Pro antwortet `vercel metrics`; `vercel usage` weiter mit 404.
+
+**Vercels Zahlen** (`vercel metrics vercel.function_invocation.function_cpu_time_ms -a sum --group-by route`, 30 Tage bis 2026-10-05):
+
+| Route | CPU | Anteil | Läufe |
+|---|---|---|---|
+| `/img/[size]/[cover]` | 3.651 s | 49,4 % | 115.465 |
+| `/book/[id]` | 1.832 s | 24,8 % | 17.253 |
+| `/api/works/[id]` | 485 s | 6,6 % | 3.393 |
+| `/collections/[slug]` | 301 s | 4,1 % | 14.415 |
+| `/` | 199 s | 2,7 % | 1.601 |
+| alle zusammen | 7.699 s = 2,14 h | | 173.292 |
+
+Je Tag (Sekunden): 09-08 65 · 09-09 144 · 09-10 266 · 09-11 259 · 09-12 138 · 09-13 161 · 09-14 bis 09-25 zwischen 0 und 113 · **09-26 994** · 09-27 691 · 09-28 355 · 09-29 488 · 09-30 460 · 10-01 367 · 10-02 189 · **10-03 1.379 · 10-04 1.187**. Vercels Mail nannte 3,6 von 4 Stunden; die Differenz zu 2,14 ist nicht aufgeklärt.
+
+**Wer, letzte zwei Tage** (`--group-by clientUserAgent`): `/img` 44.438 Läufe, davon **ClaudeBot 31.657**, dann einzelne Browser (2.823, 1.578, 818 …); `/book/[id]` 8.281 Läufe, davon **ClaudeBot 6.776**, MJ12bot 719, Browser zusammen einige hundert. Die Annahme aus Plan 2.4 §3.3, KI-Crawler läsen nur vorgerenderte Seiten und kosteten kaum, ist damit widerlegt.
+
+**Gebaut, nicht deployt:**
+
+- **2.18l** `lib/insights/cpu.ts`: ein Zähler je Instanz teilt jede Strecke Prozess-CPU gleichmäßig auf die laufenden Anfragen, CPU ohne Anfrage geht an `idle` (Start, Leerlauf); die Klassen summieren sich auf das, was der Prozess verbraucht hat. `measure(route, request)` steht als eine Zeile in 59 Handlern, Vorschaukarten und Seiten; das Ende liegt in `after`, geschrieben wird höchstens alle 30 s (ein `HINCRBY` je Feld, ein `EXPIRE`). Abrufer sind Klassen aus der Kennung, die Kennung wird nicht gespeichert; eine ISR-Seite liest ihre Kopfzeilen nicht (sie würde dynamisch), ihr Abrufer heißt `page`.
+- **2.18m** `lib/insights/costs.ts`: feste Kosten anteilig je Tag seit Beginn, Vercel-Nutzung aus der Messung zum Listenpreis abzüglich des anteiligen Guthabens, Fotos aus K13; USD und EUR getrennt.
+- 16 Tests (`insights-cpu.test.ts`): Aufteilung, Leerlauf, Summe, Klassen der Abrufer, Summen der Auswertung, Schreiben, Kosten. 1.293 Tests, tsc, Lint und Build grün; sechs fremde Tests (Cover-Index, Ringe, zwei Lab-Simulationen) fielen in zwei Gesamtläufen aus, während ein Build nebenher lief, und bestanden einzeln und in zwei weiteren Gesamtläufen — die Ursache habe ich nicht gelesen.
+
+**Nicht geprüft:** die zwei neuen Abschnitte im Browser (lokal gibt es keinen Speicher, ohne den die Ansicht „kein Speicher" zeigt) — nach dem Deploy bei 390 und 1280 px ansehen. **Datenschutz:** gespeichert werden Tagessummen je Routen- und Abrufer-Klasse, nichts über einen Leser; die Datenschutzerklärung habe ich nicht geändert — Julian entscheidet, ob ein Satz dazukommt (CLAUDE.md, Analyse-Regel 6).
+
+**Analyse (3.1):** zwei neue Kennzahlen, K14 und K15, im Plan §3; neuer Tages-Hash `cpu`; `/api/seen`, `/go/` und die Fotoroute zählen wie zuvor.

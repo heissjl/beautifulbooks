@@ -2,9 +2,11 @@ import { NextRequest } from 'next/server';
 import { candidatesFor } from '@/lib/curate/catalog';
 import { json, memberGate } from '../../suggest/guard';
 import { draftStore, loadDraft } from '../store';
+import { measure } from '@/app/api/measure';
 
 /** The most-printed works of one author or publisher on a draft (ROADMAP 5.10b). */
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   const gate = memberGate(request);
   if ('response' in gate) return gate.response;
   const s = draftStore();

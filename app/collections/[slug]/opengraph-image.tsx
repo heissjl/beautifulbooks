@@ -4,6 +4,7 @@ import { allCollections, authorsShown } from '@/lib/collections';
 import { liveCollectionBySlug } from '@/lib/collections-live';
 import { wallCover } from '@/lib/curated';
 import { SITE_URL } from '@/lib/seo';
+import { measure } from '@/app/api/measure';
 
 /**
  * The card of a shared collection (ROADMAP 6.61, Julian 2026-09-29: „wir
@@ -37,6 +38,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/jpeg';
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+  measure('og');
   const { slug } = await params;
   const c = await liveCollectionBySlug(slug).catch(() => null);
   // The site card as JPEG too, since this route is declared as one.

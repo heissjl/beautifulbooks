@@ -5,12 +5,14 @@ import { liveRecords, publishStoreFromEnv } from '@/lib/collections-live';
 import { missingStoreMessage } from '@/lib/hotornot/store';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { json } from '../../suggest/guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * The order of the collections on the site, set by Julian (5.10h): the home
  * page shows the first six published ones in this order. Admin only.
  */
 export async function POST(request: NextRequest) {
+  measure('curate', request);
   if (!suggestEnabled()) return json({ error: 'Not found' }, 404);
   const admin =
     adminSessionValid(request.cookies.get(ADMIN_COOKIE)?.value) ||

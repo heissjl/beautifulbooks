@@ -13,6 +13,7 @@ import { getWorkDetail, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
 import { foldDuplicateCovers } from '@/lib/works';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * One book through the decades (ROADMAP 5.4a, PLAN-5 §3).
@@ -122,6 +123,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params, locale = DEFAULT_LOCALE }: PageProps) {
+  measure('page-decades');
   const t = translator(locale);
   const { id } = await params;
   const loaded = await load(id);

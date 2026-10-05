@@ -13,6 +13,7 @@ import {
   suggestEnabled,
 } from '@/lib/suggest/auth';
 import { json } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * The password in, a signed cookie out (ROADMAP 5.10a). The cookie holds an
@@ -20,6 +21,7 @@ import { json } from '../guard';
  * script on the page can read it, and limited to what the tool needs.
  */
 export async function POST(request: NextRequest) {
+  measure('curate', request);
   if (!suggestEnabled()) return json({ error: 'Not found' }, 404);
   const limited = rateLimited(request, 'login');
   if (limited) return limited;

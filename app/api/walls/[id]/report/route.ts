@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { afterReport, isWallId } from '@/lib/walls/model';
 import { sendReportMail } from '@/lib/walls/notify';
 import { json, openWalls, storeDown } from '../../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/walls/<id>/report — anyone may flag a shown collection (ROADMAP
@@ -11,6 +12,7 @@ import { json, openWalls, storeDown } from '../../guard';
  * nothing about who pressed it.
  */
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const { id } = await params;

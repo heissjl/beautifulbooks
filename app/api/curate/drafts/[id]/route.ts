@@ -5,6 +5,7 @@ import { collectionRecords, isCollectionSlug, parseCollections } from '@/lib/col
 import { publishStoreFromEnv } from '@/lib/collections-live';
 import { json, memberGate } from '../../../suggest/guard';
 import { draftStore, loadDraft, storeDown } from '../../store';
+import { measure } from '@/app/api/measure';
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -15,6 +16,7 @@ interface Params {
  * the draft as it now stands. Julian's tool may also mark a draft imported.
  */
 export async function POST(request: NextRequest, { params }: Params) {
+  measure('curate', request);
   const gate = memberGate(request);
   if ('response' in gate) return gate.response;
   const s = draftStore();

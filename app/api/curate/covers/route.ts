@@ -3,6 +3,7 @@ import { inSeries } from '@/lib/collectionedit';
 import { getWorkPage, isWorkId, MAX_EDITIONS_SCANNED } from '@/lib/work';
 import { json, memberGate } from '../../suggest/guard';
 import { draftStore, loadDraft } from '../store';
+import { measure } from '@/app/api/measure';
 
 /**
  * Covers of one book for a draft, a hundred editions a page (ROADMAP 5.10b).
@@ -11,6 +12,7 @@ import { draftStore, loadDraft } from '../store';
  * its publisher spellings, as in Julian's tool.
  */
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   const gate = memberGate(request);
   if ('response' in gate) return gate.response;
   const s = draftStore();

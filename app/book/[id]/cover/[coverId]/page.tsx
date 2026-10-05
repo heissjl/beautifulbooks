@@ -6,6 +6,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 import { coverIdFromSegment } from '@/lib/coverurl';
 import { workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
+import { measure } from '@/app/api/measure';
 
 /**
  * The address a shared cover gets: `/book/<work>/cover/<cover>` (ROADMAP 6.20).
@@ -53,6 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  measure('page-cover');
   const { id, coverId } = await params;
   if (!isWorkId(id) || !coverIdFromSegment(coverId)) notFound();
   return (

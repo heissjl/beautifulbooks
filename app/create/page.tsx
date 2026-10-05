@@ -12,6 +12,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 import { startOptions } from '@/lib/walls/startoptions';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * Where a reader's own wall begins (ROADMAP 5.13a, SPEC F9): from a book (picked here,
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function WallsPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  measure('page-create');
   const t = translator(locale);
   if (!wallsEnabled()) notFound();
   const options = await startOptions();

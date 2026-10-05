@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { indexBuiltAt, similarTo } from '@/lib/coverindex';
 import { rateLimited } from '@/app/api/rate';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/similar/<coverId>?limit=6
@@ -22,6 +23,7 @@ export interface SimilarResponse {
 const MAX_LIMIT = 12;
 
 export async function GET(request: NextRequest, context: { params: Promise<{ coverId: string }> }) {
+  measure('similar', request);
   const limited = rateLimited(request, 'similar');
   if (limited) return limited;
 

@@ -3,6 +3,7 @@ import { applyOp, isWallId, toPublic, WallError, type Wall, type WallOp } from '
 import { isOwner } from '@/lib/walls/owner';
 import type { WallStore } from '@/lib/walls/store';
 import { json, openWalls, readJson, storeDown, visitorOf } from '../guard';
+import { measure } from '@/app/api/measure';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -16,6 +17,7 @@ async function load(store: WallStore, id: string): Promise<Wall | null | 'down'>
 
 /** GET /api/walls/<id> — the wall, and whether this browser may change it. */
 export async function GET(request: NextRequest, { params }: Params) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const { id } = await params;
@@ -28,6 +30,7 @@ export async function GET(request: NextRequest, { params }: Params) {
 
 /** POST /api/walls/<id> {ops} — changes, one small operation at a time, by the owner only. */
 export async function POST(request: NextRequest, { params }: Params) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const { id } = await params;

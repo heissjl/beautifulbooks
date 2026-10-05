@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import { rateLimited } from '@/app/api/rate';
 import { recordCoverFailure, type CoverFailure } from '@/lib/coverlog';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /img/<S|M|L>/<ol-12345 | gb-abc123> — one cover image, through us.
@@ -56,6 +57,7 @@ function refuse(status: number, message: string): NextResponse {
 }
 
 export async function GET(request: NextRequest, context: { params: Promise<{ size: string; cover: string }> }) {
+  measure('img', request);
   const limited = rateLimited(request, 'img');
   if (limited) return limited;
 

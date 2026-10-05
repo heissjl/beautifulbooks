@@ -3,6 +3,7 @@ import { isVisitorId, normalVisitorId, toPublic } from '@/lib/walls/model';
 import { hashVisitor } from '@/lib/walls/owner';
 import { wallsOf } from '@/lib/walls/store';
 import { clearVisitor, json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/walls/me — this browser's visitor id and its walls (E22).
@@ -12,6 +13,7 @@ import { clearVisitor, json, openWalls, readJson, setVisitor, storeDown, visitor
  * the store changes, the collections wait for the id to be pasted again.
  */
 export async function GET(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const visitor = visitorOf(request);
@@ -24,6 +26,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const body = await readJson(request);
@@ -38,6 +41,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   return clearVisitor(json({ visitor: null, walls: [] }));

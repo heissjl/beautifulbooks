@@ -4,6 +4,7 @@ import { tilesFromCurated, tilesFromWall } from '@/lib/walls/jumpstart';
 import { isWallId, toPublic } from '@/lib/walls/model';
 import { newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
 import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/walls/from?curated=<slug> | ?reader=<id> — the covers of a
@@ -12,6 +13,7 @@ import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../
  * collection that is open.
  */
 export async function GET(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const params = request.nextUrl.searchParams;
@@ -41,6 +43,7 @@ export async function GET(request: NextRequest) {
  * (5.13j), and takes only the covers, not the title's owner or their lines.
  */
 export async function POST(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const body = await readJson(request);

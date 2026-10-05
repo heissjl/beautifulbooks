@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { castVote, secretForEnv } from '@/lib/hotornot/game';
 import { StoreUnavailableError } from '@/lib/hotornot/store';
 import { json, openGame, readBody, storeDown } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/versus/vote {a, b, winner, token} — one vote on a pair this
@@ -10,6 +11,7 @@ import { json, openGame, readBody, storeDown } from '../guard';
  * the voter is kept (N11).
  */
 export async function POST(request: NextRequest) {
+  measure('versus', request);
   const game = openGame(request, 'vote');
   if ('response' in game) return game.response;
   const { a, b, winner, token } = await readBody(request);

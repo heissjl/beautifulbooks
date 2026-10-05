@@ -11,6 +11,7 @@ import { getWorkPage, isWorkId } from '@/lib/work';
 import { MOSAIC_CANDIDATES, type SiblingWork } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
 import { countGoogleStopsAfter } from '@/app/api/count';
+import { measure } from '@/app/api/measure';
 
 /**
  * Response of GET /api/works/[id] (SPEC §2.3: covers are the unit).
@@ -91,6 +92,7 @@ export function offsetFromRequest(raw: string | null): number {
 export const maxDuration = 30;
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  measure(request.nextUrl.searchParams.get('summary') === '1' ? 'works-summary' : 'works', request);
   countGoogleStopsAfter();
   const { id } = await context.params;
   if (!isWorkId(id)) {

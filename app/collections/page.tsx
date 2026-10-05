@@ -14,6 +14,7 @@ import { liveCollections } from '@/lib/collections-live';
 import { SITE_URL } from '@/lib/seo';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * Every collection the file holds (ROADMAP 5.10, SPEC F8), each with its title
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  measure('page-collections');
   const t = translator(locale);
   const collections = await liveCollections();
   if (collections.length === 0) notFound();
