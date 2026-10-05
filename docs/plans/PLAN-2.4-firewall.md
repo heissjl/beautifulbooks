@@ -81,7 +81,7 @@ Die Frage aus 2.4, ob der Monitor eine Ausnahme braucht: **auf Hobby gibt es kei
 
   | Monitor | Typ | Adresse | Stichwort (muss vorkommen) | Intervall |
   |---|---|---|---|---|
-  | `buyitscovers – Startseite` | Keyword | `https://buyitscovers.com/` | `Buy Its Covers` | 5 min |
+  | `buyitscovers – Startseite` | HTTP (eingerichtet; der Typ lässt sich nach dem Anlegen nicht ändern, und ein pausiertes Projekt antwortet ohnehin nicht 200) | `https://buyitscovers.com/` | — | 5 min |
   | `buyitscovers – Suche` | Keyword | `https://buyitscovers.com/api/search?q=1984` | `Nineteen Eighty-Four` | 5 min |
 
   Benachrichtigung: E-Mail und die UptimeRobot-App aufs Telefon (Push). Kein Abruf mit wechselndem Parameter, um den Cache zu umgehen: das wären 288 Open-Library-Anfragen am Tag von unserer Adresse, und Open Library sperrt Stöße. Auf Pro gibt es jetzt den System-Bypass der Firewall; nötig wird er erst, wenn der Monitor `x-vercel-mitigated` sieht.

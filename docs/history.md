@@ -4696,3 +4696,13 @@ Entscheidung J6 („jetzt gleich"). Gebaut, nicht deployt. **Der Weg:** eine Zei
 **About** (englisch und deutsch, die deutsche Fassung neu geschrieben): wer ein Cover hier nicht sehen will, schreibt an die Adresse des Impressums (`IMPRINT_EMAIL`, dieselbe wie auf `/contact` und `/privacy`). Angesehen bei 390 × 844 und 1280 × 800 aus dem Produktions-Build: kein Überlauf (Absatz 358 von 358 px).
 
 **Geprüft:** 13 neue Tests (`lib/__tests__/hiddencovers.test.ts`, einer je Weg; der Ring mit `vi.doMock` der Liste, weil er beim Laden gefiltert wird); 1.312 Tests, tsc, Lint und Build grün. **Analyse (3.1):** solange die Liste leer ist, ändert sich nichts. Steht ein Cover darauf, zeigt eine Buchseite eine Kachel weniger (`data-cover-id`, K-Werte zu gesehenen Covern) und das Spiel zählt ein Cover weniger; die Liste trägt das Datum, ab dem das gilt. Nichts Neues wird gespeichert oder gesendet.
+
+## 2026-10-05 · Deploy von 2.18a, k, l, m, n; UptimeRobot läuft (ROADMAP 2.18, 2.4)
+
+**Deploy:** Julian: „ja". `origin/main` von `e2fa0b2d` auf `be412402` (40 Commits, darunter die 31 Calibre-Commits des lokalen `main`), Vercel-Build 1 min, Ready. **Einmal geprüft gegen buyitscovers.com:** `/robots.txt` 200, 23.097 Byte, 822 `Allow: /book/`-Zeilen, Gruppe mit `ClaudeBot`, `Disallow: /img/`, `Crawl-delay: 10`; `/about` trägt den Satz für Rechteinhaber; `/img/M/ol-10590366` 200 `image/jpeg`. Die neuen Karten in `/admin/insights` sieht Julian an (390 und 1280 px); K14 füllt sich ab jetzt, die Wirkung von 2.18n auf ClaudeBot ist dort ab morgen zu lesen.
+
+**UptimeRobot** (2.4), eingerichtet von Claude in Julians Chrome (Julian: „mach du"); das Konto war neu, die App auf Julians iPhone schon verbunden. Zwei Monitore, je 5 min, Mail und Push: `buyitscovers – Startseite` als HTTP-Monitor — angelegt über die Einführung, deren erster Monitor ein HTTP-Monitor ist, und der Typ lässt sich nachträglich nicht ändern; für die Startseite genügt das, denn ein pausiertes Projekt antwortet nicht 200 — und `buyitscovers – Suche` als Keyword-Monitor (Vorfall, wenn `Nineteen Eighty-Four` fehlt). Keine Statusseite. Erster Stand: Startseite „Up".
+
+**Bild-Cache und Deploy** (Julian: „kann man das verbessern?"): laut Vercel-Doku übersteht der Cache der Bildoptimierung einen Deploy (Schlüssel ohne Deploy-Adresse), der CDN-Cache einer Funktionsantwort nicht. Vorschlag mit Kosten als ROADMAP 2.18o.
+
+**Ausgabenlimit und Redis-Tarif:** vorbereitet, nicht ausgeführt — in Julians Chrome ist Vercel abgemeldet (Anmeldeseite), Schritte im Plan §5.
