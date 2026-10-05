@@ -84,6 +84,79 @@ Für die Galerie-Sätze zählt vor allem der **belegte Zeitraum**. Er steht am E
 
 ---
 
-## Chris Moore, Dominic Harman, Kurt Wirth, Walter Grieder, Nikolaus Heidelbach
+## Kurt Wirth (1917–1996) — Fischer Bücherei
 
-Die Recherche läuft noch; die Abschnitte folgen.
+**Herkunft.**
+- Geboren am 12.9.1917 in Bern, gestorben am 3.2.1996 in Bern.
+- Grafikerlehre 1933–36 bei Hans Fischer, eigenes Atelier in Bern ab 1937.
+- Präsident des Verbands Schweizer Grafiker 1956–59.
+- Lehrer an der Schule für Gestaltung Bern 1971–87 laut HLS (Wikipedia nennt 1971–78; das HLS ist die bessere Quelle).
+- Quellen: [HLS](https://hls-dhs-dss.ch/de/articles/028672/2013-11-05/), [de.wikipedia](https://de.wikipedia.org/wiki/Kurt_Wirth_(Grafiker)).
+
+**Weitere Werke.**
+- Die visuelle Identität der Swissair, Plakate für die SBB.
+- Briefmarken (Flugpioniere, 1977) und Gedenkmünzen.
+- Sechsmal „Bestes Schweizer Plakat“ (1950, 1955, 1956, 1960, 1969, 1979); seit 1956 in der AGI.
+- Monografie bei Benteli (2002).
+- Quellen: wie oben, dazu [AGI](https://a-g-i.org/user/kurtwirth/) und [Sammlung Keller](https://www.sammlungkeller.ch/wirth-kurt.html).
+
+**Fischer Bücherei.**
+- Die Reihe begann im Frühjahr 1952 mit sechs Titeln zu 1,90 DM; Band 1 war Wilders *Die Brücke von San Luis Rey* ([fischerverlage.de](https://www.fischerverlage.de/verlag/fischer-taschenbuch)).
+- Die AGI zählt **180 Umschläge** von Wirth für Fischer; die Sammlung Keller sagt vorsichtiger „Dutzende“, in den 1950er und 60er Jahren.
+- Belegtes Beispiel: Orwell, *Farm der Tiere*, Band 216, 1958, mit dem Vermerk „Umschlagentwurf von Kurt Wirth“. Das ist eine Antiquariatsangabe, also ein schwacher Beleg.
+- Auftraggeber, Konzept und Technik sind **nicht belegt**. „Ab 1952“ ist unbestätigt, eine Quelle nennt 1960.
+
+**Aufhänger, belegt:** Der Mann hinter dem Swissair-Auftritt gestaltete rund 180 Fischer-Taschenbücher.
+
+**Zeitraum für den Galerie-Satz:** keiner. Belegt ist nur 1958, „1950s and 60s“ steht auf schwachen Belegen. Der Satz bleibt deshalb ohne Jahre.
+
+---
+
+## Walter Grieder (1914–2004) — Herder Bücherei, Ravensburger
+
+**Herkunft.**
+- Geboren am 21.11.1914 in Basel, gestorben am 2.3.2004 in Riehen (laut HLS; Wikipedia nennt Basel).
+- Ausbildung in St. Gallen und Basel, danach Werbegrafiker in Paris und London.
+- Ab 1957 freier Illustrator in Basel; in den 1980er und 90er Jahren nur noch Maler und Druckgrafiker.
+- Quellen: [HLS](https://hls-dhs-dss.ch/de/articles/027806/2013-11-28/), [de.wikipedia](https://de.wikipedia.org/wiki/Walter_Grieder).
+
+**Weitere Werke.**
+- „Bestes Schweizer Plakat“ 1955 und 1963.
+- Dutzende Kinder- und Jugendbücher bei Artemis, Diogenes und Sauerländer.
+- Bei Herder Bilderbücher (1961–1979), bei Ravensburger Taschenbücher 1973–79 ([Sammlung Keller](https://www.sammlungkeller.ch/grieder-walter.html), [detlef-heinsohn.de](https://www.detlef-heinsohn.de/rav-TB.htm)).
+- „Schindler“ in unserem Sammlungsnamen ist vermutlich Edith Schindler, die ebenfalls für Ravensburger zeichnete. Eine gemeinsame Arbeit der beiden ist nicht belegt.
+
+**Herder Bücherei.**
+- Gegründet vermutlich 1957; Wikipedia sagt „ab den 1960er Jahren“.
+- **Grieders Umschläge für die Reihe sind im Netz nicht belegt.** Die Sammlung Keller führt eine Rubrik „Herder Bücherei“, nennt aber weder Titel noch Jahre.
+- Unsere Sammlung stützt sich auf die eigenen Funde. Ein Post wartet, bis ein Umschlag mit Vermerk und Jahr belegt ist, etwa ein Exemplar mit „Umschlag: Walter Grieder“ im Impressum.
+
+**Zeitraum für den Galerie-Satz:** unbekannt.
+
+---
+
+## Nikolaus Heidelbach (geb. 1955) — Haffmans, Kipling
+
+**Herkunft.**
+- Geboren 1955 in Lahnstein; beim Tag widersprechen sich die Quellen (4. oder 5.12.).
+- Sohn des Malers Karl Heidelbach; studierte Germanistik, Kunstgeschichte und Theaterwissenschaft; als Zeichner weitgehend Autodidakt. Lebt in Köln.
+- Aquarell und Buntstift; Karikatur mit psychologischer Tiefe.
+- Quellen: [de.wikipedia](https://de.wikipedia.org/wiki/Nikolaus_Heidelbach), [Rossipotti](https://www.rossipotti.de/inhalt/literaturlexikon/illustratoren/heidelbach_nikolaus.html).
+
+**Weitere Werke.**
+- Debüt 1982 bei Beltz & Gelberg; Märchenbände nach Grimm und Andersen.
+- Troisdorfer Bilderbuchpreis 1988, Deutscher Jugendliteraturpreis 2007 (Sonderpreis Illustration 2000), Ringelnatz-Preis 2018.
+
+**Haffmans.**
+- Der Verlag wurde 1982 in Zürich von Gerd Haffmans, Thomas Bodmer und Urs Jakob gegründet; er brachte rund 700 Bücher heraus und ging 2001 in Konkurs ([de.wikipedia](https://de.wikipedia.org/wiki/Haffmans_Verlag)).
+- 1986 erschien dort Heidelbachs *Kleines Alphabet für Tierquäler und Kinderfreunde*.
+- **Kipling, „Zürcher Edition“, 10 Bände, 1987–1995**: neu übersetzt von Gisbert Haefs, gebunden in rotes Leinen nach Kiplings eigener Uniform Edition, Deckelbilder von Heidelbach. Die Angabe stammt aus einem [Antiquariat](https://www.abebooks.com/first-edition/Gesammelte-Werke-B%C3%A4nden-Ballade-Ost-West/31432742827/bd), ist aber sehr konkret.
+- Laut Sammlung Keller zeichnete er auch die Umschläge der Haffmans-Taschenbücher, der Krimis und der Zeitschrift *Der Rabe*, ohne Jahre oder Zahlen.
+
+**Zeitraum für den Galerie-Satz:** die Kipling-Bände 1987–1995. Für Haffmans insgesamt gibt es keinen belegten Zeitraum.
+
+---
+
+## Chris Moore, Dominic Harman
+
+Die Recherche läuft noch.

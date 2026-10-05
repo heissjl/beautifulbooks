@@ -702,7 +702,7 @@
         "rechte",
         "publish:fischer-bucherei-covers-by-kurt-wirth"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Keine Jahre im Satz, nur 1958 ist belegt. Aufhänger für die Antwort: derselbe Mann gestaltete den Auftritt der Swissair; die AGI zählt 180 Fischer-Umschläge. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-virago",
@@ -814,7 +814,7 @@
         "rechte",
         "publish:herder-bucherei-covers-by-walter-grieder"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Nicht belegt: dass Grieder Herder-Umschläge gestaltete. Erst posten, wenn ein Exemplar den Vermerk trägt, sonst verwerfen. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "bsky-sf-relaunch",
@@ -900,17 +900,16 @@
       "date": "2026-11-29",
       "channel": "bluesky",
       "kind": "galerie",
-      "text": "Nikolaus Heidelbach's covers for Haffmans",
+      "text": "Nikolaus Heidelbach's covers for Kipling at Haffmans (1987–1995)",
       "status": "vorschlag",
-      "path": "/collections/haffmans-covers-by-nikolaus-heidelbach",
-      "image": "Vier Cover aus der Sammlung",
+      "path": "/collections/kipling-at-haffmans-covers-by-nikolaus-heidelbach",
+      "image": "Vier Kipling-Bände aus der Sammlung (Deckelbilder)",
       "needs": [
         "konto:bluesky",
         "5.6a",
-        "rechte",
-        "publish:haffmans-covers-by-nikolaus-heidelbach"
+        "rechte"
       ],
-      "note": "Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Statt der ganzen Haffmans-Wand die Kipling-Ausgabe, weil nur sie einen belegten Zeitraum hat (10 Bände, rotes Leinen nach Kiplings Uniform Edition). Die Haffmans-Wand kann die Antwort verlinken. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
       "id": "review-w8",
