@@ -256,12 +256,108 @@ def mosaic_pin():
     s.convert('RGB').save(os.path.join(OUT, 'pinterest-mosaik-1.jpg'), quality=92)
 
 
+# Women only, and a short story (Julian, 2026-10-05: "bereite mosaike mit nur
+# frauen vor", fewer slides, other words on the first one, blend as close to 0
+# as possible). Rendered at 45 columns with no blend. Of nine women tried,
+# these three read at blend 0; Eliot, Shelley and Cather came out too soft,
+# Montgomery, Brontë and Burnett as faces cut or blurred.
+WOMEN = [
+    dict(key='jane-austen', name='Jane Austen', books='made of covers of her most-printed books',
+         credit='Portrait: engraving after Cassandra Austen, 1870 (public domain)'),
+    dict(key='louisa-may-alcott', name='Louisa May Alcott', books='made of covers of her eight most-printed books',
+         credit="Portrait: Warren's Portraits, Boston, c. 1870 (public domain)"),
+    dict(key='edith-wharton', name='Edith Wharton', books='made of covers of her most-printed books',
+         credit='Portrait: E. F. Cooper, Newport, c. 1889–90 (public domain)'),
+]
+
+
+def women_story():
+    W, H = 1080, 1350
+    n = len(WOMEN) + 1
+    slides = []
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    d.text((80, 80), 'Buy Its Covers', font=font('xanh-italic', 44), fill=INK)
+    counter(d, 1, n, W)
+    big, big_i = font('xanh', 96), font('xanh-italic', 96)
+    d.text((80, 790), 'The women', font=big, fill=INK)
+    d.text((80, 910), 'behind the covers.', font=big_i, fill=ACCENT)
+    f = font('jost', 36, 400)
+    d.text((84, 1110), 'Each portrait is made of the covers', font=f, fill=INK)
+    d.text((84, 1158), 'her books have been printed with.', font=f, fill=INK)
+    slides.append(s)
+    for i, p in enumerate(WOMEN, start=2):
+        s = Image.new('RGBA', (W, H), BG + (255,))
+        m = Image.open(os.path.join(OUT, f"mosaic-{p['key']}.png")).convert('RGB')
+        m = m.resize((W, round(m.height * W / m.width)), Image.LANCZOS).crop((0, 0, W, 1152))
+        s.paste(m, (0, 0))
+        d = ImageDraw.Draw(s)
+        d.text((64, 1176), p['name'], font=font('xanh', 52), fill=INK)
+        d.text((66, 1242), p['books'], font=font('jost', 30, 400), fill=INK)
+        d.text((66, 1284), p['credit'], font=font('jost', 24, 400), fill=MUTED)
+        cf = font('jost', 26, 400)
+        t = f'{i}/{n}'
+        d.text((W - 64 - d.textlength(t, font=cf), 1184), t, font=cf, fill=MUTED)
+        uf = font('xanh-italic', 30)
+        d.text((W - 64 - d.textlength('buyitscovers.com', font=uf), 1282), 'buyitscovers.com', font=uf, fill=ACCENT)
+        slides.append(s)
+    for i, s in enumerate(slides, start=1):
+        s.convert('RGB').save(os.path.join(OUT, f'instagram-frauen-{i}.jpg'), quality=92)
+
+
+def versus_pin():
+    """The Pinterest exposé (Julian, 2026-10-05): the cover game at /versus, its
+    own question and line, shown with two public-domain covers so the pin
+    needs no rights decision. The game itself shows covers that are not free."""
+    W, H = 1000, 1500
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    d.text((70, 64), 'Buy Its Covers', font=font('xanh-italic', 40), fill=INK)
+    q = font('xanh', 62)
+    d.text((70, 170), 'Which cover would you', font=q, fill=INK)
+    d.text((70, 246), 'rather look at?', font=q, fill=INK)
+    left, right = COVERS[1], COVERS[2]  # Pinocchio 1902, The Jungle Book 1894
+    box_h, top = 600, 420
+    boxes = []
+    for c, cx in ((left, W // 4 + 10), (right, 3 * W // 4 - 10)):
+        im = cover_image(c)
+        w = round(im.width * box_h / im.height)
+        if w > 400:
+            w, h = 400, round(im.height * 400 / im.width)
+        else:
+            h = box_h
+        im = im.resize((w, h), Image.LANCZOS)
+        x, y = cx - w // 2, top + (box_h - h) // 2
+        shadow = Image.new('RGBA', s.size, (0, 0, 0, 0))
+        ImageDraw.Draw(shadow).rectangle((x + 6, y + 14, x + w + 6, y + h + 14), fill=(20, 16, 12, 70))
+        s.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(16)))
+        s.paste(im, (x, y))
+        boxes.append((cx, c))
+    d = ImageDraw.Draw(s)
+    of = font('xanh-italic', 48)
+    d.text(((W - d.textlength('or', font=of)) / 2, top + box_h // 2 - 30), 'or', font=of, fill=MUTED)
+    lf = font('jost', 26, 400)
+    for cx, c in boxes:
+        year = c['imprint'].rsplit(', ', 1)[1]
+        label = f"{c['title'].replace('Le avventure di ', '')}, {year}"
+        d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
+    d.text((70, 1150), 'Judge the cover, not the book.', font=font('xanh-italic', 54), fill=ACCENT)
+    bf = font('jost', 32, 400)
+    d.text((72, 1250), 'A cover game: two covers, one click.', font=bf, fill=INK)
+    d.text((72, 1296), 'The standings show which ones readers keep choosing.', font=bf, fill=INK)
+    d.text((72, 1380), 'buyitscovers.com/versus', font=font('xanh-italic', 44), fill=ACCENT)
+    s.convert('RGB').save(os.path.join(OUT, 'pinterest-versus.jpg'), quality=92)
+
+
 if __name__ == '__main__':
     os.makedirs(CACHE, exist_ok=True)
     carousel()
     pin()
+    versus_pin()
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
         mosaic_carousel()
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain-pin.png')):
         mosaic_pin()
+    if all(os.path.exists(os.path.join(OUT, f"mosaic-{p['key']}.png")) for p in WOMEN):
+        women_story()
     print('written to', OUT)

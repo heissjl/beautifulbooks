@@ -7,7 +7,8 @@
     "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach",
     "publish:penguin-great-ideas",
     "publish:reihe-hanser-covers-by-heinz-edelmann",
-    "publish:tolkien-covers-by-heinz-edelmann"
+    "publish:tolkien-covers-by-heinz-edelmann",
+    "spiel"
   ],
   "posts": [
     {
@@ -154,16 +155,17 @@
       "date": "2026-10-17",
       "channel": "pinterest",
       "kind": "expose",
-      "text": "J. M. Barrie's Peter and Wendy in Scribner's 1911 edition: green cloth stamped in gold, cover by F. D. Bedford, now in the public domain. On Buy Its Covers, the covers Peter Pan has been printed with since, decade by decade, from two open catalogues.",
+      "text": "Buy Its Covers has a small game: two covers of two books side by side, and one question, which would you rather look at. The standings show which covers readers keep choosing, and every cover leads to its book and its other editions. Shown here: two public-domain covers, Pinocchio (Bemporad, 1902) and The Jungle Book (Macmillan, 1894).",
       "status": "vorschlag",
-      "title": "Peter and Wendy, 1911: F. D. Bedford's cover, and Peter Pan through the decades",
-      "path": "/book/OL462007W/decades",
+      "title": "Which cover would you rather look at? A cover game: two covers, one click",
+      "path": "/versus",
       "needs": [
         "konto:pinterest",
-        "5.6a"
+        "5.6a",
+        "spiel"
       ],
-      "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
-      "note": "Erster Pin, zugleich das Exposé auf Pinterest. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-versus.jpg",
+      "note": "Das Exposé auf Pinterest (Julian, 2026-10-05: „ein pinterest expose der website, dass das versus spiel zeigt“). Frage und Zeile stammen aus dem Spiel selbst. Das Spiel zeigt nicht gemeinfreie Cover; der Pin zeigt deshalb zwei gemeinfreie (Chiostri †1939, J. L. Kipling †1911) und braucht keine Rechte-Entscheidung. /versus am 2026-10-05 in Produktion geprüft: läuft. Pinnwand „Cover game“."
     },
     {
       "id": "gal-chris-moore",
@@ -948,20 +950,20 @@
       "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist."
     },
     {
-      "id": "ig-mosaik-autoren",
+      "id": "ig-mosaik-frauen",
       "date": "2026-10-16",
       "time": "18:00",
       "channel": "instagram",
       "kind": "feature",
       "status": "vorschlag",
-      "text": "Four writers, made of their own covers. Every tile is a printing of one of their books:\n\nMark Twain, from Tom Sawyer, Huckleberry Finn and six more\nJane Austen, from Pride and Prejudice, Emma and five more\nEdgar Allan Poe, from his tales and poems\nCharles Dickens, from Oliver Twist, Great Expectations and six more\n\nThe covers come from Open Library; the portraits are in the public domain. Buy Its Covers shows the covers a book has been printed with, and finds you the edition behind the one you like.\n\nLink in bio.\n\n#bookcovers #mosaic #marktwain #janeausten #edgarallanpoe #charlesdickens",
+      "text": "The women behind the covers. Each portrait is made of the covers her books have been printed with:\n\nJane Austen, from Pride and Prejudice, Emma and five more\nLouisa May Alcott, from Little Women and seven more\nEdith Wharton, from Ethan Frome, The House of Mirth, The Age of Innocence and four more\n\nThe covers come from Open Library; the portraits are in the public domain. Buy Its Covers shows the covers a book has been printed with, and finds you the edition behind the one you like.\n\nLink in bio.\n\n#bookcovers #mosaic #janeausten #louisamayalcott #edithwharton #womenwriters",
       "path": "/",
-      "image": "Karussell, sechs Folien 1080×1350: lab/kalender/out/instagram-mosaik-1.jpg bis -6.jpg",
+      "image": "Story/Karussell, vier Folien 1080×1350: lab/kalender/out/instagram-frauen-1.jpg bis -4.jpg (45 Spalten, keine Überblendung)",
       "needs": [
         "konto:instagram",
         "5.6a"
       ],
-      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Werklisten gegen lab/mosaic/out/cache/author_*_8.json geprüft (Austen: sieben Werke)."
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Frauen statt Männer, vier Folien statt sechs, neuer Text auf der ersten (Julian, 2026-10-05); Überblendung 0. Von neun versuchten Autorinnen lesen sich diese drei; Werklisten aus lab/mosaic/out/cache/author_*_8.json."
     },
     {
       "id": "pin-mosaik-twain",
@@ -978,6 +980,22 @@
         "5.6a"
       ],
       "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Pinnwand „Writers made of their covers“."
+    },
+    {
+      "id": "pin-peter-and-wendy",
+      "date": "2026-10-21",
+      "channel": "pinterest",
+      "kind": "feature",
+      "text": "J. M. Barrie's Peter and Wendy in Scribner's 1911 edition: green cloth stamped in gold, cover by F. D. Bedford, now in the public domain. On Buy Its Covers, the covers Peter Pan has been printed with since, decade by decade, from two open catalogues.",
+      "status": "vorschlag",
+      "title": "Peter and Wendy, 1911: F. D. Bedford's cover, and Peter Pan through the decades",
+      "path": "/book/OL462007W/decades",
+      "needs": [
+        "konto:pinterest",
+        "5.6a"
+      ],
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
+      "note": "Zweiter Pin, nach dem Exposé. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
     }
   ]
 }

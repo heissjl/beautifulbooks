@@ -166,6 +166,14 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
    - **Mosaike sind freigegeben** (Julian, 2026-10-05: „arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind. das sollte pragmatisch keine rechteprobleme auslösen“). Damit ist Frage 1 für Mosaike beantwortet: Weg (a), mit Quellenangabe. Für einzelne Cover, Galerien und Clips bleibt sie offen.
      - Gebaut am selben Tag: ein Instagram-Karussell mit vier Autorenporträts aus den Covern ihrer meistgedruckten Bücher (Twain, Austen, Poe, Dickens; Porträts gemeinfrei, aus `lab/loading/templates.json`) und ein Pin (Twain, verlinkt auf `/?author=mark%20twain`). Im Kalender am 16.10. und 19.10.
      - Nicht gelesen haben sich: Wilde und Woolf, deren Gesichter im Mosaik nicht erkennbar werden, und die gemeinfreien Ersteinbände als Motiv (Peter and Wendy, Pinocchio). Feine Goldprägung auf dunklem Leinen wird zu einer bunten Wand ohne Motiv, auch mit 25 % Überblendung. **Ein Mosaik braucht ein Foto mit Hell und Dunkel, keinen Einband**; das stand schon in lab/mosaic für Jacken.
+   - **Nachgebessert am 2026-10-05** (Julian: „bereite mosaike mit nur frauen vor“, „weniger kacheln in der story“, „anderes copywriting auf der ersten kachel“, „die überblendung sollte möglichst 0 sein“):
+     - Die Instagram-Story hat jetzt nur Frauen und vier Folien statt sechs. Folie 1 sagt „The women behind the covers.“, dann folgen Austen, Alcott und Wharton bei 45 Spalten ohne Überblendung. Kalender-Eintrag `ig-mosaik-frauen`, 16.10.
+     - **Neun Autorinnen versucht:** Eliot, Shelley und Cather wurden zu weich; bei Montgomery, Brontë und Burnett war das Gesicht unscharf oder abgeschnitten.
+     - **Weniger Kacheln im Mosaik** (26 bis 28 Spalten statt 45) lesen sich schlechter; mit 20 % Überblendung ginge es, aber Julian will keine.
+   - **Das Pinterest-Exposé zeigt das Cover-Spiel** (Julian, 2026-10-05: „bereite ein pinterest expose der website vor, dass das versus spiel zeigt“).
+     - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“ und „Judge the cover, not the book.“
+     - Gezeigt mit zwei gemeinfreien Covern (Pinocchio 1902, The Jungle Book 1894), verlinkt auf `/versus`. /versus läuft in Produktion, einmal geprüft am 2026-10-05.
+     - Der Peter-and-Wendy-Pin ist damit der zweite Pin (21.10.).
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
 4. **Ob die drei restlichen Entwürfe erscheinen** (Grieder/Herder, Penguin black band, Virago); sonst werden ihre Posts verworfen.
