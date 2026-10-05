@@ -23,7 +23,7 @@ import { SITE_URL } from '@/lib/seo';
  * the covers nothing to stand on. `ambient`, the default, is the board's own
  * covers blurred until only their colours are left, darkened, with the edges
  * drawn in — each picture gets the colour world of its books, and the covers
- * cast a shadow on it. `paper` is the site's warm ground with dark type, the
+ * cast a shadow on it (painted into the ground, see `shadows`). `paper` is the site's warm ground with dark type, the
  * way the website itself looks; `plain` is the old flat one, kept to compare.
  *
  * The covers are fetched here, each with its own budget, and cut to their
@@ -44,10 +44,11 @@ const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SIT
 type Format = PosterFormat | 'card';
 type Look = 'ambient' | 'paper' | 'plain';
 
-const LOOKS: Record<Look, { bg: string; ink: string; ink2: string; mark: string; empty: string; shadow: string }> = {
-  ambient: { bg: OG.bg, ink: OG.ink, ink2: '#d2cbc2', mark: OG.ink, empty: 'rgba(255,255,255,0.08)', shadow: '0 22px 48px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.5)' },
-  paper: { bg: OG.paper, ink: OG.paperInk, ink2: OG.paperInk2, mark: OG.accent, empty: '#e6dfd3', shadow: '0 20px 40px -14px rgba(20,16,12,0.5), 0 2px 5px rgba(20,16,12,0.25)' },
-  plain: { bg: OG.bg, ink: OG.ink, ink2: OG.ink2, mark: OG.ink, empty: '#2a2522', shadow: '0 0 0 2px #2a2522' },
+/** `shadow` is how dark the covers' shadow falls on the ground, 0 for none. */
+const LOOKS: Record<Look, { bg: string; ink: string; ink2: string; mark: string; empty: string; shadow: number }> = {
+  ambient: { bg: OG.bg, ink: OG.ink, ink2: '#d2cbc2', mark: OG.ink, empty: 'rgba(255,255,255,0.08)', shadow: 0.62 },
+  paper: { bg: OG.paper, ink: OG.paperInk, ink2: OG.paperInk2, mark: OG.accent, empty: '#e6dfd3', shadow: 0.3 },
+  plain: { bg: OG.bg, ink: OG.ink, ink2: OG.ink2, mark: OG.ink, empty: '#2a2522', shadow: 0 },
 };
 
 async function tile(coverId: string, width: number, height: number): Promise<Buffer | null> {
@@ -69,36 +70,75 @@ async function tile(coverId: string, width: number, height: number): Promise<Buf
 const dataUrl = (jpeg: Buffer) => `data:image/jpeg;base64,${jpeg.toString('base64')}`;
 
 /**
- * The covers themselves as a ground: each one shrunk to a few pixels and set
- * side by side as they stand on the board, that small mosaic stretched over
- * the whole picture and blurred until no cover can be told — only where the
- * reds and the blues are. Then darkened, with the edges drawn in, so the type
- * at the top and bottom stays readable on any board. Stretched rather than
- * painted in place: the first try left the bands above and below the covers
- * black, with an edge where the colour began.
- * Null when it cannot be made — the flat colour stands in.
+ * The covers themselves as a wash of colour: each one shrunk to a few pixels
+ * and set side by side as they stand on the board, that small mosaic
+ * stretched over the whole picture and blurred until no cover can be told —
+ * only where the reds and the blues are. Then darkened, with the edges drawn
+ * in, so the type at the top and bottom stays readable on any board.
+ * Stretched rather than painted in place: the first try left the bands above
+ * and below the covers black, with an edge where the colour began.
  */
-async function ambient(width: number, height: number, rects: Rect[], tiles: (Buffer | null)[]): Promise<string | null> {
+async function wash(width: number, height: number, rects: Rect[], tiles: (Buffer | null)[]): Promise<Buffer> {
   const cols = new Set(rects.map((r) => r.x)).size;
   const rows = rects.length / cols;
   const cell = { w: 12, h: 18 };
+  const cells = await Promise.all(tiles.map(async (t, i) => (t
+    ? { input: await sharp(t).resize(cell.w, cell.h, { fit: 'fill' }).toBuffer(), left: (i % cols) * cell.w, top: Math.floor(i / cols) * cell.h }
+    : null)));
+  const mosaic = await sharp({ create: { width: cols * cell.w, height: rows * cell.h, channels: 3, background: '#3a342f' } })
+    .composite(cells.flatMap((c) => (c ? [c] : [])))
+    .png()
+    .toBuffer();
+  // Blurred at an eighth of the size and enlarged: the same softness as a 130 px blur at full size, for a fraction of the work.
+  const small = await sharp(mosaic).resize(Math.round(width / 8), Math.round(height / 8), { fit: 'fill', kernel: 'cubic' }).blur(16).png().toBuffer();
+  const soft = await sharp(small).resize(width, height, { fit: 'fill', kernel: 'cubic' }).modulate({ saturation: 1.3 }).png().toBuffer();
+  const shade = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+      `<defs><radialGradient id="v" cx="50%" cy="50%" r="75%"><stop offset="30%" stop-color="#0c0a09" stop-opacity="0.45"/><stop offset="100%" stop-color="#0c0a09" stop-opacity="0.8"/></radialGradient></defs>` +
+      `<rect width="100%" height="100%" fill="url(#v)"/></svg>`,
+  );
+  return sharp(soft).composite([{ input: shade }]).png().toBuffer();
+}
+
+/**
+ * The shadow the covers cast, as one soft layer: a dark rectangle under every
+ * cover that came, a little lower than the cover, blurred at a quarter of the
+ * size. **Painted here and not as `boxShadow` in the generator**, for two
+ * reasons found on the first preview: nine blurred shadows of that size took
+ * the story from 5 s to 29 s on Vercel, a second short of the function's
+ * limit; and a tile with `boxShadow: 'none'` — every empty place — made the
+ * generator paint a black rectangle the size of a tile over the top left
+ * corner of the picture.
+ */
+async function shadows(width: number, height: number, rects: Rect[], tiles: (Buffer | null)[], strength: number): Promise<Buffer | null> {
+  const k = 4;
+  const w = Math.round(width / k);
+  const h = Math.round(height / k);
+  const drop = 20;
+  const spots = rects.flatMap((r, i) => {
+    if (!tiles[i]) return [];
+    const left = Math.round(r.x / k);
+    const top = Math.round((r.y + drop) / k);
+    const sw = Math.min(Math.round(r.width / k), w - left);
+    const sh = Math.min(Math.round(r.height / k), h - top);
+    return sw > 0 && sh > 0 ? [{ input: { create: { width: sw, height: sh, channels: 4 as const, background: { r: 8, g: 6, b: 5, alpha: strength } } }, left, top }] : [];
+  });
+  if (spots.length === 0) return null;
+  const layer = await sharp({ create: { width: w, height: h, channels: 4, background: { r: 8, g: 6, b: 5, alpha: 0 } } }).composite(spots).png().toBuffer();
+  const soft = await sharp(layer).blur(7).png().toBuffer();
+  return sharp(soft).resize(width, height, { fit: 'fill', kernel: 'cubic' }).png().toBuffer();
+}
+
+/** What the covers stand on, as one picture: the wash or the flat colour, and the shadows. Null when it cannot be made — the flat colour stands in. */
+async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[]): Promise<string | null> {
+  const L = LOOKS[look];
+  if (L.shadow === 0) return null;
   try {
-    const cells = await Promise.all(tiles.map(async (t, i) => (t
-      ? { input: await sharp(t).resize(cell.w, cell.h, { fit: 'fill' }).toBuffer(), left: (i % cols) * cell.w, top: Math.floor(i / cols) * cell.h }
-      : null)));
-    const mosaic = await sharp({ create: { width: cols * cell.w, height: rows * cell.h, channels: 3, background: '#3a342f' } })
-      .composite(cells.flatMap((c) => (c ? [c] : [])))
-      .png()
-      .toBuffer();
-    // Blurred at an eighth of the size and enlarged: the same softness as a 130 px blur at full size, for a fraction of the work.
-    const small = await sharp(mosaic).resize(Math.round(width / 8), Math.round(height / 8), { fit: 'fill', kernel: 'cubic' }).blur(16).png().toBuffer();
-    const soft = await sharp(small).resize(width, height, { fit: 'fill', kernel: 'cubic' }).modulate({ saturation: 1.3 }).png().toBuffer();
-    const shade = Buffer.from(
-      `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
-        `<defs><radialGradient id="v" cx="50%" cy="50%" r="75%"><stop offset="30%" stop-color="#0c0a09" stop-opacity="0.45"/><stop offset="100%" stop-color="#0c0a09" stop-opacity="0.8"/></radialGradient></defs>` +
-        `<rect width="100%" height="100%" fill="url(#v)"/></svg>`,
-    );
-    return dataUrl(await sharp(soft).composite([{ input: shade }]).jpeg({ quality: 80 }).toBuffer());
+    const base = look === 'ambient'
+      ? await wash(width, height, rects, tiles)
+      : await sharp({ create: { width, height, channels: 3, background: L.bg } }).png().toBuffer();
+    const cast = await shadows(width, height, rects, tiles, L.shadow);
+    return dataUrl(await sharp(base).composite(cast ? [{ input: cast }] : []).jpeg({ quality: 82 }).toBuffer());
   } catch {
     return null;
   }
@@ -115,7 +155,7 @@ function Tiles({ rects, images, look }: { rects: Rect[]; images: (string | null)
   return (
     <>
       {rects.map((r, i) => (
-        <div key={i} style={{ position: 'absolute', left: r.x, top: r.y, width: r.width, height: r.height, display: 'flex', background: L.empty, boxShadow: images[i] ? L.shadow : 'none' }}>
+        <div key={i} style={{ position: 'absolute', left: r.x, top: r.y, width: r.width, height: r.height, display: 'flex', background: L.empty }}>
           {images[i] && (
             // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
             <img src={images[i] ?? ''} alt="" width={r.width} height={r.height} />
@@ -131,13 +171,13 @@ function titleSize(title: string, size: number): number {
   return title.length <= 30 ? size : Math.max(Math.round(size * 0.62), Math.round((size * 30) / title.length));
 }
 
-function poster(format: PosterFormat, count: 6 | 9, title: string, images: (string | null)[], look: Look, ground: string | null) {
+function poster(format: PosterFormat, count: 6 | 9, title: string, images: (string | null)[], look: Look, under: string | null) {
   const P = posterLayout(format, count);
   const L = LOOKS[look];
   const { head, foot, type } = P;
   return (
     <div style={{ position: 'relative', width: P.width, height: P.height, display: 'flex', background: L.bg }}>
-      <Ground src={ground} width={P.width} height={P.height} />
+      <Ground src={under} width={P.width} height={P.height} />
       <div style={{ position: 'absolute', left: head.x, top: 0, width: head.width, height: head.height - type.title * 0.45, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
       </div>
@@ -167,12 +207,12 @@ function cardRects(count: 6 | 9): Rect[] {
   }));
 }
 
-function card(count: 6 | 9, title: string, images: (string | null)[], look: Look, ground: string | null) {
+function card(count: 6 | 9, title: string, images: (string | null)[], look: Look, under: string | null) {
   const rects = cardRects(count);
   const L = LOOKS[look];
   return (
     <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
-      <Ground src={ground} width={CARD.width} height={CARD.height} />
+      <Ground src={under} width={CARD.width} height={CARD.height} />
       <div style={{ position: 'absolute', left: 64, top: 0, width: rects[0].x - 64 - 48, height: CARD.height, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <div style={{ ...DISPLAY, display: 'flex', fontSize: titleSize(title, count === 9 ? 68 : 60), lineHeight: 1.1, color: L.ink }}>{title}</div>
         <div style={{ ...TEXT, display: 'flex', fontSize: 28, color: L.ink2, marginTop: 20 }}>{`${SIZE_WORD[count]} books, each with a favourite cover.`}</div>
@@ -202,10 +242,10 @@ export async function GET(request: NextRequest) {
   const size = format === 'card' ? { width: CARD.width, height: CARD.height } : { width: posterLayout(format, count).width, height: posterLayout(format, count).height };
   const tiles = await Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height) : null)));
   const whole = board.slots.every((s, i) => !s || tiles[i]);
-  const ground = look === 'ambient' ? await ambient(size.width, size.height, rects, tiles) : null;
+  const under = await ground(look, size.width, size.height, rects, tiles);
   const images = tiles.map((t) => (t ? dataUrl(t) : null));
 
-  const picture = await asJpeg(new ImageResponse(format === 'card' ? card(count, title, images, look, ground) : poster(format, count, title, images, look, ground), { ...size, fonts: await ogFonts() }));
+  const picture = await asJpeg(new ImageResponse(format === 'card' ? card(count, title, images, look, under) : poster(format, count, title, images, look, under), { ...size, fonts: await ogFonts() }));
   const headers = new Headers(picture.headers);
   headers.set('Cache-Control', whole ? 'public, max-age=3600, s-maxage=2592000' : 'no-store');
   return new Response(picture.body, { status: 200, headers });
