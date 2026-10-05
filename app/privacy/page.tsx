@@ -5,7 +5,8 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
-import { commerceEnabled } from '@/lib/sitemode';
+import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
+import { affiliateShops } from '@/lib/buylinks';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { suggestEnabled } from '@/lib/suggest/auth';
@@ -45,6 +46,9 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
   const t = translator(locale);
   const imprint = readImprint();
   const shop = commerceEnabled();
+  // The shops whose links carry a partner id right now (ROADMAP 4.13 step 5): named
+  // from the variables that are set, so a partner joins or leaves the notice with them.
+  const partners = affiliateShops();
   const game = versusEnabled();
   return (
     <div className="flex min-h-screen flex-col">
@@ -103,8 +107,14 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
             {shop
               ? t('Some links carry an affiliate parameter, which tells the shop that you came from here; it does not tell this site who you are.')
               : t('The links carry no affiliate or tracking parameter.')}
+            {partners.length > 0 && (
+              <>
+                {' '}
+                {t('At present these are the links to {shops}. When you follow one, the shop may store a cookie in your browser so that a purchase is credited to this site; that happens on the shop’s own site and under its privacy notice, and this site receives nothing about you from it.', { shops: partners.join(', ') })}
+              </>
+            )}
           </p>
-          {shop && (
+          {availabilityEnabled() && (
             <p>{t('The “Check the shops” button, when you press it, asks this site’s server to load each shop’s page for the ISBN. The shops see the server, not you.')}</p>
           )}
         </Section>
@@ -116,7 +126,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
 
         {game && (
           <Section title={t('The cover game')}>
-            <p>{t('Picking a cover in the game writes one line to a database: the two covers that were shown, which of them you picked, and the day — not the minute. Nothing about you is written with it: no IP address, no cookie, no browser details, no identifier of any kind, so two picks of yours cannot be recognised as yours or as belonging together. Reporting a cover as “not a cover” writes the cover and the reason, again with nothing about you, and the game stores nothing in your browser. These lines are what the ranking is counted from; they are kept while the game runs, because deleting them would delete the ranking. They live in a Redis database that this site rents from Redis through Vercel’s marketplace; it holds the lines on this site’s behalf. Legal basis: legitimate interest in a ranking that reflects what readers picked (Art. 6(1)(f) GDPR).')}</p>
+            <p>{t('Picking a cover in the game writes one line to a database: the two covers that were shown, which of them you picked, and the day — not the minute. Nothing about you is written with it: no IP address, no cookie, no browser details, no identifier of any kind, so two picks of yours cannot be recognised as yours or as belonging together. Reporting a cover as “not a cover” writes the cover and the reason, again with nothing about you, and the game stores nothing in your browser. These lines are what the ranking is counted from; they are kept while the game runs, because deleting them would delete the ranking. They live in a Redis database in Frankfurt, Germany, that this site rents from Redis through Vercel’s marketplace; it holds the lines on this site’s behalf. Legal basis: legitimate interest in a ranking that reflects what readers picked (Art. 6(1)(f) GDPR).')}</p>
           </Section>
         )}
 

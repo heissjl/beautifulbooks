@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AMAZON_ASSOCIATE_NOTE, buyLinksFor, COMMISSION_NOTE, commissionNote, retailersFor, searchLinksFor, titleSearchLinksFor } from '../buylinks';
+import { AMAZON_ASSOCIATE_NOTE, buyLinksFor, COMMISSION_NOTE, commissionNote, retailersFor, searchLinksFor, titleSearchLinksFor, affiliateShops } from '../buylinks';
 import { cookieValue, detectMarket, normalizeMarket } from '../market';
 import { isbn13to10 } from '../normalize';
 
@@ -178,3 +178,17 @@ describe('link kind (SPEC §9.3 step 16)', () => {
     expect(searches).toEqual(['thalia', 'genialokal', 'hugendubel', 'abebooks', 'booklooker', 'abebooks-de']);
   });
 });
+
+describe('affiliateShops (what the privacy notice names, ROADMAP 4.13)', () => {
+  it('names nothing in hobby mode, even with ids set', () => {
+    expect(affiliateShops({ AFFILIATE_BOOKSHOP_ID_US: '129426' }, false)).toEqual([]);
+  });
+  it('names only programmes whose id is set, once across markets', () => {
+    expect(affiliateShops({}, true)).toEqual([]);
+    expect(affiliateShops({ AFFILIATE_BOOKSHOP_ID_US: '129426', AFFILIATE_BOOKSHOP_ID_UK: '18376' }, true)).toEqual(['Bookshop.org']);
+    const both = affiliateShops({ AFFILIATE_BOOKSHOP_ID_US: '129426', AFFILIATE_AMAZON_TAG_DE: 'x-21' }, true);
+    expect(both).toContain('Bookshop.org');
+    expect(both.length).toBe(2);
+  });
+});
+
