@@ -159,6 +159,10 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
      - **Mit Erlaubnis lebender Gestalter**, etwa Harman oder Heidelbach; das Anschreiben ist Julians.
      - **Ein Foto des eigenen Exemplars hilft nicht.**
      - Vorschlag: Folie 1 mit einer gemeinfreien Ausgabe. Gestalter und Sterbejahr sind je Cover zu belegen; Claude bietet das an.
+     - **Gesucht 2026-10-05, auf Julians Wunsch abgebrochen:** [research-gemeinfreie-cover.md](research-gemeinfreie-cover.md).
+       - Fünf Cover taugen: Peter and Wendy 1911 (Bedford †1954), The Jungle Book 1894 (J. L. Kipling †1911), Pinocchio 1902 (Chiostri †1939), Alice 1928 (W. H. Walker †1938), La guerre des mondes 1906 (Alvim Corrêa †1910).
+       - Dazu zwei schlichte Leinen und 15 unklare oder nicht freie.
+       - Das Karussell mit diesen Covern ist nicht gebaut.
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
 4. **Ob die drei restlichen Entwürfe erscheinen** (Grieder/Herder, Penguin black band, Virago); sonst werden ihre Posts verworfen.
