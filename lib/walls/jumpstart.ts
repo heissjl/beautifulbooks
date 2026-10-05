@@ -40,6 +40,9 @@ export function tilesFromWall(wall: PublicWall): StartedTiles {
 }
 
 /** What the /create page needs to offer a collection to start from: no more than a card shows. */
+/** First covers shown beside a collection to start from: six fill a row on /create (Julian, 2026-10-04: „6 statt 4 cover"). */
+export const PREVIEW_COVERS = 6;
+
 export interface StartOption {
   kind: 'curated' | 'reader';
   /** Slug for a curated collection, id for a reader's. */
@@ -56,10 +59,10 @@ export interface StartOption {
 export function curatedOption(c: { slug: string; title: string; works: readonly WallWork[] }): StartOption | null {
   const { tiles, capped } = tilesFromCurated(c.works);
   if (tiles.length === 0) return null;
-  return { kind: 'curated', key: c.slug, title: c.title, count: tiles.length + capped, taken: tiles.length, covers: tiles.slice(0, 4).map((t) => t.coverId) };
+  return { kind: 'curated', key: c.slug, title: c.title, count: tiles.length + capped, taken: tiles.length, covers: tiles.slice(0, PREVIEW_COVERS).map((t) => t.coverId) };
 }
 
 export function readerOption(w: PublicWall): StartOption | null {
   if (w.tiles.length === 0) return null;
-  return { kind: 'reader', key: w.id, title: w.title, ...(w.by ? { by: w.by } : {}), count: w.tiles.length, taken: Math.min(w.tiles.length, MAX_TILES), covers: w.tiles.slice(0, 4).map((t) => t.coverId) };
+  return { kind: 'reader', key: w.id, title: w.title, ...(w.by ? { by: w.by } : {}), count: w.tiles.length, taken: Math.min(w.tiles.length, MAX_TILES), covers: w.tiles.slice(0, PREVIEW_COVERS).map((t) => t.coverId) };
 }
