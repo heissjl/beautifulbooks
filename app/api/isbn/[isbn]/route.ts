@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getIsbnCovers, type IsbnCovers } from '@/lib/isbn';
 import { rateLimited } from '@/app/api/rate';
 import { countGoogleStopsAfter } from '@/app/api/count';
+import { measure } from '@/app/api/measure';
 
 export type IsbnCoversResponse = IsbnCovers;
 
@@ -16,6 +17,7 @@ export type IsbnCoversResponse = IsbnCovers;
  * empty list, not an error: that is the normal answer for older printings.
  */
 export async function GET(request: NextRequest, context: { params: Promise<{ isbn: string }> }) {
+  measure('isbn', request);
   const limited = rateLimited(request, 'isbn', 'google');
   if (limited) return limited;
   countGoogleStopsAfter();

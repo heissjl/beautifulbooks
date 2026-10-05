@@ -73,6 +73,28 @@ export async function countOp(op: Op, options: CountOptions = {}): Promise<Count
   return add(commands, 'ops', op, options.now ?? new Date());
 }
 
+/**
+ * What the CPU meter of this instance gathered since its last flush (ROADMAP
+ * 2.18l, K14): one increment per field, one expiry for the day. Called every
+ * thirty seconds at most (`app/api/measure.ts`), not per request.
+ */
+export async function countCpu(increments: ReadonlyArray<[field: string, by: number]>, options: CountOptions = {}): Promise<CountResult> {
+  if (increments.length === 0) return 'counted';
+  const commands = setup(options);
+  if (commands === 'off') return 'off';
+  if (!commands) return 'no-store';
+  const hIncrBy = commands.hIncrBy;
+  if (!hIncrBy) return 'no-store';
+  const key = insightsKey(dayOf(options.now ?? new Date()), 'cpu');
+  try {
+    await Promise.all(increments.map(([field, by]) => hIncrBy(key, field, by)));
+    await commands.expire?.(key, RETENTION_SECONDS);
+    return 'counted';
+  } catch {
+    return 'failed';
+  }
+}
+
 /** RESP3 may hand a hash back as a `Map` (see `hashEntries` in the game's store). */
 function asHash(result: unknown): DayHash {
   if (result instanceof Map) return Object.fromEntries([...result.entries()].map(([k, v]) => [String(k), v]));

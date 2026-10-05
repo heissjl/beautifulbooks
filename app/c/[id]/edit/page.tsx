@@ -12,6 +12,7 @@ import { wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * The editing mode of a reader's collection (ROADMAP 5.13m, SPEC F9.5a).
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
 };
 
 export default async function EditWallPage({ params, locale = DEFAULT_LOCALE }: Props) {
+  measure('page-wall');
   const t = translator(locale);
   const { id } = await params;
   if (!wallsEnabled() || !isWallId(id)) notFound();

@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { WallError } from '@/lib/walls/model';
 import { matchCalibreBooks, validQueries } from '@/lib/walls/calibre';
 import { json, openWalls, readJson } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/walls/calibre {books: [{title, author, isbns}]} — a few books of
@@ -16,6 +17,7 @@ import { json, openWalls, readJson } from '../guard';
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request, 'wallsCalibre');
   if ('response' in open) return open.response;
   const body = await readJson(request);

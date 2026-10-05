@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { coverIdFromSegment } from '@/lib/coverurl';
+import { isHiddenCover } from '@/lib/hiddencovers';
 import { workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
+import { measure } from '@/app/api/measure';
 
 /**
  * The address a shared cover gets: `/book/<work>/cover/<cover>` (ROADMAP 6.20).
@@ -53,8 +55,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  measure('page-cover');
   const { id, coverId } = await params;
-  if (!isWorkId(id) || !coverIdFromSegment(coverId)) notFound();
+  // A cover taken off the site (2.18k) has no address of its own any more.
+  if (!isWorkId(id) || !coverIdFromSegment(coverId) || isHiddenCover(coverIdFromSegment(coverId))) notFound();
   return (
     <Suspense fallback={null}>
       <BookDetailPage walls={wallsEnabled()} />

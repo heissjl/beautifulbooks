@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useEffect, useState } from 'react';
 import { rememberWall, tileAnchor } from './cameFrom';
 import CoverImage from './CoverImage';
@@ -10,7 +10,7 @@ import type { Translate } from '@/lib/i18n/translate';
 import { postJson, useMyWalls } from './useMyWalls';
 import { coverUrlFor } from '@/lib/coverurl';
 import { editHref } from '@/lib/walls/edit';
-import { MIN_SHOWCASE_TILES, tileCoverId, UNSAVED_HOURS, type PublicWall, type WallOp } from '@/lib/walls/model';
+import { MIN_SHOWCASE_TILES, tileCoverId, UNSAVED_HOURS, visibleTiles, type PublicWall, type WallOp } from '@/lib/walls/model';
 
 /**
  * A reader's wall (ROADMAP 5.13a). A cover wall like every other on the site
@@ -55,6 +55,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
   // Logged out on this page: the tools go with the ID.
   const editable = canEdit && !!me.visitor;
   const others = me.walls.filter((w) => w.id !== wall.id);
+  const tiles = visibleTiles(wall.tiles);
 
   return (
     <>
@@ -94,12 +95,12 @@ export default function WallView({ initial }: { initial: PublicWall }) {
       {wall.intro && <p className="mt-4 max-w-2xl whitespace-pre-line text-base text-ink-2">{wall.intro}</p>}
 
       <p className="mt-3 text-sm text-ink-3" role="status">
-        {wall.tiles.length === 0 ? t('No covers yet.') : wall.tiles.length === 1 ? t('1 cover.') : t('{n} covers.', { n: wall.tiles.length })}
+        {tiles.length === 0 ? t('No covers yet.') : tiles.length === 1 ? t('1 cover.') : t('{n} covers.', { n: tiles.length })}
         {editable && ` ${t('Yours.')}`}
         {note && <span className="ml-2 text-ink-2">{note}</span>}
       </p>
 
-      {wall.tiles.length === 0 ? (
+      {tiles.length === 0 ? (
         <p className="mt-8 text-sm text-ink-2">
           {editable ? (
             <Link href={editHref(wall.id)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
@@ -111,7 +112,7 @@ export default function WallView({ initial }: { initial: PublicWall }) {
         </p>
       ) : (
         <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5">
-          {wall.tiles.map((tile) => {
+          {tiles.map((tile) => {
             const src = coverUrlFor(tileCoverId(tile), 'M');
             const label = tile.author ? t('{title} by {author}', { title: tile.title, author: tile.author }) : tile.title;
             return (

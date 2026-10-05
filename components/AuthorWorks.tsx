@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import CoverWall from './CoverWall';
 import { useAuthorWorks } from './useAuthorWorks';
 import { useIsDesktop } from './useIsDesktop';

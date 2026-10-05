@@ -1,9 +1,11 @@
 import { NextRequest } from 'next/server';
 import { findAuthors } from '@/lib/curate/catalog';
 import { json, memberGate } from '../../suggest/guard';
+import { measure } from '@/app/api/measure';
 
 /** Who an author is at Open Library, for adding one to a draft (ROADMAP 5.10b). */
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   const gate = memberGate(request);
   if ('response' in gate) return gate.response;
   const q = (request.nextUrl.searchParams.get('q') ?? '').trim().slice(0, 100);

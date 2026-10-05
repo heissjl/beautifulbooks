@@ -4613,6 +4613,90 @@ Julian: „baue jetzt den größten scan desselben motivs im sammlungs-modus" un
 
 1.202 Tests (75 davon in `lab/calibre/`), tsc und Lint grün.
 
+## 2026-10-05 · Vor einem Ansturm: die Grenzen gelesen, ein Besuch im Log gezählt (ROADMAP 2.18)
+
+Julian am 2026-10-04: „i want to plan for virality and have everything either robust or prepared for quick change when it happens." Während der Arbeit kam Vercels Mail: **90 % der 4 Stunden „Fluid Active CPU" verbraucht**, bei 100 % „your projects will be automatically paused". Nichts gebaut; der Plan ist [PLAN-2.18-ansturm.md](plans/PLAN-2.18-ansturm.md).
+
+**Gelesen, in der Doku der Anbieter am 2026-10-04/05:**
+
+| Anbieter | Grenze |
+|---|---|
+| Vercel Hobby | 1 Mio. CDN-Anfragen, 1 Mio. Funktionsaufrufe, 4 CPU-Stunden, 360 GB-Stunden Speicher, **10 GB Fast Origin Transfer**, 100 GB Fast Data Transfer, 50.000 Web-Analytics-Ereignisse im Monat, Laufzeit-Logs eine Stunde; über der Grenze „wait until 30 days have passed" |
+| Vercel Pro | CDN pauschal (Flat Rate CDN: 1 Mio. Anfragen und 1 TB eingeschlossen, darüber „served normally … isn't billed (subject to the fair use guidelines)"), 0,60 USD je Mio. Funktionsaufrufe, ab 0,128 USD je CPU-Stunde; Ausgabenlimit mit Meldung bei 50/75/100 % und Pause, geprüft „every few minutes" |
+| Vercel CDN | Cache je Region; `stale-if-error` wird unterstützt; ein Treffer ist nicht garantiert („best-effort") |
+| Redis Cloud, 30 MB frei (`redis-pink-yacht`) | **30 Verbindungen, 100 Befehle je Sekunde, 5 GB Netz im Monat**; 250 MB: 256 Verbindungen, 1.000 je Sekunde, 100 GB |
+
+**Gemessen:**
+
+- `vercel metrics … function_cpu_time_ms --group-by route` antwortet auf Hobby „Observability Plus is required", für jedes Zeitfenster von 1 h bis 30 d; `vercel usage` antwortet „Costs not found (404)". **Wohin die CPU ging, ist aus der Kommandozeile nicht zu lesen.**
+- Laufzeit-Logs der letzten Stunde (`vercel logs --json`, nach `id` entdoppelt — 3.000 Zeilen sind 50 bis 139 Anfragen): 23:43–23:56 UTC 50 Anfragen in 13 Minuten; 00:09–00:11 UTC **ein Besuch, 139 Anfragen in 81 s**: 54 Bilder ohne CDN-Treffer, 56 Abrufe von 14 Buchseiten (14 × `MISS`, also neu gerendert, 14 × `HIT`, 28 × `PRERENDER`) mit benachbarten Werk-IDs (OL1099641W–OL1100007W, die Liste eines Autors), 6 × `/`, 4 × `/create`, 4 × `/versus`, je 4 × `/about` und `/privacy`. Niemand öffnet 14 Bücher in drei Sekunden: das ist das Vorladen von `next/link`. Kein Crawler-Sturm in dieser Stunde.
+- Am Code: Startseite (`searchParams`), `/collections`, `/collections/<slug>`, `/c/<id>`, `/versus`, `/create` rendern bei jedem Aufruf in einer Funktion; die ersten drei lesen drei Schlüssel aus der Redis, darunter ganze Sammlungen (17–41 KB je Sammlung in `data/collections.json`). Ein Seitensignal schreibt 4 Befehle. Die Redis hat eine Verbindung je Funktionsinstanz. Die Fotoroute läuft weiter, wenn Zähler und Budget nicht lesbar sind. `lib/sources/openlibrary.ts` hat keinen Automaten für abgewiesene Verbindungen. 39 Dateien nutzen `<Link>`, eine schaltet das Vorladen ab.
+
+**Nicht gemessen:** der Anteil je Route an den 3,6 CPU-Stunden; ob ein Deploy den Bild-Cache des CDN leert; ob Pro ein pausiertes Hobby-Projekt sofort zurückholt; Verdrängungsregel und Füllstand der Redis.
+
+**Veraltet im Befund der anderen Sitzung** (aus dem Chat): die Domain antwortet seit dem 2026-10-04, die Parkseite ist kein Blocker mehr.
+
+**Entschieden von Julian am 2026-10-05** (im Chat gefragt, Plan §6): J1 jetzt auf Pro; J2 Ausgabenlimit 100 USD mit Pause; J3 Fotos schließen, wenn die Redis schweigt; J4 die Redis jetzt auf 250 MB; J5 Sammlungen der Leser werden im Ernstfall nie gesperrt; J6 ein Cover auf Zuruf ausblenden wird sofort gebaut (2.18k). **Dazu gelesen:** Vercel-Preise für Frankfurt — CDN-Anfragen 2,60 USD je Million, Fast Data Transfer 0,15 USD je GB, Fast Origin Transfer 0,06 USD je GB, Fluid Active CPU 0,184 USD je Stunde, Provisioned Memory 0,0152 USD je GB-Stunde, ISR 5,20 / 0,52 USD je Million Schreib- / Leseeinheiten; Redis Essentials 0,007 USD je Stunde, mindestens 5 USD im Monat. Alle Cover laufen mit `unoptimized`, Vercels Bildoptimierung kostet also nichts.
+
+## 2026-10-05 · Kein Vorladen mehr (ROADMAP 2.18a)
+
+Gebaut, nicht deployt. `components/Link.tsx` ist `next/link` mit `prefetch={false}`; alle 39 Dateien, die `next/link` einbanden, binden jetzt diese Komponente ein, und `lib/__tests__/link.test.ts` schlägt bei einem zweiten Importeur fehl. `DecadeLink` wärmt sein Ziel weiter beim Zeigen mit der Maus.
+
+**Gemessen am lokalen Produktions-Build** (`next build`, `next start`, im Browser über `performance.getEntriesByType('resource')`; unter `next dev` lädt Next ohnehin nichts vor): `/collections/sf-masterworks` mit 73 Buchlinks, bis ans Ende gescrollt — 0 Abrufe mit `_rsc`, 0 auf `/book/`; Startseite mit 34 Links — 0; ein Klick auf eine Kachel — genau 1 Abruf (`/book/OL271163W`), die Seite öffnet. **Vorher, in Produktion am selben Tag:** ein Besuch von 81 s, 14 neu gerenderte Buchseiten und 4–6 Abrufe je dynamischer Seite aus Kopf- und Fußzeile.
+
+**Was es kostet:** der erste Klick auf ein Buch wartet auf den Server, statt aus dem Vorrat zu kommen; die Vorschau aus `storeWorkPreview` zeigt Titel und Cover in der Zwischenzeit. An der Oberfläche ändert sich kein Pixel, deshalb keine Messung bei 390 und 1280 px. **Analyse (3.1):** nicht berührt — die Signale lesen die Kacheln und die Herkunft, nicht das Vorladen. 1.277 Tests, tsc und Build grün.
+
+## 2026-10-05 · Wohin die Rechenzeit ging: ClaudeBot; Messung und Kosten in der Analyse (ROADMAP 2.18l, 2.18m, 2.18n)
+
+Julian wechselte auf Pro; `vercel buy pro` über die CLI war zuvor an „Payment failed … valid payment method on file" gescheitert (keine Karte hinterlegt). Seit Pro antwortet `vercel metrics`; `vercel usage` weiter mit 404.
+
+**Vercels Zahlen** (`vercel metrics vercel.function_invocation.function_cpu_time_ms -a sum --group-by route`, 30 Tage bis 2026-10-05):
+
+| Route | CPU | Anteil | Läufe |
+|---|---|---|---|
+| `/img/[size]/[cover]` | 3.651 s | 49,4 % | 115.465 |
+| `/book/[id]` | 1.832 s | 24,8 % | 17.253 |
+| `/api/works/[id]` | 485 s | 6,6 % | 3.393 |
+| `/collections/[slug]` | 301 s | 4,1 % | 14.415 |
+| `/` | 199 s | 2,7 % | 1.601 |
+| alle zusammen | 7.699 s = 2,14 h | | 173.292 |
+
+Je Tag (Sekunden): 09-08 65 · 09-09 144 · 09-10 266 · 09-11 259 · 09-12 138 · 09-13 161 · 09-14 bis 09-25 zwischen 0 und 113 · **09-26 994** · 09-27 691 · 09-28 355 · 09-29 488 · 09-30 460 · 10-01 367 · 10-02 189 · **10-03 1.379 · 10-04 1.187**. Vercels Mail nannte 3,6 von 4 Stunden; die Differenz zu 2,14 ist nicht aufgeklärt.
+
+**Wer, letzte zwei Tage** (`--group-by clientUserAgent`): `/img` 44.438 Läufe, davon **ClaudeBot 31.657**, dann einzelne Browser (2.823, 1.578, 818 …); `/book/[id]` 8.281 Läufe, davon **ClaudeBot 6.776**, MJ12bot 719, Browser zusammen einige hundert. Die Annahme aus Plan 2.4 §3.3, KI-Crawler läsen nur vorgerenderte Seiten und kosteten kaum, ist damit widerlegt.
+
+**Gebaut, nicht deployt:**
+
+- **2.18l** `lib/insights/cpu.ts`: ein Zähler je Instanz teilt jede Strecke Prozess-CPU gleichmäßig auf die laufenden Anfragen, CPU ohne Anfrage geht an `idle` (Start, Leerlauf); die Klassen summieren sich auf das, was der Prozess verbraucht hat. `measure(route, request)` steht als eine Zeile in 59 Handlern, Vorschaukarten und Seiten; das Ende liegt in `after`, geschrieben wird höchstens alle 30 s (ein `HINCRBY` je Feld, ein `EXPIRE`). Abrufer sind Klassen aus der Kennung, die Kennung wird nicht gespeichert; eine ISR-Seite liest ihre Kopfzeilen nicht (sie würde dynamisch), ihr Abrufer heißt `page`.
+- **2.18m** `lib/insights/costs.ts`: feste Kosten anteilig je Tag seit Beginn, Vercel-Nutzung aus der Messung zum Listenpreis abzüglich des anteiligen Guthabens, Fotos aus K13; USD und EUR getrennt.
+- 16 Tests (`insights-cpu.test.ts`): Aufteilung, Leerlauf, Summe, Klassen der Abrufer, Summen der Auswertung, Schreiben, Kosten. 1.293 Tests, tsc, Lint und Build grün; sechs fremde Tests (Cover-Index, Ringe, zwei Lab-Simulationen) fielen in zwei Gesamtläufen aus, während ein Build nebenher lief, und bestanden einzeln und in zwei weiteren Gesamtläufen — die Ursache habe ich nicht gelesen.
+
+**Nicht geprüft:** die zwei neuen Abschnitte im Browser (lokal gibt es keinen Speicher, ohne den die Ansicht „kein Speicher" zeigt) — nach dem Deploy bei 390 und 1280 px ansehen. **Datenschutz:** gespeichert werden Tagessummen je Routen- und Abrufer-Klasse, nichts über einen Leser; die Datenschutzerklärung habe ich nicht geändert — Julian entscheidet, ob ein Satz dazukommt (CLAUDE.md, Analyse-Regel 6).
+
+**Analyse (3.1):** zwei neue Kennzahlen, K14 und K15, im Plan §3; neuer Tages-Hash `cpu`; `/api/seen`, `/go/` und die Fotoroute zählen wie zuvor.
+
+## 2026-10-05 · Crawler bleiben auf den Seiten der Sitemap (ROADMAP 2.18n)
+
+Julian zum Vorschlag aus 2.18l: „ok". Gebaut, nicht deployt. `lib/robots.ts` (`robotsRules`, `BOUNDED_CRAWLERS`, `mayFetch`), `app/robots.ts` liest dieselben zwei Listen wie die Sitemap.
+
+**Die ausgelieferte Datei** (aus dem Build gelesen): 23.091 Byte; eine Gruppe `*` wie zuvor (`/api/`, `/go/`, `/admin/` gesperrt), eine Gruppe mit sechzehn `User-Agent`-Zeilen, 822 `Allow`-Zeilen (`/book/<id>$` für 500 Werke, `/book/<id>/decades$` für 322), `Disallow` für `/book/`, `/img/`, `/c/`, `/*?` und die drei allgemeinen, `Crawl-delay: 10`.
+
+**Geprüft mit `mayFetch`** (längste passende Regel, bei Gleichstand erlaubt — RFC 9309), sechs Tests: jeder benannte Crawler darf ein veröffentlichtes Buch und seine Jahrzehnte-Seite, nicht `OL999999999W`, nicht `/book/<id>/cover/…`, nicht `?cover=`, nicht `/?author=` und `/?q=`, nicht `/img/…`; Startseite, About, Sammlungen und Spiel bleiben offen; Googlebot, bingbot, Claude-User und ChatGPT-User sind unverändert. 1.299 Tests, tsc, Lint und Build grün.
+
+**Nicht geprüft:** ob sich ClaudeBot daran hält — das zeigt K14 nach dem Deploy (Anthropic schreibt, ClaudeBot achte robots.txt und `Crawl-delay`; aus der Erinnerung, heute nicht nachgelesen). **Analyse (3.1):** nicht berührt; K14 misst die Wirkung.
+
+## 2026-10-05 · Ein Cover auf Zuruf ausblenden (ROADMAP 2.18k)
+
+Entscheidung J6 („jetzt gleich"). Gebaut, nicht deployt. **Der Weg:** eine Zeile `{ "id": "ol:123", "hidden": "YYYY-MM-DD", "note": "…" }` in `data/hidden-covers.json`, ein Deploy. `lib/hiddencovers.ts` ist die einzige Abfrage; eingehängt an zwölf Stellen: `/img` (404 `no-store`, ohne Abruf bei der Quelle), `assembleEditions` (die Wand jeder Buchseite, damit auch Jahrzehnte-Seiten und die Vorschaukarte des Buchs), `mosaicCovers` (Suchkarten), `withRetailCovers` (das Bild eines Händlers auf der Wand), `similarTo`, `parseCollections` (auch die Inhalte aus Redis, weil sie durch dieselbe Funktion gehen), `CuratedWall`, `HERO_RINGS`/`COLLECTION_RINGS` (ein Ring mit dem Cover fällt ganz weg, die Ringe sind als Siebener gebaut; 99 + 6 vorhanden), das Spiel (`activeIds`, jetzt auch für die ersten Paare), `visibleTiles` (Leser-Sammlung, ihre Karte, ihre Vorschaukarte), `loadCovers` (alle Vorschaukarten), die Teil-Adresse eines Covers (404).
+
+**Bewusst nicht gefiltert:** die Antwort von `/api/isbn` — der Vermerk vergleicht nach ID, und ohne das Bild sagte er „kein Bild hinterlegt", wo der Händler ein anderes zeigt (N12); das Bild selbst kommt trotzdem nicht, weil `/img` es verweigert. Die gespeicherte Leser-Sammlung behält die Kachel, damit der Editor sie beim nächsten Speichern nicht löscht; der Editor zeigt an ihrer Stelle den ruhigen Platzhalter.
+
+**Aus der Vercel-Doku gelesen** ([Purging CDN Cache](https://vercel.com/docs/caching/cdn-cache/purge), 2026-10-05): der Cache-Schlüssel enthält die Deploy-Adresse. Ein gesperrtes Bild ist also mit dem Deploy aus dem CDN; im Browser eines Lesers bleibt es bis zu einer Stunde (`max-age=3600`). **Die Kehrseite:** nach jedem Deploy geht jedes Bild je Region einmal neu durch die Funktion und zu Open Library — bei der Route, die 49 % der CPU trägt. Steht jetzt bei 2.18j und im Plan §10.
+
+**About** (englisch und deutsch, die deutsche Fassung neu geschrieben): wer ein Cover hier nicht sehen will, schreibt an die Adresse des Impressums (`IMPRINT_EMAIL`, dieselbe wie auf `/contact` und `/privacy`). Angesehen bei 390 × 844 und 1280 × 800 aus dem Produktions-Build: kein Überlauf (Absatz 358 von 358 px).
+
+**Geprüft:** 13 neue Tests (`lib/__tests__/hiddencovers.test.ts`, einer je Weg; der Ring mit `vi.doMock` der Liste, weil er beim Laden gefiltert wird); 1.312 Tests, tsc, Lint und Build grün. **Analyse (3.1):** solange die Liste leer ist, ändert sich nichts. Steht ein Cover darauf, zeigt eine Buchseite eine Kachel weniger (`data-cover-id`, K-Werte zu gesehenen Covern) und das Spiel zählt ein Cover weniger; die Liste trägt das Datum, ab dem das gilt. Nichts Neues wird gespeichert oder gesendet.
+
 ## 2026-10-04 · Calibre-App: Cover erschienen manchmal nicht — Maße aus dem Cover-Datensatz, Kacheln bleiben (ROADMAP 5.16a)
 
 Julian, mit einem Bild von *Ender's Game* (80 Cover): leere Kacheln mit Maßen darunter, im Vergleich „…" statt des Covers aus Calibre und „fetching the full image…" — „manchmal lädt es die cover nicht oder zeigt sie zumindest nicht an".

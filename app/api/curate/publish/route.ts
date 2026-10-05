@@ -7,6 +7,7 @@ import { applyContent } from '@/lib/collections';
 import { missingStoreMessage } from '@/lib/hotornot/store';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { json } from '../../suggest/guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * What the running site lays over the file: the publish switches and the
@@ -16,6 +17,7 @@ import { json } from '../../suggest/guard';
  * it once per generation with the admin password as a bearer token.
  */
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   if (!suggestEnabled()) return json({ error: 'Not found' }, 404);
   const admin =
     adminSessionValid(request.cookies.get(ADMIN_COOKIE)?.value) ||
@@ -41,6 +43,7 @@ export async function GET(request: NextRequest) {
  * refused — publishing is the OK that SPEC F8.2 reserves for him.
  */
 export async function POST(request: NextRequest) {
+  measure('curate', request);
   if (!suggestEnabled()) return json({ error: 'Not found' }, 404);
   const admin =
     adminSessionValid(request.cookies.get(ADMIN_COOKIE)?.value) ||

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { stopEditing, useEditingId } from './editingSession';
 import { useMyWalls } from './useMyWalls';
 import { editHref } from '@/lib/walls/edit';

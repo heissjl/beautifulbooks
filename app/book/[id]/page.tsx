@@ -8,6 +8,7 @@ import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, jsonLdHtml, workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { getWork } from '@/lib/sources/openlibrary';
+import { measure } from '@/app/api/measure';
 
 /**
  * The work page (SPEC §3 F2, §10 D10).
@@ -87,6 +88,7 @@ async function WorkJsonLd({ id }: { id: string }) {
 }
 
 export default async function Page({ params }: PageProps) {
+  measure('page-book');
   const { id } = await params;
   if (!isWorkId(id)) notFound();
   /*

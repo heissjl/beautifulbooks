@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import CoverMosaic from './CoverMosaic';
 import { useCardCovers } from './useCardCovers';
 import { storeWorkPreview } from './useWorkPreview';

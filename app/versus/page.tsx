@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -13,6 +13,7 @@ import { SITE_CARD, SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * The cover game (ROADMAP 5.8a): two covers, one click. Behind a switch —
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
 const SHOWN_BOOKS = 24;
 
 export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+  measure('page-versus');
   const t = translator(locale);
   if (!versusEnabled()) notFound();
   const books = poolBooks();

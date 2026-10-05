@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BookSearch from './BookSearch';
 import CoverImage from './CoverImage';

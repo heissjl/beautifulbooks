@@ -4,6 +4,7 @@ import { ADMIN_COOKIE, adminMatches, adminSessionValid } from '@/lib/suggest/aut
 import { isWallId, moderate, toPublic } from '@/lib/walls/model';
 import { moderationList } from '@/lib/walls/store';
 import { json, openWalls, readJson, storeDown } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * Julian's look at walls readers show (ROADMAP 5.13d). There is no review
@@ -20,6 +21,7 @@ function isAdmin(request: NextRequest): boolean {
 }
 
 export async function GET(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   if (!isAdmin(request)) return rateLimited(request, 'login') ?? json({ error: 'Only Julian can read this. Sign in on /curate first.' }, 403);
@@ -35,6 +37,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   if (!isAdmin(request)) return rateLimited(request, 'login') ?? json({ error: 'Only Julian can decide this.' }, 403);

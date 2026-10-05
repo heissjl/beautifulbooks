@@ -4,6 +4,7 @@ import { isAuthorKey, otherWorksByAuthor, withCuratedCovers, type AuthorWork } f
 import { CURATED_LIST } from '@/lib/curated';
 import { keysForLinkedAuthor } from '@/lib/authorsearch';
 import { searchAuthorsByName, searchAuthorWorks } from '@/lib/sources/openlibrary';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/authors/<OL…A>/works[?name=<her name>]
@@ -33,6 +34,7 @@ export interface AuthorWorksResponse {
 const CURATED_COVERS: ReadonlyMap<string, number> = new Map(CURATED_LIST.map(w => [w.id, w.coverId]));
 
 export async function GET(request: NextRequest, context: { params: Promise<{ key: string }> }) {
+  measure('authors', request);
   const limited = rateLimited(request, 'author');
   if (limited) return limited;
 

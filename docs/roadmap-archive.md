@@ -1029,3 +1029,17 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 5.17b
 
 **5.17b `/create` neu geordnet: ein Weg vorn, drei daneben.** (Julian, 2026-10-04: „überarbeite die oberfläche dieser seite. from a book sollte fokus oder erstes sein, sich klarer abgrenzen von from a collection. die beispielcollection sollte wyssberger sein, und 6 statt 4 cover zeigen. wahrscheinlich dann 4 wege zum anlegen, davon from a book herausgestellt. wenn man bei from a book eines anklickt, muss die seite automatisch runterscrollen zur coverauswahl“.) „From a book“ als abgesetzter erster Block auf getöntem Grund, die Coverauswahl direkt darunter; „Or start another way“ mit drei Karten nebeneinander (am Telefon untereinander): „From a collection“ (Hanspeter Wyss’ Ex-Libris-Umschläge vorgewählt, sechs Vorschau-Cover, darunter „Or start with 6 random favourites“), „From a photo“, „From your Calibre library“. Ein Klick auf ein Suchergebnis rollt die Seite zur Coverauswahl.
+
+## 2.18a
+
+**2.18a Vorladen aus.** Gemessen am 2026-10-05: ein Besuch von 81 s ließ 14 Buchseiten rendern, die niemand geöffnet hat, und je 4–6 Mal `/`, `/create`, `/versus` — `next/link` holt jeden sichtbaren Link, 39 Dateien nutzen es, nur `DecadeLink` schaltet es ab. Buchlinks und die Links in Kopf- und Fußzeile laden nur noch beim Zeigen mit der Maus vor; vorher und nachher an einer Sammlung zählen. Claude, 2 h, **zuerst**. Thema: Betrieb.
+
+## 2.18n
+
+**2.18n Crawler: ClaudeBot hat die Rechenzeit verbraucht — was dürfen Crawler?** — **Julian entscheidet.** Gemessen 2026-10-05 (2.18l): ClaudeBot folgt den Links von Buch zu Buch („More by …") in einen Raum ohne Ende — jede Werk-ID ist eine Seite, die beim ersten Abruf gerendert wird und den Katalog fragt — und holt jedes Bild über `/img`; dazu MJ12bot (719 Buchseiten in zwei Tagen). Plan 2.4 §3.3 nahm an, KI-Crawler kosteten kaum, weil sie nur vorgerenderte Seiten läsen; das ist widerlegt. Auf Pro kostet es wenig Geld (0,35 CPU-Stunden am Tag sind 6 Cent), aber es sind tausende Katalog-Anfragen von unserer Adresse, und Open Library sperrt, wer zu viel fragt. **Vorschlag:** `robots.ts` erlaubt den benannten KI- und SEO-Crawlern (ClaudeBot, GPTBot, CCBot, Bytespider, Amazonbot, Meta-ExternalAgent, MJ12bot, AhrefsBot, SemrushBot) nur die Seiten der Sitemap — `Disallow: /book/` mit einem `Allow` je veröffentlichtem Werk, `Disallow: /img/`, `Crawl-delay: 10`; Googlebot und Bingbot bleiben wie heute und werden an K14 beobachtet. Alternativen: Vercels Regelsatz „AI Bots" auf *Deny* (sperrt auch die Abrufe, mit denen Claude oder ChatGPT eine Seite für einen Leser lesen), oder nichts tun. Claude, 2 h nach der Entscheidung. Thema: Betrieb.
+
+## 2.18k
+
+**2.18k Ein Cover auf Zuruf ausblenden.** (J6, Julian 2026-10-05: „jetzt gleich"; offen seit dem [Risikoregister](risiken-2026-09-12.md), Abschnitt C.) Eine Liste von Cover-IDs im Repository, die Wand, Mosaik, Sammlungen, Spiel, Vorschaukarten und `/img` auslassen; ein Satz auf About mit der Adresse für Rechteinhaber (englisch und deutsch); ein Test je Weg. Claude, ½ Tag, **nach 2.18a**. Thema: Betrieb.
+
+**Erledigt 2026-10-05** (nicht deployt): `data/hidden-covers.json`, `lib/hiddencovers.ts`, eingehängt an zwölf Stellen; `lib/__tests__/hiddencovers.test.ts` (13 Tests). → [Historie](history.md)

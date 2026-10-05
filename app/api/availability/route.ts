@@ -5,6 +5,7 @@ import { cleanIsbn } from '@/lib/normalize';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
 import { rateLimited } from '@/app/api/rate';
 import { commerceEnabled } from '@/lib/sitemode';
+import { measure } from '@/app/api/measure';
 
 export interface AvailabilityResponse {
   isbn13: string;
@@ -24,6 +25,7 @@ export interface AvailabilityResponse {
  * disallow the probed path, and the public site does not probe them.
  */
 export async function GET(request: NextRequest) {
+  measure('other', request);
   if (!commerceEnabled()) {
     return NextResponse.json({ error: 'Not available' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
   }

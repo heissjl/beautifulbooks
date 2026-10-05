@@ -1,19 +1,17 @@
 import type { MetadataRoute } from 'next';
+import decadePages from '@/data/decade-pages.json';
+import { PUBLISHED_WORKS } from '@/lib/published';
+import { robotsRules } from '@/lib/robots';
 import { SITE_URL } from '@/lib/seo';
 
 /**
- * Crawlers are welcome on the pages, not on the API (SPEC §10 D).
- *
- * `/api/` is disallowed because every call there costs an external request
- * and, on two of the routes, a slice of the Google Books quota (§8.7). The
- * pages themselves carry the same data in a form a crawler can read. `/go/`
- * is disallowed because every fetch of it is counted as a click (F5), and a
- * crawler's fetch is not one. `/admin/` answers 404 to anyone but Julian
- * (ROADMAP 3.1a); saying so here keeps crawlers from asking.
+ * The rules are in lib/robots.ts (ROADMAP 2.18n): the named crawlers get the
+ * book pages the sitemap lists — the same two lists as app/sitemap.ts — and
+ * nothing of the endless rest.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: '*', allow: '/', disallow: ['/api/', '/go/', '/admin/'] },
+    rules: robotsRules(PUBLISHED_WORKS.map(work => work.id), decadePages.pages.map(page => page.id)),
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
   };

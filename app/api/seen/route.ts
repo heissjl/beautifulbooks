@@ -4,6 +4,7 @@ import { rateLimited } from '@/app/api/rate';
 import { MAX_SIGNAL_BYTES, parseSignal } from '@/lib/insights/signals';
 import { countSignal } from '@/lib/insights/store';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/seen — one summary of a page a reader just left (ROADMAP 3.1b,
@@ -21,6 +22,7 @@ export const dynamic = 'force-dynamic';
 const NOTHING = () => new NextResponse(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 
 export async function POST(request: NextRequest) {
+  measure('seen', request);
   if (rateLimited(request, 'seen')) return NOTHING();
   if (adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value)) return NOTHING();
   let text: string;
