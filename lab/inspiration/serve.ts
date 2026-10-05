@@ -59,17 +59,23 @@ async function workOf(workId: string) {
   return brief;
 }
 
-/** One editions walk per work, as lab/walls does: three pages reach the older printings. */
+/**
+ * One editions walk per work, as lab/walls does: three pages reach the older printings.
+ * `checked` of `total` goes with the covers, so the window can say what it has not looked at —
+ * The Great Gatsby has 1,180 editions on record and three pages are 300 of them.
+ */
 async function coversOf(workId: string) {
   const hit = coverCache.get(workId);
   if (hit) return hit;
   const work = await counted(getWork(workId));
-  if (!work) return [];
+  if (!work) return { covers: [], checked: 0, total: 0 };
   workCache.set(workId, { title: work.title, author: work.authors[0] });
   const entries: OlEditionEntry[] = [];
+  let total = 0;
   for (let offset = 0; offset < 300; offset += 100) {
     const page = await counted(getEditionsPage(workId, offset));
     entries.push(...page.entries);
+    total = page.size;
     if (offset + 100 >= page.size) break;
   }
   const covers = coversFromEditions(parseEditions(entries, work)).map(c => ({
@@ -77,8 +83,9 @@ async function coversOf(workId: string) {
     year: c.year,
     publisher: c.printings[0]?.publisher,
   }));
-  coverCache.set(workId, covers);
-  return covers;
+  const answer = { covers, checked: entries.length, total };
+  coverCache.set(workId, answer);
+  return answer;
 }
 
 async function loadCover(coverId: string): Promise<Uint8Array | null> {
@@ -190,7 +197,7 @@ createServer(async (req, res) => {
       return send(res, 200, { works: searchCache.get(q) });
     }
     const covers = path.match(/^\/api\/covers\/(OL\d+W)$/);
-    if (covers && isWorkId(covers[1])) return send(res, 200, { covers: await coversOf(covers[1]) });
+    if (covers && isWorkId(covers[1])) return send(res, 200, await coversOf(covers[1]));
 
     // Like the site's /img/ route: the path carries an id, never a URL.
     const img = path.match(/^\/img\/(S|M|L)\/([^/]+)$/);

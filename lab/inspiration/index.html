@@ -10,31 +10,24 @@
   body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.45 system-ui, sans-serif; }
   main { max-width: 560px; margin: 0 auto; padding: 16px; }
   @media (min-width: 900px) {
-    main { max-width: 960px; display: grid; grid-template-columns: 560px 1fr; column-gap: 40px; align-items: start; }
+    main { max-width: 960px; display: grid; grid-template-columns: 520px 1fr; column-gap: 40px; align-items: start; }
     main > .wide { grid-column: 1 / -1; }
-    aside { position: sticky; top: 16px; }
+    aside { position: sticky; top: 72px; }
   }
   h1 { font: italic 30px/1.15 Georgia, serif; margin: 8px 0 4px; }
   h2 { font: italic 22px/1.2 Georgia, serif; margin: 0 0 6px; }
   .sub { color: var(--ink2); margin: 0 0 14px; }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .slot { aspect-ratio: 2 / 3; background: var(--empty); border: 0; padding: 0; position: relative; cursor: pointer; color: var(--ink2); font-size: 28px; display: block; }
+  .kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .slot { aspect-ratio: 2 / 3; width: 100%; background: var(--empty); border: 0; padding: 0; position: relative; cursor: pointer; color: var(--ink2); font-size: 28px; display: block; overflow: hidden; }
   .slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .slot.target { outline: 3px solid var(--accent); outline-offset: 2px; }
   .panel { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
   .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   input[type=search], input[type=text] { flex: 1; min-width: 0; font: inherit; padding: 8px 10px; border: 1px solid var(--line); background: var(--surface); }
   button, a.btn { font: inherit; padding: 8px 12px; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; text-decoration: none; display: inline-block; }
   button.primary, a.primary { background: var(--ink); color: var(--bg); }
   button:disabled { opacity: .4; cursor: default; }
-  .results { list-style: none; padding: 0; margin: 8px 0 0; }
-  .results li { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
-  .results img { width: 40px; height: 60px; object-fit: cover; background: var(--empty); }
   .meta { color: var(--ink2); font-size: 14px; }
-  .editions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 8px; }
-  .editions button { padding: 0; border: 0; aspect-ratio: 2 / 3; background: var(--empty); overflow: hidden; }
-  .editions button.chosen { outline: 3px solid var(--accent); outline-offset: 2px; }
-  .editions img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .status { color: var(--ink2); font-size: 14px; min-height: 1.4em; margin: 6px 0; }
   .books { list-style: none; padding: 0; margin: 8px 0 0; }
   .books li { padding: 6px 0; border-bottom: 1px solid var(--line); }
@@ -48,44 +41,90 @@
   .hidden { display: none !important; }
   .share { gap: 6px; }
   .share a { font-size: 14px; padding: 6px 10px; }
+
+  /*
+    The editor follows "Arrange" in the site's collection editor (components/CollectionEditor.tsx):
+    a band that keeps the state and the way out in sight, every cover's tools under it, a click on a
+    cover for another cover of the same book, a drag to move it. Its windows are a pop-up on a wide
+    screen and a sheet from the bottom on a phone, as CollectionSheet and CoverSheet are there.
+  */
+  .band { position: sticky; top: 0; z-index: 10; background: var(--ink); color: var(--bg); }
+  .band > div { max-width: 960px; margin: 0 auto; padding: 8px 16px; display: flex; align-items: center; gap: 16px; min-height: 48px; }
+  .band .kicker { color: rgba(244, 240, 232, .7); }
+  .band .count { font: italic 20px/1.2 Georgia, serif; flex: 1; }
+  .band button { background: var(--bg); color: var(--ink); border-color: var(--bg); border-radius: 999px; padding: 4px 16px; }
+  .board { margin-top: 12px; }
+  .board .grid { gap: 12px; }
+  .board li.lifted { opacity: .4; }
+  .board li.over .slot { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .board .slot.filled { cursor: grab; user-select: none; -webkit-user-select: none; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); }
+  .board .slot.empty { border: 1px dashed var(--ink2); background: transparent; }
+  .tools { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; height: 32px; }
+  .tools button { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); font-size: 14px; line-height: 1; }
+  .tools button:hover { border-color: var(--accent); color: var(--accent); }
+  .tools .grip { border-color: transparent; background: transparent; cursor: grab; touch-action: none; font-size: 18px; }
+  .tools .off { visibility: hidden; }
+
+  .dialog { position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, .5); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 32px; }
+  .dialog-box { width: 100%; max-width: 880px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 24px; }
+  .dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .dialog-head h2 { margin: 2px 0; }
+  .dialog-head button { border-color: var(--line); color: var(--ink2); border-radius: 999px; padding: 4px 14px; font-size: 14px; flex: none; }
+  .dialog-body { margin-top: 14px; }
+  .mini { display: flex; gap: 4px; margin-bottom: 12px; }
+  .mini span { width: 28px; height: 42px; background: var(--empty); overflow: hidden; flex: none; }
+  .mini span.next { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .results { list-style: none; padding: 0; margin: 8px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+  .results li { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .results li.nocover { cursor: default; opacity: .6; }
+  .results li:not(.nocover):hover { color: var(--accent); }
+  .results img { width: 40px; height: 60px; object-fit: cover; background: var(--empty); flex: none; }
+  .editions { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px 12px; margin-top: 8px; }
+  /* `align-self`: a button centres its content, so a three-line caption in the row pushed its neighbours' covers down. */
+  .editions button { padding: 0; border: 0; background: transparent; text-align: left; position: relative; align-self: start; }
+  .editions img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; background: var(--empty); }
+  .editions .cap { display: block; margin-top: 4px; font-size: 12px; line-height: 1.3; color: var(--ink2); overflow-wrap: anywhere; }
+  .editions button.chosen img { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .editions .tag { position: absolute; left: 4px; top: 4px; background: var(--accent); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 999px; }
+
+  @media (max-width: 639px) {
+    /* A phone: the band goes to the thumb, the tools shrink to the grip and ✕ (four buttons do not fit under a 109 px cover), the window becomes a sheet. */
+    .band { position: fixed; top: auto; bottom: 0; left: 0; right: 0; border-top: 2px solid var(--accent); }
+    body.editing { padding-bottom: 64px; }
+    .board .grid { gap: 8px; }
+    .tools { justify-content: space-around; height: 36px; }
+    .tools button { width: 36px; height: 36px; }
+    .tools .arrow { display: none; }
+    .dialog { padding: 0; overflow: hidden; }
+    .dialog-box { position: absolute; top: 48px; bottom: 0; left: 0; right: 0; max-width: none; border: 0; border-radius: 16px 16px 0 0; padding: 0; display: flex; flex-direction: column; box-shadow: 0 -8px 30px rgba(0, 0, 0, .3); }
+    .dialog-head { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    .dialog-body { flex: 1; min-height: 0; overflow-y: auto; margin: 0; padding: 12px 16px 40px; }
+    .results { grid-template-columns: minmax(0, 1fr); }
+    .editions { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 8px; }
+  }
 </style>
 </head>
 <body>
+<div class="band hidden" id="band">
+  <div>
+    <span class="kicker">Your board</span>
+    <span class="count" id="count"></span>
+    <button id="finish">Done — share it</button>
+  </div>
+</div>
 <main>
   <section id="editor">
     <h1>The books that inspired me</h1>
     <p class="sub">Nine books that changed how you see things — in the editions you read them in. Pick them, then share the picture.</p>
 
-    <div class="grid" id="grid"></div>
+    <div class="row">
+      <input type="text" id="by" maxlength="40" placeholder="Your name or handle (optional)">
+    </div>
 
-    <section class="panel">
-      <div class="row">
-        <input type="search" id="q" placeholder="Search a title or author" autocomplete="off">
-        <button id="go">Search</button>
-      </div>
-      <p class="status" id="status"></p>
-      <ul class="results" id="results"></ul>
-
-      <div id="slotpanel" class="hidden">
-        <div class="row"><strong id="slottitle"></strong></div>
-        <div class="row" style="margin-top:8px">
-          <button id="left">◀</button>
-          <button id="right">▶</button>
-          <button id="change">The edition I read</button>
-          <button id="remove">Remove</button>
-        </div>
-        <div class="editions" id="editions"></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="row">
-        <input type="text" id="by" maxlength="40" placeholder="Your name or handle (optional)">
-      </div>
-      <p class="status" id="count"></p>
-      <div class="row" style="margin-top:4px">
-        <button class="primary" id="finish">Done — share it</button>
-      </div>
+    <section class="board" aria-label="Your nine books">
+      <p class="meta" id="hint"></p>
+      <ul class="grid" id="grid"></ul>
     </section>
   </section>
 
@@ -138,6 +177,33 @@
     <p><a href="{{SITE}}" target="_blank" rel="noopener">{{SITE}}</a></p>
   </aside>
 </main>
+<div class="dialog hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgtitle">
+  <div class="dialog-box">
+    <div class="dialog-head">
+      <div>
+        <p class="kicker" id="dlgkicker"></p>
+        <h2 id="dlgtitle"></h2>
+        <p class="meta" id="dlgsub"></p>
+      </div>
+      <button id="dlgclose">Close</button>
+    </div>
+    <div class="dialog-body">
+      <div id="dlgsearch">
+        <div class="mini" id="mini" aria-hidden="true"></div>
+        <div class="row">
+          <input type="search" id="q" placeholder="Search a title or author" autocomplete="off">
+          <button id="go">Search</button>
+        </div>
+        <p class="status" id="status" role="status"></p>
+        <ul class="results" id="results"></ul>
+      </div>
+      <div id="dlgcovers">
+        <p class="status" id="coverstatus" role="status"></p>
+        <div class="editions" id="editions"></div>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="module">
 import { SLOTS, boardQuery, cleanName, coverSegment, emptyBoard, filledCount, firstEmpty, parseBoard, place, remove, setCover, swap } from '/board.js';
 
@@ -147,12 +213,14 @@ const PATH = '{{PATH}}';
 const shortId = (location.pathname.match(new RegExp(`^${PATH}/([a-z2-7]{8})$`)) || [])[1] || null;
 
 let board = parseBoard(new URLSearchParams(location.search));
-let target = -1;              // the slot the next search result goes into
-const titles = new Map();     // workId -> title, for the slot panel
+let target = -1;              // the place the next search result goes into, or the one whose covers are open
+const books = new Map();      // workId -> { title, author }, for labels and the covers window
 let described = null;         // the server's description of the shared board
 
 function show(editing) {
   $('editor').classList.toggle('hidden', !editing);
+  $('band').classList.toggle('hidden', !editing);
+  document.body.classList.toggle('editing', editing);
   $('shared').classList.toggle('hidden', editing);
 }
 
@@ -164,45 +232,193 @@ function save() {
   const n = filledCount(board);
   $('count').textContent = n === SLOTS ? 'Nine. Done.' : `${n} of 9`;
   $('finish').disabled = n === 0;
+  $('hint').textContent = n === 0
+    ? 'Tap or click a + to add your first book.'
+    // On a phone a finger on a cover scrolls the page, so the grip is what moves it — say which.
+    : matchMedia('(max-width: 639px)').matches
+      ? 'Tap a cover to pick the edition you read. Drag ⠿ to move it.'
+      : 'Click a cover to pick the edition you read. Drag a cover to move it.';
 }
 
-function tile(s, i, editing) {
-  const el = document.createElement(editing ? 'button' : 'a');
-  el.className = 'slot' + (editing && i === target ? ' target' : '');
+const nameOf = workId => books.get(workId)?.title || workId;
+
+function tile(s, i) {
+  const el = document.createElement('a');
+  el.className = 'slot';
   if (s) {
     const img = document.createElement('img');
     img.src = `/img/M/${coverSegment(s.coverId)}`;
-    img.alt = titles.get(s.workId) || '';
+    img.alt = books.get(s.workId)?.title || '';
     el.append(img);
-  } else if (editing) {
-    el.textContent = '+';
   }
   return el;
+}
+
+/*
+  Dragging a cover to its place, as Arrange does it: pointer events, one drag at a time. A mouse
+  picks a cover up anywhere on it; a finger only by the grip, which has `touch-action: none` — on
+  the cover itself a finger must still scroll the page. Dropping on another place swaps the two
+  (the board has nine fixed places, so nothing shifts). A drag must not count as the click that
+  opens the covers.
+*/
+let drag = null;
+let dragged = false;
+
+function pickUp(e, from) {
+  if (e.button !== 0) return;
+  try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* a pointer the browser no longer knows */ }
+  drag = { from, over: null, x: e.clientX, y: e.clientY, moved: false };
+}
+function paintDrag() {
+  [...$('grid').children].forEach((li, i) => {
+    li.classList.toggle('lifted', !!drag?.moved && drag.from === i);
+    li.classList.toggle('over', !!drag?.moved && drag.over === i && drag.from !== i);
+  });
+}
+function track(e) {
+  if (!drag) return;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 6) drag.moved = true;
+  if (!drag.moved) return;
+  const under = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-index]');
+  drag.over = under ? Number(under.dataset.index) : null;
+  paintDrag();
+}
+function drop() {
+  if (!drag) return;
+  const d = drag;
+  drag = null;
+  dragged = d.moved;
+  if (d.moved && d.over !== null && d.over !== d.from) board = swap(board, d.from, d.over);
+  if (d.moved) render();
+}
+function draggable(el, i, anyPointer) {
+  el.onpointerdown = e => {
+    // Every press starts clean: a drag whose click never came must not swallow the next tap.
+    dragged = false;
+    if (anyPointer || e.pointerType === 'mouse') pickUp(e, i);
+  };
+  el.onpointermove = track;
+  el.onpointerup = drop;
+  el.onpointercancel = () => { drag = null; paintDrag(); };
+  // The browser's own image drag would cancel the pointer events.
+  el.ondragstart = e => e.preventDefault();
+}
+
+function tool(label, text, onclick, cls = '') {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.title = label;
+  b.setAttribute('aria-label', label);
+  b.textContent = text;
+  b.className = cls;
+  if (onclick) b.onclick = onclick;
+  return b;
 }
 
 function render() {
   const grid = $('grid');
   grid.textContent = '';
   board.slots.forEach((s, i) => {
-    const el = tile(s, i, true);
-    el.onclick = () => select(i);
-    grid.append(el);
+    const li = document.createElement('li');
+    li.dataset.index = i;
+    const cover = document.createElement('button');
+    cover.type = 'button';
+    cover.className = `slot ${s ? 'filled' : 'empty'}`;
+    const tools = document.createElement('span');
+    tools.className = 'tools';
+    if (s) {
+      const name = nameOf(s.workId);
+      const img = document.createElement('img');
+      img.src = `/img/M/${coverSegment(s.coverId)}`;
+      img.alt = books.get(s.workId)?.title || '';
+      img.draggable = false;
+      cover.append(img);
+      cover.title = 'Click for the edition you read, drag to move it';
+      cover.setAttribute('aria-label', `${name} — pick the edition you read`);
+      cover.onclick = () => { if (!dragged) openCovers(i); dragged = false; };
+      draggable(cover, i, false);
+      const grip = tool(`Drag ${name} to another place`, '⠿', null, 'grip');
+      draggable(grip, i, true);
+      tools.append(
+        tool(`Move ${name} left`, '←', () => move(i, -1), `arrow${i === 0 ? ' off' : ''}`),
+        grip,
+        tool(`Take ${name} out`, '✕', () => { board = remove(board, i); render(); }),
+        tool(`Move ${name} right`, '→', () => move(i, 1), `arrow${i === SLOTS - 1 ? ' off' : ''}`),
+      );
+    } else {
+      cover.textContent = '+';
+      cover.setAttribute('aria-label', `Add a book in place ${i + 1}`);
+      cover.onclick = () => openSearch(i);
+    }
+    li.append(cover, tools);
+    grid.append(li);
   });
-  $('by').value = board.by;
+  if ($('by').value !== board.by && document.activeElement !== $('by')) $('by').value = board.by;
   save();
 }
 
-function select(i) {
-  target = i;
-  const s = board.slots[i];
-  $('slotpanel').classList.toggle('hidden', !s);
-  $('editions').textContent = '';
-  if (s) $('slottitle').textContent = titles.get(s.workId) || s.workId;
-  else $('q').focus();
+function move(i, d) {
+  const j = i + d;
+  if (j < 0 || j >= SLOTS) return;
+  board = swap(board, i, j);
   render();
-  // The tools sit under the board, a screen further down at any width: without this a click
-  // on a book showed only an outline, and "The edition I read" stayed out of sight.
-  if (s) $('slotpanel').scrollIntoView({ block: 'start' });
+}
+
+/* ---------- the window: a pop-up on a wide screen, a sheet on a phone ---------- */
+
+let opener = null;
+
+function openDialog(mode) {
+  if ($('dialog').classList.contains('hidden')) opener = document.activeElement;
+  $('dlgsearch').classList.toggle('hidden', mode !== 'search');
+  $('dlgcovers').classList.toggle('hidden', mode !== 'covers');
+  $('dialog').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeDialog() {
+  if ($('dialog').classList.contains('hidden')) return;
+  $('dialog').classList.add('hidden');
+  document.body.style.overflow = '';
+  opener?.focus?.();
+  opener = null;
+}
+$('dlgclose').onclick = closeDialog;
+// The backdrop closes, as it does over Arrange; a click inside the box does not.
+$('dialog').onclick = e => { if (e.target === e.currentTarget) closeDialog(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDialog(); });
+
+/** The board in small at the top of the search window, which covers the real one. */
+function mini() {
+  const row = $('mini');
+  row.textContent = '';
+  board.slots.forEach((s, i) => {
+    const cell = document.createElement('span');
+    if (i === target) cell.className = 'next';
+    if (s) {
+      const img = document.createElement('img');
+      img.src = `/img/S/${coverSegment(s.coverId)}`;
+      img.alt = '';
+      cell.append(img);
+    }
+    row.append(cell);
+  });
+}
+
+function searchHead() {
+  $('dlgkicker').textContent = `Book ${filledCount(board) + 1} of 9`;
+  $('dlgtitle').textContent = 'Add a book';
+  $('dlgsub').textContent = 'A click puts the book on your board with its best-known cover. You pick the edition afterwards.';
+  mini();
+}
+
+function openSearch(i) {
+  target = i;
+  searchHead();
+  $('results').textContent = '';
+  $('status').textContent = '';
+  $('q').value = '';
+  openDialog('search');
+  $('q').focus();
 }
 
 async function search() {
@@ -211,69 +427,85 @@ async function search() {
   $('status').textContent = 'Looking…';
   $('results').textContent = '';
   const t0 = performance.now();
-  const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-  const body = await res.json();
-  if (!res.ok) { $('status').textContent = body.error; return; }
+  // Open Library takes 0.4 s for most searches and 12 s for some; say so before the reader thinks it hangs.
+  const slow = setTimeout(() => { $('status').textContent = 'Still looking — Open Library can take a while.'; }, 3000);
+  const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`).catch(() => null);
+  clearTimeout(slow);
+  const body = res ? await res.json().catch(() => null) : null;
+  if (!res?.ok || !body) { $('status').textContent = body?.error || 'The search did not answer. Try again in a moment.'; return; }
   $('status').textContent = body.works.length ? `${((performance.now() - t0) / 1000).toFixed(1)} s` : 'Open Library knows no book by that.';
   for (const w of body.works) {
     const li = document.createElement('li');
     li.innerHTML = `<img alt=""><div><div></div><div class="meta"></div></div>`;
     if (w.coverId) li.querySelector('img').src = `/img/S/${coverSegment(w.coverId)}`;
+    else li.className = 'nocover';
     li.querySelector('div > div').textContent = w.title;
     li.querySelector('.meta').textContent = [w.author, w.year].filter(Boolean).join(', ') + (w.coverId ? '' : ' — no cover on record');
     if (w.coverId) li.onclick = () => {
-      titles.set(w.id, w.title);
+      books.set(w.id, { title: w.title, author: w.author });
       const free = target >= 0 && !board.slots[target] ? target : firstEmpty(board);
-      board = place(board, free >= 0 ? free : (target >= 0 ? target : SLOTS - 1), { workId: w.id, coverId: w.coverId });
+      if (free < 0) return closeDialog();
+      board = place(board, free, { workId: w.id, coverId: w.coverId });
       target = firstEmpty(board);
+      render();
+      // The window stays for the next book until the board is full: nine books are nine searches, not nine openings.
+      if (target < 0) return closeDialog();
       $('results').textContent = '';
       $('q').value = '';
-      $('status').textContent = '';
-      render();
-      if (target >= 0) $('q').focus();
+      $('status').textContent = `${w.title} is on your board.`;
+      searchHead();
+      $('q').focus();
     };
     $('results').append(li);
   }
 }
 
-async function editions() {
-  const s = board.slots[target];
+async function openCovers(i) {
+  const s = board.slots[i];
   if (!s) return;
-  $('editions').textContent = 'Looking for the other editions…';
-  const res = await fetch(`/api/covers/${s.workId}`);
-  const body = await res.json();
-  $('editions').textContent = res.ok ? '' : body.error;
-  for (const c of body.covers || []) {
+  target = i;
+  const book = books.get(s.workId);
+  $('dlgkicker').textContent = 'The edition I read';
+  $('dlgtitle').textContent = book ? [book.title, book.author].filter(Boolean).join(' · ') : s.workId;
+  $('dlgsub').textContent = 'Pick the cover of the edition you read: it takes the place of the marked one on your board.';
+  $('editions').textContent = '';
+  $('coverstatus').textContent = 'Looking for the other editions…';
+  openDialog('covers');
+  $('dlgclose').focus();
+  const res = await fetch(`/api/covers/${s.workId}`).catch(() => null);
+  const body = res ? await res.json().catch(() => null) : null;
+  // The reader may have closed the window or opened another book's while Open Library answered.
+  if (target !== i || board.slots[i]?.workId !== s.workId || $('dlgcovers').classList.contains('hidden')) return;
+  if (!res?.ok || !body) { $('coverstatus').textContent = body?.error || 'Open Library did not answer. Try again in a moment.'; return; }
+  const { covers, checked, total } = body;
+  $('coverstatus').textContent = covers.length === 0
+    ? 'Open Library has no other cover on record for this book.'
+    : `${covers.length} ${covers.length === 1 ? 'cover' : 'covers'} from ${total > checked ? `the first ${checked} of ${total.toLocaleString('en')}` : checked} editions on record at Open Library, newest first.`;
+  for (const c of covers) {
     const b = document.createElement('button');
+    b.type = 'button';
     // M, not S: an S scan is about 40 px wide and was shown at 90 — too blurred to tell one printing from the next.
-    b.innerHTML = '<img alt="" loading="lazy">';
+    b.innerHTML = '<img alt="" loading="lazy"><span class="cap"></span>';
     b.querySelector('img').src = `/img/M/${coverSegment(c.coverId)}`;
-    b.title = [c.year, c.publisher].filter(Boolean).join(', ');
-    if (c.coverId === s.coverId) b.className = 'chosen';
+    // Under the cover, not in a tooltip: a phone shows no tooltip, and year and publisher are how one tells printings apart.
+    const caption = [c.year, c.publisher].filter(Boolean).join(' · ');
+    b.querySelector('.cap').textContent = caption || 'no year on record';
+    b.setAttribute('aria-label', caption ? `The cover of ${caption}` : 'A cover with no year on record');
+    if (c.coverId === s.coverId) {
+      b.className = 'chosen';
+      b.insertAdjacentHTML('beforeend', '<span class="tag">on your board</span>');
+    }
     b.onclick = () => {
-      board = setCover(board, target, c.coverId);
+      board = setCover(board, i, c.coverId);
       render();
-      // The board is off screen above; the mark says the click was taken.
-      for (const other of $('editions').children) other.classList.toggle('chosen', other === b);
+      closeDialog();
     };
     $('editions').append(b);
   }
 }
 
-function move(d) {
-  const j = target + d;
-  if (target < 0 || j < 0 || j >= SLOTS) return;
-  board = swap(board, target, j);
-  target = j;
-  render();
-}
-
 $('go').onclick = search;
 $('q').onkeydown = e => { if (e.key === 'Enter') search(); };
-$('change').onclick = editions;
-$('remove').onclick = () => { board = remove(board, target); select(target); };
-$('left').onclick = () => move(-1);
-$('right').onclick = () => move(1);
 $('by').oninput = e => { board = { ...board, by: cleanName(e.target.value) }; save(); };
 $('finish').onclick = async () => {
   $('count').textContent = 'Making the link…';
@@ -288,7 +520,7 @@ $('finish').onclick = async () => {
 
 function showShared(d) {
   described = d;
-  for (const b of d.books) if (b?.title) titles.set(b.workId, b.title);
+  for (const b of d.books) if (b?.title) books.set(b.workId, { title: b.title, author: b.author });
   board = parseBoard(new URLSearchParams(d.posterQuery));
   show(false);
   // "Done" is pressed at the foot of the editor; the wall is at the top of this view.
@@ -297,7 +529,7 @@ function showShared(d) {
   const grid = $('sharedgrid');
   grid.textContent = '';
   d.books.forEach((b, i) => {
-    const el = tile(b, i, false);
+    const el = tile(b, i);
     if (b) { el.href = b.bookHref; el.target = '_blank'; el.rel = 'noopener'; el.title = b.title || ''; }
     grid.append(el);
   });
@@ -349,8 +581,8 @@ $('copy').onclick = async () => {
   const copied = await navigator.clipboard.writeText(described.link).then(() => true, () => false);
   $('linktext').textContent = copied ? `Copied: ${described.link}` : `Not copied — select it here: ${described.link}`;
 };
-$('mine').onclick = () => { board = emptyBoard(); target = 0; show(true); render(); $('q').focus(); };
-$('editthis').onclick = () => { target = firstEmpty(board); show(true); render(); };
+$('mine').onclick = () => { board = emptyBoard(); show(true); render(); window.scrollTo(0, 0); };
+$('editthis').onclick = () => { show(true); render(); window.scrollTo(0, 0); };
 
 /* ---------- start ---------- */
 
@@ -369,16 +601,13 @@ if (shortId) {
   });
 } else {
   show(true);
-  target = firstEmpty(board);
   render();
   // A board that came with the address (a reload, a pasted link) brings ids, not titles;
   // without this the tools named a book "OL15297W". One request here; the server asks Open Library
   // once per book it has not met (up to nine) and answers from memory after that.
   if (filledCount(board)) fetch(`/api/board?${boardQuery(board)}`).then(res => (res.ok ? res.json() : null)).then(d => {
-    for (const b of d?.books ?? []) if (b?.title && !titles.has(b.workId)) titles.set(b.workId, b.title);
+    for (const b of d?.books ?? []) if (b?.title && !books.has(b.workId)) books.set(b.workId, { title: b.title, author: b.author });
     render();
-    const s = board.slots[target];
-    if (s) $('slottitle').textContent = titles.get(s.workId) || s.workId;
   }).catch(() => {});
 }
 </script>

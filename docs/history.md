@@ -4420,3 +4420,24 @@ Julians Prompt ([docs/prompt-inspiration-lokal.md](prompt-inspiration-lokal.md))
 **Bilder** (lokal, `docs/tests/2026-10-05-inspiration-*`): beide Poster vorher und nachher, die Story auf 390 px, die Story mit den Schutzzonen, das Brett mit den Standardcovern, die unscharfe Auswahl, die geteilte Seite bei 375 px.
 
 **Nächster Schritt, Julian:** das Story-Bild aufs Telefon und in Instagrams Vorschau; ein eigenes Brett mit Stoppuhr, dann zwei Freunde (Maß 1 und 2); danach Hashtag, Satz und ob „edition“ das richtige Wort ist.
+
+## 2026-10-05 · lab/inspiration: der Editor nach dem Muster von „Arrange“ (ROADMAP 5.18)
+
+Julian nach dem ersten Lauf: „mach die GUI eher so wie bei arrange im create modus, und mit pop-up im desktop mode, mobil vielleicht anders“. Vorbild ist `Arrange` in `components/CollectionEditor.tsx` (Stand `origin/main`, 5.13m) mit dem Cover-Fenster darüber und `CollectionSheet` fürs Telefon. Das Lab bleibt eine einzelne HTML-Seite ohne React; nachgebaut ist das Verhalten, nicht der Code.
+
+**Was jetzt anders ist** (`lab/inspiration/index.html`, `serve.ts`):
+
+- **Ein Band** hält Stand und Ausgang im Blick („Your board · 7 of 9 · Done — share it“): am Desktop oben klebend wie das „Editing“-Band, am Telefon unten am Daumen.
+- **Das Brett wie Arrange:** unter jedem Cover seine Werkzeuge ← ⠿ ✕ →, immer sichtbar; ein Klick aufs Cover öffnet die Ausgaben dieses Buchs; ein Cover lässt sich mit der Maus ziehen, mit dem Finger am Griff ⠿ (`touch-action: none`, auf dem Cover selbst muss ein Finger rollen können). Ablegen **tauscht** die zwei Plätze — das Brett hat neun feste, es rückt nichts nach. Ein leerer Platz ist ein „+“. Der Satz darüber sagt es in Worten, am Telefon mit dem Griff.
+- **Ein Fenster statt der Leiste unter dem Brett:** am Desktop ein Pop-up über dem abgedunkelten Brett (880 px breit, Escape, Klick daneben und „Close“ schließen, der Fokus kehrt zurück, die Seite dahinter rollt nicht); **am Telefon (unter 640 px) ein Blatt von unten** mit festem Kopf und rollendem Inhalt. Zwei Inhalte:
+  - **„Add a book“** vom „+“: Suchfeld (weiter nur auf Enter), Treffer, oben das Brett in klein mit dem markierten nächsten Platz. Ein Klick legt das Buch ab, **das Fenster bleibt für das nächste offen**, bis neun liegen — neun Bücher sind neun Suchen, nicht neun Öffnungen. Nach 3 s ohne Antwort steht „Still looking — Open Library can take a while.“ (die 12,5-s-Suche des ersten Laufs).
+  - **„The edition I read“** vom Cover: die Ausgaben in sechs Spalten (Telefon drei), **Jahr und Verlag unter jedem Bild** statt im Tooltip, das Cover auf dem Brett markiert („on your board“), ein Klick tauscht und schließt. Darüber, was angesehen wurde: „85 covers from the first 300 of 1,180 editions on record at Open Library, newest first.“ — der Server gibt dafür `checked` und `total` mit.
+- **Am Telefon anders:** das Blatt statt des Pop-ups, das Band unten, und unter dem Cover nur Griff und ✕ (vier Knöpfe zu 32 px passen nicht unter ein 109 px breites Cover; die Pfeile bleiben dem Desktop und der Tastatur).
+
+**Geprüft** im eingebauten Browser bei 1280 × 800 und 375 × 812, mit synthetischen Klicks und Zeigerereignissen (das Fenster war verdeckt): Ziehen von Platz 1 auf 5 tauscht und öffnet danach kein Fenster; → und ✕; „+“ → Suche → Treffer → nächster Platz markiert → Escape; Cover → Ausgaben → Wahl schließt und tauscht; „Done“, „Change this one“, „Make your own“. Kein seitliches Rollen bei 375 px; eine Verlagszeile lief über den Rand („Indoeuropeanpublishing.com“) und bricht jetzt um. 22 Tests grün, `tsc` und ESLint sauber. **Nicht geprüft:** Ziehen mit einem echten Finger, das Blatt mit offener Bildschirmtastatur.
+
+**Was das an den Maßen ändert:** an den Kosten nichts — die Ausgaben werden weiter erst auf einen Klick geladen (ein Werk und ein bis drei Editionsseiten), nur ist es jetzt der Klick aufs Cover statt ein zweiter auf einen Knopf weiter unten. Für Maß 2 heißt das: der Haken ist mit einem Klick erreichbar und steht in Worten über dem Brett. Am Desktop liegt die dritte Reihe weiter unter dem Rand (Brett 520 px breit, die Seite ist bei 800 px Fensterhöhe 1.159 px hoch) — der Preis der Werkzeuge unter jedem Cover.
+
+**Offen:** die Länge der Auswahl (146 Cover sind am Telefon ein Blatt von 10.637 px) — Sprachfilter und Falten bleiben der nächste Schritt; die Zurück-Taste schließt das Blatt nicht (auf der Seite hält `?swap=` das Fenster in der Adresse); die neuen Sätze („Add a book“, „Pick the cover of the edition you read…“) sind von Claude und ein Vorschlag wie der Rest.
+
+**Bilder** (lokal): `docs/tests/2026-10-05-inspiration-arrange-*` — Brett, Suche und Ausgaben je bei 1280 und 375 px.
