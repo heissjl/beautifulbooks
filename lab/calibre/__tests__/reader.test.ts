@@ -51,7 +51,7 @@ describe('the picture the reader keeps of a book', () => {
   });
 
   it('is grey, 8 bit, and the mean of what it covers', () => {
-    const thumb = makeThumb(cover(1040, 1572)) as Buffer;
+    const thumb = makeThumb(cover(520, 786)) as Buffer;
     expect(header(thumb)).toEqual({ width: 260, height: 393, bitDepth: 8, colorType: 0 });
     const back = PNG.sync.read(thumb);
     // Red is 76 in grey (Rec. 601), white 255; pngjs hands grey back as RGBA.
@@ -103,15 +103,15 @@ describe('the pictures of the home screen', () => {
     const { root, old } = fakeReader();
     const sized = join(root, 'system/cache/desktop/1/Books/Strugatsky, Arkady & Strugatsky, Boris');
     mkdirSync(sized, { recursive: true });
-    const picture = cover(1000, 1600);
+    const picture = cover(400, 640);
     for (const [w, h] of [[268, 396], [250, 368], [123, 184]]) writeFileSync(join(sized, `Roadside Picnic - Arkady Strugatsky & Boris Strugatsky.epub_${w}x${h}.png`), makeThumb(picture, { width: w, height: h }) as Buffer);
     // Another book's picture in the same folder, and one whose name only starts alike.
     writeFileSync(join(sized, 'Ugly Swans, The - Arkady Strugatsky & Boris Strugatsky.epub_268x396.png'), old);
     writeFileSync(join(sized, 'Roadside Picnic - Arkady Strugatsky & Boris Strugatsky.epub.bak_268x396.png'), old);
     for (const dir of ['rb', 't']) mkdirSync(join(root, 'system/cache/desktop', dir), { recursive: true });
-    writeFileSync(join(root, 'system/cache/desktop/rb/1.png'), makeThumb(cover(1000, 1600), { width: 268, height: 396 }) as Buffer);
+    writeFileSync(join(root, 'system/cache/desktop/rb/1.png'), makeThumb(cover(400, 640), { width: 268, height: 396 }) as Buffer);
     writeFileSync(join(root, 'system/cache/desktop/rb/2.png'), old);
-    writeFileSync(join(root, 'system/cache/desktop/t/41.png'), makeThumb(cover(1000, 1600), { width: 123, height: 184 }) as Buffer);
+    writeFileSync(join(root, 'system/cache/desktop/t/41.png'), makeThumb(cover(400, 640), { width: 123, height: 184 }) as Buffer);
     writeFileSync(join(root, 'system/cache/desktop/cache.dat'), index);
     return { root, old };
   }
@@ -141,7 +141,7 @@ describe('the pictures of the home screen', () => {
     const { root, old } = withHome();
     const before = new Map(picturesOf(root, lpath).map((p) => [p.file, readFileSync(p.file)]));
     const reader = new ReaderCovers(root, join(folder(), 'reader'));
-    const result = reader.put(403, cover(1080, 1832), 'ol:1');
+    const result = reader.put(403, cover(540, 916), 'ol:1');
     expect(result.ok && result.pictures).toHaveLength(6);
     expect(header(readFileSync(join(root, 'system/cache/desktop/rb/1.png')))).toMatchObject({ width: 233, height: 396, colorType: 0 });
     expect(header(readFileSync(join(root, `system/cache/desktop/1/${lpath}_123x184.png`)))).toMatchObject({ width: 108, height: 184 });
@@ -163,7 +163,7 @@ describe('the pictures of the home screen', () => {
     writeFileSync(join(keep, 'reader.jsonl'), `${JSON.stringify({ at: '2026-10-05T01:25:21.056Z', action: 'put', bookId: 403, lpath, coverId: 'ol:1', backup: join(keep, 'pictures/403/first.png') })}\n`);
     writeFileSync(join(root, 'system/cover_chache/1', `${lpath}.png`), makeThumb(cover(600, 900)) as Buffer);
     const reader = new ReaderCovers(root, keep);
-    reader.put(403, cover(1080, 1832), 'ol:2');
+    reader.put(403, cover(540, 916), 'ol:2');
     reader.back(403);
     expect(readFileSync(join(root, 'system/cover_chache/1', `${lpath}.png`)).equals(old)).toBe(true);
   });
@@ -176,7 +176,7 @@ describe('putting a cover on the reader', () => {
     const reader = new ReaderCovers(root, keep);
     const picture = join(root, 'system/cover_chache/1', `${lpath}.png`);
 
-    const result = reader.put(403, cover(1080, 1832), 'ol:1');
+    const result = reader.put(403, cover(540, 916), 'ol:1');
     expect(result).toEqual({ ok: true, lpaths: [lpath], pictures: [`system/cover_chache/1/${lpath}.png`] });
     expect(header(readFileSync(picture))).toMatchObject({ width: 232, height: 393, colorType: 0 });
     expect(readFileSync(join(root, lpath), 'utf8')).toBe('the book itself');
