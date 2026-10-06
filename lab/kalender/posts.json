@@ -1,6 +1,8 @@
 {
   "site": "https://buyitscovers.com",
   "done": [
+    "5.6a",
+    "konto:bluesky",
     "publish:dtv-phantastica-covers-by-celestino-piatti",
     "publish:fischer-bucherei-covers-by-kurt-wirth",
     "publish:haffmans-covers-by-nikolaus-heidelbach",
@@ -77,11 +79,11 @@
     },
     {
       "id": "bsky-expose",
-      "date": "2026-10-12",
+      "date": "2026-10-05",
       "channel": "bluesky",
       "kind": "expose",
       "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.",
-      "status": "vorschlag",
+      "status": "gepostet",
       "path": "/",
       "time": "10:00",
       "image": "Vorschaukarte der Startseite (kommt von selbst)",
@@ -89,7 +91,7 @@
         "konto:bluesky",
         "5.6a"
       ],
-      "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt."
+      "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
     },
     {
       "id": "ig-expose",

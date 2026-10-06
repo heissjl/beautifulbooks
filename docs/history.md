@@ -1,3 +1,7 @@
+## 2026-10-05 · Kanäle messbar, deployt (ROADMAP 5.6a)
+
+Julian gab den Satz der Datenschutzerklärung (EN und DE) frei („ok“) und den Deploy („go“). 5.6a lag seit dem 2026-10-04 auf `claude/gallant-davinci-qgndje`, 182 Commits hinter `main`; zusammengeführt über den 5.6b-Branch. Konflikte: `main` hatte K14 und K15 für Rechenzeit und Kosten vergeben (2.18l, 2.18m), die Karte „Kanäle“ heißt deshalb **K16**; die Herkunft `shelf` (5.18b) steht neben dem neuen `page`; der Bericht liest `cpu` und `landing`. Vor dem Push: Suite 1.432 Tests, Typprüfung, Lint und Build grün. Der erste Bluesky-Post (das Exposé, PLAN-5.6b §3) ging am 2026-10-05 kurz vor dem Deploy hinaus, von Julian selbst gepostet; seine ersten Besuche zählen deshalb noch als `social`.
+
 # Beautiful Books – Arbeitsprotokoll
 
 Was gebaut, gemessen und entschieden wurde, chronologisch. Die Texte sind aus der alten SPEC.md (Stand `1b92cf5`) hierher verschoben, **mit ihren alten Abschnittsnummern als Überschriften**, weil die Kommentare im Code sie zitieren („SPEC §9.3 step 11“, „§8.7“, „§10 C9“). Was die Seite heute sein soll, steht in [SPEC.md](../SPEC.md); was offen ist, in [ROADMAP.md](../ROADMAP.md). Die alte Fassung in einem Stück: `git show 1b92cf5:SPEC.md`.
