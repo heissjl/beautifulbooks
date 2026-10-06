@@ -38,3 +38,18 @@ Was fehlt, ist das Gegenstück zur ISBN: **ein Plakat hat keine Kennung.** Ob ei
 4. **Für wie viele Filme hat Commons mindestens zwei gemeinfreie Plakate?** (Wikidata-Abfrage.)
 
 Erfolg: ein Film, für den die Seite ≥ 10 Plakate zeigen und für ≥ 1 davon einen legalen Kaufweg nennen kann, der *dieses* Plakat liefert.
+
+## Messung 1: Plakate je Film bei TMDB — Skript fertig, nicht gelaufen (2026-10-06)
+
+Julian: „mach die TMDB-Messung mit zwanzig Filmen". **Aus der Cloud-Sitzung nicht möglich:** `api.themoviedb.org` wird vom Netzwerk-Proxy der Umgebung abgelehnt (`connect_rejected`), und es gibt keinen TMDB-Schlüssel. Gebaut ist das Werkzeug:
+
+- `tmdb.ts` (rein, getestet in `__tests__/tmdb.test.ts`): zählt je Film Plakate, Sprachen, Plakate ohne Text (`iso_639_1: null`), Scans ≥ 3000 px Höhe (etwa A2 bei 250 dpi — Schwelle gesetzt, nicht gemessen) und die größte Höhe; Median über die gefundenen Filme; ein nicht gefundener Film steht als „nicht gefunden", nie als 0.
+- `count.ts`: zwanzig Filme von 1922 bis 2023 (Stummfilm, Klassiker, nicht-englisch, Blockbuster, neu), je Film eine Suche nach Titel und Jahr und eine Bildabfrage ohne Sprachfilter (= alle Sprachen), nacheinander mit 300 ms Pause — 40 Anfragen. Schreibt `results.json`, druckt die Tabelle.
+
+Laufen lassen (lokal, nicht-kommerzieller Schlüssel aus den TMDB-Kontoeinstellungen):
+
+```bash
+TMDB_API_KEY=<v3-Schlüssel> npx tsx lab/movie-posters/count.ts
+```
+
+Grenze der Messung: sie zählt, was hochgeladen ist, nicht ob es offizielle Plakate sind; den Anteil Fan-Uploads sieht man nur durch Hinsehen an einer Stichprobe.
