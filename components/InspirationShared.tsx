@@ -77,6 +77,9 @@ export default function InspirationShared({ board, query, link, walls, versus }:
                 ) : (
                   <span className="block aspect-[2/3] rounded-card bg-surface-2" />
                 )}
+                {b?.edition && (b.edition.year || b.edition.publisher) && (
+                  <span className="mt-1.5 block truncate text-xs text-ink-3">{[b.edition.year, b.edition.publisher].filter(Boolean).join(' · ')}</span>
+                )}
               </li>
             );
           })}

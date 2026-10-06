@@ -56,7 +56,7 @@ export async function SharedPage({ board, path, missing }: { board: Board | null
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {board ? (
-          <InspirationShared board={await describeBoard(board)} query={boardQuery(board)} link={`${await origin()}${path}`} walls={wallsEnabled()} versus={versusEnabled()} />
+          <InspirationShared board={await describeBoard(board, { editions: true })} query={boardQuery(board)} link={`${await origin()}${path}`} walls={wallsEnabled()} versus={versusEnabled()} />
         ) : (
           <p className="py-24 text-center text-ink-2">{missing}</p>
         )}
