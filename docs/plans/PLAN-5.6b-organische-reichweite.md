@@ -127,7 +127,7 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 **Zwei Posts für alle Plattformen** (Julian, 2026-10-06):
 
 - **Der Zug-Witz am 23.10.** auf Bluesky, X, Instagram und Pinterest.
-  - Infinite Jest (das Wolken-Cover, OL 191075) gegen Fifty Shades of Grey (die Filmausgabe, 15163071), beide aus dem Pool des Spiels. Unter der Frage stehen „Judge the cover, not the book.“ und `buyitscovers.com/versus`.
+  - Infinite Jest (das Wolken-Cover, OL 191075) gegen Fifty Shades of Grey (die Filmausgabe, 15163071), beide aus dem Pool des Spiels. Unter der Frage stehen „Judge a book by its cover.“ (Julian, 2026-10-06) und `buyitscovers.com/versus`.
   - Bilder: `lab/kalender/out/zug-1080x1350.jpg` und `pinterest-zug.jpg`.
 - **Das Starter-Pack am 24.10.** auf Bluesky, X, Instagram und Pinterest, als Shelf-Portrait.
   - Claudes Vorschlag für neun Bücher: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L'étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas) und A Little Life.

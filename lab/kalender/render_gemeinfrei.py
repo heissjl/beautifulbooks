@@ -444,7 +444,7 @@ def train_post(W: int, H: int, name: str):
     d = ImageDraw.Draw(s)
     of = font('xanh-italic', round(48 * k))
     d.text(((W - d.textlength('or', font=of)) / 2, top + box_h // 2 - round(30 * k)), 'or', font=of, fill=MUTED)
-    tight_text(d, (round(70 * k), H - round(230 * k)), 'Judge the cover, not the book.', font('xanh-italic', round(54 * k)), ACCENT)
+    tight_text(d, (round(70 * k), H - round(230 * k)), 'Judge a book by its cover.', font('xanh-italic', round(54 * k)), ACCENT)
     d.text((round(72 * k), H - round(130 * k)), 'buyitscovers.com/versus', font=font('xanh-italic', round(38 * k)), fill=INK)
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
