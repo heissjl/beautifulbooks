@@ -73,7 +73,8 @@ type Lists = { state: 'idle' | 'loading' } | { state: 'done'; lists: BrowseList[
 
 type Covers =
   | { workId: string; state: 'loading' }
-  | { workId: string; state: 'done'; data: WorkCovers }
+  /** `more`: the next slice of editions is being asked for, or did not come. */
+  | { workId: string; state: 'done'; data: WorkCovers; more?: 'loading' | 'failed' }
   | { workId: string; state: 'failed'; message: string };
 
 const LIST_LABELS: Record<BrowseList['id'], string> = {
@@ -89,6 +90,8 @@ const SIZE_LINE: Record<(typeof SIZES)[number], string> = {
 
 /** The editor's public address; the code keeps the name it was built under (`inspiration`). */
 const EDITOR = '/shelfportrait';
+
+const SILENT = 'Open Library did not answer. Try again in a moment.';
 
 const CHUNK = 60;
 const pill = (active: boolean) =>
@@ -232,6 +235,29 @@ export default function InspirationEditor({ initialQuery, initialNames, children
       // The reader may have opened another book's covers while Open Library answered.
       .then((data) => setCovers((c) => (c?.workId === workId ? { workId, state: 'done', data } : c)))
       .catch((err: unknown) => setCovers((c) => (c?.workId === workId ? { workId, state: 'failed', message: err instanceof Error ? err.message : 'Open Library did not answer. Try again in a moment.' } : c)));
+  }
+
+  /** The next three pages of editions, joined to what the window shows (Julian, 2026-10-05: „make an option to load more covers"). */
+  function moreCovers() {
+    if (!covers || covers.state !== 'done' || covers.more === 'loading') return;
+    const { workId, data } = covers;
+    setCovers({ ...covers, more: 'loading' });
+    fetch(`/api/inspiration/covers/${workId}?from=${data.checked}`)
+      .then(async (r) => {
+        const body = (await r.json().catch(() => null)) as (WorkCovers & { error?: string }) | null;
+        if (!r.ok || !body) throw new Error(body?.error ?? SILENT);
+        return body;
+      })
+      .then((next) =>
+        setCovers((c) => {
+          if (c?.workId !== workId || c.state !== 'done') return c;
+          // A cover seen in a newer slice keeps its newer printing; the rest join at the end, still newest first.
+          const seen = new Set(c.data.covers.map((x) => x.coverId));
+          const joined = [...c.data.covers, ...next.covers.filter((x) => !seen.has(x.coverId))];
+          return { workId, state: 'done', data: { ...c.data, covers: joined, checked: next.checked, total: next.total } };
+        }),
+      )
+      .catch(() => setCovers((c) => (c?.workId === workId && c.state === 'done' ? { ...c, more: 'failed' } : c)));
   }
 
   async function finish() {
@@ -452,6 +478,7 @@ export default function InspirationEditor({ initialQuery, initialNames, children
           <CoversPane
             covers={covers?.workId === coversSlot.workId ? covers : null}
             current={coversSlot.coverId}
+            onMore={moreCovers}
             onPick={(coverId) => {
               const index = win.index;
               setBoard((b) => setCover(b, index, coverId));
@@ -720,16 +747,18 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
   );
 }
 
-function CoversPane({ covers, current, onPick }: { covers: Covers | null; current: string; onPick: (coverId: string) => void }) {
+function CoversPane({ covers, current, onPick, onMore }: { covers: Covers | null; current: string; onPick: (coverId: string) => void; onMore: () => void }) {
   if (!covers || covers.state === 'loading') return <p className="text-sm text-ink-2" role="status">Looking for the other editions…</p>;
   if (covers.state === 'failed') return <p className="text-sm text-accent" role="alert">{covers.message}</p>;
   const { covers: list, checked, total } = covers.data;
+  const more = covers.more;
   return (
     <>
       <p className="text-sm text-ink-2" role="status">
-        {list.length === 0
+        {list.length === 0 && checked >= total
           ? 'Open Library has no other cover on record for this book.'
-          : `${list.length} ${list.length === 1 ? 'cover' : 'covers'} from ${total > checked ? `the first ${checked} of ${total.toLocaleString('en')}` : checked} editions on record at Open Library, newest first.`}
+          : `${list.length} ${list.length === 1 ? 'cover' : 'covers'} from ${total > checked ? `the first ${checked.toLocaleString('en')} of ${total.toLocaleString('en')}` : checked} editions on record at Open Library, newest first.`}
+        {more === 'failed' && ' The next editions did not come — try again.'}
       </p>
       <ul className="mt-3 grid grid-cols-3 gap-x-2 gap-y-4 sm:grid-cols-6 sm:gap-x-3">
         {list.map((c) => {
@@ -751,6 +780,14 @@ function CoversPane({ covers, current, onPick }: { covers: Covers | null; curren
           );
         })}
       </ul>
+      {/* Older printings, three pages of editions at a time; the sentence above says how far the window has looked. */}
+      {checked < total && (
+        <div className="mt-4 text-center">
+          <button type="button" onClick={onMore} disabled={more === 'loading'} className="btn disabled:opacity-50">
+            {more === 'loading' ? 'Looking at the next editions…' : `Show more covers (${Math.min(300, total - checked)} more editions)`}
+          </button>
+        </div>
+      )}
     </>
   );
 }
