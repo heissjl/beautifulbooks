@@ -397,14 +397,50 @@
       "channel": "bluesky",
       "kind": "feature",
       "status": "vorschlag",
-      "text": "Which cover would you rather be seen reading on the train? Two covers, one click: a small game on Buy Its Covers.",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge the cover, not the book.",
       "path": "/versus",
       "needs": [
         "konto:bluesky",
         "5.6a",
-        "spiel"
+        "spiel",
+        "rechte"
       ],
-      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). "
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung.",
+      "image": "lab/kalender/out/zug-1080x1350.jpg"
+    },
+    {
+      "id": "pr-zug-pinterest",
+      "date": "2026-10-23",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge the cover, not the book.",
+      "path": "/versus",
+      "image": "lab/kalender/out/pinterest-zug.jpg",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung.",
+      "title": "Which cover would you rather be seen reading on the train?"
+    },
+    {
+      "id": "pr-zug-x",
+      "date": "2026-10-23",
+      "channel": "x",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge the cover, not the book.",
+      "path": "/versus",
+      "image": "lab/kalender/out/zug-1080x1350.jpg",
+      "needs": [
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung."
     },
     {
       "id": "ig-feminist-press",
@@ -422,6 +458,72 @@
       "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln"
     },
     {
+      "id": "pr-zug-instagram",
+      "date": "2026-10-23",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge the cover, not the book.\n\nLink in bio.\n\n#performativereader #bookcovers #booktok",
+      "path": "/versus",
+      "image": "lab/kalender/out/zug-1080x1350.jpg",
+      "needs": [
+        "konto:instagram",
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung.",
+      "time": "18:00"
+    },
+    {
+      "id": "pr-starter-bluesky",
+      "date": "2026-10-24",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader's starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
+      "path": "/shelfportrait",
+      "image": "Shelf-Portrait-Poster nach Julians Bearbeitung",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung."
+    },
+    {
+      "id": "pr-starter-pinterest",
+      "date": "2026-10-24",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader's starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
+      "path": "/shelfportrait",
+      "image": "Shelf-Portrait-Poster nach Julians Bearbeitung",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung.",
+      "title": "The performative reader's starter pack: nine books, nine covers"
+    },
+    {
+      "id": "pr-starter-x",
+      "date": "2026-10-24",
+      "channel": "x",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader's starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
+      "path": "/shelfportrait",
+      "image": "Shelf-Portrait-Poster nach Julians Bearbeitung",
+      "needs": [
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung."
+    },
+    {
       "id": "pr-ig-starter",
       "date": "2026-10-24",
       "time": "18:00",
@@ -430,13 +532,13 @@
       "status": "vorschlag",
       "text": "The performative reader's starter pack: nine books, each in the cover you'd be seen with.\n\nMake your own on Buy Its Covers: a Shelf-Portrait of three, six or nine books, shared as one picture. Link in bio.\n\n#performativereader #bookstagram #bookcovers",
       "path": "/shelfportrait",
-      "image": "Karussell: ein Shelf-Portrait (Poster aus /api/inspiration/poster) mit neun Covern, dann drei Ausschnitte",
+      "image": "Shelf-Portrait-Poster nach Julians Bearbeitung",
       "needs": [
         "konto:instagram",
         "5.6a",
         "rechte"
       ],
-      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Zeigt einzelne Cover, wartet deshalb auf die Rechte-Entscheidung; ohne sie als Variante mit Schrift-Folien und dem Hinweis auf /shelfportrait."
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung."
     },
     {
       "id": "gal-dominic-harman",

@@ -124,6 +124,16 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 | Fr 24.10. | Instagram | „The performative reader's starter pack“ als Shelf-Portrait mit neun Covern | Konto, **Rechte-Entscheidung** (einzelne Cover) |
 | Sa 25.10. | Bluesky | Shelf-Portrait: „Performative reading, done properly“ | Konto |
 
+**Zwei Posts für alle Plattformen** (Julian, 2026-10-06):
+
+- **Der Zug-Witz am 23.10.** auf Bluesky, X, Instagram und Pinterest.
+  - Infinite Jest (das Wolken-Cover, OL 191075) gegen Fifty Shades of Grey (die Filmausgabe, 15163071), beide aus dem Pool des Spiels. Unter der Frage stehen „Judge the cover, not the book.“ und `buyitscovers.com/versus`.
+  - Bilder: `lab/kalender/out/zug-1080x1350.jpg` und `pinterest-zug.jpg`.
+- **Das Starter-Pack am 24.10.** auf Bluesky, X, Instagram und Pinterest, als Shelf-Portrait.
+  - Claudes Vorschlag für neun Bücher: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L'étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas) und A Little Life.
+  - Julian bearbeitet das Brett im Editor; der Link steht im Kalender beim Eintrag `pr-ig-starter`. Das Bild ist danach das Poster des Shelf-Portraits.
+- Beide zeigen geschützte einzelne Cover und **warten auf die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1).
+
 **Das Bild der Wand** ist Julians eigenes Foto. Es liegt nur lokal unter `lab/kalender/out/cache/`, wie seine anderen Fotos auch, und wird von `render_gemeinfrei.py` zum Pin gesetzt.
 - Gezählt sind es 110 Bände, zehn mal elf, nicht 120.
 - Im Glas spiegelt sich in der Mitte schwach eine Person. Wer das nicht will, fotografiert schräg oder ohne Licht von vorn.

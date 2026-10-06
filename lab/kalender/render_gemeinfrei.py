@@ -406,12 +406,57 @@ def rowohlt_pin():
     s.convert('RGB').save(os.path.join(OUT, 'pinterest-rowohlt-wand.jpg'), quality=92)
 
 
+# The train joke (Julian, 2026-10-06, campaign "performative readers", PLAN-5.6b
+# §4b): the book you want to be seen with against the one you hide. Both covers
+# are in the game's pool. Single protected covers: waits on the rights decision.
+TRAIN_PAIR = (
+    dict(key='pool-infinite-jest', title='Infinite Jest', imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/191075-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='pool-fifty-shades', title='Fifty Shades of Grey', imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/15163071-L.jpg', crop=(0, 0, 0, 0)),
+)
+
+
+def train_post(W: int, H: int, name: str):
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    k = W / 1000
+    d.text((round(70 * k), round(60 * k)), 'Buy Its Covers', font=font('xanh-italic', round(40 * k)), fill=INK)
+    q = font('xanh', round(58 * k))
+    y = round(160 * k)
+    for line in ('Which cover would you', 'rather be seen reading', 'on the train?'):
+        tight_text(d, (round(70 * k), y), line, q, INK)
+        y += round(72 * k)
+    box_h = round((H - y - 330 * k))
+    top = y + round(50 * k)
+    for c, cx in ((TRAIN_PAIR[0], W // 4 + round(10 * k)), (TRAIN_PAIR[1], 3 * W // 4 - round(10 * k))):
+        im = cover_image(c)
+        w = round(im.width * box_h / im.height)
+        h = box_h
+        if w > round(400 * k):
+            w = round(400 * k); h = round(im.height * w / im.width)
+        im = im.resize((w, h), Image.LANCZOS)
+        x, yy = cx - w // 2, top + (box_h - h) // 2
+        sh = Image.new('RGBA', s.size, (0, 0, 0, 0))
+        ImageDraw.Draw(sh).rectangle((x + 6, yy + 14, x + w + 6, yy + h + 14), fill=(20, 16, 12, 70))
+        s.alpha_composite(sh.filter(ImageFilter.GaussianBlur(16)))
+        s.paste(im, (x, yy))
+    d = ImageDraw.Draw(s)
+    of = font('xanh-italic', round(48 * k))
+    d.text(((W - d.textlength('or', font=of)) / 2, top + box_h // 2 - round(30 * k)), 'or', font=of, fill=MUTED)
+    tight_text(d, (round(70 * k), H - round(230 * k)), 'Judge the cover, not the book.', font('xanh-italic', round(54 * k)), ACCENT)
+    d.text((round(72 * k), H - round(130 * k)), 'buyitscovers.com/versus', font=font('xanh-italic', round(38 * k)), fill=INK)
+    s.convert('RGB').save(os.path.join(OUT, name), quality=92)
+
+
 if __name__ == '__main__':
     os.makedirs(CACHE, exist_ok=True)
     carousel()
     pin()
     versus_pin()
     rowohlt_pin()
+    train_post(1080, 1350, 'zug-1080x1350.jpg')
+    train_post(1000, 1500, 'pinterest-zug.jpg')
     versus_pin(VERSUS_DRAFT, 'pinterest-versus-entwurf.jpg')
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
         mosaic_carousel()
