@@ -71,6 +71,17 @@
       "status": "vorschlag"
     },
     {
+      "id": "x-expose",
+      "date": "2026-10-06",
+      "channel": "x",
+      "kind": "expose",
+      "status": "gepostet",
+      "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.",
+      "path": "/",
+      "postedUrl": "https://x.com/buyitscovers",
+      "note": "Julian, 2026-10-06: „poste auf X so wie auf bluesky“; von Claude über Chrome gepostet, Konto @buyitscovers. Link im Text (auf X verschwindet die Karte sonst), ohne ?via=, weil 5.6a keine Klasse x kennt: Besuche von dort zählen als social (Referrer t.co). Nach dem Klick leitete X auf eine Seite „graduated-access“ um, vermutlich ein Hinweis zu Einschränkungen neuer Konten; der Post erschien trotzdem mit Karte."
+    },
+    {
       "id": "setup-deploy",
       "date": "2026-10-07",
       "channel": "alle",

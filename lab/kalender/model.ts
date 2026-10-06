@@ -13,7 +13,7 @@
  * posted here is counted under the channel it was posted on. `alle` is for
  * setup and review entries that belong to no single channel and carry no link.
  */
-export const CHANNELS = ['bluesky', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
+export const CHANNELS = ['bluesky', 'x', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
 export type Channel = (typeof CHANNELS)[number];
 
 export const STATUSES = ['vorschlag', 'freigegeben', 'gepostet', 'verworfen'] as const;
@@ -82,6 +82,7 @@ export function knownNeed(need: string): boolean {
  */
 export const LIMITS: Partial<Record<Channel, { text?: number; title?: number }>> = {
   bluesky: { text: 300 },
+  x: { text: 280 },
   instagram: { text: 2200 },
   tiktok: { text: 2200 },
   pinterest: { title: 100, text: 500 },
@@ -96,7 +97,8 @@ const length = (s: string): number => [...s].length;
 export function linkFor(post: Pick<Post, 'path' | 'channel'>, site: string): string | null {
   if (!post.path || post.channel === 'alle') return null;
   const url = new URL(post.path, site);
-  url.searchParams.set('via', post.channel);
+  // X has no class in 5.6a's VIA list; a mark there would be dropped anyway.
+  if (post.channel !== 'x') url.searchParams.set('via', post.channel);
   return url.toString();
 }
 

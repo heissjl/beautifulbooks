@@ -65,7 +65,7 @@ describe('openNeeds', () => {
 describe('validatePost', () => {
   it('accepts a sound post and names what is wrong otherwise', () => {
     expect(validatePost(post({ needs: ['rechte', 'publish:penguin-great-ideas'] }))).toBeNull();
-    expect(validatePost(post({ channel: 'x' as Post['channel'] }))).toMatch(/Kanal/);
+    expect(validatePost(post({ channel: 'myspace' as Post['channel'] }))).toMatch(/Kanal/);
     expect(validatePost(post({ needs: ['irgendwas'] }))).toMatch(/Voraussetzung/);
     expect(validatePost(post({ path: 'collections/x' }))).toMatch(/Pfad/);
   });
