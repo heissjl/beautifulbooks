@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Posting-Kalender</title>
+<style>
+  :root { --bg:#f6f2ea; --card:#fffdf8; --ink:#1f1c18; --muted:#6f675c; --line:#e2dacb; --accent:#b4532a; --ok:#3d7a4a; --warn:#b07a12; --stop:#b23a2a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.45 system-ui, -apple-system, sans-serif; }
+  header { position:sticky; top:0; z-index:2; background:var(--bg); border-bottom:1px solid var(--line); padding:10px 16px; }
+  h1 { font-size:18px; margin:0 8px 0 0; display:inline; }
+  h2 { font-size:15px; margin:24px 0 8px; }
+  main { padding:0 16px 80px; max-width:1400px; margin:0 auto; }
+  button, select, input, textarea { font:inherit; }
+  button { border:1px solid var(--line); background:var(--card); border-radius:6px; padding:4px 10px; cursor:pointer; }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .row { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px; }
+  .chip { border:1px solid var(--line); border-radius:999px; padding:2px 10px; background:var(--card); cursor:pointer; user-select:none; font-size:13px; }
+  .chip.on { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .chip.done { background:var(--ok); color:#fff; border-color:var(--ok); }
+  .label { color:var(--muted); font-size:12px; margin-right:4px; }
+  details.warn { margin-top:6px; }
+  details.warn li { cursor:pointer; }
+  .stop { color:var(--stop); } .hinweis { color:var(--warn); }
+  .week { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; min-width:900px; table-layout:fixed; }
+  th, td { border:1px solid var(--line); vertical-align:top; padding:4px; }
+  th { background:#efe8db; font-weight:600; font-size:12px; text-align:left; }
+  td.day { width:84px; font-size:12px; color:var(--muted); white-space:nowrap; }
+  td.day.today { color:var(--accent); font-weight:700; }
+  .card { background:var(--card); border:1px solid var(--line); border-left:4px solid var(--muted); border-radius:6px; padding:4px 6px; margin:0 0 4px; cursor:pointer; font-size:12px; }
+  .card:hover { border-color:var(--ink); }
+  .card.freigegeben { border-left-color:var(--accent); }
+  .card.gepostet { border-left-color:var(--ok); opacity:.65; }
+  .card.verworfen { opacity:.4; text-decoration:line-through; }
+  .card .k { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.03em; }
+  .card .t { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .card .wait { color:var(--stop); font-size:11px; }
+  .card .w { color:var(--warn); font-size:11px; }
+  dialog { width:min(760px, calc(100vw - 32px)); border:1px solid var(--line); border-radius:10px; padding:16px; background:var(--card); color:var(--ink); }
+  dialog::backdrop { background:rgba(0,0,0,.35); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:8px; }
+  label.f { display:flex; flex-direction:column; gap:2px; font-size:12px; color:var(--muted); }
+  label.f input, label.f select, label.f textarea { color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:5px 7px; background:#fff; }
+  textarea { width:100%; resize:vertical; }
+  .count { font-size:12px; color:var(--muted); } .count.over { color:var(--stop); font-weight:700; }
+  .needs { display:flex; flex-wrap:wrap; gap:4px 12px; font-size:12px; }
+  .needs label { display:flex; gap:4px; align-items:center; }
+  .linkline { font-size:12px; word-break:break-all; color:var(--muted); }
+  .msg { font-size:12px; margin-top:4px; }
+  .actions { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; justify-content:space-between; }
+  .actions > div { display:flex; flex-wrap:wrap; gap:6px; }
+  #toast { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:6px 14px; border-radius:6px; display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Posting-Kalender</h1>
+  <span class="label" id="summary"></span>
+  <button class="primary" id="new">+ Neuer Post</button>
+  <div class="row"><span class="label">Kanäle</span><span id="channels"></span>
+    <label class="chip" style="cursor:default"><input type="checkbox" id="hideDone"> Gepostete und verworfene ausblenden</label></div>
+  <div class="row"><span class="label">Erfüllt</span><span id="needs"></span></div>
+  <details class="warn" id="warnBox"><summary id="warnSummary"></summary><ul id="warnList"></ul></details>
+</header>
+<main id="weeks"></main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <div class="grid">
+      <label class="f">Datum<input type="date" name="date" required></label>
+      <label class="f">Uhrzeit<input type="time" name="time"></label>
+      <label class="f">Kanal<select name="channel"></select></label>
+      <label class="f">Art<select name="kind"></select></label>
+      <label class="f">Status<select name="status"></select></label>
+      <label class="f">ID<input name="id" required pattern="[a-z0-9-]+"></label>
+    </div>
+    <label class="f" style="margin-top:8px">Titel (Pin, HN, Reddit, Product Hunt)<input name="title"></label>
+    <span class="count" id="titleCount"></span>
+    <label class="f" style="margin-top:8px">Text<textarea name="text" rows="8"></textarea></label>
+    <span class="count" id="textCount"></span>
+    <div class="grid" style="margin-top:8px">
+      <label class="f" style="grid-column:1/-1">Pfad auf der Seite<input name="path" placeholder="/collections/sf-masterworks"></label>
+    </div>
+    <div class="linkline" id="linkline"></div>
+    <label class="f" style="margin-top:8px">Bild<input name="image"></label>
+    <label class="f" style="margin-top:8px">Notiz<input name="note"></label>
+    <label class="f" style="margin-top:8px">Gepostet unter (URL)<input name="postedUrl"></label>
+    <div style="margin-top:8px"><span class="label">Wartet auf</span><div class="needs" id="needBoxes"></div>
+      <label class="f" style="margin-top:4px">Weitere (publish:&lt;slug&gt;, clip:&lt;name&gt;, durch Komma getrennt)<input name="extraNeeds"></label></div>
+    <div class="msg stop" id="formMsg"></div>
+    <div class="actions">
+      <div>
+        <button type="button" class="primary" id="save">Speichern</button>
+        <button type="button" id="copy">Text + Link kopieren</button>
+        <button type="button" id="approve">Freigeben</button>
+        <button type="button" id="posted">Gepostet</button>
+        <button type="button" id="drop">Verwerfen</button>
+      </div>
+      <div>
+        <button type="button" id="shift">Ab hier verschieben …</button>
+        <button type="button" id="del">Löschen</button>
+        <button type="button" id="close">Schließen</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+<div id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const WD = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+let S = null, editing = null;
+const hidden = new Set(JSON.parse(safeGet('kal.hidden') || '[]'));
+function safeGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function safeSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const toast = t => { const el = $('#toast'); el.textContent = t; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 1800); };
+
+async function api(path, body) {
+  const r = await fetch(path, body ? { method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(body) } : {});
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error || r.status);
+  S = d; render(); return d;
+}
+
+function mondayOf(date) { const d = new Date(date + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() - (d.getUTCDay() + 6) % 7); return d.toISOString().slice(0,10); }
+function addDays(date, n) { const d = new Date(date + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0,10); }
+const fmt = date => { const d = new Date(date + 'T12:00:00Z'); return `${WD[(d.getUTCDay()+6)%7]} ${d.getUTCDate()}.${d.getUTCMonth()+1}.`; };
+
+function render() {
+  const hideDone = $('#hideDone').checked;
+  const warnBy = new Map();
+  for (const w of S.warnings) if (w.postId) (warnBy.get(w.postId) || warnBy.set(w.postId, []).get(w.postId)).push(w);
+  const counts = {}; for (const p of S.posts) counts[p.status] = (counts[p.status] || 0) + 1;
+  $('#summary').textContent = S.statuses.map(s => `${counts[s] || 0} ${s}`).join(' · ');
+
+  $('#channels').innerHTML = S.channels.map(c => `<span class="chip ${hidden.has(c) ? '' : 'on'}" data-ch="${c}">${c}</span>`).join(' ');
+  $('#needs').innerHTML = Object.entries(S.needs).map(([k, v]) => `<span class="chip ${S.done.includes(k) ? 'done' : ''}" data-need="${esc(k)}" title="${esc(v)}">${esc(k)}</span>`).join(' ')
+    + extraNeeds().map(k => `<span class="chip ${S.done.includes(k) ? 'done' : ''}" data-need="${esc(k)}">${esc(k)}</span>`).join(' ');
+
+  const stops = S.warnings.filter(w => w.level === 'stop').length;
+  $('#warnSummary').innerHTML = `${S.warnings.length} Hinweise${stops ? `, <span class="stop">${stops} zum Anhalten</span>` : ''}`;
+  $('#warnList').innerHTML = S.warnings.map(w => `<li class="${w.level}" data-id="${esc(w.postId || '')}">${w.postId ? `<b>${esc(w.postId)}</b>: ` : ''}${esc(w.message)}</li>`).join('');
+
+  const posts = S.posts.filter(p => !hidden.has(p.channel) && !(hideDone && (p.status === 'gepostet' || p.status === 'verworfen')));
+  const channels = S.channels.filter(c => !hidden.has(c) && S.posts.some(p => p.channel === c));
+  const weeks = [...new Set(posts.map(p => mondayOf(p.date)))].sort();
+  $('#weeks').innerHTML = weeks.map(w => {
+    const rows = [0,1,2,3,4,5,6].map(i => {
+      const day = addDays(w, i);
+      const cells = channels.map(c => `<td>${posts.filter(p => p.date === day && p.channel === c).map(p => card(p, warnBy.get(p.id))).join('')}</td>`).join('');
+      return `<tr><td class="day ${day === S.today ? 'today' : ''}">${fmt(day)}<br><button data-newday="${day}" title="Neuer Post an diesem Tag">+</button></td>${cells}</tr>`;
+    }).join('');
+    return `<h2>Woche ab ${fmt(w)} ${w.slice(0,4)}</h2><div class="week"><table><thead><tr><th style="width:84px"></th>${channels.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }).join('') || '<p>Nichts zu zeigen.</p>';
+}
+
+function extraNeeds() { return [...new Set(S.posts.flatMap(p => p.needs || []).filter(n => !(n in S.needs)))].sort(); }
+
+function card(p, ws) {
+  const first = (p.title || p.text).split('\n')[0];
+  return `<div class="card ${p.status}" data-id="${esc(p.id)}">
+    <div class="k">${esc(p.kind)}${p.time ? ' · ' + esc(p.time) : ''} · ${esc(p.status)}</div>
+    <div class="t">${esc(first)}</div>
+    ${p.open.length ? `<div class="wait">wartet: ${esc(p.open.join(', '))}</div>` : ''}
+    ${ws ? `<div class="w">⚑ ${ws.length} Hinweis${ws.length > 1 ? 'e' : ''}</div>` : ''}
+  </div>`;
+}
+
+function fill(sel, values) { sel.innerHTML = values.map(v => `<option>${esc(v)}</option>`).join(''); }
+
+function open(p) {
+  editing = p ? p.id : null;
+  const f = $('#form');
+  fill(f.channel, S.channels); fill(f.kind, S.kinds); fill(f.status, S.statuses);
+  const x = p || { id:'', date:S.today, channel:'bluesky', kind:'collection', status:'vorschlag', text:'' };
+  for (const k of ['id','date','time','channel','kind','status','title','text','path','image','note','postedUrl']) f[k].value = x[k] || '';
+  $('#needBoxes').innerHTML = Object.entries(S.needs).map(([k, v]) => `<label title="${esc(v)}"><input type="checkbox" value="${esc(k)}" ${(x.needs || []).includes(k) ? 'checked' : ''}> ${esc(k)}${S.done.includes(k) ? ' ✓' : ''}</label>`).join('');
+  f.extraNeeds.value = (x.needs || []).filter(n => !(n in S.needs)).join(', ');
+  $('#formMsg').textContent = '';
+  ['copy','approve','posted','drop','shift','del'].forEach(id => $('#' + id).disabled = !p);
+  counters(); $('#dlg').showModal();
+}
+
+function current() {
+  const f = $('#form');
+  const needs = [...$('#needBoxes').querySelectorAll('input:checked')].map(i => i.value)
+    .concat(f.extraNeeds.value.split(',').map(s => s.trim()).filter(Boolean));
+  const p = { needs };
+  for (const k of ['id','date','time','channel','kind','status','title','text','path','image','note','postedUrl']) p[k] = f[k].value.trim();
+  p.text = f.text.value; // keep line breaks and trailing spaces as typed
+  return p;
+}
+
+function linkOf(p) {
+  if (!p.path || p.channel === 'alle') return '';
+  try { const u = new URL(p.path, S.site); u.searchParams.set('via', p.channel); return u.toString(); } catch { return ''; }
+}
+
+function counters() {
+  const p = current(), lim = S.limits[p.channel] || {};
+  const link = linkOf(p);
+  const inline = p.channel === 'bluesky' && p.kind !== 'galerie' && link;
+  const n = [...p.text].length + (inline ? 2 + link.length : 0);
+  $('#textCount').textContent = lim.text ? `${n} / ${lim.text} Zeichen${inline ? ' (mit Link)' : ''}` : `${n} Zeichen`;
+  $('#textCount').className = 'count' + (lim.text && n > lim.text ? ' over' : '');
+  const t = [...p.title].length;
+  $('#titleCount').textContent = lim.title ? `${t} / ${lim.title} Zeichen` : '';
+  $('#titleCount').className = 'count' + (lim.title && t > lim.title ? ' over' : '');
+  $('#linkline').innerHTML = link ? `Link: <a href="${esc(link)}" target="_blank" rel="noopener">${esc(link)}</a>` : '';
+}
+
+async function saveWith(patch) {
+  const p = { ...current(), ...patch };
+  try { await api('/api/post', { post:p, previousId: editing || p.id }); editing = p.id; toast('Gespeichert'); return true; }
+  catch (e) { $('#formMsg').textContent = e.message; return false; }
+}
+
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-ch],[data-need],[data-id],[data-newday]');
+  if (!t) return;
+  if (t.dataset.ch) { hidden.has(t.dataset.ch) ? hidden.delete(t.dataset.ch) : hidden.add(t.dataset.ch); safeSet('kal.hidden', JSON.stringify([...hidden])); render(); }
+  else if (t.dataset.need) { await api('/api/done', { need:t.dataset.need, on: !S.done.includes(t.dataset.need) }); }
+  else if (t.dataset.newday) { open(null); $('#form').date.value = t.dataset.newday; }
+  else if (t.dataset.id) { const p = S.posts.find(x => x.id === t.dataset.id); if (p) open(p); }
+});
+$('#hideDone').addEventListener('change', render);
+$('#new').onclick = () => open(null);
+$('#form').addEventListener('input', counters);
+$('#close').onclick = () => $('#dlg').close();
+$('#save').onclick = async () => { if (await saveWith({})) $('#dlg').close(); };
+$('#approve').onclick = async () => { if (await saveWith({ status:'freigegeben' })) $('#dlg').close(); };
+$('#drop').onclick = async () => { if (await saveWith({ status:'verworfen' })) $('#dlg').close(); };
+$('#posted').onclick = async () => {
+  const url = prompt('Wo ist es erschienen? (URL, optional)', $('#form').postedUrl.value);
+  if (url === null) return;
+  if (await saveWith({ status:'gepostet', postedUrl:url.trim() })) $('#dlg').close();
+};
+$('#copy').onclick = async () => {
+  const p = current(), link = linkOf(p);
+  const elsewhere = p.channel === 'instagram' || p.channel === 'tiktok' || p.kind === 'galerie';
+  const text = link && !elsewhere ? `${p.text}\n\n${link}` : p.text;
+  const hint = p.kind === 'galerie' ? 'Text kopiert — der Link kommt als erste Antwort' : 'Text kopiert — der Link gehört ins Profil';
+  try { await navigator.clipboard.writeText(text); toast(link && elsewhere ? hint : 'Kopiert'); }
+  catch { prompt('Zum Kopieren:', text); }
+};
+$('#shift').onclick = async () => {
+  const p = current();
+  const days = Number(prompt(`Alles ab ${p.date}, das noch nicht gepostet ist, um wie viele Tage verschieben? (negativ = früher)`, '7'));
+  if (!Number.isInteger(days) || days === 0) return;
+  const onlyThis = confirm(`Nur den Kanal ${p.channel}? (Abbrechen = alle Kanäle)`);
+  await api('/api/shift', { from:p.date, days, channel: onlyThis ? p.channel : undefined });
+  $('#dlg').close(); toast(`Um ${days} Tage verschoben`);
+};
+$('#del').onclick = async () => {
+  if (!confirm('Diesen Eintrag löschen? „Verwerfen“ behält ihn sichtbar.')) return;
+  await api('/api/delete', { id: editing }); $('#dlg').close();
+};
+
+api('/api/calendar').catch(e => { $('#weeks').innerHTML = `<p class="stop">${esc(e.message)}</p>`; });
+</script>
+</body>
+</html>

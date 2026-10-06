@@ -1,0 +1,1003 @@
+{
+  "site": "https://buyitscovers.com",
+  "done": [
+    "5.6a",
+    "konto:bluesky",
+    "publish:dtv-phantastica-covers-by-celestino-piatti",
+    "publish:fischer-bucherei-covers-by-kurt-wirth",
+    "publish:haffmans-covers-by-nikolaus-heidelbach",
+    "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach",
+    "publish:penguin-great-ideas",
+    "publish:reihe-hanser-covers-by-heinz-edelmann",
+    "publish:tolkien-covers-by-heinz-edelmann",
+    "spiel"
+  ],
+  "posts": [
+    {
+      "id": "setup-bluesky",
+      "date": "2026-10-05",
+      "channel": "bluesky",
+      "kind": "setup",
+      "text": "Konto anlegen. Als Handle die Domain selbst: @buyitscovers.com (Bluesky → Einstellungen → Handle → eigene Domain; ein TXT-Eintrag _atproto bei INWX, v=spf1 nicht anfassen). Profiltext: „Judge a book, buy its covers. The covers a book has been printed with, from two open catalogues.“ Website im Profil: https://buyitscovers.com/?via=bluesky",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-instagram",
+      "date": "2026-10-05",
+      "channel": "instagram",
+      "kind": "setup",
+      "text": "Konto @buyitscovers (Creator- oder Business-Konto, damit es Statistiken gibt). Link im Profil: https://buyitscovers.com/?via=instagram. Profiltext wie bei Bluesky. Noch nichts mit Covern posten, solange die Rechte-Entscheidung offen ist.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-pinterest",
+      "date": "2026-10-06",
+      "channel": "pinterest",
+      "kind": "setup",
+      "text": "Unternehmenskonto, Website bestätigen (DNS-TXT bei INWX, PLAN-5.5-5.6 §7), Pinnwände anlegen: eine je veröffentlichter Sammlung, dazu „Covers through the decades“. Nichts pinnen vor Rechte-Entscheidung und 5.5a.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-tiktok",
+      "date": "2026-10-06",
+      "channel": "tiktok",
+      "kind": "setup",
+      "text": "Namen @buyitscovers reservieren, Link im Profil mit ?via=tiktok. Posten erst, wenn die Clips kodiert sind und die Rechte-Entscheidung gefallen ist.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-deploy",
+      "date": "2026-10-07",
+      "channel": "alle",
+      "kind": "setup",
+      "text": "Vor dem ersten Link: 5.6a deployen (Satz der Datenschutzerklärung freigeben), damit ?via= zählt. Vor HN und Reddit zusätzlich 0.2, 0.13, 2.4 (Kapazität).",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-reddit",
+      "date": "2026-10-07",
+      "channel": "reddit",
+      "kind": "setup",
+      "text": "Eigenes Konto prüfen (Alter, Karma); die Regeln von r/InternetIsBeautiful, r/books, r/printSF und r/suggestmeabook lesen und hier notieren, was für Selbstwerbung gilt.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-decision",
+      "date": "2026-10-08",
+      "channel": "alle",
+      "kind": "setup",
+      "text": "Rechte-Entscheidung (PLAN-5.5-5.6 §6 Frage 1): (a) Cover auf fremden Plattformen mit Quellenangabe, (b) nur gemeinfreie, (c) nur Links mit Vorschaukarte. Ohne Antwort gilt (c): Bluesky, Reddit, HN laufen, Instagram nur mit dem Typografie-Exposé, Pinterest und TikTok warten.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "setup-publish",
+      "date": "2026-10-09",
+      "channel": "alle",
+      "kind": "setup",
+      "text": "Online schon veröffentlicht (Stand 2026-10-04, einmal von buyitscovers.com/collections gelesen): Edelmann (Reihe Hanser, Tolkien, Jules Verne, Fischer), Piatti (dtv phantastica, Steinbeck), Kurt Wirth, Heidelbach (Haffmans, Kipling), Penguin Great Ideas und 30 weitere. Noch Entwurf, und der Kalender wartet darauf: Herder Bücherei von Walter Grieder (Galerie 22.11.), Penguin Classics black band (13.11.), Virago Modern Classics (16./19.11.). Veröffentlichen oder die Posts verwerfen; abhaken im Werkzeug unter „Erfüllt“.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "bsky-expose",
+      "date": "2026-10-05",
+      "channel": "bluesky",
+      "kind": "expose",
+      "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.",
+      "status": "gepostet",
+      "path": "/",
+      "time": "10:00",
+      "image": "Vorschaukarte der Startseite (kommt von selbst)",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
+    },
+    {
+      "id": "ig-expose",
+      "date": "2026-10-13",
+      "channel": "instagram",
+      "kind": "expose",
+      "text": "A book is printed many times, and each printing can wear a different face. Here are five from before 1931, all in the public domain:\n\nPeter and Wendy (Scribner, 1911), cover by F. D. Bedford\nLe avventure di Pinocchio (Bemporad, 1902), cover by Carlo Chiostri\nThe Jungle Book (Macmillan, 1894), cover by John Lockwood Kipling\nAlice's Adventures in Wonderland (The Bodley Head, 1928), cover by W. H. Walker\nLa guerre des mondes (Vandamme, 1906), cover by Henrique Alvim Corrêa\n\nBuy Its Covers shows the covers a title has been printed with, by language and year, and points you to the edition behind the one you like. From two open catalogues, Open Library and Google Books.\n\nScans: Internet Archive and Open Library. Link in bio.\n\n#bookcovers #bookdesign #antiquebooks #publicdomain",
+      "status": "vorschlag",
+      "path": "/",
+      "time": "18:00",
+      "needs": [
+        "konto:instagram",
+        "5.6a"
+      ],
+      "image": "Karussell, sieben Folien 1080×1350: lab/kalender/out/instagram-1.jpg bis -7.jpg (python3 lab/kalender/render_gemeinfrei.py). Folie 1 der Schriftzug, 2–6 je ein gemeinfreies Cover mit Verlag, Jahr und Gestalter, 7 was die Seite tut.",
+      "note": "Anpinnen. Die Cover sind gemeinfrei (Gestalter vor 1956 gestorben, alle vor 1931 erschienen; docs/plans/research-gemeinfreie-cover.md) und brauchen deshalb keine Rechte-Entscheidung. Restrisiken: Jungle Book ist ein Foto des Buches, nicht ein Flachscan; Alice und La guerre des mondes sind nur mittelstark zugeschrieben."
+    },
+    {
+      "id": "bsky-sf-masterworks",
+      "date": "2026-10-14",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three classics that Millennium and Gollancz reprinted, in the order of their numbers.\n\nBehind each cover is a wall of the other faces the book has worn.",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "image": "Vorschaukarte der Sammlung"
+    },
+    {
+      "id": "ig-sf-masterworks",
+      "date": "2026-10-15",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "The SF Masterworks, the numbered run (1999–2007): seventy-three classics in the order of their numbers.\n\nSwipe for a few of them: The Forever War, I Am Legend, Cities in Flight, Do Androids Dream of Electric Sheep?, The Stars My Destination, Babel-17, Lord of Light.\n\nCovers by Chris Moore, Jim Thiesen, John Harris, Fred Gambino and others (credits from ISFDB).\n\nThe whole wall, and the other faces each book has worn: link in bio.\n\n#sfmasterworks #sciencefiction #bookcovers #coverart",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Folie 1: Bildschirmfoto der Wand; Folien 2–8: die sieben genannten Cover einzeln, Künstler in der Bildbeschreibung"
+    },
+    {
+      "id": "bsky-edition-suhrkamp",
+      "date": "2026-10-16",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "edition suhrkamp: since 1963 the series has run through the colours of the spectrum, one book after the next, in a design by Willy Fleckhaus.\n\n198 of its books on one wall: Habermas, Brecht, Peter Weiss, Marcuse.",
+      "status": "vorschlag",
+      "path": "/collections/edition-suhrkamp",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Fleckhaus und 1963 aus allgemeinem Wissen, nicht aus unseren Daten: vor dem Posten prüfen. Gern zusätzlich auf Deutsch posten."
+    },
+    {
+      "id": "pin-expose",
+      "date": "2026-10-17",
+      "channel": "pinterest",
+      "kind": "expose",
+      "text": "Buy Its Covers has a small game: two covers of two books side by side, and one question, which would you rather look at. The standings show which covers readers keep choosing, and every cover leads to its book and its other editions. Shown here: two public-domain covers, Peter and Wendy (Scribner, 1911) and La guerre des mondes (Vandamme, 1906).",
+      "status": "vorschlag",
+      "title": "Which cover would you rather look at? A cover game: two covers, one click",
+      "path": "/versus",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "spiel"
+      ],
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-versus.jpg",
+      "note": "Das Exposé auf Pinterest (Julian, 2026-10-05: „ein pinterest expose der website, dass das versus spiel zeigt“). Frage und Zeile stammen aus dem Spiel selbst. Das Spiel zeigt nicht gemeinfreie Cover; der Pin zeigt deshalb zwei gemeinfreie (F. D. Bedford †1954, Alvim Corrêa †1910; Julian wollte zwei andere als Pinocchio und Jungle Book, die schon im Instagram-Exposé stehen; die Zuschreibung an Alvim Corrêa ist nur mittelstark) und braucht keine Rechte-Entscheidung. /versus am 2026-10-05 in Produktion geprüft: läuft. Pinnwand „Cover game“."
+    },
+    {
+      "id": "gal-chris-moore",
+      "date": "2026-10-18",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Chris Moore's covers for the SF Masterworks (1999–2007)",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks",
+      "image": "Vier Cover von Chris Moore aus der Sammlung (ISFDB nennt ihn bei 40 der 73), z. B. The Forever War, Do Androids Dream of Electric Sheep?, The Stars My Destination, Babel-17",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Antwort-Aufhänger: Band 1, The Forever War (1999), trägt sein Bild; sein erstes SF-Cover war 1976. Nie „wiederverwendet“ behaupten. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "bsky-feminist-press",
+      "date": "2026-10-19",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "Feminist Press authors (Suzette Haden Elgin, Agnes Smedley, Dorothy West, Alice Childress and more) and the covers their books have been printed with, one picked for each, the others behind it.",
+      "status": "vorschlag",
+      "path": "/collections/feminist-press",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "mail-outreach",
+      "date": "2026-10-19",
+      "channel": "mail",
+      "kind": "outreach",
+      "text": "Fünf Blogger oder BookTok-Leute, deren Bücher in den Sammlungen stehen: Claude liefert je Person einen Link auf „ihr“ Buch oder Cover (mit ?via=blog bzw. ?via=mail) und prüft die Vorschaukarte. Das Anschreiben schreibst du.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "reddit-answers-w2",
+      "date": "2026-10-19",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Fenster für bis zu drei Antworten diese Woche, nur wo jemand nach einer Ausgabe oder einem Cover fragt. Die Antwort hilft auch ohne Link; der Link geht auf das passende Cover (/book/<id>/cover/<coverId>?via=reddit). Nie kopiert. Claude liefert auf Zuruf eine Suchliste.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "hn-show",
+      "date": "2026-10-20",
+      "channel": "hn",
+      "kind": "expose",
+      "text": "[Ein Satz in deinen Worten, warum du das gebaut hast.]\n\nYou type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nWhat it can't do: it knows only what two open catalogues hold, a fraction of what was printed; it doesn't check stock; and most shops can't be checked at all. No accounts, no ads, a hobby project for now.\n\nNext.js on Vercel.",
+      "status": "vorschlag",
+      "title": "Show HN: Buy Its Covers – the covers a book has been printed with",
+      "path": "/",
+      "time": "15:30",
+      "needs": [
+        "5.6a",
+        "kapazitaet"
+      ],
+      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer."
+    },
+    {
+      "id": "pin-batch-w2",
+      "date": "2026-10-21",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins, über die Woche verteilt (Pinterests Planung): SF Masterworks, edition suhrkamp, Feminist Press, Gatsby durch die Jahrzehnte, Dune durch die Jahrzehnte. Titel und Beschreibung je Pin nach PLAN-5.5-5.6 §7; Link mit ?via=pinterest.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
+      "id": "ig-edition-suhrkamp",
+      "date": "2026-10-21",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "edition suhrkamp: since 1963 one colour of the spectrum after the next, in a design by Willy Fleckhaus.\n\n198 books on one wall: link in bio.\n\n#editionsuhrkamp #suhrkamp #bookdesign #typography #bookcovers",
+      "status": "vorschlag",
+      "path": "/collections/edition-suhrkamp",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Bildschirmfoto der Wand, dazu ein Ausschnitt, in dem der Farbverlauf sichtbar ist",
+      "note": "Fakten wie beim Bluesky-Post prüfen."
+    },
+    {
+      "id": "bsky-gatsby-decades",
+      "date": "2026-10-22",
+      "channel": "bluesky",
+      "kind": "decades",
+      "text": "The Great Gatsby, decade by decade: the covers it has been printed with from the 1920s to the 2020s, as far as the open catalogues know them.",
+      "status": "vorschlag",
+      "path": "/book/OL468431W/decades",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ig-feminist-press",
+      "date": "2026-10-23",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "Feminist Press authors and the faces their books have worn: Suzette Haden Elgin's Native Tongue, Agnes Smedley's Daughter of Earth, Dorothy West's The Living Is Easy and more.\n\nThe wall: link in bio.\n\n#feministpress #bookcovers #feministbooks",
+      "status": "vorschlag",
+      "path": "/collections/feminist-press",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln"
+    },
+    {
+      "id": "gal-dominic-harman",
+      "date": "2026-10-25",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Dominic Harman's covers for the SF Masterworks, after the 2010 relaunch",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks-relaunch",
+      "image": "Vier Cover von Dominic Harman (ISFDB nennt ihn bei 22 der 182)",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Antwort-Aufhänger: er malte für beide Gesichter der Reihe, schon für Nr. 59, 64, 66, 70 der nummerierten. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "bsky-hugo",
+      "date": "2026-10-26",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "Hugo Award winners for best novel, from The Demolished Man on, each with a cover we picked and a wall of its other covers behind it.",
+      "status": "vorschlag",
+      "path": "/collections/hugo-award-novel",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "reddit-answers-w3",
+      "date": "2026-10-26",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Antwort-Fenster, höchstens drei, wie Woche 2.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ig-sf-relaunch",
+      "date": "2026-10-27",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "In 2010 Gollancz gave the SF Masterworks a new face: the numbers went, and the series name turned sideways and climbed the left edge of the cover.\n\n182 of them on one wall, in the order of the list: link in bio.\n\n#sfmasterworks #gollancz #sciencefiction #bookcovers",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks-relaunch",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Bildschirmfoto der Wand, dann vier Cover mit der senkrechten Reihenzeile; Künstler aus ISFDB in die Bildbeschreibung"
+    },
+    {
+      "id": "bsky-1984-decades",
+      "date": "2026-10-28",
+      "channel": "bluesky",
+      "kind": "decades",
+      "text": "Nineteen Eighty-Four from the 1940s to the 2020s: the faces Orwell's novel has been printed with, decade by decade, from two open catalogues.",
+      "status": "vorschlag",
+      "path": "/book/OL1168083W/decades",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "pin-batch-w3",
+      "date": "2026-10-28",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins: Hugo-Preisträger, SF Masterworks Relaunch, Nineteen Eighty-Four durch die Jahrzehnte, Otherwise Award, The Hobbit durch die Jahrzehnte.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
+      "id": "tt-expose-dune",
+      "date": "2026-10-29",
+      "channel": "tiktok",
+      "kind": "expose",
+      "text": "Dune's covers, from the 1960s to now. Which one is on your shelf? Each edition is a different book to hold: find yours at buyitscovers.com (link in bio).",
+      "status": "vorschlag",
+      "path": "/book/OL893414W/decades",
+      "needs": [
+        "rechte",
+        "ffmpeg",
+        "konto:tiktok"
+      ],
+      "image": "Clip „Dune“ aus lab/video (15–20 s)",
+      "note": "Liste der gezeigten Ausgaben als Quellenangabe in die Beschreibung (Claude liefert sie)."
+    },
+    {
+      "id": "bsky-otherwise",
+      "date": "2026-10-30",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "The Otherwise Award (formerly the Tiptree) honours science fiction and fantasy that expands or explores our understanding of gender. Forty of its winners and their covers.",
+      "status": "vorschlag",
+      "path": "/collections/tiptree-award",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ig-dune-decades",
+      "date": "2026-10-30",
+      "channel": "instagram",
+      "kind": "decades",
+      "text": "Dune, decade by decade: from the 1960s to now, the covers it has been printed with as far as the open catalogues know them.\n\nWhich decade would you buy? Link in bio.\n\n#dune #frankherbert #bookcovers #sciencefiction",
+      "status": "vorschlag",
+      "path": "/book/OL893414W/decades",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Je Jahrzehnt ein Cover als Folie, in Reihenfolge; Verlag und Jahr in die Bildbeschreibung"
+    },
+    {
+      "id": "gal-edelmann-hanser",
+      "date": "2026-11-01",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Heinz Edelmann's covers for the Reihe Hanser paperbacks, from 1968",
+      "status": "vorschlag",
+      "path": "/collections/reihe-hanser-covers-by-heinz-edelmann",
+      "image": "Vier Cover aus der Sammlung",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte",
+        "publish:reihe-hanser-covers-by-heinz-edelmann"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Das Ende (~1975) ist nur ungefähr belegt, deshalb „from 1968“. Antwort-Idee: derselbe Mann war Art Director von Yellow Submarine. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "bsky-versus",
+      "date": "2026-11-02",
+      "channel": "bluesky",
+      "kind": "feature",
+      "text": "Two covers, one click: which would you rather own? A small game on Buy Its Covers, and the votes slowly sort the covers into a board.",
+      "status": "vorschlag",
+      "path": "/versus",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "spiel"
+      ]
+    },
+    {
+      "id": "reddit-answers-w4",
+      "date": "2026-11-02",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Antwort-Fenster, höchstens drei. In der Launch-Woche lieber eine weniger.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "reddit-iib",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "expose",
+      "text": "Type a book's title and see the covers it has been printed with, by language and year, then find the edition behind the one you like. Covers from Open Library and Google Books; no accounts, no ads.",
+      "status": "vorschlag",
+      "title": "Buy Its Covers – see the covers a book has been printed with, and find that edition",
+      "path": "/",
+      "time": "15:00",
+      "needs": [
+        "5.6a",
+        "kapazitaet"
+      ],
+      "note": "r/InternetIsBeautiful. Zwei Wochen nach HN, damit die Messung die beiden trennt. Vorher die Regeln der Community noch einmal lesen; Reddit-Apps senden oft keinen Referrer, deshalb ?via=reddit."
+    },
+    {
+      "id": "pin-batch-w4",
+      "date": "2026-11-04",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins: Pride and Prejudice, Jane Eyre, Brave New World, Fahrenheit 451 und Moby Dick durch die Jahrzehnte.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
+      "id": "ig-otherwise",
+      "date": "2026-11-04",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "The Otherwise Award (formerly the Tiptree): science fiction and fantasy that expands or explores our understanding of gender. Forty winners and their covers.\n\nLink in bio.\n\n#otherwiseaward #sciencefiction #fantasy #bookcovers",
+      "status": "vorschlag",
+      "path": "/collections/tiptree-award",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Bildschirmfoto der Wand, dann vier Cover; Künstler aus ISFDB, wo bekannt"
+    },
+    {
+      "id": "bsky-sf-rounded",
+      "date": "2026-11-05",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "A short detour in the SF Masterworks: the 2006 editions with rounded corners. Ten of them, side by side.",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks-rounded",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "tt-gatsby",
+      "date": "2026-11-05",
+      "channel": "tiktok",
+      "kind": "decades",
+      "text": "The Great Gatsby, a hundred years of covers. Which one would you put on your shelf? Link in bio.",
+      "status": "vorschlag",
+      "path": "/book/OL468431W/decades",
+      "needs": [
+        "rechte",
+        "ffmpeg",
+        "konto:tiktok"
+      ],
+      "image": "Clip „Gatsby“ aus lab/video"
+    },
+    {
+      "id": "ig-hobbit-decades",
+      "date": "2026-11-06",
+      "channel": "instagram",
+      "kind": "decades",
+      "text": "The Hobbit from the 1930s to now, decade by decade, as far as the open catalogues know its covers.\n\nLink in bio.\n\n#thehobbit #tolkien #bookcovers",
+      "status": "vorschlag",
+      "path": "/book/OL27482W/decades",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00",
+      "image": "Je Jahrzehnt ein Cover als Folie"
+    },
+    {
+      "id": "bsky-pride-decades",
+      "date": "2026-11-07",
+      "channel": "bluesky",
+      "kind": "decades",
+      "text": "Pride and Prejudice across two centuries: the covers it has been printed with, decade by decade, as far as two open catalogues know them.",
+      "status": "vorschlag",
+      "path": "/book/OL66554W/decades",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "gal-piatti",
+      "date": "2026-11-08",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Celestino Piatti's covers for dtv phantastica (1979–1983)",
+      "status": "vorschlag",
+      "path": "/collections/dtv-phantastica-covers-by-celestino-piatti",
+      "image": "Vier Cover aus der Sammlung",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte",
+        "publish:dtv-phantastica-covers-by-celestino-piatti"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Aufhänger für die Antwort: für das Unheimliche drehte er sein eigenes weißes dtv-Gesicht um, schwarzer Grund. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "bsky-edelmann-hanser",
+      "date": "2026-11-09",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "Heinz Edelmann, who art-directed Yellow Submarine, also gave the Reihe Hanser paperbacks their face from 1968 on. A hundred of his covers on one wall.",
+      "status": "vorschlag",
+      "path": "/collections/reihe-hanser-covers-by-heinz-edelmann",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "publish:reihe-hanser-covers-by-heinz-edelmann"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Yellow Submarine belegt (en.wikipedia). Gern auch auf Deutsch."
+    },
+    {
+      "id": "reddit-answers-w5",
+      "date": "2026-11-09",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Antwort-Fenster, höchstens drei.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ig-edelmann-tolkien",
+      "date": "2026-11-10",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "Heinz Edelmann's covers for The Lord of the Rings in German, seven of them on one wall.\n\nLink in bio.\n\n#heinzedelmann #tolkien #herrderringe #bookcovers #illustration",
+      "status": "vorschlag",
+      "path": "/collections/tolkien-covers-by-heinz-edelmann",
+      "needs": [
+        "rechte",
+        "konto:instagram",
+        "publish:tolkien-covers-by-heinz-edelmann"
+      ],
+      "time": "18:00"
+    },
+    {
+      "id": "bsky-create",
+      "date": "2026-11-11",
+      "channel": "bluesky",
+      "kind": "feature",
+      "text": "Make a wall of your own: pick the covers of the books you love, in the editions you own, and share it as one link. No account needed.",
+      "status": "vorschlag",
+      "path": "/create",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "walls"
+      ]
+    },
+    {
+      "id": "pin-batch-w5",
+      "date": "2026-11-11",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins aus den neu veröffentlichten Sammlungen (Edelmann, Piatti, Penguin black band) und ein Jahrzehnte-Pin.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
+      "id": "bsky-piatti",
+      "date": "2026-11-12",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "dtv phantastica (1979–1983): Celestino Piatti, who drew more than 6,000 white dtv covers, turned his own design black for the uncanny.",
+      "status": "vorschlag",
+      "path": "/collections/dtv-phantastica-covers-by-celestino-piatti",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "publish:dtv-phantastica-covers-by-celestino-piatti"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. "
+    },
+    {
+      "id": "tt-1984",
+      "date": "2026-11-12",
+      "channel": "tiktok",
+      "kind": "decades",
+      "text": "Nineteen Eighty-Four, eighty years of covers. Link in bio.",
+      "status": "vorschlag",
+      "path": "/book/OL1168083W/decades",
+      "needs": [
+        "rechte",
+        "ffmpeg",
+        "konto:tiktok",
+        "clip:1984"
+      ],
+      "image": "neuer Clip, Storyboard in lab/video"
+    },
+    {
+      "id": "ig-penguin-black-band",
+      "date": "2026-11-13",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "Penguin Classics in the black-band years: a painting on the front, a black band below it, the credit for the painting on the back.\n\nLink in bio.\n\n#penguinclassics #penguinbooks #bookcovers",
+      "status": "vorschlag",
+      "path": "/collections/penguin-classics-the-black-band-years",
+      "needs": [
+        "rechte",
+        "konto:instagram",
+        "publish:penguin-classics-the-black-band-years"
+      ],
+      "time": "18:00",
+      "note": "Die Gemälde sind in der Sammlung belegt (coverCredits: artwork); in der Bildbeschreibung nennen."
+    },
+    {
+      "id": "gal-kurt-wirth",
+      "date": "2026-11-15",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Kurt Wirth's covers for the Fischer Bücherei",
+      "status": "vorschlag",
+      "path": "/collections/fischer-bucherei-covers-by-kurt-wirth",
+      "image": "Vier Cover aus der Sammlung",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte",
+        "publish:fischer-bucherei-covers-by-kurt-wirth"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Keine Jahre im Satz, nur 1958 ist belegt. Aufhänger für die Antwort: derselbe Mann gestaltete den Auftritt der Swissair; die AGI zählt 180 Fischer-Umschläge. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "bsky-virago",
+      "date": "2026-11-16",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "Virago Modern Classics: the green spines, and on the front a painting, credited where we could find out whose.",
+      "status": "vorschlag",
+      "path": "/collections/virago-modern-classics",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "publish:virago-modern-classics"
+      ]
+    },
+    {
+      "id": "reddit-answers-w6",
+      "date": "2026-11-16",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Antwort-Fenster, höchstens drei.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ig-piatti",
+      "date": "2026-11-17",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "Celestino Piatti for dtv phantastica: bold lines, few colours.\n\nLink in bio.\n\n#celestinopiatti #dtv #bookdesign #bookcovers",
+      "status": "vorschlag",
+      "path": "/collections/dtv-phantastica-covers-by-celestino-piatti",
+      "needs": [
+        "rechte",
+        "konto:instagram",
+        "publish:dtv-phantastica-covers-by-celestino-piatti"
+      ],
+      "time": "18:00"
+    },
+    {
+      "id": "bsky-alice-decades",
+      "date": "2026-11-18",
+      "channel": "bluesky",
+      "kind": "decades",
+      "text": "Alice's Adventures in Wonderland from the 1860s on: a century and a half of covers, decade by decade.",
+      "status": "vorschlag",
+      "path": "/book/OL138052W/decades",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "pin-batch-w6",
+      "date": "2026-11-18",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins: Virago, Penguin Great Ideas, Alice, Metamorphosis, Der Steppenwolf.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
+      "id": "ig-virago",
+      "date": "2026-11-19",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "Virago Modern Classics and the paintings on their fronts, credited where we could find the painter.\n\nLink in bio.\n\n#viragomodernclassics #virago #bookcovers",
+      "status": "vorschlag",
+      "path": "/collections/virago-modern-classics",
+      "needs": [
+        "rechte",
+        "konto:instagram",
+        "publish:virago-modern-classics"
+      ],
+      "time": "18:00"
+    },
+    {
+      "id": "bsky-great-ideas",
+      "date": "2026-11-20",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "Penguin Great Ideas: short books, type only on the cover, and still each one looks different.",
+      "status": "vorschlag",
+      "path": "/collections/penguin-great-ideas",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "publish:penguin-great-ideas"
+      ]
+    },
+    {
+      "id": "gal-grieder",
+      "date": "2026-11-22",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Walter Grieder's covers for the Herder Bücherei",
+      "status": "vorschlag",
+      "path": "/collections/herder-bucherei-covers-by-walter-grieder",
+      "image": "Vier Cover aus der Sammlung",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte",
+        "publish:herder-bucherei-covers-by-walter-grieder"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Nicht belegt: dass Grieder Herder-Umschläge gestaltete. Erst posten, wenn ein Exemplar den Vermerk trägt, sonst verwerfen. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "bsky-sf-relaunch",
+      "date": "2026-11-23",
+      "channel": "bluesky",
+      "kind": "collection",
+      "text": "In 2010 the SF Masterworks got a new face: no more numbers, the series name sideways up the left edge, and the list kept growing. 182 of them, in list order.",
+      "status": "vorschlag",
+      "path": "/collections/sf-masterworks-relaunch",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "reddit-answers-w7",
+      "date": "2026-11-23",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Antwort-Fenster, höchstens drei.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ig-great-ideas",
+      "date": "2026-11-24",
+      "channel": "instagram",
+      "kind": "collection",
+      "text": "Penguin Great Ideas: type on the cover and nothing else, and each one different.\n\nLink in bio.\n\n#penguingreatideas #typography #bookdesign",
+      "status": "vorschlag",
+      "path": "/collections/penguin-great-ideas",
+      "needs": [
+        "rechte",
+        "konto:instagram",
+        "publish:penguin-great-ideas"
+      ],
+      "time": "18:00"
+    },
+    {
+      "id": "bsky-steppenwolf-decades",
+      "date": "2026-11-25",
+      "channel": "bluesky",
+      "kind": "decades",
+      "text": "Der Steppenwolf, decade by decade since the 1950s, in German and in translation.",
+      "status": "vorschlag",
+      "path": "/book/OL872773W/decades",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ]
+    },
+    {
+      "id": "pin-batch-w7",
+      "date": "2026-11-25",
+      "channel": "pinterest",
+      "kind": "batch",
+      "text": "Fünf Pins nach dem, was in den Statistiken getragen hat.",
+      "status": "vorschlag",
+      "needs": [
+        "rechte",
+        "5.5a",
+        "konto:pinterest"
+      ]
+    },
+    {
+      "id": "ig-1984-decades",
+      "date": "2026-11-26",
+      "channel": "instagram",
+      "kind": "decades",
+      "text": "Nineteen Eighty-Four, decade by decade since the 1940s.\n\nLink in bio.\n\n#1984 #orwell #bookcovers",
+      "status": "vorschlag",
+      "path": "/book/OL1168083W/decades",
+      "needs": [
+        "rechte",
+        "konto:instagram"
+      ],
+      "time": "18:00"
+    },
+    {
+      "id": "gal-heidelbach",
+      "date": "2026-11-29",
+      "channel": "bluesky",
+      "kind": "galerie",
+      "text": "Nikolaus Heidelbach's covers for Kipling at Haffmans (1987–1995)",
+      "status": "vorschlag",
+      "path": "/collections/kipling-at-haffmans-covers-by-nikolaus-heidelbach",
+      "image": "Vier Kipling-Bände aus der Sammlung (Deckelbilder)",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte",
+        "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach"
+      ],
+      "note": "Belegt in docs/plans/research-gestalter-galerien.md. Statt der ganzen Haffmans-Wand die Kipling-Ausgabe, weil nur sie einen belegten Zeitraum hat (10 Bände, rotes Leinen nach Kiplings Uniform Edition). Die Haffmans-Wand kann die Antwort verlinken. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "review-w8",
+      "date": "2026-11-30",
+      "channel": "alle",
+      "kind": "review",
+      "text": "Auswertung nach PLAN-5.5-5.6 §5 mit der Karte „Kanäle“ (K14) in /admin/insights: je Kanal Besuche, Anteil mit geöffnetem Buch, Anteil mit Klick zu einem Händler. Was trägt, behält seinen Rhythmus; was nicht trägt, wird eingestellt, nicht verbessert. Danach plant Claude die nächsten acht Wochen.",
+      "status": "vorschlag"
+    },
+    {
+      "id": "reddit-answers-w8",
+      "date": "2026-11-30",
+      "channel": "reddit",
+      "kind": "answer",
+      "text": "Antwort-Fenster, höchstens drei.",
+      "status": "vorschlag",
+      "needs": [
+        "5.6a"
+      ]
+    },
+    {
+      "id": "ph-launch",
+      "date": "2026-12-01",
+      "channel": "producthunt",
+      "kind": "expose",
+      "text": "See the covers a book has been printed with, by language and year, and find the edition behind the one you like. From two open catalogues.",
+      "status": "vorschlag",
+      "title": "Buy Its Covers",
+      "path": "/",
+      "needs": [
+        "5.6a",
+        "kapazitaet"
+      ],
+      "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist."
+    },
+    {
+      "id": "ig-mosaik-frauen",
+      "date": "2026-10-16",
+      "time": "18:00",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The women behind the covers. Each portrait is made of the covers her books have been printed with:\n\nJane Austen, from Pride and Prejudice, Emma and five more\nLouisa May Alcott, from Little Women and seven more\nEdith Wharton, from Ethan Frome, The House of Mirth, The Age of Innocence and four more\n\nThe covers come from Open Library; the portraits are in the public domain. Buy Its Covers shows the covers a book has been printed with, and finds you the edition behind the one you like.\n\nLink in bio.\n\n#bookcovers #mosaic #janeausten #louisamayalcott #edithwharton #womenwriters",
+      "path": "/",
+      "image": "Story/Karussell, vier Folien 1080×1350: lab/kalender/out/instagram-frauen-1.jpg bis -4.jpg (45 Spalten, keine Überblendung)",
+      "needs": [
+        "konto:instagram",
+        "5.6a"
+      ],
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Frauen statt Männer, vier Folien statt sechs, neuer Text auf der ersten (Julian, 2026-10-05); Überblendung 0. Von neun versuchten Autorinnen lesen sich diese drei; Werklisten aus lab/mosaic/out/cache/author_*_8.json."
+    },
+    {
+      "id": "pin-mosaik-twain",
+      "date": "2026-10-19",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "title": "Mark Twain, made of the covers of his books",
+      "text": "A portrait of Mark Twain built from the covers of his eight most-printed books, Tom Sawyer and Huckleberry Finn among them. On Buy Its Covers: the covers his books have been printed with, and the editions behind them.",
+      "path": "/?author=mark%20twain",
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-mosaik-1.jpg",
+      "needs": [
+        "konto:pinterest",
+        "5.6a"
+      ],
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Pinnwand „Writers made of their covers“."
+    },
+    {
+      "id": "pin-peter-and-wendy",
+      "date": "2026-10-21",
+      "channel": "pinterest",
+      "kind": "feature",
+      "text": "J. M. Barrie's Peter and Wendy in Scribner's 1911 edition: green cloth stamped in gold, cover by F. D. Bedford, now in the public domain. On Buy Its Covers, the covers Peter Pan has been printed with since, decade by decade, from two open catalogues.",
+      "status": "vorschlag",
+      "title": "Peter and Wendy, 1911: F. D. Bedford's cover, and Peter Pan through the decades",
+      "path": "/book/OL462007W/decades",
+      "needs": [
+        "konto:pinterest",
+        "5.6a"
+      ],
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
+      "note": "Zweiter Pin, nach dem Exposé. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
+    }
+  ]
+}

@@ -1,3 +1,7 @@
+## 2026-10-05 · Kanäle messbar, deployt (ROADMAP 5.6a)
+
+Julian gab den Satz der Datenschutzerklärung (EN und DE) frei („ok“) und den Deploy („go“). 5.6a lag seit dem 2026-10-04 auf `claude/gallant-davinci-qgndje`, 182 Commits hinter `main`; zusammengeführt über den 5.6b-Branch. Konflikte: `main` hatte K14 und K15 für Rechenzeit und Kosten vergeben (2.18l, 2.18m), die Karte „Kanäle“ heißt deshalb **K16**; die Herkunft `shelf` (5.18b) steht neben dem neuen `page`; der Bericht liest `cpu` und `landing`. Vor dem Push: Suite 1.432 Tests, Typprüfung, Lint und Build grün. Der erste Bluesky-Post (das Exposé, PLAN-5.6b §3) ging am 2026-10-05 kurz vor dem Deploy hinaus, von Julian selbst gepostet; seine ersten Besuche zählen deshalb noch als `social`.
+
 # Beautiful Books – Arbeitsprotokoll
 
 Was gebaut, gemessen und entschieden wurde, chronologisch. Die Texte sind aus der alten SPEC.md (Stand `1b92cf5`) hierher verschoben, **mit ihren alten Abschnittsnummern als Überschriften**, weil die Kommentare im Code sie zitieren („SPEC §9.3 step 11“, „§8.7“, „§10 C9“). Was die Seite heute sein soll, steht in [SPEC.md](../SPEC.md); was offen ist, in [ROADMAP.md](../ROADMAP.md). Die alte Fassung in einem Stück: `git show 1b92cf5:SPEC.md`.
@@ -4423,6 +4427,17 @@ Julian: „miss die drei ideen am testsatz“. Gemessen: die Schärfezahl ohne M
 ## 2026-10-04 · Die Schwelle wieder bei 30 (ROADMAP 5.11a)
 
 Julian: „setz die schwelle zurück auf 30 und pushe“. Einen Tag stand sie bei 40; der Testsatz zeigte, dass ein erster Blick auf einem dichten Regal 35–55 Bücher liest und der zweite Blick bei 40 vom Zufall abhing (dasselbe Foto 35 von 46 in einem Lauf, 45 im nächsten; die Galeriewand in einem Lauf ohne zweiten Blick). Bei 30 kam er auf allen sechs dichten Fotos. Die Ausgaben begrenzt seit demselben Tag das Tagesbudget. Die Zahl der im Bild gefundenen Regalböden als Signal, das nicht schwankt, bleibt eine Idee — sie gilt nur für Regale (Julian).
+
+## 2026-10-04 · Kanäle messbar (ROADMAP 5.6a)
+
+Julian: „baue 5.6 für das analyse-tool". Vorher fielen Reddit, Pinterest und Instagram unter `social`, Hacker News und Product Hunt unter `other`, In-App-Browser ohne Referrer unter `direct`. Sammlungs- und Wandseiten sendeten kein Signal; ein Launch wäre ungemessen geblieben. Gebaut:
+- Herkunftsklassen je Plattform (`ENTRIES`).
+- Die Marke `?via=` aus einer festen Liste (`VIA`). Sie gewinnt nur auf der ersten Seite eines Tabs über den Referrer.
+- Der Kanal des Besuchs liegt im Modulspeicher von `NavMemory` und steht in jedem Buchsignal.
+- Ein drittes Signal `landing` für Startseite, Suchergebnisse, Sammlungsübersicht, Sammlung und Leser-Sammlung, ohne ID.
+- Die Karte „Kanäle" (K14, beim Zusammenführen am 2026-10-05 zu K16 umbenannt) in `/admin/insights`.
+
+Eine Seite der Site ohne eigene Klasse heißt als Herkunft jetzt `page`, nicht `other`, damit eine fremde Herkunft auf einem Buchbesuch eindeutig „erste Seite des Tabs" heißt. Buchbesuche von vor 5.6a haben keinen Kanal und werden in der Karte als solche gezählt. Die Einstiege sind eine Untergrenze: About, `/create` und das Spiel sind keine Einstiegsseiten. Tests: 5 neue in `insights-signals.test.ts`; Suite (1.098 Tests), Typprüfung, Lint und Build grün. Im Browser gegen `next start` geprüft: Einstieg auf `/collections/sf-masterworks?via=pinterest`, Klick auf ein Buch, Verlassen: das Signal `landing` kam mit `entry: pinterest, first: true, opened: true` an, das Buchsignal mit `from: collection, entry: pinterest`; ein zweiter Tab auf `/` ohne Referrer kam als `home, direct`. Die Karte „Kanäle“ mit Beispieldaten aus einem lokalen Redis ist in 1280 × 800 und 390 × 844 ohne Seitenüberlauf; am Telefon passten die Spaltenköpfe erst gekürzt („→ Buch“, „→ Händler“). Nicht deployt: Der Satz der Datenschutzerklärung (EN/DE) wartet auf Julians Freigabe. Plan: [PLAN-5.5-5.6-kanaele.md](plans/PLAN-5.5-5.6-kanaele.md) §3, dazu §7, wie auf Pinterest gepostet wird.
 
 ## 2026-10-04 · Search Console und Bing Webmaster Tools eingerichtet (ROADMAP 2.5, 2.15 Schritt 4)
 
