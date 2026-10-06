@@ -77,9 +77,6 @@ export default function InspirationShared({ board, query, link, walls, versus }:
                 ) : (
                   <span className="block aspect-[2/3] rounded-card bg-surface-2" />
                 )}
-                {b?.edition && (b.edition.year || b.edition.publisher) && (
-                  <span className="mt-1.5 block truncate text-xs text-ink-3">{[b.edition.year, b.edition.publisher].filter(Boolean).join(' · ')}</span>
-                )}
               </li>
             );
           })}
@@ -136,9 +133,13 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               return (
                 <li key={b.workId} className="flex items-center gap-3 py-2">
                   <span className="relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">{src && <CoverImage src={src} alt="" sizes="32px" />}</span>
-                  <span className="min-w-0 flex-1 truncate text-sm text-ink">
-                    {b.title ?? 'A book whose title did not load'}
-                    {b.author && <span className="text-ink-3"> — {b.author}</span>}
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm text-ink">
+                      {b.title ?? 'A book whose title did not load'}
+                      {b.author && <span className="text-ink-3"> — {b.author}</span>}
+                    </span>
+                    {/* Here, not under the covers (Julian, 2026-10-06: „nur unten beim ausgeklappten finder … aber nicht im portrait selbst"). */}
+                    {b.edition && <span className="block truncate text-xs text-ink-3">{[b.edition.year, b.edition.publisher].filter(Boolean).join(' · ')}</span>}
                   </span>
                   {/*
                     In a new tab (Julian, 2026-10-05): the list is worked through book by book, and the portrait should
