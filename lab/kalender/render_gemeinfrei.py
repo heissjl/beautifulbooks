@@ -100,6 +100,24 @@ def centred(d: ImageDraw.ImageDraw, y: int, text: str, f, fill, width: int) -> i
     return y + f.size
 
 
+def tight_text(d: ImageDraw.ImageDraw, xy: tuple[int, int], text: str, f, fill, space: float = 0.5):
+    """Draws text with word spaces at `space` of the monospaced advance."""
+    x, y = xy
+    gap = d.textlength(' ', font=f) * space
+    # A monospaced comma or full stop sits in the middle of a full cell, which
+    # looks like a space before it; pull it in by a third of a cell.
+    pull = d.textlength(' ', font=f) * 0.35
+    for i, word in enumerate(text.split(' ')):
+        if i:
+            x += gap
+        stem, mark = (word[:-1], word[-1]) if word[-1:] in ',.;:' else (word, '')
+        d.text((x, y), stem, font=f, fill=fill)
+        x += d.textlength(stem, font=f)
+        if mark:
+            d.text((x - pull, y), mark, font=f, fill=fill)
+            x += d.textlength(mark, font=f) - pull
+
+
 def wrap(d: ImageDraw.ImageDraw, text: str, f, max_w: int) -> list[str]:
     lines, line = [], ''
     for word in text.split():
@@ -353,11 +371,10 @@ def versus_pin(pair=None, name='pinterest-versus.jpg'):
         year = c['imprint'].rsplit(', ', 1)[1]
         label = c['title'] if c['key'].startswith('pool-') else f"{c['title']}, {year}"
         d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
-    d.text((70, 1150), 'Judge the cover, not the book.', font=font('xanh-italic', 54), fill=ACCENT)
-    bf = font('jost', 32, 400)
-    d.text((72, 1250), 'A cover game: two covers, one click.', font=bf, fill=INK)
-    d.text((72, 1296), 'The standings show which ones readers keep choosing.', font=bf, fill=INK)
-    d.text((72, 1380), 'buyitscovers.com/versus', font=font('xanh-italic', 44), fill=ACCENT)
+    # Julian, 2026-10-05: no explaining sentences under the tagline, and tidy
+    # its spacing — Xanh Mono is monospaced, so a full-width space reads as a gap.
+    tight_text(d, (70, 1180), 'Judge the cover, not the book.', font('xanh-italic', 58), ACCENT)
+    d.text((72, 1330), 'buyitscovers.com/versus', font=font('xanh-italic', 40), fill=INK)
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
 
