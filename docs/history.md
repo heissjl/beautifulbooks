@@ -5228,6 +5228,30 @@ Julian: „können wir das cover der buchdatei auch ohne probleme ändern?", „
 
 1.331 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
 
+## 2026-10-05 · Calibre-App: der Batch — wählen, dann alle auf einen Knopfdruck schreiben (ROADMAP 5.16a, 5.16c)
+
+Julian, zu „Write to Calibre" und „Write to the PocketBook": „aber ich will die möglichkeit auch für den ganzen batch".
+
+**Gebaut:** `batch.ts` (ein gewähltes Cover je Buch, als Eintrag in `chosen.json` neben den Backups; ein Eintrag, der keine Cover-Nummer ist, zählt nicht), `/api/chosen` (setzen, mit `coverId: null` herausnehmen; geht auch im Schau-Modus, es ist die eigene Datei des Werkzeugs), der Zustand nennt je Buch `chosen`. Seite: dritter Knopf „Add to the batch" im Vergleich; die Übersicht beginnt mit „Chosen — n not written yet", Kacheln mit dem gewählten Cover und der Marke „chosen" bzw. „chosen · on reader", darüber „Write n to Calibre", „Write m to the PocketBook", „Empty the batch" und der Satz „Nothing is written until you press a button". Die Knöpfe schreiben den ganzen Batch, auch Bücher, die ein Filter gerade verbirgt — die Zeile zählt sie und sagt es. Nach `/api/apply` verlässt das Buch den Batch; hatte der Reader dieses Cover schon (aus `reader.jsonl` gelesen, geht also auch ohne angeschlossenen Reader), wird es als gesendet vermerkt.
+
+**Geprüft** an der Probe-Kopie und dem nachgebauten Reader-Ordner, schreibend, Calibre geschlossen:
+
+| Schritt | Ergebnis |
+|---|---|
+| drei Bücher je ein Cover, „Add to the batch" | Vergleich schließt, Kopf des Buchs: „A cover is chosen … nothing is written yet"; Übersicht: „Chosen — 3 not written yet", „1 not on the reader" |
+| „Write 2 to the PocketBook" | 0,58 s; beide „chosen · on reader", Cover in Calibre unverändert (281 × 475, 1225 × 2200), Knopf danach „Write to the PocketBook", gesperrt |
+| „Write 3 to Calibre" | 3,1 s; 1311 × 2200, 1464 × 2200, 1650 × 2136 (aus 2550 × 3301); Batch leer |
+| zweiter Lauf, ein Buch: erst Reader, dann Calibre | Buch gilt als gesendet und steht nicht unter „to send" |
+| „Empty the batch" | 0 gewählt |
+
+Beim ersten Lauf gefunden und behoben: der Knopf hieß „Write 0 to the PocketBook", und Bücher, deren Cover der Reader schon hatte, standen nach dem Schreiben in Calibre wieder unter „to send to the reader".
+
+**Nicht geprüft:** der Batch an der echten Bibliothek und am echten Reader.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.398 Tests (130 davon in `lab/calibre/`), tsc und Lint grün.
+
 ## 2026-10-05 · 2.18o in Produktion; Redis 250 MB mit Backup; das Fehlprojekt gelöscht
 
 **2.18o deployt** (Julian: „ja"): `origin/main` von `df77809` auf `fb5ea95`, nach einem Merge der 5.18b-Commits einer anderen Sitzung (ein Konflikt am Ende der Historie, beide Seiten behalten). Der lokale Build lief bei einer Last von 11–15 (iCloud synchronisierte) nicht durch und wurde nach 30 min abgebrochen, im TypeScript-Schritt; `tsc --noEmit` und Lint waren grün, der volle Testlauf hatte einen wechselnden Ausfall durch Zeitüberschreitung (`Test timed out in 5000ms`, je Lauf ein anderer Test in `integration.test.ts`, ein Lauf ganz grün). Als Nachweis des Builds diente Vercels Vorschau desselben Commits (Status „success"). **Einmal gegen die Produktion geprüft:** `/collections` trägt `/_next/image?url=https%3A%2F%2Fbuyitscovers.com%2Fimg%2FM%2Fol-683284&w=384`, und diese Adresse kam als `image/webp` mit **`x-vercel-cache: HIT`** — das Cover hatte die Vorschau in den Cache gelegt, die Produktion las es von dort: **der Cache der Bildoptimierung gilt über Deploys und Deploy-Arten hinweg**, was 2.18o sollte.
@@ -5266,6 +5290,16 @@ Nach dem Vergleich mit my9books.com ([docs/vergleich-my9books.md](vergleich-my9b
 **Was es schon gab:** seit 6.29 (2026-09-10) erkennt `shapeOf` (`lib/queryshape.ts`) eine eingegebene ISBN an der Prüfziffer; Open Librarys gewöhnliche Suche liefert für eine bekannte ISBN genau einen Treffer, die Karte trägt `?isbn=`, die Buchseite wählt das Cover dieser Ausgabe vor. Gebaut wurde deshalb **kein neuer Weg**, nur sein Eingang: `SearchMode` hat einen dritten Wert `isbn`, `MODES` einen dritten Chip. Im ISBN-Modus sagt der Platzhalter „The ISBN of your copy“ (deutsch „Die ISBN deines Exemplars“), die Tastatur am Telefon ist numerisch, die beliebten Titel im Vorschlagsmenü fallen weg, und **eine falsche Prüfziffer wird genannt, bevor gefragt wird** („That is not an ISBN — check the digits. It has 10 or 13 of them.“) — sonst hätte Open Library mit Texttreffern geantwortet. Eine gültige ISBN geht als `?q=<isbn>`, wie eine eingefügte immer ging; die Seite liest den Modus aus der Form der Anfrage zurück, der Chip bleibt also nach dem Laden gedrückt. Vom ISBN-Modus in einen anderen (oder umgekehrt) wechseln sucht nicht sofort neu: Wörter sind keine ISBN.
 
 **Angesehen gegen `next dev`:** Chip, Platzhalter, die Meldung für `978-0-7432-7356-6` (Adresse bleibt `/`), `978-0-7432-7356-5` führt zu `/?q=978-0-7432-7356-5` mit gedrücktem Chip. **Die Karte selbst kam nicht:** Open Library verweigerte diesem Mac in dem Moment die Verbindung (`Connection refused` auf openlibrary.org:443, `covers.openlibrary.org` antwortete) — die bekannte Sperre nach zu vielen Anfragen, nicht der Code; die Seite sagte richtig „The catalogue did not answer“. Der Weg von dort zur Karte ist der unveränderte aus 6.29. Bei 390 px stehen die drei Chips in einer Zeile (englisch rechts bis 274 px, deutsch bis 263 px), der deutsche Platzhalter braucht 185 von 212 px, kein Überlauf. Analytik: das Suchsignal kennt `mode: 'isbn'` seit 3.1b aus derselben Form der Anfrage — nichts zu ändern; kein Shop-Link, keine neue Herkunft.
+
+## 2026-10-05 · Vor dem Umschalttag: der Verfügbarkeits-Button bekommt einen eigenen Schalter, die Datenschutzerklärung nennt die Partner (ROADMAP 0.1, 0.12, 4.13)
+
+Julian, 2026-10-05, zur Liste aus 4.13: „das haben wir jetzt" (Vercel Pro), „bereite das so vor, dass es beim shop modus automatisch mitkommt" (Datenschutz), „eigener schalter" (Verfügbarkeits-Button).
+
+- **0.1:** `availabilityEnabled()` in `lib/sitemode.ts` — an nur mit `NEXT_PUBLIC_AVAILABILITY_CHECK=on` **und** Shop-Modus; alles andere ist aus. `/api/availability` antwortet sonst 404, die Buchseite zeigt den Knopf nicht. Vorher hing er allein am Shop-Modus, der Umschalttag hätte ihn mit eingeschaltet.
+- **4.13 Schritt 5:** `affiliateShops()` in `lib/buylinks.ts` nennt die Shops, deren `AFFILIATE_*`-Variable gesetzt ist, über alle Märkte ohne Doppelung, im Hobby-Modus nichts. Die Datenschutzerklärung hängt im Shop-Modus an den vorhandenen Satz zum Affiliate-Parameter: „At present these are the links to {shops}. When you follow one, the shop may store a cookie …" (deutsch: „Zurzeit sind das die Links zu {shops} …"). Beim Cover-Spiel steht jetzt „a Redis database in Frankfurt, Germany" (`fra1`, nachgesehen 2026-10-05). Der Satz zum Verfügbarkeits-Button folgt dessen eigenem Schalter. **Partner-Satz freigegeben** (Julian, 2026-10-05: „passt"); der Satz zur Region fällt wieder heraus (Julian: „brauchen wir nicht"); der Abschnitt zum Cover-Spiel steht wieder wie vor diesem Tag.
+- **Geprüft:** 1.404 Tests, tsc, ESLint, `next build`; am Dev-Server mit `NEXT_PUBLIC_SITE_MODE=shop` und `AFFILIATE_BOOKSHOP_ID_US=129426`: Datenschutzerklärung nennt „Bookshop.org" und Frankfurt, kein Satz zum Verfügbarkeits-Button, `/api/availability` 404, `/go/bookshop/9780141439518?market=us` → 302 `https://bookshop.org/a/129426/9780141439518`. Branch `claude/shop-switches`, nicht gepusht.
+- **0.12:** Vercel Pro seit dem 2026-10-05 (Julian), damit auch Vercels DPA; abgehakt.
+- **4.12 entschieden:** die About-Seite bleibt allgemein formuliert, ohne erste Person (Julian: „allgemein statt 1. person ist mir lieber"); keine Bedingung mehr für den Shop-Modus.
 
 ## 2026-10-05 · Deploy von 2.18b, 2.18p, 2.18c (Teil), 2.18d (Teil)
 

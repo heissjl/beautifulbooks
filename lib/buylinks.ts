@@ -197,6 +197,24 @@ export function earningProviders(market: Market): ReadonlySet<string> {
 }
 
 /**
+ * The shops whose links carry an affiliate parameter right now, by label and
+ * without repeats across markets — what the privacy notice names as the places
+ * a click may leave a cookie (ROADMAP 4.13 step 5). Empty in hobby mode, where
+ * no link carries one (E20), and empty for a programme whose variable is unset,
+ * so the notice never names a partner the links do not use.
+ */
+export function affiliateShops(env: Env = process.env, commerce: boolean = commerceEnabled()): string[] {
+  if (!commerce) return [];
+  const labels: string[] = [];
+  for (const market of Object.keys(RETAILERS) as Market[]) {
+    for (const r of RETAILERS[market]) {
+      if (r.affiliateEnv && env[r.affiliateEnv] && !labels.includes(r.label)) labels.push(r.label);
+    }
+  }
+  return labels;
+}
+
+/**
  * The same shops searched by words instead of by number (ROADMAP 1.11
  * lever 5) — the row that answers "I just want to read the book".
  *

@@ -4,7 +4,7 @@ import { isIsbn13 } from '@/lib/isbn';
 import { cleanIsbn } from '@/lib/normalize';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
 import { rateLimited } from '@/app/api/rate';
-import { commerceEnabled } from '@/lib/sitemode';
+import { availabilityEnabled } from '@/lib/sitemode';
 import { measure } from '@/app/api/measure';
 
 export interface AvailabilityResponse {
@@ -21,12 +21,13 @@ export interface AvailabilityResponse {
  * request per shop, to shops that mostly dislike being asked.
  *
  * 400 for a malformed ISBN. A shop that refuses or fails is part of the
- * answer, not an error. 404 in hobby mode (E20): four of the six shops
- * disallow the probed path, and the public site does not probe them.
+ * answer, not an error. 404 unless shop mode and its own switch are both on
+ * (E20, ROADMAP 0.1): four of the six shops disallow the probed path, and the
+ * public site does not probe them.
  */
 export async function GET(request: NextRequest) {
   measure('other', request);
-  if (!commerceEnabled()) {
+  if (!availabilityEnabled()) {
     return NextResponse.json({ error: 'Not available' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
   }
   const limited = rateLimited(request, 'availability');
