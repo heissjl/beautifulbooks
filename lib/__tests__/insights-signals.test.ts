@@ -56,7 +56,7 @@ describe('where a visit came from', () => {
     expect(originOf(null, 'https://www.google.de/', HOST)).toBe('engine');
     expect(originOf(null, 'https://duckduckgo.com/', HOST)).toBe('engine');
     expect(originOf(null, 'https://www.bing.com/search?q=x', HOST)).toBe('engine');
-    expect(originOf(null, 'https://t.co/abc', HOST)).toBe('social');
+    expect(originOf(null, 'https://t.co/abc', HOST)).toBe('x');
     expect(originOf(null, 'https://www.reddit.com/r/books', HOST)).toBe('reddit');
     expect(originOf(null, 'https://www.facebook.com/', HOST)).toBe('social');
     expect(originOf(null, 'https://someblog.example/post', HOST)).toBe('other');
@@ -76,6 +76,9 @@ describe('channels (ROADMAP 5.6a)', () => {
       ['https://l.instagram.com/?u=x', 'instagram'],
       ['https://www.tiktok.com/@someone', 'tiktok'],
       ['https://bsky.app/profile/x', 'bluesky'],
+      ['https://t.co/AbC123', 'x'],
+      ['https://x.com/buyitscovers', 'x'],
+      ['https://mobile.twitter.com/someone', 'x'],
       ['https://www.producthunt.com/posts/x', 'producthunt'],
       ['https://www.linkedin.com/feed', 'social'],
       ['https://notreddit.com.example/', 'other'],
@@ -87,6 +90,7 @@ describe('channels (ROADMAP 5.6a)', () => {
     expect(originOf(null, '', HOST, '?via=pinterest')).toBe('pinterest');
     expect(originOf(null, 'https://www.google.com/', HOST, '?cover=1&via=hn')).toBe('hn');
     expect(originOf(null, '', HOST, '?via=blog')).toBe('blog');
+    expect(originOf(null, '', HOST, '?via=x')).toBe('x');
     expect(originOf(null, '', HOST, '?via=evil.example')).toBe('direct');
     expect(originOf({ path: '/', search: '' }, '', HOST, '?via=hn')).toBe('home');
     expect(entryOf('?via=mail', 'https://www.google.com/', HOST)).toBe('mail');

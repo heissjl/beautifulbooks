@@ -109,7 +109,7 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
 const ORIGIN_NAMES: Record<string, string> = {
   engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung', shelf: 'Shelf-Portrait',
   book: 'Andere Buchseite', page: 'Andere Seite hier', social: 'Sozial, sonstige', other: 'Andere Website', direct: 'Direkt / unbekannt',
-  reddit: 'Reddit', pinterest: 'Pinterest', hn: 'Hacker News', instagram: 'Instagram', tiktok: 'TikTok', bluesky: 'Bluesky',
+  reddit: 'Reddit', pinterest: 'Pinterest', hn: 'Hacker News', instagram: 'Instagram', tiktok: 'TikTok', bluesky: 'Bluesky', x: 'X',
   producthunt: 'Product Hunt', blog: 'Blog (via-Link)', mail: 'Mail (via-Link)', site: 'Anderer Tab dieser Seite',
 };
 const LANDING_NAMES: Record<string, string> = {

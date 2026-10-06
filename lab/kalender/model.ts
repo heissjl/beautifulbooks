@@ -12,6 +12,7 @@
  * 5.6a (`VIA` in lib/insights/signals.ts on the 5.6a branch), so that a link
  * posted here is counted under the channel it was posted on. `alle` is for
  * setup and review entries that belong to no single channel and carry no link.
+ * `x` joined VIA on 2026-10-06.
  */
 export const CHANNELS = ['bluesky', 'x', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
 export type Channel = (typeof CHANNELS)[number];
@@ -97,8 +98,7 @@ const length = (s: string): number => [...s].length;
 export function linkFor(post: Pick<Post, 'path' | 'channel'>, site: string): string | null {
   if (!post.path || post.channel === 'alle') return null;
   const url = new URL(post.path, site);
-  // X has no class in 5.6a's VIA list; a mark there would be dropped anyway.
-  if (post.channel !== 'x') url.searchParams.set('via', post.channel);
+  url.searchParams.set('via', post.channel);
   return url.toString();
 }
 
