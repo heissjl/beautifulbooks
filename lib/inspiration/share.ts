@@ -18,17 +18,23 @@
 export const HASHTAG = '#shelfportrait';
 
 /**
- * The two lines every page and picture carries (Julian, 2026-10-05: „Oben: My
- * Shelf-Portrait, unten: The books that inspire me"). With a name on the
- * board they speak of that person.
+ * The one line every shared page and picture carries (Julian, 2026-10-05:
+ * „Oben: My Shelf-Portrait"). A second line stood under it for a day — „The
+ * books that inspire me", then „A self-portrait in nine books." — until
+ * Julian struck it („lösche den subheader ganz fürs erste"); the suggestions
+ * are kept in the history, „Vorschläge für eine andere Unterzeile". With a
+ * name on the board the line speaks of that person.
  */
 export function titleOf(by: string): string {
   return by ? `${by}’s Shelf-Portrait` : 'My Shelf-Portrait';
 }
 
-export function subtitleOf(by: string): string {
-  return by ? `The books that inspire ${by}` : 'The books that inspire me';
-}
+/**
+ * Appended to every picture address. The CDN keeps a whole picture for a
+ * month under its address; a new number here is how a changed line reaches
+ * boards that were already shared.
+ */
+export const PICTURE_VERSION = 3;
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';

@@ -120,7 +120,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
 
         {/* ROADMAP 3.1b; wording approved by Julian on 2026-10-04. Nothing is stored on the device, hence no consent (§ 25 TDDDG, plan §6). */}
         <Section title={t('What is counted when you leave a page')}>
-          <p>{t('When you leave a book page or a search, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. No identifier, cookie, IP address or referrer is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
+          <p>{t('When you leave a book page, a search, the home page or a collection, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. The summary also names the kind of site your visit began on, as one word from a fixed list (a search engine, Reddit, Pinterest, Hacker News and the like), or the word in the “via” part of a link this site posted itself. No identifier, cookie, IP address or address you came from is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
         </Section>
 
         {game && (

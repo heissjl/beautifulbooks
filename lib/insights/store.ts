@@ -9,7 +9,7 @@
  * the totals (plan §4).
  */
 import { commandsFromEnv, type RedisCommands } from '../hotornot/store';
-import { bookField, searchField, workField, type Signal } from './signals';
+import { bookField, landingField, searchField, workField, type Signal } from './signals';
 import {
   clickField,
   EMPTY_RETENTION_SECONDS,
@@ -136,7 +136,7 @@ export async function readDays(days: string[], hash: InsightsHash, commands: Red
 /**
  * One visit's signal into the day's totals (ROADMAP 3.1b): a book visit adds
  * to `book` and `works`, a search to `search` and, when it found nothing, to
- * `empty` with its words.
+ * `empty` with its words, a landing page (5.6a) to `landing`.
  */
 export async function countSignal(signal: Signal, options: CountOptions = {}): Promise<CountResult> {
   const commands = setup(options);
@@ -146,7 +146,9 @@ export async function countSignal(signal: Signal, options: CountOptions = {}): P
   const writes: Array<[InsightsHash, string]> =
     signal.t === 'book'
       ? [['book', bookField(signal)], ['works', workField(signal)]]
-      : [['search', searchField(signal)], ...(signal.q ? [['empty', signal.q] as [InsightsHash, string]] : [])];
+      : signal.t === 'landing'
+        ? [['landing', landingField(signal)]]
+        : [['search', searchField(signal)], ...(signal.q ? [['empty', signal.q] as [InsightsHash, string]] : [])];
   const results = await Promise.all(writes.map(([hash, field]) => add(commands, hash, field, now)));
   return results.find(r => r !== 'counted') ?? 'counted';
 }

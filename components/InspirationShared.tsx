@@ -2,12 +2,12 @@ import Link from './Link';
 import CoverImage from './CoverImage';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
-import { CopyLink, PictureShare } from './InspirationShareTools';
+import { BuyListDetails, CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
-import { isHiddenCover } from '@/lib/hiddencovers';
 import { SIZE_WORD } from '@/lib/inspiration/board';
+import { isHiddenCover } from '@/lib/hiddencovers';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
-import { shareTargets, shareText, subtitleOf, titleOf } from '@/lib/inspiration/share';
+import { PICTURE_VERSION, shareTargets, shareText, titleOf } from '@/lib/inspiration/share';
 import { SITE_NAME } from '@/lib/seo';
 
 /**
@@ -28,7 +28,6 @@ export default function InspirationShared({ board, query, link, walls, versus }:
   const title = titleOf(board.by);
   const books = board.books.flatMap((b) => (b ? [b] : []));
   const size = board.books.length === 3 ? 3 : board.books.length === 6 ? 6 : 9;
-  const word = SIZE_WORD[size];
   const fresh = size === 9 ? '/shelfportrait' : `/shelfportrait?n=${size}`;
   const pill = 'rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent';
   const accentPill = 'rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90';
@@ -39,7 +38,6 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
           <div className="min-w-0">
             <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{title}</h1>
-            <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{subtitleOf(board.by)}</p>
           </div>
           {/* At the top, where the collection page has "Edit collection": the way back into the board, or into one's own. */}
           <div className="flex flex-wrap gap-2">
@@ -54,7 +52,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
             />
           </div>
         </div>
-        <p className="mt-3 text-base text-ink-2">{word} books, each with a favourite cover.</p>
+        <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books, each with a favourite cover.</p>
         {/*
           The invitation, for the maker as for a visitor (Julian, 2026-10-05: not "What's yours?" behind
           the sentence but „Take your Shelf-Portrait" with a link under it to start a new one of one's own).
@@ -105,7 +103,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               <h3 className="mt-7 text-lg text-ink">As a link</h3>
               <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
               {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself, at the size it is shown; next/image would transform it again */}
-              <img src={`/api/inspiration/poster?${query}&format=card`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
+              <img src={`/api/inspiration/poster?${query}&format=card&v=${PICTURE_VERSION}`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
               <div className="mt-3 flex flex-wrap items-center gap-1.5">
                 {shareTargets(link, board.by).map((s) => (
                   <a key={s.id} href={s.href} target="_blank" rel="noopener" className={pill}>{s.label}</a>
@@ -117,11 +115,11 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         />
 
         {/*
-          Open, and plainer than a collection's list (Julian, 2026-10-05: „aufklappen" — it was folded
-          for one round, and where to find the editions is half of what the page is for). It can
-          still be folded away.
+          Plainer than a collection's list. Open for the one who made the board, folded for whoever
+          follows the link (Julian, 2026-10-05: „nur für die editoren ausgeklappt, nicht für andere
+          besucher"): the maker is here to order, a visitor to look.
         */}
-        <details open className="group mt-10 border-t border-line pt-5">
+        <BuyListDetails query={query} className="group mt-10 border-t border-line pt-5">
           <summary className="cursor-pointer list-none text-base text-ink transition-colors hover:text-accent">
             <span className="mr-1.5 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
             Are any of these missing from your library?{' '}
@@ -147,7 +145,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               );
             })}
           </ol>
-        </details>
+        </BuyListDetails>
 
         {/* The way on from a board: the same covers as a collection one keeps, adds to and arranges (5.13a). */}
         {walls && <InspirationToCollection title={title} books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author }] : []))} />}
