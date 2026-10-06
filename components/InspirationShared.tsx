@@ -4,9 +4,10 @@ import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
 import { BuyListDetails, CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
+import { SIZE_WORD } from '@/lib/inspiration/board';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
-import { PICTURE_VERSION, shareTargets, shareText, subtitleOf, titleOf } from '@/lib/inspiration/share';
+import { PICTURE_VERSION, shareTargets, shareText, titleOf } from '@/lib/inspiration/share';
 import { SITE_NAME } from '@/lib/seo';
 
 /**
@@ -37,7 +38,6 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
           <div className="min-w-0">
             <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{title}</h1>
-            <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{subtitleOf(board.by, size)}</p>
           </div>
           {/* At the top, where the collection page has "Edit collection": the way back into the board, or into one's own. */}
           <div className="flex flex-wrap gap-2">
@@ -52,7 +52,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
             />
           </div>
         </div>
-        <p className="mt-3 text-base text-ink-2">Each with a favourite cover.</p>
+        <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books, each with a favourite cover.</p>
         {/*
           The invitation, for the maker as for a visitor (Julian, 2026-10-05: not "What's yours?" behind
           the sentence but „Take your Shelf-Portrait" with a link under it to start a new one of one's own).

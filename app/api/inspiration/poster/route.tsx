@@ -8,7 +8,7 @@ import { coverUrlFor } from '@/lib/coverurl';
 import { type BoardSize, filledCount, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
-import { subtitleOf, titleOf } from '@/lib/inspiration/share';
+import { titleOf } from '@/lib/inspiration/share';
 import { SITE_URL } from '@/lib/seo';
 
 /**
@@ -206,10 +206,9 @@ function poster(format: PosterFormat, count: BoardSize, by: string, images: (str
   return (
     <div style={{ position: 'relative', width: P.width, height: P.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={P.width} height={P.height} />
-      {/* Two lines (Julian, 2026-10-05): the name of the thing, and under it what it is. */}
+      {/* One line (Julian, 2026-10-05: „lösche den subheader ganz fürs erste"): the name of the thing, and nothing under it. */}
       <div style={{ position: 'absolute', left: head.x, top: head.y, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
-        <div style={{ ...TEXT, display: 'flex', textAlign: 'center', fontSize: Math.round(type.title * 0.5), color: L.ink2, marginTop: type.title * 0.12 }}>{clip(subtitleOf(by, count), head.width, type.title * 0.5)}</div>
       </div>
       <Tiles rects={P.tiles} images={images} look={look} />
       {captions && P.caption && P.tiles.map((r, i) => captions[i] && (
@@ -277,7 +276,6 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
       <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink }}>{title}</div>
-          <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(17, Math.round(size * 0.46)), lineHeight: 1.25, color: L.ink2, marginTop: Math.round(size * 0.3) }}>{subtitleOf(by, count)}</div>
         </div>
         {/*
           The site's line, "Judge a book, buy its covers", with its second half as the address — one
