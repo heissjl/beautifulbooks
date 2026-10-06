@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, '..', '..')
 SRC = os.path.join(HERE, 'out', 'cache', 'starterpack-julian.jpg')
 OUT = os.path.join(HERE, 'out', 'starterpack-sharepic.jpg')
-TITLE = 'The performative reader’s starter pack'
+TITLE = 'The performative reader starter pack'
 BAND = 143  # the covers start here in the 1080x1350 poster
 
 src = Image.open(SRC).convert('RGB')
