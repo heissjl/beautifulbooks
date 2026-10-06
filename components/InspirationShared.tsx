@@ -2,7 +2,7 @@ import Link from './Link';
 import CoverImage from './CoverImage';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
-import { BuyListDetails, CopyLink, PictureShare } from './InspirationShareTools';
+import { CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
 import { SIZE_WORD } from '@/lib/inspiration/board';
 import { isHiddenCover } from '@/lib/hiddencovers';
@@ -54,6 +54,8 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           </div>
         </div>
         <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books, each with a favourite cover.</p>
+        {/* What only this site can say about a board (Julian, 2026-10-06: „ok"). */}
+        <p className="mt-1 text-base text-ink-2">Each cover is the edition chosen — tap one to see where to get it.</p>
         {/*
           The invitation, for the maker as for a visitor (Julian, 2026-10-05: not "What's yours?" behind
           the sentence but „Take your Shelf-Portrait" with a link under it to start a new one of one's own).
@@ -116,11 +118,10 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         />
 
         {/*
-          Plainer than a collection's list. Open for the one who made the board, folded for whoever
-          follows the link (Julian, 2026-10-05: „nur für die editoren ausgeklappt, nicht für andere
-          besucher"): the maker is here to order, a visitor to look.
+          Plainer than a collection's list. Open for everyone since 2026-10-06 (Julian, „ok", to making the
+          edition and where to get it plainer than on grids elsewhere); until then it was folded for visitors.
         */}
-        <BuyListDetails query={query} className="group mt-10 border-t border-line pt-5">
+        <details open className="group mt-10 border-t border-line pt-5">
           <summary className="cursor-pointer list-none text-base text-ink transition-colors hover:text-accent">
             <span className="mr-1.5 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
             Are any of these missing from your library?{' '}
@@ -141,12 +142,12 @@ export default function InspirationShared({ board, query, link, walls, versus }:
                     still be there after each. `noopener` only, not `noreferrer` — the book page reads the referrer to
                     class this visit as coming from a Shelf-Portrait (K9).
                   */}
-                  <Link href={b.href} target="_blank" rel="noopener" className={`shrink-0 whitespace-nowrap text-xs ${more}`}>Where to find it</Link>
+                  <Link href={b.href} target="_blank" rel="noopener" className={`shrink-0 whitespace-nowrap text-xs ${more}`}>Find this edition</Link>
                 </li>
               );
             })}
           </ol>
-        </BuyListDetails>
+        </details>
 
         {/* The way on from a board: the same covers as a collection one keeps, adds to and arranges (5.13a). */}
         {walls && <InspirationToCollection title={title} books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author }] : []))} />}

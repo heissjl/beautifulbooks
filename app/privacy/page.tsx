@@ -132,7 +132,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         {/* The sentence Julian approved on 2026-10-05, as he approved it (ROADMAP 5.18b). */}
         {inspirationEnabled() && (
           <Section title={t('Your Shelf-Portrait')}>
-            <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
+            <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name and the line under the title if you typed them. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
           </Section>
         )}
 

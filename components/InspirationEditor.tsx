@@ -349,10 +349,10 @@ export default function InspirationEditor({ initialQuery, initialNames, children
             <li><span className="mr-2 text-ink-3 tabular-nums">3</span>Share the picture.</li>
           </ol>
           {/*
-            The words people search for (Julian, 2026-10-06, after 9things.me: „ja, schreib das irgendwo in
-            die shelfportrait creation seite"): the trend is known as "books that define me", not by our name.
+            The words people search for (Julian, 2026-10-06: „ja, schreib das irgendwo in die shelfportrait
+            creation seite"), without naming the grids they come from („ich will nicht die andere seite referenzieren").
           */}
-          <p className="mt-4 text-sm text-ink-2">Like the “books that define me” grids — with the cover you love on every book, and where to find that edition.</p>
+          <p className="mt-4 text-sm text-ink-2">The books that define you — each with the cover you love, and where to find that edition.</p>
           {link.note && <p className="mt-3 text-sm text-accent" role="alert">{link.note}</p>}
 
           <input

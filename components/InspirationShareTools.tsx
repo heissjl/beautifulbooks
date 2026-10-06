@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useSyncExternalStore } from 'react';
-import { wasMade, watchMade } from './inspirationMemory';
 import { PICTURE_VERSION } from '@/lib/inspiration/share';
 
 /**
@@ -154,14 +153,4 @@ export function CopyLink({ link }: { link: string }) {
       </span>
     </>
   );
-}
-
-/**
- * The buy list's fold: open for the board's maker, closed for a visitor
- * (`inspirationMemory.ts` knows the maker). The server renders it closed;
- * the browser opens it once it knows. A reader may still fold or unfold it.
- */
-export function BuyListDetails({ query, className, children }: { query: string; className: string; children: React.ReactNode }) {
-  const mine = useSyncExternalStore(watchMade, () => wasMade(query), () => false);
-  return <details open={mine || undefined} className={className}>{children}</details>;
 }
