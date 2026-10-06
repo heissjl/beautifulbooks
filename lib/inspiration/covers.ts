@@ -42,36 +42,52 @@ export function coversOfEditions(editions: readonly SourceEdition[]): EditionCov
     .sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
 }
 
-/** Three pages reach the older printings of most works; The Great Gatsby has 1,180 editions on record. */
+/**
+ * Three pages reach the older printings of most works; The Great Gatsby has
+ * 1,180 editions on record. A reader who wants to see further asks for the
+ * next three (Julian, 2026-10-05: „make an option to load more covers").
+ */
 export const EDITION_PAGES = 3;
-const PAGE = 100;
+export const PAGE = 100;
+/** How far back a reader may ask: Open Library's own editions list ends there too. */
+export const MAX_FROM = 10_000;
 
 export interface WorkCovers {
   title: string;
   author?: string;
+  /** The covers of the editions from `from` on — three pages of them. */
   covers: EditionCover[];
-  /** Editions looked at, of `total` on record — so the window can say what it has not seen. */
+  /** Where this slice began: 0, 300, 600 … */
+  from: number;
+  /** Editions looked at so far, from the start to the end of this slice, of `total` on record — so the window can say what it has not seen. */
   checked: number;
   total: number;
 }
 
-/** Null when Open Library has no such work; throws when it does not answer (N12). */
-export async function workCovers(workId: string): Promise<WorkCovers | null> {
+/**
+ * Null when Open Library has no such work; throws when it does not answer
+ * (N12). `from` is a multiple of `PAGE`: the first call looks at editions
+ * 0–299, "more" at 300–599, and so on; the window joins the slices.
+ */
+export async function workCovers(workId: string, from = 0): Promise<WorkCovers | null> {
   const work = await getWork(workId);
   if (!work) return null;
   const entries: OlEditionEntry[] = [];
   let total = 0;
-  for (let offset = 0; offset < EDITION_PAGES * PAGE; offset += PAGE) {
+  let looked = from;
+  for (let offset = from; offset < from + EDITION_PAGES * PAGE; offset += PAGE) {
     const page = await getEditionsPage(workId, offset);
     entries.push(...page.entries);
     total = page.size;
+    looked = Math.min(offset + PAGE, page.size);
     if (offset + PAGE >= page.size) break;
   }
   return {
     title: work.title,
     ...(work.authors[0] ? { author: work.authors[0] } : {}),
     covers: coversOfEditions(parseEditions(entries, work)),
-    checked: entries.length,
+    from,
+    checked: Math.max(looked, Math.min(from, total)),
     total,
   };
 }
