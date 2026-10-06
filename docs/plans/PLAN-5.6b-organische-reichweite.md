@@ -132,6 +132,9 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 - **Das Starter-Pack am 24.10.** auf Bluesky, X, Instagram und Pinterest, als Shelf-Portrait.
   - Claudes Vorschlag für neun Bücher: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L'étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas) und A Little Life.
   - Julian bearbeitet das Brett im Editor; der Link steht im Kalender beim Eintrag `pr-ig-starter`. Das Bild ist danach das Poster des Shelf-Portraits.
+- **Julians fertiges Starter-Pack** (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero und East of Eden.
+  - Als Sharepic ist die zweite Zeile die einzige Überschrift: „The performative reader’s starter pack“ in der proportionalen Xanh der Seite. Der Kopf ist aus dem Mosaik des Posters neu gesetzt (`lab/kalender/sharepic_starterpack.py`).
+  - Das Poster der Website bleibt, wie es ist.
 - Beide zeigen geschützte einzelne Cover und **warten auf die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1).
 
 **Das Bild der Wand** ist Julians eigenes Foto. Es liegt nur lokal unter `lab/kalender/out/cache/`, wie seine anderen Fotos auch, und wird von `render_gemeinfrei.py` zum Pin gesetzt.
