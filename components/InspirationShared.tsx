@@ -5,9 +5,8 @@ import InspirationToCollection from './InspirationToCollection';
 import { BuyListDetails, CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
 import { isHiddenCover } from '@/lib/hiddencovers';
-import { SIZE_WORD } from '@/lib/inspiration/board';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
-import { shareTargets, shareText, subtitleOf, titleOf } from '@/lib/inspiration/share';
+import { PICTURE_VERSION, shareTargets, shareText, subtitleOf, titleOf } from '@/lib/inspiration/share';
 import { SITE_NAME } from '@/lib/seo';
 
 /**
@@ -28,7 +27,6 @@ export default function InspirationShared({ board, query, link, walls, versus }:
   const title = titleOf(board.by);
   const books = board.books.flatMap((b) => (b ? [b] : []));
   const size = board.books.length === 3 ? 3 : board.books.length === 6 ? 6 : 9;
-  const word = SIZE_WORD[size];
   const fresh = size === 9 ? '/shelfportrait' : `/shelfportrait?n=${size}`;
   const pill = 'rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent';
   const accentPill = 'rounded-full bg-accent px-4 py-1 text-sm text-on-accent transition-opacity hover:opacity-90';
@@ -39,7 +37,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
           <div className="min-w-0">
             <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{title}</h1>
-            <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{subtitleOf(board.by)}</p>
+            <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{subtitleOf(board.by, size)}</p>
           </div>
           {/* At the top, where the collection page has "Edit collection": the way back into the board, or into one's own. */}
           <div className="flex flex-wrap gap-2">
@@ -54,7 +52,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
             />
           </div>
         </div>
-        <p className="mt-3 text-base text-ink-2">{word} books, each with a favourite cover.</p>
+        <p className="mt-3 text-base text-ink-2">Each with a favourite cover.</p>
         {/*
           The invitation, for the maker as for a visitor (Julian, 2026-10-05: not "What's yours?" behind
           the sentence but „Take your Shelf-Portrait" with a link under it to start a new one of one's own).
@@ -105,7 +103,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               <h3 className="mt-7 text-lg text-ink">As a link</h3>
               <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
               {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself, at the size it is shown; next/image would transform it again */}
-              <img src={`/api/inspiration/poster?${query}&format=card`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
+              <img src={`/api/inspiration/poster?${query}&format=card&v=${PICTURE_VERSION}`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
               <div className="mt-3 flex flex-wrap items-center gap-1.5">
                 {shareTargets(link, board.by).map((s) => (
                   <a key={s.id} href={s.href} target="_blank" rel="noopener" className={pill}>{s.label}</a>
