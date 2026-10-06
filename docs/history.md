@@ -5467,3 +5467,24 @@ Julian nach dem Screenshot des Entwurfs: „ja, bau es auf den billigeren weg um
 ## 2026-10-06 · Jahr und Verlag in die Kaufliste statt unter die Cover (ROADMAP 5.18b)
 
 Julian: „ich glaube es ist besser wenn wir verlag und jahr nur unten beim ausgeklappten finder zeigen, aber nicht im portrait selbst“. Die Zeile steht jetzt in der Kaufliste unter Titel und Autor, je Buch neben „Find this edition“; das Brett zeigt nur die Cover. Angesehen bei 1280 und 390 px (kein Überlauf, Titel und Autor kürzen wie vorher mit „…“). Abfragen unverändert.
+
+## 2026-10-06 · Welche Reihen im Cover-Spiel sind — und welche nicht (ROADMAP 5.8a)
+
+Julian: „nimm die rororo konterfei serie aus dem cover-spiel“ und „welche serien sind aktuell nicht drin?“
+
+**Die Rowohlts Monographien sind seit dem 2026-10-01 draußen** (Eintrag oben, Commit `e202b39`, in `origin/main`) — die Bitte war schon einmal erfüllt. Nachgeprüft statt angenommen:
+
+- `rowohlts-monographien` steht in `LEFT_OUT` von `scripts/add-collection-covers-to-pool.ts` und in `collections.leftOut` des Vorrats.
+- Von den 154 Covern der Liste `lab/collections/lists/rowohlts-monographien.json` liegt **keines** im Vorrat, und **keines ihrer 154 Werke** ist dort überhaupt vertreten — auch nicht über den Grundvorrat aus dem Index. Kein Eintrag des Vorrats nennt in Titel oder Autor „Monographie“, „rororo“ oder „Rowohlt“.
+- Auch die Rangliste zeigt sie nicht: `board()` wirft Stimmen auf Cover weg, die der Vorrat nicht mehr hält (`lib/hotornot/game.ts`).
+- Produktion einmal geprüft: `/versus` spielt `mix-2000-paperwhite-collections` mit **4.884 Covern aus 2.780 Büchern**, Speicher `redis`, drei Paare vorgeladen — derselbe Stand wie die Datei.
+
+**Welche Reihen nicht mitspielen.** Der Vorrat zieht aus **42 Sammlungen** (2.976 ihrer Cover). `collections.from` ist eingefroren: eine Sammlung, die es beim ersten Lauf nicht gab, kommt nur mit `--add=<slug>` hinzu. Von den 56 Sammlungen der Datei fehlen deshalb 14.
+
+*Auf Julians Wort heraus (5):* edition suhrkamp (198 Cover), Rowohlts Monographien (154), Library of America (72), suhrkamp taschenbuch — Autorenporträts (70), Suhrkamp BasisBibliothek (59). Alle fünf stehen auf der Seite, keines ihrer Cover ist im Spiel.
+
+*Nicht im letzten Lauf (9).* Veröffentlicht und damit die eigentliche Frage: Nebula — Roman (62 Cover, 3 davon über andere Sammlungen schon drin), Ravensburger — Grieder und Schindler (33, 0), Deutscher Buchpreis (21, 0), Fischer Bücherei — Edelmann (10, alle 10 über Fischer Bücherei schon drin). Noch Entwürfe, also auch auf der Seite nicht zu sehen: Virago Modern Classics (141, 0), Penguin Classics — die schwarzen Bänder (98, 0), National Book Award (83, 4), Herder Bücherei — Grieder (44, 0), Penguin Drop Caps (22, 2).
+
+**Umgekehrt spielen drei Sammlungen mit, die auf der Seite nicht stehen** — Penguin English Library, Verso Radical Thinkers, Heinz Edelmann — verschiedene Verlage: ihre Cover kamen in einem früheren Lauf hinein, veröffentlicht sind sie nicht. Kein Fehler, der Vorrat fragt nicht nach Veröffentlichung; es erklärt aber, warum die Zahl der Sammlungen im Spiel nicht die der Seite ist.
+
+**Woraus die Zahlen kommen:** der Vorrat gegen `data/collections.json` und gegen die Live-Seite `/collections` (ein Abruf, 48 Sammlungen). **Die `published`-Flagge der Datei ist dafür unbrauchbar** — nur 7 der 56 stehen dort auf `true`; veröffentlicht wird seit 5.10g im Speicher über `/curate`, und der gewinnt über die Datei. Wer „welche Sammlungen sind live“ aus der Datei liest, liegt um 41 Sammlungen falsch.
