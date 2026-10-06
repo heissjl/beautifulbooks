@@ -217,7 +217,8 @@ function poster(format: PosterFormat, count: BoardSize, by: string, images: (str
           <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
         </div>
       ))}
-      <div style={{ position: 'absolute', left: foot.x, top: foot.y, width: foot.width, height: foot.height, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      {/* The words keep a distance from the covers above them, not only from the edge below (Julian, 2026-10-05). */}
+      <div style={{ position: 'absolute', left: foot.x, top: foot.y, width: foot.width, height: foot.height, paddingTop: type.site * 0.8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <Wordmark size={type.site} color={L.mark} />
         <div style={{ ...TEXT, display: 'flex', fontSize: type.address, color: L.ink2, marginTop: type.address * 0.15 }}>{ADDRESS}</div>
       </div>

@@ -52,11 +52,13 @@ const SPECS: Record<PosterFormat, Spec> = {
     y = 96–206 and the address at 1770–1866, inside both. The address is the only way back from a
     picture, so the words moved into the block between (Julian, 2026-10-05, on the question
     whether that is worth smaller covers: „ja"): 130 px under the top band for the two title lines,
-    110 px over the bottom band for name and address. Nine covers are 250 × 375 there, not 304 × 456.
+    110 px over the bottom band for name and address. Nine covers were 250 × 375 there, not 304 × 456.
+    The foot grew to 400 (150 over the band) on 2026-10-05, with the feed's: Julian, on a board of
+    three whose covers reached down to the name, „a bit more space below the covers before the link". Nine are 242 × 363 since.
   */
-  story: { width: 1080, height: 1920, head: 380, foot: 360, margin: 60, gap: 24, safe: 250, type: { title: 64, site: 44, address: 40 } },
-  // 4:5, the tallest a feed post may be. Nothing is laid over a post.
-  feed: { width: 1080, height: 1350, head: 140, foot: 130, margin: 60, gap: 18, safe: 0, type: { title: 52, site: 34, address: 32 } },
+  story: { width: 1080, height: 1920, head: 380, foot: 400, margin: 60, gap: 24, safe: 250, type: { title: 64, site: 44, address: 40 } },
+  // 4:5, the tallest a feed post may be. Nothing is laid over a post. Foot 170, not 130, since 2026-10-05 (see the story).
+  feed: { width: 1080, height: 1350, head: 140, foot: 170, margin: 60, gap: 18, safe: 0, type: { title: 52, site: 34, address: 32 } },
 };
 
 export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number }> = {
@@ -66,12 +68,12 @@ export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number 
 
 /**
  * How fewer than nine covers stand. Six: two wide and three high in a story,
- * which fills its height at the size nine have there (250 × 375), and three
+ * which fills its height at the size nine have there (242 × 363), and three
  * wide and two high in a feed post, where they come out a third larger than
- * nine (308 × 462 against 232 × 348). Three: **one above and two below**
+ * nine (308 × 462 against 222 × 333). Three: **one above and two below**
  * (Julian, 2026-10-05: „mach bei 3 bildern eines oben und 2 unten") in a story
  * and in a post alike — the first book stands alone at the top, and in a post
- * the covers come out larger than three side by side would (354 × 531 against
+ * the covers come out larger than three side by side would (340 × 510 against
  * 308 × 462). A row that is not full is centred; `lead` says that it is the
  * first row, not the last.
  */
