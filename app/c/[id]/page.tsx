@@ -12,6 +12,7 @@ import { wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { measure } from '@/app/api/measure';
 
 /**
  * One reader's wall (ROADMAP 5.13a). Never indexed: the title is a reader's
@@ -56,6 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function WallPage({ params, locale = DEFAULT_LOCALE }: Props) {
+  measure('page-wall');
   const t = translator(locale);
   const wall = await loadWall((await params).id, true);
   if (!wall) notFound();

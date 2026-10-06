@@ -56,3 +56,51 @@ Alle anderen Fotos lesen im ersten Blick höchstens 21 Bücher. Die Schwelle ste
 
 **Berichtigung der Preise (2026-10-04, beim Zusammenführen mit main):** alle Cent-Angaben in diesem Dokument bis hierher rechnen mit **angenommenen** 3 $ / 15 $ je Million Token. Die Analyse-Sitzung (ROADMAP 3.1, K13) hat den Listenpreis nachgeschlagen: `claude-sonnet-5` kostet **2 $ / 10 $** (`lib/insights/prices.ts`). Alle Kosten sind also um ein Drittel niedriger als oben genannt: ein gewöhnliches Foto rund **1,5 ct** statt 2, ein dichtes **6–9 ct** statt 9–13, der Testsatz-Lauf mit zweitem Blick **53 ct** statt 80, mit einem Blick 25 statt 38. Die Verhältnisse (zweiter Blick ≈ doppelte Kosten über den ganzen Satz, Vierfaches bei einer dichten Wand) bleiben. Budget und Auswertungsskript rechnen seitdem mit der gemeinsamen Tabelle.
 
+## Dritter Durchgang: die drei Ideen (2026-10-04, abends) — **zur Hälfte gemessen, dann war das Guthaben leer**
+
+Julian: „miss die drei ideen am testsatz“. Stand des Codes: Schwelle 40, Preise aus `lib/insights/prices.ts`. Die Varianten sind Schalter des Auswertungsskripts (`--variant cut,trim,unsure`) und der Lesefunktion; die Website übergibt keine.
+
+**Abbruch:** während der Läufe antwortete die Anthropic-API mit „Your credit balance is too low“. Zwei Vergleichsläufe brachen bei Foto 13 ab; die Varianten `trim` und `unsure` sind **nicht gelaufen**. Was unten steht, sind zwei Vergleichsläufe über die Fotos 01–12 und ein vollständiger Lauf der Variante `cut`.
+
+### (c) Ein Hinweis bei Unschärfe — gemessen, ohne Modell, trägt
+
+`lib/sharpness.ts`: je Kachel (12 × 12) das Verhältnis der stärksten Helligkeitssprünge zwischen direkten Nachbarn zu denen über vier Pixel, davon das 90. Perzentil. Rund 30 ms je Foto, kein Aufruf.
+
+| Foto | 01 | 02 | 03 | 04 | **05** | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Schärfe | 0,56 | 0,43 | 0,55 | 0,57 | **0,33** | 0,46 | 0,63 | 0,52 | 0,74 | 0,60 | 0,59 | 0,73 | 0,61 | 0,58 |
+
+Das verwackelte Regal (05) liegt mit 0,33 deutlich unter allen anderen (0,43–0,74); eine Schwelle bei 0,38 trennt. Ein erster Versuch über das ganze Bild trennte **nicht**: der scharfe Umschlag in der Hand (02) lag mit 0,28 unter dem verwackelten Foto, weil der unscharfe Hintergrund das Bild beherrscht — darum kachelweise, und ein Foto ist so scharf wie seine schärfsten Kacheln. **Einschränkung:** ein einziges unscharfes Beispiel. Das reicht für einen Hinweis an den Leser („the photo looks blurred“), nicht dafür, ein Foto abzuweisen.
+
+### Das Rauschen zwischen zwei gleichen Läufen — und was es über die Schwelle 40 sagt
+
+| Fotos 01–12 | gelesen von Liste | Stümpfe | Fehler auf vollzähligen | Kosten |
+|---|---|---|---|---|
+| Vergleich a | 231 / 262 (88 %) | 9 | 2 | 35,1 ct |
+| Vergleich b | 239 / 262 (91 %) | 16 | 3 | 40,3 ct |
+
+Derselbe Code, dieselben Fotos, **acht Bücher Unterschied** — und sieben davon stammen von einem einzigen Foto: die Belletristik (10) las im ersten Blick einmal weniger als 40 Bücher und bekam **keinen zweiten Blick** (35 von 46), einmal mehr und bekam ihn (45 von 46). Im `cut`-Lauf traf dasselbe City Lights (09: 23 von 38) und die Galeriewand (13: 27 von 39). **Die Schwelle 40 liegt mitten in der Spanne, die ein erster Blick auf einem dichten Regal liest (35–55): ob der zweite Blick kommt, ist dort Zufall.** Mit 30 kam er auf allen sechs dichten Fotos. Das ist die Folge des Hochsetzens vom selben Tag und gehört entschieden: zurück auf 30 (das Tagesbudget begrenzt die Ausgaben inzwischen ohnehin), oder ein Dichtesignal, das nicht schwankt — die Zahl der Böden, die `shelvesOf` findet, kostet nichts und ist bei jedem Lauf gleich.
+
+Die Fehler auf vollzähligen Fotos schwanken genauso: „The Secret History — Donna Tartt“ (08, erfunden), „Ten Commandments“ (02, ein unscharfer Rücken im Hintergrund), „Extraordinary“ (03, ein angeschnittenes Buch) kamen je in einem der zwei Läufe. Unter drei Punkten Unterschied ist bei einem einzelnen Lauf nichts zu behaupten.
+
+### (a) Bruchstücke am Bildrand, Variante `cut` (ein Satz im Prompt) — gemessen, **trägt nicht**
+
+„Leave out a book that the edge of the picture cuts off so that its title is not whole.“
+
+- **Die Stümpfe bleiben:** auf Foto 10 kommen „GO“, „SELF“, „CLASH“, „FREE“, „SETH“ mit dem Satz genauso wie ohne. Sie stammen aus dem angeschnittenen Streifen über dem obersten Brett, der beim zweiten Blick ein eigenes Stück ist — dort gibt es nichts als Stümpfe, und das Modell liefert sie.
+- **Echte Bücher gehen verloren:** *City on the Edge* (01, rechts angeschnitten, Titel lesbar) fehlt nur in diesem Lauf.
+- Über alle vierzehn 271 von 322 — nicht vergleichbar, weil drei dichte Fotos in diesem Lauf keinen zweiten Blick bekamen (siehe oben); mit dem Satz liest der erste Blick eher weniger, was die Schwelle noch seltener auslöst.
+
+Der gezielte Weg ist Variante `trim` — die niedrigen Randstreifen beim zweiten Blick gar nicht lesen —, **nicht gemessen** (Guthaben).
+
+### (b) Ein Feld für Unsicheres, Variante `unsure` — **nicht gemessen** (Guthaben)
+
+Gebaut und schaltbar: ein Feld `u` je Buch, der Satz „give your best reading and set u to true“ statt „leave out“; das Skript zählt, wie viele Listenbücher nur als unsichere Lesung kommen und wie viele unsichere Lesungen daneben liegen.
+
+### Was als Nächstes zu messen ist, sobald wieder Guthaben da ist
+
+1. `--variant trim`, zweimal, gegen zwei Vergleichsläufe (alle mit derselben Schwelle).
+2. `--variant unsure`, zweimal.
+3. Vorher die Schwellenfrage entscheiden, sonst misst jeder Lauf vor allem, ob der zweite Blick kam.
+Je Lauf rund 35–55 ct; sechs Läufe etwa 3 $.
+

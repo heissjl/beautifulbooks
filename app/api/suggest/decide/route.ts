@@ -1,9 +1,11 @@
 import { NextRequest } from 'next/server';
 import { readBody } from '@/app/api/versus/guard';
 import { adminGate, json, storeDown } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /** Julian's local tool marks a suggestion taken over or declined; the first answer stays. */
 export async function POST(request: NextRequest) {
+  measure('curate', request);
   const gate = adminGate(request);
   if ('response' in gate) return gate.response;
   const body = await readBody(request);

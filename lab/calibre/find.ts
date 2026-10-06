@@ -10,10 +10,9 @@
  * proposed; which work it really is stays Julian's click, and the click is
  * remembered.
  */
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
-import { dirname } from 'node:path';
 import { coverRefFromUrl, isWorkId, pickWork, userAgent, type WorkReason, type WorkSummary } from './site';
 import { CatalogueError, type Catalogue } from './catalogue';
+import { FileMap } from './filemap';
 import type { CalibreBook } from './library';
 
 /* ---------- pure ---------- */
@@ -102,28 +101,7 @@ export function proposal(works: readonly WorkSummary[], book: { title: string; a
 /* ---------- the remembered choices ---------- */
 
 /** Book number -> work id, per library, beside its backups: what Julian clicked once is not asked again. */
-export class WorkMap {
-  private map: Record<string, string>;
-
-  constructor(private readonly file: string) {
-    this.map = existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Record<string, string>) : {};
-  }
-
-  get(bookId: number): string | undefined {
-    return this.map[String(bookId)];
-  }
-
-  all(): Record<string, string> {
-    return { ...this.map };
-  }
-
-  set(bookId: number, workId: string): void {
-    this.map[String(bookId)] = workId;
-    mkdirSync(dirname(this.file), { recursive: true });
-    writeFileSync(`${this.file}.tmp`, JSON.stringify(this.map, null, 1));
-    renameSync(`${this.file}.tmp`, this.file);
-  }
-}
+export class WorkMap extends FileMap {}
 
 /* ---------- Open Library ---------- */
 
@@ -132,7 +110,17 @@ interface OlEdition {
   works?: Array<{ key: string }>;
 }
 
-async function editionByIsbn(isbn: string, site: string): Promise<{ workId: string; covers: string[] } | null> {
+/** What Open Library lists under an ISBN: the work, and the covers of that very edition record. */
+export interface IsbnEdition {
+  workId: string;
+  covers: string[];
+}
+
+/**
+ * The one question that goes to Open Library itself — the website has no
+ * route for it. Null: Open Library does not know the number.
+ */
+export async function editionByIsbn(isbn: string, site: string): Promise<IsbnEdition | null> {
   const res = await fetch(`https://openlibrary.org/isbn/${isbn}.json`, { headers: { 'user-agent': userAgent(site) }, signal: AbortSignal.timeout(15_000) });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`Open Library answered ${res.status}`);
@@ -143,17 +131,17 @@ async function editionByIsbn(isbn: string, site: string): Promise<{ workId: stri
 }
 
 export interface FindOptions {
-  /** The site's address, for the user agent of the one direct request. */
-  site: string;
   remembered?: string;
   /** What Julian typed: replaces title and author. */
   query?: string;
   /**
-   * Ask Open Library itself which covers the ISBN's own edition carries — the
-   * one question the website has no route for. Off while Open Library refuses
-   * this Mac's connections; the app then simply marks no cover as „your edition".
+   * Which covers the catalogue lists under the book's ISBN (`editionByIsbn`,
+   * through the store in the app). Undefined as an answer means "not asked" —
+   * Open Library is refusing this Mac and nothing is kept — and the app then
+   * marks no cover as „same ISBN", without calling it a failure. Left out,
+   * nobody is asked.
    */
-  askEdition: boolean;
+  edition?: (isbn: string) => Promise<IsbnEdition | null | undefined>;
 }
 
 const hitOf = (work: { id: string; title: string; authors: string[]; firstPublishYear?: number; editionCount?: number }): WorkHit => ({
@@ -166,7 +154,7 @@ const hitOf = (work: { id: string; title: string; authors: string[]; firstPublis
 
 /** One book against the catalogue. */
 export async function findWorks(book: CalibreBook, catalogue: Catalogue, options: FindOptions): Promise<Found> {
-  const { site, remembered, query } = options;
+  const { remembered, query } = options;
   const title = cleanBookTitle(book.title);
   const author = firstAuthor(book);
   const isbn = query ? undefined : book.isbns[0];
@@ -203,14 +191,14 @@ export async function findWorks(book: CalibreBook, catalogue: Catalogue, options
   };
 
   const ownEdition = async () => {
-    if (!isbn || !options.askEdition) return;
+    if (!isbn || !options.edition) return;
     try {
-      const edition = await editionByIsbn(isbn, site);
+      const edition = await options.edition(isbn);
       if (!edition) return;
       editionCovers = edition.covers;
       editionWork = edition.workId;
     } catch (err) {
-      failed(err, 'Open Library did not say which covers belong to your own edition.');
+      failed(err, 'Open Library did not say which covers it lists under this ISBN.');
     }
   };
 

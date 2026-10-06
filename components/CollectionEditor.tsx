@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { writeTarget } from './AddToWall';
@@ -264,7 +264,8 @@ export default function CollectionEditor({ initial, photoOn, startOptions }: { i
                   <p className="mt-4 text-sm text-ink-2">
                     {rich(t('Photograph a shelf or a pile of books. The books we can read are offered for {title} — you tick which go in.'), { title: <strong className="font-medium text-ink">{wall.title}</strong> })}
                   </p>
-                  <WallPhoto photoOn={photoOn} target={wall} onCommit={commit} onOtherCover={showCovers} onSearchFor={(q) => go({ add: 'search', q, work: undefined })} />
+                  {/* No onOtherCover: the photo list swaps a row's cover in its own window, as on /create, instead of leaving for the Search tab and hiding the list (Julian, 2026-10-04). */}
+                  <WallPhoto photoOn={photoOn} target={wall} onCommit={commit} onSearchFor={(q) => go({ add: 'search', q, work: undefined })} />
                 </div>
               )}
               <div hidden={tab !== 'ideas'} className="mt-5 space-y-10">
@@ -377,7 +378,14 @@ function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend:
           </button>
         </p>
       ) : (
-        <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
+        <>
+        {/*
+          Said in words, not only in the tile's `title` (Julian, 2026-10-04, on a phone
+          in a home-screen web app: he could not find "another cover"). A tooltip never
+          shows on a touch screen, so the tap on a cover was there but nothing named it.
+        */}
+        <p className="mt-6 text-sm text-ink-2">{t('Tap or click a cover to swap it for another cover of the same book.')}</p>
+        <ul className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
           {wall.tiles.map((tile, i) => {
             const src = coverUrlFor(tileCoverId(tile), 'M');
             const label = tile.author ? t('{title} by {author}', { title: tile.title, author: tile.author }) : tile.title;
@@ -417,6 +425,7 @@ function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend:
             );
           })}
         </ul>
+        </>
       )}
     </section>
   );

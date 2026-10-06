@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WallProposal, { type Destination, type Proposal } from './WallProposal';
+import WallPicker from './WallPicker';
 import { rich, useT } from './i18n';
 import type { Translate } from '@/lib/i18n/translate';
 import type { PublicWall, Tile } from '@/lib/walls/model';
@@ -160,12 +161,29 @@ export default function WallPhoto({
   const [over, setOver] = useState(false);
   // The size the photo is shown at, read when it has loaded: pins step aside in pixels (lib/walls/pins.ts).
   const [shown, setShown] = useState<{ w: number; h: number } | null>(null);
+  /*
+    Another cover before there is a collection (Julian, 2026-10-04: „i want a user to be able to
+    change covers in the from photo funnel before they create a collection“). Without a collection
+    to swap in, the choice stays here, per row, and replaces the row's tile in the list; nothing is
+    written until the reader adds the ticked rows. The editor uses the same window; a parent's `onOtherCover` would replace it.
+  */
+  const [swapped, setSwapped] = useState<Record<number, Tile>>({});
+  const [picking, setPicking] = useState<{ index: number; tile: Tile } | null>(null);
+  const otherCover = onOtherCover ?? ((tile: Tile, index: number) => setPicking({ index, tile }));
+  useEffect(() => {
+    if (!picking) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setPicking(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [picking]);
   const input = useRef<HTMLInputElement>(null);
 
   async function read(file: File | undefined) {
     if (!file) return;
     const preview = URL.createObjectURL(file);
     setState({ step: 'reading', preview, reads: [] });
+    setSwapped({});
+    setPicking(null);
     try {
       const body = await prepare(file, t);
       const res = await fetch('/api/walls/photo', { method: 'POST', headers: { 'content-type': body.type || 'image/jpeg' }, body });
@@ -227,7 +245,7 @@ export default function WallPhoto({
     sub: m?.tile && !m.unsure ? undefined : read.author || undefined,
     ...(m
       ? {
-          tile: m.tile,
+          tile: m.tile && swapped[i] ? swapped[i] : m.tile,
           missing: m.failed ? t('the search did not answer') : t('not in the catalogue'),
           ...(m.failed ? { failed: true } : {}),
           ...(m.unsure ? { unsure: true } : {}),
@@ -252,7 +270,7 @@ export default function WallPhoto({
   const summary =
     state.step === 'looking'
       ? `${booksRead}, ${t('looking them up… {done} of {total}', { done: matches.length, total: rows.length })}${counts.length && found ? `: ${counts.join(', ')}` : ''}. ${t('You can tick and add while the rest come in.')}`
-      : `${booksRead}${capped ? ` ${t('(the first 100 of more)')}` : ''}: ${counts.join(', ')}. ${onOtherCover ? t('Each gets the book’s usual cover — “another cover” shows the others it has had.') : t('Each gets the book’s usual cover — you can change it in the collection’s editor.')}`;
+      : `${booksRead}${capped ? ` ${t('(the first 100 of more)')}` : ''}: ${counts.join(', ')}. ${t('Each gets the book’s usual cover — “find another cover” shows the others it has had.')}${maybe ? ` ${t('A “maybe” is a guess from the title alone: accept it if it is your book.')}` : ''}`;
 
   return (
     <div className="mt-4">
@@ -328,11 +346,38 @@ export default function WallPhoto({
             target={target}
             walls={walls}
             onCommit={onCommit}
-            onOtherCover={onOtherCover}
+            onOtherCover={otherCover}
             onSearchFor={onSearchFor}
             summary={summary}
           />
         ))}
+      {picking && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('Covers of {title}', { title: picking.tile.title })}
+          onClick={(e) => e.target === e.currentTarget && setPicking(null)}
+        >
+          <div className="w-full max-w-5xl rounded-lg border border-line bg-bg p-4 sm:p-6">
+            <WallPicker
+              key={picking.tile.coverId}
+              workId={picking.tile.workId}
+              target={null}
+              choose={{
+                current: picking.tile,
+                onChoose: (tile) => {
+                  setSwapped((prev) => ({ ...prev, [picking.index]: tile }));
+                  setPicking(null);
+                },
+              }}
+              onWall={() => {}}
+              onClose={() => setPicking(null)}
+              className=""
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

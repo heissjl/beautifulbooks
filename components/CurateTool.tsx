@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import CoverImage from './CoverImage';
 import AdminCollections, { type AdminCollection } from './AdminCollections';
 import { rich, useLocale, useT } from './i18n';

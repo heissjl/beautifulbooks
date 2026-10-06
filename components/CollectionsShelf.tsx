@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/Link';
 import CoverImage from './CoverImage';
 import { wallCover } from '@/lib/curated';
 import type { Collection } from '@/lib/collections';

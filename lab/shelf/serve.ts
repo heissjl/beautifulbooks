@@ -12,9 +12,14 @@
  * so the list in a shared link never reaches this server.
  */
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { build } from 'esbuild';
+import decodeHeic from 'heic-decode';
+import jpeg from 'jpeg-js';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { decode, type RgbaImage } from '../../lib/imagehash';
+import { imageSize } from './imagesize';
 import { Matcher, coverIdFromUrl } from './match';
 import { FALLBACK_MODEL, PRIMARY_MODEL, hasApiKey, recognize, type RecognizedBook } from './recognize';
 
@@ -27,6 +32,27 @@ const SITE = (process.env.SHELF_SITE ?? 'https://buyitscovers.com').replace(/\/$
 const MAX_PHOTO_BYTES = 12 * 1024 * 1024;
 
 const matcher = new Matcher();
+
+/**
+ * The model's answer per photo, keyed by the photo's SHA-256, until the
+ * server stops: uploading the same photo again (to try a change in the
+ * colour or edition step) costs no second model call. Only the hash and the
+ * titles are kept, never the photo.
+ */
+const recognitions = new Map<string, Awaited<ReturnType<typeof recognize>>>();
+
+/**
+ * The colour step (ROADMAP 5.16) runs in the browser, on the photo the page
+ * already holds: lab/colorsort/shelfcolors.ts, bundled once per start.
+ */
+let colorsJs: Promise<string> | null = null;
+function colorsScript(): Promise<string> {
+  colorsJs ??= build({
+    entryPoints: [join(import.meta.dirname, '..', 'colorsort', 'shelfcolors.ts')],
+    bundle: true, write: false, format: 'iife', target: 'es2022', minify: true,
+  }).then(r => r.outputFiles[0].text, err => { colorsJs = null; throw err; });
+  return colorsJs;
+}
 
 async function readBytes(req: IncomingMessage, limit: number): Promise<Buffer> {
   const chunks: Buffer[] = [];
@@ -47,14 +73,43 @@ function stream(res: ServerResponse) {
 
 async function matchAll(books: RecognizedBook[], photo: RgbaImage | null, emit: (line: unknown) => void) {
   const started = Date.now();
+  const results = [];
   for (let i = 0; i < books.length; i++) {
-    emit({ type: 'match', index: i, result: await matcher.match(books[i], photo) });
+    const result = await matcher.match(books[i], photo);
+    results.push(result);
+    emit({ type: 'match', index: i, result });
   }
-  emit({ type: 'done', matchMs: Date.now() - started });
+  const matchMs = Date.now() - started;
+  // Second pass (ROADMAP 5.16): the edition behind each spine. After the
+  // works, so the wall stands first and covers change in place.
+  let editions = 0, picked = 0;
+  if (photo) {
+    for (let i = 0; i < books.length; i++) {
+      const r = results[i];
+      if (!r.work || books[i].kind !== 'spine') continue;
+      emit({ type: 'edition-start', index: i });
+      try {
+        const found = await matcher.spineEdition(books[i], r.work.id, photo, r.cover?.coverId ?? 0);
+        if (!found) continue;
+        editions++;
+        if (found.cover.reason === 'spine-edition') picked++;
+        emit({ type: 'edition', index: i, cover: found.cover, ranked: found.ranked.slice(0, 24), spine: found.spine });
+      } catch (err) {
+        emit({ type: 'edition', index: i, error: `Open Library: ${err instanceof Error ? err.message : String(err)}` });
+      }
+    }
+  }
+  emit({ type: 'done', matchMs, editionMs: Date.now() - started - matchMs, editions, picked });
 }
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
+  // One line per request — path, status, time, size; never the photo, never a title.
+  const t0 = Date.now();
+  res.on('finish', () => {
+    if (url.pathname === '/api/log') return;
+    console.log(`${new Date().toISOString().slice(11, 19)} ${req.method} ${url.pathname} ${res.statusCode} ${Date.now() - t0}ms ${req.headers['content-length'] ?? ''}${req.headers['content-type'] ? ` ${req.headers['content-type']}` : ''} ${(req.headers['user-agent'] ?? '').match(/(Safari|Chrome|Firefox)\/[\d.]+/g)?.join(' ') ?? ''}`);
+  });
   const send = (code: number, body: unknown) => {
     res.writeHead(code, { 'content-type': 'application/json' });
     res.end(JSON.stringify(body));
@@ -64,6 +119,37 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/') {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
       res.end(readFileSync(HTML_FILE, 'utf8'));
+      return;
+    }
+
+    if (url.pathname === '/colors.js') {
+      res.writeHead(200, { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'no-store' });
+      res.end(await colorsScript());
+      return;
+    }
+
+    // iPhone photos are HEIC, which Chrome cannot decode (Safari can): the
+    // page sends such a file here and gets a JPEG back. In memory only, like
+    // the photo in /api/recognize — nothing is written.
+    if (url.pathname === '/api/heic' && req.method === 'POST') {
+      const bytes = await readBytes(req, 40 * 1024 * 1024);
+      let image;
+      try {
+        image = await decodeHeic({ buffer: new Uint8Array(bytes) });
+      } catch (err) {
+        return send(400, { error: `HEIC ließ sich nicht lesen: ${err instanceof Error ? err.message : String(err)}` });
+      }
+      const out = jpeg.encode({ data: Buffer.from(image.data.buffer, image.data.byteOffset, image.data.byteLength), width: image.width, height: image.height }, 90);
+      res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'no-store' });
+      res.end(out.data);
+      return;
+    }
+
+    // What went wrong in the page, so a failure in the reader's browser reaches this terminal.
+    if (url.pathname === '/api/log' && req.method === 'POST') {
+      const text = (await readBytes(req, 4000)).toString('utf8');
+      console.log(`page: ${text.replace(/\s+/g, ' ').slice(0, 500)}`);
+      res.writeHead(204); res.end();
       return;
     }
 
@@ -79,6 +165,44 @@ const server = createServer(async (req, res) => {
       return res.end();
     }
 
+    // Reading by rows (ROADMAP 5.16, first real photo 2026-09-29): the page
+    // cuts the photo at the shelf boards it found and sends each row at full
+    // resolution. /api/read only reads — one row, one model call, cached by
+    // the crop's hash; /api/match then matches the combined list against the
+    // whole (shrunk) photo, streamed as before.
+    if (url.pathname === '/api/read' && req.method === 'POST') {
+      if (!hasApiKey()) return send(400, { error: 'ANTHROPIC_API_KEY ist nicht gesetzt.' });
+      const type = req.headers['content-type'];
+      if (type !== 'image/jpeg' && type !== 'image/png') return send(400, { error: 'nur JPEG oder PNG' });
+      const bytes = await readBytes(req, MAX_PHOTO_BYTES);
+      const image = imageSize(bytes);
+      if (!image) {
+        console.log(`read: no image size, ${bytes.length} bytes, starts ${bytes.subarray(0, 8).toString('hex')}`);
+        return send(400, { error: `Bild ließ sich nicht lesen (${bytes.length} Bytes, Kopf ${bytes.subarray(0, 4).toString('hex')})` });
+      }
+      const key = createHash('sha256').update(bytes).digest('hex');
+      const cached = recognitions.get(key);
+      try {
+        const run = cached ?? await recognize(bytes, type, { publisher: true, axis: true, pixels: { width: image.width, height: image.height } });
+        recognitions.set(key, run);
+        return send(200, { ...run, cached: !!cached });
+      } catch (err) {
+        return send(502, { error: `Erkennung fehlgeschlagen: ${err instanceof Error ? err.message : String(err)}` });
+      }
+    }
+
+    if (url.pathname === '/api/match' && req.method === 'POST') {
+      const body = JSON.parse((await readBytes(req, MAX_PHOTO_BYTES * 2)).toString('utf8')) as {
+        photo: string; books: RecognizedBook[]; meta: Record<string, unknown>;
+      };
+      const photo = decode(Buffer.from(body.photo, 'base64'));
+      if (!photo) return send(400, { error: 'Foto ließ sich nicht lesen' });
+      const emit = stream(res);
+      emit({ type: 'recognized', books: body.books, problems: [], ...body.meta, photo: { width: photo.width, height: photo.height } });
+      await matchAll(body.books, photo, emit);
+      return res.end();
+    }
+
     if (url.pathname === '/api/recognize' && req.method === 'POST') {
       if (!hasApiKey()) return send(400, { error: 'ANTHROPIC_API_KEY ist nicht gesetzt. Schlüssel in .env.local eintragen und den Server neu starten — oder die Beispielliste nehmen.' });
       const type = req.headers['content-type'];
@@ -87,9 +211,11 @@ const server = createServer(async (req, res) => {
       const bytes = await readBytes(req, MAX_PHOTO_BYTES);
       const photo = decode(bytes);
       if (!photo) return send(400, { error: 'Foto ließ sich nicht lesen' });
-      let run;
+      const key = createHash('sha256').update(bytes).digest('hex');
+      let run = recognitions.get(key);
       try {
-        run = await recognize(bytes, type);
+        run ??= await recognize(bytes, type, { publisher: true, axis: true, pixels: { width: photo.width, height: photo.height } });
+        recognitions.set(key, run);
       } catch (err) {
         return send(502, { error: `Erkennung fehlgeschlagen: ${err instanceof Error ? err.message : String(err)}` });
       }

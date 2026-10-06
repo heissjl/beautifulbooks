@@ -9,6 +9,7 @@ import { readPhoto } from '@/lib/walls/readphoto';
 import { json, openWalls } from '../guard';
 import { later } from '@/app/api/count';
 import { countPhoto } from '@/lib/insights/store';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/walls/photo — a photo of books (JPEG or PNG, the browser has
@@ -43,6 +44,7 @@ function recordPhoto(event: Record<string, unknown>): void {
 }
 
 export async function POST(request: NextRequest) {
+  measure('photo', request);
   const open = openWalls(request, 'wallsPhoto');
   if ('response' in open) return open.response;
 

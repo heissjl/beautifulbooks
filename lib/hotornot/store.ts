@@ -139,6 +139,21 @@ export interface RedisCommands {
   setEx?(key: string, value: string, ttlSeconds: number): Promise<unknown>;
   /** EXPIRE key seconds: the daily totals of the analytics (3.1a) age out by themselves. Optional, like hIncrBy. */
   expire?(key: string, seconds: number): Promise<unknown>;
+  /**
+   * Many HINCRBYs on one hash and its EXPIRE as **one** command, a Lua script
+   * (ROADMAP 2.18d): the CPU meter's flush was 14–35 commands every thirty
+   * seconds per instance (measured 2.18b). Optional, like hIncrBy.
+   */
+  hIncrByMany?(key: string, increments: ReadonlyArray<readonly [field: string, by: number]>, ttlSeconds: number): Promise<unknown>;
+}
+
+/** ARGV[1] is the expiry, then field and amount in turns. Returns how many fields it added to. */
+export const HINCRBY_MANY_SCRIPT =
+  "for i = 2, #ARGV, 2 do redis.call('HINCRBY', KEYS[1], ARGV[i], ARGV[i + 1]) end " +
+  "redis.call('EXPIRE', KEYS[1], ARGV[1]) return (#ARGV - 1) / 2";
+
+function hIncrByManyArgs(increments: ReadonlyArray<readonly [string, number]>, ttlSeconds: number): string[] {
+  return [String(ttlSeconds), ...increments.flatMap(([field, by]) => [field, String(by)])];
 }
 
 /**
@@ -266,6 +281,7 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     },
     hSetNX: (key, field, value) => command(['HSETNX', key, field, value]),
     setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
+    hIncrByMany: (key, increments, ttlSeconds) => command(['EVAL', HINCRBY_MANY_SCRIPT, 1, key, ...hIncrByManyArgs(increments, ttlSeconds)]),
   };
 }
 
@@ -345,6 +361,8 @@ export function redisCommands(url: string): RedisCommands {
     hIncrBy: (key, field, by) => run(client => client.hIncrBy(key, field, by)),
     setEx: (key, value, ttlSeconds) => run(client => client.set(key, value, { EX: ttlSeconds })),
     expire: (key, seconds) => run(client => client.expire(key, seconds)),
+    hIncrByMany: (key, increments, ttlSeconds) =>
+      run(client => client.eval(HINCRBY_MANY_SCRIPT, { keys: [key], arguments: hIncrByManyArgs(increments, ttlSeconds) })),
   };
 }
 
@@ -365,8 +383,8 @@ type Env = Record<string, string | undefined>;
 
 export type StoreConfig = { kind: 'rest'; url: string; token: string } | { kind: 'redis'; url: string };
 
-export function storeConfig(env: Env = process.env): StoreConfig | null {
-  const names = Object.keys(env).filter(k => k.startsWith(STORE_PREFIX) && env[k]).sort();
+export function storeConfig(env: Env = process.env, prefix: string = STORE_PREFIX): StoreConfig | null {
+  const names = Object.keys(env).filter(k => k.startsWith(prefix) && env[k]).sort();
   const url = names.find(k => /REST(_API)?_URL$/.test(k));
   // The read-only token is useless here: a vote is a write.
   const token = names.find(k => /REST(_API)?_TOKEN$/.test(k) && !k.includes('READ_ONLY'));
@@ -422,10 +440,12 @@ export function storeFromEnv(env: Env = process.env): VoteStore | null {
 /**
  * The Redis commands this deployment has, or null: the same choice as
  * `storeFromEnv` (REST first, then a direct connection), without the dev
- * memory fallback, which each store keeps for itself.
+ * memory fallback, which each store keeps for itself. `prefix` names another
+ * store's variables: the short links of 5.18b live in a Redis of their own
+ * (`LINKS_…`), found by the same matching.
  */
-export function commandsFromEnv(env: Env = process.env): RedisCommands | null {
-  const config = storeConfig(env);
+export function commandsFromEnv(env: Env = process.env, prefix: string = STORE_PREFIX): RedisCommands | null {
+  const config = storeConfig(env, prefix);
   if (config?.kind === 'rest') return upstashCommands(config.url, config.token);
   if (config?.kind === 'redis') return redisCommands(config.url);
   return null;

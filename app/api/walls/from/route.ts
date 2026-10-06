@@ -4,6 +4,7 @@ import { tilesFromCurated, tilesFromWall } from '@/lib/walls/jumpstart';
 import { isWallId, toPublic } from '@/lib/walls/model';
 import { newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
 import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET /api/walls/from?curated=<slug> | ?reader=<id> — the covers of a
@@ -12,6 +13,7 @@ import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../
  * collection that is open.
  */
 export async function GET(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const params = request.nextUrl.searchParams;
@@ -19,7 +21,7 @@ export async function GET(request: NextRequest) {
   const reader = params.get('reader');
   try {
     if (curated) {
-      const c = await liveCollectionBySlug(curated, { includeDrafts: false });
+      const c = await liveCollectionBySlug(curated);
       if (!c) return json({ error: 'No such collection.' }, 404);
       return json({ title: c.title, ...tilesFromCurated(c.works) });
     }
@@ -41,6 +43,7 @@ export async function GET(request: NextRequest) {
  * (5.13j), and takes only the covers, not the title's owner or their lines.
  */
 export async function POST(request: NextRequest) {
+  measure('walls', request);
   const open = openWalls(request);
   if ('response' in open) return open.response;
   const body = await readJson(request);
@@ -50,7 +53,7 @@ export async function POST(request: NextRequest) {
   let started;
   try {
     if (typeof body.curated === 'string') {
-      const c = await liveCollectionBySlug(body.curated, { includeDrafts: false });
+      const c = await liveCollectionBySlug(body.curated);
       if (!c) return json({ error: 'No such collection.' }, 404);
       title = c.title;
       started = tilesFromCurated(c.works);

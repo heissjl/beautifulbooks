@@ -3,6 +3,7 @@ import { readBody } from '@/app/api/versus/guard';
 import { allCollections } from '@/lib/collections';
 import { parseSuggestion } from '@/lib/suggest/store';
 import { adminGate, friendGate, json, storeDown } from './guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST: a friend sends a suggestion. GET: Julian's local tool reads them all,
@@ -14,6 +15,7 @@ import { adminGate, friendGate, json, storeDown } from './guard';
  * shows it as one.
  */
 export async function POST(request: NextRequest) {
+  measure('curate', request);
   const gate = friendGate(request);
   if ('response' in gate) return gate.response;
   const known = allCollections({ includeDrafts: true }).map(c => c.slug);
@@ -28,6 +30,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   const gate = adminGate(request);
   if ('response' in gate) return gate.response;
   try {

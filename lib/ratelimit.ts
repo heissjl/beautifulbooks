@@ -96,10 +96,30 @@ export const RATE_RULES = {
    */
   wallsPhoto: { capacity: 3, refillPerMinute: 1 },
   /**
+   * A Calibre library looked up at Open Library (5.17a): one request is 8
+   * books, about 11 catalogue requests. The burst holds a whole library of
+   * 500 books (63 requests); after it, 12 a minute is ~130 catalogue requests
+   * a minute for one reader — so a second library at once waits instead of
+   * taking Open Library from everyone else. The page waits and goes on by itself.
+   */
+  wallsCalibre: { capacity: 64, refillPerMinute: 12 },
+  /**
    * The analytics' signals from the browser (ROADMAP 3.1b): one per page a
    * reader leaves. Generous for a reader, tight for someone feeding numbers.
    */
   seen: { capacity: 60, refillPerMinute: 60 },
+  /**
+   * "The books that inspired me" (ROADMAP 5.18b): the lists, a book's editions
+   * (two to four Open Library requests when nobody asked before) and a board's
+   * link. A reader building a board asks a few dozen times.
+   */
+  inspiration: { capacity: 60, refillPerMinute: 30 },
+  /**
+   * A poster or a link card: nine covers fetched and one picture drawn, the
+   * heaviest thing this feature does. The CDN keeps the answer, so a reader
+   * needs one per format and board.
+   */
+  inspirationPoster: { capacity: 12, refillPerMinute: 6 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

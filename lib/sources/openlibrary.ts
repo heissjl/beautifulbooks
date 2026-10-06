@@ -435,3 +435,71 @@ export async function getEditionsPage(workId: string, offset = 0, limit = OL_EDI
     throw err;
   }
 }
+
+/**
+ * The cover ids Open Library's own record for an ISBN carries (ROADMAP 1.12).
+ *
+ * The fallback behind the verdict when Google Books cannot be asked — its
+ * daily quota spent, or two attempts failed. It answers a weaker question
+ * than Google does: not "what does the publisher show for this ISBN today"
+ * but "what has the catalogue scanned for it", and `lib/verdicts.ts` words it
+ * as exactly that. A 404 is a real answer: no record, so no cover on record.
+ * Anything else that fails is thrown, so the caller can report "did not
+ * answer" rather than "nothing known" (SPEC N12). Per-IP limits do not apply:
+ * `/isbn/` is the JSON API (3 requests a second with the e-mail in the user
+ * agent), not the rate-limited cover lookup by ISBN.
+ */
+export async function lookupIsbnRecordCoversOrThrow(isbn13: string): Promise<number[]> {
+  const url = `${BASE}/isbn/${encodeURIComponent(isbn13)}.json`;
+  try {
+    const data = await fetchJson<{ covers?: unknown }>(url, { timeoutMs: OL_TIMEOUTS.work, revalidate: OL_REVALIDATE.work });
+    const ids = Array.isArray(data.covers) ? data.covers : [];
+    // Open Library marks a removed scan with -1; it is not a cover.
+    return ids.filter((id): id is number => typeof id === 'number' && Number.isInteger(id) && id > 0);
+  } catch (err) {
+    if (err instanceof HttpError && err.status === 404) return [];
+    throw err;
+  }
+}
+
+/** The edition an ISBN names: its work and the covers on record for this very printing (ROADMAP 5.17a). */
+export interface IsbnEdition {
+  workId: string;
+  covers: number[];
+}
+
+/** `/isbn/<isbn>.json` as far as the Calibre import reads it. */
+export interface OlIsbnDoc {
+  works?: Array<{ key?: string }>;
+  covers?: number[];
+}
+
+/** Pure: the edition document to its work and covers, null when it names no work. */
+export function editionFromIsbnDoc(doc: OlIsbnDoc): IsbnEdition | null {
+  const workId = /^\/works\/(OL\d+W)$/.exec(doc.works?.[0]?.key ?? '')?.[1];
+  if (!workId) return null;
+  // Open Library marks a deleted image with -1.
+  return { workId, covers: (doc.covers ?? []).filter((c) => Number.isInteger(c) && c > 0) };
+}
+
+/**
+ * The edition behind an ISBN (`/isbn/<isbn>.json`, which redirects to the
+ * edition record). Null when Open Library has no such ISBN; **throws
+ * `SourceUnavailableError` when it does not answer** — silence asked once
+ * more, as the search does. Cached like the editions.
+ */
+export async function getEditionByIsbn(isbn13: string): Promise<IsbnEdition | null> {
+  if (!/^97[89]\d{10}$/.test(isbn13)) return null;
+  let failure: unknown;
+  for (let attempt = 1; attempt <= SEARCH_RETRY.attempts; attempt++) {
+    try {
+      const doc = await fetchJson<OlIsbnDoc>(`${BASE}/isbn/${isbn13}.json`, { timeoutMs: OL_TIMEOUTS.search, revalidate: OL_REVALIDATE.editions });
+      return editionFromIsbnDoc(doc);
+    } catch (err) {
+      if (err instanceof HttpError && err.status === 404) return null;
+      failure = err;
+      if (!isSilence(err)) break;
+    }
+  }
+  throw new SourceUnavailableError('openlibrary', failure);
+}

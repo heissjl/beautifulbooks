@@ -17,11 +17,17 @@ export default function BookSearch({
   workId,
   onSearch,
   onPick,
+  wide = false,
 }: {
   q: string;
   workId: string | null;
   onSearch: (q: string) => void;
   onPick: (workId: string) => void;
+  /**
+   * The results take the block's whole width, three or four across (Julian, 2026-10-04: „use the space
+   * better“ — on /create two columns left half the block empty). The field stays a readable width.
+   */
+  wide?: boolean;
 }) {
   const t = useT();
   const [query, setQuery] = useState(q);
@@ -48,7 +54,7 @@ export default function BookSearch({
           e.preventDefault();
           if (query.trim().length >= 3) onSearch(query.trim());
         }}
-        className="mt-4 flex gap-2"
+        className={`mt-4 flex gap-2 ${wide ? 'max-w-2xl' : ''}`}
       >
         <input
           type="search"
@@ -66,7 +72,7 @@ export default function BookSearch({
         (shown.works.length === 0 ? (
           <p className="mt-3 text-sm text-ink-2">{t('Open Library has nothing under “{q}”.', { q: shown.q })}</p>
         ) : (
-          <ul className="mt-4 grid gap-1 sm:grid-cols-2">
+          <ul className={`mt-4 grid gap-1 sm:grid-cols-2 ${wide ? 'gap-x-4 lg:grid-cols-3 xl:grid-cols-4' : ''}`}>
             {shown.works.map((w) => (
               <li key={w.id} className="min-w-0">
                 <button
@@ -75,8 +81,8 @@ export default function BookSearch({
                   aria-current={w.id === workId}
                   className={`flex w-full items-center gap-3 rounded-md p-1.5 text-left hover:bg-surface-2 ${w.id === workId ? 'bg-surface-2' : ''}`}
                 >
-                  <span className="relative block h-14 w-10 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
-                    {w.coverUrls[0] && <CoverImage src={w.coverUrls[0]} alt="" sizes="40px" />}
+                  <span className={`relative block shrink-0 overflow-hidden rounded-[2px] bg-surface-2 ${wide ? 'h-[4.5rem] w-12' : 'h-14 w-10'}`}>
+                    {w.coverUrls[0] && <CoverImage src={w.coverUrls[0]} alt="" sizes={wide ? '48px' : '40px'} />}
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate text-sm text-ink">{w.title}</span>

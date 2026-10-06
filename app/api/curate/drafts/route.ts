@@ -6,6 +6,7 @@ import type { CollectionRecord } from '@/lib/collections';
 import { listDrafts, newDraft } from '@/lib/curate/drafts';
 import { json, memberGate } from '../../suggest/guard';
 import { draftStore, storeDown } from '../store';
+import { measure } from '@/app/api/measure';
 
 /**
  * GET: every draft, for friends and for Julian's tool. POST: a new draft,
@@ -14,6 +15,7 @@ import { draftStore, storeDown } from '../store';
  * (ROADMAP 5.10b, SPEC F8.5.)
  */
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   const gate = memberGate(request);
   if ('response' in gate) return gate.response;
   const s = draftStore();
@@ -26,6 +28,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  measure('curate', request);
   const gate = memberGate(request);
   if ('response' in gate) return gate.response;
   const s = draftStore();

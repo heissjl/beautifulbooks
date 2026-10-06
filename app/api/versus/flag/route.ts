@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { flagCover, secretForEnv } from '@/lib/hotornot/game';
 import { StoreUnavailableError } from '@/lib/hotornot/store';
 import { json, openGame, readBody, storeDown } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/versus/flag {id, reason, a, b, token} — "not a cover", or an
@@ -9,6 +10,7 @@ import { json, openGame, readBody, storeDown } from '../guard';
  * for everyone, so it needs the pair it was shown in, like a vote does.
  */
 export async function POST(request: NextRequest) {
+  measure('versus', request);
   const game = openGame(request, 'vote');
   if ('response' in game) return game.response;
   const { id, reason, a, b, token } = await readBody(request);

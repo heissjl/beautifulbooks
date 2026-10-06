@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { commerceEnabled, siteMode } from '../sitemode';
+import { availabilityEnabled, commerceEnabled, siteMode } from '../sitemode';
 
 describe('siteMode (E20)', () => {
   it('is hobby when unset, empty or hobby', () => {
@@ -19,3 +19,18 @@ describe('siteMode (E20)', () => {
     expect(() => siteMode('true')).toThrow();
   });
 });
+
+describe('availabilityEnabled (ROADMAP 0.1: a switch of its own)', () => {
+  it('stays off in shop mode unless its own switch says on', () => {
+    expect(availabilityEnabled('shop', undefined)).toBe(false);
+    expect(availabilityEnabled('shop', '')).toBe(false);
+    expect(availabilityEnabled('shop', 'true')).toBe(false);
+    expect(availabilityEnabled('shop', 'on')).toBe(true);
+    expect(availabilityEnabled('shop', ' ON ')).toBe(true);
+  });
+  it('stays off in hobby mode even when its switch says on', () => {
+    expect(availabilityEnabled('hobby', 'on')).toBe(false);
+    expect(availabilityEnabled('', 'on')).toBe(false);
+  });
+});
+

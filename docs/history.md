@@ -3605,6 +3605,70 @@ Die Regel damit: **ein geteiltes Cover** (`/book/<id>/cover/<coverId>`) zeigt di
 Die neuen Seiten aus 5.13 (`/create`, `/c/<id>`, `/collections/readers`, `/create/review`) setzen kein eigenes `openGraph` und erben die Karte ohne Änderung. `/contact` und `/privacy` antworteten im Dev-Server mit 500, weil dort die `IMPRINT_*`-Variablen fehlen (bekannt, nicht neu); `/curate`, `/suggest` und eine unbekannte `/c/<id>` mit 404, weil Passwort bzw. Sammlung fehlen — das `og:image` steht trotzdem im Kopf.
 
 
+## 2026-09-28 — Das eigene Regal nach Farben, ein Lab-Prototyp (ROADMAP 5.16)
+
+Julian: „start a new lab project. i want an option to take a picture of my library and then have an algorithm to sort the books by colours"
+
+- Gebaut in [`lab/colorsort/`](../lab/colorsort/README.md): eine einzige HTML-Datei (18,8 KB, esbuild), die ohne Server läuft. Kein Bildmodell, kein Netz — das Foto bleibt auf dem Gerät.
+- Erkennung ohne Modell: Regalböden als Zeilen, deren Farbkante (OKLab) im **Median** über die ganze Breite hoch ist; Trennlinien zwischen Rücken als Spalten, deren Farbkante im **20-%-Quantil** über den unteren Teil der Reihe hoch ist. Farbe je Rücken: größter von drei k-means-Clustern ohne die Ränder.
+- **Der Median reichte für die Rücken nicht:** am gemalten Regal fand er 27 Linien zu viel, die Ränder der Titelzeile. Mit dem 20-%-Quantil auf sechs gemalten Regalen (Seeds 7, 1–5): **295 von 295 Trennlinien auf ±3 px, keine zu viel**, beide Reihen gefunden. Im Browser 175 ms vom Bild bis zur Ansicht.
+- Ordnung: Weiß → Farbkreis ab 10° (Rot) in 30°-Stufen, je hell nach dunkel → Grau/Schwarz; Schwelle für Grau Buntheit 0,04. Alle gesetzt, nicht gemessen, als Schieber auf der Seite.
+- Befund: Wandstücke an den Reihenenden werden als helle Bücher gelesen; die Seite hat dafür „Kein Buch".
+- **Offen:** kein echtes Foto gesehen. Fünf Fotos von Julian (hell, schummrig, voll, mit Lücken, mit Stützen), Ziel ≥ 90 % der Linien ohne Eingriff.
+
+## 2026-09-28 — Die Farbordnung als Schritt im Regal-Ablauf (ROADMAP 5.16 auf 5.11)
+
+Julian: „use the book detection by the other lab project for the collection curation to better find the books from the picture and make the colours sorting part of that process"
+
+- Im Regal-Ablauf von [`lab/shelf/`](../lab/shelf/README.md) findet das Bildmodell (`lib/recognize.ts`) die Bücher. `refineSpineBox` aus [`lab/colorsort/`](../lab/colorsort/README.md) schiebt die linke und rechte Kante jedes Rücken-Kastens auf die nächste Trennlinie. Danach liest der Browser die Farbe und ordnet die Wand „wie im Foto“, „nach Farben“ oder „hell nach dunkel“. Der geteilte Link trägt die gewählte Reihenfolge.
+- **Kanten-Anpassung, gemessen** an sechs gemalten Regalen (283 Rücken), beide Kanten um einen Anteil der Rückenbreite verschoben: 10 % → 283/283 auf ±3 px zurück, 25 % → 274, 35 % → 199, 50 % → 5. Die erste Fassung nahm die *stärkste* Linie im Fenster statt der *nächsten* und kam bei 25 % nur auf 79 %: die Außenkante eines schmalen Nachbarn war stärker.
+- Beispielmodus im Browser: 12 von 12 Farben gelesen, 71 ms; die Reihenfolge im Link stimmt mit der Wand überein.
+- **Offen:** ein echtes Foto (Schlüssel fehlt lokal). Die Kacheln zeigen Open-Library-Cover, geordnet wird nach der Farbe des eigenen Exemplars. Ob das auf der Wand stimmig aussieht, entscheidet Julian.
+
+## 2026-09-28 — Die Ausgabe vom Buchrücken (ROADMAP 5.16 auf 5.11)
+
+Julian: „der plan ist auch, dass du die seite das entsprechende cover der im foto gezeigten version findet. schwierig vom buchrücken aus, aber lass es uns versuchen"
+
+- **Verlag:** `lib/recognize.ts` hat die Option `{ publisher: true }`. Das Modell liest dann den Verlag vom Buch mit. Die Website ruft ohne die Option auf; Prompt und Schema sind dort unverändert.
+- **Auswahl** (`lab/shelf/edition.ts`, `Matcher.spineEdition`): Kandidaten sind die Cover von Seite 0 des Werks mit demselben Verlag, ohne Verlagstreffer die ersten 16. Gereiht wird nach dem OKLab-Abstand der Rückenfarbe zur nächsten Hauptfarbe des Covers. Gewählt wird bei Verlagstreffer ab Abstand ≤ 0,10; ohne Verlag nur, wenn das Cover außerdem das zweitbeste um ≥ 0,03 schlägt. Die Kacheln zeigen die Gründe, „anderes Cover" die Reihung.
+- **Gestellte Messung:** Streifen aus der Mitte echter Cover als „Rücken", drei Werke. Mit Verlag 22 von 23 richtig. Nur mit Farbe 7 von 17 gewählt, alle richtig; das richtige stand in 13 von 17 Fällen auf Platz 1. Kalt 8,8 s für sechs Rücken.
+- **Offen:** echte Rücken, deren Farbe von der Vorderseite abweicht, und ob Sonnet den Verlag lesen kann — dafür braucht es Julians Fotos. Außerdem sieht der Vergleich nur Seite 0 (Gatsby: 7 von 379 Covern).
+
+## 2026-09-28 — HEIC-Fotos im Regal-Prototyp (ROADMAP 5.11/5.16)
+
+Julian: „it doesnt recognize the photos i am uploading, but the same photo worked online for a collection creation already"
+
+- Gemessen im Browser-Pane (Chrome): eine `.HEIC`-Datei hat einen leeren `file.type`. `createImageBitmap` scheitert mit „The source image could not be decoded“, `<img>` ebenso. Der Prototyp prüfte `file.type.startsWith('image/')` und kehrte ohne Meldung zurück; beim Server kam nie eine Anfrage an.
+- Behoben in `lab/shelf/`: Lesefehler stehen in der Statuszeile. HEIC geht an `POST /api/heic` (heic-decode → JPEG, im Speicher). Ende-zu-Ende geprüft: HEIC → JPEG → `claude-sonnet-5`, 2,2 s.
+- `/create` auf der Website (`components/WallPhoto.tsx`) dekodiert ebenfalls mit `createImageBitmap` und scheitert in Chrome an HEIC. Nicht angefasst.
+
+## 2026-09-29 — Das erste echte Foto im Regal-Prototyp (ROADMAP 5.11/5.16)
+
+Julian: „the picture works now, but the colour detection seems still off"
+
+- Ganzes Regal im Hochformat, auf 1200 × 1600 verkleinert, 38 Rücken. Erkennung 20,1 s, 3224 + 2767 Tokens; 38 Werke, mindestens eines falsch (unsicher markiert, aber gezählt). Open Library 19,7 s, Ausgaben 53,1 s, 10 von 38 Rücken einer Ausgabe zugeordnet. **Verlag bei 0 von 38 gelesen.**
+- **Befund:** Die Kästen des Modells lagen waagrecht ungefähr richtig. Senkrecht begannen sie mitten auf dem Rücken und liefen über das Brett in die nächste Reihe. In der unteren Reihe waren sie gleichmäßig verteilt (alle 0,025 breit, Schritt 0,035) — geschätzt. Die Farben kamen zum Teil vom Brett und von Nachbarreihen.
+- Die Kantenerkennung fand die drei Regalböden sauber (364 ms). Zwischen den Rücken fand sie nur 21 von 38 Linien.
+- **Geändert:** Kästen werden auf ihre Reihe geschnitten (`fitBoxToRows`). Die Seite liest Reihe für Reihe in bis zu 2576 px statt das ganze Regal in 1600 px. Die Kästen kommen in Pixeln (`recognize(…, { pixels })`); die Website-Anfrage bleibt unverändert. Antworten werden per Prüfsumme gemerkt.
+- **Dasselbe Foto, zweiter Durchgang:** 64 statt 38 Bücher gelesen, Verlag bei 25 statt 0. 26 von 63 Rücken einer Ausgabe zugeordnet (vorher 10 von 38). Lesen 14,3 s in drei parallelen Aufrufen, 12 919 + 4572 Tokens; Open Library 40,4 s, Ausgaben 82,0 s. Die Kästen sitzen senkrecht auf den Rücken. Die Farbordnung ist auf den ersten Blick plausibel, Buch für Buch nicht geprüft.
+
+## 2026-09-29 — Gedrehte Rechtecke für schräge und liegende Bücher (ROADMAP 5.16)
+
+Julian: „teilweise liegen die bücher ja auch oder sind schief im regal. die segmentierung sollte hier deutlich genauer sein"
+
+- `lab/colorsort/oriented.ts`: ein Buch ist eine Mittellinie mit einer Breite. Die Längskanten werden quer zur Buchrichtung gesucht, mit Drehungen bis ±8°; es gewinnt das Kantenpaar, das Mitte und Dicke des Modells am nächsten bleibt. Die Farbe wird im gedrehten Rechteck gelesen. `lib/recognize.ts` hat dafür die Option `axis` (die Website nutzt sie nicht).
+- Ohne Modell, drei gemalte Szenen, 42 Bücher mit verschobenen, verdrehten und falsch dicken Rechtecken: Die erste Fassung suchte jede Kante einzeln und traf 21–36 %. Mit der Paarsuche sind es 40 von 42.
+- Mit `claude-sonnet-5`, gemalte Szene mit echten Titeln (5 stehend, 2 lehnend, 3 liegend). Erster Versuch: Die lehnenden Bücher gab das Modell 4–7° zu steil an, die Winkelsuche bis ±3° reichte nicht. Die liegenden kamen als „Umschlag“ und wurden verworfen, danach als kurze Linie quer übers Buch („Fuß → Kopf“ verstand das Modell als unten → oben). Nach drei Korrekturen (±8°, „entlang der langen Seite“, Drehen einer zu kurzen Linie): **10 von 10 auf ≤ 2 px**, Dicke ≤ 3 px, alle Farben richtig. Das Modell allein lag bis zu 12 px daneben.
+- Offen: ein echtes Foto mit schrägen und liegenden Büchern.
+
+## 2026-09-29 — Das sortierte Regal; gedrehte Rechtecke am echten Foto (ROADMAP 5.16)
+
+Julian: „baue noch die funktion ein, dass am ende das sortierte regal gezeigt wird"
+
+- `drawSortedShelf` schneidet jedes Buch entlang seines gedrehten Rechtecks aus dem Foto, richtet es auf und räumt die Reihen in Farbordnung neu ein, jede so breit wie im Foto. An der gemalten Szene trifft eine Linie über dem Brett die zehn Rücken in Regenbogenordnung.
+- Echtes Foto mit gedrehten Rechtecken: 58 Bücher (50 stehend, 8 lehnend), 37 verschoben, Hauptfarbe 0,55 → 0,58. **Verlag nur bei 3 von 58** (vorher 25 von 64). Seitdem fragt die Anweisung den Verlag direkt nach dem Autor; ein Test hält die Anfrage der Website Wort für Wort fest. Zuordnung kalt 589 s.
+- Firefox: drei Reihen-Ausschnitte mit 5,1–5,7 MB (Chrome 0,4–0,6 MB) scheiterten an der Speichergrenze von jpeg-js, weil `/api/read` sie nur für die Bildgröße dekodierte. Jetzt kommt die Größe aus dem Dateikopf (`imagesize.ts`).
+
 **dtv phantastica (Piatti), fertig am 2026-09-28.** 30 neue Ausgaben angelegt, OL62603158M–OL62603190M (Zuordnung in `created.json` im Manifest-Ordner), und 36 Umschläge hochgeladen.
 - Nr. 1859 (Handke) ist ohne ISBN angelegt. Die DNB gibt dem Druck von 1980 die alte ISBN von dtv 783, die bei Open Library zum Druck von 1971 gehört.
 - Die Wand `dtv-phantastica-covers-by-celestino-piatti` zeigt 36 von 36, laut Kontaktbogen alle von Piatti. Online als Entwurf.
@@ -4352,3 +4416,899 @@ Julian, mit Bildschirmfoto aus „Calibre Covers": „Open Library did not answe
 
 **Nicht gelöst:** die Sperre selbst — nur Warten hilft. Und die App fragt bei jedem Öffnen eines Buchs neu; ein Speicher für Werke und Ausgaben-Seiten auf der Platte würde die Anfragen senken, ist aber nicht gebaut.
 
+## 2026-10-04 · Drei Ideen am Testsatz, zur Hälfte — das Guthaben war leer (ROADMAP 5.11a)
+
+Julian: „miss die drei ideen am testsatz“. Gemessen: die Schärfezahl ohne Modell trennt das verwackelte Foto von den anderen dreizehn (0,33 gegen 0,43–0,74), aber erst kachelweise — über das ganze Bild lag ein scharfer Umschlag vor unscharfem Laden darunter. Der Prompt-Satz gegen angeschnittene Bücher trägt nicht: die Stümpfe bleiben, ein echtes Buch geht verloren. Dann meldete die Anthropic-API ein leeres Guthaben; die Varianten „Randstreifen auslassen“ und „Feld für Unsicheres“ sind gebaut und ungemessen, und die Website liest bis zum Aufladen kein Foto. Der wichtigste Befund kam nebenbei: zwei gleiche Läufe unterscheiden sich um acht Bücher, weil die am selben Tag hochgesetzte Schwelle 40 in der Spanne liegt, die ein erster Blick auf einem dichten Regal liest — ob der zweite Blick kommt, ist dort Zufall. [Bericht](tests/2026-10-04-regalfoto-testsatz.md).
+
+## 2026-10-04 · Die Schwelle wieder bei 30 (ROADMAP 5.11a)
+
+Julian: „setz die schwelle zurück auf 30 und pushe“. Einen Tag stand sie bei 40; der Testsatz zeigte, dass ein erster Blick auf einem dichten Regal 35–55 Bücher liest und der zweite Blick bei 40 vom Zufall abhing (dasselbe Foto 35 von 46 in einem Lauf, 45 im nächsten; die Galeriewand in einem Lauf ohne zweiten Blick). Bei 30 kam er auf allen sechs dichten Fotos. Die Ausgaben begrenzt seit demselben Tag das Tagesbudget. Die Zahl der im Bild gefundenen Regalböden als Signal, das nicht schwankt, bleibt eine Idee — sie gilt nur für Regale (Julian).
+
+## 2026-10-04 · Search Console und Bing Webmaster Tools eingerichtet (ROADMAP 2.5, 2.15 Schritt 4)
+
+Julians Prompt („Richte die Seite bei Google Search Console und Bing Webmaster Tools ein"), in seinem Chrome mit angemeldetem Google-, Microsoft- und INWX-Konto, 06:40–07:05 MESZ.
+
+**Google:** Property vom Typ *Domain* `buyitscovers.com`; der TXT-Eintrag `google-site-verification=…` auf `@` bei INWX (nach Julians „ja, speichern"), bestätigt beim ersten Klick. Sitemap `https://buyitscovers.com/sitemap.xml` gesendet — Status „Couldn't fetch" ohne „Last read", auch zehn Minuten später; dieselbe Datei mit Googlebot-Kennung einmal abgerufen: 200, `application/xml`, 148.575 Bytes, `x-vercel-cache: HIT`, 875 `<loc>`, alle auf `buyitscovers.com`; robots.txt erlaubt alles außer `/api/`, `/go/`, `/admin/` und nennt die Sitemap. Bei einer neuen Property ist das der übliche Zustand vor dem ersten Abruf, kein Befund über die Datei.
+
+**URL-Prüfung** (Live-Test, Googlebot Smartphone):
+
+| Adresse | Index | Live-Test | Kanonisch (vom Nutzer) | Antrag |
+|---|---|---|---|---|
+| `/` | unbekannt | kann indexiert werden | `https://buyitscovers.com/` | gestellt |
+| `/book/OL1168083W` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+| `/collections/sf-masterworks` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+| `/book/OL1168083W/decades` | unbekannt | kann indexiert werden | = geprüfte URL | gestellt |
+
+Alle vier: „URL has no enhancements" — das Book-JSON-LD ist kein Typ, den die Search Console als Erweiterung berichtet; das sagt nichts über seine Gültigkeit (Rich-Results-Test bleibt 2.15 Schritt 5).
+
+**Bing:** angemeldet mit Julians Google-Konto, Import aus der Search Console mit Lesezugriff (`webmasters.readonly`): eine Website, importiert und damit bestätigt; Sitemaps-Zahl 0, weil Google sie noch nicht gelesen hatte, daher in Bing von Hand eingereicht — „Processing".
+
+**Offen:** 2.5 abhaken, sobald die Search Console „Success" und gefundene Seiten meldet; nach zwei bis drei Wochen Leistung und Seiten lesen (Buchseiten „Gecrawlt – zurzeit nicht indexiert" wären der Auslöser für 5.2); Core Web Vitals erst nach 28 Tagen Felddaten; IndexNow erst, wenn Seiten in Mengen entstehen (5.3/5.4).
+
+## 2026-10-04 · Zwei Fotos in Produktion: Umschläge gelesen, nicht zugeordnet; der Editor öffnet auf den neuen Covern (ROADMAP 5.11a, 5.13m)
+
+Julian, am Telefon in der Homescreen-Web-App: einmal fand das Foto kaum Werke, einmal fand er „another cover“ nicht. Aus `bb.photo` innerhalb der Log-Stunde: **Foto 1** las 8 Umschläge (4,3 s, 1,0 ct) und ordnete **keinen** zu — 7 „not in the catalogue“, 1 „maybe“, kein Suchausfall; **Foto 2** las 29 Bücher, 18 gefunden, 8 „maybe“, 3 nicht gefunden (9,6 s Modell, 13,2 s Suche, 2,0 ct). Der Testsatz misst nur das Lesen; die Zuordnung ist ungemessen, und „not in the catalogue“ fasst „keine Treffer“, „keine Übereinstimmung“ und „Werk ohne Cover“ zusammen. Das fehlende „another cover“: auf `/create` gibt es den Link nicht (noch keine Sammlung), und der Editor öffnete danach auf „Add covers“ statt auf den Covern; der Tausch per Tipp war nur als Tooltip benannt. Geändert: Ziel Arrange nach einem Commit mit Covern, ein Satz über dem Raster; angesehen bei 390 und 1280. Bericht: [docs/tests/2026-10-04-regalfoto-produktion.md](tests/2026-10-04-regalfoto-produktion.md).
+
+**Nachtrag am selben Abend:** „another cover“ gibt es jetzt schon in der Fotoliste auf `/create`, bevor die Sammlung existiert (Julian: „i want a user to be able to change covers in the from photo funnel before they create a collection“) — die Wahl bleibt in der Liste, bis „Make a collection“ sie schreibt; nachgestellt mit gestubbter Foto-Antwort und den Gatsby-Fixtures bei 390 und 1280 (Einzelheiten im Bericht).
+
+**Nachtrag 2:** Julian sah den Link am Telefon nicht. Gemessen mit einem langen Titel bei 390 px: die Liste war 630 px breit, „another cover“ lag rechts außerhalb des Bildschirms — das Grid in `WallProposal` hatte keine Spaltenangabe, und eine implizite Spur wächst mit dem längsten nicht umbrechenden Titel. `grid-cols-1` und `min-w-0`: 390 px, Link sichtbar. Das Foto im Editor benutzt jetzt dasselbe Fenster wie `/create` statt in die Suche zu springen.
+
+**Nachtrag 3:** ein „maybe“ in der Fotoliste hat „Accept“ („Stimmt“); danach ist die Zeile angehakt und hat „find another cover“ — so heißt der Link jetzt überall (Julian). Nachgestellt auf `/create` und im Editor bei 390 und 1280.
+
+## 2026-10-03 · Die Calibre-Bibliothek als eigene Sammlung, Lab (ROADMAP 5.17)
+
+Julian: „geh das projekt Calibre → Sammlung (5.17) an". Umgesetzt nach [PLAN-5.17](plans/PLAN-5.17-calibre-zur-sammlung.md), Schritte 1–5 und 7; Schritt 6 (einmal gegen die echte Seite) ist Julians. Der Plan und `lab/calibre/` lagen nur auf `claude/calibre-book-covers-df06e1` und sind in diesen Branch gemergt.
+
+**Gebaut:** `lab/calibre-import/` — `clean.ts`, `lookup.ts`, `assign.ts`, `review.ts`, `upload.ts`, `measure.ts`, `serve.ts` (Port 4328, 127.0.0.1, Token), `index.html`; dazu in `lab/calibre/` die Zuordnungsdatei (`map.ts`) und die sichere Art `mapped` in `match.ts`, `serve.ts --map`. 50 neue Tests (42 im Import, 8 für die Zuordnungsdatei), ohne Netz, eine aufgezeichnete ISBN-Antwort als Fixture. Die Website ist unverändert.
+
+**Vor der Messung:** Open Library lehnte am Abend etwa eine halbe Stunde lang jede Verbindung ab (`ECONNREFUSED` auf 207.241.234.205:443, auch von außerhalb; `covers.openlibrary.org` und archive.org antworteten). In der Zeit entstand, was kein Netz braucht.
+
+**Was in Calibre-Titeln steht** (gelesen, nie geschrieben): von 445 Büchern haben 24 keinen brauchbaren Autor (Lizenztexte, READMEs, Aufsätze unter ihrem Dateinamen) und werden übersprungen; bei 115 ändert das Glätten Titel oder Autor. Die Formen: Reihe davor („[Philip K. Dick 04] • …", „Foundation 1 - …", „Hey 3318 – …"), Jahr davor („1974-Rendezvous With Rama"), Autor im Titel davor oder dahinter („Crichton, Michael - Sphere"), Titel und Autor vertauscht („1954 Ray Bradbury - Fahrenheit 451" unter dem Autor „Fahrenheit 451"), Herkunfts-Etikett einer Schattenbibliothek mit „by <Autor>", Dateiendung, Untertitel. Autoren stehen als „Nachname, Vorname", mit Lebensdaten, mit Titeln („Preston, Psy.D., ABPP, John D.") oder zu zweit in einem Feld.
+
+**Die Messung** (`measure.ts`, 2026-10-03, die ganze Bibliothek, drei Anfragen gleichzeitig): **593 Anfragen an Open Library in 240 s, keine ohne Antwort**; 132 ISBN-Abrufe (22 kennt Open Library nicht, 33 Ausgaben ohne Cover) und 478 Suchen; der Cache ist 584 KB groß, ein zweiter Lauf stellt keine Anfrage.
+
+| | Bücher | Anteil an 421 fragbaren |
+|---|---|---|
+| Treffer | 328 | 78 % (74 % aller 445) |
+| – über die ISBN | 102 | |
+| – über Autor und Titel | 226 | |
+| Vorschlag | 69 | 16 % |
+| – gleicher Autor, anderer Titel | 27 | |
+| – nur der Titel | 33 | |
+| – gleicher Autor, längerer Werktitel | 7 | |
+| – ISBN, sonst stimmt nichts | 2 | |
+| nicht gefunden | 24 | 6 % |
+| übersprungen | 24 | |
+
+Aus den 328 Treffern werden 319 Kacheln (zwei Ausgaben eines Buchs sind eine Kachel; „Winnetou 1–3" liegen auf einem Werk). 75 der 102 ISBN-Treffer tragen das Cover genau ihres Drucks und die ISBN als Druck an der Kachel. **Das Erfolgsmaß des Plans (≥ 70 % der Bücher) ist erreicht.**
+
+**Stichprobe:** 40 Treffer mit festem Zufall (Seed 517), jeder von Hand gegen Titel und Autor geprüft: **39 richtig, 1 falsch** — „MaddAddam" traf *MADDADDAM TRILOGY BOX*. Daraufhin alle zwölf Treffer angesehen, bei denen der Titel nur enthalten war: ist der **Werktitel** der längere, waren von 7 zwei ein anderes Buch (die Box; „Pippi Langstrumpf" → *Guck mal, Pippi Langstrumpf*), zwei fraglich („Sherlock Holmes" → *The Adventures of …*, „Südamerika" → *Aus Nord- und Südamerika*), drei richtig; ist der **Buchtitel** der längere (Bandnummer, Untertitel ohne Doppelpunkt), waren 5 von 5 richtig. Die erste Form ist seitdem ein Vorschlag (`author+part`); die Tabelle oben ist der Stand danach (vorher 335 Treffer).
+
+**Die Vorschläge, durchgesehen:** von 27 „gleicher Autor, anderer Titel" sind rund 23 das richtige Werk — es sind die **übersetzten Titel** („Der Schnupfen" → *Katar*, „Die Stimme des Herrn" → *Głos pana*, „By Night in Chile" → *Nocturno de Chile*, „Das Lied von Vogel und Schlange" → *The Ballad of Songbirds and Snakes*) und Schreibvarianten („Effie Briest"). Die Sorge des Plans, deutsche Titel fänden ihr Werk nicht, trifft so nicht zu: Open Librarys Suche findet sie über die Ausgabentitel, nur bestätigen kann der Titelvergleich sie nicht. Sie bleiben Vorschläge (vier waren falsch: eine Erzählung traf den Sammelband, zwei Sachbücher ein anderes Buch desselben Autors). Von 33 „nur der Titel" sind rund 20 richtig — der Autor steht bei Open Library in anderer Schrift (刘慈欣, Аркадий Стругацкий) oder Form („Juan Valera y Alcalá-Galiano") — und 13 falsch („Quick Start Guide" → *Hadoop 2 Quick-Start Guide*). Die beiden „ISBN, sonst stimmt nichts" sind richtig (japanisches und chinesisches Original). Nicht gefunden: vor allem deutsche Abenteuerromane des 19. Jahrhunderts und abgeschnittene Dateinamen.
+
+**Wie viel es auf der Seite zu wählen gibt:** von den 328 Werken haben 167 zwanzig oder mehr Ausgaben, 106 fünf bis neunzehn, 38 zwei bis vier, 17 eine einzige. Bei 55 Werken (17 %) ist die Wand also dünn. Ein Teil davon sind verirrte Einzelwerke: „Der Prozess" traf OL42602621W (eine Ausgabe) statt Kafkas *Der Proceß* (OL498463W), weil der Titel dort genau stimmt. Die Suche von Hand auf der Prüfseite behebt das je Zeile; gezählt, wie viele der 55 so ein Fall sind, ist nicht.
+
+**Hochladen, gegen `npm run dev`** (eigener Dev-Server auf Port 3017 ohne `.env.local`, also mit dem Speicher im Prozess und nie der Produktions-Redis; Wegwerf-ID): 329 angehakte Bücher → eine Anfrage → 320 Kacheln, „My Calibre library", nicht gespeichert. Der Browser übernahm die ID über `/create#id=…` und zeigte die Sammlung unter „Your collections". **Die Seite trägt sie:** `/c/<id>` liefert 36 KB HTML, 320 Bilder mit `loading=lazy` (ohne Scrollen 25 geladen bei 1280 px, 97 bei 390 px), kein waagrechter Überlauf; 5 Spalten und 23.920 px Höhe bei 1280 × 800, 3 Spalten und 20.147 px bei 390 × 844; der Editor in „Arrange" 18.778 px (1280) und 23.749 px (390), 2.733 DOM-Knoten. Zeiten im Dev-Modus (1,3–2,2 s bis zur ersten Antwort) sagen nichts über Produktion. **Befund:** in einer Sammlung dieser Größe findet man ein Buch nur durch Scrollen — die Kacheln im Editor tragen keinen Titel, und es gibt keine Suche in der Sammlung.
+
+**Der Rückweg, auf einer Probe-Kopie:** im Editor das Cover von *The Ballad of Songbirds and Snakes* gegen das deutsche getauscht (Oetinger 2020, `ol:14858983`; das Werk der Kachel bleibt dasselbe). `lab/calibre/serve.ts` gegen die Probe-Kopie: ohne Zuordnungsdatei 300 von 320 Kacheln sicher, und die Datei wird abgelehnt („made for another library" — die Kopie hat einen anderen Schlüssel); mit `--map` **314 sicher, alle 314 über `mapped`**, die 6 übrigen sind Werke mit zwei oder drei Büchern. Buch 277, „Das Lied von Vogel und Schlange", bekam das Oetinger-Cover (1052 × 1500 statt 713 × 1024), die Rücknahme gab das alte zurück; danach **alle 423 Cover der Kopie bytegleich mit dem Original**. Die echte Bibliothek wurde nur gelesen.
+
+**Die Besucher-ID:** `upload.ts` nimmt sie aus `BB_VISITOR` (Umgebung, sonst `.env.local` des Hauptordners) und setzt sie nur in den Cookie-Kopf der einen Anfrage. Ein Test führt acht Wege durch (Erfolg, 404, 429, 503 mit der ID im Antworttext, Antwort mit der ID als Sammlungs-ID, Netzfehler mit den Köpfen in der Meldung, keine Kachel, zu viele) und findet sie in keiner Rückgabe, Meldung oder Spur.
+
+**Aufgeräumt:** die Entscheidungen, der Upload-Vermerk und die Zuordnungsdatei des Tests sowie die Probe-Kopie sind wieder gelöscht; geblieben sind Cache und Ergebnis der Messung unter `~/Library/Application Support/BuyItsCovers/calibre/import/`, damit Julians erster Lauf keine Anfrage stellt.
+
+**Offen:** Julians Entscheidungen (Plan §6) und danach der eine Lauf gegen die echte Seite; die 69 Vorschläge durchsehen; die echte Bibliothek schreibt `lab/calibre` (5.16). Nicht gemacht: die Cover-Erkennung des vorhandenen Covers (Plan §5, optional).
+
+1.089 Tests, tsc und Lint grün. `npm run build` lief nicht — `app/`, `components/` und `lib/` sind unverändert.
+
+## 2026-10-03 · 5.17 einmal gegen die echte Seite, als Test-Besucher
+
+Julian zur Frage, ob die Liste seiner Bücher in den Speicher der Seite darf: „ja, aber benutze vielleicht eine dedizierte test-user ID, mit der wir in production testen". Und zum Befund über den Editor: „das soll ja einfach erstmal nur eine sammlung initialisieren aus einer calibre datei, die man hochlädt oder verbindet / was ist an deiner version anders?"
+
+**Die Test-ID:** `BB_TEST_VISITOR` in der `.env.local` des Hauptordners, einmal erzeugt (`newVisitorId()`), nie ausgegeben; `serve.ts --as-test` liest sie statt `BB_VISITOR` und nennt die Sammlung „My Calibre library (test)". Ein Test hält fest, dass das Werkzeug, nach dem Test-Besucher gefragt, nie auf die eigene ID ausweicht. Die Regel gilt über dieses Werkzeug hinaus: was auf der echten Seite zum Ausprobieren angelegt wird, gehört dem Test-Besucher.
+
+**Der Lauf:** eine Anfrage, `POST https://buyitscovers.com/api/walls`, 328 angehakte Bücher (nur die Treffer, kein Vorschlag) → **319 Kacheln, Antwort nach 1,0 s**, Sammlung `y3lsl27ot5`, nicht gespeichert — sie verfällt nach 48 Stunden (2026-10-05), wenn niemand „Keep it" drückt. Die Zuordnungsdatei liegt unter `…/calibre/maps/y3lsl27ot5.json`. Produktion danach **einmal** angesehen (`/c/y3lsl27ot5`): Titel und „319 covers." stehen, die Bilder kommen, erste Antwort nach 133 ms, 29 KB HTML. Breite und Höhe sind dabei nicht gemessen (das Browserfenster hatte in dem Moment keine Breite); dafür gelten die Zahlen vom Dev-Server oben.
+
+**Was an der gebauten Fassung anders ist als „eine Calibre-Datei hochladen":** das Ergebnis ist dasselbe, der Weg nicht. Gebaut ist ein Kommando auf Julians Mac, das den Bibliotheksordner liest, eine Prüfseite zeigt und die Sammlung über die Schnittstelle anlegt; es braucht seine ID in einer Datei und merkt sich für den Rückweg, welches Buch welches Werk ist. Auf der Seite gibt es dafür keinen Knopf, und ein anderer Leser kann es nicht benutzen. Der Befund über den Editor (ein Buch unter 320 Kacheln nur durch Scrollen zu finden) betrifft das Wählen danach, nicht das Anlegen. Die Fassung für die Seite steht als Vorschlag 5.17a in der Roadmap; die Zahlen dieser Messung sagen, was sie kostet: 421 Bücher sind 593 Anfragen an Open Library und vier Minuten — der Foto-Import der Seite hört heute bei 80 Büchern auf.
+
+43 Tests im Import, tsc und Lint grün.
+
+## 2026-10-04 · Eine Calibre-Bibliothek auf der Seite (ROADMAP 5.17a)
+
+Julian: „ja, bau 5.17a“. Vorher `origin/main` (26 Commits) hereingeholt; in `docs/history.md` hatten beide Seiten nur angehängt, beide Einträge behalten.
+
+**Die Datei im Browser lesen.** `lib/calibre/sqlite.ts` liest Tabellen aus dem SQLite-Format selbst — Kopf, Tabellen-B-Bäume, Überlaufseiten, Datensätze, UTF-8 und UTF-16 —, statt sql.js (rund 600 KB WebAssembly) für vier Tabellenscans zu laden. An Julians `metadata.db` (1,1 MB, Seitengröße 4096, UTF-8, kein WAL): **445 von 445 Büchern gleich wie `sqlite3`** — Titel, Autoren in Calibres Reihenfolge, ISBNs —, gelesen in 8 ms. Die erste Fassung brach an der echten Datei ab: Calibre 7 hat vier Tabellen `WITHOUT ROWID` (`annotations_fts_*`, der Volltextindex der Anmerkungen); sie werden jetzt übersprungen. Getestet an zwei kleinen Datenbanken aus `lib/__fixtures__/calibre/library.sql` (Seitengröße 512, damit 300 Bücher innere Seiten und ein Titel von 3.005 Zeichen Überlaufseiten brauchen; eine davon UTF-16), dazu eine abgeschnittene Datei und eine Seite, die auf sich selbst zeigt.
+
+**Umgezogen aus dem Lab:** `clean.ts` nach `lib/calibre/clean.ts` (läuft im Browser), die Zuordnung nach `lib/walls/calibre.ts` (Server), der ISBN-Abruf nach `lib/sources/openlibrary.ts` (`getEditionByIsbn`, fragt Schweigen einmal nach, wirft dann `SourceUnavailableError`). `lab/calibre-import` benutzt dieselben Regeln und hat keine eigene Kopie mehr.
+
+**Gegen `npm run dev`** (eigener Server auf 3017 ohne `.env.local`, also Speicher im Prozess), Julians `metadata.db` über einen lokalen Dateiserver und `DataTransfer` ins Dateifeld gegeben, weil das Browserfenster keine Dateiauswahl bedienen kann:
+
+| | |
+|---|---|
+| Bücher in der Datei | 445 |
+| ohne Autor oder Titel ausgelassen | 24 |
+| doppelt (gleicher Titel und Autor) | 7 |
+| gefragt | 414, in 52 Anfragen |
+| Treffer / maybe / nicht gefunden / ohne Antwort | 321 / 69 / 24 / 0 |
+| Dauer, kalt | 4 min 16 s (je Anfrage Median 5,0 s, höchstens 9,3 s) |
+| Dauer, zweiter Lauf (Next-Datencache) | etwa 15 s |
+| angehakt → Sammlung | 321 → 319 Cover (zwei Treffer teilten ein Cover) |
+
+Das deckt sich mit der Lab-Messung (328 Treffer bei 421 Fragen, darin die 7 doppelten). Die Seite stellte dabei nur die 52 Anfragen an `/api/walls/calibre`; die Datei selbst ging nirgendwohin.
+
+**Zwei Dinge, die der Blick zeigte:** die Liste mit 418 Zeilen machte `/create` 12.181 px hoch und schob „Make a collection of 321“ ans Ende — sie scrollt jetzt in einem eigenen Kasten (`WallProposal scroll`), die Seite ist 1.473 px hoch. Und am Telefon lief der Kasten waagrecht über, weil ein Grid in einem scrollenden Kasten auf die Breite seiner längsten Zeile wächst; mit `grid-cols-[minmax(0,1fr)]` kürzen die Zeilen wieder (390 px: kein Überlauf, 82 Zeilen mit Auslassungspunkten). Das gilt auch für die Liste des Fotos.
+
+**Fehlerwege im Browser:** eine Textdatei → „This is not a Calibre library file…“; die ersten 5.000 Byte der echten Datei → „The file could not be read — it may be damaged or cut off…“. Eine SQLite-Datei ohne Calibre-Tabellen deckt ein Test ab.
+
+**Nicht gebaut:** „Verbinden“ mit Calibres Content-Server; ein Weg aus dem Editor (`/c/<id>/edit`, „Add covers“) — die Liste bietet aber schon „Add to <Sammlung>“ neben „A new collection“; der Rückweg der gewählten Cover nach Calibre bleibt lokal (5.16). Nicht deployt.
+
+1.186 Tests, tsc, Lint und `npm run build` grün.
+
+**Nachtrag 2026-10-04 — hochladen statt im Browser lesen?** Julian fragte, ob das Senden der Datei weniger eingreife und welche Berechtigungen Leser dafür freigeben müssten. Keine, in beiden Fällen: der Dateidialog gibt der Seite genau die gewählte Datei und nichts sonst. Hochladen ist dieselbe Lesung plus das Senden der ganzen Datei; Julians `metadata.db` enthält außer Titeln und Autoren 170 Klappentexte, 300 Schlagwörter, 128 Verlage und 5 Bewertungen (gezählt, nur gelesen; Anmerkungen 0, eigene Spalten 0). Deshalb bleibt es beim Lesen im Browser; die Begründung steht in SPEC F9.4 (e).
+
+## 2026-10-04 · `/create` neu geordnet (ROADMAP 5.17b)
+
+(Julian, 2026-10-04: „überarbeite die oberfläche dieser seite. from a book sollte fokus oder erstes sein, sich klarer abgrenzen von from a collection. die beispielcollection sollte wyssberger sein, und 6 statt 4 cover zeigen. wahrscheinlich dann 4 wege zum anlegen, davon from a book herausgestellt. wenn man bei from a book eines anklickt, muss die seite automatisch runterscrollen zur coverauswahl“.)
+
+**Gebaut:** „From a book“ zuerst, auf getöntem Grund und größer gesetzt; die Coverauswahl (`WallPicker`) steht direkt darunter statt am Seitenende. Darunter „Or start another way“ mit drei Karten (bei 1280 px nebeneinander, je rund 400 px breit; bei 390 px untereinander): „From a collection“, „From a photo“, „From your Calibre library“. Das sind vier Wege, wie Julian schätzte — die sechs Zufallscover sind kein eigener Weg mehr, sondern stehen in der Sammlungs-Karte unter der Auswahl, weil sie dasselbe tun: mit fertig gewählten Covern beginnen.
+
+**Wyss:** „wyssberger“ verstanden als die Sammlung *Ex Libris — covers by Hanspeter Wyss* (`ex-libris-covers-by-hanspeter-wyss`, 58 Cover). In `data/collections.json` ist sie ein Entwurf, auf der echten Seite online veröffentlicht (`/collections/ex-libris-…` antwortete 200, einmal abgefragt). `StartFromPicker` wählt sie vor, wenn sie angeboten wird, sonst die erste. Damit sie auch unter `next dev` ohne Redis erscheint, nehmen `startOptions` und `/api/walls/from` jetzt die Voreinstellung der übrigen Seite (`draftsVisible()`: Entwürfe nur in dev); in Produktion ändert sich nichts. Vorschau **6 statt 4** Cover (`PREVIEW_COVERS`), als Reihe über die Kartenbreite statt 44 px kleiner Kacheln. Die Auswahlliste hat die volle Kartenbreite — daneben gequetscht las sie „Ex Libris — covers …“.
+
+**Der Sprung zur Coverauswahl:** `WallsStart` rief bisher `scrollIntoView` in `requestAnimationFrame` direkt nach dem Wechsel der Adresse — da gab es die Auswahl noch nicht, der Sprung ging ins Leere. Jetzt holt sich `WallPicker` mit `focus` beim Erscheinen selbst ins Bild (`scroll-mt-20` gegen den Kopf). Gemessen bei 1280 × 800: von Seitenanfang auf 428 px gerollt, „Pick covers“ 80 px unter dem oberen Rand. Weil Open Library während des Tests wieder jede Verbindung ablehnte (`ECONNREFUSED`, auch die Suche „Dune“ antwortete 503), lief der Test über denselben Adresswechsel, den ein Klick auf ein Suchergebnis auslöst (`router.push('/create?q=Dune&work=OL893415W')`), nicht über einen echten Klick.
+
+**Die Ankreuzlisten** (Foto, Calibre, Zufallscover, Sammlung) teilen sich in zwei Spalten jetzt nach der Breite ihrer Karte (`@container`, ab 42rem), nicht nach der des Bildschirms — in einer Drittel-Karte wären zwei Spalten zu schmal.
+
+**Lokal mit Foto:** der Dev-Server lief diesmal mit `ANTHROPIC_API_KEY` aus der `.env.local` des Hauptordners (nur diese Variable), damit „From a photo“ erscheint; Julian musste daran erinnern.
+
+Kein waagrechter Überlauf bei 390 und 1280 px; Seite 1.228 px hoch bei 1280. 1.186 Tests, tsc und Lint grün. Nicht deployt.
+
+**Nachtrag 2026-10-04 — der echte Klick.** Mit Open Library wieder erreichbar: auf `/create?q=Dune` „Dune Messiah“ angeklickt, die Seite rollte von 0 auf 840 px, „Pick covers“ 80 px unter dem oberen Rand, 56 Cover aus 101 Ausgaben geladen. Ein erster Versuch landete 1.150 px zu tief — das Browserfenster des Tests wurde währenddessen eingeblendet und wechselte die Breite, die Trefferliste sprang von einer in zwei Spalten und die Auswahl rückte nach oben; bei gleichbleibender Breite (1024 px vor und nach dem Klick) stimmt der Sprung.
+
+**Nachtrag 2026-10-04 — die Treffer über die ganze Breite.** Julian, mit einem Bildschirmfoto der Suche „dune“: „use the space better“ — die Treffer standen in zwei Spalten in der linken Hälfte des Blocks, weil sie mit dem Suchfeld in derselben `max-w-2xl`-Spalte steckten. Jetzt bleibt nur das Feld so schmal (`BookSearch wide`); die Treffer füllen den Block: bei 1280 px vier Spalten, 1.152 px breit, zwölf Treffer in 260 px Höhe statt sechs Reihen, Cover 48 statt 40 px breit; gekürzt nur „Dune, Dune Messiah, Children of Dune“. Bei 390 px eine Spalte, kein Überlauf, der Platzhalter passt. Im Editor (`CollectionEditor`) bleibt die Suche, wie sie war.
+
+## 2026-10-04 · Die Calibre-App fragt über die Website, ohne Google (ROADMAP 5.16a)
+
+Julian nach der Sperre durch Open Library: „vielleicht wär es deshalb doch besser die lokale app mit der website zu verbinden und von dort die abfrage machen zu lassen?" Auf die Abwägung drei Rückfragen — was von Google geholt wird („klappentext brauchen wir ja nicht. google können wir doch für diese app weglassen"), was an der Website zu ändern wäre, und ob Open Library so viele gute Bilder fehlen — und dann: „überarbeite das jetzt ohne google und mit verbindung über die website".
+
+**Die drei Antworten.** (1) Google liefert auf Seite 0 eines Werks über eine Titelsuche weitere Cover, Klappentexte und Vorschau-Links; für die App zählte davon nur das Cover. (2) An der Website muss nichts geändert werden: `/api/works/<id>?sibling=1` ist schon der Modus nur mit Open Library (gebaut für 6.13), ohne Google-Anfrage und ohne den `google`-Eimer. Die Route trägt jetzt einen Kommentar, dass die App sich darauf verlässt. (3) **Gemessen, nur Bilddateien, mit Pause:** 118 zufällige Open-Library-Cover aus `data/cover-index.json` (500 Werke) in Originalgröße — Breite p25 313, Median 356, p75 813, größtes 4020 px; 42 % ≥ 400, 29 % ≥ 600, 23 % ≥ 1000; 7 unter 200. 40 Google-Cover (Bände aus den Test-Fixtures von fünf Werken, `fife=w800`) — p25 128, Median 300, p75 800, keins über 800; 30 % erreichen 800; 15 unter 200. Die Aussage vom Vortag, mit Google kämen „die größeren Bilder dazu", war falsch: Google endet bei 800 px, Open Library hat ein Viertel darüber.
+
+**Gebaut:** `lab/calibre/catalogue.ts` — `siteCatalogue` (Suche und Werkseiten der Website), `directCatalogue` (der bisherige Weg), `withFallback` (erst die Website; Open Library direkt nur, wenn die Website ausfällt und Open Library diesen Mac nicht gerade abweist), `remembering` (Antworten für den Lauf, Fehler nicht). `find.ts` fragt nur noch über diese Schicht: die ISBN als Suche (die Seite antwortet darauf mit genau dem Werk), Titel + Autor wie zuvor; ein Werk, das nur als ID bekannt ist, bekommt seinen Namen aus der ersten Cover-Seite, die ohnehin als Nächstes gebraucht wird. Direkt an Open Library geht nur noch eine Frage: welche Cover die eigene Ausgabe trägt (`/isbn/<isbn>.json`) — fällt sie aus, fehlt die Markierung „your edition", sonst nichts. Eine Website, die nicht erreichbar ist, wird nicht als Sperre von Open Library gelesen. Schalter `--source direct` und `--site <Adresse>`.
+
+**Geprüft** (Open Library antwortete von hier wieder): über buyitscovers.com *Flow My Tears* (ISBN, Werk in 2,1 s, 25 Cover in 1,1 s, zwei Cover der eigenen Ausgabe), *Rendezvous with Rama* (ISBN, 0,6 s und 0,2 s, 33 Cover), *Ochsenkrieg* (Titel + Autor, 0,6 s), *Francisco Pizarro* (nichts gefunden, ohne Fehlermeldung) — dieselben Ergebnisse wie am Vortag direkt, bei 1,4–5,6 s damals. `/api/search?q=9781857983418` nennt genau ein Werk, das richtige. Mit `--site http://127.0.0.1:9` (unerreichbar): Rückfall auf Open Library, *Jenny* gefunden, 9 Cover. Am Vorabend, noch unter der Sperre: Werk und Cover über die Website in 2,5 s und 0,4 s. Im Browser: Cover-Wand mit Größen, 8 von 16 groß genug, eigene Ausgabe markiert. **Dabei gefunden:** die Seite schrieb an zwei Stellen das Wort „null" in den Text (`replaceChildren` mit leerem Wert) — behoben.
+
+**Auswirkung auf die Analyse (3.1):** keine — die App liest nur die gecachten Routen `/api/search` und `/api/works`, in denen nichts gezählt wird; an der Website ist nur ein Kommentar neu.
+
+1.145 Tests (56 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-03 — 5.16 in `main`: die Lab-Anfrage zieht aus `lib/recognize.ts` aus
+
+Beim Zusammenführen mit `main` stieß der Branch von 5.16 auf den Umbau von 5.11a: Die Website fragt das Modell seit 2026-10-01 nur noch nach Titel, Autor, Art und einem Punkt je Buch (kurze Schlüssel, ganze Prozent, keine Kästen). Die Optionen, die das Lab angehängt hatte — Verlag, Kästen in Pixeln, Mittellinie und Breite —, passten nicht mehr in diesen Prompt. Sie stehen jetzt in `lab/shelf/recognize.ts`, einer eigenen Anfrage mit den langen Schlüsseln von vorher; `lib/recognize.ts` ist die Fassung aus `main`, unverändert. Der Test, der den alten Website-Prompt Wort für Wort festhielt, ist entfallen, weil das Lab ihn nicht mehr berührt. 1165 Tests grün, der Regal-Server startet und liefert `/colors.js`.
+
+## 2026-10-04 · Die Calibre-App merkt sich die Antworten des Katalogs auf der Platte (ROADMAP 5.16a)
+
+Julian: „baue den speicher für katalog-antworten auf der platte" — der Punkt stand seit dem Umbau auf die Website als offen im Roadmap-Eintrag. Bis dahin hielt `remembering` die Antworten nur für einen Lauf: jeder Start der App fragte für gestern geöffnete Bücher wieder die Website und, für die Cover zur ISBN, Open Library direkt — die eine Anfrage, die noch von Julians Adresse ausgeht.
+
+**Gebaut:** `lab/calibre/kept.ts`. `AnswerStore` legt jede Antwort als Datei ab (`search-<Hash>.json`, `page-<Werk>-<Offset>.json`, `isbn-<ISBN>.json`; Schlüssel und Zeitpunkt in der Datei, geschrieben über eine `.tmp`-Datei) unter `~/Library/Application Support/BuyItsCovers/calibre/catalogue/`, für alle Bibliotheken gemeinsam. Regeln: 30 Tage frisch (`KEEP_DAYS`), dann wird neu gefragt und ersetzt; scheitert die Frage, kommt die alte Antwort, als solche gemeldet; `notBefore` (aus `since=` der Seite) macht alles Ältere zu alt — der Knopf „Ask the catalogue again"; zwei gleichzeitige Frager teilen sich eine Anfrage; eine kaputte oder fremde Datei gilt als keine. **Nicht aufgeschrieben** werden ein Ausfall, eine leere Suche (die Suche der Seite macht aus einem gescheiterten Abruf eine leere Liste, ROADMAP 1.4) und „Werk unbekannt"; beides Letztere gilt nur für den Lauf. `keptCatalogue` stellt den Speicher vor `siteCatalogue`/`directCatalogue`; `remembering` ist entfallen. `findWorks` bekommt die ISBN-Frage hereingereicht (`edition`), damit sie durch denselben Speicher geht; während der Pause wird für sie nur der Speicher angesehen. Die Pause nach einer verweigerten Verbindung beginnt auch dann, wenn die alte Antwort die Lücke gefüllt hat. Im Direkt-Modus antwortet die App während der Pause aus dem Speicher statt mit 503, solange etwas da ist. Die Seite zeigt unter den Covern, von wann die älteste nicht eben erfragte Antwort ist; Antworten aus demselben Öffnen (die erste Cover-Seite, eine Sekunde vorher beim Finden des Werks geholt) zählen nicht als gemerkt.
+
+**Warum 30 Tage:** eine Cover-ID ändert ihr Bild nie, und ein Werk bekommt selten neue Ausgaben; die Website selbst hält Antworten einen Tag, aber sie bedient Fremde. Für Julians Durchgang durch 445 Bücher über Wochen zählt, dass ein Buch beim zweiten Öffnen niemanden fragt; für das seltene neue Cover gibt es den Knopf. Gesetzt, nicht gemessen.
+
+**Gemessen** an sechs Büchern der echten Bibliothek, nur schauend, mit leerem Speicher in einem Testordner (`CALIBRE_BACKUP_DIR`), über buyitscovers.com: erstes Öffnen 6,53 s für die Werke und 5,42 s für die ersten Cover-Seiten (je Buch 0,32–1,67 s und 0,22–1,23 s); nach einem Neustart 0,23 s und 0,01 s, gleiche Treffer, gleiche Cover (53, 56, 24, 13, 8, 20). 25 Dateien, 124 KB. Übrig blieb eine Anfrage: die leere Suche bei *Everyman* (0,18 s). In der Seite: Zeile „kept on this Mac — the oldest of it today at 00:07", nach „Ask the catalogue again" gingen `/api/find/457?since=…` und `/api/covers/…&since=…` hinaus und die Zeile verschwand. Der Fall „Katalog schweigt, alte Antwort" ist nur in den Tests gelaufen, nicht an einem echten Ausfall.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`; die App fragt die gecachten Routen der Website seltener als zuvor.
+
+1.194 Tests (67 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Sammlungs-Modus: der größte Scan desselben Motivs; in der App die geänderten Bücher vorn (ROADMAP 5.16, 5.16a)
+
+Julian: „baue jetzt den größten scan desselben motivs im sammlungs-modus" und „stell die geänderten werke vorne in der übersicht heraus, damit ich weiß welche ich in calibre ändern muss".
+
+**Der größte Scan (5.16).** Der Befund vom Vortag (`measure-fold.ts`): die Faltung der Seite behält den zuerst gesehenen Scan eines Motivs, bei *Rendezvous with Rama* 287 × 500 vor 2002 × 3401 — eine Sammlung trägt dann die ID des kleinen. Gebaut: `lab/calibre/larger.ts` (`sameDesign`, `largestOf`, `largerScan`): die Cover des Werks über den Katalog (Website zuerst, Antworten aus `kept.ts`, höchstens drei Seiten Ausgaben), je Cover die Signatur der Seite (`signature` aus `lib/imagehash.ts`, am mittleren Bild; `CoverHashes` in `download.ts`, gemerkt in `cover-hashes.json`), Motiv-Gleichheit bei dHash-Abstand ≤ 8 (`SAME_COVER_MAX_DISTANCE`, die Stufe ohne weitere Bedingung), Größe der Scans desselben Motivs aus `CoverSizes`. Ersetzt wird ab einem Zehntel mehr Pixel (`CLEARLY_LARGER = 1.1`, wie in der Messung; gesetzt, nicht gemessen). Die lockereren Stufen der Faltung bleiben aus: sie brauchen Verlag, Jahr und Farbwelt, und ein falsches Motiv in Calibre ist schlimmer als ein kleines. `serve.ts`: `POST /api/larger` je Zeile, die Ersetzung in `larger-scans.json` (Cover-ID → Cover-ID, für alle Bibliotheken und Sammlungen), Bild, Prüfung und Schreiben nehmen den Ersatz; die Seite hat „Look for a larger scan" je Zeile, „Look for larger scans (n)" für alle sicheren Zeilen (nacheinander, 1,5 s Pause nur, wo der Katalog gefragt wurde, Halt beim ersten Ausfall) und „Use the collection's own scan". Was sich nicht vergleichen ließ, wird gezählt und gesagt; fällt eine spätere Seite Ausgaben aus, heißt das Ergebnis unvollständig; fällt die erste aus, gibt es keins. `CoverSizes` und `CoverHashes` teilen sich jetzt eine Klasse (`CoverFacts`), `WorkMap` und die neuen Dateien eine (`FileMap`).
+
+**Gemessen** (SF Masterworks, echte Bibliothek, nur schauend, leere Speicher im Testordner): 17 sichere Zeilen, **0 mit größerem Scan** — 16 ohne zweiten Scan des Motivs, *The Dispossessed* mit einem nicht größeren; deckt sich mit der Messung vom Vortag. 20 Katalog-Seiten über die Website, 748 mittlere Bilder gehasht, 1 nicht vergleichbar. Erste Zeile 2,0 s, nach Neustart 0,7 s ohne Katalog-Anfrage. *Rendezvous with Rama* (OL17417W, 33 Cover): von `ol:8706133` (287 × 500) → `ol:6557353` (2002 × 3401) in 0,4 s; von `ol:8706215` (200 × 338) → `ol:8706223` (333 × 500). Die Ersetzung in der Seite mit einem von Hand eingetragenen Paar geprüft. Kein Schreiblauf mit einem Ersatz-Scan. Der Mac schlief während der Messung 756 s (`pmset -g log`), deshalb keine Gesamtzeit.
+
+**Die geänderten Bücher vorn (5.16a).** Was mit „in calibre ändern" gemeint ist, habe ich so gelesen: das Cover ist schon in Calibre, aber der Reader bekommt es erst, wenn das Buch noch einmal gesendet wird (Einträge vom selben Tag) — die geänderten Bücher sind die Liste dessen, was in Calibre noch zu tun ist. Gebaut: `app.html` stellt die Gruppe „Changed here — n to send to the reader" vor alle anderen Bücher (zuletzt geändert zuerst, unabhängig von der Sortierung, innerhalb des gewählten Filters), Marke „to send", Zahl in der Kopfzeile; `sent.json` je Bibliothek (`POST /api/sent`, ohne `--write`, weil es Calibre nicht berührt) hält den Haken als Buchnummer → Cover-ID, sodass ein erneut geändertes Buch wieder vorn steht. Der Haken ist eine Zutat von mir, nicht von Julian verlangt: ohne ihn würde die Gruppe nur wachsen. Nach einem Schreiben wird das ganze Raster neu gezeichnet, damit das Buch nach vorn rückt. **Geprüft** an der echten Bibliothek, nur schauend: 13 geänderte Bücher vorn, 432 dahinter; abhaken → 12, zurück → 13.
+
+**Aufgefallen:** in ROADMAP.md tragen zwei Punkte die Nummer 5.16 („Das eigene Regal nach Farben" und dieser) — eine Kollision zweier Sitzungen, hier nicht aufgelöst.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.202 Tests (75 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-05 · Vor einem Ansturm: die Grenzen gelesen, ein Besuch im Log gezählt (ROADMAP 2.18)
+
+Julian am 2026-10-04: „i want to plan for virality and have everything either robust or prepared for quick change when it happens." Während der Arbeit kam Vercels Mail: **90 % der 4 Stunden „Fluid Active CPU" verbraucht**, bei 100 % „your projects will be automatically paused". Nichts gebaut; der Plan ist [PLAN-2.18-ansturm.md](plans/PLAN-2.18-ansturm.md).
+
+**Gelesen, in der Doku der Anbieter am 2026-10-04/05:**
+
+| Anbieter | Grenze |
+|---|---|
+| Vercel Hobby | 1 Mio. CDN-Anfragen, 1 Mio. Funktionsaufrufe, 4 CPU-Stunden, 360 GB-Stunden Speicher, **10 GB Fast Origin Transfer**, 100 GB Fast Data Transfer, 50.000 Web-Analytics-Ereignisse im Monat, Laufzeit-Logs eine Stunde; über der Grenze „wait until 30 days have passed" |
+| Vercel Pro | CDN pauschal (Flat Rate CDN: 1 Mio. Anfragen und 1 TB eingeschlossen, darüber „served normally … isn't billed (subject to the fair use guidelines)"), 0,60 USD je Mio. Funktionsaufrufe, ab 0,128 USD je CPU-Stunde; Ausgabenlimit mit Meldung bei 50/75/100 % und Pause, geprüft „every few minutes" |
+| Vercel CDN | Cache je Region; `stale-if-error` wird unterstützt; ein Treffer ist nicht garantiert („best-effort") |
+| Redis Cloud, 30 MB frei (`redis-pink-yacht`) | **30 Verbindungen, 100 Befehle je Sekunde, 5 GB Netz im Monat**; 250 MB: 256 Verbindungen, 1.000 je Sekunde, 100 GB |
+
+**Gemessen:**
+
+- `vercel metrics … function_cpu_time_ms --group-by route` antwortet auf Hobby „Observability Plus is required", für jedes Zeitfenster von 1 h bis 30 d; `vercel usage` antwortet „Costs not found (404)". **Wohin die CPU ging, ist aus der Kommandozeile nicht zu lesen.**
+- Laufzeit-Logs der letzten Stunde (`vercel logs --json`, nach `id` entdoppelt — 3.000 Zeilen sind 50 bis 139 Anfragen): 23:43–23:56 UTC 50 Anfragen in 13 Minuten; 00:09–00:11 UTC **ein Besuch, 139 Anfragen in 81 s**: 54 Bilder ohne CDN-Treffer, 56 Abrufe von 14 Buchseiten (14 × `MISS`, also neu gerendert, 14 × `HIT`, 28 × `PRERENDER`) mit benachbarten Werk-IDs (OL1099641W–OL1100007W, die Liste eines Autors), 6 × `/`, 4 × `/create`, 4 × `/versus`, je 4 × `/about` und `/privacy`. Niemand öffnet 14 Bücher in drei Sekunden: das ist das Vorladen von `next/link`. Kein Crawler-Sturm in dieser Stunde.
+- Am Code: Startseite (`searchParams`), `/collections`, `/collections/<slug>`, `/c/<id>`, `/versus`, `/create` rendern bei jedem Aufruf in einer Funktion; die ersten drei lesen drei Schlüssel aus der Redis, darunter ganze Sammlungen (17–41 KB je Sammlung in `data/collections.json`). Ein Seitensignal schreibt 4 Befehle. Die Redis hat eine Verbindung je Funktionsinstanz. Die Fotoroute läuft weiter, wenn Zähler und Budget nicht lesbar sind. `lib/sources/openlibrary.ts` hat keinen Automaten für abgewiesene Verbindungen. 39 Dateien nutzen `<Link>`, eine schaltet das Vorladen ab.
+
+**Nicht gemessen:** der Anteil je Route an den 3,6 CPU-Stunden; ob ein Deploy den Bild-Cache des CDN leert; ob Pro ein pausiertes Hobby-Projekt sofort zurückholt; Verdrängungsregel und Füllstand der Redis.
+
+**Veraltet im Befund der anderen Sitzung** (aus dem Chat): die Domain antwortet seit dem 2026-10-04, die Parkseite ist kein Blocker mehr.
+
+**Entschieden von Julian am 2026-10-05** (im Chat gefragt, Plan §6): J1 jetzt auf Pro; J2 Ausgabenlimit 100 USD mit Pause; J3 Fotos schließen, wenn die Redis schweigt; J4 die Redis jetzt auf 250 MB; J5 Sammlungen der Leser werden im Ernstfall nie gesperrt; J6 ein Cover auf Zuruf ausblenden wird sofort gebaut (2.18k). **Dazu gelesen:** Vercel-Preise für Frankfurt — CDN-Anfragen 2,60 USD je Million, Fast Data Transfer 0,15 USD je GB, Fast Origin Transfer 0,06 USD je GB, Fluid Active CPU 0,184 USD je Stunde, Provisioned Memory 0,0152 USD je GB-Stunde, ISR 5,20 / 0,52 USD je Million Schreib- / Leseeinheiten; Redis Essentials 0,007 USD je Stunde, mindestens 5 USD im Monat. Alle Cover laufen mit `unoptimized`, Vercels Bildoptimierung kostet also nichts.
+
+## 2026-10-05 · Kein Vorladen mehr (ROADMAP 2.18a)
+
+Gebaut, nicht deployt. `components/Link.tsx` ist `next/link` mit `prefetch={false}`; alle 39 Dateien, die `next/link` einbanden, binden jetzt diese Komponente ein, und `lib/__tests__/link.test.ts` schlägt bei einem zweiten Importeur fehl. `DecadeLink` wärmt sein Ziel weiter beim Zeigen mit der Maus.
+
+**Gemessen am lokalen Produktions-Build** (`next build`, `next start`, im Browser über `performance.getEntriesByType('resource')`; unter `next dev` lädt Next ohnehin nichts vor): `/collections/sf-masterworks` mit 73 Buchlinks, bis ans Ende gescrollt — 0 Abrufe mit `_rsc`, 0 auf `/book/`; Startseite mit 34 Links — 0; ein Klick auf eine Kachel — genau 1 Abruf (`/book/OL271163W`), die Seite öffnet. **Vorher, in Produktion am selben Tag:** ein Besuch von 81 s, 14 neu gerenderte Buchseiten und 4–6 Abrufe je dynamischer Seite aus Kopf- und Fußzeile.
+
+**Was es kostet:** der erste Klick auf ein Buch wartet auf den Server, statt aus dem Vorrat zu kommen; die Vorschau aus `storeWorkPreview` zeigt Titel und Cover in der Zwischenzeit. An der Oberfläche ändert sich kein Pixel, deshalb keine Messung bei 390 und 1280 px. **Analyse (3.1):** nicht berührt — die Signale lesen die Kacheln und die Herkunft, nicht das Vorladen. 1.277 Tests, tsc und Build grün.
+
+## 2026-10-05 · Wohin die Rechenzeit ging: ClaudeBot; Messung und Kosten in der Analyse (ROADMAP 2.18l, 2.18m, 2.18n)
+
+Julian wechselte auf Pro; `vercel buy pro` über die CLI war zuvor an „Payment failed … valid payment method on file" gescheitert (keine Karte hinterlegt). Seit Pro antwortet `vercel metrics`; `vercel usage` weiter mit 404.
+
+**Vercels Zahlen** (`vercel metrics vercel.function_invocation.function_cpu_time_ms -a sum --group-by route`, 30 Tage bis 2026-10-05):
+
+| Route | CPU | Anteil | Läufe |
+|---|---|---|---|
+| `/img/[size]/[cover]` | 3.651 s | 49,4 % | 115.465 |
+| `/book/[id]` | 1.832 s | 24,8 % | 17.253 |
+| `/api/works/[id]` | 485 s | 6,6 % | 3.393 |
+| `/collections/[slug]` | 301 s | 4,1 % | 14.415 |
+| `/` | 199 s | 2,7 % | 1.601 |
+| alle zusammen | 7.699 s = 2,14 h | | 173.292 |
+
+Je Tag (Sekunden): 09-08 65 · 09-09 144 · 09-10 266 · 09-11 259 · 09-12 138 · 09-13 161 · 09-14 bis 09-25 zwischen 0 und 113 · **09-26 994** · 09-27 691 · 09-28 355 · 09-29 488 · 09-30 460 · 10-01 367 · 10-02 189 · **10-03 1.379 · 10-04 1.187**. Vercels Mail nannte 3,6 von 4 Stunden; die Differenz zu 2,14 ist nicht aufgeklärt.
+
+**Wer, letzte zwei Tage** (`--group-by clientUserAgent`): `/img` 44.438 Läufe, davon **ClaudeBot 31.657**, dann einzelne Browser (2.823, 1.578, 818 …); `/book/[id]` 8.281 Läufe, davon **ClaudeBot 6.776**, MJ12bot 719, Browser zusammen einige hundert. Die Annahme aus Plan 2.4 §3.3, KI-Crawler läsen nur vorgerenderte Seiten und kosteten kaum, ist damit widerlegt.
+
+**Gebaut, nicht deployt:**
+
+- **2.18l** `lib/insights/cpu.ts`: ein Zähler je Instanz teilt jede Strecke Prozess-CPU gleichmäßig auf die laufenden Anfragen, CPU ohne Anfrage geht an `idle` (Start, Leerlauf); die Klassen summieren sich auf das, was der Prozess verbraucht hat. `measure(route, request)` steht als eine Zeile in 59 Handlern, Vorschaukarten und Seiten; das Ende liegt in `after`, geschrieben wird höchstens alle 30 s (ein `HINCRBY` je Feld, ein `EXPIRE`). Abrufer sind Klassen aus der Kennung, die Kennung wird nicht gespeichert; eine ISR-Seite liest ihre Kopfzeilen nicht (sie würde dynamisch), ihr Abrufer heißt `page`.
+- **2.18m** `lib/insights/costs.ts`: feste Kosten anteilig je Tag seit Beginn, Vercel-Nutzung aus der Messung zum Listenpreis abzüglich des anteiligen Guthabens, Fotos aus K13; USD und EUR getrennt.
+- 16 Tests (`insights-cpu.test.ts`): Aufteilung, Leerlauf, Summe, Klassen der Abrufer, Summen der Auswertung, Schreiben, Kosten. 1.293 Tests, tsc, Lint und Build grün; sechs fremde Tests (Cover-Index, Ringe, zwei Lab-Simulationen) fielen in zwei Gesamtläufen aus, während ein Build nebenher lief, und bestanden einzeln und in zwei weiteren Gesamtläufen — die Ursache habe ich nicht gelesen.
+
+**Nicht geprüft:** die zwei neuen Abschnitte im Browser (lokal gibt es keinen Speicher, ohne den die Ansicht „kein Speicher" zeigt) — nach dem Deploy bei 390 und 1280 px ansehen. **Datenschutz:** gespeichert werden Tagessummen je Routen- und Abrufer-Klasse, nichts über einen Leser; die Datenschutzerklärung habe ich nicht geändert — Julian entscheidet, ob ein Satz dazukommt (CLAUDE.md, Analyse-Regel 6).
+
+**Analyse (3.1):** zwei neue Kennzahlen, K14 und K15, im Plan §3; neuer Tages-Hash `cpu`; `/api/seen`, `/go/` und die Fotoroute zählen wie zuvor.
+
+## 2026-10-05 · Crawler bleiben auf den Seiten der Sitemap (ROADMAP 2.18n)
+
+Julian zum Vorschlag aus 2.18l: „ok". Gebaut, nicht deployt. `lib/robots.ts` (`robotsRules`, `BOUNDED_CRAWLERS`, `mayFetch`), `app/robots.ts` liest dieselben zwei Listen wie die Sitemap.
+
+**Die ausgelieferte Datei** (aus dem Build gelesen): 23.091 Byte; eine Gruppe `*` wie zuvor (`/api/`, `/go/`, `/admin/` gesperrt), eine Gruppe mit sechzehn `User-Agent`-Zeilen, 822 `Allow`-Zeilen (`/book/<id>$` für 500 Werke, `/book/<id>/decades$` für 322), `Disallow` für `/book/`, `/img/`, `/c/`, `/*?` und die drei allgemeinen, `Crawl-delay: 10`.
+
+**Geprüft mit `mayFetch`** (längste passende Regel, bei Gleichstand erlaubt — RFC 9309), sechs Tests: jeder benannte Crawler darf ein veröffentlichtes Buch und seine Jahrzehnte-Seite, nicht `OL999999999W`, nicht `/book/<id>/cover/…`, nicht `?cover=`, nicht `/?author=` und `/?q=`, nicht `/img/…`; Startseite, About, Sammlungen und Spiel bleiben offen; Googlebot, bingbot, Claude-User und ChatGPT-User sind unverändert. 1.299 Tests, tsc, Lint und Build grün.
+
+**Nicht geprüft:** ob sich ClaudeBot daran hält — das zeigt K14 nach dem Deploy (Anthropic schreibt, ClaudeBot achte robots.txt und `Crawl-delay`; aus der Erinnerung, heute nicht nachgelesen). **Analyse (3.1):** nicht berührt; K14 misst die Wirkung.
+
+## 2026-10-05 · Ein Cover auf Zuruf ausblenden (ROADMAP 2.18k)
+
+Entscheidung J6 („jetzt gleich"). Gebaut, nicht deployt. **Der Weg:** eine Zeile `{ "id": "ol:123", "hidden": "YYYY-MM-DD", "note": "…" }` in `data/hidden-covers.json`, ein Deploy. `lib/hiddencovers.ts` ist die einzige Abfrage; eingehängt an zwölf Stellen: `/img` (404 `no-store`, ohne Abruf bei der Quelle), `assembleEditions` (die Wand jeder Buchseite, damit auch Jahrzehnte-Seiten und die Vorschaukarte des Buchs), `mosaicCovers` (Suchkarten), `withRetailCovers` (das Bild eines Händlers auf der Wand), `similarTo`, `parseCollections` (auch die Inhalte aus Redis, weil sie durch dieselbe Funktion gehen), `CuratedWall`, `HERO_RINGS`/`COLLECTION_RINGS` (ein Ring mit dem Cover fällt ganz weg, die Ringe sind als Siebener gebaut; 99 + 6 vorhanden), das Spiel (`activeIds`, jetzt auch für die ersten Paare), `visibleTiles` (Leser-Sammlung, ihre Karte, ihre Vorschaukarte), `loadCovers` (alle Vorschaukarten), die Teil-Adresse eines Covers (404).
+
+**Bewusst nicht gefiltert:** die Antwort von `/api/isbn` — der Vermerk vergleicht nach ID, und ohne das Bild sagte er „kein Bild hinterlegt", wo der Händler ein anderes zeigt (N12); das Bild selbst kommt trotzdem nicht, weil `/img` es verweigert. Die gespeicherte Leser-Sammlung behält die Kachel, damit der Editor sie beim nächsten Speichern nicht löscht; der Editor zeigt an ihrer Stelle den ruhigen Platzhalter.
+
+**Aus der Vercel-Doku gelesen** ([Purging CDN Cache](https://vercel.com/docs/caching/cdn-cache/purge), 2026-10-05): der Cache-Schlüssel enthält die Deploy-Adresse. Ein gesperrtes Bild ist also mit dem Deploy aus dem CDN; im Browser eines Lesers bleibt es bis zu einer Stunde (`max-age=3600`). **Die Kehrseite:** nach jedem Deploy geht jedes Bild je Region einmal neu durch die Funktion und zu Open Library — bei der Route, die 49 % der CPU trägt. Steht jetzt bei 2.18j und im Plan §10.
+
+**About** (englisch und deutsch, die deutsche Fassung neu geschrieben): wer ein Cover hier nicht sehen will, schreibt an die Adresse des Impressums (`IMPRINT_EMAIL`, dieselbe wie auf `/contact` und `/privacy`). Angesehen bei 390 × 844 und 1280 × 800 aus dem Produktions-Build: kein Überlauf (Absatz 358 von 358 px).
+
+**Geprüft:** 13 neue Tests (`lib/__tests__/hiddencovers.test.ts`, einer je Weg; der Ring mit `vi.doMock` der Liste, weil er beim Laden gefiltert wird); 1.312 Tests, tsc, Lint und Build grün. **Analyse (3.1):** solange die Liste leer ist, ändert sich nichts. Steht ein Cover darauf, zeigt eine Buchseite eine Kachel weniger (`data-cover-id`, K-Werte zu gesehenen Covern) und das Spiel zählt ein Cover weniger; die Liste trägt das Datum, ab dem das gilt. Nichts Neues wird gespeichert oder gesendet.
+
+## 2026-10-05 · Open Library als Ersatz fürs Urteil, wenn Google nicht gefragt werden kann (ROADMAP 1.12)
+
+Julian am 2026-10-04: „we need a backup way for this“, dann „implement this as a back up to automatically happen when google quota is reached“. Vorher geprüft: eine zweite Quelle für dieselbe Aussage — das Bild, das der Verlag heute zur ISBN führt — gibt es nicht frei (zweiter Google-Schlüssel oder schlüssellose Anfragen umgehen das Kontingent; ISBNdb kostet; Amazons Bild-URLs sind ohne PA-API verboten; DNB/BnF führen kein Verlagsbild je ISBN). Gebaut ist darum die schwächere Aussage, und sie sagt in jedem Satz, dass sie schwächer ist.
+
+**Was läuft:** `getIsbnCovers` fragt Google wie bisher (ein Versuch, eine Wiederholung). Antwortet Google nicht — Kontingent verbraucht (`googleAvailable()` falsch), kein Schlüssel, oder beide Versuche gescheitert —, fragt es `openlibrary.org/isbn/<isbn13>.json` (`lookupIsbnRecordCoversOrThrow`; Timeout und Cache wie ein Werk, 5 s / 24 h; die JSON-API, nicht die limitierte Cover-Suche nach ISBN). `covers` daraus werden `ol:<id>`-Cover, `-1` (entfernter Scan) fällt weg, 404 heißt „kein Eintrag, also kein Cover verzeichnet“ — eine Antwort, keine Stille. Erst wenn auch Open Library schweigt, bleibt `unavailable`. Die Antwort trägt `source: 'googlebooks' | 'openlibrary'`; der Hook merkt sich die ISBNs mit Katalogantwort (`catalogue`), `verifyIsbnCover` bekommt das als siebten Parameter und liefert dieselbe Vierteilung unter eigenen Namen: `catalogueVerified`, `catalogueDiffers`, `catalogueUncompared`, `catalogueUnknown`.
+
+**Warum eigene Zustände statt eines Flags:** `linkPlan` reagiert auf `differs` (Suchen statt Läden) und `unknown` (Antiquariat hinten dran) — ein Katalog-Scan ist kein Grund, die Läden zu verschieben, denn der Scan kann älter sein als das, was heute verschickt wird. Mit eigenen Namen bleibt `linkPlan` unberührt, die Analytik zählt getrennt (`VERDICTS` in `lib/insights/signals.ts`, K8), und die About-Seite listet die vier mit ihrer Bedeutung. Jeder Satz beginnt mit „The publisher’s image could not be checked“ — ein Test hält das fest, damit kein Leser, der bis „this cover“ überfliegt, den Scan für das Wort des Verlags nimmt. Die Seitenleiste zeigt bei `catalogueDiffers`/`Uncompared` den Scan neben der Notiz mit eigener Beschriftung („Open Library’s cover for this ISBN“). Deutsch in `lib/i18n/de.ts`.
+
+**Gemessen:** nur an Tests — 1.157 grün, davon neu: Fallback nach zwei Google-Fehlern, bei verbrauchtem Kontingent (null Google-Anfragen, eine Open-Library-Anfrage), ohne Schlüssel, 404 als Antwort, doppelte Stille als `unavailable`; die vier Zustände in `verifyIsbnCover`. Nicht gemessen: wie oft Open Librarys ISBN-Eintrag überhaupt ein Cover trägt, und ob er dasselbe Cover trägt wie die Edition in der Wand (dann wäre `catalogueVerified` die Regel und der Satz ein Trost). Beides liest sich aus `/admin/insights`, sobald ein Tag mit verbrauchtem Kontingent kommt.
+
+**Offen:** mehr Kontingent (0.3); die ISBN-Nachschau von 24 h auf 7 Tage cachen (N4) — Julian.
+
+## 2026-10-05 · lab/inspiration zum ersten Mal mit echten Covern (ROADMAP 5.18)
+
+Julians Prompt ([docs/prompt-inspiration-lokal.md](prompt-inspiration-lokal.md)), auf seinem Rechner im Worktree `bb-nine`, Branch `claude/sleepy-wozniak-lodegp`; Open Library war erreichbar (ein `curl` vorab: 200 in 0,8 s). **Gespielt hat Claude im eingebauten Browser, kein Mensch** — die Zeiten unten sind darum eine Maschinenzeit mit Werkzeugpausen, kein Maß 1. Nichts blockierte den Durchlauf: Suche, Cover-Bilder über `/img/…`, Ausgaben, Kurzlink, geteilte Seite und beide Poster liefen beim ersten Versuch. 22 Tests grün vorher und nachher.
+
+**Das Brett:** *The Great Gatsby*, *Nineteen Eighty-Four*, *Der Meister und Margarita*, *Die unsichtbaren Städte*, *The Left Hand of Darkness*, *Slaughterhouse-Five*, *Der Proceß*, *Beloved*, *Der Name der Rose*; Name „Julian“; Kurzlink `/inspiration/bqnihxi6` (`b=a1fz.88x6x~p1ar.5imne~ehm1.4vk0b~bsx.1l42~1a54.6bl9b~23yz.7ks7t~aom7.ldm7~1304.4x2if~5ctp3.54agn&by=Julian` — 108 Zeichen, mit `https://buyitscovers.com/inspiration?` davor 145).
+
+**Die fünf Maße**
+
+| Maß | Ergebnis | Stand |
+|---|---|---|
+| 1 Zeit bis zum Bild | 137,5 s bis neun Bücher lagen; 260,5 s bis zur geteilten Seite (mit drei Ausgabenwechseln und Name); **283 s (4 min 43 s)** bis zum Klick auf „Save for a story“. Davon Warten auf Open Library: neun Suchen zusammen 17,0 s (Median 0,5 s, **eine 12,5 s**), Ausgaben 2,5 s und 2,2 s, Poster kalt 0,55 s, geteilte Seite kalt 0,23 s | **nicht das Maß** — das sind Julian und zwei Freunde, Ziel Median unter 3 min; offen |
+| 2 Wird die Ausgabe gewählt? | **3 von 9** gewechselt (Gatsby, Bulgakow, Calvino). Aber: bei **4 von 9** war das Standardcover keins, das man posten würde — Gatsby eine Schulausgabe („OCR Oxford“), *1984* Leineneinband ohne Umschlag, Bulgakow russisch, Calvino französisch. Der Wechsel war also zur Hälfte Reparatur, nicht „die Ausgabe, die ich las“ | ein Lauf, kein Schnitt; mit Menschen offen |
+| 3 Lesbarkeit am Telefon | Story auf 390 px Breite verkleinert und angesehen: **alle neun Cover erkennbar**, Titel auf den Covern lesbar. Adresse: war 27 px auf der Leinwand = 9,8 CSS-px am Telefon, **jetzt 40 px = 14,4 CSS-px** (Seitenname 34 → 44). **Nicht in Instagrams Vorschau gesehen** — das braucht Julians Telefon | Rechnung und Verkleinerung, keine Messung am Gerät; offen |
+| 4 Kosten je Brett | **34 Open-Library-Anfragen** laut Serverausgabe: 9 Suchen, 10 für drei Ausgaben-Listen (4 + 4 + 2: je ein Werk und ein bis drei Editionsseiten), 6 Werke für die Titel bei „Done“, 9 Bilder (L) fürs Poster. Ohne Ausgabenwechsel 27; allgemein **27 + Zahl der geladenen Editionsseiten**. Das zweite Poster (Post) kostet 0. Geteilte Seite und Poster auf frisch gestartetem Server: 9 + 9 = 18 | gemessen |
+| 4 Google | **0** — der Importgraph von `serve.ts` hat 18 Module, keins ist der Google-Client; kein Schlüssel in der Umgebung; alle neun Cover-IDs sind `ol:` | bestätigt |
+| 5 Funnels | Nur durch Zusehen: die Kachel öffnet `buyitscovers.com/book/OL468431W/cover/ol-13853193` mit dem gewählten Cover in der Seitenleiste und Läden nach ISBN (ein Besuch der Produktion); `/create#inspiration=…` öffnet `/create` und liest das Fragment nicht (bekannt); X nimmt den Intent an und leitet zur Anmeldung mit dem ganzen Text in `redirect_after_login` | kein Leserverhalten gemessen; offen |
+
+**Was der Server nicht zählt:** die Vorschaubilder. `/img/…` antwortet mit 302, das Bild holt der Browser selbst bei covers.openlibrary.org. Für dieses Brett gerechnet (der Ressourcen-Puffer des Browsers war bei 250 voll, darum nicht gezählt): bis zu 73 Bilder in den Trefferlisten, 85 + 146 + 25 = 256 in den drei Ausgaben-Listen, 12 Kacheln — **rund 340 Bildanfragen**, alle von der Adresse des Lesers, nicht von der Seite.
+
+**Repariert** (nichts davon blockierte; es sind die Fehler, die erst mit echten Daten sichtbar wurden):
+
+1. **Der Name stand zweimal auf dem Poster** — „The books that inspired Julian“ und darunter „— Julian“. Die Unterzeile ist weg (`poster.ts`, `layout.ts`: `type` heißt jetzt `title`/`site`/`address`).
+2. **Adresse und Seitenname auf dem Poster größer:** Story 27 → 40 px und 34 → 44 px; Post 22 → 32 px und 28 → 34 px, dazu Kopf 170 → 140 und Fuß 100 → 130, die Kacheln bleiben 232 × 348. Die Adresse ist der einzige Weg zurück von einem Bild ohne Link.
+3. **Ein Klick auf ein Buch zeigte nichts:** die Werkzeuge („The edition I read“, ◀ ▶, Remove) liegen unter dem Brett, in einem Fenster von 800 × 600 px 1.059 px unter dem oberen Rand. Jetzt rollt die Seite dorthin.
+4. **Die Ausgaben-Auswahl war unscharf:** S-Scans (34–41 px breit) auf rund 87 px gezogen. Jetzt M mit `loading="lazy"`; die gewählte Ausgabe bekommt einen Rahmen (vorher keine Rückmeldung, das Brett liegt außerhalb des Bildes); die letzte Reihe stieß an das Namensfeld.
+5. **Nach „Done — share it“ stand die geteilte Seite an ihrem Ende** („Buy these books“ statt der Wand). Jetzt oben.
+6. **„Link copied.“ stand auch da, wenn der Browser die Zwischenablage verweigerte** (N12), und überschrieb den Link. Jetzt „Copied: <Link>“ oder „Not copied — select it here: <Link>“.
+7. **Ein Brett aus der Adresse (Neuladen, eingefügter Link) nannte Bücher „OL15297W“:** die Titel kamen nur aus Suchtreffern. Jetzt fragt die Seite `/api/board` — bis zu neun Werk-Anfragen beim ersten Mal je Server, danach keine.
+8. **Zurück nach „Done“** änderte die Adresse und ließ die geteilte Ansicht stehen. Jetzt zeichnet sich die Seite neu.
+
+**Offen geblieben, mit dem, was gesehen wurde:**
+
+- **Die Auswahl ist zu lang und stumm.** 85 Cover für *Gatsby*, 146 für Bulgakow, 25 für Calvino, neueste zuerst, ohne Sprachfilter, Jahr und Verlag nur als Tooltip (am Telefon unsichtbar), dasselbe Bild bis zu dreimal nebeneinander. 146 sind am Telefon 30 Reihen. Und es sind nur die ersten 300 Editionen: *Gatsby* hat 1.180, die Buchseite zeigt aus denselben 300 schon 105 Cover.
+- **Das gewählte Cover ist nicht die gelesene Ausgabe.** Das blaue Cugat-Cover hängt im Katalog an „Lulu.com, 2021“ (ISBN 9781716075735); die Buchseite bietet also den Nachdruck an, nicht Scribner. „The cover I remember“ wäre ehrlicher als „The edition I read“ — Julians Entscheidung, gehört zum Satz.
+- **Titel in der Sprache des Werks:** „Мастер и Маргарита“, „Le città invisibili“, „Der Proceß“, „Il nome della rosa“ in „Buy these books“ und in den Werkzeugen — 4 von 9, obwohl englische Ausgaben gewählt waren. `getWork` liefert den Werktitel; der Titel der gewählten Ausgabe bräuchte die Edition.
+- **Das Standardcover** kommt aus dem Suchtreffer (`cover_i`) und ist bei 4 von 9 unpassend (Maß 2).
+- **Instagrams Schutzzonen:** Meta empfiehlt für Storys oben und unten je 250 px frei (aus dem Gedächtnis, nicht nachgeschlagen). Der Titel (Grundlinie y = 254) liegt in der oberen Zone, Seitenname und Adresse (1.814, 1.866) und die untersten 48 px der dritten Reihe in der unteren (ab 1.670). Hielte man beide ein, wären die Kacheln etwa 250 × 375 statt 304 × 456. Erst am Telefon ansehen, dann entscheiden.
+- **Eine Suche brauchte 12,5 s** und zeigte so lange nur „Looking…“.
+- **Das Suchfeld liegt am Desktop unter dem Brett** (das Raster ist bei 560 px Breite 830 px hoch); am Telefon (375 × 812) beginnt die Werkzeugzeile bei 791 px.
+- **„Save for a story/post“:** der Server lieferte das PNG (Story **3,05 MB**, Post 1,88 MB); der eingebaute Browser speichert keine Downloads, die Datei ist darum mit `curl` geholt, das `download`-Attribut ungeprüft. Ob 3 MB fürs Teilen zu viel sind (JPEG), nicht gemessen.
+- **„Share the picture…“** (Web-Share-API) erscheint am Desktop nicht (`navigator.canShare` fehlt) — nur am Telefon prüfbar.
+- **Beschnitt:** `fit: cover` schneidet bei *Slaughterhouse-Five* den rechten Rand der Schrift an.
+- **Unterzeile der geteilten Seite:** frisch gebaut „Nine books, in the editions they were read in.“, über den Kurzlink geladen mit „What inspired you?“ dahinter; „Nine“ steht auch bei weniger als neun. Wortlaut, darum nicht angefasst — wie Hashtag und Satz oben.
+
+**Bilder** (lokal, `docs/tests/2026-10-05-inspiration-*`): beide Poster vorher und nachher, die Story auf 390 px, die Story mit den Schutzzonen, das Brett mit den Standardcovern, die unscharfe Auswahl, die geteilte Seite bei 375 px.
+
+**Nächster Schritt, Julian:** das Story-Bild aufs Telefon und in Instagrams Vorschau; ein eigenes Brett mit Stoppuhr, dann zwei Freunde (Maß 1 und 2); danach Hashtag, Satz und ob „edition“ das richtige Wort ist.
+
+## 2026-10-05 · lab/inspiration: der Editor nach dem Muster von „Arrange“ (ROADMAP 5.18)
+
+Julian nach dem ersten Lauf: „mach die GUI eher so wie bei arrange im create modus, und mit pop-up im desktop mode, mobil vielleicht anders“. Vorbild ist `Arrange` in `components/CollectionEditor.tsx` (Stand `origin/main`, 5.13m) mit dem Cover-Fenster darüber und `CollectionSheet` fürs Telefon. Das Lab bleibt eine einzelne HTML-Seite ohne React; nachgebaut ist das Verhalten, nicht der Code.
+
+**Was jetzt anders ist** (`lab/inspiration/index.html`, `serve.ts`):
+
+- **Ein Band** hält Stand und Ausgang im Blick („Your board · 7 of 9 · Done — share it“): am Desktop oben klebend wie das „Editing“-Band, am Telefon unten am Daumen.
+- **Das Brett wie Arrange:** unter jedem Cover seine Werkzeuge ← ⠿ ✕ →, immer sichtbar; ein Klick aufs Cover öffnet die Ausgaben dieses Buchs; ein Cover lässt sich mit der Maus ziehen, mit dem Finger am Griff ⠿ (`touch-action: none`, auf dem Cover selbst muss ein Finger rollen können). Ablegen **tauscht** die zwei Plätze — das Brett hat neun feste, es rückt nichts nach. Ein leerer Platz ist ein „+“. Der Satz darüber sagt es in Worten, am Telefon mit dem Griff.
+- **Ein Fenster statt der Leiste unter dem Brett:** am Desktop ein Pop-up über dem abgedunkelten Brett (880 px breit, Escape, Klick daneben und „Close“ schließen, der Fokus kehrt zurück, die Seite dahinter rollt nicht); **am Telefon (unter 640 px) ein Blatt von unten** mit festem Kopf und rollendem Inhalt. Zwei Inhalte:
+  - **„Add a book“** vom „+“: Suchfeld (weiter nur auf Enter), Treffer, oben das Brett in klein mit dem markierten nächsten Platz. Ein Klick legt das Buch ab, **das Fenster bleibt für das nächste offen**, bis neun liegen — neun Bücher sind neun Suchen, nicht neun Öffnungen. Nach 3 s ohne Antwort steht „Still looking — Open Library can take a while.“ (die 12,5-s-Suche des ersten Laufs).
+  - **„The edition I read“** vom Cover: die Ausgaben in sechs Spalten (Telefon drei), **Jahr und Verlag unter jedem Bild** statt im Tooltip, das Cover auf dem Brett markiert („on your board“), ein Klick tauscht und schließt. Darüber, was angesehen wurde: „85 covers from the first 300 of 1,180 editions on record at Open Library, newest first.“ — der Server gibt dafür `checked` und `total` mit.
+- **Am Telefon anders:** das Blatt statt des Pop-ups, das Band unten, und unter dem Cover nur Griff und ✕ (vier Knöpfe zu 32 px passen nicht unter ein 109 px breites Cover; die Pfeile bleiben dem Desktop und der Tastatur).
+
+**Geprüft** im eingebauten Browser bei 1280 × 800 und 375 × 812, mit synthetischen Klicks und Zeigerereignissen (das Fenster war verdeckt): Ziehen von Platz 1 auf 5 tauscht und öffnet danach kein Fenster; → und ✕; „+“ → Suche → Treffer → nächster Platz markiert → Escape; Cover → Ausgaben → Wahl schließt und tauscht; „Done“, „Change this one“, „Make your own“. Kein seitliches Rollen bei 375 px; eine Verlagszeile lief über den Rand („Indoeuropeanpublishing.com“) und bricht jetzt um. 22 Tests grün, `tsc` und ESLint sauber. **Nicht geprüft:** Ziehen mit einem echten Finger, das Blatt mit offener Bildschirmtastatur.
+
+**Was das an den Maßen ändert:** an den Kosten nichts — die Ausgaben werden weiter erst auf einen Klick geladen (ein Werk und ein bis drei Editionsseiten), nur ist es jetzt der Klick aufs Cover statt ein zweiter auf einen Knopf weiter unten. Für Maß 2 heißt das: der Haken ist mit einem Klick erreichbar und steht in Worten über dem Brett. Am Desktop liegt die dritte Reihe weiter unter dem Rand (Brett 520 px breit, die Seite ist bei 800 px Fensterhöhe 1.159 px hoch) — der Preis der Werkzeuge unter jedem Cover.
+
+**Offen:** die Länge der Auswahl (146 Cover sind am Telefon ein Blatt von 10.637 px) — Sprachfilter und Falten bleiben der nächste Schritt; die Zurück-Taste schließt das Blatt nicht (auf der Seite hält `?swap=` das Fenster in der Adresse); die neuen Sätze („Add a book“, „Pick the cover of the edition you read…“) sind von Claude und ein Vorschlag wie der Rest.
+
+**Bilder** (lokal): `docs/tests/2026-10-05-inspiration-arrange-*` — Brett, Suche und Ausgaben je bei 1280 und 375 px.
+
+**Nachtrag am selben Tag — Julians Satz und der Look der Seite.** Julian zum Ausgaben-Fenster: „Pick the cover of the edition you read or the one you love the most“ — so steht es jetzt dort, gefolgt von „: it takes the place of the marked one on your board.“ Damit ist die offene Frage „edition oder cover?“ aus dem ersten Lauf für diesen Satz beantwortet: beides zählt. Der Satz über dem Brett („Click a cover to pick the edition you read…“) und die Überzeile „The edition I read“ sind unverändert. Und: „make the buttons looks like on the website, nicht so kantig“ — die Farben sind jetzt die Tokens aus `app/globals.css` (hell), Knöpfe wie `.btn` (6 px Radius, Haarlinie auf der Flächenfarbe, 14 px halbfett), der Hauptknopf wie `.btn-accent` (Terrakotta statt Schwarz), die Share-Knöpfe und „Close“ als Pillen, Felder mit 6 px Radius, Cover mit `rounded-card` und dem Schatten der Seite, die Überzeile im Fenster in normaler Schreibung wie `.kicker` seit 6.84. Die Schriften der Seite (Xanh, Jost) lädt das Lab nicht; es bleibt bei Georgia und der Systemschrift. Angesehen bei 1280 × 800 und 375 × 812, kein seitliches Rollen; Bilder lokal unter `docs/tests/2026-10-05-inspiration-look-*`.
+
+## 2026-10-05 · Die meistgelesenen Werke bei Open Library als Liste, und „Browse“ im Lab (ROADMAP 5.18a)
+
+Julian: „gib noch eine option zum browsen/scrollen des katalogs, d.h. mindestens von den werken der kuratierten liste“, dann: „vielleicht bauen wir eine liste zum browsen aus den beliebtesten werken auf google books oder openlibrary. die können wir auch für andere sachen im projekt gebrauchen“.
+
+**Welche Quelle.** Google Books scheidet aus: die API ordnet nach Relevanz oder Datum, nicht nach Lesern; sie kennt kein Werk (E5); und jede Anfrage ginge vom Kontingent der Urteile ab (E10). **Open Library kann es** — entgegen dem Kommentar in `scripts/pick-index-works.ts` („Open Library has no such endpoint“), der jetzt einen Verweis trägt. Gemessen mit sechs einzelnen Anfragen, je 4 s Pause:
+
+| Anfrage | Antwort |
+|---|---|
+| `search.json?q=*&sort=…` | 422 — eine Suche braucht mindestens drei Zeichen |
+| `trending/forever.json` | 500 |
+| `search.json?q=*:*&sort=readinglog` | 200 in 3,1 s, 43.631.768 Werke. Vorn, was Leute lesen *wollen*: fünf Ratgeber unter den ersten sechs (*Atomic Habits*, *The 48 Laws of Power*, *Rich Dad, Poor Dad* …), dazu Einträge mit 3 und 15 Ausgaben |
+| `search.json?q=*:*&sort=already_read` | 200 in 3,0 s. Liest sich wie ein Regal: *Harry Potter*, *Animal Farm*, *The Hunger Games*, *Nineteen Eighty-Four* unter den ersten zehn |
+| `search.json?q=*:*&sort=editions` | 200 in 3,8 s. Die Bibel, ein Ausmalbuch, Gesetzessammlungen, Bohrprotokolle |
+
+Genommen ist **`already_read`**: wie viele Leser das Werk als gelesen markiert haben.
+
+**Die Liste:** `scripts/build-popular-works.ts` holt zehn Seiten zu hundert, eine nach der anderen mit 4 s Pause (2,4–5,0 s je Seite, eine 29,1 s), und schreibt `data/popular-works.json` (236 KB): **995 Werke** aus 1.000 Treffern (5 ohne Cover, ohne Autor oder doppelt), je mit Werk-ID, Titel, erstem Autor, Cover (`cover_i`), Erstjahr, Zahl der Ausgaben und den drei Zählern (gelesen, Leseliste, Bewertungen). `lib/popularworks.ts` macht aus Suchtreffern Zeilen (rein, 5 Tests) und lädt selbst keine Daten. **Nichts wird wegen geringer Beliebtheit oder weniger Ausgaben weggelassen** — die Zahlen stehen in jeder Zeile, der Nutzer der Liste schneidet.
+
+**Was drinsteht:** gelesen von 1.726 (*Atomic Habits*) bis 66 Lesern. 945 Werke haben mindestens 5 Ausgaben im Katalog, 878 mindestens 10, 721 mindestens 25. Die 50 unter fünf sind überwiegend Einzeleinträge ohne Wand dahinter (indonesische Lehrbücher, Liebesromane mit einem Datensatz) — aber auch echte Bücher, die dünn katalogisiert sind (*Saga* 3, *Smile* 3). 824 der 995 sind ab 1950 erschienen, 87 zwischen 1900 und 1949. Stephen King steht 48-mal darin, Terry Pratchett 24-mal, Rick Riordan 18-mal. **Überschneidung:** 106 der 185 Zeilen von `data/curated.json`, 243 der 500 von `data/index-works.json` — 752 Werke der Liste kennt der Index noch nicht.
+
+**Im Lab** (`lab/inspiration`): das Fenster „Add a book“ hat zwei Reiter, **Search** und **Browse**. Browse zeigt zwei Listen als Pillen — **„Picked by Buy Its Covers“** (115 Werke: die Zeilen von `curated.json` mit einem Open-Library-Cover, die weder übersprungen noch gestrichen sind, mit Julians Cover) und **„Most read on Open Library“** (945: ab fünf Ausgaben) —, ein Filterfeld über Titel und Autor (im Browser, ohne Anfrage, Akzente egal: „garcia marquez“ findet drei), die Cover in sechs Spalten (Telefon drei) zu je 60, die nächsten beim Rollen oder über „Show more“. Ein Klick legt das Buch aufs Brett, ein zweiter nimmt es wieder herunter; das Fenster bleibt offen und merkt sich den Reiter.
+
+**Kosten:** Browsen fragt den Katalog nichts — die Listen sind Dateien, nur die Bilder kommen von covers.openlibrary.org. Ein gebrowstes Buch kostet auch keine Titel-Anfrage (der Server kennt Titel und Autor aus der Liste; geprüft: `/api/board` mit einem Listenwerk druckt keine Open-Library-Anfrage). Ein Brett nur aus der Liste kostet damit **9 Anfragen** (die Posterbilder) statt 27.
+
+**Geprüft** bei 1280 × 800 und 375 × 812 mit synthetischen Klicks: Reiter, beide Listen, Klick und zweiter Klick, „Show more“ (60 → 120), Filter mit und ohne Treffer, Markierung eines Buchs, das schon auf dem Brett liegt. 27 Tests im Lab und für die Liste grün, `tsc` und ESLint sauber. **Nicht geprüft:** das Nachladen beim Rollen (der Beobachter feuert im verdeckten Fenster nicht; der Knopf ist der Ersatz).
+
+**Wofür die Liste sonst taugt** (nichts davon gebaut, jedes wäre ein eigener Punkt): Kandidaten für den Index und die Sitemap (5.1; 752 neue), für das Cover-Spiel, für „Start from“ auf `/create`. Für eine Seite über Cover ist „oft gelesen“ aber nicht „oft neu eingekleidet“: *Atomic Habits* hat 42 Ausgaben, *Animal Farm* 653 — dafür steht `editionCount` in jeder Zeile.
+
+**Offen:** wo geschnitten wird (5 Ausgaben ist ein erster Wert, an 50 Zeilen angesehen); ob Ratgeber und Liebesromane in einer Liste für „books that inspired me“ richtig stehen oder ob Themen-Listen (`subject:…&sort=already_read`) besser tragen; die Liste altert — neu bauen kostet zehn Anfragen.
+
+**Bilder** (lokal): `docs/tests/2026-10-05-inspiration-browse-*`.
+
+## 2026-10-05 · „The books that inspired me“ auf der Seite, hinter einem Schalter (ROADMAP 5.18b)
+
+Julian, nachdem die Vercel-Vorschau das Lab nicht zeigte: „können wir das vom lab in einen online-preview stand bringen? lass uns damit weiterentwickeln“. Der Prototyp ist darum von `lab/inspiration` auf die Website gezogen — als `/inspiration`, **in der Produktion aus** (`INSPIRATION`, dieselbe Regel wie `HOTORNOT`: ungesetzt heißt an, außer bei `VERCEL_ENV=production`), `noindex`, nirgends verlinkt. Vorher `origin/main` in den Branch gezogen (20 Commits; drei Konflikte, beide Seiten behalten).
+
+**Was wohin kam**
+
+| Lab | Seite |
+|---|---|
+| `board.ts`, `layout.ts`, `share.ts`, die Kurz-ID | `lib/inspiration/` (rein; die Tests nach `lib/__tests__/inspiration-*.test.ts`). Das Lab läuft weiter und liest sie von dort |
+| `links.json` | `lib/inspiration/store.ts`: **eine eigene Redis unter dem Präfix `LINKS_`** (Julian, 2026-10-04), gefunden wie die des Spiels (`storeConfig` nimmt jetzt ein Präfix). Ein Schlüssel je ID, einmal geschrieben, ohne Ablauf, **ohne Besitzer und Besucher-ID**: der Eintrag ist die Adresse des Bretts und der Tag. Unter `next dev` Arbeitsspeicher. **Ohne Store gibt es trotzdem einen Link:** die lange Form `/inspiration/board?b=…`, die keinen braucht — so arbeitet eine Vorschau, bevor es die zweite Redis gibt |
+| `serve.ts`: Suche | die vorhandene `/api/search` (ein Open-Library-Aufruf, seit 6.60 nie Google, einen Tag am CDN) |
+| `serve.ts`: Ausgaben | `/api/inspiration/covers/<Werk>` über `lib/inspiration/covers.ts`. **Nicht `/api/works`**, dessen erste Seite die Google-Titelsuche fährt |
+| `serve.ts`: Listen, Titel, Link | `/api/inspiration/browse` (eine Woche am CDN), `/board`, `/link` |
+| `poster.ts` (sharp, SVG-Text) | `/api/inspiration/poster?format=story|feed|card` mit `next/og` in **Xanh und Jost** wie die Link-Karten; die Cover holt die Route selbst, je 8 s, und schneidet sie auf die Kachel. **JPEG:** die Story ist 287 KB statt 3,05 MB. Ein Bild mit allen Covern hängt nur an seiner Adresse und liegt einen Monat am CDN; fehlt eins, wird es nicht gecacht |
+| — | **eine Karte 1200 × 630** (`format=card`) als `og:image` der geteilten Seite: Titel links, die neun Cover rechts |
+| `index.html` | `components/InspirationEditor.tsx` (Band, Brett wie Arrange, Fenster mit Search/Browse und den Ausgaben), `InspirationShared.tsx` (auf dem Server gerendert) und `InspirationShareTools.tsx` (Kopieren, Web-Share) |
+| eine Seite, zwei Ansichten | drei Adressen: `/inspiration?b=…` (bauen), `/inspiration/<8 Zeichen>` (Kurzlink), `/inspiration/board?b=…` (lange Form), je mit Spiegel unter `app/de/` |
+
+**Anders als im Lab:** die Titel eines Bretts aus der Adresse kommen schon mit der Seite (der Server schlägt sie nach), nicht in einer zweiten Anfrage. Am Desktop steht der Text neben dem Brett (27rem), sodass bei 1280 × 800 zwei Reihen und der Anfang der dritten im Bild sind; das Brett endet 120 px unter dem Rand. Die Erklärung „What is *Buy Its Covers*?“ steht nur noch auf der geteilten Seite. **„Make it a collection“ fehlt**: `/create` liest `#inspiration=` nicht, und ein Knopf ins Leere ist schlechter als keiner.
+
+**Gemessen auf dem Dev-Server** (`next dev`, Port 3033): Seite mit sieben Büchern 200 in 2,2 s kalt (davon 1,7 s Kompilieren); Ausgaben von *Le città invisibili* 25 Cover aus 45 Editionen in 0,7 s; Kurzlink 201; Story 4,0 s kalt, **287 KB**; Post 1,4 s, 167 KB; Karte 4,7 s, 75 KB. Ziehen (Platz 1 auf 5 und 1 auf 2), Suche („beloved toni morrison“ → erster Treffer → nächster Platz), Browse (115 und 945), Auto-Schließen beim neunten Buch, Ausgaben-Fenster mit Markierung, „Done“ → `/inspiration/ixvnywve` mit neun Kacheln, fünf Share-Knöpfen, `og:image` und `noindex` — alles mit synthetischen Ereignissen, weil das Browser-Fenster verdeckt war. **375 × 812** (DOM-Messung): kein seitliches Rollen auf beiden Ansichten und im Blatt, Kachel 109 × 164, darunter nur Griff und ✕ (je 36 px), das Band unten bei 762 px, der Footer endet darüber (756). Bilder aus Headless-Chrome bei 1280 und 500 px (dunkles Schema) lokal unter `docs/tests/2026-10-05-inspiration-site-*`.
+
+**Ein Fehler dabei gefunden:** nach einem Ziehen schluckte der Editor den nächsten Klick, wenn ihm kein Zeigerdruck vorausging — eine Kachel, die mit der Tastatur geöffnet wird. Das Merkmal „wurde gezogen“ lebt jetzt nur bis zum Klick, der dem Loslassen folgt.
+
+**Tests:** 39 für das Feature (neu: Ausgaben gruppieren, Link-Store, Schalter), 1.247 im Ganzen; `tsc`, ESLint und `npm run build` sauber. Beim ersten vollen Lauf nach dem Merge schlugen 4 Tests fehl, bei den zwei Läufen danach keiner — nicht nachgestellt, nicht geklärt.
+
+**Einmal in der Vercel-Vorschau geprüft** (Commit `37e33de`, `beautifulbooks-97pr66lfy-…vercel.app`, über einen Zugangslink, je eine Anfrage): `/inspiration` 200 in 1,1 s; Listen 115 und 945; Ausgaben von *Le città invisibili* 25 aus 45; **der Link kommt in der langen Form** (`short: false`) — die Vorschau hat keine `LINKS_`-Variablen, wie erwartet; Story 200, JPEG, 289 KB in 5,0 s, **mit Xanh und Jost** (die Schriftdateien sind im Build); Karte 76 KB in 2,8 s; die geteilte Seite 200 in 0,6 s mit Titeln und einem `og:image`, das auf den Host der Vorschau zeigt. Nicht geprüft: die Seite im Browser eines Telefons.
+
+**Vor dem Einschalten in der Produktion** (steht so in ROADMAP 5.18b): die zweite Redis (Julian im Dashboard, Präfix `LINKS`); die Sätze durch `t()` und Deutsch — die Seite ist **nur englisch**, bis Überschrift, Hashtag und „edition“ entschieden sind; ein Satz in der Datenschutzerklärung (ein Kurzlink speichert den Namen, den jemand aufs Bild schreibt) — Julian gibt ihn frei; eine Herkunftsklasse in `originOf`, damit K9 Besuche von dort sieht; SPEC-Abschnitt und Zeile in `docs/features.md`; `/create` liest `#inspiration=`.
+
+## 2026-10-05 · `/inspiration` nach Julians erster Runde in der Vorschau (ROADMAP 5.18b)
+
+Julian ging die Vorschau durch und schickte fünfzehn Punkte mit vier Bildschirmfotos (die geteilte Seite: Share-Zeile, Kaufliste, die zwei Knöpfe, die Erklärung). Was daraus wurde:
+
+**Sätze.** „kein ‚in the edition they were read‘ sondern ‚with your favourite covers‘“ — überall getauscht: Unterzeile („Nine books that changed how you see things, with your favourite covers.“), geteilte Seite und Karte („Nine books, each with a favourite cover.“), der Share-Satz (`shareText`: „…, with my favourite covers“ / „…, each with a favourite cover“; der Test hält das fest), Überzeile des Cover-Fensters („Your favourite cover“). Julians eigener Satz im Fenster („Pick the cover of the edition you read or the one you love the most“) bleibt. **„mach in der anleitung auf der seite nicht nur im popup klarer, dass man nach der auswahl die cover ändern kann“** — auf der Seite stehen jetzt drei Schritte, der zweite hervorgehoben: „Then change the covers. Each book arrives with its best-known one; a tap on it shows the others.“; dazu der Satz über dem Brett, der Satz im Fenster „Add a book“ und die Meldung nach einem Treffer („… is on your board. Tap its cover there to change it.“).
+
+**Die geteilte Seite.**
+- **Oben statt unten** (Julian: „den change this one button eher nach oben“), und **je nachdem, wer hinsieht** („make your own macht keinen sinn, wenn man gerade vom editieren kommt“): wer das Brett eben gebaut hat, sieht oben „Change it“ und sonst nichts; alle anderen „Make your own“ und „Start from this one“, dazu am Ende „What inspired you? Make your own“. Woher die Seite das weiß, **ohne Besitzer und ohne Besucher-ID**: der Editor merkt sich das übergebene Brett im Speicher des Moduls (`components/inspirationMemory.ts`, wie `NavMemory`), „Done“ ist eine Navigation im Browser und das Modul überlebt sie. Auf dem Gerät wird nichts geschrieben; nach einem Neuladen ist der Erbauer ein Besucher.
+- **Zwei Wege zu teilen, beim Namen genannt** („share as picture share as link? oder wie wird der x post gebaut? nur mit kachel?“): „As a picture“ (Story, Post, am Telefon das Bild direkt an eine App) und „As a link“ — ein Knopf für X, Threads, Bluesky, WhatsApp oder Telegram kann nur einen Satz und einen Link übergeben; der Beitrag zeigt den Link als **Karte mit den Covern**, und diese Karte ist jetzt auf der Seite abgebildet. Das Bild selbst muss gespeichert und angehängt werden.
+- **Der lange Link** („das ist noch die lang-url im screenshot?“): ja — die Vorschau hat keine `LINKS_`-Redis, also die Adresse mit dem ganzen Brett. Sie wird jetzt gekürzt angezeigt (48 Zeichen und „…“); kopiert wird die ganze.
+- **„Buy these books“ zum Ausklappen**, schlichter als die Liste einer Sammlung: zugeklappt eine Zeile mit Julians Satz — „Are any of these missing from your library? Order the editions you chose.“ (für Besucher „Order these editions.“) —, aufgeklappt je Buch das kleine Cover, Titel und Autor, „Where to find it“.
+- **Die Erklärung:** „… and, for each, where to find and buy that edition new or used, online or locally.“ Der zweite Absatz (Urteil zur ISBN) ist weg („den zweiten teil der beschreibung will ich glaub nicht“). Darunter drei Wege: ein Buch nachschlagen, eine eigene Sammlung (`/create`, wenn an), das Cover-Spiel (`/versus`, wenn an).
+
+**Der Grund der Bilder** („der hintergrund der sharepics muss noch besser sein“). Das flache Fast-Schwarz ließ jedes Brett gleich aussehen. Neu, als Standard: **`ambient`** — die Cover des Bretts, je auf 12 × 18 px verkleinert, nebeneinandergesetzt, über das ganze Bild gezogen und weichgezeichnet, bis nur noch ihre Farben bleiben; abgedunkelt, die Ränder zugezogen; die Cover werfen einen Schatten. Der erste Versuch malte die Cover an ihrem Platz und ließ über und unter ihnen schwarze Bänder mit einer Kante. Daneben **`look=paper`**: der helle Grund der Seite mit dunkler Schrift, und `look=plain`, der alte. Beide über die Adresse; **welcher es wird, entscheidet Julian an den Bildern.** Gemessen (Dev-Server, neun Cover): Story 299 KB in 7,4 s kalt, Papier 298 KB, Karte 77 KB.
+
+**Sechs statt neun, als Alternative** („mach eine lokale alternative mit nur 6 büchern“). Ein Brett kann sechs Plätze haben: `n=6` in der Adresse, neun bleibt ungesagt, alte Adressen lesen sich wie zuvor. Im Editor drei breit, zwei hoch — das passt bei 1280 × 800 ganz ins Bild. Im Post stehen die Cover drei breit und **ein Drittel größer als bei neun (308 × 462 statt 232 × 348)**; in der Story zwei breit und drei hoch, so groß wie bei neun (304 × 456), weil dort die Höhe begrenzt. Die Karte zeigt sie drei mal zwei. Der Umschalter im Editor erscheint nur unter `next dev`; `?n=6` geht überall, wo die Seite an ist.
+
+**Julians Frage: „sollten wir hier auch das user-id system einführen?“ — Claudes Rat: nein, nicht für das Brett.** Der Link eines Bretts ist der Hash seines Inhalts: gleicher Inhalt, gleicher Link, nichts zu besitzen. Mit einer Besucher-ID müsste ein Brett veränderlich werden (derselbe Link, anderer Inhalt), bräuchte Lösch- und Aufbewahrungsregeln und fiele unter die Ausnahme E22, die Julian für Sammlungen und nur für sie gemacht hat — und eine Seite, die herumgereicht werden soll, setzte beim Bauen ein Cookie. Was die ID hier bringen würde, gibt es billiger: „Change it“ für den Erbauer (oben, ohne ID), und wer sein Brett behalten und pflegen will, macht daraus eine **Sammlung** — dort gibt es die ID schon. Das ist der Schritt „`/create` liest das Brett“ aus der Liste vor der Produktion. **Julian entscheidet.**
+
+**Vorschläge zum Text** (Julian: „mach hier noch andere vorschläge für das copywriting“), neben dem, was jetzt drinsteht:
+- Unterzeile: „Nine books that made you, each in the cover you love most.“ · „The books that shaped you, wearing your favourite covers.“ · „Nine books, nine covers you would hang on a wall.“
+- Geteilte Seite: „Nine books in the covers Julian loves. What are yours?“
+- Share-Satz: „My nine, in my favourite covers. What are yours?“
+
+**Andere Aufmachungen** („gibt es ein sprichwort mit top shelf? favourite shelf? oder vielleicht das thema mini library“):
+- **Top shelf** ist ein fester Ausdruck: „top-shelf“ heißt erstklassig (vom teuren Schnaps im obersten Regal). „My top shelf“ trägt also. **Vorsicht im britischen Englisch:** „top-shelf magazines“ sind Pornohefte, die im Laden ganz oben liegen.
+- **Shelf portrait** — ein Wortspiel mit „self-portrait“: das Brett als Bild von einem selbst. Claudes Favorit: es sagt in zwei Wörtern, warum man es teilt. („My shelf portrait: nine books that made me.“)
+- **Shelfie** gibt es schon als Wort und als Hashtag für Fotos vom eigenen Regal; „A shelfie without the shelf“ würde an eine vorhandene Gewohnheit anschließen, ist aber nicht mehr neu.
+- **Mini library** / „My pocket library“: sachlich, ohne Witz; passt eher zu sechs als zu neun.
+- **Desert-island shelf**: lehnt sich an „Desert Island Discs“ an (die BBC-Sendung: acht Platten, ein Buch, ein Luxus) — sofort verstanden, vor allem in Großbritannien.
+- **A shelf of one’s own**, nach Virginia Woolf: schön, aber leiser.
+- „Favourite shelf“ ist kein Ausdruck, nur zwei Wörter.
+
+**Geprüft** auf dem Dev-Server bei 1280 px (Headless-Chrome, helles Schema) und über das DOM: Editor mit neun und mit sechs (Band „Six. Done.“, sechs Plätze, die drei Schritte), „Done“ → `/inspiration/fyhpb7js` mit „Change it“ oben, „Order the editions you chose.“ und ohne den Knopf am Ende; dieselbe Tafel frisch geladen: „Make your own“ (führt auf `?n=6`), „Start from this one“, „Order these editions.“, der Knopf am Ende. 1.255 Tests grün (neu: das Brett aus sechs, seine Layouts, der Share-Satz), `tsc` und ESLint sauber. **Nicht geprüft:** am Telefon, und die Bilder in Instagram.
+
+**Zwei Fehler, die erst die Vorschau zeigte** (Commit `74c525f`, eine Prüfung): die Story brauchte auf Vercel **29,0 s** (vorher 5,0 s; die Funktion darf 30) und der Post mit sechs 13,9 s; und oben links lag ein **schwarzes Rechteck in Kachelgröße** über Titel und erstem Cover. Beides kam von den Schatten: neun weichgezeichnete `boxShadow` dieser Größe sind für den Bildgenerator teuer, und eine Kachel mit `boxShadow: 'none'` — jeder leere Platz, und jedes Cover, das nicht kam — ließ ihn das Rechteck malen. Lokal nachgestellt mit einem Brett aus drei Büchern. **Behoben:** die Schatten malt jetzt sharp als eine weiche Ebene in den Grund (`shadows` in der Poster-Route), der Generator bekommt keinen `boxShadow` mehr. Lokal danach: Story 1,3 s, Papier 1,1 s, Karte 0,6 s, ein Brett mit sechs leeren Plätzen ohne Rechteck. In derselben Prüfung blieb eine Kachel leer, weil ihr Cover in 8 s nicht kam — das Bild wurde dann wie vorgesehen nicht gecacht.
+
+**Nach dem Fix einmal in der Vorschau** (Commit `faa69cf`): Story mit neun Covern **6,7 s** statt 29,0 s, 298 KB, alle Cover da, kein Rechteck; ein Brett aus drei Büchern als Post 4,0 s, ohne Rechteck; sechs auf Papier als Story 4,7 s.
+
+**Bilder** (lokal): `docs/tests/2026-10-05-inspiration-bild-*` (ambient, Papier, sechs als Story und Post, die Karte) und `…-site-v2-*`.
+
+## 2026-10-05 · `/inspiration` nach Julians zweiter Runde: „My Shelf-Portrait“ (ROADMAP 5.18b)
+
+Julian ging die Vorschau ein zweites Mal durch (zwei Bildschirmfotos, vierzehn Punkte). Die Arbeit wurde mitten in der Runde vom Nutzungslimit unterbrochen; dieser Eintrag hält die ganze Runde fest.
+
+**Entschieden, Julian.**
+- **Der Name: „My Shelf-Portrait“, darunter „The books that inspire me“** („Shelf portrait … das ist gut“; „Oben: My Shelf-Portrait, unten: The books that inspire me“). Gegenwart, nicht mehr „inspired“. Mit Namen auf dem Brett: „Julian’s Shelf-Portrait“ / „The books that inspire Julian“. Die zwei Zeilen stehen einmal in `lib/inspiration/share.ts` (`titleOf`, `subtitleOf`); Editor, geteilte Seite, Metadaten, Bilder und Link-Karte lesen sie von dort.
+- **Der Hashtag `#shelfportrait`** — Claude hatte ihn dem Namen nachgezogen, Julian: „ist gut so“. Share-Satz: „My Shelf-Portrait: the books that inspire me, with my favourite covers. What’s yours? #shelfportrait“.
+- **Drei, sechs oder neun** („gib die möglichkeit sich zwischen 3, 6 und 9 zu entscheiden beim erstellen“). Der Umschalter, der nur unter `next dev` stand, ist weg; im Editor stehen über den Schritten drei Knöpfe „How many books? 3 · 6 · 9“. `n=3` und `n=6` in der Adresse, neun bleibt ungesagt.
+- **Beide Gründe bleiben, der Leser wählt beim Teilen** („beides gut, mach beim sharen einen toggle für den user“).
+- **Die Kaufliste ist aufgeklappt** („aufklappen“) und lässt sich zuklappen.
+- **Schritt 2 endet auf „— pick the one you love“.**
+
+**Gebaut.**
+- **Kein Buch geht durch die Größenwahl verloren.** `resize(board, size, spare)` gibt das Brett und die Bücher zurück, für die ein kleineres keinen Platz hat; ein größeres nimmt sie wieder auf. Neun → drei → neun ergibt dieselbe Adresse wie vorher (am Dev-Server nachgeklickt). Die Plätze bleiben, wo die Bücher hineinpassen, und rücken nur zusammen, wo eines jenseits des kleineren Bretts stand. Der Editor sagt es: „6 books are set aside — a bigger board brings them back.“ Die beiseitegelegten Bücher stehen nicht in der Adresse; ein Neuladen vergisst sie.
+- **Das Bild beim Teilen: eine Vorschau, drei Wahlen, drei Wege** (`PictureShare` in `components/InspirationShareTools.tsx`). Format (Story 1080 × 1920 · Post 1080 × 1350), Grund („Cover colours“ = `ambient` · „Paper“ = `look=paper`), Titel („Covers only“ · „With title and author“ = `titles=1`: Julian, „make a toggle whether the author and title should be shown“). Gezeigt wird genau das Bild, das die Knöpfe übergeben — niemand speichert eine Aufmachung, die er nicht gesehen hat. „Save the picture“, **„Copy the picture“** (Julian: „vllt noch ein copy as a picture?“) und am Telefon „Share the picture…“. Die zwei Speicherknöpfe („for a story“, „for a post“) sind in der Formatwahl aufgegangen.
+- **„Copy the picture“** legt ein PNG in die Zwischenablage, weil keine Zwischenablage JPEG nimmt: das JPEG der Poster-Route wird im Browser auf eine Leinwand gezeichnet und als PNG übergeben (Post mit Titeln auf Papier: **1.962 KB**). Das `ClipboardItem` entsteht im Klick und wird später gefüllt — Safari verweigert ein Schreiben, das erst nach einem Warten beginnt. Der Knopf erscheint nur, wo der Browser `ClipboardItem` kennt. Im Browser-Fenster der App mit einem echten Klick geprüft: „The picture is copied“. Ein Klick aus einem Skript scheitert an „Document is not focused“ — das ist die Regel des Browsers, kein Fehler der Seite.
+- **Titel und Autor unter den Covern** (Poster-Route, `titles=1`; `posterLayout(format, count, captions)` macht die Kacheln dafür niedriger). Die Link-Karte hat dafür keinen Platz. Ein Bild mit Titeln wird nur dann einen Monat behalten, wenn auch jeder Titel kam.
+- **Die Link-Karte nutzt ihren Platz und ist mit „BuyItsCovers.com“ gezeichnet** (Julian: „the space usage in der vorschaukachel muss noch besser sein. außerdem sollte es ‚BuyItsCovers.com‘ heißen“). Vorher standen die Cover klein in der rechten Hälfte. Jetzt (`cardPlan`): bei neun ein Raster aus fünf mal zwei Feldern von 186 × 279 px, die Worte im ersten Feld; bei sechs drei mal zwei Cover rechts, die Worte in einer Spalte links; bei drei eine Reihe von 264 × 396 px. Für die anderen Karten der Seite ist das ROADMAP 6.90.
+- **Vom Brett in eine Sammlung, mit einem Klick** (`components/InspirationToCollection.tsx`, wenn `WALLS` an ist). Julians Frage zum Verweis auf `/create`: „läuft dieser funnel smooth?“ — **nein, er lief nicht**: der Verweis öffnete eine leere Sammlung, und die Bücher des Bretts hätte man neu suchen müssen. Jetzt steht unter der Kaufliste „More books than fit here? [Make it a collection]“: der Knopf legt eine Sammlung mit den Covern des Bretts an (Titel = der Titel des Bretts) und öffnet ihren Editor. Am Dev-Server geklickt: neun Cover, „Julian’s Shelf-Portrait“, „not saved yet“, Reiter „Add covers“. Die Sammlung ist die dieses Browsers wie jede andere: die erste setzt das Besucher-Cookie (E22), sie landet ungespeichert (5.13j). Eine Kachel trägt keine Druckausgaben (das Brett hält nur das Bild) — wie eine Kachel aus einem Regalfoto. Damit ist Punkt (6) der Liste „vor dem Einschalten“ erledigt, ohne `#inspiration=` in `/create`.
+- **Ein FAQ unter dem Brett** (`components/InspirationFaq.tsx`; Julian: „make a faq similar to my9albums.org. mach einen vorschlag, ich werde dann anpassen und kürzen“). **Ein Vorschlag, mit Absicht zu lang:** dreizehn Fragen zum Aufklappen, in der Reihenfolge, in der man ihnen beim Bauen begegnet. Die Fragen von my9albums (was ist es, warum so viele, kein Konto, wie lange, welche Bildgrößen, später ändern) und vier, die dort keinen Anlass haben: ein anderes Cover wählen, ein Buch oder Cover, das der Katalog nicht hat, wo man die Ausgaben kauft, wem die Bilder gehören. Jede Antwort beschreibt, was die Seite heute tut. **Die Antwort „What is stored?“ ist ein Satz zum Datenschutz und braucht Julians Freigabe** wie der Satz in der Datenschutzerklärung (Liste in 5.18b, Punkt 3); sie stimmt für ein Brett, aber nicht mehr für den, der „Make it a collection“ klickt — dort gilt, was für Sammlungen gilt.
+
+**Ein Fehler beim Bauen, vor dem Commit gefunden:** das FAQ stand zuerst im selben Raster wie die zwei Spalten des Editors, und die mitlaufende linke Spalte (`sticky`) schob sich beim Scrollen über die Fragen — in Chrome hält die Zeile eines Rasters ein `sticky`-Element nicht auf. Die zwei Spalten haben jetzt ein eigenes Raster, das FAQ steht danach.
+
+**Julians Frage: „for known cover art it should also have a toggle for the artist?“ — Claudes Antwort: jetzt nicht.** Wer ein Cover gestaltet hat, weiß die Seite nur für die kuratierten Sammlungen (die ISFDB-Angaben in `data/collections.json`), und dort für eine Ausgabe, nicht für jedes Bild. Für ein beliebiges Cover aus Open Library gibt es keine Angabe; ein Schalter, der bei den meisten Brettern nichts zeigt, verspricht mehr, als da ist (N12). Sinnvoll wird er, wenn ein Brett aus einer kuratierten Sammlung gebaut wird — vorgemerkt in 5.18b.
+
+**Die zweite Redis für die Kurzlinks — nicht angelegt, weil sie Geld kostet.** Julian: „lege das in vercel an über die cli. und gerade beim kopieren wäre doch die kurze wichtig?“ — ja, gerade dort. Befund aus der CLI (`vercel integration add redis`, Marktplatz „Redis“, Integration installiert): der Tarif **„Free — 30 MB“ gibt es einmal je Konto und ist vergeben** (der Store `redis-pink-yacht` des Spiels, der Sammlungen und der Entwürfe); er hat **keine Persistenz**, keine Hochverfügbarkeit, 100 Befehle je Sekunde, 30 Verbindungen. Der nächste Tarif, **250 MB, kostet 6 $ im Monat** und hat Persistenz (1 GB 20 $, 2,5 GB 40 $). Nichts wurde gekauft; der Kauf braucht Julians Ja. Seine Gegenfrage („vllt den kurzlink store als kostenlosen und den anderen als zweiten kostenpflichtigen? welcher wird voller werden?“) — die Rechnung: ein Kurzlink ist ein Schlüssel von 18 Zeichen und ein Wert von 170–200 Byte, mit der Verwaltung von Redis rund 300 Byte, **30 MB fassen also etwa 100.000 Bretter**; eine Sammlung ist je nach Länge 2–100 KB (eine Kachel 150–250 Byte, höchstens 500 Kacheln), ein Entwurf aus `/curate` einige zehn KB. **Je Eintrag füllt der vorhandene Store schneller, nach Anzahl die Kurzlinks, falls die Seite herumgeht** — jedes fertige Brett ist ein Eintrag, eine Sammlung baut nur, wer bleibt. Wie voll der vorhandene Store ist, zeigt die CLI nicht (Dashboard). **Was schwerer wiegt als die Größe: die Persistenz.** Ohne sie kann ein Neustart den Store leeren; dann wären die Sammlungen der Leser weg, oder jeder gepostete Kurzlink sagte „not on record here“ — die lange Adresse überlebt das, der Kurzlink nicht. Claudes Rat darum: **den vorhandenen Store auf 250 MB heben (6 $ im Monat, Persistenz) und die Kurzlinks mit hineinlegen** (`LINKS_`-Variablen auf denselben Store; die Schlüssel sind mit `insp:link:` schon getrennt) — eine Rechnung, beides gesichert. Julians Aufteilung (Sammlungen bezahlt, Kurzlinks im dann wieder freien Gratis-Store) kostet dasselbe und ließe die Kurzlinks ohne Persistenz. Ob `redis-pink-yacht` wirklich auf dem Gratis-Tarif läuft, ist aus der CLI nur geschlossen (der Gratis-Tarif ist „vergeben“) — **im Dashboard nachsehen.** **Upstash**, die andere Redis im Marktplatz: ein Dienst, der Redis je Befehl abrechnet statt je Monat und über HTTP spricht (der Code kann das REST-Paar schon, `storeConfig`). Seine Preisseite (upstash.com/pricing/redis, gelesen am 2026-10-05, nach dem ersten Rat): **gratis 256 MB und 500.000 Befehle im Monat, Persistenz als Eigenschaft aller Tarife aufgeführt**; darüber 0,20 $ je 100.000 Befehle. Ein Kurzlink kostet einen Befehl beim Anlegen und zwei je Aufruf der geteilten Seite (Metadaten und Seite fragen je einmal) — 500.000 Befehle sind rund 250.000 Aufrufe im Monat. **Damit ändert sich Claudes Rat: die Kurzlinks zu Upstash, gratis und mit Persistenz**; der vorhandene Store bleibt, wie er ist, und ob er Persistenz braucht (6 $), ist eine eigene Frage, von den Kurzlinks getrennt. Zwei Vorbehalte: die Zahlen sind von Upstashs eigener Seite, nicht aus dem Vercel-Marktplatz gelesen (dort kann der Tarif anders zugeschnitten sein — beim Anlegen nachsehen), und es ist ein zweiter Anbieter, dessen Bedingungen Julian selbst annehmen muss (Dashboard → Storage → Upstash, oder `vercel integration add upstash` im Terminal; Präfix `LINKS`).
+
+**Geprüft** auf dem Dev-Server bei 1280 × 800 und 390 × 844 (keine Zeile breiter als das Fenster, an beiden Seiten gemessen): Editor mit neun, sechs, drei und zurück; die geteilte Seite mit den drei Wahlen (ein neues Bild lokal in 1,0–1,6 s; Story 1080 × 1920, Post 1080 × 1350; der Speichern-Verweis folgt der Wahl), „Copy the picture“ mit echtem Klick, die offene Kaufliste mit neun Zeilen, „Make it a collection“ bis in den Sammlungs-Editor. **1.259 Tests grün** (neu: vier zur Größenwahl), `tsc` und ESLint sauber, `npm run build` läuft durch. **Nicht geprüft, braucht Julians Telefon** („das sollten wir noch testen“): die Story in Instagrams Vorschau und ihre Ränder, „Share the picture…“ an eine App, das Ziehen am Griff, das Fenster über der Tastatur, „Copy the picture“ in Safari.
+
+**Einmal in der Vorschau** (Commit `adbb5c3`): Editor 200 in 0,8 s mit beiden Titelzeilen, der Größenwahl, „pick the one you love“ und dreizehn Fragen; geteilte Seite 200 in 0,6 s mit „Julian’s Shelf-Portrait“, „The books that inspire Julian“, der offenen Kaufliste, den Wahlen und „Make it a collection“ (nicht geklickt: die Vorschau schreibt in den echten Store); `og:title` „Julian’s Shelf-Portrait“, Beschreibung „The books that inspire Julian: nine books, each with a favourite cover. What’s yours?“. Bilder: **Story auf Papier mit Titeln 6,3 s, 235 KB**; Link-Karte 3,9 s, 128 KB; Post mit drei Büchern 3,3 s, 120 KB; die Größen stimmen (1080 × 1920, 1200 × 630, 1080 × 1350), die Schriften der Seite sind da, auch ein japanischer Titel wird gesetzt.
+
+**Ein Fehler, den erst das Bild aus der Vorschau zeigte:** „A Confederacy of Dunces“ stand unter seinem Cover in zwei Zeilen („A Confederacy of / D…“) und schob den Autor nach unten. `clip` rechnete mit 0,47 Geviert je Buchstabe und hielt 19 Zeichen für passend; Jost ist breiter. Jetzt 0,5, und eine Bildunterschrift bricht nie um (`ONE_LINE`: `nowrap`, was übersteht, wird abgeschnitten). Lokal neu gezeichnet: „A Confederacy of…“ in einer Zeile. **Nach dem Fix einmal in der Vorschau** (Commit `f4621a1`): dieselbe Story in 6,7 s, 234 KB, „A Confederacy of…“ in einer Zeile, der Autor an seinem Platz.
+
+**Beobachtung, für Julian:** der Titel unter dem Cover ist der Titel des Werks im Katalog, nicht der der Ausgabe — unter einem deutschen Kundera-Cover steht „Nesnesitelná lehkost bytí“, unter einem katalanischen Murakami „海辺のカフカ“, unter „De la guerra“ steht „Vom Kriege“. Für die kuratierte Liste und die meistgelesenen Werke kommen die Titel aus den eigenen Listen (meist englisch), sonst von Open Library. Den Titel der gewählten Ausgabe zu zeigen hieße, je Buch die Ausgabe zum Cover zu suchen (bis zu drei Katalog-Anfragen) — nicht gebaut; ob es das wert ist, entscheidet sich daran, ob „with title and author“ benutzt wird.
+
+**Offen.** Die Adresse heißt weiter `/inspiration` und steht so im Fuß der Bilder (`buyitscovers.com/inspiration`) — ob sie dem Namen folgt (`/shelf-portrait`?), ist Julians Entscheidung und sollte fallen, bevor Bilder im Umlauf sind. Das FAQ kürzen. Die Redis.
+
+**Bilder** (lokal): `docs/tests/2026-10-05-inspiration-round2-editor.png`, `…-shared.png`, `…-shared-three-phone.png` (500 px breit — schmaler zeichnet Headless-Chrome nicht).
+
+## 2026-10-05 · `/shelfportrait` nach Julians dritter Runde; was in Redis liegt; was ein Bild kostet (ROADMAP 5.18b)
+
+Julian probierte die Vorschau am Telefon und am Rechner und schickte vierzehn Punkte, fünf markierte Stellen und zwei Aufträge zu den Stores.
+
+**Entschieden, Julian.**
+- **Die Adresse heißt `/shelfportrait`** („nenn auch die subsite in /shelfportrait um“): `/shelfportrait` (bauen), `/shelfportrait/<8 Zeichen>` und `/shelfportrait/board?b=…` (geteilt), ebenso im Fuß der Bilder (`buyitscovers.com/shelfportrait`). Im Code bleibt der Name, unter dem es gebaut wurde — `lib/inspiration/`, `/api/inspiration/…`, der Schalter `INSPIRATION`, die Komponenten `Inspiration…` —, wie „wall“ für „collection“. Eine Weiterleitung von `/inspiration` gibt es nicht: die Adresse war nie öffentlich, und ein Vorschau-Link gilt nur für seinen Stand.
+- **Je Größe ein eigener Satz** unter den zwei Titelzeilen, statt „… books that changed how you see things, with your favourite covers“: neun „A stack of books that changed your outlook.“, sechs „A few books that altered your brain chemistry.“, drei „Your must-reads.“
+- **In der Ansicht kein „What’s yours?“ mehr, sondern „Take your Shelf-Portrait“** mit dem Verweis „Start a new one of your own“ darunter — für den Erbauer wie für Besucher; der Knopf am Ende heißt ebenso. Oben bleibt „Change it“ (Erbauer) bzw. „Start from this one“ (Besucher); „Make your own“ ist in der neuen Zeile aufgegangen. Die Beschreibung für Link-Vorschauen endet auf „Take your Shelf-Portrait.“ **Der Share-Satz endet weiter auf „What’s yours? #shelfportrait“** — Julian sprach von der Ansicht; ob der Satz mitzieht, ist offen.
+- **Vier Fragen gestrichen** (im Browser markiert): „Why three, six or nine?“, „How long does it take?“, „Can I choose another cover for a book?“, „Can I change the order?“. Neun bleiben.
+- **Auf der Link-Karte** mehr Abstand zwischen den Buchstaben von „BuyItsCovers.com“ (0,045 Geviert), und **„Judge a book,“ darüber** — klein, aufrecht, in Jost und gedämpft, die Adresse darunter kursiv in Xanh und in der Akzentfarbe: zwei Schriften und zwei Farben, damit niemand den ganzen Spruch für den Link hält. Die Adresse wird jetzt an die Spaltenbreite angepasst (sechzehn Buchstaben).
+
+**Behoben.**
+- **„Zurück“ nach „Done“ leerte das Brett** („when i go back in the browser after having pressed done all the progress is gone“). Nachgestellt: drei Bücher, „Done“, zurück → Adresse `?n=3`, „0 of 3“. Ursache: „Zurück“ bringt die Seite, wie sie zuerst geladen wurde — ein leeres Brett —, während die Adresse dieses Schritts die Bücher noch trägt; der Editor baute sich leer auf und schrieb das leere Brett über die Adresse. Jetzt liest er das Brett beim Aufbau aus der Adresse des Browsers, wenn der schon beim Editor steht (bei einem Verweis dorthin steht der Browser in diesem Moment noch auf der alten Seite — dann gilt, was der Server geschickt hat); die Titel der Bücher überleben den Schritt im Speicher des Moduls (`keepNames`). Nachgeklickt, fünf Wege: zurück nach „Done“ (drei Bücher, Titel da), „Change it“ (drei), „Start a new one of your own“ vom Kurzlink und von der langen Adresse (leer), „Start from this one“ (drei).
+- **X öffnete eine Nachricht statt eines Beitrags** („sharing on x should be as a post, not a message“). Die Adresse war `x.com/intent/post`; jetzt `x.com/intent/tweet`, die Form, die X dokumentiert und die seine Apps als neuen Beitrag öffnen. **Nicht am Telefon nachgeprüft** — das kann nur Julian.
+- **Das geteilte Bild trägt den Link im Satz** („share as picture sollte zb bei whatsapp trotzdem den direktlink in dem share-satz mitgeben“): „Share the picture…“ übergibt Bild und „<Satz> <Link>“; ein eigenes `url`-Feld bliebe bei manchen Apps auf Kosten des Bildes.
+- **Schärfere Bilder** („die schrift leicht unscharf“, in Instagram). Story und Post wurden als JPEG mit Qualität 82 und halbierter Farbauflösung (4:2:0) geschrieben — farbige Buchstaben fransen dabei aus, und Instagram komprimiert noch einmal. Jetzt Qualität 92 und volle Farbauflösung (4:4:4); der Grund wird mit 90 statt 82 eingebettet. Größen lokal: Story 558 KB (vorher 298), Story auf Papier mit Titeln 433 KB (235), Post 370 KB. Die Link-Karte bleibt bei 82 (129 KB), sie soll für Messenger klein sein. Ob es in Instagram reicht, zeigt nur Julians Telefon.
+
+**Beantwortet, nicht gebaut.**
+- **„bei mir mobile auf insta zu lang für eine seite im beitrag-modus“.** Der Post ist 1080 × 1350 (4 : 5), das höchste Format, das ein Instagram-Beitrag ganz zeigt. Claudes Vermutung, nicht geprüft: Instagram schneidet jedes Bild beim Auswählen zuerst quadratisch zu (unten links im Bild der Knopf mit den zwei Pfeilen zeigt es ganz) — dann fehlen Titel und Fuß. Wenn es das ist, hilft nur ein **quadratisches Format** (1080 × 1080); bei neun Covern im Hochformat blieben darin links und rechts breite Ränder, oder die Cover stünden fünf und vier wie auf der Karte. Nicht auf Verdacht gebaut — Julian sagt, was er gesehen hat.
+- **„mach den paper-background in der farbe der website“.** Er ist es schon: `OG.paper` ist `#f4f0e8`, der Grund der Seite (`--bg`); im JPEG der Vorschau gemessen `#f4f0e7`. Zwei Lesarten bleiben: Julian sah die Seite am Telefon im dunklen Schema (dann ist ihr Grund `#131110`, den es als `look=plain` gibt, aber nicht als Wahl), oder er meint etwas anderes (die Akzentfarbe?). Rückfrage gestellt.
+- **Die Vorschaukarte in WhatsApp zeigte etwas von Vercel** („weil es im preview mode war?“) — ja. Eine Vorschau liegt hinter Vercels Anmeldung; der Abruf von WhatsApp bekommt deren Seite statt unserer, mit Vercels Bild. In der Produktion gibt es diese Schranke nicht. Prüfen lässt sich die Karte erst dort (oder mit einem Tunnel auf den lokalen Server).
+- **„die anderen punkte haben auf mobile gepasst“** — Julians Wort für den Rest der Telefon-Liste (Story, Ziehen am Griff, Fenster über der Tastatur, „Share the picture…“); einzeln aufgezählt hat er sie nicht. Offen bleiben der Beitrag in Instagram und X.
+
+**Was „Drawing the picture“ kostet** („how much does 'drawing the picture' cost us?“). Aus Vercels Messwerten für die Route `/api/inspiration/poster` (alle Aufrufe bisher, 2026-10-05, Region `fra1`): **32 Bilder, 92,5 s Rechenzeit, 172,5 s Laufzeit** — im Mittel 2,9 s Rechenzeit und 5,4 s Laufzeit je Bild, größter Speicherbedarf 471 MB. Vercels Preise für Frankfurt (docs, Stand 2026-06-16): 0,184 $ je Stunde Rechenzeit, 0,0152 $ je GB-Stunde Speicher, 0,60 $ je Million Aufrufe. Je Bild: Rechenzeit 0,000148 $ + Speicher 0,000046 $ (mit 2 GB gerechnet, dem Standard — nicht nachgelesen, wie die Funktion eingestellt ist) + Aufruf 0,0000006 $ = **rund 0,02 Cent; ein Dollar zeichnet etwa 5.000 Bilder.** Ein Brett löst beim Teilen typisch drei bis sechs Bilder aus (Vorschau, Karte, zwei bis vier Wahlen) — 0,06 bis 0,12 Cent; zehntausend Bretter also 6 bis 12 $, gegen 20 $ Guthaben, die Pro im Monat mitbringt. Ein Bild, das ganz ist, liegt danach einen Monat im CDN: wer die geteilte Seite ansieht, zeichnet nichts neu. Die schärfere Kompression kostet etwas mehr Rechenzeit; nachmessen, wenn die Seite an ist. Gebremst ist die Route je Adresse auf zwölf Bilder auf einmal und sechs je Minute.
+
+**Was in Redis liegt** („was speichern wir derzeit wie in redis?“) — aus dem Code gelesen, nicht aus dem Store; ein Store (`STORAGE_`), zwanzig Schlüsselfamilien, Vorschau und Produktion teilen ihn:
+
+| Was | Schlüssel, Typ | Ein Eintrag | Läuft ab | Verlust |
+|---|---|---|---|---|
+| Stimmen des Spiels | `versus:<pool>:votes`, Liste (4 Pools) | 70–90 Byte je Stimme | nie | **nicht ersetzbar** |
+| „kein Cover“-Meldungen | `versus:<pool>:flags`, Hash | 20 Byte je Cover | nie | nicht ersetzbar, klein |
+| Zwischenstand des Spiels | `versus:<pool>:tally` | 100–150 KB je Pool | nie | wird aus den Stimmen neu gezählt |
+| Paar-Marken | `versus:token:<…>` | 60 Byte | 1 h | egal |
+| Vorschläge der Freunde, Entscheidungen | `suggest:items` (Liste), `suggest:decisions` (Hash) | 0,2–1 KB | nie | **nicht ersetzbar** |
+| Entwürfe aus `/curate` | `curate:drafts`, `curate:draft:<id>` | 5–60 KB je Entwurf, nie gelöscht | nie | **nicht ersetzbar**, soweit von Hand bearbeitet und nicht in `data/collections.json` übernommen |
+| Schalter, veröffentlichte Inhalte, Reihenfolge der Sammlungen | `collections:published`, `:content`, `:order` | bis einige hundert KB | nie | Julians Arbeit; die Seite fällt auf die Datei zurück |
+| **Sammlungen der Leser** | `wall:<id>` | typisch 5–30 KB, höchstens ~300 KB (500 Kacheln) | ungespeichert nach 48 h, gespeichert nie | **nicht ersetzbar — die Arbeit der Leser** |
+| Wem welche Sammlung gehört | `walls:owner:<Hash>`, Liste | 10 Byte je Sammlung | nie | ohne sie kommt kein Leser an seine Sammlung; aus `wall:*` wieder aufzubauen |
+| Listen, Aufrufe, Meldungen der Sammlungen | `walls:all`, `:showcase`, `:views`, `:reports` | klein | nie | gering |
+| Fotos je Tag, Ausgaben je Tag | `walls:photos`, `walls:photos:spend`, Hash | ein Feld je Tag, wächst ewig | nie | egal bis auf die Kostenhistorie |
+| Analyse | `ins:<Tag>:<clicks…>`, sieben Hashes je Tag | 20–120 Byte je Feld | 400 Tage (leere Suchen 90) | Statistik, nicht ersetzbar |
+| Merker verschickter Alarme | `alerts:<…>` | 40 Byte | 2 Tage | egal |
+
+Befunde dazu: **nichts sichert den Store** — kein Skript, kein Export; die einzige Kopie von irgendetwas ist die Übernahme eines Entwurfs in `data/collections.json`. Nur der Zwischenstand des Spiels, die Marken, die Alarme und die Analyse vertragen einen Verlust. Alles andere ist die einzige Fassung. Die zwei Tages-Hashes der Fotos wachsen um ein Feld am Tag ohne Ablauf (klein, aber ewig). Die Beschreibung des Stores im Cockpit nannte Sammlungen, Analyse und Alarme nicht — nachgezogen. **Claudes Rat: Persistenz holen (250 MB; der Preis steht unten, in Frankfurt 8 $ im Monat) — nicht wegen der Größe, sondern weil in diesem Store die Sammlungen der Leser liegen**, und dazu ein Export, der den Store regelmäßig in eine Datei schreibt (eigener Roadmap-Punkt, noch nicht angelegt: Julian entscheidet, ob er ihn will). Julian: „ich glaube es macht sinn das zu holen, bereite es vor“.
+
+**Die Preise, nachgeprüft** (Julian: „double checke den preis“) — über Vercels API gelesen, nichts angelegt, nichts gekauft (`vercel api /v1/integrations/integration/<Anbieter>/products/<Produkt>/plans`, `…/v1/storage/stores/<id>`):
+- **Upstash for Redis im Vercel-Marktplatz, Tarif `free`:** „Free — For trying out things. Limited to 1 database per account“, **500.000 Befehle im Monat**, keine Zahlungsart nötig. Die Datenmenge nennt der Marktplatz nicht (Upstashs Preisseite: 256 MB). Darüber: „Pay As You Go“ 0,20 $ je 100.000 Befehle, „Fixed 250MB“ 10 $ im Monat. **Eine Falle in den Voreinstellungen: `autoUpgrade` steht auf an** („auto upgrade your plan when reaching plan limits“) — beim Anlegen ausschalten, sonst kann aus gratis ein bezahlter Tarif werden; `eviction` aus, damit ein voller Store keine Kurzlinks verdrängt (ein Schreiben scheitert dann, und die Seite gibt die lange Adresse aus).
+- **Der vorhandene Store `redis-pink-yacht`: bestätigt „Free — 30 MB“, nur Arbeitsspeicher, keine Persistenz, keine Hochverfügbarkeit, 100 Befehle je Sekunde, 5 GB Netz im Monat, 30 Verbindungen; Region `fra1`.** Das war gestern nur geschlossen, jetzt ist es gelesen.
+- **250 MB mit Persistenz kosten in Frankfurt 8 $ im Monat, nicht 6 $** (1 GB: 25 $). Die 6 $ von gestern waren der Preis für `iad1` — der Preis hängt an der Region, und der Store steht in `fra1` (die Region lässt sich bei einem Wechsel des Tarifs nicht ändern). Mit Hochverfügbarkeit „Single zone“ nicht nachgesehen.
+- **Den Tarif eines Stores ändert die CLI nicht** (`vercel integration update` betrifft Tarife der Installation, nicht eines Stores) — das geht nur im Dashboard: Storage → redis-pink-yacht → Settings → Plan.
+
+**Vorbereitet für Julian.** In seinem Chrome zwei Tabs: die Einstellungen von `redis-pink-yacht` (hinter Vercels Anmeldung — Chrome war dort nicht angemeldet, weiter ging es ohne ihn nicht) und die Marktplatz-Seite von Upstash. Für Upstash geht es auch im Terminal: `vercel integration accept-terms upstash` (das bestätigt nur ein Mensch), dann `vercel integration add upstash/upstash-kv --name shelfportrait-links --prefix LINKS_ --plan free -m primaryRegion=fra1 -m eviction=false -m autoUpgrade=false -e production -e preview`.
+
+**Einmal in der Vorschau** (Commit `3a0adc1`): `/shelfportrait?n=6` 200 in 0,7 s mit „A few books that altered your brain chemistry.“ und neun Fragen; `/inspiration` antwortet 404; die geteilte Seite 200 in 0,6 s mit „Take your Shelf-Portrait“, „Start a new one of your own“ und `x.com/intent/tweet`; die Karte mit „Judge a book,“ über der gesperrten Adresse (4,8 s, 129 KB); eine Story 6,3 s, 558 KB. Ohne Zugangslink antwortet dieselbe Adresse mit einer Weiterleitung zu Vercels Anmeldung (302) — das ist, was WhatsApp statt der Karte sah.
+
+**Geprüft** lokal bei 1280 und 390 px: die drei Sätze je Größe, neun Fragen, die Ansicht mit „Take your Shelf-Portrait“ (keine Zeile breiter als das Fenster), die drei Karten (neun, sechs, drei) mit „Judge a book,“ und der Adresse angesehen, die fünf Wege zurück in den Editor. 1.259 Tests grün, `tsc` und ESLint sauber, `npm run build` zeigt die sechs Routen unter `/shelfportrait` und `/de/shelfportrait`.
+
+## 2026-10-05 · `/shelfportrait`, vierte Runde: Teilen nur für den Erbauer, drei Cover als eins über zwei; wie Bilder für Instagram sein müssen (ROADMAP 5.18b)
+
+**Gebaut, auf Julians Wort.**
+- **Die Wege zu teilen sieht nur, wer das Brett gebaut hat** („the sharing options should only be there when you edited the picture, not when you get on the portrait from a link“). Wer einem Link folgt, sieht die Cover, „Take your Shelf-Portrait“, „Start from this one“, die Kaufliste und „Make it a collection“ — kein „Share it“, und die Link-Karte wird für ihn gar nicht erst gezeichnet. **Woran die Seite den Erbauer erkennt:** bisher nur am Speicher des Moduls, und der überlebt kein Neuladen — ein Telefon lädt einen weggelegten Tab neu, und der Erbauer stünde vor seiner Seite ohne die Knöpfe. Darum landet „Done“ jetzt auf der Adresse mit **`#mine`** dahinter: ein Fragment geht nie an den Server, übersteht das Neuladen, und es ist weiterhin nichts auf dem Gerät gespeichert. Die Links, die die Seite ausgibt („Copy link“, X, WhatsApp …), tragen es nicht. **Die Lücke, bewusst:** wer statt „Copy link“ die Adresszeile kopiert, gibt `#mine` mit, und der Empfänger sieht die Ansicht des Erbauers — nichts, was er nicht sehen dürfte, aber eben die Knöpfe. Dichter ginge es nur mit etwas Gespeichertem (`sessionStorage`), und das wäre eine Entscheidung für die Datenschutzerklärung. Nachgeklickt: nach „Done“ und nach einem Neuladen „Share it“, „Save the picture“, „Change it“; dieselbe Adresse ohne `#mine`: keines davon, dafür „Start from this one“.
+- **Drei Cover: eines oben, zwei unten** („mach bei 3 bildern eines oben und 2 unten“) — in der Story (vorher zwei oben, eines unten) und im Post (vorher drei nebeneinander; die Cover sind jetzt 354 × 531 statt 308 × 462). Die Link-Karte (Querformat) und das Brett im Editor zeigen die drei weiter in einer Reihe.
+- **Die Signatur der Karte etwas größer** („etwas größer“): die Adresse 0,6 statt 0,5 der Titelgröße und bis an die Breite ihrer Spalte (auf der Karte mit neun 24 statt 21 px, mit sechs 43 statt 36), „Judge a book,“ 0,7 davon.
+- **Im FAQ, dritte Frage („My book, or my cover, is not there.“):** „You can add it yourself: Open Library is free to edit with an account — add a missing book, or upload a cover on the book’s page there.“, mit Verweis auf `openlibrary.org/books/add`.
+
+**Julians Frage: „wenn wir den paid plan für redis holen, was spricht dann dagegen das auch für die kurzlinks zu benutzen?“ — wenig, und das Wenige lässt sich abfangen.** Dagegen stand bisher ein einziger Grund, Julians eigener vom 2026-10-04 („i'm thinking we should set up a second redis for it“): eine Welle von Brettern soll nicht den Store füllen, in dem Sammlungen und Spiel liegen. In 250 MB ist das weit weg — ein Kurzlink braucht rund 300 Byte, 100.000 Bretter sind 30 MB, voll wäre der Store erst bei etwa 800.000 —, und eine Obergrenze (ab N Kurzlinks gibt die Seite die lange Adresse aus, wie heute ohne Store) nimmt den Rest. Sonst: ein Anbieter und eine Rechnung statt zwei, beides mit Persistenz, keine zweiten Bedingungen; Vorschau und Produktion teilen den Store wie bisher (Probebretter aus Vorschauen bleiben liegen, je 300 Byte); fällt der Store aus, fallen Kurzlinks und Sammlungen zusammen aus — die Kurzlinks dann auf die lange Adresse. **Claudes Rat: so machen, Upstash weglassen.** **Nicht umgestellt:** der Code sucht die Kurzlinks unter `LINKS_` und ein Test hält fest, dass er den Store des Spiels „nie borgt“ — das war eine Entscheidung, und Julian hat gefragt, nicht entschieden. Auf sein Ja: `linkStoreFromEnv` fällt auf den Store der Seite zurück, dazu die Obergrenze und der Test; eine kleine Änderung.
+
+**Recherche: wie Bilder für Instagram sein müssen** (Julian: „mache nochmal eine kurze recherche hierzu wie insta-sharepics am besten sein müssen“; Websuche am 2026-10-05, Ratgeberseiten, nicht Instagram selbst — die Zahlen stimmen unter ihnen überein):
+- **Beitrag:** 1080 px breit. **4 : 5 (1080 × 1350) ist das sichere Format** — das höchste, das in der App, über Planungswerkzeuge und in Anzeigen ganz bleibt. Seit Januar 2025 zeigt das Profilraster Vorschauen in **3 : 4**, und aus der App lässt sich auch 3 : 4 (1080 × 1440) posten; von einem 4 : 5-Beitrag zeigt das Raster die mittleren 1012 × 1350 px, es fehlen also je 34 px links und rechts. Unser Post hat 60 px Rand — nichts Wichtiges fällt weg.
+- **Story:** 1080 × 1920. **Oben 250 px und unten 250 px (bei Anzeigen 340) kann Instagrams Oberfläche verdecken** — Name und Schließen-Knopf oben, das Antwortfeld unten; sicher ist der Block von 1080 × 1420 in der Mitte. **Bei uns liegt beides außerhalb:** die zwei Titelzeilen stehen etwa bei y = 96–206, Name der Seite und Adresse bei 1770–1866. Auf Julians Telefon hat es gepasst (hohe Telefone zeigen das Antwortfeld unter dem Bild, nicht darüber); auf einem Gerät mit 16 : 9 läge das Antwortfeld über der Adresse — und die Adresse ist der einzige Weg vom Bild zurück. Titel und Fuß in den sicheren Block zu holen kostet bei neun Büchern Covergröße: 242 × 363 statt 304 × 456. **Nicht umgebaut** — Julian entscheidet, ob ihm die Größe der Cover oder die Sicherheit der Adresse wichtiger ist.
+- **Schärfe:** JPEG in sRGB, genau 1080 px breit, Qualität 85–90, Datei zwischen etwa 500 KB und 1 MB; über 1080 px Breite oder über etwa 1,5 MB komprimiert Instagram ein zweites Mal, eine größere Datei wird also schlechter, nicht besser. Für Bilder mit Schrift wird auch PNG genannt. Unsere Bilder seit heute: 1080 breit, Qualität 92 mit voller Farbauflösung, 370–560 KB — im empfohlenen Bereich. In der App: Einstellungen → „Datennutzung und Medienqualität“ → **„In höchster Qualität hochladen“** an, sonst rechnet die App das Bild vor dem Hochladen klein.
+- **„zu lang im Beitrag-Modus“** erklärt die Recherche nicht eindeutig: 4 : 5 passt. Zwei Möglichkeiten bleiben — beim Auswählen zeigt Instagram zuerst einen Zuschnitt (der Knopf unten links im Bild zeigt das ganze), oder Julian hat die Story (9 : 16) als Beitrag gewählt, die dort immer beschnitten wird. Mit dem neuen, schärferen Post noch einmal versuchen; wenn wieder etwas fehlt: was genau.
+- Quellen: socialbee.com/blog/updated-instagram-aspect-ratio-image-size, skedsocial.com/blog/best-instagram-image-and-video-size-recommendations, postfa.st/sizes/instagram/feed, outfy.com/blog/instagram-safe-zone, argil.ai/blog/instagram-story-dimensions, pixelbatch.io/blog/instagram-size-guide, revelraw.com/blog/export-settings-for-instagram.html.
+
+**Geprüft** lokal: die Bilder mit drei Covern (Story dunkel, Post auf Papier mit Titeln) und die Karten mit neun und sechs angesehen; die geteilte Seite als Erbauer, nach Neuladen und als Besucher durchgeklickt; der neue Satz im FAQ steht mit seinem Verweis in der Seite. 1.260 Tests grün (neu: die Anordnung eins über zwei), `tsc`, ESLint und `npm run build` sauber.
+
+**Einmal in der Vorschau** (Commit `f25b859`): der Editor mit dem neuen Satz im FAQ und dem Verweis auf `openlibrary.org/books/add`; die geteilte Seite, wie der Server sie einem Besucher schickt, ohne „Share it“ und ohne „Save the picture“, mit „Take your Shelf-Portrait“, „Start from this one“ und der Kaufliste; der Post mit drei Büchern, eins über zwei (5,6 s, 267 KB); die Karte mit drei, „Judge a book,“ über der größeren Adresse (3,2 s, 92 KB).
+
+**Weiter offen, Julian:** was mit „Paper in der Farbe der Website“ gemeint ist (Paper ist `#f4f0e8`, der helle Grund der Seite); ob der Share-Satz auf „Take your Shelf-Portrait“ endet; Kurzlinks in den bezahlten Store (ja/nein); die Story und die sicheren Ränder.
+
+## 2026-10-05 · `/shelfportrait`, fünfte Runde: Kurzlinks im Store der Seite, die Story im sicheren Bereich, ein Verweis auf der Startseite; in `main` (ROADMAP 5.18b)
+
+Julian zu den vier offenen Fragen: Kurzlinks in den bezahlten Redis — „ja“; Titel und Adresse der Story in den sicheren Bereich — „ja“; Paper — „passt erstmal“; der Tarifwechsel — „machen wir morgen“. Dazu: „noch ein link auf der startseite zum shelfportrait“ und „commite, merge in main und deploye dann“.
+
+**Kurzlinks im Store der Seite, mit Obergrenze.** `linkStoreFromEnv` nimmt einen eigenen Store unter `LINKS_`, wo einer gesetzt ist, sonst **den Store der Seite** (`STORAGE_`); die Schlüssel bleiben `insp:link:<id>`. Was der zweite Store leisten sollte (Julian, 2026-10-04: eine Welle von Brettern soll den Store der Sammlungen nicht füllen), leistet eine **Obergrenze: 50.000 Kurzlinks** (`LINK_CAP`, rund 15 MB — die Hälfte der 30 MB von heute, ein Sechzehntel der 250 MB von morgen; mit `LINKS_CAP` zu ändern). Gezählt wird in einem Feld (`insp:links`, `HINCRBY`) vor dem Schreiben; über der Grenze wird nichts geschrieben, der Zähler zurückgenommen, und die Seite gibt die lange Adresse aus — wie ohne Store und wie bei einem Store, der nicht antwortet. Ein Brett, das schon einen Kurzlink hat, bekommt ihn auch an der Grenze. Der Test, der festhielt, dass die Kurzlinks den Store des Spiels „nie borgen“, hält jetzt das Gegenteil fest, dazu die Grenze. **Upstash ist damit vom Tisch**; die zwei Befehle von gestern braucht niemand. **Bis zum Tarifwechsel liegen Kurzlinks in einem Store ohne Persistenz** — wie die Sammlungen der Leser auch.
+
+**Die Story im sicheren Bereich.** `lib/inspiration/layout.ts` kennt je Format einen Rand, über den die App ihre eigene Oberfläche legen darf (`safe`: Story 250 px oben und unten, Post 0). Die zwei Titelzeilen stehen jetzt bei y = 250–384, Name und Adresse bei 1557–1670; darüber und darunter bleibt das Bild leer. Gemessen (`posterLayout`): neun und sechs Cover **250 × 375** (vorher 304 × 456), drei 384 × 576 (465 breit vorher); mit Titeln unter den Covern 194 × 291 bzw. 328 × 492. Mit Titeln sind neun Cover in der Story damit klein und die Titel kurz („Berlin Alexan…“) — der Preis der sicheren Adresse; der Post ist davon unberührt. Lokal gezeichnet und angesehen: dunkel ohne Titel, Papier mit Titeln. Julian war 242 px genannt worden; es wurden 250, weil die Textbänder knapper ausfielen als geschätzt (130 und 110 px).
+
+**Der Verweis auf der Startseite**, als dritte Einladung unter dem Suchfeld: „Take your Shelf-Portrait: the books that inspire you“, deutsch „Mach dein Shelf-Portrait: die Bücher, die dich prägen“ (der Name bleibt englisch, er steht so auf dem Bild und im Hashtag). **Nur wo die Seite an ist** (`inspirationEnabled()`), sonst wäre es in der Produktion ein toter Verweis. Am Telefon stehen die drei Einladungen in drei Zeilen (390 px: eine Zeile je Verweis, nichts breiter als das Fenster), bei 1280 px in zwei.
+
+**Die Analyse zieht mit** (Regel aus CLAUDE.md, Punkt 3): eine Buchseite, die von einem Shelf-Portrait aus erreicht wird, bekommt die Herkunft **`shelf`** (`originOf`, K9) statt „andere Seite“; in der Auswertung heißt sie „Shelf-Portrait“; Test und Plan 3.1 §3 nachgezogen. Sonst nichts: kein Händler-Verweis, kein Zähler, kein bezahlter Aufruf. Gespeichert wird neu der Kurzlink (Bücher, Cover, der eingetragene Name, der Tag) — das ist keine Analyse, aber ein Satz für die Datenschutzerklärung, **bevor die Seite angeht**.
+
+**Entwurf des Satzes für die Datenschutzerklärung — Julian gibt ihn frei** (noch nicht in `app/privacy/page.tsx`: die Seite ist in der Produktion aus):
+- EN: „A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.“
+- DE: „Ein Shelf-Portrait, das du fertigstellst, wird unter seinem Link gespeichert: die Bücher, die gewählten Cover und der Name, falls du einen eingetragen hast. Sonst wird dazu nichts über dich gespeichert, und es wird dafür kein Cookie gesetzt. Schick uns den Link, und wir löschen es.“
+- Dazu gehört: wer „Make it a collection“ klickt, legt eine Sammlung an — dafür gilt, was die Erklärung zu Sammlungen schon sagt (das Besucher-Cookie). Und Löschen heißt heute: Julian entfernt den Schlüssel von Hand; ein Werkzeug dafür gibt es nicht.
+
+**Beim Zusammenführen mit `origin/main`** (vierzig Commits voraus: der Plan für einen Ansturm 2.18, Links ohne Vorladen 2.18a, Cover auf Zuruf ausblenden 2.18k, Crawler-Regeln 2.18n): zwei Konflikte, beide in Texten (`CLAUDE.md`, `docs/history.md`), beide Seiten behalten. Zwei Regeln aus `main` galten für die neuen Seiten noch nicht und sind nachgezogen: **die geteilte Seite nimmt den Link der Seite** (`components/Link.tsx`, kein Vorladen — neun Cover hätten sonst neun Buchseiten vorgeladen; der Test gegen einen zweiten Importeur von `next/link` schlug an), und **ein auf Zuruf ausgeblendetes Cover** erscheint auch hier nicht: nicht unter den Covern eines Buchs, nicht in den Listen zum Stöbern, nicht auf der geteilten Seite und nicht im Bild oder auf der Karte (der Platz bleibt leer, das Buch bleibt in der Liste). `hiddencovers.test.ts` prüft den neuen Weg mit. Danach 1.371 Tests grün, `tsc`, ESLint und `npm run build` sauber.
+
+**In `main`, ausgeliefert, in der Produktion aus.** Die Seite steht hinter `INSPIRATION` und ist in Vercels Produktion aus, solange die Variable nicht auf `on` steht; der Verweis auf der Startseite erscheint dort deshalb auch nicht. Eingeschaltet hat Claude sie nicht: Julian sagte „deploye“, nicht „schalte ein“, und der Satz oben wartet auf sein Wort. Was vor dem Einschalten noch fehlt, steht in der Roadmap unter 5.18b.
+
+**Ausgeliefert und einmal geprüft** (Commit `4a989f2`, `origin/main` im Schnellvorlauf, 2026-10-05): Vercels Status für `beautifulbooks` „Deployment has completed“. `buyitscovers.com/` 200 in 0,3 s mit Suchfeld und dem Verweis aufs Spiel, **ohne** den Verweis aufs Shelf-Portrait; `/shelfportrait` und `/api/inspiration/browse` 404 — die Seite ist aus, wie vorgesehen; `INSPIRATION` ist in der Produktion nicht gesetzt (`vercel env ls`, nur Namen). (Eine erste Abfrage lief, während der Deploy noch „pending“ war, weil der Gesamtstatus des Commits schon „failure“ zeigte — siehe nächster Absatz; gewertet ist die zweite.)
+
+**Nebenbefund, nicht von dieser Arbeit: ein zweites Vercel-Projekt hängt am selben Repository.** Der Commit bekam zwei Status: „Vercel – beautifulbooks“ (erfolgreich) und **„Vercel – annas-archive-cover-scraping-115241“ (fehlgeschlagen)**, mit je einem Preview- und einem Production-Deployment dieses zweiten Projekts. Der Commit davor auf `main` hatte nur einen Status („Vercel“). Das Projekt steht im selben Team; sein Build bricht sofort ab. Solange es verbunden ist, zeigt jeder Push einen roten Gesamtstatus, obwohl die Seite ausgeliefert ist — und gelänge sein Build, gäbe es eine zweite öffentliche Kopie der Seite. **Julian:** das Projekt vom Repository trennen oder löschen, wenn es ein Versehen ist. Außerdem heißt das Team bei Vercel jetzt **`byitscovers`** (vorher `julian-heiss-projects`); Vorschau-Adressen enden entsprechend auf `-byitscovers.vercel.app`.
+
+## 2026-10-05 · Das Shelf-Portrait ist an (ROADMAP 5.18b)
+
+Julian zum Schalter: „stell auf on“; zum Entwurf des Satzes für die Datenschutzerklärung: „ok“.
+
+- **Der Satz, wie freigegeben**, als eigener Abschnitt „Your Shelf-Portrait“ / „Dein Shelf-Portrait“ in `app/privacy/page.tsx`, nur wo die Seite an ist (N12), deutsch in `lib/i18n/de.ts`; Stand der Erklärung 5. Oktober 2026. Englisch: „A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.“ Anders als die Abschnitte zum Spiel und zu den Vorschlägen nennt er weder den Ort (Redis über Vercels Marktplatz) noch die Rechtsgrundlage — freigegeben ist dieser Satz, nicht mehr; ob er um beides ergänzt wird, ist Julians Sache. Die Zeile dazu steht in `docs/recht-hobbyseite.md` §3.2.
+- **`INSPIRATION=on`** in Vercels Produktion gesetzt (`vercel env add`, geprüft mit `vercel env ls`: nur Namen).
+- **SPEC F10** beschreibt die Seite; **`docs/features.md`** hat ihre Zeile.
+- Was offen bleibt, steht in der Roadmap unter 5.18b: Deutsch, der Tarif des Stores, die Messung mit Menschen, `noindex`, die Link-Karte in den Messengern, ein Werkzeug zum Löschen, die Kosten nach den ersten Tagen.
+
+**Ausgeliefert und einmal geprüft** (Commit `df77809`, Status „Vercel – beautifulbooks“ erfolgreich): `buyitscovers.com/` 200 mit dem Verweis auf `/shelfportrait`; `/shelfportrait` 200 in 0,4 s mit den zwei Titelzeilen, neun Fragen und `noindex`; `/privacy` mit dem Abschnitt „Your Shelf-Portrait“, dem Satz und dem Stand 5 October 2026; **ein Kurzlink aus der Produktion: `/shelfportrait/5nfwx3ix`** (201, `short: true` — der Store der Seite nimmt ihn an), die geteilte Seite dazu 200 in 0,4 s, ihr `og:image` zeigt auf `buyitscovers.com/api/inspiration/poster…`, und die Karte kommt (4,9 s, 91 KB, JPEG). Der Probelink ist ein Brett aus drei Büchern ohne Namen und liegt jetzt im Store — der erste von höchstens 50.000. Nicht geprüft: die Karte in WhatsApp, iMessage und X (das kann nur ein Telefon), und die Seite auf Deutsch (sie ist englisch).
+
+**Nachtrag am selben Tag:** „Where to find it“ in der Kaufliste öffnet die Buchseite in einem neuen Tab (Julian: „the where to find it links should open in a new tab“) — man arbeitet die Liste Buch für Buch ab, und das Portrait bleibt stehen. Mit `rel="noopener"`, nicht `noreferrer`: die Buchseite liest im neuen Tab den Referrer und ordnet den Besuch weiter der Herkunft „Shelf-Portrait“ zu (K9). Die Cover selbst öffnen wie bisher im selben Tab.
+
+**„Where to find it“ live geprüft** (Commit `d2e21f2`, einmal): auf `buyitscovers.com/shelfportrait/5nfwx3ix` öffnen die drei Verweise einen neuen Tab.
+
+**Versuch, nur lokal: die Kaufliste wie Schritt 2 des Rahmen-Funnels** (Julian, 2026-10-05: „try locally what it would look like if we were to do it like with step 2 of the framing funnel“). Schritt 2 ist „Get the books“ aus 5.13f (`WallPlan` auf dem Branch `claude/art-funnel-lab`, nie nach `main` gekommen): ein Häkchen je Buch, „Find it“ klappt die Läden in der Zeile auf statt auf die Buchseite zu führen, „Open next shop“ geht die Liste ab, „Copy list“ gibt sie als Text heraus. Nachgebaut als `components/InspirationBuyList.tsx`, **nur unter `next dev`** und unter der jetzigen Liste, in einem gestrichelten Kasten „Local only“ — zum Vergleichen, nicht ausgeliefert.
+- **Was anders ist als in Schritt 2:** eine Sammlung kennt die Drucke ihrer Cover, ein Brett nur das Bild. Der Druck (Verlag, Jahr, eine ISBN) wird deshalb **nachgeschlagen, wenn er gebraucht wird** — für das Buch, dessen Zeile aufgeht, und für das nächste zu kaufende —, über `/api/inspiration/covers/<work>`, das dafür je Cover jetzt auch eine ISBN mitgibt (`coversOfEditions`). Nie für die ganze Liste beim Laden: neun Bücher wären bis zu 36 Katalog-Anfragen für eine Seite, die die meisten nur ansehen.
+- **Gesehen mit echten Daten** (Brett aus sechs, Markt US): „The Great Gatsby — Scribner Classics 2018 · ISBN 978-0-684-83042-1“, vorn „Bookshop.org by ISBN“ und „Amazon by ISBN“, dahinter „More places to look“ (AbeBooks, ThriftBooks, eBay nach ISBN, dann die Suchen nach Titel, Google Lens, TinEye, WorldCat), darunter „Buy from a local bookshop“ und „Check on the book’s page whether shops show this cover“; „Open next shop“ führt auf `/go/bookshop/9780684830421`. Jeder Laden-Verweis geht durch `/go/` (ISBN, Wörter oder lokal), wie auf der Buchseite. Abgehakt: durchgestrichen und blass, Zähler „1 of 6 bought“.
+- **Wenn der Katalog schweigt** (beim ersten Versuch verweigerte `openlibrary.org` die Verbindung von diesem Mac, die bekannte Sperre): die Zeile sagt „The catalogue did not answer — searching by title“, und die Läden suchen nach Titel und Autor — kein leerer Kasten, kein „nicht vorhanden“ (N12). Liegt der Druck des Covers jenseits der ersten 300 Ausgaben: „This cover’s printing is beyond the editions looked at“.
+- **Telefonbreite (390 px):** nichts breiter als das Fenster; Titel und die Zeile mit Verlag und ISBN werden abgeschnitten („ISBN 9…“) — die zweite Zeile müsste dort umbrechen dürfen.
+- **Vor einem Ausliefern zu entscheiden, Julian:** (1) ob diese Liste die schlichte ersetzt oder nur der Erbauer sie sieht; (2) **die Häkchen** — hier leben sie nur bis zum Neuladen; Schritt 2 legte sie in `localStorage`, das wäre das Erste, was diese Seite auf dem Gerät speichert, und gehört dann in die Datenschutzerklärung; (3) der Markt wird hier aus der Browsersprache geraten, die Buchseite nimmt ihn aus der Anfrage; (4) „Download for your agent“ aus Schritt 2 fehlt; (5) Regel 1 der Analyse: die Verweise gehen schon durch `/go/`, aber die Auswertung kennt den Ort „Shelf-Portrait“ für Klicks noch nicht.
+
+**Zurückgestellt und wieder ausgebaut** (Julian: „stellen wir das erst zurück“): der Versuch bleibt in Commit `d67fc9d` lesbar, Komponente und die ISBN je Cover sind aus dem Stand genommen. **Stattdessen:** die Kaufliste ist **für den Erbauer aufgeklappt, für Besucher zugeklappt** (Julian: „zeig den bereich aber nur für die editoren ausgeklappt, nicht für andere besucher. dort eingeklappt“) — `BuyListDetails` kennt den Erbauer wie die Share-Knöpfe (Speicher des Moduls oder `#mine`); der Server liefert sie zu, der Browser klappt sie für den Erbauer auf; auf- und zuklappen kann weiter jeder.
+
+## 2026-10-05 · Deploy von 2.18a, k, l, m, n; UptimeRobot läuft (ROADMAP 2.18, 2.4)
+
+**Deploy:** Julian: „ja". `origin/main` von `e2fa0b2d` auf `be412402` (40 Commits, darunter die 31 Calibre-Commits des lokalen `main`), Vercel-Build 1 min, Ready. **Einmal geprüft gegen buyitscovers.com:** `/robots.txt` 200, 23.097 Byte, 822 `Allow: /book/`-Zeilen, Gruppe mit `ClaudeBot`, `Disallow: /img/`, `Crawl-delay: 10`; `/about` trägt den Satz für Rechteinhaber; `/img/M/ol-10590366` 200 `image/jpeg`. Die neuen Karten in `/admin/insights` sieht Julian an (390 und 1280 px); K14 füllt sich ab jetzt, die Wirkung von 2.18n auf ClaudeBot ist dort ab morgen zu lesen.
+
+**UptimeRobot** (2.4), eingerichtet von Claude in Julians Chrome (Julian: „mach du"); das Konto war neu, die App auf Julians iPhone schon verbunden. Zwei Monitore, je 5 min, Mail und Push: `buyitscovers – Startseite` als HTTP-Monitor — angelegt über die Einführung, deren erster Monitor ein HTTP-Monitor ist, und der Typ lässt sich nachträglich nicht ändern; für die Startseite genügt das, denn ein pausiertes Projekt antwortet nicht 200 — und `buyitscovers – Suche` als Keyword-Monitor (Vorfall, wenn `Nineteen Eighty-Four` fehlt). Keine Statusseite. Erster Stand: Startseite „Up".
+
+**Bild-Cache und Deploy** (Julian: „kann man das verbessern?"): laut Vercel-Doku übersteht der Cache der Bildoptimierung einen Deploy (Schlüssel ohne Deploy-Adresse), der CDN-Cache einer Funktionsantwort nicht. Vorschlag mit Kosten als ROADMAP 2.18o.
+
+**Ausgabenlimit und Redis-Tarif:** vorbereitet, nicht ausgeführt — in Julians Chrome ist Vercel abgemeldet (Anmeldeseite), Schritte im Plan §5.
+
+## 2026-10-05 · Cover über Vercels Bildoptimierung (ROADMAP 2.18o); Ausgabenlimit gesetzt; ein Projekt aus Versehen
+
+**2.18o** (Julian: „ja"). In einem Vercel-Build fragt jede Kachel `/_next/image?url=https://buyitscovers.com/img/<S|M|L>/<id>&w=128|384|828&q=75`; Quelle ist nur die eigene Route (`remotePatterns`), `minimumCacheTTL` 30 Tage; `next dev` und die Tests bleiben bei `/img`. Der Wiederholungsversuch (6.31) hängt `?retry=1` an die Quelle, weil die Optimierung danach schlüsselt; `isHiddenCoverUrl` liest die Quelle aus der Optimierungsadresse; das Spiel geht denselben Weg. `scripts/hide-cover.ts` trägt eine ID ein und gibt sechs `vercel cache invalidate --srcimg`-Befehle aus (drei Größen, je mit und ohne `?retry=1`). Sechs neue Tests (`lib/__tests__/covercdn.test.ts`, darunter: jede Breite ist in `next.config.ts` erlaubt); 1.318 Tests, tsc, Lint und Build grün.
+
+**Auf einer Vorschau gemessen** (`beautifulbooks-os9rzeu52`, per `vercel curl`, je ein Abruf): `/collections` trägt die Optimierungsadressen; `ol-683284` in `M`: erster Abruf `MISS`, zweiter `HIT`, `image/webp`, 13.094 Byte gegen 16.580 Byte JPEG aus `/img`, 180 × 304 px wie das Original (keine Vergrößerung), `cache-control: public, max-age=2592000, must-revalidate` — **der Browser hält ein Cover jetzt 30 Tage** statt einer Stunde. Eine fremde Quelle (`covers.openlibrary.org`) und die Breite 500 antworten 400; die `?retry=1`-Quelle 200. **Kosten** stehen nicht in K15 (dort als „nicht gemessen" vermerkt), sondern unter Vercel → Usage → Images. **Analyse:** K14 zeigt weniger `img`; sonst nichts, die Kacheln tragen dieselben `data-cover-id`.
+
+**Ausgabenlimit (J2)** in Julians Chrome gesetzt, nachdem er sich angemeldet hatte: das Team-Budget stand bereits auf 200 USD **ohne Pause**; jetzt 100 USD mit „Pause production deployments", Warnungen 50/75/100 %. Abgelesen nebenbei: Guthaben 0,59 von 20 USD verbraucht, „Flat Rate CDN" mit 1 Mio. Anfragen und 1 TB, Bildoptimierung im neuen Preismodell.
+
+**Redis (J4) nicht umgestellt:** der Dialog nennt für 250 MB **8 USD im Monat** (Erwartung aus redis.io: rund 5), 1 GB 25 USD; „Persistence included" ab 250 MB. Region Frankfurt (fra1), nur RAM, ohne Hochverfügbarkeit. Dialog ohne Änderung geschlossen; wartet auf Julians Ja.
+
+**Ein Fehler von Claude:** der Worktree war nicht mit dem Vercel-Projekt verknüpft, und `vercel deploy --yes` legte ein neues Projekt `annas-archive-cover-scraping-115241` an, das sich mit dem GitHub-Repository verband und bei Pushes eigene Builds startete (sechs, alle mit Fehler, weil ihm die Umgebungsvariablen fehlen). Git-Verbindung getrennt (`vercel git disconnect`); das Projekt selbst steht noch, ohne Domain — löschen nur mit Julians Ja. Die Vorschau entstand danach über einen Push des Branches. Als Erinnerung für spätere Sitzungen notiert: vor `vercel deploy` im Worktree `vercel link --project beautifulbooks --yes`.
+
+## 2026-10-04 · Calibre-App: Cover erschienen manchmal nicht — Maße aus dem Cover-Datensatz, Kacheln bleiben (ROADMAP 5.16a)
+
+Julian, mit einem Bild von *Ender's Game* (80 Cover): leere Kacheln mit Maßen darunter, im Vergleich „…" statt des Covers aus Calibre und „fetching the full image…" — „manchmal lädt es die cover nicht oder zeigt sie zumindest nicht an".
+
+**Ursachen**, am Code und am Netz nachgesehen: (1) `CoverSizes` holte für das Maß jedes Original — 80 Dateien für dieses Werk, vier gleichzeitig. `covers.openlibrary.org` reicht die meisten Bilder an Zip-Archive des Internet Archive weiter (`…/view_archive.php?archive=…zip&file=…`); gemessen an dem Abend mit curl: Originale 611 KB in 9,6 s und 858 KB in 4,2 s, ein mittleres Bild 0,07 s (vom Cover-Host selbst) bis 5,9 s (über das Archiv). (2) `renderCovers` baute bei jedem Maß (alle 250 ms) alle Kacheln samt `<img>` neu — ein noch ladendes Bild wurde verworfen und neu angefragt. (3) `pick()` wartete mit dem Calibre-Cover auf das große Bild (`Promise.all`). Keine Sperre: `openlibrary.org` und der Cover-Host antworteten.
+
+**Gefunden:** `https://covers.openlibrary.org/b/id/<n>.json` — der Datensatz des Covers, mit `width` und `height`, in 0,05–0,3 s. Geprüft an 40 zufälligen der 652 Maße, die Julians App aus den Bildern selbst gelesen hatte (0,4 s Pause je Anfrage): 39 identisch, 0 abweichend, 1 Datensatz ohne Maß (`ol:1008445`). Steht jetzt bei den API-Fakten in CLAUDE.md.
+
+**Gebaut:** `CoverSizes` fragt erst den Datensatz (`sizeFromRecord`), das Bild nur noch, wenn er kein Maß nennt (und für Google-Bilder); `CoverFacts` nimmt dafür eine Liste von Quellen mit je eigener Leseart. Davon hat auch die Suche nach dem größten Scan im Sammlungs-Modus etwas. `app.html`: eine Kachel je Cover für die Dauer des geöffneten Werks (`coverTile`, in `open.tiles`), nur Klasse und Text ändern sich; `thumb()` fragt ein gescheitertes kleines Bild zweimal neu an und schreibt dann „picture did not load"; das Calibre-Cover im Vergleich kommt unabhängig vom großen Bild; bis das da ist, steht das kleine verblasst an seiner Stelle.
+
+**Nachgemessen** (echte Bibliothek, nur schauend, leere Speicher): *Ender's Game* — Werk nach 1,0 s, alle 80 Maße 2,5 s nach dem Klick, 80 von 80 kleinen Bildern geladen, 0 gescheitert; Vergleich mit `ol:8186457`: Calibre-Cover nach 0,3 s, großes Bild (639 × 1000, 625 KB) nach 0,5 s, Maß aus dem Datensatz gleich dem des geholten Bilds. Die Browser-Fläche der Sitzung war verdeckt, verzögertes Laden griff dort nicht; die Bilder wurden für die Messung auf sofortiges Laden gestellt. Ein Vorher-Wert für die Wand ist nicht gemessen.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/` und ein Satz in CLAUDE.md.
+
+1.203 Tests (76 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Die Cover auf den PocketBook: das Vorschaubild, nicht die Buchdatei (ROADMAP 5.16c)
+
+Julian: „can we push the new covers onto the pocketbook ourselves? without using calibre?" — und, nachdem die Antwort den Plan „Cover in die EPUB auf dem Gerät schreiben, erst an einem Buch" genannt hatte: „der reader ist jetzt angeschlossen".
+
+**Ohne Gerät:** im installierten Calibre 7.26 kommen bei allen PocketBook-Treibern `upload_cover`, `sync_booklists` und `upload_books` unverändert aus `USBMS`; `CAN_SET_METADATA` ist leer, `THUMBNAIL_HEIGHT` 68, `WANTS_UPDATED_THUMBNAILS` falsch. Senden heißt: Datei kopieren, `metadata.calibre` schreiben.
+
+**Am Gerät** (`/Volumes/PB626`, FAT, Touch Lux 3, „SW Version W5.12.692"; nur gelesen, die Datenbanken als Kopie): `metadata.calibre` hat 452 Einträge, 422 Buchnummern aus Calibre. `system/explorer-3/explorer-3.db` (mit WAL): `files` (Ordner, Name, Größe, Änderungszeit → `book_id`), `books_impl` (999 Bücher, 444 Dateien), `books_uids` (je Buch ein „QuickHash", 16 Bytes), `books_settings` (Lesestand je Buch). `system/config/books.db`: `Books`/`Items` mit `HashUUID` gleich dem QuickHash, `Files` mit Pfad, Name, Länge; Markierungen als Kinder des Buchs. `system/cover_chache/1/`: 483 PNG, alle 8-Bit-Grau, keins breiter als 260, keins höher als 393, benannt `<Pfad des Buchs>.png`.
+
+**Der Zufallsversuch *Ubik*.** Julian hatte es am 3. Oktober 17:14 aus Calibre neu gesendet. Auf dem Reader: Datei 309.502 Bytes mit dem neuen Cover darin (996 × 1500); `books_impl` 971 (212.557 Bytes, QuickHash C761…, Lesestand 999/1000, geöffnet im April) hat keine Datei mehr; `books_impl` 995 (309.502 Bytes, QuickHash F887…, hinzugefügt am 4. Oktober) hat sie und keinen Lesestand. `books.db` kennt nur den alten Eintrag (654, Länge 212.557, ein Kind). Das Vorschaubild `…/Ubik - Philip K. Dick.epub.png` trägt das Datum 20. April und zeigt, angesehen, das alte Cover. Drei Schlüsse: der Reader erkennt ein Buch am Inhalt der Datei; eine geänderte Datei ist ein neues Buch ohne Lesestand; das Bild der Bibliotheksansicht wird bei einer geänderten Datei nicht neu gemacht. Der angekündigte Plan (Cover in die EPUB schreiben) hätte also Lesestand und Markierungen gekostet und das Bild in der Bibliothek trotzdem nicht geändert — verworfen.
+
+**Gebaut:** `lab/calibre/reader.ts` — `makeThumb` (dekodieren mit dem Dekoder der Seite, Rec.-601-Grau, Flächenmittel auf höchstens 260 × 393, PNG Farbtyp 0 mit `pngjs`), `booksOnReader`/`readBooksOnReader` (`metadata.calibre`, ohne Einträge unter `system/`), `thumbFile` (lehnt Pfade ab, die den Bilder-Ordner verließen), `ReaderCovers` (`put`: altes Bild sichern und vergleichen, neues daneben schreiben, zurücklesen, darüberschieben, Eintrag in `reader.jsonl`; `back`: das Bild von vor dem ersten `put`; `status`). `reader-covers.ts` als Kommando. Sieben Tests auf einem nachgebauten Reader-Ordner, ohne Gerät.
+
+**Ein Bild geschrieben:** *Roadside Picnic* (#403; Datei seit November 2025 unverändert, also mit altem Cover darin — an ihm zeigt sich, ob der Reader unser Bild nimmt und behält; an *Ubik* hätte man es nicht unterscheiden können). Vorher/nachher: Buchdatei `d98442a5…`, `books.db` `047cbfdf…`, `explorer-3.db` `7f1aedb9…` — gleich. Das Bild 254 × 393 (20 KB) → 232 × 393 (57 KB; die Bilder des Readers sind kleiner, vermutlich auf weniger Graustufen gebracht — nicht nachgebaut). macOS schrieb `._<Name>` daneben (das Attribut `com.apple.provenance`, auf FAT als zweite Datei); gelöscht, und `write` räumt es künftig weg.
+
+**Nicht bekannt:** ob der Reader das Bild zeigt und ob er es behält, wenn das Buch geöffnet wird. Das sieht nur Julian am Gerät. Die anderen elf Bücher und der Knopf in der App sind nicht gemacht.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.283 Tests (117 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: drei Bilder je Buch — Bibliothek und Startseite geschrieben, Ruhezustand nicht (ROADMAP 5.16c)
+
+Julian, nach dem Blick auf den Reader: „in der library auf dem reader wurde es mit dem neuen angezeigt, auf der startseite und im standby nicht. was heißt das?" Reader wieder angeschlossen, nur gelesen:
+
+- Das Bild der Bibliothek war noch das geschriebene (57.166 Bytes, 232 × 393), obwohl *Roadside Picnic* inzwischen geöffnet worden war (`cache.dat`: `rb.1` ist das Buch) — der Reader nimmt es und behält es.
+- **Startseite:** `system/cache/desktop/` mit `cache.dat` (787 Zeilen `rb.<n>.…` und `t.<n>.…`: Pfad, Titel, Buchnummer, Prüfsumme je Platz), `1/<Pfad>_<B>x<H>.png` (142 Dateien: 40 × 123x184, 33 × 234x343, 33 × 250x368, 36 × 268x396), `rb/` (9 Bilder: Platz 1 in 268×396, Platz 2 in 250×368, Platz 3 in 234×343) und `t/` (40 Kacheln, 123 × 184). Die vier Größen von *Roadside Picnic* trugen das Datum November 2025; `rb/1.png` das dieses Abends, gleiche Maße wie die 268×396-Datei, andere Bytes.
+- **Ruhezustand:** `system/cache/bookcover/` mit 11 Dateien `<32 Hex>.<295…305>`, jede 389.238 Bytes: BMP, 758 × 1024, 4 Bit. `system/logo/bookcover.lnk` zeigt auf `….305`; angesehen ist es das alte Cover von *Roadside Picnic* aus der Datei. `global.cfg`: `offlogo=@cover_logo`. Je Öffnen eine neue Nummer; woraus der Name gebildet wird, ist nicht gefunden (kein MD5 von Pfad, Name, Titel oder Prüfsumme).
+
+**Gebaut:** `picturesOf` (Bibliothek; jede vorhandene Größe der Startseite; die Plätze aus `cache.dat`, die den Pfad des Buchs tragen, mit der Größe, deren Maß sie haben), `homePositions`, `makeThumb` mit Rahmen; `put` und `back` gehen über alle Bilder, das Journal nennt jedes; ein Eintrag aus der ersten Fassung (ohne Dateiname) wird weiter richtig zurückgelegt. `cache.dat` wird nur gelesen. Vier Tests dazu.
+
+**Geschrieben:** *Roadside Picnic*, 6 Bilder — Bibliothek 232 × 393, Startseite 108 × 184, 202 × 343, 217 × 368, 233 × 396 und `rb/1.png` 233 × 396. Vorher/nachher gleich: Buchdatei `d98442a5…`, `books.db` `6a71361a…`, `explorer-3.db` `7f1aedb9…`, `cache.dat` `9f3a7f60…`; keine `._`-Dateien.
+
+**Der Ruhezustand ist nicht gemacht und so nicht zu machen:** das Bild entsteht bei jedem Öffnen aus der Datei; es zu überschreiben hielte bis zum nächsten Öffnen. **Nicht bekannt:** ob die Startseite die neuen Bilder zeigt und behält.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: die Startseite bestätigt, der Knopf in der App (ROADMAP 5.16c)
+
+Julian: „startseite zeigt jetzt auch das neue cover, mach die übrigen". Der Reader zeigt also in Bibliothek und Startseite die geschriebenen Bilder von *Roadside Picnic*; das Buch ist in `sent.json` abgehakt.
+
+**Gebaut:** `app.ts` sucht bei jedem Zustand nach dem Reader (`findReader`) und sagt je geändertem Buch, ob es darauf liegt (`onReader`) und ob die dort geschriebenen Bilder vom jetzigen Cover sind (`readerHas`); `POST /api/reader` schreibt die Bilder eines Buchs oder legt die alten zurück (`back`), nur mit `--write`, und setzt oder löscht den Haken „gesendet". `app.html`: über der Gruppe der Name des Readers und „Put n covers on the reader" (eins nach dem anderen, hält beim ersten Fehler); im geöffneten Buch „Put this cover on the reader" / „Put the reader's old pictures back". `reader-covers.ts` setzt den Haken ebenfalls. Der Satz in der App, der Reader zeige das Cover nach erneutem Senden, ist gestrichen.
+
+**Geprüft** mit einem nachgebauten Reader-Ordner und einer Kopie des Journals in einem Testordner (die echte Bibliothek nur gelesen): 14 geänderte Bücher, 3 „auf dem Reader"; der Knopf schrieb 3 Bilder, die Gruppe zählte danach 11; ein Buch zurückgelegt — das Bild bytegleich das alte, Haken weg, Gruppe 12.
+
+**Nicht gemacht:** die übrigen elf Bücher auf dem echten Reader — er war nach Julians Blick auf die Startseite nicht wieder eingebunden.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: die übrigen elf Bücher geschrieben (ROADMAP 5.16c)
+
+Julian: „jetzt ist er im finder zu sehen, mach du es". (Zweimal davor hieß es „eingebunden", während der Mac kein Laufwerk und kein USB-Gerät sah; `/Volumes` und `system_profiler` zeigten nur Hub und Telefon.)
+
+**Vor dem Schreiben gefunden:** `metadata.calibre` führt jetzt 418 von Calibres Büchern. Von den neun zuletzt gelesenen Büchern haben nur zwei die vier Größen-Dateien unter `desktop/1/`; für die anderen gibt es allein die Plätze. Deren Maße: `rb/1,4,7` 268 × 396, `rb/2,5,8` 250 × 368, `rb/3,6,9` 234 × 343 (bei Büchern ohne Größen-Dateien füllt das Bild des Readers den Rahmen genau: 250 × 368, 234 × 343, 268 × 396), `t/<n>` 123 × 184. `picturesOf` nimmt die Größe eines Platzes deshalb aus dieser Regel (`positionBox`) statt aus dem Maß einer Größen-Datei.
+
+**Geschrieben**, eins nach dem anderen mit `reader-covers.ts --put`: #457 *Ubik* (2 Bilder), #364 *Invisible Man* (1), #333 *Count Zero* (2), #481 *Nocturno de Chile* (7), #431 *Berlin Alexanderplatz* (1), #334 *Mona Lisa Overdrive* (3), #445 *Olympos* (3), #330 *Endymion* (1), #473 *East of Eden* (3), #315 *Snow Crash* (1), #363 *Montauk* (2) — 26 Bilder. Vorher/nachher gleich: Größe und Änderungszeit jeder Buchdatei unter `Books/` (eine Prüfsumme über die Liste), SHA-256 dreier Buchdateien, `books.db`, `explorer-3.db`, `cache.dat`, `metadata.calibre`; keine `._`- oder `.new`-Dateien. Alle zwölf in `sent.json` abgehakt; 33 gesicherte Bilder liegen unter `reader/pictures/` (die 26 von heute und die sieben von *Roadside Picnic*).
+
+**Nicht bekannt:** ob der Reader einen Platz der Startseite aus dem Cover in der Datei neu zeichnet, wenn sich die Reihe verschiebt. Julian hat die elf noch nicht am Gerät angesehen.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.287 Tests (121 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · Calibre-App: das volle Bild zuerst, und wie groß die Bilder sind (ROADMAP 5.16a)
+
+Julian, mit einem Bild des Vergleichs für *Foundation* (rechts die verblasste Vorschau, „fetching the full image…"): „das ist sehr langsam, kann man den download priorisieren?" und „überfordern wir jetzt das gerät, wenn wir so viele hochauflösende bilder reinladen?"
+
+**Gemessen, wo die Zeit bleibt** (abends, ein ruhiger Moment der Bildquelle; eine zweite, nur schauende Instanz der App auf einer Kopie ihrer eigenen Dateien):
+
+| Was | Zeit |
+|---|---|
+| sechs Originale einzeln mit `curl`, erste Anfrage (32 KB bis 3,2 MB) | 0,15–0,31 s |
+| dieselben, zweite Anfrage | 0,08–0,44 s |
+| in Node: bis zu den Kopfzeilen / der Rest / Prüfen (Dekodieren) | 19–293 ms / 1–109 ms / 21–190 ms |
+| sieben Originale durch `CoverDownloads`, zwei gleichzeitig | 0,79 s zusammen |
+| in der App, Klick auf ein 3,2-MB-Cover (1464 × 2200), während die Wand lädt: Anfrage geht hinaus nach | 11 ms |
+| … Bild geholt und geprüft nach | 0,41 s |
+| 42 Vorschaubilder der Wand, vom Browser geholt | alle in 0,5 s (Median 0,37 s) |
+
+In der App wartet das angeklickte Bild also auf nichts als die Quelle. Die schwankt: am Vormittag desselben Tages brauchte ein Original 4–10 s (Eintrag „Cover, die nicht erschienen"). Den langsamen Moment konnte ich abends nicht nachstellen — alles Folgende ist deshalb gegen die Schwankung gebaut, nicht an ihr gemessen. Neuere Cover (Nummern um 15 Millionen) liefert `covers.openlibrary.org` selbst aus, ältere leitet es an eine Zip-Datei beim Internet Archive weiter; für dieselbe Zip-Datei nannte die Weiterleitung einmal `ia800506` und einmal `ia600506` — zwei Maschinen mit derselben Kopie.
+
+**Gebaut** (`download.ts`, `app.ts`, `app.html`):
+
+- `CoverDownloads.get` — das Bild, auf das jemand wartet — steht nie an. `warm` holt voraus: ruht der Zeiger 0,15 s auf einer Kachel, fragt die Seite `/api/new?…&ahead=1`; zwei solche Downloads gleichzeitig, höchstens drei wartend (der älteste gibt auf), und ein wartendes Bild, das angeklickt wird, startet sofort.
+- Eine Adresse, die `SECOND_ASK_MS` (2,5 s) nicht geantwortet hat, wird ein zweites Mal gefragt; die erste Antwort gilt, die andere Anfrage wird abgebrochen. Eine Absage (404) wird nicht wiederholt.
+- Jeder Download steht mit Dauer, Bytes, „voraus", „zweite Anfrage" und „welche gewann" als Zeile in `download-times.jsonl` neben den Backups.
+- Im Vergleich steht das Pixelmaß sofort (aus dem Cover-Datensatz, den die Wand schon hat), die Warnung „weniger Pixel" ebenso, und „Use this cover" ist klickbar, sobald Maß und das Cover in Calibre bekannt sind — der Server holt und prüft das Bild beim Schreiben selbst. Während er noch holt, heißt der Knopf „Fetching the image, then writing…".
+
+**Geprüft** auf einer Probe-Kopie der Bibliothek im Testordner, schreibend: Zeiger 0,7 s auf einer Kachel, dann Klick — Bild 56 ms nach dem Klick da (voraus geholt in 271 ms). Ein anderes Cover angeklickt und sofort „Use this cover": Knopf frei nach 16 ms, Cover in Calibre 1,09 s nach dem Klick auf die Kachel (Download 160 ms, der Rest `calibredb`); das Buch hat danach 1225 × 2200 aus einem Original von 1351 × 2425. Sieben neue Tests ohne Netz (`__tests__/download.test.ts`).
+
+**Nicht gemessen:** ob die zweite Anfrage in einem langsamen Moment früher ankommt als die erste. Die Notizen sagen es beim nächsten.
+
+**Wie groß die Bilder sind** (echte Bibliothek und angeschlossener Reader, nur gelesen):
+
+| Was | Gemessen |
+|---|---|
+| Cover, die die App bis dahin gesetzt hat | 26 Bücher |
+| davon aus dem Katalog größer als 1650 × 2200 | 11 (bis 3402 × 5032) |
+| … in Calibre danach | alle auf 2200 px Höhe oder 1650 px Breite verkleinert — Calibres `maximum_cover_size` |
+| größte Cover-Datei in Calibre | 891 KB (*Motherless Brooklyn*, 1375 × 2200) |
+| die 26 Cover vorher / jetzt | 2,4 MB / 8,9 MB |
+| alle 425 Cover der Bibliothek | 70,8 MB |
+| vom Werkzeug geschriebene Bilder auf dem Reader | 32, zusammen 1.050 KB (die des Readers an ihrer Stelle: 448 KB) |
+| alle Bibliotheksbilder des Readers | 483 Dateien, 7,1 MB |
+| freier Speicher des Readers | 2,61 von 3,46 GB |
+
+Auf den Reader kommt durch das Werkzeug kein großes Bild und keine geänderte Buchdatei. Nicht gemessen ist, wie der Reader ein Cover von 1650 × 2200 in einer neu gesendeten Datei verarbeitet (er verkleinert es beim Öffnen für den Ruhezustand); *Ubik* mit 996 × 1500 wird angezeigt.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.294 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-04 · PocketBook: der Ruhezustand zeigt weiter das alte Cover — am Gerät gesehen (ROADMAP 5.16c)
+
+Julian, spät am Abend: „beim standby bild wurde gerade immer noch das alte cover von roadside picnic angezeigt". Das ist der Befund, den die Dateien des Readers vorhergesagt hatten: das Bild im Ruhezustand (`system/cache/bookcover/`) zeichnet der Reader bei jedem Öffnen des Buchs neu aus dem Cover in der Buchdatei, und die Buchdatei fasst das Werkzeug nicht an. Der Reader war bei dieser Meldung nicht eingebunden; nachgesehen wurde nichts Neues.
+
+**Was es ändern würde, und was es kostet** (nichts davon gebaut): (1) das Buch aus Calibre neu senden und danach die Bilder schreiben — neues Cover überall, aber der Reader hält die neue Datei für ein neues Buch, Lesestand und Markierungen bleiben am alten Eintrag (an *Ubik* gesehen); ohne Verlust nur bei Büchern, die nicht angefangen sind. (2) Dem Reader in seiner Datenbank sagen, dass die neue Datei das alte Buch ist — nicht untersucht, und es hieße, eine Datenbank des Readers zu schreiben, was das Werkzeug bisher nie tut. (3) Das Bild im Ruhezustand überschreiben — hält nur bis zum nächsten Öffnen des Buchs.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur Dokumente.
+
+## 2026-10-05 · Calibre-App: Calibre und PocketBook als zwei Ziele; der Weg für neue Bücher (ROADMAP 5.16a, 5.16c)
+
+Julian: „können wir das cover der buchdatei auch ohne probleme ändern?", „i added new books to my calibre library, what is the right pipeline now to get a nice picture all around" und „i don't [want] the app to write automatically, but after a push. and i want to decide whether to write to calibre or pocketbook".
+
+**Gebaut** (`app.ts`, `app.html`, `reader.ts`): im Vergleich zwei Knöpfe statt „Use this cover" — „Write to Calibre" und „Write to the PocketBook" —, darunter „Nothing is written until you press a button" und der Stand des Readers. `/api/reader` nimmt neben `{bookId}` (Calibres Cover) jetzt `{bookId, coverId}`: das Katalog-Cover wird geholt, geprüft und als Bilder des Readers geschrieben; Calibre wird nicht angefasst, der Haken „sent" nur gesetzt, wenn es dasselbe Cover ist, das Calibre hat. Der Zustand sagt für jedes Buch `onReader` (vorher nur für geänderte) und `readerCover`; welche Bücher auf dem Reader liegen, wird einmal je Änderungszeit von `metadata.calibre` nachgesehen (`ReaderCovers.present`), nicht bei jeder Anfrage. Die Reader-Knöpfe hängen nicht mehr daran, dass Calibre geschlossen ist. Die Seite fragt beim Öffnen des Vergleichs den Zustand neu, damit ein inzwischen angeschlossener Reader gesehen wird.
+
+**Geprüft** an der Probe-Kopie im Testordner und einem nachgebauten Reader-Ordner (zwei Bücher, Regalbilder, ein Platz der Startseite), während Calibre lief: beide Bücher als „auf dem Reader" erkannt; *Foundation and Empire* (#308), Cover `ol:12585750` (1459 × 2447, 913 KB, geholt in 568 ms) → „Write to the PocketBook" fertig nach 0,44 s, zwei Bilder geschrieben, Cover in der Probe-Bibliothek unverändert 281 × 475, „Write to Calibre" derweil gesperrt (Calibre läuft); „Put the reader's old pictures back" → `shasum` über jede Datei des Reader-Ordners gleich wie vor dem Schreiben. Das Schreiben in Calibre selbst ist der Weg vom Vorabend (dort an der Probe-Kopie gelaufen); heute nicht wiederholt, weil Calibre offen war.
+
+**Nicht geprüft:** der neue Knopf am echten Reader (nicht angeschlossen). Und der Weg für neue Bücher — erst Cover in Calibre, dann senden, der Reader macht alle drei Bilder aus der gesendeten Datei — ist aus dem Befund an *Ubik* geschlossen, nicht an einem neuen Buch gesehen.
+
+**Zur Buchdatei:** ändern lässt sie sich; der Reader hält sie dann für ein neues Buch (Prüfsumme der Datei), Lesestand und Markierungen bleiben am alten Eintrag. Nicht untersucht ist, worüber die Prüfsumme geht und ob die Zuordnung in `explorer-3.db` umzuschreiben wäre.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.331 Tests (128 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-05 · Calibre-App: der Batch — wählen, dann alle auf einen Knopfdruck schreiben (ROADMAP 5.16a, 5.16c)
+
+Julian, zu „Write to Calibre" und „Write to the PocketBook": „aber ich will die möglichkeit auch für den ganzen batch".
+
+**Gebaut:** `batch.ts` (ein gewähltes Cover je Buch, als Eintrag in `chosen.json` neben den Backups; ein Eintrag, der keine Cover-Nummer ist, zählt nicht), `/api/chosen` (setzen, mit `coverId: null` herausnehmen; geht auch im Schau-Modus, es ist die eigene Datei des Werkzeugs), der Zustand nennt je Buch `chosen`. Seite: dritter Knopf „Add to the batch" im Vergleich; die Übersicht beginnt mit „Chosen — n not written yet", Kacheln mit dem gewählten Cover und der Marke „chosen" bzw. „chosen · on reader", darüber „Write n to Calibre", „Write m to the PocketBook", „Empty the batch" und der Satz „Nothing is written until you press a button". Die Knöpfe schreiben den ganzen Batch, auch Bücher, die ein Filter gerade verbirgt — die Zeile zählt sie und sagt es. Nach `/api/apply` verlässt das Buch den Batch; hatte der Reader dieses Cover schon (aus `reader.jsonl` gelesen, geht also auch ohne angeschlossenen Reader), wird es als gesendet vermerkt.
+
+**Geprüft** an der Probe-Kopie und dem nachgebauten Reader-Ordner, schreibend, Calibre geschlossen:
+
+| Schritt | Ergebnis |
+|---|---|
+| drei Bücher je ein Cover, „Add to the batch" | Vergleich schließt, Kopf des Buchs: „A cover is chosen … nothing is written yet"; Übersicht: „Chosen — 3 not written yet", „1 not on the reader" |
+| „Write 2 to the PocketBook" | 0,58 s; beide „chosen · on reader", Cover in Calibre unverändert (281 × 475, 1225 × 2200), Knopf danach „Write to the PocketBook", gesperrt |
+| „Write 3 to Calibre" | 3,1 s; 1311 × 2200, 1464 × 2200, 1650 × 2136 (aus 2550 × 3301); Batch leer |
+| zweiter Lauf, ein Buch: erst Reader, dann Calibre | Buch gilt als gesendet und steht nicht unter „to send" |
+| „Empty the batch" | 0 gewählt |
+
+Beim ersten Lauf gefunden und behoben: der Knopf hieß „Write 0 to the PocketBook", und Bücher, deren Cover der Reader schon hatte, standen nach dem Schreiben in Calibre wieder unter „to send to the reader".
+
+**Nicht geprüft:** der Batch an der echten Bibliothek und am echten Reader.
+
+**Auswirkung auf die Analyse (3.1):** keine — nur `lab/calibre/`.
+
+1.398 Tests (130 davon in `lab/calibre/`), tsc und Lint grün.
+
+## 2026-10-05 · 2.18o in Produktion; Redis 250 MB mit Backup; das Fehlprojekt gelöscht
+
+**2.18o deployt** (Julian: „ja"): `origin/main` von `df77809` auf `fb5ea95`, nach einem Merge der 5.18b-Commits einer anderen Sitzung (ein Konflikt am Ende der Historie, beide Seiten behalten). Der lokale Build lief bei einer Last von 11–15 (iCloud synchronisierte) nicht durch und wurde nach 30 min abgebrochen, im TypeScript-Schritt; `tsc --noEmit` und Lint waren grün, der volle Testlauf hatte einen wechselnden Ausfall durch Zeitüberschreitung (`Test timed out in 5000ms`, je Lauf ein anderer Test in `integration.test.ts`, ein Lauf ganz grün). Als Nachweis des Builds diente Vercels Vorschau desselben Commits (Status „success"). **Einmal gegen die Produktion geprüft:** `/collections` trägt `/_next/image?url=https%3A%2F%2Fbuyitscovers.com%2Fimg%2FM%2Fol-683284&w=384`, und diese Adresse kam als `image/webp` mit **`x-vercel-cache: HIT`** — das Cover hatte die Vorschau in den Cache gelegt, die Produktion las es von dort: **der Cache der Bildoptimierung gilt über Deploys und Deploy-Arten hinweg**, was 2.18o sollte.
+
+**Redis (J4)** nach Julians Ja zu 8 USD: `redis-pink-yacht` auf 250 MB (Status kurz „Initializing", dann „Available"; `/versus` und `/collections` antworteten dabei 200). Redis-Konsole: AWS eu-central-1, Redis 8.6, Persistenz Append-only jede Sekunde, **Remote backup an, alle 24 h, Redis-managed repo** (kam mit dem Tarif), Verdrängung `noeviction`, belegt 3,7 MB, Netz im Oktober 1,7 GB. `FIXED_COSTS` hat die Zeile „Redis 250 MB", 8 USD im Monat seit 2026-10-05 (K15). Damit ist auch der Kern von 2.11 erfüllt: es gibt eine Sicherung, die nicht von Hand läuft.
+
+**Das versehentliche Vercel-Projekt `annas-archive-cover-scraping-115241` ist gelöscht** (Julian: „Ja, löschen"; `vercel project rm`). Die andere Sitzung hatte es in ihrem 5.18b-Eintrag ebenfalls bemerkt („a second Vercel project hangs on the repository"). Das Vercel-Team heißt inzwischen „ByItsCovers", Slug `byitscovers`.
+
+## 2026-10-05 · Was ein Besuch kostet, gemessen (ROADMAP 2.18b)
+
+**Werkzeug** `lab/visitcost/` (Julian: „mach weiter mit 2.18b"). `next build` und `next start` mit festen Variablen und einem Preload (`intercept.cjs`), der jedes `fetch` aus dem Prozess abfängt: Open Library und Google aus `lib/__fixtures__`, Cover als kleines JPEG, Redis als Attrappe des Upstash-REST-Protokolls (die Seite nimmt REST, sobald ein REST-Paar gesetzt ist), **jeder andere Host abgewiesen**. Ein kopfloses Chrome besucht neun Seitentypen je zweimal in frischem Profil (1280 × 800), scrollt bis zum Ende und verlässt die Seite. Eigenes Build-Verzeichnis `.next-visitcost` (dafür liest `next.config.ts` `NEXT_DIST_DIR`), dessen Datencache vor jedem Lauf geleert wird.
+
+**Ergebnis** (Tabelle in PLAN-2.18 §3): eine Seite kostet höchstens **eine Funktion je Aufruf**, nämlich das Dokument (Startseite, Suche, Sammlungen, Spiel, Jahrzehnte); die kuratierte Buchseite ist vorgerendert und kostet keine, ihre sechs API-Aufrufe (vier Ausgabenseiten, „More by", Seite 0) tragen `s-maxage` und kosten erst den ersten Leser. Kalt fragt die Buchseite Open Library 5-mal und Google einmal (Seite 0), ein gewähltes Cover Google einmal (`/api/isbn`), die Suche Open Library 7-mal, die Jahrzehnte-Seite 6-mal. Redis: 3 `GET` je Startseite, 6 je `/collections` (3 Sammlungs-, 3 Wand-Schlüssel), 6 je Sammlung, 2–4 für das Signal einer Buch- oder Suchseite, keiner beim Aufruf des Spiels. 83 Anfragen auf der Startseite (61 Bilder), 135 auf `/collections` (117 Bilder); JavaScript, CSS und Schriften 290–470 KB je Seite.
+
+**Befunde:** (1) **`/book/[id]/decades` ist dynamisch** — `revalidate` ohne `generateStaticParams`, Build-Klasse ƒ, zweimal hintereinander `Cache-Control: private, no-cache, no-store`; jeder Aufruf rendert in einer Funktion (→ 2.18p). (2) **`/collections/<slug>` liest seine drei Redis-Schlüssel doppelt** (`generateMetadata` und Seite; → 2.18c). (3) **Die CPU-Messung schreibt alle 30 s je Instanz 14–35 `HINCRBY`** (→ 2.18d). (4) `/api/seen` sendet nur auf Buch- und Suchseiten, wie geplant.
+
+**Unterwegs:** zwei frühe Läufe teilten `.next` mit den normalen Builds und schrieben 39 Attrappen-Antworten in dessen Datencache; diese 39 Einträge (alle vom 2026-10-05) sind gelöscht, die 166 echten vom Vortag geblieben. Eine `.env.local`, die `vercel link` angelegt hatte (nur `VERCEL_OIDC_TOKEN`), ist gelöscht, damit die Messung nichts erbt. **Analyse:** nicht berührt; `NEXT_DIST_DIR` wirkt nur, wenn gesetzt.
+
+## 2026-10-05 · Die drei Befunde aus 2.18b behoben (ROADMAP 2.18p, 2.18c Teil, 2.18d Teil)
+
+Julian: „mach weiter damit". Drei Commits, nicht deployt; nachgemessen mit einem vollen Lauf von `lab/visitcost` (neuer Build, leerer Datencache), vorher und nachher:
+
+| | vorher | nachher |
+|---|---|---|
+| `/book/[id]/decades`, `/book/[id]/cover/[coverId]` im Build | ƒ (dynamisch), `no-store` | **●**, Rendern beim ersten Abruf, dann ISR einen Tag |
+| Jahrzehnte-Seite, Funktion je Aufruf | 1, jedes Mal | 0 ab dem zweiten Leser (`s-maxage`) |
+| Redis je Aufruf von `/collections/<slug>` | 6 `GET` | **3** |
+| Redis je Abgabe der CPU-Messung | 5–35 `HINCRBY` + `EXPIRE` | **1** `EVAL` |
+
+**2.18p:** `generateStaticParams` mit leerer Liste in beiden Routen und den deutschen Spiegeln. **2.18c (Teil):** `liveRecords` in React `cache()` — eine Antwort je Rendern, `generateMetadata` und Seite teilen sie; kein Aufrufer schreibt und liest in derselben Anfrage. **2.18d (Teil):** `RedisCommands.hIncrByMany`, ein Lua-Skript (`HINCRBY_MANY_SCRIPT`) für alle Felder und das `EXPIRE`, über die direkte Verbindung (`client.eval`) und über REST (`EVAL`); `countCpu` nimmt es, wo es da ist, sonst wie zuvor Feld für Feld. Zwei neue Tests (ein Befehl; die REST-Form). 1.379 Tests grün, tsc und Lint sauber. **Analyse:** K14 zählt weniger `page-decades`/`page-cover`-Renderings, was gewollt ist; die Felder in `ins:<Tag>:cpu` bleiben dieselben.
+
+## 2026-10-05 · Ein Chip „ISBN“ unter der Hauptsuche (ROADMAP 6.91)
+
+Nach dem Vergleich mit my9books.com ([docs/vergleich-my9books.md](vergleich-my9books.md)). Zuerst als drittes Feld im Shelf-Portrait-Editor gebaut — ein Missverständnis; Julian: „ich wollte es nur in der hauptsuche einbauen, nicht für das shelfportrait“. Beide Commits lagen nur lokal und sind entfernt; im Shelf-Portrait ist nichts geändert.
+
+**Was es schon gab:** seit 6.29 (2026-09-10) erkennt `shapeOf` (`lib/queryshape.ts`) eine eingegebene ISBN an der Prüfziffer; Open Librarys gewöhnliche Suche liefert für eine bekannte ISBN genau einen Treffer, die Karte trägt `?isbn=`, die Buchseite wählt das Cover dieser Ausgabe vor. Gebaut wurde deshalb **kein neuer Weg**, nur sein Eingang: `SearchMode` hat einen dritten Wert `isbn`, `MODES` einen dritten Chip. Im ISBN-Modus sagt der Platzhalter „The ISBN of your copy“ (deutsch „Die ISBN deines Exemplars“), die Tastatur am Telefon ist numerisch, die beliebten Titel im Vorschlagsmenü fallen weg, und **eine falsche Prüfziffer wird genannt, bevor gefragt wird** („That is not an ISBN — check the digits. It has 10 or 13 of them.“) — sonst hätte Open Library mit Texttreffern geantwortet. Eine gültige ISBN geht als `?q=<isbn>`, wie eine eingefügte immer ging; die Seite liest den Modus aus der Form der Anfrage zurück, der Chip bleibt also nach dem Laden gedrückt. Vom ISBN-Modus in einen anderen (oder umgekehrt) wechseln sucht nicht sofort neu: Wörter sind keine ISBN.
+
+**Angesehen gegen `next dev`:** Chip, Platzhalter, die Meldung für `978-0-7432-7356-6` (Adresse bleibt `/`), `978-0-7432-7356-5` führt zu `/?q=978-0-7432-7356-5` mit gedrücktem Chip. **Die Karte selbst kam nicht:** Open Library verweigerte diesem Mac in dem Moment die Verbindung (`Connection refused` auf openlibrary.org:443, `covers.openlibrary.org` antwortete) — die bekannte Sperre nach zu vielen Anfragen, nicht der Code; die Seite sagte richtig „The catalogue did not answer“. Der Weg von dort zur Karte ist der unveränderte aus 6.29. Bei 390 px stehen die drei Chips in einer Zeile (englisch rechts bis 274 px, deutsch bis 263 px), der deutsche Platzhalter braucht 185 von 212 px, kein Überlauf. Analytik: das Suchsignal kennt `mode: 'isbn'` seit 3.1b aus derselben Form der Anfrage — nichts zu ändern; kein Shop-Link, keine neue Herkunft.
+
+## 2026-10-05 · Vor dem Umschalttag: der Verfügbarkeits-Button bekommt einen eigenen Schalter, die Datenschutzerklärung nennt die Partner (ROADMAP 0.1, 0.12, 4.13)
+
+Julian, 2026-10-05, zur Liste aus 4.13: „das haben wir jetzt" (Vercel Pro), „bereite das so vor, dass es beim shop modus automatisch mitkommt" (Datenschutz), „eigener schalter" (Verfügbarkeits-Button).
+
+- **0.1:** `availabilityEnabled()` in `lib/sitemode.ts` — an nur mit `NEXT_PUBLIC_AVAILABILITY_CHECK=on` **und** Shop-Modus; alles andere ist aus. `/api/availability` antwortet sonst 404, die Buchseite zeigt den Knopf nicht. Vorher hing er allein am Shop-Modus, der Umschalttag hätte ihn mit eingeschaltet.
+- **4.13 Schritt 5:** `affiliateShops()` in `lib/buylinks.ts` nennt die Shops, deren `AFFILIATE_*`-Variable gesetzt ist, über alle Märkte ohne Doppelung, im Hobby-Modus nichts. Die Datenschutzerklärung hängt im Shop-Modus an den vorhandenen Satz zum Affiliate-Parameter: „At present these are the links to {shops}. When you follow one, the shop may store a cookie …" (deutsch: „Zurzeit sind das die Links zu {shops} …"). Beim Cover-Spiel steht jetzt „a Redis database in Frankfurt, Germany" (`fra1`, nachgesehen 2026-10-05). Der Satz zum Verfügbarkeits-Button folgt dessen eigenem Schalter. **Partner-Satz freigegeben** (Julian, 2026-10-05: „passt"); der Satz zur Region fällt wieder heraus (Julian: „brauchen wir nicht"); der Abschnitt zum Cover-Spiel steht wieder wie vor diesem Tag.
+- **Geprüft:** 1.404 Tests, tsc, ESLint, `next build`; am Dev-Server mit `NEXT_PUBLIC_SITE_MODE=shop` und `AFFILIATE_BOOKSHOP_ID_US=129426`: Datenschutzerklärung nennt „Bookshop.org" und Frankfurt, kein Satz zum Verfügbarkeits-Button, `/api/availability` 404, `/go/bookshop/9780141439518?market=us` → 302 `https://bookshop.org/a/129426/9780141439518`. Branch `claude/shop-switches`, nicht gepusht.
+- **0.12:** Vercel Pro seit dem 2026-10-05 (Julian), damit auch Vercels DPA; abgehakt.
+- **4.12 entschieden:** die About-Seite bleibt allgemein formuliert, ohne erste Person (Julian: „allgemein statt 1. person ist mir lieber"); keine Bedingung mehr für den Shop-Modus.
+
+## 2026-10-05 · Deploy von 2.18b, 2.18p, 2.18c (Teil), 2.18d (Teil)
+
+Julian: „ja, deployen". `origin/main` von `4742a14` auf `475b06d`, nach einem Merge von 22 Commits anderer Sitzungen (Calibre/PocketBook 5.16, Pinterest 2.2, Thalia 4.3; ein Konflikt am Ende der Historie, beide Seiten behalten); 1.398 Tests und tsc grün, Vercels Vorschau desselben Commits „success". **Einmal geprüft:** `/book/OL1168083W/decades` antwortete zweimal `MISS`, acht Sekunden später **`HIT`, `age: 17`** — Vercel legt das erste Rendern einer Seite ohne vorgebauten Pfad nachträglich ab. Die Buchseite zum Vergleich `PRERENDER`. **Das gebündelte Schreiben der CPU-Messung läuft auf der echten Redis:** `/api/insights?days=7` (Admin-Passwort aus der `.env.local`, nicht ausgegeben) zweimal im Abstand von 90 s gelesen — die Summe des Tages stieg von 567,9 auf 572,8 CPU-Sekunden und von 2.214 auf 2.220 Aufrufe.
+
+## 2026-10-05 · Die Kontaktadresse ist mail@buyitscovers.com
+
+Julian, zum Satz für Rechteinhaber auf About (2.18k): „this should name mail@buyitscovers.com" und „change also in impressum and privacy notice". About, `/contact` (Impressum) und `/privacy` lesen dieselbe Variable `IMPRINT_EMAIL` (`lib/imprint.ts`); sie stand in Produktion und Vorschau auf Julians privater Adresse. Umgestellt mit `vercel env update IMPRINT_EMAIL production|preview` und in der `.env.local` des Hauptordners; wirksam mit dem nächsten Build, weil die drei Seiten vorgerendert sind. Die Post für `@buyitscovers.com` läuft über Julians Proton-Konto (docs/domain-recherche.md §22). Nicht geändert: der User-Agent von `lab/international-covers/lookup.ts`, ein Laborwerkzeug.
+
+## 2026-10-05 · Datenschutzerklärung: der Abschnitt zu Vorschlägen ist weg, der erste Satz kürzer
+
+Julian, zu „Suggestions for collections (invitation only)": „remove this part". Claude wies darauf hin, dass `/suggest` und `/curate` in Produktion an sind (`SUGGEST_PASSWORD`) und weiter das Cookie `bb_suggest` setzen und Vorschläge mit Notiz und freiwilligem Namen in der Redis speichern, die Erklärung das dann aber nicht mehr nennt; zur Wahl standen kürzen, nur entfernen, oder `/suggest` abschalten (mit eigenem Schalter für `/curate`). **Julian wählte „nur den Text entfernen".** Entfernt in `app/privacy/page.tsx` samt der zwei deutschen Sätze in `lib/i18n/de.ts`; SPEC F8.4 sagt, wann er zurück muss. Dazu Julian zum Einleitungssatz: „nach listed below den satz beenden" — jetzt „What it does process is listed below." / „Was sie verarbeitet, steht unten." (das „in full" / „ohne Auslassung" wäre nach dem Entfernen ohnehin nicht mehr wahr gewesen).

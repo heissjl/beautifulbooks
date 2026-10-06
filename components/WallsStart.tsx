@@ -1,10 +1,11 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BookSearch from './BookSearch';
 import CoverImage from './CoverImage';
 import IdLinkNotice from './IdLinkNotice';
+import WallCalibre from './WallCalibre';
 import WallIdField from './WallIdField';
 import WallPhoto from './WallPhoto';
 import WallPicker from './WallPicker';
@@ -20,13 +21,17 @@ import { tileCoverId, type Tile } from '@/lib/walls/model';
 
 const WORK = /^OL\d+W$/;
 
+/** The collection offered first under "From a collection" (Julian, 2026-10-04: Hanspeter Wyss's Ex Libris covers). */
+const FEATURED_COLLECTION = 'curated:ex-libris-covers-by-hanspeter-wyss';
+
 /**
- * The lobby of a reader's collections (ROADMAP 5.13a, 5.13c, 5.13m): their
+ * The lobby of a reader's collections (ROADMAP 5.13a, 5.13c, 5.13m, 5.17b): their
  * own collections, each opening in its editor (Julian, 2026-09-29: „wenn ich
  * eine collection in der create ansicht anklicke lande ich in der
- * anzeigesicht, dort kann ich aber nichts machen“), and three ways to start a
- * new one — a book, six random favourites or another collection, a photo.
- * Every start ends in the editor of the new collection. A search result opens
+ * anzeigesicht, dort kann ich aber nichts machen“), and the ways to start a
+ * new one: a book, set apart as the main way, then three more as cards —
+ * another collection (or six random favourites), a photo, a Calibre library
+ * (5.17a). Every start ends in the editor of the new collection. A search result opens
  * the book's covers here, between two rules; the first cover picked makes the
  * collection and the page becomes its editor with the same book open.
  */
@@ -55,7 +60,10 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
 
   async function commit(dest: Destination, tiles: Tile[]) {
     const wall = 'wall' in dest ? await addTiles(dest.wall, tiles) : await createWall(dest.title, tiles);
-    router.push(editHref(wall.id));
+    // Straight to the covers just added, not to the search box: from a photo the next step is
+    // checking them and changing one, which Arrange does (Julian, 2026-10-04, on a phone: the
+    // editor opened on "Add covers" and "another cover" was nowhere to be seen).
+    router.push(editHref(wall.id, tiles.length > 0 ? { mode: 'arrange' } : {}));
   }
 
   async function emptyWall() {
@@ -68,6 +76,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
   }
 
   const heading = 'font-display text-2xl text-ink';
+  const card = 'min-w-0 rounded-card border border-line p-5';
 
   return (
     <>
@@ -115,46 +124,48 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
             <h2 id="new" className={heading}>{t('Start a new one')}</h2>
           </div>
         )}
-        <div className={`mt-6 grid gap-12 ${photoOn ? 'lg:grid-cols-2' : 'max-w-2xl'}`}>
-          <div className="min-w-0">
-            <h3 className="font-display text-xl text-ink">{t('From a book')}</h3>
-            <p className="mt-2 text-sm text-ink-2">{t('Find a book and pick the covers you love from the ones it has had.')}</p>
-            <BookSearch
-              key={q}
-              q={q}
-              workId={workId}
-              onSearch={(value) => go({ q: value, work: null })}
-              onPick={(id) => {
-                go({ work: id });
-                requestAnimationFrame(() => document.getElementById('picker')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-              }}
-            />
-            <WallSample onCommit={commit} />
-            <StartFromPicker options={startOptions} />
-          </div>
 
+        {/* The main way, set apart (Julian, 2026-10-04: „from a book sollte fokus oder erstes sein, sich klarer abgrenzen“). */}
+        <div className="mt-6 rounded-card bg-surface-2 px-5 py-6 sm:px-8 sm:py-8">
+          <h3 className="font-display text-2xl text-ink sm:text-3xl">{t('From a book')}</h3>
+          <p className="mt-2 max-w-2xl text-sm text-ink-2 sm:text-base">{t('Find a book and pick the covers you love from the ones it has had.')}</p>
+          <BookSearch key={q} q={q} workId={workId} wide onSearch={(value) => go({ q: value, work: null })} onPick={(id) => go({ work: id })} />
+        </div>
+
+        {workId && (
+          <WallPicker
+            key={workId}
+            workId={workId}
+            target={null}
+            newTitle={defaultTitle(me.walls, t)}
+            focus
+            // The first cover made the collection: from here on the page is its editor, same book open.
+            onWall={(wall) => router.replace(editHref(wall.id, { q, work: workId }), { scroll: false })}
+            onClose={() => go({ work: null })}
+          />
+        )}
+
+        <h3 className="mt-14 font-display text-xl text-ink">{t('Or start another way')}</h3>
+        <div className={`mt-4 grid gap-6 ${photoOn ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
+          <div className={card}>
+            <StartFromPicker options={startOptions} preferred={FEATURED_COLLECTION} />
+            <WallSample onCommit={commit} />
+          </div>
           {/* Without a key the photo cannot be read, so the section is not shown at all (Julian, 2026-09-28). */}
           {photoOn && (
-            <div className="min-w-0">
+            <div className={card}>
               <h3 className="font-display text-xl text-ink">{t('From a photo')}</h3>
-              <p className="mt-2 text-sm text-ink-2">{t('Photograph a shelf or a pile of books. We read the titles and offer them as covers.')}</p>
+              <p className="mt-1 text-sm text-ink-2">{t('Photograph a shelf or a pile of books. We read the titles and offer them as covers.')}</p>
               <WallPhoto photoOn={photoOn} walls={me.walls} onCommit={commit} />
             </div>
           )}
+          <div className={card}>
+            <h3 className="font-display text-xl text-ink">{t('From your Calibre library')}</h3>
+            <p className="mt-1 text-sm text-ink-2">{t('Choose your Calibre library’s database. We look the books up and offer their covers.')}</p>
+            <WallCalibre walls={me.walls} onCommit={commit} />
+          </div>
         </div>
       </section>
-
-      {workId && (
-        <WallPicker
-          key={workId}
-          workId={workId}
-          target={null}
-          newTitle={defaultTitle(me.walls, t)}
-          // The first cover made the collection: from here on the page is its editor, same book open.
-          onWall={(wall) => router.replace(editHref(wall.id, { q, work: workId }), { scroll: false })}
-          onClose={() => go({ work: null })}
-        />
-      )}
 
       <WallIdField me={me} onChange={setMe} />
     </>

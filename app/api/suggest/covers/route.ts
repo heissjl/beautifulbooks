@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { friendGate, json } from '../guard';
+import { measure } from '@/app/api/measure';
 
 /**
  * The covers of one book for the suggestion tool (ROADMAP 5.10a): one page of
@@ -10,6 +11,7 @@ import { friendGate, json } from '../guard';
  * description either: one external call per page, nothing else.
  */
 export async function GET(request: NextRequest) {
+  measure('curate', request);
   const gate = friendGate(request);
   if ('response' in gate) return gate.response;
   const id = request.nextUrl.searchParams.get('id') ?? '';

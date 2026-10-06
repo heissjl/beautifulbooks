@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
@@ -9,6 +9,7 @@ import type { Market } from '@/lib/market';
 import { adminCookieValid } from '@/lib/suggest/session';
 import { PRICES_AS_OF } from '@/lib/insights/prices';
 import { PHOTOS_PER_DAY } from '@/app/api/walls/photo/route';
+import { VERCEL_PRICES } from '@/lib/insights/costs';
 
 /**
  * Julian's analytics (ROADMAP 3.1a, docs/plans/PLAN-3.1-analyse.md §8):
@@ -106,7 +107,7 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
 }
 
 const ORIGIN_NAMES: Record<string, string> = {
-  engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung',
+  engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung', shelf: 'Shelf-Portrait',
   book: 'Andere Buchseite', social: 'Sozial', other: 'Andere Seite', direct: 'Direkt / unbekannt',
 };
 const VERDICT_NAMES: Record<string, string> = {
@@ -285,6 +286,18 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
         </Card>
       </section>
 
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card
+          title="Rechenzeit der Funktionen"
+          sub="CPU-Zeit je Route und Abrufer, von der Seite selbst gemessen (K14). Ein Crawler ist kein Leser."
+        >
+          <CpuSection cpu={report.cpu} />
+        </Card>
+        <Card title="Kosten im Zeitraum" sub="Feste Kosten und was die Seite an Verbrauch selbst messen kann (K15). Keine Rechnung.">
+          <CostSection costs={report.costs} />
+        </Card>
+      </section>
+
       <section className="mt-6">
         <Card title="Betrieb" sub="Ereignisse, keine Anfragen.">
           <ul className="space-y-2 text-sm">
@@ -315,6 +328,134 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
 }
 
 const usd = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 3 });
+const eur = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const seconds = (micros: number) => micros / 1_000_000;
+const duration = (micros: number) => {
+  const s = seconds(micros);
+  return s >= 3600 ? `${nf.format(Math.round(s / 36) / 100)} h` : s >= 60 ? `${nf.format(Math.round(s / 6) / 10)} min` : `${nf.format(Math.round(s * 10) / 10)} s`;
+};
+
+const ROUTE_LABELS: Record<string, string> = {
+  img: 'Bildroute /img',
+  works: 'Wandseiten /api/works',
+  'works-summary': 'Mosaik /api/works?summary',
+  search: 'Suche',
+  isbn: 'ISBN-Nachschau',
+  authors: 'Bücher eines Autors',
+  similar: 'Ähnliche Cover',
+  seen: 'Seitensignal',
+  go: 'Klick zum Händler',
+  walls: 'Sammlungen der Leser (API)',
+  photo: 'Regalfoto',
+  versus: 'Cover-Spiel (API)',
+  curate: 'Kuratieren, Vorschläge, Analyse',
+  og: 'Vorschaukarten',
+  'page-home': 'Startseite',
+  'page-book': 'Buchseite',
+  'page-cover': 'Seite eines Covers',
+  'page-decades': 'Jahrzehnte-Seite',
+  'page-collections': 'Sammlungen',
+  'page-wall': 'Sammlung eines Lesers',
+  'page-create': 'Sammlung anlegen',
+  'page-versus': 'Cover-Spiel',
+  other: 'Sonstiges',
+  idle: 'Start und Leerlauf der Instanzen',
+};
+
+const AGENT_LABELS: Record<string, string> = {
+  browser: 'Browser',
+  claudebot: 'ClaudeBot (Anthropic)',
+  gptbot: 'GPTBot (OpenAI)',
+  googlebot: 'Googlebot',
+  bingbot: 'Bingbot',
+  bot: 'andere Bots und Skripte',
+  page: 'gerenderte Seiten (Abrufer nicht lesbar)',
+  none: 'ohne Kennung, Start und Leerlauf',
+};
+
+function CpuSection({ cpu }: { cpu: Extract<InsightsReport, { ok: true }>['cpu'] }) {
+  if (cpu.cpu === 0) {
+    return <p className="text-sm text-ink-2">Noch nichts gemessen. Die Messung beginnt mit dem Deploy, der sie enthält; frühere Tage bleiben leer.</p>;
+  }
+  return (
+    <>
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-ink-2">
+        <span>
+          <span className="text-2xl font-medium text-ink">{duration(cpu.cpu)}</span> CPU
+        </span>
+        <span>{nf.format(cpu.n)} Läufe</span>
+      </div>
+      <h3 className="mt-4 text-sm font-medium text-ink">Nach Route</h3>
+      <div className="overflow-x-auto">
+      <table className="mt-1 w-full min-w-[26rem] text-sm">
+        <thead className="text-left text-xs text-ink-3">
+          <tr>
+            <th className="py-1 font-normal">Route</th>
+            <th className="py-1 text-right font-normal">CPU</th>
+            <th className="py-1 text-right font-normal">Anteil</th>
+            <th className="py-1 text-right font-normal">Läufe</th>
+            <th className="py-1 text-right font-normal">ms je Lauf</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cpu.byRoute.slice(0, 12).map(r => (
+            <tr key={r.route} className="border-t border-line">
+              <td className="py-1 pr-2 text-ink-2">{ROUTE_LABELS[r.route] ?? r.route}</td>
+              <td className="py-1 text-right tabular-nums text-ink">{duration(r.cpu)}</td>
+              <td className="py-1 text-right tabular-nums text-ink-2">{pf.format(r.cpu / cpu.cpu)}</td>
+              <td className="py-1 text-right tabular-nums text-ink-2">{nf.format(r.n)}</td>
+              <td className="py-1 text-right tabular-nums text-ink-2">{r.n > 0 ? nf.format(Math.round(r.cpu / r.n / 100) / 10) : '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
+      <h3 className="mt-4 text-sm font-medium text-ink">Nach Abrufer</h3>
+      <div className="mt-2">
+        <Bars rows={cpu.byAgent.map(a => ({ label: AGENT_LABELS[a.agent] ?? a.agent, value: a.cpu }))} total={cpu.cpu} few={false} />
+      </div>
+      <div className="mt-4">
+        <DayColumns perDay={cpu.perDay.map(d => ({ day: d.day, clicks: Math.round(seconds(d.cpu)) }))} format={v => `${nf.format(v)} s`} label="CPU-Sekunden je Tag" />
+      </div>
+      <Note>
+        Die CPU eines Prozesses lässt sich nicht je Anfrage lesen; sie wird gleichmäßig auf die Anfragen verteilt, die gerade laufen. Der Proxy
+        läuft als eigene Funktion und fehlt hier, ebenso, was eine Instanz in den letzten dreißig Sekunden vor ihrem Ende gemessen hat. Wer eine
+        gerenderte Seite abruft, zeigt nur Vercel: <code>vercel metrics vercel.function_invocation.count --group-by clientUserAgent</code>.
+      </Note>
+    </>
+  );
+}
+
+function CostSection({ costs }: { costs: Extract<InsightsReport, { ok: true }>['costs'] }) {
+  const money = (amount: number, currency: 'USD' | 'EUR') => (currency === 'EUR' ? eur : usd).format(amount);
+  return (
+    <>
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <span className="text-2xl font-medium text-ink">{usd.format(costs.totals.USD)}</span>
+        {costs.totals.EUR > 0 && <span className="text-2xl font-medium text-ink">+ {eur.format(costs.totals.EUR)}</span>}
+      </div>
+      <table className="mt-3 w-full text-sm">
+        <tbody>
+          {costs.lines.map(line => (
+            <tr key={line.label} className="border-t border-line align-top">
+              <td className="py-1 pr-2 text-ink-2">
+                {line.label}
+                {line.note && <span className="block text-xs text-ink-3">{line.note}</span>}
+              </td>
+              <td className="py-1 pr-2 text-xs text-ink-3">{line.kind === 'fixed' ? 'fest, anteilig' : 'gemessen'}</td>
+              <td className="py-1 text-right tabular-nums text-ink">{money(line.amount, line.currency)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Note>
+        Listenpreise für Frankfurt, Stand {VERCEL_PRICES.asOf}; die Rechnung selbst steht bei Vercel (<code>vercel usage</code>) und bei Anthropic.
+        Zwei Währungen, nicht umgerechnet. Nicht gemessen: {costs.notMeasured.join(' · ')}.
+      </Note>
+    </>
+  );
+}
+
 
 function PhotoSection({ photos }: { photos: Extract<InsightsReport, { ok: true }>['photos'] }) {
   const perPhoto = photos.read > 0 ? photos.costUsd / photos.read : null;

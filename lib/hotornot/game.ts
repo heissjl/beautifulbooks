@@ -16,7 +16,8 @@
  */
 import poolFile from '@/data/versus-pool.json';
 import { collectionRecords } from '../collections';
-import { coverPathSegment } from '../coverurl';
+import { coverPathSegment, coverProxyPath } from '../coverurl';
+import { isHiddenCover } from '../hiddencovers';
 import { rng } from '../loading';
 import type { PoolCover } from './pool';
 import {
@@ -63,10 +64,10 @@ async function recorded(store: VoteStore, pool: VersusPool): Promise<{ votes: St
   return { votes: votes.flat(), flags };
 }
 
-/** The pool's covers minus the ones people reported. */
+/** The pool's covers minus the ones people reported and the ones taken off the site (2.18k). */
 function activeIds(pool: VersusPool, flags: readonly CoverFlag[]): string[] {
   const out = new Set(flags.map(f => f.id));
-  return pool.covers.map(c => c.id).filter(id => !out.has(id));
+  return pool.covers.map(c => c.id).filter(id => !out.has(id) && !isHiddenCover(id));
 }
 
 export const POOL = poolFile as VersusPool;
@@ -97,9 +98,9 @@ export function seriesIndex(records = collectionRecords()): Map<string, string[]
 let seriesCache: Map<string, string[]> | null = null;
 const seriesOf = (id: string): readonly string[] => (seriesCache ??= seriesIndex()).get(id) ?? [];
 
-/** Through our own image route (ROADMAP 1.3): the covers never leave the site. */
+/** Through our own image route (ROADMAP 1.3), behind the optimizer in a Vercel build (2.18o). */
 export function imagePath(coverId: string, size: 'M' | 'L'): string {
-  return `/img/${size}/${coverPathSegment(coverId)}`;
+  return coverProxyPath(coverId, size);
 }
 
 /**
@@ -334,7 +335,7 @@ export function readyPairs(
   count: number,
   { pool = POOL, random = rng(Date.now() >>> 0), now = Date.now(), store = 'redis' }: { pool?: VersusPool; random?: () => number; now?: number; store?: VoteStore['kind'] } = {},
 ): PairResponse[] {
-  const ids = pool.covers.map(c => c.id);
+  const ids = activeIds(pool, []);
   const book = new Map(pool.covers.map(c => [c.id, c.workId]));
   const elo = newElo(ids);
   const out: PairResponse[] = [];

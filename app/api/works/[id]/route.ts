@@ -11,6 +11,7 @@ import { getWorkPage, isWorkId } from '@/lib/work';
 import { MOSAIC_CANDIDATES, type SiblingWork } from '@/lib/works';
 import { rateLimited } from '@/app/api/rate';
 import { countGoogleStopsAfter } from '@/app/api/count';
+import { measure } from '@/app/api/measure';
 
 /**
  * Response of GET /api/works/[id] (SPEC §2.3: covers are the unit).
@@ -91,6 +92,7 @@ export function offsetFromRequest(raw: string | null): number {
 export const maxDuration = 30;
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  measure(request.nextUrl.searchParams.get('summary') === '1' ? 'works-summary' : 'works', request);
   countGoogleStopsAfter();
   const { id } = await context.params;
   if (!isWorkId(id)) {
@@ -100,6 +102,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   const offset = offsetFromRequest(request.nextUrl.searchParams.get('offset'));
   const signatures = request.nextUrl.searchParams.get('signatures') === '1';
   const summary = request.nextUrl.searchParams.get('summary') === '1';
+  // Also what Julian's local Calibre app asks with (lab/calibre/catalogue.ts,
+  // ROADMAP 5.16a): it wants the covers and nothing Google adds, so keep this
+  // mode free of Google and of the `google` bucket.
   // A sibling's pages, walked for another work's wall (ROADMAP 6.13): Open
   // Library only. Its title may differ in form from the lead's, so a Google
   // search for it would be a second request that the cache cannot absorb.

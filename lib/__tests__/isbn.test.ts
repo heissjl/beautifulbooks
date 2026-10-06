@@ -8,6 +8,7 @@ import { getIsbnCovers, isIsbn13 } from '../isbn';
 
 const BELOVED = '9780307388629';
 let handler: (url: URL) => { status?: number; body?: unknown };
+let olHandler: (url: URL) => { status?: number; body?: unknown };
 const calls: string[] = [];
 
 function volume(id: string, isbn13: string) {
@@ -30,10 +31,12 @@ beforeEach(() => {
   calls.length = 0;
   vi.stubEnv('GOOGLE_BOOKS_API_KEY', 'test-key');
   handler = () => ({ body: { items: [volume('v1', BELOVED)] } });
+  // Open Library's record for the ISBN, the fallback (ROADMAP 1.12); a test replaces it to make it fail.
+  olHandler = () => ({ body: { covers: [12547191, -1] } });
   vi.stubGlobal('fetch', vi.fn(async (input: string | URL) => {
     const url = new URL(String(input));
     calls.push(url.toString());
-    const { status = 200, body = {} } = handler(url);
+    const { status = 200, body = {} } = url.hostname === 'openlibrary.org' ? olHandler(url) : handler(url);
     return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
   }));
 });
@@ -74,7 +77,7 @@ describe('getIsbnCovers', () => {
 
   it('returns an empty list when Google has no image, which is not an error', async () => {
     handler = () => ({ body: { items: [] } });
-    await expect(getIsbnCovers(BELOVED)).resolves.toEqual({ isbn13: BELOVED, covers: [] });
+    await expect(getIsbnCovers(BELOVED)).resolves.toEqual({ isbn13: BELOVED, covers: [], source: 'googlebooks' });
   });
 
   it('ignores volumes that do not actually carry the ISBN', async () => {
@@ -84,7 +87,7 @@ describe('getIsbnCovers', () => {
 
   it('survives Google failing', async () => {
     handler = () => ({ status: 429 });
-    await expect(getIsbnCovers(BELOVED)).resolves.toMatchObject({ isbn13: BELOVED, covers: [] });
+    await expect(getIsbnCovers(BELOVED)).resolves.toMatchObject({ isbn13: BELOVED });
   });
 });
 
@@ -98,34 +101,54 @@ describe('getIsbnCovers when Google is flaky', () => {
     expect(r!.unavailable).toBeUndefined();
   });
 
-  it('says the source was unavailable rather than pretending there is no cover', async () => {
+  it('asks Open Library’s record when Google fails twice, and says whose answer it is (ROADMAP 1.12)', async () => {
     handler = () => ({ status: 503 });
     const r = await getIsbnCovers(BELOVED);
-    expect(calls).toHaveLength(2);
-    expect(r).toMatchObject({ isbn13: BELOVED, covers: [], unavailable: true });
+    expect(calls.filter(u => u.includes('googleapis'))).toHaveLength(2);
+    expect(calls.filter(u => u.includes('openlibrary.org/isbn/9780307388629.json'))).toHaveLength(1);
+    expect(r).toMatchObject({ isbn13: BELOVED, source: 'openlibrary' });
+    expect(r!.unavailable).toBeUndefined();
+    // The -1 Open Library writes for a removed scan is not a cover.
+    expect(r!.covers.map(c => c.id)).toEqual(['ol:12547191']);
+    expect(r!.covers[0]).toMatchObject({ source: 'openlibrary', url: 'https://covers.openlibrary.org/b/id/12547191-L.jpg' });
   });
 
-  it('reports unavailable, and asks nobody, once the day\'s quota is gone', async () => {
+  it('says the source was unavailable only when Open Library is silent too', async () => {
+    handler = () => ({ status: 503 });
+    olHandler = () => ({ status: 503 });
+    const r = await getIsbnCovers(BELOVED);
+    expect(r).toMatchObject({ isbn13: BELOVED, covers: [], unavailable: true });
+    expect(r!.source).toBeUndefined();
+  });
+
+  it('takes a missing Open Library record as "no cover on record", not as silence', async () => {
+    handler = () => ({ status: 503 });
+    olHandler = () => ({ status: 404 });
+    await expect(getIsbnCovers(BELOVED)).resolves.toEqual({ isbn13: BELOVED, covers: [], source: 'openlibrary' });
+  });
+
+  it('falls back to Open Library, and asks Google nobody, once the day\'s quota is gone', async () => {
     // The quota read on 2026-09-07 is 1,000 a day, so this is a day that will
     // come. What must not happen is telling the reader no cover is on record
-    // (SPEC §8.7 point 5).
+    // (SPEC §8.7 point 5) — and since ROADMAP 1.12 the catalogue stands in.
     handler = () => ({
       status: 403,
       body: { error: { code: 403, errors: [{ reason: 'dailyLimitExceeded' }] } },
     });
     const first = await getIsbnCovers(BELOVED);
-    expect(first).toMatchObject({ covers: [], unavailable: true });
+    expect(first).toMatchObject({ source: 'openlibrary' });
 
     calls.length = 0;
     const second = await getIsbnCovers('9780141036144');
-    expect(second).toMatchObject({ covers: [], unavailable: true });
-    // Not one further request: an exhausted quota only collects errors.
-    expect(calls).toHaveLength(0);
+    expect(second).toMatchObject({ source: 'openlibrary' });
+    // Not one further Google request: an exhausted quota only collects errors.
+    expect(calls.filter(u => u.includes('googleapis'))).toHaveLength(0);
+    expect(calls.filter(u => u.includes('openlibrary.org'))).toHaveLength(1);
   });
 
-  it('reports unavailable without an API key instead of an empty answer', async () => {
+  it('falls back to Open Library without an API key instead of an empty answer', async () => {
     vi.stubEnv('GOOGLE_BOOKS_API_KEY', '');
-    expect(await getIsbnCovers(BELOVED)).toMatchObject({ unavailable: true });
-    expect(calls).toHaveLength(0);
+    expect(await getIsbnCovers(BELOVED)).toMatchObject({ source: 'openlibrary' });
+    expect(calls.filter(u => u.includes('googleapis'))).toHaveLength(0);
   });
 });

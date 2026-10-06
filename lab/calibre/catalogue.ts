@@ -18,7 +18,8 @@
  *    app did at first. The fallback when the website does not answer.
  *
  * Only ever on a click, one book at a time: a loop through this door would
- * draw Open Library's block onto the website instead of onto one Mac.
+ * draw Open Library's block onto the website instead of onto one Mac. What
+ * either way answered is kept on this Mac (`kept.ts`).
  */
 import { pickCovers, pickCoversFromPage, type PickCover } from './covers';
 import { getEditionsPage, getWork, isWorkId, parseEditions, search, userAgent, type Work, type WorkSummary } from './site';
@@ -64,7 +65,13 @@ interface SitePage {
 
 export function siteCatalogue(base: string, fetcher: typeof fetch = fetch): Catalogue {
   const get = async <T>(path: string): Promise<T | null> => {
-    const res = await fetcher(`${base}${path}`, { headers: { 'user-agent': userAgent(base), accept: 'application/json' }, signal: AbortSignal.timeout(35_000) });
+    let res: Response;
+    try {
+      res = await fetcher(`${base}${path}`, { headers: { 'user-agent': userAgent(base), accept: 'application/json' }, signal: AbortSignal.timeout(35_000) });
+    } catch {
+      // Without its cause on purpose: a website that cannot be reached must not be read as Open Library shutting the door (`refusedConnection`).
+      throw new Error('The website did not answer.');
+    }
     if (res.status === 404) return null;
     if (res.status === 429) throw new CatalogueError('The website is holding back: too many requests in a short time. Wait a minute and open the book again.');
     if (res.status === 403) throw new CatalogueError('The website turned the app away (its bot protection). Try again in a few minutes.');
@@ -96,18 +103,4 @@ export function withFallback(first: Catalogue, second: Catalogue, mayFallBack: (
     }
   };
   return { search: (q) => either((c) => c.search(q)), page: (id, offset) => either((c) => c.page(id, offset)) };
-}
-
-/** Answers kept for the run; a failure is not remembered, so the next look asks again (SPEC N12). */
-export function remembering(catalogue: Catalogue): Catalogue {
-  const kept = new Map<string, Promise<unknown>>();
-  const once = <T>(key: string, ask: () => Promise<T>): Promise<T> => {
-    const have = kept.get(key) as Promise<T> | undefined;
-    if (have) return have;
-    const p = ask();
-    kept.set(key, p);
-    p.catch(() => kept.delete(key));
-    return p;
-  };
-  return { search: (q) => once(`s:${q}`, () => catalogue.search(q)), page: (id, offset) => once(`p:${id}@${offset}`, () => catalogue.page(id, offset)) };
 }

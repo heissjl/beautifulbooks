@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import CurateTool, { type StartingPoint } from '@/components/CurateTool';

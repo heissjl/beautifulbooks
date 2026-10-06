@@ -9,6 +9,8 @@
  * shopping list (stage 2 of PLAN-5.13) — an ISBN names a printing, not the
  * picture (E8), so the list is where a search starts, not a promise.
  */
+import { isHiddenCover } from '../hiddencovers';
+
 /** One framed cover. Carries enough to buy the book later (stage 2 of the plan). */
 export interface Tile {
   workId: string;
@@ -115,6 +117,16 @@ export const normalVisitorId = (s: string): string => s.trim().toLowerCase();
 export function tileCoverId(t: Pick<Tile, 'coverId'> | string): string {
   const id = typeof t === 'string' ? t : t.coverId;
   return id.startsWith('gb:') ? id : `ol:${id}`;
+}
+
+/**
+ * The tiles a visitor sees: a cover taken off the site (2.18k) leaves its
+ * tile out of the page, the reader cards and the share card. The stored wall
+ * keeps it, so the owner's editor does not lose it on the next save and the
+ * tile comes back if the entry is taken out.
+ */
+export function visibleTiles<T extends Pick<Tile, 'coverId'>>(tiles: readonly T[]): T[] {
+  return tiles.filter(t => !isHiddenCover(tileCoverId(t)));
 }
 
 /** The site's cover id as a tile stores it, or null for an id no collection can hold. */

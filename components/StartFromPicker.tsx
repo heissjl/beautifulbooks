@@ -27,15 +27,20 @@ export default function StartFromPicker({
   into,
   onCommit,
   onOtherCover,
+  preferred,
 }: {
   options: StartOption[];
   into?: PublicWall;
   onCommit?: (dest: Destination, tiles: Tile[]) => Promise<void>;
   onOtherCover?: (tile: Tile) => void;
+  /** The option shown first when it is on offer, `curated:<slug>` or `reader:<id>`. */
+  preferred?: string;
 }) {
   const router = useRouter();
   const t = useT();
-  const [chosen, setChosen] = useState(options[0] ? `${options[0].kind}:${options[0].key}` : '');
+  const [chosen, setChosen] = useState(
+    preferred && options.some((o) => `${o.kind}:${o.key}` === preferred) ? preferred : options[0] ? `${options[0].kind}:${options[0].key}` : '',
+  );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [loaded, setLoaded] = useState<Loaded | null>(null);
@@ -77,11 +82,11 @@ export default function StartFromPicker({
   const label = (o: StartOption) => `${o.title}${o.by ? ` — ${t('by {name}', { name: o.by })}` : ''} (${o.count}${!into && o.taken < o.count ? `, ${t('the first {n} go in', { n: o.taken })}` : ''})`;
   const current = loaded && loaded.key === key ? loaded : null;
   return (
-    <div className={into ? '' : 'mt-8'}>
+    <div>
       {into ? (
         <h3 className="font-display text-lg text-ink">{t('From another collection')}</h3>
       ) : (
-        <h3 className="text-sm font-medium text-ink">{t('Or start from a collection')}</h3>
+        <h3 className="font-display text-xl text-ink">{t('From a collection')}</h3>
       )}
       <p className="mt-1 text-sm text-ink-2">
         {into
@@ -93,7 +98,7 @@ export default function StartFromPicker({
           value={key}
           onChange={(e) => setChosen(e.target.value)}
           aria-label={into ? t('Collection to take covers from') : t('Collection to start from')}
-          className="w-0 min-w-[10rem] max-w-full flex-1 truncate rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink"
+          className={`w-0 min-w-[10rem] max-w-full flex-1 truncate rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink ${into ? '' : 'basis-full'}`}
         >
           {ours.length > 0 && (
             <optgroup label={t('Our collections')}>
@@ -115,10 +120,10 @@ export default function StartFromPicker({
         </button>
       </div>
       {!current && (
-        <ul className="mt-3 flex gap-1.5" aria-label={t('First covers of {title}', { title: option.title })}>
+        <ul className="mt-3 grid max-w-sm grid-cols-6 gap-1.5" aria-label={t('First covers of {title}', { title: option.title })}>
           {option.covers.map((id) => (
-            <li key={id} className="relative h-16 w-11 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">
-              <CoverImage src={coverUrlFor(tileCoverId(id), 'S') ?? ''} alt="" sizes="44px" />
+            <li key={id} className="relative aspect-[2/3] overflow-hidden rounded-[2px] bg-surface-2">
+              <CoverImage src={coverUrlFor(tileCoverId(id), 'M') ?? ''} alt="" sizes="64px" />
             </li>
           ))}
         </ul>

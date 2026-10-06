@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CoverGallery from '@/components/CoverGallery';
 import DecadeLink from '@/components/DecadeLink';
@@ -40,7 +40,7 @@ import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
-import { commerceEnabled } from '@/lib/sitemode';
+import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { Translate } from '@/lib/i18n/translate';
@@ -398,6 +398,7 @@ function BookDetail() {
         isbnCovers.asked.has(isbn13),
         isbnCovers.unavailable.has(isbn13),
         view.signatures,
+        isbnCovers.catalogue.has(isbn13),
       )}
     />
   );
@@ -943,8 +944,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
   const rows = details.filter(([, v]) => v);
   const moreLinks = plan.rest.length;
   const commission = commissionNote([...plan.lead, ...plan.rest, ...plan.anyEdition]);
-  // In hobby mode the availability probe is off (E20), so the fold holds links only.
-  const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
+  // The availability probe has its own switch (ROADMAP 0.1); without it the fold holds links only.
+  const hasFold = moreLinks > 0 || (availabilityEnabled() && !!edition.isbn13);
   const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
 
   return (
@@ -962,7 +963,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
           publisher's image stands in the same place for the reader to weigh
           before clicking; the buttons stay the ISBN's (ROADMAP 6.32).
         */}
-        {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared') && (
+        {edition.isbn13 && (verdict.status === 'differs' || verdict.status === 'uncompared'
+          || verdict.status === 'catalogueDiffers' || verdict.status === 'catalogueUncompared') && (
           <VerdictNote verdict={verdict} hint={hint} />
         )}
         {/* The pills sit right after the heading, not pushed to the far edge (Julian, 2026-09-26: „less gap before the pills"). */}
@@ -1026,8 +1028,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
                 ))}
               </div>
             )}
-            {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
-            {commerceEnabled() && edition.isbn13 && (
+            {/* Off unless its own switch is on (ROADMAP 0.1): the probe is not cleared for the public site. */}
+            {availabilityEnabled() && edition.isbn13 && (
               <AvailabilityCheck
                 isbn13={edition.isbn13}
                 checked={!!shops}
@@ -1152,15 +1154,25 @@ function IsbnText({ isbn }: { isbn: string }) {
 }
 
 function VerdictNote({ verdict, hint }: {
-  verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' }>;
+  verdict: Extract<IsbnVerdict, { status: 'differs' | 'uncompared' | 'catalogueDiffers' | 'catalogueUncompared' }>;
   hint: string;
 }) {
   const t = useT();
+  // Open Library stood in for Google (ROADMAP 1.12): the picture is the catalogue's scan, and the labels must not call it the publisher's.
+  const catalogue = verdict.status === 'catalogueDiffers' || verdict.status === 'catalogueUncompared';
   return (
     <div className="mb-4 flex items-start gap-3">
-      <a href={`?cover=${encodeURIComponent(verdict.cover.id)}`} className="shrink-0" aria-label={t('See the publisher’s current image for this ISBN')}>
+      <a
+        href={`?cover=${encodeURIComponent(verdict.cover.id)}`}
+        className="shrink-0"
+        aria-label={catalogue ? t('See Open Library’s cover for this ISBN') : t('See the publisher’s current image for this ISBN')}
+      >
         <span className="cover-shadow relative block h-20 w-[3.4rem] overflow-hidden rounded-[3px] bg-surface-2">
-          <CoverImage src={verdict.cover.urlSmall ?? verdict.cover.url} alt={t('The publisher’s current image for this ISBN')} sizes="55px" />
+          <CoverImage
+            src={verdict.cover.urlSmall ?? verdict.cover.url}
+            alt={catalogue ? t('Open Library’s cover for this ISBN') : t('The publisher’s current image for this ISBN')}
+            sizes="55px"
+          />
         </span>
       </a>
       <p className="text-xs leading-relaxed text-ink-3">
@@ -1170,6 +1182,8 @@ function VerdictNote({ verdict, hint }: {
             {t('It is the one beside this note, so that is what a new copy is likely to be.')}
             {hint ? ` ${t('The searches below look for {hint} second-hand instead.', { hint })}` : ` ${t('The searches below look for this printing instead.')}`}
           </>
+        ) : verdict.status === 'catalogueDiffers' ? (
+          t('It is the one beside this note.')
         ) : (
           t('It is the one beside this note; if it looks like the cover on screen, a new copy probably will too.')
         )}

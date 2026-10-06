@@ -24,10 +24,15 @@
  */
 import ringsFile from '@/data/hero-rings.json';
 import type { CollectionRing, HeroRing } from './heroring';
+import { isHiddenCover } from './hiddencovers';
 
 const file = ringsFile as { rings: HeroRing[]; collectionRings?: CollectionRing[] };
 
-export const HERO_RINGS: readonly HeroRing[] = file.rings;
+/**
+ * A ring with a cover taken off the site (2.18k) is left out whole rather than
+ * drawn with six: the rings were chosen as sets of seven at build time.
+ */
+export const HERO_RINGS: readonly HeroRing[] = file.rings.filter(r => !r.coverIds.some(isHiddenCover));
 
 /**
  * **Collection rings (ROADMAP 6.59):** seven books of one published
@@ -38,7 +43,7 @@ export const HERO_RINGS: readonly HeroRing[] = file.rings;
  * which kind came last would mean keeping something in the reader's browser
  * that the reader did not ask for (privacy notice, § 25 TDDDG).
  */
-export const COLLECTION_RINGS: readonly CollectionRing[] = file.collectionRings ?? [];
+export const COLLECTION_RINGS: readonly CollectionRing[] = (file.collectionRings ?? []).filter(r => !r.covers.some(c => isHiddenCover(c.coverId)));
 
 /** The share of visits that show a collection ring, when one is live. */
 export const COLLECTION_RING_SHARE = 1 / 3;

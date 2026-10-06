@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
 import { SITE_NAME } from '@/lib/seo';
+import { isHiddenCoverUrl } from '@/lib/hiddencovers';
 
 /**
  * What the shared-link cards have in common (ROADMAP 6.61): the site's two
@@ -95,6 +96,8 @@ export async function loadCovers(urls: string[], want: number, timeoutMs = 5000)
       return null;
     }
   };
+  // A cover taken off the site (2.18k) is not drawn into a card either.
+  urls = urls.filter(url => !isHiddenCoverUrl(url));
   const out: string[] = [];
   // In batches of `want`: the first batch is usually enough, and the next
   // only asks for as many as are still missing.
@@ -116,9 +119,11 @@ export const CARD_JPEG_QUALITY = 82;
  * 82. The site card stays PNG: it is flat colour and type, which PNG keeps
  * small and JPEG would smear.
  */
-export async function asJpeg(card: Response): Promise<Response> {
+export async function asJpeg(card: Response, fine = false): Promise<Response> {
   const png = Buffer.from(await card.arrayBuffer());
-  const jpeg = await sharp(png).jpeg({ quality: CARD_JPEG_QUALITY, mozjpeg: true }).toBuffer();
+  // `fine` is for a picture that is posted and compressed once more by the app that takes it: full colour
+  // resolution, so that small type keeps its edges (at 4:2:0 coloured letters fray), and less loss.
+  const jpeg = await sharp(png).jpeg(fine ? { quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true } : { quality: CARD_JPEG_QUALITY, mozjpeg: true }).toBuffer();
   const headers = new Headers(card.headers);
   headers.set('content-type', 'image/jpeg');
   headers.delete('content-length');

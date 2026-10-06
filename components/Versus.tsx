@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import ShareMenu from '@/components/ShareMenu';
 import { useT } from '@/components/i18n';
 import type { Translate } from '@/lib/i18n/translate';

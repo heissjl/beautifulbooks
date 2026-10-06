@@ -625,6 +625,20 @@ describe('verifyIsbnCover', () => {
     expect((verdict as { cover: Cover }).cover.id).toBe('ol:other');
   });
 
+  it('words the same four answers as the catalogue’s when Open Library stood in for Google (ROADMAP 1.12)', () => {
+    const selected = cover('ol:scan');
+    const other = cover('ol:other');
+    expect(verifyIsbnCover(selected, [], [selected], true, false, new Map(), true)).toEqual({ status: 'catalogueUnknown' });
+    expect(verifyIsbnCover(selected, ['ol:scan'], [selected], true, false, new Map(), true)).toEqual({ status: 'catalogueVerified' });
+    expect(verifyIsbnCover(selected, ['ol:other'], [selected, other], true, false, signed('ol:scan', 'ol:other'), true))
+      .toMatchObject({ status: 'catalogueDiffers', cover: { id: 'ol:other' } });
+    expect(verifyIsbnCover(selected, ['ol:other'], [selected, other], true, false, signed('ol:other'), true))
+      .toMatchObject({ status: 'catalogueUncompared' });
+    // Silence and waiting are the same whoever would have answered.
+    expect(verifyIsbnCover(selected, [], [selected], true, true, new Map(), true)).toEqual({ status: 'unavailable' });
+    expect(verifyIsbnCover(selected, [], [selected], false, false, new Map(), true)).toEqual({ status: 'pending' });
+  });
+
   /*
     ROADMAP 6.32, Rowohlt 2011 on 2026-09-10: "a different cover" beside a
     picture that was plainly the same one. Nothing folded because a picture

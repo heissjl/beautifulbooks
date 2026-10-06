@@ -9,6 +9,8 @@
  * (`sf-masterworks`). `--library <folder>` points at another library — a
  * rehearsal copy from `rehearsal.ts`, for the first run. `--base <url>` reads
  * a reader's collection from another address (`http://localhost:3000`).
+ * `--map <file>` names the import's map (5.17) when it was made for another
+ * library with the same book numbers, i.e. for the original of a rehearsal copy.
  *
  * Local only, never deployed: binds 127.0.0.1 and takes requests only with
  * the token printed at start. The page asks nothing outside this server. What
@@ -18,17 +20,30 @@
  *
  * Open Library and Google are asked for image files only, one per cover and
  * at most two at a time; no Google Books API request is made (lab rule 6).
+ *
+ * „Look for a larger scan" (`larger.ts`) is the one thing that asks the
+ * catalogue: the covers of a row's work, through the website and kept on this
+ * Mac (`catalogue.ts`, `kept.ts`), to find the largest scan of the design the
+ * collection chose. A larger scan found stands in for the collection's from
+ * then on — remembered by cover id beside the backups, in this run and later
+ * ones — until Julian takes the row back to the collection's own.
  */
 import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { makeToken } from './site';
-import { CoverDownloads } from './download';
+import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
+import { CoverDownloads, CoverHashes, CoverSizes } from './download';
+import { FileMap } from './filemap';
+import { refusedConnection } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, isSmaller, type ImageFacts } from './image';
+import { AnswerStore, keptCatalogue, type Served } from './kept';
+import { LargerError, largerScan, type LargerScan } from './larger';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
-import { matchPicks } from './match';
-import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
+import { booksByWork, loadMap, mapFile } from './map';
+import { matchPicks, type Mapped } from './match';
+import { CoverWriter, defaultBackupRoot, findCalibredb, libraryKey, undoStacks } from './safety';
 import { loadSource, type Source } from './source';
 
 const args = process.argv.slice(2);
@@ -39,7 +54,7 @@ const flag = (name: string): string | undefined => {
 const WRITE = args.includes('--write');
 const PORT = Number(flag('port') ?? process.env.PORT ?? 4327);
 const BASE = (flag('base') ?? 'https://buyitscovers.com').replace(/\/$/, '');
-const VALUE_FLAGS = new Set(['--library', '--base', '--port']);
+const VALUE_FLAGS = new Set(['--library', '--base', '--port', '--map']);
 const sourceArg = args.find((a, i) => !a.startsWith('--') && !VALUE_FLAGS.has(args[i - 1] ?? ''));
 const ROOT = join(__dirname, '../..');
 const TOKEN = makeToken();
@@ -54,9 +69,42 @@ async function main(): Promise<void> {
   let books = readLibrary(library);
   const source: Source = await loadSource(sourceArg, ROOT, BASE);
 
+  /*
+   * The scan a row uses: the collection's, or the larger one of the same
+   * design that a look found. Cover id against cover id — true of the two
+   * images whatever the library or the collection, so one file for all.
+   */
+  const larger = new FileMap(join(defaultBackupRoot(), 'larger-scans.json'));
+  const coverOf = (index: number): string => larger.get(source.picks[index].coverId) ?? source.picks[index].coverId;
+  /** What this run's looks found, per row. */
+  const looked = new Map<number, LargerScan>();
+  const hashes = new CoverHashes(join(defaultBackupRoot(), 'cover-hashes.json'), BASE);
+  const sizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), BASE);
+  const answers = new AnswerStore(join(defaultBackupRoot(), 'catalogue'));
+  // As in the app: the website first, Open Library directly when it fails — unless Open Library is refusing this Mac.
+  let pausedUntil = 0;
+  const asked: Catalogue = withFallback(siteCatalogue(BASE), directCatalogue(), () => Date.now() >= pausedUntil);
+
+  /*
+   * The import's map (5.17): which book each tile was made from. Looked up
+   * for this collection and this library; `--map <file>` names one made for
+   * another library — a rehearsal copy has the numbers of its original.
+   */
+  let mapped: Mapped = new Map();
+  let mapNote = '';
+  if (source.kind === 'wall') {
+    const given = flag('map');
+    const found = loadMap(given ?? mapFile(defaultBackupRoot(), source.ref), source.ref, given ? null : libraryKey(library));
+    if ('map' in found) {
+      mapped = booksByWork(found.map);
+      mapNote = `${found.map.books.length} books mapped by the import${given ? ' (map named by hand)' : ''}`;
+    } else if (given) throw new Error(`--map: ${found.none}`);
+    else mapNote = found.none;
+  }
+
   /* The new images: fetched once, checked, kept in memory for the run. */
   const downloads = new CoverDownloads(BASE);
-  const newImage = (index: number) => downloads.get(source.picks[index].coverId);
+  const newImage = (index: number) => downloads.get(coverOf(index));
 
   const oldFacts = (book: CalibreBook): ImageFacts | { missing: string } => {
     const file = coverFile(library, book);
@@ -65,7 +113,7 @@ async function main(): Promise<void> {
   };
 
   const state = () => {
-    const matches = matchPicks(source.picks, books);
+    const matches = matchPicks(source.picks, books, mapped);
     const stacks = undoStacks(writer.journal());
     return {
       mode: WRITE ? 'write' : 'preview',
@@ -73,7 +121,8 @@ async function main(): Promise<void> {
       library: { path: library, books: books.length, withIsbn: books.filter((b) => b.isbns.length).length },
       backupRoot: writer.root,
       source: { kind: source.kind, ref: source.ref, title: source.title, skipped: source.skipped },
-      rows: source.picks.map((pick, index) => ({ index, pick, ...matches[index] })),
+      // `use`: the scan the row writes; it differs from the pick's when a larger scan of the same design stands in.
+      rows: source.picks.map((pick, index) => ({ index, pick, ...matches[index], use: coverOf(index), ...(looked.has(index) ? { looked: looked.get(index) } : {}) })),
       books: books.map((b) => ({ id: b.id, title: b.title, authors: b.authors, hasCover: b.hasCover })),
       // Per book: the cover the tool last put there, if that write can still be taken back.
       applied: Object.fromEntries([...stacks].map(([id, stack]) => [id, { coverId: stack[stack.length - 1].coverId, canUndo: !!stack[stack.length - 1].backup }])),
@@ -111,6 +160,38 @@ async function main(): Promise<void> {
         return send(res, 200, readFileSync(file), 'image/jpeg');
       }
 
+      /* Which scan a row uses touches only the tool's own file, so it works without --write. */
+      if (req.method === 'POST' && path === '/api/larger') {
+        const body = await jsonBody(req);
+        const index = typeof body.index === 'number' ? body.index : -1;
+        const pick = source.picks[index];
+        if (!pick) return send(res, 404, { error: 'No such row.' });
+        if (body.own === true) {
+          larger.delete(pick.coverId);
+          return send(res, 200, { ok: true, state: state() });
+        }
+        // Whether the catalogue was asked just now: the page pauses between such rows and not between kept ones.
+        let fresh = 0;
+        const served: Served[] = [];
+        const counting: Catalogue = { search: (q) => asked.search(q), page: (id, offset) => (fresh++, asked.page(id, offset)) };
+        try {
+          const found = await largerScan(pick, { catalogue: keptCatalogue(answers, counting, { served: (s) => served.push(s) }), hashes, sizes });
+          if (served.some((s) => refusedConnection(s.error))) pausedUntil = Date.now() + 15 * 60_000;
+          looked.set(index, found);
+          if (found.larger) larger.set(pick.coverId, found.use.coverId);
+          else larger.delete(pick.coverId);
+          return send(res, 200, { ok: true, asked: fresh > 0, state: state() });
+        } catch (err) {
+          if (err instanceof LargerError) return send(res, 409, { error: err.message });
+          if (refusedConnection(err)) {
+            pausedUntil = Date.now() + 15 * 60_000;
+            return send(res, 503, { error: 'Open Library is refusing connections from this Mac, and the website did not answer either. The tool stops asking the catalogue for a quarter of an hour.' });
+          }
+          if (err instanceof CatalogueError) return send(res, 502, { error: err.message });
+          return send(res, 502, { error: 'The catalogue did not answer. Try again in a moment.' });
+        }
+      }
+
       if (req.method === 'POST' && (path === '/api/apply' || path === '/api/undo')) {
         if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
         const body = await jsonBody(req);
@@ -131,7 +212,7 @@ async function main(): Promise<void> {
         if (!('missing' in current) && isSmaller(f.check, current) && body.allowSmaller !== true) {
           return send(res, 409, { smaller: true, error: `The new cover (${f.check.width} × ${f.check.height}) has fewer pixels than the one the book has (${current.width} × ${current.height}).` });
         }
-        const result = writer.apply(book.id, f.bytes, row.coverId);
+        const result = writer.apply(book.id, f.bytes, coverOf(body.index as number));
         if (result.ok) books = result.books;
         return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, state: state() } : result);
       }
@@ -149,9 +230,10 @@ async function main(): Promise<void> {
       process.exit(1);
     })
     .listen(PORT, '127.0.0.1', () => {
-      const sure = matchPicks(source.picks, books).filter((m) => m.sure !== undefined).length;
+      const sure = matchPicks(source.picks, books, mapped).filter((m) => m.sure !== undefined).length;
       console.log(`calibre: „${source.title}" — ${source.picks.length} covers, ${sure} with a sure match among ${books.length} books`);
       console.log(`library: ${library}`);
+      if (mapNote) console.log(`map:     ${mapNote}`);
       console.log(WRITE ? `mode:    WRITE — backups and journal in ${writer.root}` : 'mode:    look only (add --write to change the library)');
       for (const p of WRITE ? writer.problems() : []) console.log(`         ! ${p}`);
       console.log(`open:    http://127.0.0.1:${PORT}/?t=${TOKEN}`);

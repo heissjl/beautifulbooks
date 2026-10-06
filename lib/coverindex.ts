@@ -48,6 +48,7 @@ export interface SimilarCover {
   Re-exported here because callers of the index expect it.
 */
 import { coverUrlFor } from './coverurl';
+import { isHiddenCover } from './hiddencovers';
 export { coverUrlFor };
 
 interface Unpacked {
@@ -214,14 +215,14 @@ export function lookDistance(structureBits: number, aSig: ImageSignature, bSig: 
 export function similarTo(coverId: string, limit = 6, { sameWork = false } = {}): SimilarCover[] {
   const idx = load();
   const at = idx.positionOf.get(coverId);
-  if (at === undefined) return [];
+  if (at === undefined || isHiddenCover(coverId)) return [];
 
   const ownWork = idx.workOf[at];
   const source: ImageSignature = { hash: '', contrast: 0, saturation: idx.saturation[at], hues: idx.hues[at] };
   const found: SimilarCover[] = [];
 
   for (let i = 0; i < idx.coverIds.length; i++) {
-    if (i === at) continue;
+    if (i === at || isHiddenCover(idx.coverIds[i])) continue;
     if (!sameWork && idx.workOf[i] === ownWork) continue;
     const bits = bitsApart(idx.hashHi[at], idx.hashLo[at], idx.hashHi[i], idx.hashLo[i]);
     if (bits <= SAME_DESIGN_BITS) continue;

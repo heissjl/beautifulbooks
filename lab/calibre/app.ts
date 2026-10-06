@@ -16,8 +16,13 @@
  * site's servers and kept a day at its CDN. When the website does not answer,
  * the same code runs here against Open Library directly — unless Open Library
  * is refusing this Mac, in which case the app waits. `--source direct` skips
- * the website. Google Books is never asked, either way (lab rule 6). Only on
+ * the website; `--site <address>` names another one (a local `npm run dev`). Google Books is never asked, either way (lab rule 6). Only on
  * a click: nothing here walks the library by itself.
+ *
+ * What the catalogue answered is kept on this Mac for thirty days (`kept.ts`),
+ * so a book opened before asks nobody — not after a restart either, and not
+ * while Open Library refuses this Mac. The page says when what it shows is a
+ * kept answer, and „Ask the catalogue again" sends `since=<now>`.
  *
  * `--library <folder>` points at another library (a rehearsal copy).
  * `--port auto` takes any free port and `--exit-with-parent` ends the server
@@ -29,16 +34,20 @@
  */
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { appendFileSync, existsSync, readFileSync, statSync } from 'node:fs';
+import { basename, join } from 'node:path';
 import { isWorkId, makeToken } from './site';
-import { CatalogueError, directCatalogue, remembering, siteCatalogue, withFallback } from './catalogue';
+import { readChoice, writeChoice } from './batch';
+import { CatalogueError, directCatalogue, siteCatalogue, withFallback, type Catalogue } from './catalogue';
 import { CoverDownloads, CoverSizes } from './download';
-import { findWorks, refusedConnection, WorkMap } from './find';
+import { FileMap } from './filemap';
+import { editionByIsbn, findWorks, refusedConnection, WorkMap, type IsbnEdition } from './find';
 import { jsonBody, refused, send } from './http';
 import { imageFacts, imageSizeFast, isSmaller, type ImageFacts } from './image';
+import { AnswerStore, KEEP_DAYS, keptCatalogue, type AskOptions, type Served } from './kept';
 import { coverFile, findLibrary, readLibrary, type CalibreBook } from './library';
 import { findSyncScript, pocketbookStatus, readSyncConfig, runSync } from './pocketbook';
+import { findReader, ReaderCovers } from './reader';
 import { CoverWriter, defaultBackupRoot, findCalibredb, undoStacks } from './safety';
 
 const args = process.argv.slice(2);
@@ -50,7 +59,8 @@ const WRITE = args.includes('--write');
 // `auto`: the system picks a free port; the real number is known once the server listens.
 let PORT = flag('port') === 'auto' ? 0 : Number(flag('port') ?? process.env.PORT ?? 4329);
 const ROOT = join(__dirname, '../..');
-const SITE = 'https://buyitscovers.com';
+// `--site http://localhost:3000` asks a local `npm run dev` instead of the live site.
+const SITE = (flag('site') ?? 'https://buyitscovers.com').replace(/\/$/, '');
 const TOKEN = makeToken();
 const COVER_ID = /^(ol:\d{1,12}|gb:[A-Za-z0-9_-]{1,40})$/;
 /** Open Library hands out 100 editions a page; ten pages reach the older printings of a much-printed book. */
@@ -59,7 +69,56 @@ const MAX_OFFSET = 900;
 const library = findLibrary(flag('library'));
 const writer = new CoverWriter({ library, calibredb: findCalibredb(), backupRoot: defaultBackupRoot() });
 const works = new WorkMap(join(writer.root, 'works.json'));
-const downloads = new CoverDownloads(SITE);
+/*
+ * Book number -> the cover Julian marked as sent to the reader. A new cover is
+ * in Calibre at once but on the reader only when the book is sent again
+ * (README: „Kommt das neue Cover von selbst auf den Reader?"), so every
+ * changed book is a thing still to do in Calibre until he says it is done
+ * (Julian, 2026-10-04: „stell die geänderten werke vorne in der übersicht
+ * heraus, damit ich weiß welche ich in calibre ändern muss"). The mark names
+ * the cover: a book changed again is to send again.
+ */
+const sent = new FileMap(join(writer.root, 'sent.json'));
+// Book number -> a cover chosen for it and not written yet: the batch (`batch.ts`).
+const chosen = new FileMap(join(writer.root, 'chosen.json'));
+/*
+ * The connected PocketBook, when there is one (`reader.ts`, ROADMAP 5.16c).
+ * Its shelves show pictures of their own, which neither Calibre's sending nor
+ * anything else renews; the app can write them — the cover from Calibre as
+ * the reader's picture of the book, in the library and on the home screen.
+ * Looked for anew each time: the reader comes and goes.
+ */
+const readerNow = (): { root: string; covers: ReaderCovers } | null => {
+  const root = findReader();
+  return root ? { root, covers: new ReaderCovers(root, join(writer.root, 'reader')) } : null;
+};
+/*
+ * How long each full image took, one line per download, beside the backups:
+ * the image host is quick most of the time and very slow now and then
+ * (download.ts), and only a note taken in the slow moment says which.
+ */
+/*
+ * Which of Calibre's books are on the reader. Looking costs one question per
+ * file over USB, and the answer only changes when Calibre sends or removes a
+ * book — which rewrites its list there. So: once per state of that list.
+ */
+let shelf: { key: string; ids: Set<number> } | null = null;
+function booksOnShelf(reader: { root: string; covers: ReaderCovers }): Set<number> {
+  const key = `${reader.root}:${statSync(join(reader.root, 'metadata.calibre')).mtimeMs}`;
+  if (shelf?.key !== key) shelf = { key, ids: reader.covers.present() };
+  return shelf.ids;
+}
+
+const downloadTimes = join(defaultBackupRoot(), 'download-times.jsonl');
+const downloads = new CoverDownloads(SITE, {
+  note: (n) => {
+    try {
+      appendFileSync(downloadTimes, `${JSON.stringify({ at: new Date().toISOString(), ...n })}\n`);
+    } catch {
+      // A note that could not be written costs a measurement, not a cover.
+    }
+  },
+});
 // Cover ids are the catalogue's, not a library's: one file of sizes for every library.
 const coverSizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), SITE);
 let books = readLibrary(library);
@@ -98,8 +157,21 @@ function state() {
   }
   const stacks = undoStacks(writer.journal());
   const remembered = works.all();
+  const reader = readerNow();
+  let onShelf = new Set<number>();
+  let readerCover = new Map<number, string>();
+  try {
+    if (reader) {
+      onShelf = booksOnShelf(reader);
+      readerCover = reader.covers.lastPut();
+    }
+  } catch {
+    // Its list did not read — unplugged this moment, or Calibre is writing it: then nothing is said about any book.
+  }
   return {
     mode: WRITE ? 'write' : 'preview',
+    // The reader's name when it is connected; per changed book below, whether it is on it.
+    reader: reader ? { name: basename(reader.root) } : null,
     catalogue: SOURCE,
     problems: WRITE ? writer.problems() : [],
     library: { path: library, books: books.length },
@@ -107,6 +179,7 @@ function state() {
     books: books.map((b) => {
       const stack = stacks.get(b.id);
       const cover = coverNow(b);
+      const choice = readChoice(chosen.get(b.id));
       return {
         id: b.id,
         title: b.title,
@@ -118,8 +191,14 @@ function state() {
         size: cover?.size ?? null,
         v: cover?.v ?? 0,
         ...(remembered[b.id] ? { workId: remembered[b.id] } : {}),
+        // Chosen for this book and waiting in the batch; nothing is written yet.
+        ...(choice ? { chosen: choice.coverId, ...(choice.smaller ? { chosenSmaller: true } : {}) } : {}),
         // The cover the tool last put there, while that write can still be taken back.
-        ...(stack ? { applied: stack[stack.length - 1].coverId, canUndo: !!stack[stack.length - 1].backup } : {}),
+        ...(stack ? { applied: stack[stack.length - 1].coverId, appliedAt: stack[stack.length - 1].at, canUndo: !!stack[stack.length - 1].backup, sent: sent.get(b.id) === stack[stack.length - 1].coverId } : {}),
+        // On the connected reader; the cover whose pictures this app wrote there; and whether that is the cover the book has now.
+        ...(onShelf.has(b.id)
+          ? { onReader: true, ...(readerCover.has(b.id) ? { readerCover: readerCover.get(b.id) } : {}), ...(stack ? { readerHas: readerCover.get(b.id) === stack[stack.length - 1].coverId } : {}) }
+          : {}),
       };
     }),
   };
@@ -147,7 +226,43 @@ const paused = (): { error: string; pausedUntil: number } | null =>
 
 /* Through the website first; Open Library directly when the website fails and Open Library is not refusing this Mac. */
 const SOURCE = flag('source') === 'direct' ? 'direct' : 'site';
-const catalogue = remembering(SOURCE === 'site' ? withFallback(siteCatalogue(SITE), directCatalogue(), () => !paused()) : directCatalogue());
+const direct = directCatalogue();
+// Asked directly, the pause is the catalogue's answer — in its own words, so a kept answer can still stand in for it.
+const unlessPaused = <T>(ask: () => Promise<T>): Promise<T> => {
+  const pause = paused();
+  return pause ? Promise.reject(new CatalogueError(pause.error)) : ask();
+};
+const source: Catalogue =
+  SOURCE === 'site'
+    ? withFallback(siteCatalogue(SITE), direct, () => !paused())
+    : { search: (q) => unlessPaused(() => direct.search(q)), page: (id, offset) => unlessPaused(() => direct.page(id, offset)) };
+
+// The catalogue's answers are the catalogue's, not a library's: one store for every library, like the sizes.
+const answers = new AnswerStore(join(defaultBackupRoot(), 'catalogue'));
+
+/** The catalogue for one request: what the store has, and a note of what came out of it. */
+function asking(url: URL) {
+  const since = Number(url.searchParams.get('since') ?? 0);
+  const served: Served[] = [];
+  const options: AskOptions = { ...(Number.isSafeInteger(since) && since > 0 ? { notBefore: since } : {}), served: (s) => served.push(s) };
+  return {
+    options,
+    catalogue: keptCatalogue(answers, source, options),
+    /** Open Library shut the door behind an answer that was served from the store all the same. */
+    refused: () => served.some((s) => refusedConnection(s.error)),
+    /** For the page: the oldest answer that was not asked for just now, and whether the catalogue was silent. */
+    kept: (): { kept?: { at: number; unanswered?: true } } =>
+      served.length ? { kept: { at: Math.min(...served.map((s) => s.at)), ...(served.some((s) => s.error !== undefined) ? { unanswered: true as const } : {}) } } : {},
+  };
+}
+
+/** The covers Open Library lists under an ISBN. While it refuses this Mac only the store is looked at; undefined says "not asked". */
+async function isbnEdition(isbn: string, options: AskOptions): Promise<IsbnEdition | null | undefined> {
+  if (!paused()) return answers.answer('isbn', isbn, () => editionByIsbn(isbn, SITE), options);
+  const have = answers.read<IsbnEdition | null>('isbn', isbn);
+  if (have) options.served?.({ at: have.at });
+  return have?.value;
+}
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://127.0.0.1:${PORT}`);
@@ -162,13 +277,13 @@ const server = createServer(async (req, res) => {
       const book = books.find((b) => b.id === Number(bookPath[2]));
       if (!book) return send(res, 404, { error: 'No such book.' });
       if (bookPath[1] === 'find') {
-        if (SOURCE === 'direct' && paused()) return send(res, 503, paused());
         const q = (url.searchParams.get('q') ?? '').trim().slice(0, 200);
-        const found = await findWorks(book, catalogue, { site: SITE, remembered: works.get(book.id), query: q || undefined, askEdition: !paused() });
-        if (found.refused) pausedUntil = Date.now() + PAUSE_MS;
-        // Refused and nothing to show: say why, once, instead of an empty list.
-        if (found.refused && found.hits.length === 0) return send(res, 503, paused());
-        return send(res, 200, found);
+        const ask = asking(url);
+        const found = await findWorks(book, ask.catalogue, { remembered: works.get(book.id), query: q || undefined, edition: (isbn) => isbnEdition(isbn, ask.options) });
+        if (found.refused || ask.refused()) pausedUntil = Date.now() + PAUSE_MS;
+        // Refused and nothing to show — nothing kept either: say why, once, instead of an empty list.
+        if ((found.refused || (SOURCE === 'direct' && paused())) && found.hits.length === 0) return send(res, 503, paused());
+        return send(res, 200, { ...found, ...ask.kept() });
       }
       if (path.startsWith('/api/')) return send(res, 200, oldFacts(book));
       const file = coverFile(library, book);
@@ -180,19 +295,18 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && coversOf && isWorkId(coversOf[1])) {
       const offset = Number(url.searchParams.get('offset') ?? 0);
       if (!Number.isInteger(offset) || offset < 0 || offset > MAX_OFFSET || offset % 100 !== 0) return send(res, 400, { error: 'Bad offset.' });
-      if (SOURCE === 'direct' && paused()) return send(res, 503, paused());
+      const ask = asking(url);
       try {
-        const page = await catalogue.page(coversOf[1], offset);
+        const page = await ask.catalogue.page(coversOf[1], offset);
+        if (ask.refused()) pausedUntil = Date.now() + PAUSE_MS;
         if (!page) return send(res, 404, { error: 'The catalogue does not know this work.' });
         const next = page.next !== null && page.next <= MAX_OFFSET ? page.next : null;
         // Sizes already known ride along, so a work opened before sorts at once.
         const covers = page.covers.map((c) => ({ ...c, ...(coverSizes.peek(c.coverId) ? { size: coverSizes.peek(c.coverId) } : {}) }));
-        return send(res, 200, { covers, editions: page.editions, next });
+        return send(res, 200, { covers, editions: page.editions, next, ...ask.kept() });
       } catch (err) {
-        if (refusedConnection(err)) {
-          pausedUntil = Date.now() + PAUSE_MS;
-          return send(res, 503, paused());
-        }
+        if (refusedConnection(err)) pausedUntil = Date.now() + PAUSE_MS;
+        if (paused() && (SOURCE === 'direct' || refusedConnection(err))) return send(res, 503, paused());
         if (err instanceof CatalogueError) return send(res, 502, { error: err.message });
         return send(res, 502, { error: 'The catalogue did not answer. Try again in a moment.' });
       }
@@ -205,6 +319,11 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === 'GET' && (path === '/api/new' || path === '/new')) {
       if (!COVER_ID.test(coverId)) return send(res, 400, { error: 'Bad cover id.' });
+      // The pointer rests on this cover: fetch it when there is room, and do not make the page wait.
+      if (path === '/api/new' && url.searchParams.get('ahead') === '1') {
+        downloads.warm(coverId);
+        return send(res, 202, {});
+      }
       const f = await downloads.get(coverId);
       if (f.check.ok) coverSizes.remember(coverId, f.check);
       if (path === '/api/new') return send(res, 200, f.check);
@@ -212,7 +331,7 @@ const server = createServer(async (req, res) => {
       return send(res, 200, f.bytes, `image/${f.check.format}`);
     }
 
-    if (req.method === 'POST' && (path === '/api/work' || path === '/api/apply' || path === '/api/undo')) {
+    if (req.method === 'POST' && (path === '/api/work' || path === '/api/chosen' || path === '/api/sent' || path === '/api/reader' || path === '/api/apply' || path === '/api/undo')) {
       const body = await jsonBody(req);
       const book = books.find((b) => b.id === body.bookId);
       if (!book) return send(res, 404, { error: 'No such book in the library.' });
@@ -224,7 +343,55 @@ const server = createServer(async (req, res) => {
         return send(res, 200, { ok: true });
       }
 
+      // So does the batch: a cover chosen is a note in the tool's own file. `coverId: null` takes the book out again.
+      if (path === '/api/chosen') {
+        if (body.coverId === null) chosen.delete(book.id);
+        else if (typeof body.coverId === 'string' && COVER_ID.test(body.coverId)) chosen.set(book.id, writeChoice({ coverId: body.coverId, ...(body.smaller === true ? { smaller: true as const } : {}) }));
+        else return send(res, 400, { error: 'Bad cover id.' });
+        return send(res, 200, { ok: true, state: state() });
+      }
+
+      // So does the mark „sent to the reader": it says what Julian did in Calibre, and changes nothing there.
+      if (path === '/api/sent') {
+        const top = undoStacks(writer.journal()).get(book.id)?.at(-1);
+        if (!top) return send(res, 409, { error: 'This book’s cover was not changed here.' });
+        if (body.sent === false) sent.delete(book.id);
+        else sent.set(book.id, top.coverId);
+        return send(res, 200, { ok: true, state: state() });
+      }
+
       if (!WRITE) return send(res, 403, { error: 'This run only looks. Start it with --write to change the library.' });
+
+      /* The cover Calibre has, as the reader's pictures of this book — or the reader's own pictures back. Never the book file. */
+      if (path === '/api/reader') {
+        const reader = readerNow();
+        if (!reader) return send(res, 409, { error: 'The PocketBook is not connected.' });
+        if (body.back === true) {
+          const result = reader.covers.back(book.id);
+          if (result.ok) sent.delete(book.id);
+          return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+        }
+        const top = undoStacks(writer.journal()).get(book.id)?.at(-1);
+        // A cover from the catalogue straight onto the reader's shelves: Calibre keeps the cover it has (Julian, 2026-10-05:
+        // „i want to decide whether to write to calibre or pocketbook").
+        if (body.coverId !== undefined) {
+          if (typeof body.coverId !== 'string' || !COVER_ID.test(body.coverId)) return send(res, 400, { error: 'Bad cover id.' });
+          const f = await downloads.get(body.coverId);
+          if (!f.check.ok || !f.bytes) return send(res, 409, { error: f.check.ok ? 'No image.' : f.check.reason });
+          const result = reader.covers.put(book.id, f.bytes, body.coverId);
+          // The same cover Calibre has: then the book is as good as sent.
+          if (result.ok && top?.coverId === body.coverId) sent.set(book.id, body.coverId);
+          return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+        }
+        if (!top) return send(res, 409, { error: 'This book’s cover was not changed here.' });
+        const file = coverFile(library, book);
+        if (!existsSync(file)) return send(res, 409, { error: 'The cover file is not on this Mac (iCloud).' });
+        const result = reader.covers.put(book.id, readFileSync(file), top.coverId);
+        // On the reader's shelves now: that is what „sent" was waiting for.
+        if (result.ok) sent.set(book.id, top.coverId);
+        return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, pictures: result.pictures.length, state: state() } : result);
+      }
+
       if (path === '/api/undo') {
         const result = writer.undo(book.id);
         if (result.ok) books = result.books;
@@ -240,6 +407,11 @@ const server = createServer(async (req, res) => {
       }
       const result = writer.apply(book.id, f.bytes, body.coverId);
       if (result.ok) books = result.books;
+      // Calibre has a cover from here now: whatever waited in the batch for this book is settled.
+      if (result.ok) chosen.delete(book.id);
+      // The reader's shelves got this very cover before Calibre did (the batch, written to the PocketBook first): nothing is left to send.
+      // The record of that is on this Mac, so this holds with the reader unplugged too.
+      if (result.ok && new ReaderCovers(readerNow()?.root ?? '', join(writer.root, 'reader')).lastPut().get(book.id) === body.coverId) sent.set(book.id, body.coverId);
       return send(res, result.ok ? 200 : 409, result.ok ? { ok: true, state: state() } : result);
     }
     /* The PocketBook highlights sync: Julian's own script, started as it is (pocketbook.ts). */
@@ -278,6 +450,7 @@ server
     console.log(WRITE ? `mode:    WRITE — backups and journal in ${writer.root}` : 'mode:    look only (add --write to change the library)');
     for (const p of WRITE ? writer.problems() : []) console.log(`         ! ${p}`);
     console.log(`asks:    ${SOURCE === 'site' ? `${SITE} (Open Library directly when it does not answer)` : 'Open Library directly'}`);
+    console.log(`keeps:   the catalogue's answers for ${KEEP_DAYS} days in ${answers.dir}`);
     console.log(`open:    http://127.0.0.1:${PORT}/?t=${TOKEN}`);
   });
 

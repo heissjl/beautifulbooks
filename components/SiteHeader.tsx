@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import BrandMark from '@/components/BrandMark';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 import { useT } from '@/components/i18n';

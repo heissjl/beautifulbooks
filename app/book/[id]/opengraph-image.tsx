@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og';
 import { SITE_NAME, authorLine, coverImages } from '@/lib/seo';
 import { asJpeg, Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
+import { measure } from '@/app/api/measure';
 
 /**
  * The picture a shared link shows (SPEC §10 D10).
@@ -20,6 +21,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/jpeg';
 
 export default async function Image({ params }: { params: Promise<{ id: string }> }) {
+  measure('og');
   const { id } = await params;
   let title: string = SITE_NAME;
   let author = '';

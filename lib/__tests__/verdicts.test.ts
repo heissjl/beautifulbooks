@@ -10,7 +10,10 @@
 import { describe, expect, it } from 'vitest';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER, type VerdictStatus } from '../verdicts';
 
-const STATUSES: VerdictStatus[] = ['verified', 'differs', 'uncompared', 'unknown', 'pending', 'unavailable'];
+const STATUSES: VerdictStatus[] = [
+  'verified', 'differs', 'uncompared', 'unknown', 'pending', 'unavailable',
+  'catalogueVerified', 'catalogueDiffers', 'catalogueUncompared', 'catalogueUnknown',
+];
 
 describe('verdict wording', () => {
   it('gives every state words, and lists every state', () => {
@@ -51,6 +54,14 @@ describe('verdict wording', () => {
     expect(VERDICT_LEAD.uncompared).toMatch(/publisher/i);
     expect(VERDICT_LEAD.uncompared).toMatch(/could not be compared/i);
     expect(VERDICT_LEAD.uncompared).not.toMatch(/different|same/i);
+  });
+
+  it('never lets the catalogue fallback pass for the publisher’s word (ROADMAP 1.12)', () => {
+    for (const status of ['catalogueVerified', 'catalogueDiffers', 'catalogueUncompared', 'catalogueUnknown'] as const) {
+      expect(VERDICT_LEAD[status]).toMatch(/^The publisher’s image could not be checked/);
+      expect(VERDICT_LEAD[status]).toMatch(/Open Library/);
+    }
+    expect(VERDICT_LEAD.catalogueUncompared).not.toMatch(/different|same/i);
   });
 
   it('claims nothing about completeness', () => {

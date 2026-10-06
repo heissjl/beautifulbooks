@@ -51,6 +51,7 @@
   <div id="banners"></div>
   <div class="bar">
     <button class="primary" id="all" disabled>Use all sure matches</button>
+    <button id="allLarger" disabled title="For each cover with a sure match: look through the covers of its work for a larger scan of the same design. One row after the other, with a pause where the catalogue has to be asked.">Look for larger scans</button>
     <label class="filter"><input type="checkbox" id="onlyMatched" checked> only rows with a book in my library</label>
     <span id="progress" class="sub" style="margin:0"></span>
   </div>
@@ -72,19 +73,22 @@ const el = (tag, attrs = {}, ...kids) => {
   return n;
 };
 const px = (f) => `${f.width} × ${f.height} px`;
-const SURE = new Set(['isbn', 'title+author']);
-const KIND = { isbn: 'same ISBN', 'title+author': 'same title and author', maybe: 'similar title', author: 'same author' };
+const SURE = new Set(['mapped', 'isbn', 'title+author']);
+const KIND = { mapped: 'the book this tile was made from', isbn: 'same ISBN', 'title+author': 'same title and author', maybe: 'similar title', author: 'same author' };
 
 let state = null;
 const chosen = new Map();   // row index -> book id (or null)
 const fresh = new Map();    // row index -> check of the new image
 const olds = new Map();     // book id -> facts of the current cover
 const errors = new Map();   // row index -> last error
+const looking = new Set();  // row indexes whose work is being looked through for a larger scan
+const lookErrors = new Map();
 let version = 0;            // busts the image cache after a write
 
 const book = (id) => state.books.find((b) => b.id === id);
 const bookLabel = (b) => `${b.title} — ${b.authors.join(', ') || 'unknown'} (#${b.id})`;
-const isApplied = (row) => { const a = state.applied[chosen.get(row.index)]; return !!a && a.coverId === row.pick.coverId; };
+const isApplied = (row) => { const a = state.applied[chosen.get(row.index)]; return !!a && a.coverId === row.use; };
+const canLook = (row) => row.pick.coverId.startsWith('ol:');
 const smaller = (row) => { const n = fresh.get(row.index), o = olds.get(chosen.get(row.index)); return !!(n && n.ok && o && !o.missing && n.width * n.height < 0.9 * o.width * o.height); }; // 0.9: SMALLER_BELOW in image.ts, the server decides the same way
 const bulkReady = (row) => row.sure !== undefined && chosen.get(row.index) === row.sure && fresh.get(row.index)?.ok && !smaller(row) && !isApplied(row);
 
@@ -126,8 +130,8 @@ function renderRow(row) {
     el('div', { class: 'frame' }, b && o && !o.missing ? el('img', { src: `/old/${id}?t=${token}&v=${version}`, alt: 'current cover', loading: 'lazy' }) : el('span', { class: 'none' }, b ? (o?.missing ?? '…') : 'no book chosen')),
     el('figcaption', {}, 'in Calibre now', el('br'), o && !o.missing ? px(o) : ''));
   const newFig = el('figure', {},
-    el('div', { class: 'frame' }, n?.ok ? el('img', { src: `/new/${row.index}?t=${token}`, alt: 'chosen cover', loading: 'lazy' }) : el('span', { class: 'none' }, n ? n.reason : 'loading…')),
-    el('figcaption', {}, 'from the collection', el('br'), n?.ok ? px(n) : ''));
+    el('div', { class: 'frame' }, n?.ok ? el('img', { src: `/new/${row.index}?t=${token}&c=${encodeURIComponent(row.use)}`, alt: 'chosen cover', loading: 'lazy' }) : el('span', { class: 'none' }, n ? n.reason : 'loading…')),
+    el('figcaption', {}, row.use === row.pick.coverId ? 'from the collection' : 'larger scan, same design', el('br'), n?.ok ? px(n) : ''));
 
   const select = el('select', { onchange: async (e) => { chosen.set(row.index, e.target.value ? Number(e.target.value) : null); errors.delete(row.index); await loadOld(chosen.get(row.index)); want(row); refresh(row); } },
     el('option', { value: '' }, '— no book —'),
@@ -140,6 +144,16 @@ function renderRow(row) {
   if (smaller(row)) notes.push(el('p', { class: 'note warn' }, `Fewer pixels than the cover the book has (${px(n)} against ${px(o)}).`));
   if (applied) notes.push(el('p', { class: 'note ok' }, 'This cover is in Calibre.'));
   if (errors.has(row.index)) notes.push(el('p', { class: 'note bad' }, errors.get(row.index)));
+  // What a look for a larger scan found. What could not be compared is said, not passed off as "none".
+  const k = row.looked;
+  const seenLine = k ? `${k.covers} cover${k.covers === 1 ? '' : 's'} in ${k.seen} of ${k.editions} edition records looked at${k.notCompared ? `, ${k.notCompared} could not be compared` : ''}${k.incomplete ? `. ${k.incomplete}` : ''}` : '';
+  if (row.use !== row.pick.coverId) notes.push(el('p', { class: 'note ok' }, k
+    ? `A larger scan of the same design stands in: ${px(k.use.size)} instead of ${px(k.own.size)} (${k.same} other scan${k.same === 1 ? '' : 's'} of this design; ${seenLine}).`
+    : 'A larger scan of the same design stands in for the collection’s, found in an earlier run.'));
+  else if (k) notes.push(el('p', { class: k.incomplete || k.notCompared ? 'note warn' : 'note' }, k.same
+    ? `No larger scan: ${k.same} other scan${k.same === 1 ? '' : 's'} of this design, none with a tenth more pixels than ${px(k.own.size)} (${seenLine}).`
+    : `No other scan of this design (${seenLine}).`));
+  if (lookErrors.has(row.index)) notes.push(el('p', { class: 'note bad' }, lookErrors.get(row.index)));
 
   const use = el('button', { class: 'primary', disabled: !canWrite || !b || !n?.ok || applied, title: state.mode === 'preview' ? 'Start with --write' : '', onclick: () => apply(row, false) }, 'Use this cover');
   const undo = b && state.applied[id]?.canUndo ? el('button', { disabled: !canWrite, onclick: () => undoBook(row, id) }, 'Undo last change to this book') : null;
@@ -148,7 +162,9 @@ function renderRow(row) {
     el('div', { class: 'pics' }, oldFig, el('span', { class: 'arrow' }, '→'), newFig),
     el('div', { class: 'info' },
       el('h2', {}, row.pick.title), el('p', { class: 'by' }, row.pick.author ?? ''),
-      select, el('div', {}, notes), el('div', { class: 'actions' }, use, undo)));
+      select, el('div', {}, notes), el('div', { class: 'actions' }, use, undo,
+        row.use !== row.pick.coverId ? el('button', { onclick: () => look(row, true) }, 'Use the collection’s own scan')
+          : canLook(row) ? el('button', { disabled: looking.has(row.index), onclick: () => look(row, false) }, looking.has(row.index) ? 'Looking…' : k ? 'Look again' : 'Look for a larger scan') : null)));
 }
 
 function renderBar() {
@@ -156,6 +172,10 @@ function renderBar() {
   const all = document.getElementById('all');
   all.textContent = `Use all sure matches (${ready})`;
   all.disabled = state.mode !== 'write' || state.problems.length > 0 || ready === 0;
+  const open = state.rows.filter(toLook).length;
+  const allLarger = document.getElementById('allLarger');
+  allLarger.textContent = lookingAll ? 'Stop looking' : `Look for larger scans (${open})`;
+  allLarger.disabled = !lookingAll && open === 0;
 }
 
 function render() {
@@ -169,7 +189,8 @@ function render() {
 
 /** One row again, without touching the pictures of the others. */
 function refresh(row) {
-  document.getElementById(`row-${row.index}`)?.replaceWith(renderRow(row));
+  // The row as the state has it now: a look for a larger scan replaces the state while pictures are still arriving.
+  document.getElementById(`row-${row.index}`)?.replaceWith(renderRow(state.rows[row.index]));
   renderBar();
 }
 
@@ -192,6 +213,53 @@ function pump() {
       .finally(() => { workers--; refresh(row); pump(); });
   }
 }
+
+/*
+ * The largest scan of the design the collection chose (larger.ts). A row's
+ * picture and its measure belong to the scan in use, so both are asked for
+ * again when the scan changes.
+ */
+const toLook = (row) => row.sure !== undefined && canLook(row) && !row.looked && row.use === row.pick.coverId;
+let lookingAll = false;
+
+async function look(row, own) {
+  looking.add(row.index);
+  lookErrors.delete(row.index);
+  refresh(row);
+  const { status, body } = await api('/api/larger', own ? { index: row.index, own: true } : { index: row.index }).catch(() => ({ status: 0, body: { error: 'The tool did not answer.' } }));
+  looking.delete(row.index);
+  if (status !== 200) { lookErrors.set(row.index, body.error ?? 'The look failed.'); refresh(row); return { ok: false }; }
+  const before = row.use;
+  state = body.state;
+  const now = state.rows[row.index];
+  if (now.use !== before) { fresh.delete(row.index); requested.delete(row.index); want(now); }
+  refresh(now);
+  return { ok: true, asked: !!body.asked };
+}
+
+document.getElementById('allLarger').addEventListener('click', async () => {
+  if (lookingAll) { lookingAll = false; renderBar(); return; }
+  lookingAll = true;
+  const progress = document.getElementById('progress');
+  const todo = state.rows.filter(toLook).map((r) => r.index);
+  let done = 0;
+  let found = 0;
+  for (const index of todo) {
+    if (!lookingAll) break;
+    progress.textContent = `Looking for larger scans: ${done} of ${todo.length}…`;
+    renderBar();
+    const result = await look(state.rows[index], false);
+    // A catalogue that does not answer is not asked on, row after row.
+    if (!result.ok) { lookingAll = false; progress.textContent = `Stopped after ${done} of ${todo.length}: see the row „${state.rows[index].pick.title}".`; renderBar(); return; }
+    done++;
+    if (state.rows[index].use !== state.rows[index].pick.coverId) found++;
+    // Only where the catalogue was asked: what is kept on this Mac costs nobody anything.
+    if (result.asked) await new Promise((r) => setTimeout(r, 1500));
+  }
+  lookingAll = false;
+  progress.textContent = `${done} looked at: a larger scan of the same design for ${found}.`;
+  renderBar();
+});
 
 async function apply(row, quiet) {
   const bookId = chosen.get(row.index);
