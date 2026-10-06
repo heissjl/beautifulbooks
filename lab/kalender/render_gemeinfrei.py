@@ -305,7 +305,19 @@ def women_story():
         s.convert('RGB').save(os.path.join(OUT, f'instagram-frauen-{i}.jpg'), quality=92)
 
 
-def versus_pin():
+# A draft for when public domain would not matter (Julian, 2026-10-05: "mache
+# mal einen entwurf, wenn gemeinfrei nicht relevant wäre"): two covers that are
+# actually in the game's pool (data/versus-pool.json). Not cleared for posting:
+# these covers are protected, and the rights decision for single covers is open.
+VERSUS_DRAFT = (
+    dict(key='pool-gatsby', title='The Great Gatsby', imprint='in the game, 2026', credit='',
+         url='https://covers.openlibrary.org/b/id/12547003-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='pool-dune', title='Dune', imprint='in the game, 2026', credit='',
+         url='https://covers.openlibrary.org/b/id/380097-L.jpg', crop=(0, 0, 0, 0)),
+)
+
+
+def versus_pin(pair=None, name='pinterest-versus.jpg'):
     """The Pinterest exposé (Julian, 2026-10-05): the cover game at /versus, its
     own question and line, shown with two public-domain covers so the pin
     needs no rights decision. The game itself shows covers that are not free."""
@@ -316,7 +328,7 @@ def versus_pin():
     q = font('xanh', 62)
     d.text((70, 170), 'Which cover would you', font=q, fill=INK)
     d.text((70, 246), 'rather look at?', font=q, fill=INK)
-    left, right = COVERS[0], COVERS[4]  # Peter and Wendy 1911, La guerre des mondes 1906 (Julian: two others)
+    left, right = pair or (COVERS[0], COVERS[4])  # Peter and Wendy 1911, La guerre des mondes 1906 (Julian: two others)
     box_h, top = 600, 420
     boxes = []
     for c, cx in ((left, W // 4 + 10), (right, 3 * W // 4 - 10)):
@@ -339,14 +351,14 @@ def versus_pin():
     lf = font('jost', 26, 400)
     for cx, c in boxes:
         year = c['imprint'].rsplit(', ', 1)[1]
-        label = f"{c['title']}, {year}"
+        label = c['title'] if c['key'].startswith('pool-') else f"{c['title']}, {year}"
         d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
     d.text((70, 1150), 'Judge the cover, not the book.', font=font('xanh-italic', 54), fill=ACCENT)
     bf = font('jost', 32, 400)
     d.text((72, 1250), 'A cover game: two covers, one click.', font=bf, fill=INK)
     d.text((72, 1296), 'The standings show which ones readers keep choosing.', font=bf, fill=INK)
     d.text((72, 1380), 'buyitscovers.com/versus', font=font('xanh-italic', 44), fill=ACCENT)
-    s.convert('RGB').save(os.path.join(OUT, 'pinterest-versus.jpg'), quality=92)
+    s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
 
 if __name__ == '__main__':
@@ -354,6 +366,7 @@ if __name__ == '__main__':
     carousel()
     pin()
     versus_pin()
+    versus_pin(VERSUS_DRAFT, 'pinterest-versus-entwurf.jpg')
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
         mosaic_carousel()
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain-pin.png')):

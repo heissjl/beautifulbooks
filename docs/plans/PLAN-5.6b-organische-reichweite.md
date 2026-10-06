@@ -174,6 +174,7 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
      - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“ und „Judge the cover, not the book.“
      - Gezeigt mit zwei gemeinfreien Covern: Peter and Wendy 1911 und La guerre des mondes 1906, verlinkt auf `/versus`. Zuerst waren es Pinocchio und das Jungle Book; Julian wollte zwei andere, weil diese schon im Instagram-Exposé stehen. /versus läuft in Produktion, einmal geprüft am 2026-10-05.
      - Der Peter-and-Wendy-Pin ist damit der zweite Pin (21.10.).
+     - **Entwurf ohne die Gemeinfreiheits-Grenze** (Julian, 2026-10-05: „mache mal einen entwurf, wenn gemeinfrei nicht relevant wäre“): `lab/kalender/out/pinterest-versus-entwurf.jpg` zeigt The Great Gatsby (OL-Cover 12547003) gegen Dune in den SF Masterworks (380097), beide aus dem Pool des Spiels (`data/versus-pool.json`). **Nicht zum Posten freigegeben**, solange die Rechte-Frage für einzelne Cover offen ist. Im Kalender steht weiter die gemeinfreie Fassung.
 2. **Welche Kanäle es wirklich gibt.** Der Kalender plant acht; ein Kanal, den Julian nicht will, wird im Werkzeug ausgeblendet oder seine Einträge verworfen.
 3. **Startdatum.** Der Kalender beginnt mit einer Einrichtungswoche ab Mo 5.10. und dem ersten Post am Mo 12.10. Wer später anfängt, schiebt mit „Ab hier verschieben“ alles in einem Schritt.
 4. **Ob die drei restlichen Entwürfe erscheinen** (Grieder/Herder, Penguin black band, Virago); sonst werden ihre Posts verworfen.
