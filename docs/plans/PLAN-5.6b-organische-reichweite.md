@@ -108,6 +108,29 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 
 **X ist der Kanal des Vorbilds, steht aber nicht im Kalender:** 5.6a kennt keine Klasse `x`, und ohne sie ist ein Besuch von dort „social“ oder „direkt“. Soll X dazukommen, braucht `VIA` den Eintrag (Analyse-Regel 6, Julian gibt den Satz frei), dann ist es ein weiterer Kanal im Werkzeug.
 
+## 4b. Kampagne „performative readers“
+
+(Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“, nachdem er den Begriff in seinen Show-HN-Text geschrieben hatte.) „Performative reader“ ist ein Spottwort für Leute, die Bücher lesen oder tragen, um gesehen zu werden.
+
+**Die Haltung:** Die Kampagne nimmt das Wort selbstironisch an und spottet über niemanden. Der Satz, der sie trägt: Das Cover ist der Teil eines Buches, den alle anderen sehen. Genau dafür ist die Seite da, denn sie zeigt die Cover und führt zur Ausgabe dahinter. Ein Post darf nie Leser auslachen, auch nicht die, die das Wort meint.
+
+**Eine Woche, im Kalender vom 21. bis 25.10., direkt nach dem Show HN:**
+
+| Tag | Kanal | Post | Wartet auf |
+|---|---|---|---|
+| Di 21.10. | Bluesky, X | „A note for the performative readers: the cover is the part of a book everyone else sees.“, Link auf die Startseite | Konto, 5.6a |
+| Mi 22.10. | Pinterest | Julians gerahmte Wand aus 110 Rowohlts Monographien: „A hundred and ten lives, one wall.“, verlinkt auf die Sammlung | Konto |
+| Do 23.10. | Bluesky | Das Cover-Spiel: „Which cover would you rather be seen reading on the train?“ | Konto |
+| Fr 24.10. | Instagram | „The performative reader's starter pack“ als Shelf-Portrait mit neun Covern | Konto, **Rechte-Entscheidung** (einzelne Cover) |
+| Sa 25.10. | Bluesky | Shelf-Portrait: „Performative reading, done properly“ | Konto |
+
+**Das Bild der Wand** ist Julians eigenes Foto. Es liegt nur lokal unter `lab/kalender/out/cache/`, wie seine anderen Fotos auch, und wird von `render_gemeinfrei.py` zum Pin gesetzt.
+- Gezählt sind es 110 Bände, zehn mal elf, nicht 120.
+- Im Glas spiegelt sich in der Mitte schwach eine Person. Wer das nicht will, fotografiert schräg oder ohne Licht von vorn.
+- Rechtlich sind es wie bei einem Mosaik viele kleine Cover, die Mosaike hat Julian freigegeben. Ob das Foto genauso behandelt wird, ist Julians Entscheidung; er hat den Pin gewollt.
+
+**Gemessen** wird mit K16 wie alles andere. Die Kampagne trägt, wenn in der Woche mehr Besuche von Bluesky und X ein Buch öffnen als in der Woche davor.
+
 ## 5. Der Kalender und wie man eingreift
 
 **Wo:** `lab/kalender/posts.json` ist die einzige Liste. Das Werkzeug liest und schreibt nur diese Datei; man kann sie auch von Hand ändern.

@@ -9,6 +9,7 @@
     "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach",
     "publish:penguin-great-ideas",
     "publish:reihe-hanser-covers-by-heinz-edelmann",
+    "publish:rowohlts-monographien",
     "publish:tolkien-covers-by-heinz-edelmann",
     "spiel"
   ],
@@ -289,6 +290,20 @@
       "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer. Text am 2026-10-06 geprüft: Platzhalter ersetzt (Julian kommentiert sonst nicht, deshalb kein persönlicher Grund), Satz über nicht prüfbare Shops gestrichen (die Verfügbarkeitsprüfung ist nicht in Produktion), Spiel und Sammlungen ergänzt. Link ohne ?via=: HN zeigt die Adresse, der Referrer news.ycombinator.com ergibt die Klasse hn. Offen vor dem Post: 0.13 (Kontingent-Alarm) und 2.4 (Firewall auf Log). Text am 2026-10-06 von Julian selbst überarbeitet (erster Absatz sein eigener Grund) und so ins Formular gesetzt."
     },
     {
+      "id": "pr-bsky",
+      "date": "2026-10-21",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "A note for the performative readers: the cover is the part of a book everyone else sees.\n\nBuy Its Covers shows the covers a title has been printed with, so you can find the edition you'd want to be seen with.",
+      "path": "/",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Auftakt am Tag nach dem Show HN, der den Begriff schon nennt."
+    },
+    {
       "id": "pin-batch-w2",
       "date": "2026-10-21",
       "channel": "pinterest",
@@ -316,6 +331,19 @@
       ],
       "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
       "note": "Zweiter Pin, nach dem Exposé. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
+    },
+    {
+      "id": "pr-x",
+      "date": "2026-10-21",
+      "channel": "x",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "A note for the performative readers: the cover is the part of a book everyone else sees.\n\nBuy Its Covers shows the covers a title has been printed with, so you can find the edition you'd want to be seen with.",
+      "path": "/",
+      "needs": [
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Wie auf Bluesky; auf X bleibt der Link im Text."
     },
     {
       "id": "ig-edition-suhrkamp",
@@ -347,6 +375,38 @@
       ]
     },
     {
+      "id": "pr-pin-rowohlt",
+      "date": "2026-10-22",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "title": "A hundred and ten lives, one wall: Rowohlts Monographien, framed",
+      "text": "A wall of Rowohlts Monographien, the small paperback lives Rowohlt has published since 1958, each with a portrait tinted in one colour. Framed at home: 110 covers, ten by eleven. On Buy Its Covers, the series as a wall and the editions behind each cover.",
+      "path": "/collections/rowohlts-monographien",
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-rowohlt-wand.jpg, aus Julians Foto seiner gerahmten Wand (bleibt lokal)",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "publish:rowohlts-monographien"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Das Foto zeigt 110 echte Umschläge hinter Glas; im Glas spiegelt sich in der Mitte schwach eine Person. Rechtlich wie ein Mosaik viele kleine Cover; Julian hat es als Pin gewollt. 1958 steht in der Einleitung unserer Sammlung."
+    },
+    {
+      "id": "pr-versus",
+      "date": "2026-10-23",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train? Two covers, one click: a small game on Buy Its Covers.",
+      "path": "/versus",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "spiel"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). "
+    },
+    {
       "id": "ig-feminist-press",
       "date": "2026-10-23",
       "channel": "instagram",
@@ -360,6 +420,23 @@
       ],
       "time": "18:00",
       "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln"
+    },
+    {
+      "id": "pr-ig-starter",
+      "date": "2026-10-24",
+      "time": "18:00",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader's starter pack: nine books, each in the cover you'd be seen with.\n\nMake your own on Buy Its Covers: a Shelf-Portrait of three, six or nine books, shared as one picture. Link in bio.\n\n#performativereader #bookstagram #bookcovers",
+      "path": "/shelfportrait",
+      "image": "Karussell: ein Shelf-Portrait (Poster aus /api/inspiration/poster) mit neun Covern, dann drei Ausschnitte",
+      "needs": [
+        "konto:instagram",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Zeigt einzelne Cover, wartet deshalb auf die Rechte-Entscheidung; ohne sie als Variante mit Schrift-Folien und dem Hinweis auf /shelfportrait."
     },
     {
       "id": "gal-dominic-harman",
@@ -376,6 +453,20 @@
         "rechte"
       ],
       "note": "Belegt in docs/plans/research-gestalter-galerien.md. Antwort-Aufhänger: er malte für beide Gesichter der Reihe, schon für Nr. 59, 64, 66, 70 der nummerierten. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
+    },
+    {
+      "id": "pr-bsky-shelf",
+      "date": "2026-10-25",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Performative reading, done properly: put three, six or nine books on one shelf, each in the cover you love, and share it as a single picture.",
+      "path": "/shelfportrait",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Schluss der Woche."
     },
     {
       "id": "bsky-hugo",

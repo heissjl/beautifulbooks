@@ -378,11 +378,40 @@ def versus_pin(pair=None, name='pinterest-versus.jpg'):
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
 
+def rowohlt_pin():
+    """A pin from Julian's photograph of his framed wall of Rowohlts Monographien
+    (2026-10-06, "einen pinterest post, der das bild hier nutzt"). The photo is
+    his and stays local (out/cache is git-ignored, like docs/tests images)."""
+    src = os.path.join(CACHE, 'rowohlt-wand.jpg')
+    if not os.path.exists(src):
+        return
+    W, H = 1000, 1500
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    photo = Image.open(src).convert('RGB')
+    # The frame, with a little of the wall around it.
+    photo = photo.crop((150, 70, 1055, 1545))
+    ph = 1180
+    pw = round(photo.width * ph / photo.height)
+    photo = photo.resize((pw, ph), Image.LANCZOS)
+    x = (W - pw) // 2
+    shadow = Image.new('RGBA', s.size, (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rectangle((x + 8, 34, x + pw + 8, 34 + ph + 16), fill=(20, 16, 12, 60))
+    s.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(18)))
+    s.paste(photo, (x, 30))
+    d = ImageDraw.Draw(s)
+    tight_text(d, (60, 1250), 'A hundred and ten lives,', font('xanh', 50), INK)
+    tight_text(d, (60, 1312), 'one wall.', font('xanh-italic', 50), ACCENT)
+    d.text((62, 1392), 'Rowohlts Monographien, framed. The covers and their editions:', font=font('jost', 26, 400), fill=INK)
+    d.text((62, 1430), 'buyitscovers.com', font=font('xanh-italic', 36), fill=ACCENT)
+    s.convert('RGB').save(os.path.join(OUT, 'pinterest-rowohlt-wand.jpg'), quality=92)
+
+
 if __name__ == '__main__':
     os.makedirs(CACHE, exist_ok=True)
     carousel()
     pin()
     versus_pin()
+    rowohlt_pin()
     versus_pin(VERSUS_DRAFT, 'pinterest-versus-entwurf.jpg')
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
         mosaic_carousel()
