@@ -5312,3 +5312,19 @@ Julian, zum Satz für Rechteinhaber auf About (2.18k): „this should name mail@
 ## 2026-10-05 · Datenschutzerklärung: der Abschnitt zu Vorschlägen ist weg, der erste Satz kürzer
 
 Julian, zu „Suggestions for collections (invitation only)": „remove this part". Claude wies darauf hin, dass `/suggest` und `/curate` in Produktion an sind (`SUGGEST_PASSWORD`) und weiter das Cookie `bb_suggest` setzen und Vorschläge mit Notiz und freiwilligem Namen in der Redis speichern, die Erklärung das dann aber nicht mehr nennt; zur Wahl standen kürzen, nur entfernen, oder `/suggest` abschalten (mit eigenem Schalter für `/curate`). **Julian wählte „nur den Text entfernen".** Entfernt in `app/privacy/page.tsx` samt der zwei deutschen Sätze in `lib/i18n/de.ts`; SPEC F8.4 sagt, wann er zurück muss. Dazu Julian zum Einleitungssatz: „nach listed below den satz beenden" — jetzt „What it does process is listed below." / „Was sie verarbeitet, steht unten." (das „in full" / „ohne Auslassung" wäre nach dem Entfernen ohnehin nicht mehr wahr gewesen).
+
+## 2026-10-05 · Vorschläge für eine andere Unterzeile auf dem Bild (ROADMAP 5.18b)
+
+Julian: „make a suggestion for another sub-header for the share pic“. Heute steht unter „My Shelf-Portrait“ die Zeile „The books that inspire me“ (mit Namen: „The books that inspire Julian“), aus `subtitleOf` in `lib/inspiration/share.ts`; dieselbe Zeile steht auf der geteilten Seite und in der Link-Karte. Vorschläge, je mit der Fassung mit Namen (ohne Pronomen, weil die Seite keines kennt):
+
+| Unterzeile | mit Namen | was sie tut |
+|---|---|---|
+| **Judge me by my covers.** | Judge Julian by these covers. | Spielt mit dem Spruch der Seite („Judge a book, buy its covers“) und dem Wortspiel im Titel: ein Shelf-Portrait ist ein Selbstporträt, und wer es ansieht, urteilt. Claudes Favorit — es sagt in fünf Wörtern, warum man das Bild teilt, und trägt die Marke ohne Logo. |
+| A self-portrait in nine books. | Julian, in nine books. | Erklärt das Wortspiel für alle, die es nicht sofort hören; die Zahl folgt der Brettgröße (three / six / nine). |
+| The books that made me. | The books that made Julian. | Vergangenheit statt Gegenwart: prägen statt anregen. Kürzer als heute; die my9albums-Verwandtschaft („the albums that made me“) ist hörbar. |
+| Books that rearranged my head. | Books that rearranged Julian’s head. | Julians eigener Ton aus den Editor-Sätzen („altered your brain chemistry“), umgangssprachlicher als die übrigen. |
+| My life in nine covers. | Julian’s life in nine covers. | Legt den Akzent auf die Cover — das, was die Seite von my9albums unterscheidet. |
+| Read me by my shelf. | Read Julian by this shelf. | Leiser als „Judge me“, gleiche Figur. |
+| Nach Brettgröße, in der ersten Person: 9 „A stack of books that changed my outlook.“ · 6 „A few books that altered my brain chemistry.“ · 3 „My must-reads.“ | mit Namen: „… that changed Julian’s outlook“ usw. | Julians drei Sätze aus dem Editor auf dem Bild wiederholt: Seite und Bild sprechen dann mit einer Stimme; dafür drei Zeilen zu pflegen statt einer. |
+
+Was zu beachten ist: Die Zeile steht auf dem Bild in 32 px (Story) und 26 px (Post) und auf der Link-Karte in einer schmalen Spalte (bei neun Büchern 172 px breit, dort bricht sie um) — mehr als etwa 35 Zeichen werden auf der Karte drei Zeilen. „Judge me by my covers.“ hat 22, „A self-portrait in nine books.“ 30, die Editor-Sätze 29–46. Die Beschreibung für Link-Vorschauen (`sharedMetadata`) hängt an derselben Funktion und zöge mit. Entschieden wird in `subtitleOf`; der Test `inspiration-share.test.ts` hält den Satz fest.
