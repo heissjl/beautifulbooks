@@ -21,16 +21,10 @@ export interface EditionCover {
   coverId: string;
   year?: number;
   publisher?: string;
-  /**
-   * An ISBN of a printing that carried this cover — the newest one's where it
-   * has one. It names a printing, not the picture (E8): a shop link built from
-   * it is a place to look, and the book page says whether the shop shows this cover.
-   */
-  isbn13?: string;
 }
 
 export function coversOfEditions(editions: readonly SourceEdition[]): EditionCover[] {
-  const byCover = new Map<string, { year?: number; publisher?: string; isbn13?: string }>();
+  const byCover = new Map<string, { year?: number; publisher?: string }>();
   for (const e of editions) {
     if (e.format === 'ebook') continue;
     for (const c of e.covers) {
@@ -39,11 +33,7 @@ export function coversOfEditions(editions: readonly SourceEdition[]): EditionCov
       const known = byCover.get(c.id);
       // The newest printing names the cover; one without a year never replaces one with.
       if (!known || (e.year ?? 0) > (known.year ?? 0)) {
-        const publisher = e.publisher ?? known?.publisher;
-        const isbn13 = e.isbn13 ?? known?.isbn13;
-        byCover.set(c.id, { ...(e.year ? { year: e.year } : {}), ...(publisher ? { publisher } : {}), ...(isbn13 ? { isbn13 } : {}) });
-      } else if (!known.isbn13 && e.isbn13) {
-        known.isbn13 = e.isbn13;
+        byCover.set(c.id, { ...(e.year ? { year: e.year } : {}), ...(e.publisher ? { publisher: e.publisher } : known?.publisher ? { publisher: known.publisher } : {}) });
       }
     }
   }

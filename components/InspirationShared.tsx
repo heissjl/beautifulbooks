@@ -1,9 +1,8 @@
 import Link from './Link';
 import CoverImage from './CoverImage';
-import InspirationBuyList from './InspirationBuyList';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
-import { CopyLink, PictureShare } from './InspirationShareTools';
+import { BuyListDetails, CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import { SIZE_WORD } from '@/lib/inspiration/board';
@@ -118,11 +117,11 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         />
 
         {/*
-          Open, and plainer than a collection's list (Julian, 2026-10-05: „aufklappen" — it was folded
-          for one round, and where to find the editions is half of what the page is for). It can
-          still be folded away.
+          Plainer than a collection's list. Open for the one who made the board, folded for whoever
+          follows the link (Julian, 2026-10-05: „nur für die editoren ausgeklappt, nicht für andere
+          besucher"): the maker is here to order, a visitor to look.
         */}
-        <details open className="group mt-10 border-t border-line pt-5">
+        <BuyListDetails query={query} className="group mt-10 border-t border-line pt-5">
           <summary className="cursor-pointer list-none text-base text-ink transition-colors hover:text-accent">
             <span className="mr-1.5 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
             Are any of these missing from your library?{' '}
@@ -148,12 +147,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               );
             })}
           </ol>
-        </details>
-
-        {/* A trial beside the list above, on a laptop only (see the component): the list as step 2 of the collection funnel does it. */}
-        {process.env.NODE_ENV === 'development' && (
-          <InspirationBuyList books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author, href: b.href }] : []))} />
-        )}
+        </BuyListDetails>
 
         {/* The way on from a board: the same covers as a collection one keeps, adds to and arranges (5.13a). */}
         {walls && <InspirationToCollection title={title} books={books.flatMap((b) => (b.title ? [{ workId: b.workId, coverId: b.coverId, title: b.title, author: b.author }] : []))} />}
