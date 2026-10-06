@@ -51,9 +51,18 @@ describe('what crawlers may fetch (ROADMAP 2.18n)', () => {
       expect(mayFetch(rules, agent, '/img/M/ol-15259424')).toBe(true);
       expect(mayFetch(rules, agent, '/?q=1984')).toBe(true);
       expect(mayFetch(rules, agent, '/api/works/OL1W')).toBe(false);
+      expect(mayFetch(rules, agent, '/api/inspiration/covers/OL1W')).toBe(false);
       expect(mayFetch(rules, agent, '/go/amazon/9780141036144')).toBe(false);
       expect(mayFetch(rules, agent, '/admin/insights')).toBe(false);
     }
+  });
+
+  it('lets a link preview fetch the Shelf-Portrait card, which lives under /api/', () => {
+    const card = '/api/inspiration/poster?b=2hxjo.5fq3&n=6&by=Caro&format=card&v=3';
+    for (const agent of ['Twitterbot', 'facebookexternalhit', 'LinkedInBot', 'Slackbot']) {
+      expect(mayFetch(rules, agent, card)).toBe(true);
+    }
+    expect(mayFetch(rules, 'ClaudeBot', card)).toBe(false);
   });
 
   it('allows exactly the book addresses the sitemap lists', () => {
