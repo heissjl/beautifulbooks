@@ -16,11 +16,16 @@ import type { Market } from '@/lib/market';
 import {
   countClass,
   emptyQuery,
+  entryOf,
+  landingOf,
   originOf,
   pagesClass,
   positionClass,
   seenClass,
   type BookSignal,
+  type Entry,
+  type Landing,
+  type LandingSignal,
   type Origin,
   type SearchSignal,
   type VERDICTS,
@@ -36,15 +41,68 @@ type Location = { path: string; search: string };
 let current: Location | null = null;
 let previous: Location | null = null;
 
-/** Keeps the two addresses up to date. Rendered once, in the root layout. */
+/*
+  The channel this tab's visit began with (5.6a), worked out once from the
+  first page's `?via=` mark or `document.referrer`, and kept in memory like
+  the addresses: a reload asks again, nothing is stored.
+*/
+let entry: Entry | null = null;
+
+function visitEntry(): Entry {
+  entry ??= entryOf(window.location.search, document.referrer, window.location.host);
+  return entry;
+}
+
+/* The landing page open now (5.6a), summarised when it is left. */
+let landing: { page: Landing; first: boolean; opened: boolean; sent: boolean } | null = null;
+
+function flushLanding(): void {
+  if (!landing || landing.sent) return;
+  landing.sent = true;
+  send({ t: 'landing', page: landing.page, entry: visitEntry(), first: landing.first, opened: landing.opened });
+}
+
+/**
+ * Keeps the two addresses up to date, and summarises each landing page
+ * (home, search results, collections, a reader's collection) when it is left.
+ * Rendered once, in the root layout.
+ */
 export function NavMemory() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   useEffect(() => {
     const here = { path: window.location.pathname, search: window.location.search };
-    if (current && (current.path !== here.path || current.search !== here.search)) previous = current;
+    const first = current === null;
+    const moved = current !== null && (current.path !== here.path || current.search !== here.search);
+    if (moved) previous = current;
     current = here;
+    if (!first && !moved) return;
+    visitEntry();
+    flushLanding();
+    const page = landingOf(here.path, here.search);
+    landing = page ? { page, first, opened: false, sent: false } : null;
   }, [pathname, searchParams]);
+
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      if (event.type === 'auxclick' && event.button !== 1) return;
+      const href = (event.target as Element | null)?.closest?.('a')?.getAttribute('href');
+      if (landing && href?.startsWith('/book/')) landing.opened = true;
+    };
+    const onHide = () => {
+      if (document.visibilityState === 'hidden') flushLanding();
+    };
+    document.addEventListener('click', onClick, true);
+    document.addEventListener('auxclick', onClick, true);
+    document.addEventListener('visibilitychange', onHide);
+    window.addEventListener('pagehide', flushLanding);
+    return () => {
+      document.removeEventListener('click', onClick, true);
+      document.removeEventListener('auxclick', onClick, true);
+      document.removeEventListener('visibilitychange', onHide);
+      window.removeEventListener('pagehide', flushLanding);
+    };
+  }, []);
   return null;
 }
 
@@ -54,7 +112,7 @@ function arrivedFrom(): Location | null {
   return current && current.path === path ? previous : current;
 }
 
-function send(signal: BookSignal | SearchSignal): void {
+function send(signal: BookSignal | SearchSignal | LandingSignal): void {
   try {
     const body = JSON.stringify(signal);
     if (navigator.sendBeacon) navigator.sendBeacon('/api/seen', new Blob([body], { type: 'text/plain' }));
@@ -120,11 +178,13 @@ interface BookVisit {
  * reports its verdict through.
  */
 export function useBookSignal({ workId, market, pagesLoaded, picked }: BookVisit): (status: Verdict) => void {
-  const visit = useRef({ from: 'direct' as Origin, pages: 0, picked: false, verdict: 'none' as Verdict, bought: false, found: false, seen: new Set<string>(), market });
+  const visit = useRef({ from: 'direct' as Origin, entry: 'direct' as Entry, pages: 0, picked: false, verdict: 'none' as Verdict, bought: false, found: false, seen: new Set<string>(), market });
 
-  // Where the reader came from: once, when the page opens.
+  // Where the reader came from, and the channel the visit began with: once, when the page opens.
   useEffect(() => {
-    visit.current.from = originOf(arrivedFrom(), document.referrer, window.location.host);
+    const before = arrivedFrom();
+    visit.current.from = originOf(before, document.referrer, window.location.host, before ? '' : window.location.search);
+    visit.current.entry = visitEntry();
   }, [workId]);
 
   useEffect(() => {
@@ -191,6 +251,7 @@ export function useBookSignal({ workId, market, pagesLoaded, picked }: BookVisit
       verdict: v.verdict,
       bought: v.bought,
       found: v.found,
+      entry: v.entry,
     });
   }, workId);
 

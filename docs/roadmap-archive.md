@@ -8,6 +8,18 @@ Die Nummern sind die der [Roadmap](../ROADMAP.md). Ein Punkt, der nach dem 2026-
 
 ## Phase 0 — Entscheidungen
 
+### 0.1
+
+**0.1 Verfügbarkeits-Button** (SPEC F2.10, E12). Vor dem ersten Deployment entscheiden, denn auf `localhost` schadet er niemandem, öffentlich schon: vier von sechs Händlern verbieten den abgefragten Pfad in ihrer robots.txt, Amazons Partnerbedingungen untersagen automatisierte Zugriffe, und er sagt nur für etwa zwei von sechs Händlern überhaupt etwas. **Stand 2026-09-28:** weiter offen — vier der sechs Shops sperren den geprüften Pfad per robots.txt, Amazons Associates-Bedingungen verbieten automatisierten Zugriff; nicht in Produktion, bis Julian entscheidet.
+
+### 0.12
+
+**0.12 Vercel Pro oder ein anderer Hoster, wegen des Auftragsverarbeitungsvertrags.** (Aus der Recherche vom 2026-09-08, [docs/recht-hobbyseite.md](docs/recht-hobbyseite.md) §5.) Vercels DPA gilt nur für Pro und Enterprise; auf Hobby fehlt der Vertrag nach Art. 28 DSGVO, die DPF-Zertifizierung deckt nur den Transfer. **Julian hat am 2026-09-08 entschieden, das Restrisiko für den Hobby-MVP zu tragen.** Neu zu entscheiden, sobald eines eintritt: die Shop-Variante geht in Production (Pro ist dann ohnehin wegen der kommerziellen Nutzung fällig, 0.6), die Seite nimmt irgendetwas vom Leser entgegen (Formular, Konto, Kommentar), oder eine Aufsichtsbehörde oder ein Leser fragt nach. Wege mit Preis: Pro 20 USD/Monat (DPA gilt automatisch), Cloudflare Pages (DPA für Self-Serve, kostenlos, kommerziell erlaubt, Umbau auf OpenNext ein bis zwei Tage), Hetzner mit Coolify (deutscher Hoster, AV-Vertrag im Kundenkonto, eigener Betrieb). Bis dahin nennt die Datenschutzerklärung Vercel als Hoster mit DPF.
+
+### 4.12
+
+**4.12 Die About-Seite in der ersten Person — Bedingung für den Shop-Modus.** (Julian, 2026-10-02, zur Durchsicht [docs/gestaltung-ki-anmutung.md](docs/gestaltung-ki-anmutung.md): „nimm das in die roadmap als bedingung für shop modus".) Die Seite spricht heute wie ein Modell, das sich rechtfertigt — Verneinungsketten, „X, nicht Y", Messprotokolle — und nennt keine Person. Wer an Links verdient, sollte sagen, wer er ist. **Julian schreibt** in der ersten Person: wer, warum, seit wann, was er sammelt; die Fakten (Quellen, Lücken, Verdikte, Zählung der Klicks) bleiben, die Beteuerungen schrumpfen auf je einen Satz. **Claude kürzt** und baut ein. **Gekürzt ist sie schon** (2026-10-02, Julian: „can you shorten the about page"): von rund 1.000 auf rund 500 Wörter, die Erklärungen der Verdikte in `lib/verdicts.ts` (`VERDICT_MEANING`, nur dort gebraucht) mit; was fehlt, ist die erste Person. Kein „chosen by Julian" an Sammlungen (Julian, 2026-10-02: „so etwas will ich nicht"). Thema: Texte.
+
 ### 0.6
 
 **0.6 Vercel-Plan.** Hobby ist laut Nutzungsbedingungen nur für nicht-kommerzielle Nutzung. Vorschlag: Hobby bis zum ersten Affiliate-Link, dann Pro (20 USD/Monat) — **so umgesetzt mit 2.0: Hobby-Plan für den Hobby-Modus; Pro am Umschalttag** — oder Cloudflare Pages (kostenlos, kommerziell erlaubt, Next.js über OpenNext) oder ein Hetzner-VPS mit Coolify. Serverstandort ändert an Impressum und Datenschutz nichts (Betreiber in Deutschland, EU-Nutzer); Frankfurt hält nur den Drittland-Absatz kürzer. **Recherche 2026-09-08 ([docs/recht-hobbyseite.md](recht-hobbyseite.md) §5): Vercels Auftragsverarbeitungsvertrag gilt nur für Pro und Enterprise, auf Hobby fehlt er (Art. 28 DSGVO). Drei Wege: bewusst tragen, Pro (20 USD/Monat), Cloudflare Pages. Julian hat am 2026-09-08 entschieden: erst einmal Hobby und das Restrisiko tragen; die Frage steht als 0.12 für später.** *0.6 damit erledigt für den MVP.*
@@ -1067,6 +1079,18 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 ## 6.91
 
 **6.91 Ein Chip „ISBN“ unter der Hauptsuche.** (Julian, 2026-10-05, zum Vergleich mit my9books.com: „ja, einbauen mit drittem feld unter der suche "ISBN"“, dann „ich wollte es nur in der hauptsuche einbauen, nicht für das shelfportrait“.) Die Suche erkannte eine eingegebene ISBN schon seit 6.29 an der Prüfziffer und führte bei genau einem Treffer auf ihre Ausgabe — nur sah das niemand: das Feld fragt nach „A title, or a title and author“. my9books.com zeigt ein eigenes ISBN-Feld (docs/vergleich-my9books.md). Ein dritter Chip neben den beiden Modi aus 6.60 macht den Weg sichtbar, ohne einen neuen zu bauen. Zuerst irrtümlich als drittes Feld im Shelf-Portrait-Editor gebaut und vor dem Push wieder entfernt.
+
+**Erledigt 2026-10-05.** → [Historie](history.md)
+
+## 5.6a
+
+**5.6a Kanäle unterscheidbar messen.** **Gebaut 2026-10-04, auf dem Branch, nicht deployt** (Julian: „baue 5.6 für das analyse-tool"): Herkunft je Plattform, `?via=` aus der Liste `VIA`, Signal `landing` aus `NavMemory`, Kanal je Buchbesuch, Karte „Kanäle" (K14) in `/admin/insights`, neuer Satz in der Datenschutzerklärung EN/DE — **wartet auf Julians Freigabe des Satzes, dann Deploy**; [Historie](docs/history.md#2026-10-04--kanäle-messbar-roadmap-56a). (Claude, Freigabe des Datenschutz-Satzes durch Julian; [Plan §3](docs/plans/PLAN-5.5-5.6-kanaele.md#3-messung-56a).) Heute fallen Reddit, Pinterest, Instagram in `social`, Hacker News und Product Hunt in `other`, In-App-Browser ohne Referrer in `direct`, und Sammlungs- und Wandseiten senden kein Signal — ein Launch verpufft ungemessen, und 5.7 kann „Referrer pro Kanal" nicht beantworten. Drei Teile: Herkunftsklassen je Plattform, Kanal-Marke `?via=<feste Klasse>` für selbst gesetzte Links (gewinnt über den Referrer), ein Landing-Signal für `/collections/<slug>`, `/c/<id>` und die Startseite ohne ID; dazu eine Tabelle „Kanäle" in `/admin/insights`. Fällt unter Punkt 6 der Analyse-Regel (CLAUDE.md). **Vor jedem Launch-Beitrag.**
+
+**Erledigt 2026-10-05.** → [Historie](history.md)
+
+## 5.10m
+
+**5.10m /curate bearbeitet ab dem neuesten Stand; die Zählzeile unter einer Sammlung ist weg.** Julian, 2026-10-05, mit einem Bildschirmfoto der Hugo-Wand: „kill the sub-header and change the curate-site so i can easily change collections from the newest version“. Die Zeile „75 books by 50 authors, each with a cover from Open Library, not all of them chosen by hand yet.“ steht auf keiner Sammlungsseite mehr (die Metadaten behalten sie). Auf /curate hat jede Zeile der Sammlungsliste „Edit“: es öffnet den zuletzt geänderten Entwurf, der noch genau den Stand der Seite hält, sonst wird einer kopiert. Kopiert wird der Stand der Seite (`liveRecords`: Datei plus von /curate veröffentlichte Entwürfe), auch bei „Continue …“; vorher kopierte die Route `data/collections.json` allein.
 
 **Erledigt 2026-10-05.** → [Historie](history.md)
 

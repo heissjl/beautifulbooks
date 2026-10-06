@@ -41,6 +41,21 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 const ext = 'underline underline-offset-2 hover:text-accent';
 
+/**
+ * The site's own accounts, the one place they are written (ROADMAP 5.6b,
+ * 2026-10-05, Julian: "we can list social media accounts in a contact section
+ * within the about page"). `rel="me"` is not decoration: Mastodon marks the
+ * link in a profile field verified only when the page that field points at
+ * links back this way. Change an address here and that check goes with it, so
+ * a second copy elsewhere would break it silently. Listed are the accounts
+ * that post; Pinterest and the GitHub organisation exist but are empty.
+ */
+const ACCOUNTS: { name: string; handle: string; href: string }[] = [
+  { name: 'Mastodon', handle: '@buyitscovers@mastodon.social', href: 'https://mastodon.social/@buyitscovers' },
+  { name: 'Bluesky', handle: '@buyitscovers.com', href: 'https://bsky.app/profile/buyitscovers.com' },
+  { name: 'X', handle: '@buyitscovers', href: 'https://x.com/buyitscovers' },
+];
+
 export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
   const t = translator(locale);
   const { email } = readImprint();
@@ -117,6 +132,22 @@ export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale
               privacy: <Link href="/privacy" className={ext}>{t('privacy notice')}</Link>,
             })}
           </p>
+        </Section>
+
+        <Section title={t('Contact')}>
+          <p>
+            {rich(t('Write to {email} — about a cover, a wrong edition, or anything the site gets wrong. The site also posts here:'), {
+              email: <a className={ext} href={`mailto:${email}`}>{email}</a>,
+            })}
+          </p>
+          <ul className="list-disc space-y-3 pl-5 marker:text-ink-3">
+            {ACCOUNTS.map(account => (
+              <li key={account.name}>
+                <a className={ext} href={account.href} target="_blank" rel="me noopener noreferrer">{account.name}</a>{' '}
+                <span className="text-ink-3">{account.handle}</span>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         <p className="mt-12 text-sm">

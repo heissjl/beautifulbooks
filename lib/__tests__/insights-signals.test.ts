@@ -7,6 +7,9 @@ import {
   bookField,
   countClass,
   emptyQuery,
+  entryOf,
+  landingField,
+  landingOf,
   originOf,
   pagesClass,
   parseSignal,
@@ -15,10 +18,10 @@ import {
   type BookSignal,
 } from '../insights/signals';
 import { countSignal } from '../insights/store';
-import { emptySearches, summarizeBooks, summarizeSearches, topWorks } from '../insights/visits';
+import { emptySearches, summarizeBooks, summarizeChannels, summarizeSearches, topWorks } from '../insights/visits';
 
 const HOST = 'buyitscovers.com';
-const book: BookSignal = { t: 'book', work: 'OL1168083W', from: 'search', market: 'de', pages: '2', seen: '13-40', picked: true, verdict: 'differs', bought: true, found: false };
+const book: BookSignal = { t: 'book', work: 'OL1168083W', from: 'search', market: 'de', pages: '2', seen: '13-40', picked: true, verdict: 'differs', bought: true, found: false, entry: 'engine' };
 
 describe('classes', () => {
   it('puts numbers into the classes the plan names', () => {
@@ -44,8 +47,8 @@ describe('where a visit came from', () => {
     expect(originOf({ path: '/book/OL1W', search: '' }, '', HOST)).toBe('book');
     expect(originOf({ path: '/shelfportrait/k3x9q2ab', search: '' }, '', HOST)).toBe('shelf');
     expect(originOf({ path: '/shelfportrait/board', search: '?b=a1fz.7gxh3' }, '', HOST)).toBe('shelf');
-    expect(originOf({ path: '/shelfportraits', search: '' }, '', HOST)).toBe('other');
-    expect(originOf({ path: '/about', search: '' }, '', HOST)).toBe('other');
+    expect(originOf({ path: '/shelfportraits', search: '' }, '', HOST)).toBe('page');
+    expect(originOf({ path: '/about', search: '' }, '', HOST)).toBe('page');
   });
 
   it('classes the referrer of a first page, and never sends it', () => {
@@ -53,11 +56,109 @@ describe('where a visit came from', () => {
     expect(originOf(null, 'https://www.google.de/', HOST)).toBe('engine');
     expect(originOf(null, 'https://duckduckgo.com/', HOST)).toBe('engine');
     expect(originOf(null, 'https://www.bing.com/search?q=x', HOST)).toBe('engine');
-    expect(originOf(null, 'https://t.co/abc', HOST)).toBe('social');
-    expect(originOf(null, 'https://www.reddit.com/r/books', HOST)).toBe('social');
+    expect(originOf(null, 'https://t.co/abc', HOST)).toBe('x');
+    expect(originOf(null, 'https://www.reddit.com/r/books', HOST)).toBe('reddit');
+    expect(originOf(null, 'https://www.facebook.com/', HOST)).toBe('social');
     expect(originOf(null, 'https://someblog.example/post', HOST)).toBe('other');
     expect(originOf(null, `https://${HOST}/?q=dune`, HOST)).toBe('search');
     expect(originOf(null, 'not a url', HOST)).toBe('other');
+  });
+});
+
+describe('channels (ROADMAP 5.6a)', () => {
+  it('gives the platforms a launch or a pin goes to a class of their own', () => {
+    const cases: Array<[string, string]> = [
+      ['https://news.ycombinator.com/item?id=1', 'hn'],
+      ['https://old.reddit.com/r/printSF/comments/x', 'reddit'],
+      ['https://redd.it/abc', 'reddit'],
+      ['https://www.pinterest.de/pin/123/', 'pinterest'],
+      ['https://pin.it/xyz', 'pinterest'],
+      ['https://l.instagram.com/?u=x', 'instagram'],
+      ['https://www.tiktok.com/@someone', 'tiktok'],
+      ['https://bsky.app/profile/x', 'bluesky'],
+      ['https://t.co/AbC123', 'x'],
+      ['https://x.com/buyitscovers', 'x'],
+      ['https://mobile.twitter.com/someone', 'x'],
+      ['https://www.producthunt.com/posts/x', 'producthunt'],
+      ['https://www.linkedin.com/feed', 'social'],
+      ['https://notreddit.com.example/', 'other'],
+    ];
+    for (const [referrer, origin] of cases) expect(originOf(null, referrer, HOST), referrer).toBe(origin);
+  });
+
+  it('lets a ?via= mark win over the referrer on the first page only, and ignores marks off the list', () => {
+    expect(originOf(null, '', HOST, '?via=pinterest')).toBe('pinterest');
+    expect(originOf(null, 'https://www.google.com/', HOST, '?cover=1&via=hn')).toBe('hn');
+    expect(originOf(null, '', HOST, '?via=blog')).toBe('blog');
+    expect(originOf(null, '', HOST, '?via=x')).toBe('x');
+    expect(originOf(null, '', HOST, '?via=evil.example')).toBe('direct');
+    expect(originOf({ path: '/', search: '' }, '', HOST, '?via=hn')).toBe('home');
+    expect(entryOf('?via=mail', 'https://www.google.com/', HOST)).toBe('mail');
+    expect(entryOf('', 'https://www.google.com/', HOST)).toBe('engine');
+    expect(entryOf('', `https://${HOST}/book/OL1W`, HOST)).toBe('site');
+    expect(entryOf('', '', HOST)).toBe('direct');
+  });
+
+  it('knows which pages are landing pages', () => {
+    expect(landingOf('/', '')).toBe('home');
+    expect(landingOf('/', '?q=dune&via=hn')).toBe('search');
+    expect(landingOf('/collections', '')).toBe('collections');
+    expect(landingOf('/collections/readers', '')).toBe('collections');
+    expect(landingOf('/collections/sf-masterworks', '')).toBe('collection');
+    expect(landingOf('/c/abc123', '')).toBe('wall');
+    expect(landingOf('/book/OL1W', '')).toBeNull();
+    expect(landingOf('/c/abc123/edit', '')).toBeNull();
+    expect(landingOf('/about', '')).toBeNull();
+  });
+
+  it('accepts a landing signal and nothing that identifies the page', () => {
+    const landing = { t: 'landing', page: 'collection', entry: 'pinterest', first: true, opened: false };
+    expect(parseSignal(landing)).toEqual(landing);
+    expect(parseSignal({ ...landing, slug: 'sf-masterworks' })).toEqual(landing);
+    expect(parseSignal({ ...landing, page: '/c/abc' })).toBeNull();
+    expect(parseSignal({ ...landing, entry: 'news.ycombinator.com' })).toBeNull();
+    expect(parseSignal({ ...landing, first: 'yes' })).toBeNull();
+    expect(parseSignal({ ...book, entry: undefined })).toBeNull();
+  });
+
+  it('adds up entries per channel, what they opened and how often they reached a shop', async () => {
+    const day = '2026-10-04';
+    const books = {
+      // First page a book, from HN: an entry that opened a book.
+      [bookField({ ...book, from: 'hn', entry: 'hn', bought: true })]: 2,
+      [bookField({ ...book, from: 'hn', entry: 'hn', bought: false })]: 1,
+      // Reached from a collection in a visit that began on Pinterest.
+      [bookField({ ...book, from: 'collection', entry: 'pinterest', bought: true })]: 1,
+      // A book reached from another page of the site is not an entry.
+      [bookField({ ...book, from: 'page', entry: 'direct', bought: false })]: 4,
+      // Counted before 5.6a: no channel.
+      [bookField(book).replace('|entry=engine', '')]: 5,
+    };
+    const landings = {
+      [landingField({ t: 'landing', page: 'collection', entry: 'pinterest', first: true, opened: true })]: 1,
+      [landingField({ t: 'landing', page: 'collection', entry: 'pinterest', first: true, opened: false })]: 3,
+      [landingField({ t: 'landing', page: 'home', entry: 'direct', first: true, opened: false })]: 6,
+      [landingField({ t: 'landing', page: 'home', entry: 'hn', first: false, opened: true })]: 2,
+    };
+    const s = summarizeChannels([day], [books], [landings]);
+    const by = Object.fromEntries(s.rows.map(r => [r.entry, r]));
+    expect(by.hn).toEqual({ entry: 'hn', entries: 3, opened: 3, bookVisits: 3, bought: 2 });
+    expect(by.pinterest).toEqual({ entry: 'pinterest', entries: 4, opened: 1, bookVisits: 1, bought: 1 });
+    expect(by.direct).toEqual({ entry: 'direct', entries: 6, opened: 0, bookVisits: 4, bought: 0 });
+    expect(s.entries).toBe(13);
+    expect(s.perDay).toEqual([{ day, clicks: 7 }]);
+    expect(s.landings.collection).toEqual({ visits: 4, first: 4, opened: 1 });
+    expect(s.landings.home).toEqual({ visits: 8, first: 6, opened: 2 });
+    expect(s.unattributed).toBe(5);
+
+    const r = fakeRedis();
+    const opts = { env: { VERCEL_ENV: 'production' }, commands: r.commands, now: new Date(`${day}T10:00:00Z`) };
+    expect(await countSignal({ t: 'landing', page: 'wall', entry: 'mail', first: true, opened: true }, opts)).toBe('counted');
+    expect(r.hashes.get(`ins:${day}:landing`)?.get('page=wall|entry=mail|first=1|opened=1')).toBe(1);
+    expect(r.expires.get(`ins:${day}:landing`)).toBe(RETENTION_SECONDS);
+    const report = await buildReport(7, undefined, r.commands, opts.now);
+    if (!report.ok) throw new Error('expected a report');
+    expect(report.channels.rows).toEqual([{ entry: 'mail', entries: 1, opened: 1, bookVisits: 0, bought: 0 }]);
   });
 });
 

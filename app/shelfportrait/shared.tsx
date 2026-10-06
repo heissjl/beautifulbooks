@@ -7,7 +7,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { type Board, boardQuery, parseBoard, SIZE_WORD, sizeOf } from '@/lib/inspiration/board';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { describeBoard } from '@/lib/inspiration/describe';
-import { subtitleOf, titleOf } from '@/lib/inspiration/share';
+import { PICTURE_VERSION, titleOf } from '@/lib/inspiration/share';
 import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
@@ -36,9 +36,10 @@ export async function origin(): Promise<string> {
 
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   const title = titleOf(board?.by ?? '');
-  const description = `${subtitleOf(board?.by ?? '')}: ${(board ? SIZE_WORD[sizeOf(board)] : 'Nine').toLowerCase()} books, each with a favourite cover. Take your Shelf-Portrait.`;
+  const description = `${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. Take your Shelf-Portrait.`;
   // Not indexed while the page lives behind its switch; the card makes a shared link show the covers.
-  const images = board ? [{ url: `${await origin()}/api/inspiration/poster?${boardQuery(board)}&format=card`, width: 1200, height: 630 }] : undefined;
+  // Outside /api/, which robots.txt closes and X honours for the image too (2.18q).
+  const images = board ? [{ url: `${await origin()}/shelfportrait/card.jpg?${boardQuery(board)}&format=card&v=${PICTURE_VERSION}`, width: 1200, height: 630 }] : undefined;
   return {
     title,
     description,

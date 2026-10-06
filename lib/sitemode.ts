@@ -27,7 +27,23 @@ export function siteMode(raw: string | undefined = process.env.NEXT_PUBLIC_SITE_
   throw new Error(`NEXT_PUBLIC_SITE_MODE must be "hobby" or "shop", got "${raw}"`);
 }
 
-/** Affiliate parameters, availability check and commission wording: shop mode only. */
+/** Affiliate parameters and commission wording: shop mode only. */
 export function commerceEnabled(raw?: string | undefined): boolean {
   return siteMode(raw === undefined ? process.env.NEXT_PUBLIC_SITE_MODE : raw) === 'shop';
+}
+
+/**
+ * The availability check (SPEC F2.10, ROADMAP 0.1) has a switch of its own,
+ * `NEXT_PUBLIC_AVAILABILITY_CHECK=on`, and needs shop mode as well. Julian,
+ * 2026-10-05: „eigener schalter". Turning the site into a shop must not turn
+ * the probe on with it: four of the six shops disallow the probed path in
+ * robots.txt and Amazon's Associates terms forbid automated access, so the
+ * probe stays off until someone decides it may run. Anything but `on` is off.
+ * Literal member access, as above, so the bundler inlines it for the client.
+ */
+export function availabilityEnabled(
+  mode?: string | undefined,
+  raw: string | undefined = process.env.NEXT_PUBLIC_AVAILABILITY_CHECK,
+): boolean {
+  return commerceEnabled(mode) && (raw ?? '').trim().toLowerCase() === 'on';
 }

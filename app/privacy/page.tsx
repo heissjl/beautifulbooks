@@ -5,10 +5,10 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
-import { commerceEnabled } from '@/lib/sitemode';
+import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
+import { affiliateShops } from '@/lib/buylinks';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
-import { suggestEnabled } from '@/lib/suggest/auth';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
 
@@ -45,6 +45,9 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
   const t = translator(locale);
   const imprint = readImprint();
   const shop = commerceEnabled();
+  // The shops whose links carry a partner id right now (ROADMAP 4.13 step 5): named
+  // from the variables that are set, so a partner joins or leaves the notice with them.
+  const partners = affiliateShops();
   const game = versusEnabled();
   return (
     <div className="flex min-h-screen flex-col">
@@ -54,7 +57,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         <p className="mt-2 text-sm text-ink-3">Datenschutzerklärung · {t('last updated {date}', { date: t(UPDATED) })}</p>
 
         <Section title={t('In short')}>
-          <p>{t('This site has no accounts, no forms, no advertising and no tracking. It does not set a tracking cookie and does not need a consent banner. What it does process is listed below, in full, because a short list is easier to check than a reassuring sentence.')}</p>
+          <p>{t('This site has no accounts, no forms, no advertising and no tracking. It does not set a tracking cookie and does not need a consent banner. What it does process is listed below.')}</p>
         </Section>
 
         <Section title={t('Who is responsible')}>
@@ -103,15 +106,21 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
             {shop
               ? t('Some links carry an affiliate parameter, which tells the shop that you came from here; it does not tell this site who you are.')
               : t('The links carry no affiliate or tracking parameter.')}
+            {partners.length > 0 && (
+              <>
+                {' '}
+                {t('At present these are the links to {shops}. When you follow one, the shop may store a cookie in your browser so that a purchase is credited to this site; that happens on the shop’s own site and under its privacy notice, and this site receives nothing about you from it.', { shops: partners.join(', ') })}
+              </>
+            )}
           </p>
-          {shop && (
+          {availabilityEnabled() && (
             <p>{t('The “Check the shops” button, when you press it, asks this site’s server to load each shop’s page for the ISBN. The shops see the server, not you.')}</p>
           )}
         </Section>
 
         {/* ROADMAP 3.1b; wording approved by Julian on 2026-10-04. Nothing is stored on the device, hence no consent (§ 25 TDDDG, plan §6). */}
         <Section title={t('What is counted when you leave a page')}>
-          <p>{t('When you leave a book page or a search, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. No identifier, cookie, IP address or referrer is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
+          <p>{t('When you leave a book page, a search, the home page or a collection, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. The summary also names the kind of site your visit began on, as one word from a fixed list (a search engine, Reddit, Pinterest, Hacker News and the like), or the word in the “via” part of a link this site posted itself. No identifier, cookie, IP address or address you came from is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
         </Section>
 
         {game && (
@@ -124,12 +133,6 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         {inspirationEnabled() && (
           <Section title={t('Your Shelf-Portrait')}>
             <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
-          </Section>
-        )}
-
-        {suggestEnabled() && (
-          <Section title={t('Suggestions for collections (invitation only)')}>
-            <p>{t('Friends of the site can suggest books for its collections on a page protected by a password. Entering the password sets one cookie, “bb_suggest”, for 30 days: it holds an expiry date and a signature and nothing about you, and exists only to keep you signed in (§ 25(2) TDDDG). A suggestion stores what you chose and typed — the collection, the book, the cover, your note, the day, and a name only if you give one — in the same Redis database as the cover game, and nothing else: no IP address, no browser details. Suggestions are kept until they have been looked at; ask via the contact page to have one removed. Legal basis: your consent in sending it (Art. 6(1)(a) GDPR).')}</p>
           </Section>
         )}
 

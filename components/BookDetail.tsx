@@ -40,7 +40,7 @@ import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
-import { commerceEnabled } from '@/lib/sitemode';
+import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
 import type { ShopStatus } from '@/lib/availability';
 import type { Market } from '@/lib/market';
 import type { Translate } from '@/lib/i18n/translate';
@@ -944,8 +944,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
   const rows = details.filter(([, v]) => v);
   const moreLinks = plan.rest.length;
   const commission = commissionNote([...plan.lead, ...plan.rest, ...plan.anyEdition]);
-  // In hobby mode the availability probe is off (E20), so the fold holds links only.
-  const hasFold = moreLinks > 0 || (commerceEnabled() && !!edition.isbn13);
+  // The availability probe has its own switch (ROADMAP 0.1); without it the fold holds links only.
+  const hasFold = moreLinks > 0 || (availabilityEnabled() && !!edition.isbn13);
   const hasInfo = !!edition.previewUrl || rows.length > 0 || !!edition.description;
 
   return (
@@ -1028,8 +1028,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
                 ))}
               </div>
             )}
-            {/* Off in hobby mode (E20): the probe is not cleared for the public site (ROADMAP 0.1). */}
-            {commerceEnabled() && edition.isbn13 && (
+            {/* Off unless its own switch is on (ROADMAP 0.1): the probe is not cleared for the public site. */}
+            {availabilityEnabled() && edition.isbn13 && (
               <AvailabilityCheck
                 isbn13={edition.isbn13}
                 checked={!!shops}

@@ -108,7 +108,12 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
 
 const ORIGIN_NAMES: Record<string, string> = {
   engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung', shelf: 'Shelf-Portrait',
-  book: 'Andere Buchseite', social: 'Sozial', other: 'Andere Seite', direct: 'Direkt / unbekannt',
+  book: 'Andere Buchseite', page: 'Andere Seite hier', social: 'Sozial, sonstige', other: 'Andere Website', direct: 'Direkt / unbekannt',
+  reddit: 'Reddit', pinterest: 'Pinterest', hn: 'Hacker News', instagram: 'Instagram', tiktok: 'TikTok', bluesky: 'Bluesky', x: 'X',
+  producthunt: 'Product Hunt', blog: 'Blog (via-Link)', mail: 'Mail (via-Link)', site: 'Anderer Tab dieser Seite',
+};
+const LANDING_NAMES: Record<string, string> = {
+  home: 'Startseite', search: 'Suchergebnisse', collections: 'Sammlungsübersicht', collection: 'Eine Sammlung', wall: 'Leser-Sammlung',
 };
 const VERDICT_NAMES: Record<string, string> = {
   verified: 'gleich (verified)', differs: 'anders (differs)', uncompared: 'nicht verglichen', unknown: 'kein Bild (unknown)',
@@ -274,6 +279,15 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
             total={books.visits}
             few={few}
           />
+        </Card>
+      </section>
+
+      <section className="mt-6">
+        <Card
+          title="Kanäle"
+          sub="Womit ein Besuch begann — Plattform aus dem Referrer oder die Marke ?via= eines selbst gesetzten Links — und was diese Leser taten (K16). Alle Märkte."
+        >
+          <ChannelSection channels={report.channels} />
         </Card>
       </section>
 
@@ -456,6 +470,61 @@ function CostSection({ costs }: { costs: Extract<InsightsReport, { ok: true }>['
   );
 }
 
+
+function ChannelSection({ channels }: { channels: Extract<InsightsReport, { ok: true }>['channels'] }) {
+  const { rows, landings, perDay, unattributed } = channels;
+  const landingRows = Object.entries(landings).filter(([, l]) => l.visits > 0);
+  return (
+    <div>
+      <DayColumns perDay={perDay} format={v => plural(v, 'Einstieg', 'Einstiege')} label="Einstiege von außen je Tag" />
+      <p className="mt-1 text-xs text-ink-3">Einstiege von außen: alles außer direkt und anderem Tab dieser Seite. Ein Launch-Tag zeigt sich als Spitze.</p>
+      {rows.length === 0 ? (
+        <p className="mt-4 text-sm text-ink-2">Noch kein Einstieg mit Kanal gezählt.</p>
+      ) : (
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-line text-left text-xs text-ink-3">
+                <th className="py-1.5 pr-2 font-normal">Kanal</th>
+                <th className="py-1.5 pr-2 text-right font-normal">Einstiege</th>
+                <th className="py-1.5 pr-2 text-right font-normal" title="Anteil der Einstiege, die ein Buch öffneten">→ Buch</th>
+                <th className="py-1.5 pr-2 text-right font-normal">Buch&shy;besuche</th>
+                <th className="py-1.5 text-right font-normal" title="Anteil der Buchbesuche mit Klick zum Händler">→ Händler</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(r => (
+                <tr key={r.entry} className="border-b border-line">
+                  <td className="py-1.5 pr-2 text-ink">{ORIGIN_NAMES[r.entry] ?? r.entry}</td>
+                  <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(r.entries)}</td>
+                  <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{r.entries > 0 ? pf.format(r.opened / r.entries) : '–'}</td>
+                  <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(r.bookVisits)}</td>
+                  <td className="py-1.5 text-right tabular-nums text-ink-2">{r.bookVisits > 0 ? pf.format(r.bought / r.bookVisits) : '–'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {landingRows.length > 0 && (
+        <p className="mt-3 text-xs text-ink-3">
+          Einstiegsseiten:{' '}
+          {landingRows
+            .map(([page, l]) => `${LANDING_NAMES[page] ?? page} ${nf.format(l.visits)} Besuche, ${nf.format(l.first)} als erste Seite, ${l.visits > 0 ? pf.format(l.opened / l.visits) : '–'} mit geöffnetem Buch`)
+            .join(' · ')}
+          .
+        </p>
+      )}
+      <Note>
+        „→ Buch“: Anteil der Einstiege, die ein Buch öffneten; „→ Händler“: Anteil der Buchbesuche mit Klick zu einem Händler.
+        Ein Einstieg ist die erste Seite eines Tabs: eine Einstiegsseite (Startseite, Suchergebnisse, Sammlungen, eine Leser-Sammlung) oder eine Buchseite.
+        Andere Seiten (About, Anlegen einer Sammlung) zählen nicht als Einstieg. Der Kanal lebt nur im Speicher des Tabs; ein Neuladen fragt den
+        Referrer neu. In-App-Browser senden oft keinen, deshalb tragen selbst gesetzte Links ?via=… (Liste in docs/plans/PLAN-5.5-5.6-kanaele.md §3).
+        {unattributed > 0 && ` ${plural(unattributed, 'Buchbesuch', 'Buchbesuche')} im Zeitraum stammen von vor 5.6a und haben keinen Kanal.`}
+      </Note>
+    </div>
+  );
+}
 
 function PhotoSection({ photos }: { photos: Extract<InsightsReport, { ok: true }>['photos'] }) {
   const perPhoto = photos.read > 0 ? photos.costUsd / photos.read : null;

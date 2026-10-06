@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useSyncExternalStore } from 'react';
+import { wasMade, watchMade } from './inspirationMemory';
+import { PICTURE_VERSION } from '@/lib/inspiration/share';
 
 /**
  * What on a shared board needs the browser (ROADMAP 5.18b): choosing how the
@@ -63,7 +65,7 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
   const canShare = useSyncExternalStore(() => () => {}, () => typeof navigator.canShare === 'function', () => false);
   const canCopy = useSyncExternalStore(() => () => {}, () => typeof ClipboardItem !== 'undefined' && typeof navigator.clipboard?.write === 'function', () => false);
 
-  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'paper' ? '&look=paper' : ''}${titles ? '&titles=1' : ''}`;
+  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'paper' ? '&look=paper' : ''}${titles ? '&titles=1' : ''}&v=${PICTURE_VERSION}`;
   const file = format === 'story' ? 'shelf-portrait-story.jpg' : 'shelf-portrait.jpg';
   const drawing = arrived?.src !== src;
   const failed = !drawing && !arrived?.ok;
@@ -152,4 +154,14 @@ export function CopyLink({ link }: { link: string }) {
       </span>
     </>
   );
+}
+
+/**
+ * The buy list's fold: open for the board's maker, closed for a visitor
+ * (`inspirationMemory.ts` knows the maker). The server renders it closed;
+ * the browser opens it once it knows. A reader may still fold or unfold it.
+ */
+export function BuyListDetails({ query, className, children }: { query: string; className: string; children: React.ReactNode }) {
+  const mine = useSyncExternalStore(watchMade, () => wasMade(query), () => false);
+  return <details open={mine || undefined} className={className}>{children}</details>;
 }

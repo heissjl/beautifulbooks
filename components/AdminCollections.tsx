@@ -26,13 +26,17 @@ const ON_HOME = 6;
  * the home page's. A drop is saved at once; no deploy.
  *
  * For a friend the same list without the controls. Either way each row says
- * how many drafts exist for that collection, and opens them (`onDrafts`).
+ * how many drafts exist for that collection, and opens them (`onDrafts`), and
+ * its Edit button opens the version the site shows now (`onEdit`; Julian,
+ * 2026-10-05: „so i can easily change collections from the newest version").
  */
-export default function AdminCollections({ collections, admin, draftsBySlug, onDrafts }: {
+export default function AdminCollections({ collections, admin, draftsBySlug, onDrafts, onEdit }: {
   collections: AdminCollection[];
   admin: boolean;
   draftsBySlug: Record<string, number>;
   onDrafts: (slug: string) => void;
+  /** Opens the collection as the site shows it now, as a draft (2026-10-05). */
+  onEdit: (slug: string) => void;
 }) {
   const router = useRouter();
   const t = useT();
@@ -123,6 +127,9 @@ export default function AdminCollections({ collections, admin, draftsBySlug, onD
                 </button>
               )}
               <span className="hidden shrink-0 text-xs tabular-nums text-ink-3 sm:inline">{t('{n} books', { n: c.works })}</span>
+              <button type="button" onClick={() => onEdit(c.slug)} aria-label={t('Edit {title}', { title: c.title })} className="shrink-0 rounded-md border border-line px-2 py-0.5 text-xs text-ink hover:border-accent hover:text-accent">
+                {t('Edit')}
+              </button>
               {/* On a phone the button says it; the title needs the room. */}
               <span className={`${admin ? 'hidden sm:inline' : ''} shrink-0 text-xs ${c.published ? 'text-ink-2' : 'text-accent'}`}>{c.published ? t('published') : t('not published')}</span>
               {admin && <PublishToggle slug={c.slug} title={c.title} published={c.published} />}

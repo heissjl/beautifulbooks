@@ -246,6 +246,21 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
     }
   }
 
+  /**
+   * Edit a collection as the site shows it now (Julian, 2026-10-05): opens the
+   * draft that still holds that version, or copies a new one from the site.
+   */
+  async function edit(slug: string) {
+    setError('');
+    try {
+      const { draft: d } = await call<{ draft: Draft }>(t, '/api/curate/drafts', { from: slug, reuse: true, by: creating.by });
+      setDrafts(prev => (prev.some(x => x.id === d.id) ? prev : [d, ...prev]));
+      open(d.id);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : t('Not created.'));
+    }
+  }
+
   async function findAuthor(event: React.FormEvent) {
     event.preventDefault();
     setError('');
@@ -403,6 +418,7 @@ export default function CurateTool({ initialDrafts, startingPoints, collections,
             collections={collections}
             admin={admin}
             draftsBySlug={draftsBySlug}
+            onEdit={slug => void edit(slug)}
             onDrafts={slug => { setFilter({ origin: 'all', slug, text: '' }); document.getElementById('drafts')?.scrollIntoView({ behavior: 'smooth' }); }}
           />
 
