@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BLUESKY_LIMIT, HASHTAG, shareTargets, shareText, subtitleOf, THREADS_LIMIT, titleOf, X_LIMIT, X_LINK_LENGTH } from '../inspiration/share';
+import { BLUESKY_LIMIT, HASHTAG, shareTargets, shareText, THREADS_LIMIT, titleOf, X_LIMIT, X_LINK_LENGTH } from '../inspiration/share';
 
 const link = 'https://buyitscovers.com/shelfportrait/k3x9q2ab';
 const longName = 'x'.repeat(40);
@@ -16,9 +16,8 @@ describe('share texts', () => {
   });
 
   it('gives the page its two lines, for the reader or for a name', () => {
-    expect([titleOf(''), subtitleOf('')]).toEqual(['My Shelf-Portrait', 'A self-portrait in nine books.']);
-    expect([titleOf('Ada'), subtitleOf('Ada', 6)]).toEqual(['Ada’s Shelf-Portrait', 'Ada, in six books.']);
-    expect(subtitleOf('', 3)).toBe('A self-portrait in three books.');
+    expect(titleOf('')).toBe('My Shelf-Portrait');
+    expect(titleOf('Ada')).toBe('Ada’s Shelf-Portrait');
   });
 
   it('stay inside every platform’s limit, even with the longest name', () => {

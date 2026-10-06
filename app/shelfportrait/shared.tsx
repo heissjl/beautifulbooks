@@ -4,10 +4,10 @@ import HeaderSearch from '@/components/HeaderSearch';
 import InspirationShared from '@/components/InspirationShared';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
-import { type Board, boardQuery, parseBoard, sizeOf } from '@/lib/inspiration/board';
+import { type Board, boardQuery, parseBoard, SIZE_WORD, sizeOf } from '@/lib/inspiration/board';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { describeBoard } from '@/lib/inspiration/describe';
-import { PICTURE_VERSION, subtitleOf, titleOf } from '@/lib/inspiration/share';
+import { PICTURE_VERSION, titleOf } from '@/lib/inspiration/share';
 import { wallsEnabled } from '@/lib/walls/switch';
 
 /**
@@ -36,7 +36,7 @@ export async function origin(): Promise<string> {
 
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   const title = titleOf(board?.by ?? '');
-  const description = `${subtitleOf(board?.by ?? '', board ? sizeOf(board) : 9).replace(/\.$/, '')}, each with a favourite cover. Take your Shelf-Portrait.`;
+  const description = `${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. Take your Shelf-Portrait.`;
   // Not indexed while the page lives behind its switch; the card makes a shared link show the covers.
   const images = board ? [{ url: `${await origin()}/api/inspiration/poster?${boardQuery(board)}&format=card&v=${PICTURE_VERSION}`, width: 1200, height: 630 }] : undefined;
   return {
