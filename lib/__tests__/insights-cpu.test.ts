@@ -218,7 +218,9 @@ describe('the Anthropic Max plan in the cost table', () => {
     expect(line(['2026-09-03', '2026-09-04', '2026-09-05'])?.amount).toBeCloseTo((100 / 30.4375) * 2, 6);
   });
 
-  it('names the usage credits as not measured while their amount is missing', () => {
-    expect(summarizeCosts(['2026-10-06'], { cpu: 0, n: 0 }, 0).notMeasured.some(n => n.includes('Usage Credits'))).toBe(true);
+  it('counts the usage credits as a monthly amount beside it, read from the account on 2026-10-06', async () => {
+    const { FIXED_COSTS } = await import('../insights/costs');
+    expect(FIXED_COSTS.find(c => c.id === 'anthropic-credits')).toMatchObject({ amount: 8.03, currency: 'USD', per: 'month', since: '2026-09-04' });
+    expect(summarizeCosts(['2026-10-06'], { cpu: 0, n: 0 }, 0).notMeasured.some(n => n.includes('Usage Credits'))).toBe(false);
   });
 });
