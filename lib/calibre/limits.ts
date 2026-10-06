@@ -15,3 +15,6 @@ export const MAX_CALIBRE_BOOKS = 500;
 
 /** A `metadata.db` is about 2.5 KB a book; 200 MB is far beyond any library a page should read in one go. */
 export const MAX_CALIBRE_FILE_BYTES = 200 * 1024 * 1024;
+
+/** A Goodreads export is about 0.5 KB a book, reviews included; 20 MB is tens of thousands of books. */
+export const MAX_GOODREADS_FILE_BYTES = 20 * 1024 * 1024;
