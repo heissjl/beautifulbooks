@@ -6,7 +6,7 @@ import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/walls/calibre {books: [{title, author, isbns}]} — a few books of
- * a Calibre library → a match, a suggestion, nothing, or "did not answer" for
+ * a Calibre library or a Goodreads export (5.19, `source`) → a match, a suggestion, nothing, or "did not answer" for
  * each, in the order sent (ROADMAP 5.17a). The library itself never comes
  * here: the browser read `metadata.db` and sends what it cleaned, at most
  * `CALIBRE_BOOKS_PER_REQUEST` books at a time, one request after another.
@@ -33,6 +33,8 @@ export async function POST(request: NextRequest) {
   try {
     console.info(
       `bb.calibre ${JSON.stringify({
+        // Which file the reader chose (5.19): the same lookup, counted apart.
+        source: body.source === 'goodreads' ? 'goodreads' : 'calibre',
         books: books.length,
         withIsbn: books.filter((b) => b.isbns.length > 0).length,
         match: matches.filter((m) => m.status === 'match').length,

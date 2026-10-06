@@ -93,7 +93,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
             {rich(t('Google is certified under the EU-US Data Privacy Framework; the Internet Archive publishes its own {terms}.'), { terms: <a className={ext} href="https://archive.org/about/terms.php" target="_blank" rel="noopener noreferrer">{t('privacy terms')}</a> })}
           </p>
           <p>{t('Searches and book lookups, by contrast, are made by this site’s server on your behalf. Open Library and Google Books receive the title you searched for or the book you opened, never your IP address.')}</p>
-          <p>{t('If you start a collection from your Calibre library, the file you choose is read in your browser and never sent. For each book, its title, first author and ISBNs go to this server, which looks them up at Open Library as it does a search; they are not stored and not written to the log, which only counts how many books were asked about and found.')}</p>
+          <p>{t('If you start a collection from your Calibre library or your Goodreads export, the file you choose is read in your browser and never sent, and this site does not contact Goodreads. For each book, its title, first author and ISBNs go to this server, which looks them up at Open Library as it does a search; they are not stored and not written to the log, which only counts how many books were asked about and found.')}</p>
         </Section>
 
         <Section title={t('What is kept in your browser')}>

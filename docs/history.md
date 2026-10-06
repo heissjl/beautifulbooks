@@ -1,3 +1,34 @@
+## 2026-10-05 · Kontakt-Abschnitt auf der Über-Seite, Profiltexte auf drei Kanälen (ROADMAP 5.6b)
+
+Julian: „we can list social media accounts in a contact section within the about page“ und „update bsky and x bio too“.
+
+**Auf der Seite.** Die Über-Seite hat einen Abschnitt „Kontakt“ (deutsch „Kontakt“): die Adresse aus dem Impressum als Einladung zu schreiben, darunter die drei Konten, die posten — Mastodon, Bluesky, X. Sie stehen **an einer Stelle**, der Liste `ACCOUNTS` in `app/about/page.tsx`, und jeder Link trägt `rel="me noopener noreferrer"`. Das `me` ist keine Verzierung: Mastodon setzt den Haken an ein Profilfeld erst, wenn die Seite, auf die das Feld zeigt, so zurückverlinkt — eine zweite Kopie der Adressen anderswo würde diese Prüfung still zerbrechen. Pinterest und die GitHub-Organisation stehen nicht in der Liste, weil dort nichts liegt. Angesehen bei 375 und 1280 px, englisch und deutsch: kein Überlauf, jede Zeile einzeilig; `@buyitscovers@mastodon.social` ist die längste und passt auf dem Telefon. Suite 1.435 Tests, Typprüfung, Lint und Build grün.
+
+**Das Feld bei Mastodon bleibt vorerst unbestätigt**, weil es auf `https://buyitscovers.com` zeigt und der `rel="me"`-Link auf `/about` steht. Nach dem Deploy sind es zwei Wege: das Feld auf `https://buyitscovers.com/about` ändern, oder denselben Link zusätzlich auf die Startseite nehmen. Vorher deployen, sonst prüft Mastodon gegen eine Seite ohne Link und der Haken bleibt aus.
+
+**Die Profiltexte.** Alle drei Konten hatten Bild, Banner und Namen, aber keine Zeile Text. Jetzt:
+
+- **Bluesky** (`@buyitscovers.com`) und **Mastodon**: derselbe Text, 211 Zeichen (Bluesky zählt 215, es erlaubt 256).
+- **X** (`@buyitscovers`): 160 Zeichen sind die Grenze, also eine kurze Fassung in einem Satz — „Judge a book, buy its covers. The covers a book has been printed with, by language and year, from two open catalogues: Open Library and Google Books.“ (149). Dazu das Feld „Website“: `https://buyitscovers.com`, das vorher leer war.
+
+Keine Zahl der Analyse ändert sich dadurch: Die Konten verlinken die Startseite ohne `?via=`, die Besuche zählen über den Referrer (X als `x`, Mastodon und Bluesky wie gehabt).
+
+## 2026-10-05 · Das Exposé auf Mastodon (ROADMAP 5.6b)
+
+Julian: „post the same expose as on x and bsky on mastodon“. Derselbe Text wie auf Bluesky und X, über Chrome im Konto `@buyitscovers` auf `mastodon.social` gepostet, öffentlich, Sprache Englisch, 258 Zeichen von 500: [mastodon.social/@buyitscovers/117392110664968201](https://mastodon.social/@buyitscovers/117392110664968201). Die Adresse steht wie auf X im Text, ohne `?via=`, weil 5.6a keine Klasse `mastodon` kennt. Die Vorschaukarte holte Mastodon selbst (Titel „Buy Its Covers“, Beschreibung der Startseite, Bild zwischengespeichert).
+
+**Gemessen am fertigen Post:** Mastodon setzt auf den Link `rel="nofollow noopener"` — **kein `noreferrer`**, anders als oft angenommen. Der Browser schickt also die Herkunft `https://mastodon.social/` mit, und `originOf` zählt den Besuch über `SOCIAL` als `social` (der Ausdruck kennt `mastodon` seit 3.1). Zwei Lücken bleiben: Besuche über eine andere Instanz (`hachyderm.io`, `chaos.social`) treffen `SOCIAL` nicht und zählen als `direct`, und Mastodon steht in der Kanal-Karte K16 nicht neben Bluesky und X, sondern im Sammeleintrag `social`. Ob `mastodon` eine eigene Klasse in `ENTRIES`/`VIA` bekommt wie X am 2026-10-06, ist Julians Entscheidung; am Code wurde dafür nichts geändert.
+
+**Der Profiltext, am selben Tag** (Julian: „we also need to update our bio. do it with the chrome extension“). Das Konto hatte seit dem 2026-10-04 Bild, Banner und Namen, aber keine Zeile Text. Jetzt steht dort, 211 von 500 Zeichen:
+
+> Judge a book, buy its covers.
+>
+> Type a title and see the covers it has been printed with, by language and year, then find the edition you'd want on your shelf. From two open catalogues, Open Library and Google Books.
+
+Dazu ein Feld „Website“ mit `https://buyitscovers.com` (ohne `?via=`). **Das Feld ist unbestätigt** (`verified_at: null`): den grünen Haken setzt Mastodon erst, wenn die verlinkte Seite selbst einen Link mit `rel="me"` auf `https://mastodon.social/@buyitscovers` trägt. Die Seite verlinkt bisher **kein** eigenes Konto — ob sie das tun soll, ist Julians Entscheidung, und es wäre ein Fußzeilen-Eintrag, kein neuer Mechanismus. Bluesky hat denselben leeren Profiltext; dort ist nichts geändert worden.
+
+Im Kalender (`lab/kalender/`): Kanal `mastodon` in `CHANNELS` (Grenze 500 Zeichen), `konto:mastodon` in `NEEDS` und in `done`, der Eintrag `mastodon-expose` als `gepostet` mit Adresse. Seine Einträge lassen `path` leer und tragen den Link im Text — solange es keine `VIA`-Klasse gibt, wäre ein `?via=mastodon` ein Parameter, den die Seite wegwirft.
+
 ## 2026-10-06 · X als eigener Kanal (ROADMAP 5.6a)
 
 Julian: „bau das“, auf die Frage, ob X einen eigenen Eintrag in der Kanal-Messung bekommt. Der Exposé-Post ging am selben Tag auf X hinaus (Konto @buyitscovers); bis dahin zählte ein Besuch von dort als `social`. Neu: Klasse `x` in `ENTRIES` und `VIA`, erkannt am Referrer `x.com`, `twitter.com` oder `t.co` (X schickt seinen Kürzer als Referrer), Label „X“ in der Karte K16. Die Datenschutzerklärung bleibt unverändert: Ihr Satz nennt Beispiele „and the like“, X ist eines davon. Tests: Referrer-Fälle und `?via=x`; der ältere Test, der `t.co` als `social` erwartete, erwartet jetzt `x`. Suite, Typprüfung, Lint und Build grün.
@@ -5383,3 +5414,12 @@ Julian, nach dem Mockup der Gründe (https://claude.ai/artifact/M9eJGFexJARM6ipg
 **Mosaik** (`look=mosaic`, in den Teilen-Werkzeugen „Mosaic“ zwischen „Cover colours“ und „Paper“): `lib/inspiration/mosaicground.ts` schneidet die zwanzig 640-px-Lade-Bilder in ihre 16 × 24-Zellen (28.760), setzt sie zufällig, mit dem Brett als Saat (dieselben Cover → dasselbe Feld), 40 Zellen breit auf 1080 px wie im Lader, auf die Hälfte abgedunkelt, zum Rand hin bis 0,8, hinter Kopf und Fuß (auf der Karte hinter der Wortspalte) bis 0,78 mit 60 px Übergang. Keine Anfrage an eine Quelle. Die Bilder liegen im Funktionsbündel beider Routen (`outputFileTracingIncludes`, im `nft.json` des Builds geprüft: je 20 Dateien). Unter `next dev` 1,1 s (Karte, sechs), 1,4 s (Post, sechs), 1,3 s (Story, drei), inklusive der Cover; auf Vercel nicht gemessen.
 
 **Karte:** neben sechs oder drei Covern stehen Titel und Satz zusammen in der Mitte ihrer Spalte, mittig gesetzt; bei sechs endet der Satz bei etwa 70 % der Höhe statt am unteren Rand. Neun Cover behalten das erste Feld oben links, das nichts überdeckt. `PICTURE_VERSION` 3 → 4, damit schon geteilte Bretter neu gezeichnet werden (X behält eine einmal gelesene Karte in seinem eigenen Cache). Die FAQ-Antwort „What do I get to share?“ nennt das Mosaik. Analyse: nichts betroffen — kein Shop-Link, keine Route, kein Signal; der Grund ist ein Parameter der Bildadresse.
+
+## 2026-10-05 · Eine Sammlung aus dem Goodreads-Export (ROADMAP 5.19)
+
+Julian fragte, ob sich Goodreads-Listen als Anfang für Sammlungen und Shelf-Portraits holen lassen. Geprüft (ROADMAP 5.19, Archiv): das RSS eines öffentlichen Regals antwortet (HTTP 200, XML mit ISBN und Cover-URL), aber `robots.txt` verbietet `/review/list_rss` und `/review/list`, die Nutzungsbedingungen den automatisierten Zugriff, und das Amazon-Konto hängt daran (6.11). Julian wählte nur den Export, nur für Sammlungen, und „not with a third option but as a toggle between calibre and goodreads“.
+
+**Gebaut:** `lib/goodreads/export.ts` (CSV nach RFC 4180 — Felder mit Komma, verdoppelten Anführungszeichen und Zeilenumbrüchen, die eine Rezension haben kann; BOM; die ISBN-Spalten in Formel-Schreibweise `="…"`, ISBN-10 zu 13) mit sechs Tests. `components/WallCalibre.tsx` heißt jetzt `WallLibrary.tsx` und nimmt `source`; die Karte „From your library“ in `WallsStart` schaltet zwischen Calibre und Goodreads. Danach derselbe Weg wie bei Calibre: `cleanBook` (streicht auch Goodreads' Reihenklammer „(Harry Potter, #1)“), `/api/walls/calibre`, acht Bücher je Anfrage, höchstens 500 (die zuletzt hinzugefügten). Neu sind die Regalknöpfe mit Zahl; „Read“ vorgewählt. Die Logzeile `bb.calibre` trägt `source`. Datenschutzsatz englisch und deutsch: „…from your Calibre library or your Goodreads export, … and this site does not contact Goodreads.“
+
+**Angesehen gegen `next dev`** mit einem Beispiel-Export aus vier Büchern über drei Regale: Umschalter, Regalknöpfe (Read 2, Currently reading 1, Want to read 1, All 4), Wechsel des Regals bricht ab und beginnt neu, bei 390 × 844 und 1280 × 800 kein Überlauf. **Treffer kamen nicht:** Open Library verweigerte diesem Mac wieder die Verbindung (curl Exit 7), die Bücher standen ehrlich als „the search did not answer“ da. Der Abgleich selbst ist der unveränderte von Calibre (`wallscalibre.test.ts`). **Nachgeholt, etwa zehn Minuten später**, als Open Library wieder antwortete (alle drei Hosts HTTP 200): dieselben vier Bücher an `/api/walls/calibre` — vier Treffer, *1984* über die ISBN als *Nineteen Eighty-Four* (OL1168083W), die anderen über Autor und Titel; 1,2 s. Die Sperre war kurz und kam nicht von diesem Test (vier Bücher); am selben Tag traf sie schon 6.91. Was sie auslöst, sieht man von hier nicht — zeitgleiche Läufe anderer Sitzungen oder der Calibre-App sind die bekannte Ursache (2026-10-04). **Analyse:** keine neue Herkunft und kein neuer Shop-Link; Regel 3 nicht berührt, die Zählung liegt in der Logzeile.
+

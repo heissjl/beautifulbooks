@@ -1,11 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import Link from '@/components/Link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BookSearch from './BookSearch';
 import CoverImage from './CoverImage';
 import IdLinkNotice from './IdLinkNotice';
-import WallCalibre from './WallCalibre';
+import WallLibrary, { type LibrarySource } from './WallLibrary';
 import WallIdField from './WallIdField';
 import WallPhoto from './WallPhoto';
 import WallPicker from './WallPicker';
@@ -31,7 +32,7 @@ const FEATURED_COLLECTION = 'curated:ex-libris-covers-by-hanspeter-wyss';
  * anzeigesicht, dort kann ich aber nichts machen“), and the ways to start a
  * new one: a book, set apart as the main way, then three more as cards —
  * another collection (or six random favourites), a photo, a Calibre library
- * (5.17a). Every start ends in the editor of the new collection. A search result opens
+ * (5.17a) or Goodreads export (5.19). Every start ends in the editor of the new collection. A search result opens
  * the book's covers here, between two rules; the first cover picked makes the
  * collection and the page becomes its editor with the same book open.
  */
@@ -41,6 +42,7 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
   const params = useSearchParams();
   const { me, setMe } = useMyWalls();
   const t = useT();
+  const [library, setLibrary] = useState<LibrarySource>('calibre');
 
   const workParam = params.get('work');
   const workId = workParam && WORK.test(workParam) ? workParam : null;
@@ -159,10 +161,20 @@ export default function WallsStart({ photoOn, startOptions = [] }: { photoOn: bo
               <WallPhoto photoOn={photoOn} walls={me.walls} onCommit={commit} />
             </div>
           )}
+          {/* One card, two sources (5.19; Julian, 2026-10-05: „nicht mit einer dritten option sondern als toggle zwischen calibre und goodreads"). */}
           <div className={card}>
-            <h3 className="font-display text-xl text-ink">{t('From your Calibre library')}</h3>
-            <p className="mt-1 text-sm text-ink-2">{t('Choose your Calibre library’s database. We look the books up and offer their covers.')}</p>
-            <WallCalibre walls={me.walls} onCommit={commit} />
+            <h3 className="font-display text-xl text-ink">{t('From your library')}</h3>
+            <div className="mt-2 flex gap-2" role="group" aria-label={t('Library')}>
+              {(['calibre', 'goodreads'] as const).map((s) => (
+                <button key={s} type="button" aria-pressed={library === s} onClick={() => setLibrary(s)} className={`rounded-full border px-3 py-0.5 text-sm transition-colors ${library === s ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`}>
+                  {s === 'calibre' ? 'Calibre' : 'Goodreads'}
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-sm text-ink-2">
+              {library === 'goodreads' ? t('Choose the export of your Goodreads library. We look the books up and offer their covers.') : t('Choose your Calibre library’s database. We look the books up and offer their covers.')}
+            </p>
+            <WallLibrary key={library} source={library} walls={me.walls} onCommit={commit} />
           </div>
         </div>
       </section>

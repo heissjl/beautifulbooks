@@ -33,7 +33,7 @@ Grundlage ist [PLAN-5.5-5.6-kanaele.md](PLAN-5.5-5.6-kanaele.md) (Kanäle, Messu
 | **Product Hunt** | optional, zuletzt | einmal | Galerie aus Bildschirmfotos der Seite | HN und Reddit ausgewertet |
 | **Mail / Blogs** | fünf Personen, deren Bücher in den Sammlungen stehen | einmal, dann je nach Antwort | Julians eigener Text, Claudes Linkliste | 5.6a |
 
-**Bluesky-Handle:** die Domain selbst, `@buyitscovers.com`. Das kostet einen TXT-Eintrag bei INWX und ist der einzige Profilname, den niemand nachmachen kann. **Mastodon und Threads** stehen nicht in der Liste, weil 5.6a sie nicht als Klasse kennt; soll einer dazu, braucht `VIA` einen Eintrag (Analyse-Regel 6 in CLAUDE.md, Julian gibt den Satz frei).
+**Bluesky-Handle:** die Domain selbst, `@buyitscovers.com`. Das kostet einen TXT-Eintrag bei INWX und ist der einzige Profilname, den niemand nachmachen kann. **Mastodon und Threads** standen zuerst nicht in der Liste, weil 5.6a sie nicht als Klasse kennt. **Mastodon ist seit dem 2026-10-05 trotzdem ein Kanal** (Julian: „post the same expose as on x and bsky on mastodon“): das Exposé liegt im Konto `@buyitscovers` auf `mastodon.social`, der Link ohne `?via=` im Text. Gemessen am Post: Mastodon setzt `rel="nofollow noopener"` ohne `noreferrer`, der Referrer `mastodon.social` kommt also an und der Besuch zählt als `social` — aber nicht als eigener Kanal, und eine fremde Instanz zählt als `direct`. Soll `mastodon` eine Klasse werden wie `x`, braucht `VIA` einen Eintrag (Analyse-Regel 6 in CLAUDE.md, Julian gibt den Satz frei). **Threads** bleibt draußen.
 
 ## 3. Das Exposé
 
@@ -46,6 +46,7 @@ Was in jedem Exposé steht: was man tut (Titel eingeben), was man sieht (die Cov
 | Kanal | Datum im Kalender | Form |
 |---|---|---|
 | Bluesky | Mo 12.10. | Text, Startseite als Karte, angepinnt |
+| Mastodon | **gepostet am 5.10.** | Text mit Adresse, Karte holt Mastodon selbst |
 | Instagram | Di 13.10. | Karussell aus fünf Schrift-Folien **ohne Cover**, angepinnt; braucht deshalb keine Rechte-Entscheidung |
 | Pinterest | Sa 17.10. | Pin der Startseite, wartet auf `rechte` und 5.5a |
 | Hacker News | Di 20.10., 15:30 | Show HN; der erste Satz ist ein Platzhalter für Julians eigenen Grund |
