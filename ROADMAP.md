@@ -25,7 +25,7 @@ Stand: 2026-10-03 (Stand, Nächste Schritte und Zählung nachgezogen; die Doppel
 | **Arbeitsregeln** | [CLAUDE.md](CLAUDE.md) |
 | **Anleitungen** | [Partnerprogramme bis zum Umschalttag](docs/guides/affiliate-programme.md) · [Partnerprogramme: Sätze und Netzwerke](docs/guides/affiliate-programme-recherche.md) · [Gewerbe und Steuer](docs/guides/gewerbe-anmeldung.md) · [Bookshop.org](docs/guides/bookshop-affiliate.md) |
 | **Durchsichten des Codes** | [Zuschnitt 2026-10-03](docs/refactoring-2026-10-03.md) · [Sicherheit 2026-10-02](docs/sicherheit-2026-10-02.md) |
-| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Visuelle Identität und Cover-Rechte im Logo](docs/identitaet.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Vergleich whichedition.com und deren Affiliate-Links](docs/vergleich-whichedition.md) · [Vergleich my9books.com](docs/vergleich-my9books.md) · [Was an der Seite nach Claude aussieht](docs/gestaltung-ki-anmutung.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) · [Alltagstauglichkeit, zwei Durchsichten 2026-09-28](docs/tests/2026-09-28-alltagstauglichkeit.md) · [Sicherheit und störungsfreier Betrieb, Durchsicht 2026-10-02](docs/sicherheit-2026-10-02.md) |
+| **Recherchen** | [Risikoregister: was das Projekt kaputt machen könnte](docs/risiken-2026-09-12.md) · [Best Practices Websites und Claude Code](docs/best-practices-2026-09-12.md) · [Recht der Hobbyseite](docs/recht-hobbyseite.md) · [Domain-Namen](docs/domain-recherche.md) · [Visuelle Identität und Cover-Rechte im Logo](docs/identitaet.md) · [Suche nach ISBN und Stichwort](docs/suche-isbn-und-stichwort.md) · [Buchrücken](docs/spine-research.md) · [Vergleich whichedition.com und deren Affiliate-Links](docs/vergleich-whichedition.md) · [Vergleich my9books.com](docs/vergleich-my9books.md) · [Vergleich 9things.me](docs/vergleich-9things.md) · [Was an der Seite nach Claude aussieht](docs/gestaltung-ki-anmutung.md) · [Testbericht 2026-09-07](docs/tests/2026-09-07-durchklick.md) · [Alltagstauglichkeit, zwei Durchsichten 2026-09-28](docs/tests/2026-09-28-alltagstauglichkeit.md) · [Sicherheit und störungsfreier Betrieb, Durchsicht 2026-10-02](docs/sicherheit-2026-10-02.md) |
 
 ### Stand
 
@@ -1301,6 +1301,19 @@ Julian: „check what we can learn from this website that went viral just now". 
 | ~~„9 books that made you — in the edition you read"~~ → **5.18 „The books that inspired me", Lab gebaut 2026-10-04** (2.2 ist seit 2026-10-04 erledigt; die Warnung „Parkseite" im ersten Befund war veraltet) | — |
 | **„Download image" 1080×1920 mit Adresse** für jede Sammlung, nicht nur die Vorschaukarte 1200×630 (2:3-Kacheln passen in 9:16, nicht ohne Rand in 4:5) | mit der Zeile darüber oder für F9 allein |
 | ~~Picker ohne Google~~ → **6.88**, Julian entscheidet | — |
+
+### Ideen aus 9things.me (2026-10-06), unbewertet
+
+Julian: „https://9things.me/ — what can we learn from this". Befund in [docs/vergleich-9things.md](docs/vergleich-9things.md) (durchgeklickt; dabei legte „Copy link" auf ihrem Server ein Raster mit einem Buch an). 9things.me ist derselbe Brauch für alle Kategorien, Bücher aus Apple Books und Open Library, ohne Ausgabenwahl und ohne Kauflinks. Neu gegenüber my9books: **die Nische im Titel**, **drei Bildformate mit „Copy caption"** für Instagram, eine Erklärseite für die Suchwendung, und eine Rangliste aus 115 Rastern, deren Spitze nach wenigen Vielbauern aussieht. Auslöser wie oben.
+
+| Idee | Wann |
+|---|---|
+| **„Copy caption"** im Teilen-Fenster: Satz, Kurzlink, `#shelfportrait` in die Zwischenablage, dazu „Instagram takes images only …" | jederzeit, Claude |
+| **Eine Nische im Titel** („sci-fi", „childhood", „most reread"), in der Adresse wie der Name | **Julian entscheidet** Wortlaut |
+| **Square** als drittes Format (sie bauen es, empfehlen aber selbst 4:5) | nach Julians Antwort zu „zu lang" (5.18b) |
+| Die Wendung „books that define me" in Beschreibung oder Untertitel | wenn 5.18b (4) auf Indexieren entschieden ist |
+| Eine Rangliste legt gleiche Bretter zusammen, bevor sie zählt (ihre: acht Bücher mit genau 12 Wahlen aus 115 Rastern) | mit der Mitwahl-Zeile unten |
+| Apple Books (iTunes Search API) als Bild für Bücher ohne Cover in Open Library — keine Ausgabe, keine ISBN der Druckausgabe; Bedingungen und Grenzen ungelesen | mit der „Kachel ohne Cover" unten |
 
 ### Ideen aus my9books.com (2026-10-05), unbewertet
 
