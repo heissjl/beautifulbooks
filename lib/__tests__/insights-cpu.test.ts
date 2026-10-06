@@ -207,3 +207,18 @@ describe('the costs of a range', () => {
     expect(summarizeCosts(days, { cpu: 0, n: 0 }, 0, fixed).notMeasured.length).toBeGreaterThan(0);
   });
 });
+
+describe('the Anthropic Max plan in the cost table', () => {
+  it('is counted in full from the first bill on 2026-09-04, at 100 USD a month, and not before', async () => {
+    const { FIXED_COSTS } = await import('../insights/costs');
+    const max = FIXED_COSTS.find(c => c.id === 'anthropic-max');
+    expect(max).toMatchObject({ amount: 100, currency: 'USD', per: 'month', since: '2026-09-04' });
+    const line = (days: string[]) => summarizeCosts(days, { cpu: 0, n: 0 }, 0).lines.find(l => l.label === max!.label);
+    expect(line(['2026-09-03'])).toBeUndefined();
+    expect(line(['2026-09-03', '2026-09-04', '2026-09-05'])?.amount).toBeCloseTo((100 / 30.4375) * 2, 6);
+  });
+
+  it('names the usage credits as not measured while their amount is missing', () => {
+    expect(summarizeCosts(['2026-10-06'], { cpu: 0, n: 0 }, 0).notMeasured.some(n => n.includes('Usage Credits'))).toBe(true);
+  });
+});
