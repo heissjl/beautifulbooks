@@ -204,7 +204,7 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
      - **Neun Autorinnen versucht:** Eliot, Shelley und Cather wurden zu weich; bei Montgomery, Brontë und Burnett war das Gesicht unscharf oder abgeschnitten.
      - **Weniger Kacheln im Mosaik** (26 bis 28 Spalten statt 45) lesen sich schlechter; mit 20 % Überblendung ginge es, aber Julian will keine.
    - **Das Pinterest-Exposé zeigt das Cover-Spiel** (Julian, 2026-10-05: „bereite ein pinterest expose der website vor, dass das versus spiel zeigt“).
-     - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“ und „Judge the cover, not the book.“
+     - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“; die Zeile darunter war „Judge the cover, not the book.“ aus dem Spiel und heißt seit dem 2026-10-06 auf allen Bildern „Judge a book by its cover.“ (Julian: „ja, überall austauschen“)
      - Gezeigt mit zwei gemeinfreien Covern: Peter and Wendy 1911 und La guerre des mondes 1906, verlinkt auf `/versus`. Zuerst waren es Pinocchio und das Jungle Book; Julian wollte zwei andere, weil diese schon im Instagram-Exposé stehen. /versus läuft in Produktion, einmal geprüft am 2026-10-05.
      - Der Peter-and-Wendy-Pin ist damit der zweite Pin (21.10.).
      - **Entwurf ohne die Gemeinfreiheits-Grenze** (Julian, 2026-10-05: „mache mal einen entwurf, wenn gemeinfrei nicht relevant wäre“): `lab/kalender/out/pinterest-versus-entwurf.jpg` zeigt The Great Gatsby (OL-Cover 12547003) gegen Dune in den SF Masterworks (380097), beide aus dem Pool des Spiels (`data/versus-pool.json`). **Nicht zum Posten freigegeben**, solange die Rechte-Frage für einzelne Cover offen ist. Im Kalender steht weiter die gemeinfreie Fassung.

@@ -373,7 +373,7 @@ def versus_pin(pair=None, name='pinterest-versus.jpg'):
         d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
     # Julian, 2026-10-05: no explaining sentences under the tagline, and tidy
     # its spacing — Xanh Mono is monospaced, so a full-width space reads as a gap.
-    tight_text(d, (70, 1180), 'Judge the cover, not the book.', font('xanh-italic', 58), ACCENT)
+    tight_text(d, (70, 1180), 'Judge a book by its cover.', font('xanh-italic', 58), ACCENT)
     d.text((72, 1330), 'buyitscovers.com/versus', font=font('xanh-italic', 40), fill=INK)
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
