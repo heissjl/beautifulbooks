@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from 'react';
 import { wasMade, watchMade } from './inspirationMemory';
+import { PICTURE_VERSION } from '@/lib/inspiration/share';
 
 /**
  * What on a shared board needs the browser (ROADMAP 5.18b): choosing how the
@@ -64,7 +65,7 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
   const canShare = useSyncExternalStore(() => () => {}, () => typeof navigator.canShare === 'function', () => false);
   const canCopy = useSyncExternalStore(() => () => {}, () => typeof ClipboardItem !== 'undefined' && typeof navigator.clipboard?.write === 'function', () => false);
 
-  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'paper' ? '&look=paper' : ''}${titles ? '&titles=1' : ''}`;
+  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'paper' ? '&look=paper' : ''}${titles ? '&titles=1' : ''}&v=${PICTURE_VERSION}`;
   const file = format === 'story' ? 'shelf-portrait-story.jpg' : 'shelf-portrait.jpg';
   const drawing = arrived?.src !== src;
   const failed = !drawing && !arrived?.ok;

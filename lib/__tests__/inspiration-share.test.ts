@@ -16,8 +16,9 @@ describe('share texts', () => {
   });
 
   it('gives the page its two lines, for the reader or for a name', () => {
-    expect([titleOf(''), subtitleOf('')]).toEqual(['My Shelf-Portrait', 'The books that inspire me']);
-    expect([titleOf('Ada'), subtitleOf('Ada')]).toEqual(['Ada’s Shelf-Portrait', 'The books that inspire Ada']);
+    expect([titleOf(''), subtitleOf('')]).toEqual(['My Shelf-Portrait', 'A self-portrait in nine books.']);
+    expect([titleOf('Ada'), subtitleOf('Ada', 6)]).toEqual(['Ada’s Shelf-Portrait', 'Ada, in six books.']);
+    expect(subtitleOf('', 3)).toBe('A self-portrait in three books.');
   });
 
   it('stay inside every platform’s limit, even with the longest name', () => {

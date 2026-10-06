@@ -18,17 +18,30 @@
 export const HASHTAG = '#shelfportrait';
 
 /**
- * The two lines every page and picture carries (Julian, 2026-10-05: „Oben: My
- * Shelf-Portrait, unten: The books that inspire me"). With a name on the
- * board they speak of that person.
+ * The two lines every shared page and picture carries. The first is Julian's
+ * (2026-10-05: „Oben: My Shelf-Portrait"); the second was „The books that
+ * inspire me" until later that day, when he chose „A self-portrait in nine
+ * books." from a list of suggestions (history, „Vorschläge für eine andere
+ * Unterzeile") — „vorerst", so it may change again. The count follows the
+ * board. With a name on the board they speak of that person; the editor
+ * page keeps its own second line.
  */
 export function titleOf(by: string): string {
   return by ? `${by}’s Shelf-Portrait` : 'My Shelf-Portrait';
 }
 
-export function subtitleOf(by: string): string {
-  return by ? `The books that inspire ${by}` : 'The books that inspire me';
+const COUNT_WORD: Record<3 | 6 | 9, string> = { 3: 'three', 6: 'six', 9: 'nine' };
+
+export function subtitleOf(by: string, size: 3 | 6 | 9 = 9): string {
+  return by ? `${by}, in ${COUNT_WORD[size]} books.` : `A self-portrait in ${COUNT_WORD[size]} books.`;
 }
+
+/**
+ * Appended to every picture address. The CDN keeps a whole picture for a
+ * month under its address; a new number here is how a changed line reaches
+ * boards that were already shared.
+ */
+export const PICTURE_VERSION = 2;
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';
