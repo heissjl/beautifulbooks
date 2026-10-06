@@ -12,8 +12,9 @@
  * 5.6a (`VIA` in lib/insights/signals.ts on the 5.6a branch), so that a link
  * posted here is counted under the channel it was posted on. `alle` is for
  * setup and review entries that belong to no single channel and carry no link.
+ * `x` joined VIA on 2026-10-06.
  */
-export const CHANNELS = ['bluesky', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
+export const CHANNELS = ['bluesky', 'x', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
 export type Channel = (typeof CHANNELS)[number];
 
 export const STATUSES = ['vorschlag', 'freigegeben', 'gepostet', 'verworfen'] as const;
@@ -82,6 +83,7 @@ export function knownNeed(need: string): boolean {
  */
 export const LIMITS: Partial<Record<Channel, { text?: number; title?: number }>> = {
   bluesky: { text: 300 },
+  x: { text: 280 },
   instagram: { text: 2200 },
   tiktok: { text: 2200 },
   pinterest: { title: 100, text: 500 },

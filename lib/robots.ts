@@ -30,6 +30,16 @@ export const CRAWL_DELAY = 10;
 /** Closed to every crawler: the API, the click counter, Julian's pages. */
 export const CLOSED_TO_ALL = ['/api/', '/go/', '/admin/'];
 
+/**
+ * The one address under `/api/` a link card names as its picture: the
+ * Shelf-Portrait's poster (`og:image` of `/shelfportrait/<id>`). X's
+ * Twitterbot honours robots.txt for the image too, and under `Disallow: /api/`
+ * a shared Shelf-Portrait showed its title over an empty grey box (2026-10-06).
+ * The other cards are `opengraph-image` files beside their pages and were never
+ * closed. Open to `*` only: the named crawlers have no use for it.
+ */
+export const CARD_IMAGES = ['/api/inspiration/poster'];
+
 export interface RobotsRule {
   userAgent: string | string[];
   allow?: string | string[];
@@ -39,7 +49,7 @@ export interface RobotsRule {
 
 export function robotsRules(publishedWorkIds: readonly string[], decadeWorkIds: readonly string[]): RobotsRule[] {
   return [
-    { userAgent: '*', allow: '/', disallow: CLOSED_TO_ALL },
+    { userAgent: '*', allow: ['/', ...CARD_IMAGES], disallow: CLOSED_TO_ALL },
     {
       userAgent: [...BOUNDED_CRAWLERS],
       // `$` ends the address: the book itself, not its covers' pages and not a query.

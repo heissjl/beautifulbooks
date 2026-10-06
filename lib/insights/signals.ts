@@ -22,7 +22,7 @@ export const INTERNAL_ORIGINS = ['home', 'search', 'collection', 'shelf', 'book'
  * opened from another tab of this site.
  */
 export const ENTRIES = [
-  'engine', 'reddit', 'pinterest', 'hn', 'instagram', 'tiktok', 'bluesky', 'producthunt', 'blog', 'mail',
+  'engine', 'reddit', 'pinterest', 'hn', 'instagram', 'tiktok', 'bluesky', 'x', 'producthunt', 'blog', 'mail',
   'social', 'other', 'site', 'direct',
 ] as const;
 export type Entry = (typeof ENTRIES)[number];
@@ -35,7 +35,7 @@ export type Origin = (typeof ORIGINS)[number];
  * over the referrer, which in-app browsers (Instagram, TikTok, often Reddit)
  * do not send. Anything else in `via` is ignored.
  */
-export const VIA = ['pinterest', 'hn', 'reddit', 'producthunt', 'instagram', 'tiktok', 'bluesky', 'blog', 'mail'] as const satisfies readonly Entry[];
+export const VIA = ['pinterest', 'hn', 'reddit', 'producthunt', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail'] as const satisfies readonly Entry[];
 
 /** Pages whose leaving is summarised as a `landing` signal (5.6a); book pages and searches have their own. */
 export const LANDINGS = ['home', 'search', 'collections', 'collection', 'wall'] as const;
@@ -144,6 +144,8 @@ const PLATFORMS: Array<[Entry, RegExp]> = [
   ['instagram', /(^|\.)instagram\.com$/],
   ['tiktok', /(^|\.)tiktok\.com$/],
   ['bluesky', /(^|\.)(bsky\.app|bsky\.social)$/],
+  // X sends its own link shortener as the referrer (Julian, 2026-10-06: X as its own channel).
+  ['x', /(^|\.)(x\.com|twitter\.com|t\.co)$/],
   ['producthunt', /(^|\.)producthunt\.com$/],
 ];
 const SOCIAL = /(^|\.)(facebook|fb|instagram|t\.co|x\.com|twitter|reddit|pinterest|bsky|threads|linkedin|tiktok|youtube|whatsapp|telegram|mastodon|tumblr|discord)\b/;

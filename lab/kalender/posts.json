@@ -30,6 +30,31 @@
       "status": "vorschlag"
     },
     {
+      "id": "bsky-expose",
+      "date": "2026-10-05",
+      "channel": "bluesky",
+      "kind": "expose",
+      "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.",
+      "status": "gepostet",
+      "path": "/",
+      "time": "10:00",
+      "image": "Vorschaukarte der Startseite (kommt von selbst)",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
+    },
+    {
+      "id": "setup-hn",
+      "date": "2026-10-06",
+      "channel": "hn",
+      "kind": "setup",
+      "status": "vorschlag",
+      "text": "Konto auf news.ycombinator.com anlegen (kostenlos, Benutzername und Passwort, E-Mail freiwillig). Als Person, nicht als Marke: Show HN ist für den, der es gebaut hat. Neue Konten sind zwei Wochen lang grün markiert und werden strenger beäugt; deshalb jetzt anlegen und bis zum Show HN am 20.10. ein paar ehrliche Kommentare zu anderen Themen schreiben. Regeln für Show HN: https://news.ycombinator.com/showhn.html (ausprobierbar ohne Anmeldung, das erfüllt die Seite).",
+      "note": "Julian, 2026-10-06: „muss ich mich bei hacker news anmelden um dort posten zu können?“"
+    },
+    {
       "id": "setup-pinterest",
       "date": "2026-10-06",
       "channel": "pinterest",
@@ -44,6 +69,17 @@
       "kind": "setup",
       "text": "Namen @buyitscovers reservieren, Link im Profil mit ?via=tiktok. Posten erst, wenn die Clips kodiert sind und die Rechte-Entscheidung gefallen ist.",
       "status": "vorschlag"
+    },
+    {
+      "id": "x-expose",
+      "date": "2026-10-06",
+      "channel": "x",
+      "kind": "expose",
+      "status": "gepostet",
+      "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.",
+      "path": "/",
+      "postedUrl": "https://x.com/buyitscovers",
+      "note": "Julian, 2026-10-06: „poste auf X so wie auf bluesky“; von Claude über Chrome gepostet, Konto @buyitscovers. Link im Text (auf X verschwindet die Karte sonst), ohne ?via=, weil 5.6a keine Klasse x kennt: Besuche von dort zählen als social (Referrer t.co). Nach dem Klick leitete X auf eine Seite „graduated-access“ um, vermutlich ein Hinweis zu Einschränkungen neuer Konten; der Post erschien trotzdem mit Karte."
     },
     {
       "id": "setup-deploy",
@@ -76,22 +112,6 @@
       "kind": "setup",
       "text": "Online schon veröffentlicht (Stand 2026-10-04, einmal von buyitscovers.com/collections gelesen): Edelmann (Reihe Hanser, Tolkien, Jules Verne, Fischer), Piatti (dtv phantastica, Steinbeck), Kurt Wirth, Heidelbach (Haffmans, Kipling), Penguin Great Ideas und 30 weitere. Noch Entwurf, und der Kalender wartet darauf: Herder Bücherei von Walter Grieder (Galerie 22.11.), Penguin Classics black band (13.11.), Virago Modern Classics (16./19.11.). Veröffentlichen oder die Posts verwerfen; abhaken im Werkzeug unter „Erfüllt“.",
       "status": "vorschlag"
-    },
-    {
-      "id": "bsky-expose",
-      "date": "2026-10-05",
-      "channel": "bluesky",
-      "kind": "expose",
-      "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.",
-      "status": "gepostet",
-      "path": "/",
-      "time": "10:00",
-      "image": "Vorschaukarte der Startseite (kommt von selbst)",
-      "needs": [
-        "konto:bluesky",
-        "5.6a"
-      ],
-      "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
     },
     {
       "id": "ig-expose",
@@ -153,6 +173,22 @@
       "note": "Fleckhaus und 1963 aus allgemeinem Wissen, nicht aus unseren Daten: vor dem Posten prüfen. Gern zusätzlich auf Deutsch posten."
     },
     {
+      "id": "ig-mosaik-frauen",
+      "date": "2026-10-16",
+      "time": "18:00",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The women behind the covers. Each portrait is made of the covers her books have been printed with:\n\nJane Austen, from Pride and Prejudice, Emma and five more\nLouisa May Alcott, from Little Women and seven more\nEdith Wharton, from Ethan Frome, The House of Mirth, The Age of Innocence and four more\n\nThe covers come from Open Library; the portraits are in the public domain. Buy Its Covers shows the covers a book has been printed with, and finds you the edition behind the one you like.\n\nLink in bio.\n\n#bookcovers #mosaic #janeausten #louisamayalcott #edithwharton #womenwriters",
+      "path": "/",
+      "image": "Story/Karussell, vier Folien 1080×1350: lab/kalender/out/instagram-frauen-1.jpg bis -4.jpg (45 Spalten, keine Überblendung)",
+      "needs": [
+        "konto:instagram",
+        "5.6a"
+      ],
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Frauen statt Männer, vier Folien statt sechs, neuer Text auf der ersten (Julian, 2026-10-05); Überblendung 0. Von neun versuchten Autorinnen lesen sich diese drei; Werklisten aus lab/mosaic/out/cache/author_*_8.json."
+    },
+    {
       "id": "pin-expose",
       "date": "2026-10-17",
       "channel": "pinterest",
@@ -210,6 +246,22 @@
       ]
     },
     {
+      "id": "pin-mosaik-twain",
+      "date": "2026-10-19",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "title": "Mark Twain, made of the covers of his books",
+      "text": "A portrait of Mark Twain built from the covers of his eight most-printed books, Tom Sawyer and Huckleberry Finn among them. On Buy Its Covers: the covers his books have been printed with, and the editions behind them.",
+      "path": "/?author=mark%20twain",
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-mosaik-1.jpg",
+      "needs": [
+        "konto:pinterest",
+        "5.6a"
+      ],
+      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Pinnwand „Writers made of their covers“."
+    },
+    {
       "id": "reddit-answers-w2",
       "date": "2026-10-19",
       "channel": "reddit",
@@ -225,7 +277,7 @@
       "date": "2026-10-20",
       "channel": "hn",
       "kind": "expose",
-      "text": "[Ein Satz in deinen Worten, warum du das gebaut hast.]\n\nYou type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nWhat it can't do: it knows only what two open catalogues hold, a fraction of what was printed; it doesn't check stock; and most shops can't be checked at all. No accounts, no ads, a hobby project for now.\n\nNext.js on Vercel.",
+      "text": "A book is often reprinted with a different cover, and a shop page rarely tells you which one you will get.\n\nYou type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nThere is also a small cover game (two covers, pick one) and curated walls of book series, such as the SF Masterworks in number order.\n\nWhat it can't do: it only knows what two open catalogues hold, a fraction of what was printed, and it doesn't check stock. No accounts and no ads; it's a hobby project.\n\nBuilt with Next.js on Vercel.",
       "status": "vorschlag",
       "title": "Show HN: Buy Its Covers – the covers a book has been printed with",
       "path": "/",
@@ -234,7 +286,7 @@
         "5.6a",
         "kapazitaet"
       ],
-      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer."
+      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer. Text am 2026-10-06 geprüft: Platzhalter ersetzt (Julian kommentiert sonst nicht, deshalb kein persönlicher Grund), Satz über nicht prüfbare Shops gestrichen (die Verfügbarkeitsprüfung ist nicht in Produktion), Spiel und Sammlungen ergänzt. Link ohne ?via=: HN zeigt die Adresse, der Referrer news.ycombinator.com ergibt die Klasse hn. Offen vor dem Post: 0.13 (Kontingent-Alarm) und 2.4 (Firewall auf Log)."
     },
     {
       "id": "pin-batch-w2",
@@ -248,6 +300,22 @@
         "5.5a",
         "konto:pinterest"
       ]
+    },
+    {
+      "id": "pin-peter-and-wendy",
+      "date": "2026-10-21",
+      "channel": "pinterest",
+      "kind": "feature",
+      "text": "J. M. Barrie's Peter and Wendy in Scribner's 1911 edition: green cloth stamped in gold, cover by F. D. Bedford, now in the public domain. On Buy Its Covers, the covers Peter Pan has been printed with since, decade by decade, from two open catalogues.",
+      "status": "vorschlag",
+      "title": "Peter and Wendy, 1911: F. D. Bedford's cover, and Peter Pan through the decades",
+      "path": "/book/OL462007W/decades",
+      "needs": [
+        "konto:pinterest",
+        "5.6a"
+      ],
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
+      "note": "Zweiter Pin, nach dem Exposé. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
     },
     {
       "id": "ig-edition-suhrkamp",
@@ -949,55 +1017,7 @@
         "5.6a",
         "kapazitaet"
       ],
-      "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist."
-    },
-    {
-      "id": "ig-mosaik-frauen",
-      "date": "2026-10-16",
-      "time": "18:00",
-      "channel": "instagram",
-      "kind": "feature",
-      "status": "vorschlag",
-      "text": "The women behind the covers. Each portrait is made of the covers her books have been printed with:\n\nJane Austen, from Pride and Prejudice, Emma and five more\nLouisa May Alcott, from Little Women and seven more\nEdith Wharton, from Ethan Frome, The House of Mirth, The Age of Innocence and four more\n\nThe covers come from Open Library; the portraits are in the public domain. Buy Its Covers shows the covers a book has been printed with, and finds you the edition behind the one you like.\n\nLink in bio.\n\n#bookcovers #mosaic #janeausten #louisamayalcott #edithwharton #womenwriters",
-      "path": "/",
-      "image": "Story/Karussell, vier Folien 1080×1350: lab/kalender/out/instagram-frauen-1.jpg bis -4.jpg (45 Spalten, keine Überblendung)",
-      "needs": [
-        "konto:instagram",
-        "5.6a"
-      ],
-      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Frauen statt Männer, vier Folien statt sechs, neuer Text auf der ersten (Julian, 2026-10-05); Überblendung 0. Von neun versuchten Autorinnen lesen sich diese drei; Werklisten aus lab/mosaic/out/cache/author_*_8.json."
-    },
-    {
-      "id": "pin-mosaik-twain",
-      "date": "2026-10-19",
-      "channel": "pinterest",
-      "kind": "feature",
-      "status": "vorschlag",
-      "title": "Mark Twain, made of the covers of his books",
-      "text": "A portrait of Mark Twain built from the covers of his eight most-printed books, Tom Sawyer and Huckleberry Finn among them. On Buy Its Covers: the covers his books have been printed with, and the editions behind them.",
-      "path": "/?author=mark%20twain",
-      "image": "Pin 1000×1500: lab/kalender/out/pinterest-mosaik-1.jpg",
-      "needs": [
-        "konto:pinterest",
-        "5.6a"
-      ],
-      "note": "Mosaik aus nicht gemeinfreien Covern: Julian hat am 2026-10-05 entschieden, dass das pragmatisch keine Rechteprobleme auslöst („arbeite noch mit mosaiken der cover, die nicht gemeinfrei sind“); die Porträts sind gemeinfrei. Bilder: lab/kalender/out/, Befehle in lab/kalender/README.md. Pinnwand „Writers made of their covers“."
-    },
-    {
-      "id": "pin-peter-and-wendy",
-      "date": "2026-10-21",
-      "channel": "pinterest",
-      "kind": "feature",
-      "text": "J. M. Barrie's Peter and Wendy in Scribner's 1911 edition: green cloth stamped in gold, cover by F. D. Bedford, now in the public domain. On Buy Its Covers, the covers Peter Pan has been printed with since, decade by decade, from two open catalogues.",
-      "status": "vorschlag",
-      "title": "Peter and Wendy, 1911: F. D. Bedford's cover, and Peter Pan through the decades",
-      "path": "/book/OL462007W/decades",
-      "needs": [
-        "konto:pinterest",
-        "5.6a"
-      ],
-      "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
-      "note": "Zweiter Pin, nach dem Exposé. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
+      "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist. Einschätzung 2026-10-06 (Julian: „macht product hunt überhaupt sinn für dieses produkt?“): eher nein. Das Publikum sind Gründer und Tech-Leute, die Werkzeuge für ihre Arbeit suchen, nicht Leser; ein Launch trägt einen Tag und braucht Vorbereitung und Unterstützer, und ohne Provision (Hobby-Modus) bringt er nichts Messbares außer Besuchen. Erst entscheiden, wenn HN und Reddit ausgewertet sind."
     }
   ]
 }
