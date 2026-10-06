@@ -266,7 +266,7 @@
       "date": "2026-10-20",
       "channel": "hn",
       "kind": "expose",
-      "text": "[Ein Satz in deinen Worten, warum du das gebaut hast.]\n\nYou type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nWhat it can't do: it knows only what two open catalogues hold, a fraction of what was printed; it doesn't check stock; and most shops can't be checked at all. No accounts, no ads, a hobby project for now.\n\nNext.js on Vercel.",
+      "text": "A book is often reprinted with a different cover, and a shop page rarely tells you which one you will get.\n\nYou type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nThere is also a small cover game (two covers, pick one) and curated walls of book series, such as the SF Masterworks in number order.\n\nWhat it can't do: it only knows what two open catalogues hold, a fraction of what was printed, and it doesn't check stock. No accounts and no ads; it's a hobby project.\n\nBuilt with Next.js on Vercel.",
       "status": "vorschlag",
       "title": "Show HN: Buy Its Covers – the covers a book has been printed with",
       "path": "/",
@@ -275,7 +275,7 @@
         "5.6a",
         "kapazitaet"
       ],
-      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer."
+      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer. Text am 2026-10-06 geprüft: Platzhalter ersetzt (Julian kommentiert sonst nicht, deshalb kein persönlicher Grund), Satz über nicht prüfbare Shops gestrichen (die Verfügbarkeitsprüfung ist nicht in Produktion), Spiel und Sammlungen ergänzt. Link ohne ?via=: HN zeigt die Adresse, der Referrer news.ycombinator.com ergibt die Klasse hn. Offen vor dem Post: 0.13 (Kontingent-Alarm) und 2.4 (Firewall auf Log)."
     },
     {
       "id": "pin-batch-w2",
@@ -1006,7 +1006,7 @@
         "5.6a",
         "kapazitaet"
       ],
-      "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist."
+      "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist. Einschätzung 2026-10-06 (Julian: „macht product hunt überhaupt sinn für dieses produkt?“): eher nein. Das Publikum sind Gründer und Tech-Leute, die Werkzeuge für ihre Arbeit suchen, nicht Leser; ein Launch trägt einen Tag und braucht Vorbereitung und Unterstützer, und ohne Provision (Hobby-Modus) bringt er nichts Messbares außer Besuchen. Erst entscheiden, wenn HN und Reddit ausgewertet sind."
     }
   ]
 }
