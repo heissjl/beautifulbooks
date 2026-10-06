@@ -5437,3 +5437,20 @@ Julian: „ich habe probleme manche buttons auf dem handy zu drücken. irgendwie
 ## 2026-10-06 · Eine eigene Linkkarte für /shelfportrait (ROADMAP 5.18b)
 
 Julian: „baue noch ein schönere vorschaukarte für den allgemeinen link zur shelfportrait-seite, ein sharepic in abstrakt zb, aber mit dem schönen hintergrund“. Bis dahin zeigte ein Link auf `/shelfportrait` die allgemeine Karte der Seite. Jetzt `app/shelfportrait/opengraph-image.tsx`, 1200 × 630, JPEG: das Mosaik der Teilen-Bilder als Grund, ein leeres Brett aus neun Plätzen (124 × 186) rechts, in den Plätzen hell (Abdunklung 0,12), außerhalb stark abgedunkelt (0,8 statt der 0,5 der Brett-Bilder; `mosaicGround` hat dafür `windows` und `base` bekommen), der mittlere Platz mit Rahmen und Schein im Akzent; links „My Shelf-Portrait“, „The books that inspire you, each with the cover you love.“ und „Judge a book, BuyItsCovers.com“. Der erste Versuch mit der Abdunklung 0,5 war zu unruhig, das Brett kaum zu erkennen. Die Schrift endet bei 71 % der Höhe, außerhalb des Schilds, das X links unten über die Karte legt. Kein Cover wird geholt; `next build` zeichnet die Karte einmal statisch (`○ /shelfportrait/opengraph-image`). Geteilte Bretter behalten ihre eigene Karte mit ihren Covern. Analyse: nichts betroffen.
+
+## 2026-10-06 · Apple Books als Bildquelle, erster Lauf (ROADMAP 6.93)
+
+Julian: „können wir die apple book API benutzen?“, dann „ja, bau den lab-Versuch“. Stichprobe vorher, je eine Anfrage: die iTunes Search API (`media=ebook`, kein Schlüssel) liefert E-Book-Ausgaben mit Bild bis 2000 px Kante (1351 × 2000 px gemessen); `lookup?isbn=` trifft E-Book-ISBNs, findet Druck-ISBNs nicht (2 von 2) und gab für die Scribner-ISBN 9780743273565 ein koreanisches E-Book. Treffer tragen keine ISBN, keinen Verlag, keine Sprache.
+
+`lab/apple-books/` ordnet Apple-Treffer (US-, UK-, DE-Store, 45 Anfragen im 4-s-Takt) über Nachname und normalisierten Titel einem Werk zu, hasht die Bilder wie die Seite und faltet sie mit `foldDuplicateCovers` gegen die Wand. Der volle Lauf scheiterte, bevor er eine Antwort bekam: `openlibrary.org` verweigerte diesem Mac am Vormittag die Verbindung (`ECONNREFUSED`, auch curl), `covers.openlibrary.org`, archive.org und Apple antworteten. Daher nur gegen die aufgezeichneten Seiten (`--fixtures`, je Werk Seite 0, Gatsby drei Seiten):
+
+| Werk | Wand nach Faltung | Apple zugeordnet (Alias) | neu (Alias) | gefaltet |
+|---|---|---|---|---|
+| Mumbo Jumbo | 9 | 4 (0) | 4 (0) | 0 |
+| Nineteen Eighty-Four | 21 | 140 (120) | 110 (92) | 6 |
+| Gravity's Rainbow | 22 | 3 (2) | 1 (1) | 1 |
+| The Great Gatsby | 101 | 129 (28) | 108 (22) | 17 |
+| Pride and Prejudice | 60 | 161 (46) | 145 (37) | 6 |
+
+Angesehen: bei Mumbo Jumbo vier echte Verlagscover, die die Wand nicht hat; bei den gemeinfreien Werken überwiegend E-Books kleiner Anbieter (Vorlagen, Stockfotos). Von 17 gefalteten Gatsby-Paaren ist eines falsch (ein gestreiftes *Der große Gatsby* in ein anderes Design). `1984: The Graphic Novel` wurde über den Alias `1984` zugeordnet, weil `normalizeTitle` den Untertitel abschneidet. Nichts auf der Website; offen in ROADMAP 6.93.
+
