@@ -1,6 +1,6 @@
 ## 2026-10-06 · X als eigener Kanal (ROADMAP 5.6a)
 
-Julian: „bau das“, auf die Frage, ob X einen eigenen Eintrag in der Kanal-Messung bekommt. Der Exposé-Post ging am selben Tag auf X hinaus (Konto @buyitscovers); bis dahin zählte ein Besuch von dort als `social`. Neu: Klasse `x` in `ENTRIES` und `VIA`, erkannt am Referrer `x.com`, `twitter.com` oder `t.co` (X schickt seinen Kürzer als Referrer), Label „X“ in der Karte K16. Die Datenschutzerklärung bleibt unverändert: Ihr Satz nennt Beispiele „and the like“, X ist eines davon. Tests: Referrer-Fälle und `?via=x`; der ältere Test, der `t.co` als `social` erwartete, erwartet jetzt `x`. Suite, Typprüfung, Lint und Build grün.
+Julian: „bau das“, auf die Frage, ob X einen eigenen Eintrag in der Kanal-Messung bekommt. Der Exposé-Post ging am selben Tag auf X hinaus (Konto @buyitscovers); bis dahin zählte ein Besuch von dort als `social`. Neu: Klasse `x` in `ENTRIES` und `VIA`, erkannt am Referrer `x.com`, `twitter.com` oder `t.co` (X schickt seinen Kürzer als Referrer), Label „X“ in der Karte K16. Die Datenschutzerklärung bleibt unverändert: Ihr Satz nennt Beispiele „and the like“, X ist eines davon. Tests: Referrer-Fälle und `?via=x`; der ältere Test, der `t.co` als `social` erwartete, erwartet jetzt `x`. Suite, Typprüfung, Lint und Build grün. Deployt am selben Abend (`beautifulbooks-ovrqtjcxr`, Ready).
 
 ## 2026-10-05 · Kanäle messbar, deployt (ROADMAP 5.6a)
 
