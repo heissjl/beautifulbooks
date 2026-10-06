@@ -1,3 +1,19 @@
+## 2026-10-05 · Das Exposé auf Mastodon (ROADMAP 5.6b)
+
+Julian: „post the same expose as on x and bsky on mastodon“. Derselbe Text wie auf Bluesky und X, über Chrome im Konto `@buyitscovers` auf `mastodon.social` gepostet, öffentlich, Sprache Englisch, 258 Zeichen von 500: [mastodon.social/@buyitscovers/117392110664968201](https://mastodon.social/@buyitscovers/117392110664968201). Die Adresse steht wie auf X im Text, ohne `?via=`, weil 5.6a keine Klasse `mastodon` kennt. Die Vorschaukarte holte Mastodon selbst (Titel „Buy Its Covers“, Beschreibung der Startseite, Bild zwischengespeichert).
+
+**Gemessen am fertigen Post:** Mastodon setzt auf den Link `rel="nofollow noopener"` — **kein `noreferrer`**, anders als oft angenommen. Der Browser schickt also die Herkunft `https://mastodon.social/` mit, und `originOf` zählt den Besuch über `SOCIAL` als `social` (der Ausdruck kennt `mastodon` seit 3.1). Zwei Lücken bleiben: Besuche über eine andere Instanz (`hachyderm.io`, `chaos.social`) treffen `SOCIAL` nicht und zählen als `direct`, und Mastodon steht in der Kanal-Karte K16 nicht neben Bluesky und X, sondern im Sammeleintrag `social`. Ob `mastodon` eine eigene Klasse in `ENTRIES`/`VIA` bekommt wie X am 2026-10-06, ist Julians Entscheidung; am Code wurde dafür nichts geändert.
+
+**Der Profiltext, am selben Tag** (Julian: „we also need to update our bio. do it with the chrome extension“). Das Konto hatte seit dem 2026-10-04 Bild, Banner und Namen, aber keine Zeile Text. Jetzt steht dort, 211 von 500 Zeichen:
+
+> Judge a book, buy its covers.
+>
+> Type a title and see the covers it has been printed with, by language and year, then find the edition you'd want on your shelf. From two open catalogues, Open Library and Google Books.
+
+Dazu ein Feld „Website“ mit `https://buyitscovers.com` (ohne `?via=`). **Das Feld ist unbestätigt** (`verified_at: null`): den grünen Haken setzt Mastodon erst, wenn die verlinkte Seite selbst einen Link mit `rel="me"` auf `https://mastodon.social/@buyitscovers` trägt. Die Seite verlinkt bisher **kein** eigenes Konto — ob sie das tun soll, ist Julians Entscheidung, und es wäre ein Fußzeilen-Eintrag, kein neuer Mechanismus. Bluesky hat denselben leeren Profiltext; dort ist nichts geändert worden.
+
+Im Kalender (`lab/kalender/`): Kanal `mastodon` in `CHANNELS` (Grenze 500 Zeichen), `konto:mastodon` in `NEEDS` und in `done`, der Eintrag `mastodon-expose` als `gepostet` mit Adresse. Seine Einträge lassen `path` leer und tragen den Link im Text — solange es keine `VIA`-Klasse gibt, wäre ein `?via=mastodon` ein Parameter, den die Seite wegwirft.
+
 ## 2026-10-06 · X als eigener Kanal (ROADMAP 5.6a)
 
 Julian: „bau das“, auf die Frage, ob X einen eigenen Eintrag in der Kanal-Messung bekommt. Der Exposé-Post ging am selben Tag auf X hinaus (Konto @buyitscovers); bis dahin zählte ein Besuch von dort als `social`. Neu: Klasse `x` in `ENTRIES` und `VIA`, erkannt am Referrer `x.com`, `twitter.com` oder `t.co` (X schickt seinen Kürzer als Referrer), Label „X“ in der Karte K16. Die Datenschutzerklärung bleibt unverändert: Ihr Satz nennt Beispiele „and the like“, X ist eines davon. Tests: Referrer-Fälle und `?via=x`; der ältere Test, der `t.co` als `social` erwartete, erwartet jetzt `x`. Suite, Typprüfung, Lint und Build grün.

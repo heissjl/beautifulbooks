@@ -3,6 +3,7 @@
   "done": [
     "5.6a",
     "konto:bluesky",
+    "konto:mastodon",
     "publish:dtv-phantastica-covers-by-celestino-piatti",
     "publish:fischer-bucherei-covers-by-kurt-wirth",
     "publish:haffmans-covers-by-nikolaus-heidelbach",
@@ -80,6 +81,29 @@
       "path": "/",
       "postedUrl": "https://x.com/buyitscovers",
       "note": "Julian, 2026-10-06: „poste auf X so wie auf bluesky“; von Claude über Chrome gepostet, Konto @buyitscovers. Link im Text (auf X verschwindet die Karte sonst), ohne ?via=, weil 5.6a keine Klasse x kennt: Besuche von dort zählen als social (Referrer t.co). Nach dem Klick leitete X auf eine Seite „graduated-access“ um, vermutlich ein Hinweis zu Einschränkungen neuer Konten; der Post erschien trotzdem mit Karte."
+    },
+    {
+      "id": "setup-mastodon",
+      "date": "2026-10-05",
+      "channel": "mastodon",
+      "kind": "setup",
+      "status": "gepostet",
+      "text": "Konto @buyitscovers auf mastodon.social (von Julian am 2026-10-04 angelegt, Profilbild W1 und banner-right-1500x500.png, Anzeigename „Buy Its Covers“). Profiltext am 2026-10-05 gesetzt: „Judge a book, buy its covers. / Type a title and see the covers it has been printed with, by language and year, then find the edition you’d want on your shelf. From two open catalogues, Open Library and Google Books.“ (211 von 500 Zeichen). Feld „Website“: https://buyitscovers.com, ohne ?via=.",
+      "note": "Das Feld ist **unbestätigt** (`verified_at: null`): Mastodon setzt den grünen Haken erst, wenn buyitscovers.com einen Link mit rel=\"me\" auf https://mastodon.social/@buyitscovers trägt. Die Seite verlinkt bisher kein eigenes Konto — Julians Entscheidung, ob sie das tun soll."
+    },
+    {
+      "id": "mastodon-expose",
+      "date": "2026-10-05",
+      "channel": "mastodon",
+      "kind": "expose",
+      "status": "gepostet",
+      "text": "Judge a book, buy its covers.\n\nType a title and see the covers it has been printed with, by language and year. Then find the edition you'd want on your shelf.\n\nThe covers come from two open catalogues, Open Library and Google Books.\n\nhttps://buyitscovers.com",
+      "postedUrl": "https://mastodon.social/@buyitscovers/117392110664968201",
+      "image": "Vorschaukarte der Startseite (Mastodon holt sie selbst)",
+      "needs": [
+        "konto:mastodon"
+      ],
+      "note": "Julian, 2026-10-05: „post the same expose as on x and bsky on mastodon“; von Claude über Chrome gepostet, Konto @buyitscovers auf mastodon.social, öffentlich, Sprache Englisch. Der Link steht im Text und ohne ?via=, weil 5.6a keine Klasse mastodon kennt; Mastodon setzt rel=\"nofollow noopener\" (kein noreferrer), also kommt der Referrer mastodon.social an und der Besuch zählt als social. Die Vorschaukarte kam von selbst (Titel „Buy Its Covers“, Bild zwischengespeichert)."
     },
     {
       "id": "setup-deploy",

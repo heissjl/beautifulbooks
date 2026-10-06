@@ -12,9 +12,12 @@
  * 5.6a (`VIA` in lib/insights/signals.ts on the 5.6a branch), so that a link
  * posted here is counted under the channel it was posted on. `alle` is for
  * setup and review entries that belong to no single channel and carry no link.
- * `x` joined VIA on 2026-10-06.
+ * `x` joined VIA on 2026-10-06. `mastodon` is the exception: it has no VIA
+ * class, so a Mastodon post carries the plain address and the visit is counted
+ * from the referrer (`mastodon.social` falls under `social`). Its entries
+ * therefore leave `path` empty and put the link in the text.
  */
-export const CHANNELS = ['bluesky', 'x', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
+export const CHANNELS = ['bluesky', 'x', 'mastodon', 'instagram', 'pinterest', 'tiktok', 'reddit', 'hn', 'producthunt', 'mail', 'alle'] as const;
 export type Channel = (typeof CHANNELS)[number];
 
 export const STATUSES = ['vorschlag', 'freigegeben', 'gepostet', 'verworfen'] as const;
@@ -66,6 +69,7 @@ export const NEEDS: Record<string, string> = {
   '5.5a': 'Pin-Format 1000×1500 gebaut',
   ffmpeg: 'ffmpeg installiert, Clips aus lab/video kodiert',
   'konto:bluesky': 'Bluesky-Konto angelegt',
+  'konto:mastodon': 'Mastodon-Konto angelegt (mastodon.social)',
   'konto:instagram': 'Instagram-Konto angelegt',
   'konto:pinterest': 'Pinterest-Unternehmenskonto angelegt, Website bestätigt',
   'konto:tiktok': 'TikTok-Konto angelegt',
@@ -84,6 +88,7 @@ export function knownNeed(need: string): boolean {
 export const LIMITS: Partial<Record<Channel, { text?: number; title?: number }>> = {
   bluesky: { text: 300 },
   x: { text: 280 },
+  mastodon: { text: 500 },
   instagram: { text: 2200 },
   tiktok: { text: 2200 },
   pinterest: { title: 100, text: 500 },
