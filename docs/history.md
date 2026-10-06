@@ -5301,3 +5301,7 @@ Julian, zum Satz für Rechteinhaber auf About (2.18k): „this should name mail@
 ## 2026-10-05 · Datenschutzerklärung: der Abschnitt zu Vorschlägen ist weg, der erste Satz kürzer
 
 Julian, zu „Suggestions for collections (invitation only)": „remove this part". Claude wies darauf hin, dass `/suggest` und `/curate` in Produktion an sind (`SUGGEST_PASSWORD`) und weiter das Cookie `bb_suggest` setzen und Vorschläge mit Notiz und freiwilligem Namen in der Redis speichern, die Erklärung das dann aber nicht mehr nennt; zur Wahl standen kürzen, nur entfernen, oder `/suggest` abschalten (mit eigenem Schalter für `/curate`). **Julian wählte „nur den Text entfernen".** Entfernt in `app/privacy/page.tsx` samt der zwei deutschen Sätze in `lib/i18n/de.ts`; SPEC F8.4 sagt, wann er zurück muss. Dazu Julian zum Einleitungssatz: „nach listed below den satz beenden" — jetzt „What it does process is listed below." / „Was sie verarbeitet, steht unten." (das „in full" / „ohne Auslassung" wäre nach dem Entfernen ohnehin nicht mehr wahr gewesen).
+
+## 2026-10-05 · Deploy der Shop-Schalter (0.1, 4.13 Schritt 5)
+
+Julian: „ja, merge und push". `origin/main` von `d2e21f2` auf `f4e61dc`, nach einem Merge von 7 Commits anderer Sitzungen (Konflikt nur in dieser Datei, beide Abschnitte behalten). Vorher 1.404 Tests, tsc, ESLint, `next build`. Produktion einmal angesehen: `/privacy` nennt weder Frankfurt beim Cover-Spiel noch den Partner-Satz (Hobby-Modus) — wie gewollt.
