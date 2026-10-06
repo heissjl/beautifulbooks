@@ -118,6 +118,18 @@ def tight_text(d: ImageDraw.ImageDraw, xy: tuple[int, int], text: str, f, fill, 
             x += d.textlength(mark, font=f) - pull
 
 
+def slogan(d: ImageDraw.ImageDraw, xy: tuple[int, int], size: int):
+    """The home page's hero line as the site sets it (app/page.tsx): "Judge a
+    book," upright in ink, "buy its covers." in italics in the accent, in the
+    site's proportional Xanh (assets/fonts, the files the share cards use)
+    (Julian, 2026-10-06: "besser doch unseren hero slogan von der startseite")."""
+    root = os.path.join(HERE, '..', '..', 'assets', 'fonts')
+    upright = ImageFont.truetype(os.path.join(root, 'xanh-proportional-regular.woff'), size)
+    italic = ImageFont.truetype(os.path.join(root, 'xanh-proportional-italic.woff'), size)
+    x, y = xy
+    d.text((x, y), 'Judge a book, ', font=upright, fill=INK)
+    d.text((x + d.textlength('Judge a book, ', font=upright), y), 'buy its covers.', font=italic, fill=ACCENT)
+
 def wrap(d: ImageDraw.ImageDraw, text: str, f, max_w: int) -> list[str]:
     lines, line = [], ''
     for word in text.split():
@@ -373,7 +385,7 @@ def versus_pin(pair=None, name='pinterest-versus.jpg'):
         d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
     # Julian, 2026-10-05: no explaining sentences under the tagline, and tidy
     # its spacing — Xanh Mono is monospaced, so a full-width space reads as a gap.
-    tight_text(d, (70, 1180), 'Judge a book by its cover.', font('xanh-italic', 58), ACCENT)
+    slogan(d, (70, 1180), 58)
     d.text((72, 1330), 'buyitscovers.com/versus', font=font('xanh-italic', 40), fill=INK)
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
@@ -444,7 +456,7 @@ def train_post(W: int, H: int, name: str):
     d = ImageDraw.Draw(s)
     of = font('xanh-italic', round(48 * k))
     d.text(((W - d.textlength('or', font=of)) / 2, top + box_h // 2 - round(30 * k)), 'or', font=of, fill=MUTED)
-    tight_text(d, (round(70 * k), H - round(230 * k)), 'Judge a book by its cover.', font('xanh-italic', round(54 * k)), ACCENT)
+    slogan(d, (round(70 * k), H - round(230 * k)), round(54 * k))
     d.text((round(72 * k), H - round(130 * k)), 'buyitscovers.com/versus', font=font('xanh-italic', round(38 * k)), fill=INK)
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 

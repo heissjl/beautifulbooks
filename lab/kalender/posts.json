@@ -20,7 +20,8 @@
       "channel": "bluesky",
       "kind": "setup",
       "text": "Konto anlegen. Als Handle die Domain selbst: @buyitscovers.com (Bluesky → Einstellungen → Handle → eigene Domain; ein TXT-Eintrag _atproto bei INWX, v=spf1 nicht anfassen). Profiltext: „Judge a book, buy its covers. The covers a book has been printed with, from two open catalogues.“ Website im Profil: https://buyitscovers.com/?via=bluesky",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-instagram",
@@ -28,7 +29,8 @@
       "channel": "instagram",
       "kind": "setup",
       "text": "Konto @buyitscovers (Creator- oder Business-Konto, damit es Statistiken gibt). Link im Profil: https://buyitscovers.com/?via=instagram. Profiltext wie bei Bluesky. Noch nichts mit Covern posten, solange die Rechte-Entscheidung offen ist.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "bsky-expose",
@@ -61,7 +63,8 @@
       "channel": "pinterest",
       "kind": "setup",
       "text": "Unternehmenskonto, Website bestätigen (DNS-TXT bei INWX, PLAN-5.5-5.6 §7), Pinnwände anlegen: eine je veröffentlichter Sammlung, dazu „Covers through the decades“. Nichts pinnen vor Rechte-Entscheidung und 5.5a.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-tiktok",
@@ -69,7 +72,8 @@
       "channel": "tiktok",
       "kind": "setup",
       "text": "Namen @buyitscovers reservieren, Link im Profil mit ?via=tiktok. Posten erst, wenn die Clips kodiert sind und die Rechte-Entscheidung gefallen ist.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "x-expose",
@@ -88,7 +92,8 @@
       "channel": "alle",
       "kind": "setup",
       "text": "Vor dem ersten Link: 5.6a deployen (Satz der Datenschutzerklärung freigeben), damit ?via= zählt. Vor HN und Reddit zusätzlich 0.2, 0.13, 2.4 (Kapazität).",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-reddit",
@@ -96,7 +101,8 @@
       "channel": "reddit",
       "kind": "setup",
       "text": "Eigenes Konto prüfen (Alter, Karma); die Regeln von r/InternetIsBeautiful, r/books, r/printSF und r/suggestmeabook lesen und hier notieren, was für Selbstwerbung gilt.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-decision",
@@ -104,7 +110,8 @@
       "channel": "alle",
       "kind": "setup",
       "text": "Rechte-Entscheidung (PLAN-5.5-5.6 §6 Frage 1): (a) Cover auf fremden Plattformen mit Quellenangabe, (b) nur gemeinfreie, (c) nur Links mit Vorschaukarte. Ohne Antwort gilt (c): Bluesky, Reddit, HN laufen, Instagram nur mit dem Typografie-Exposé, Pinterest und TikTok warten.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-publish",
@@ -112,7 +119,8 @@
       "channel": "alle",
       "kind": "setup",
       "text": "Online schon veröffentlicht (Stand 2026-10-04, einmal von buyitscovers.com/collections gelesen): Edelmann (Reihe Hanser, Tolkien, Jules Verne, Fischer), Piatti (dtv phantastica, Steinbeck), Kurt Wirth, Heidelbach (Haffmans, Kipling), Penguin Great Ideas und 30 weitere. Noch Entwurf, und der Kalender wartet darauf: Herder Bücherei von Walter Grieder (Galerie 22.11.), Penguin Classics black band (13.11.), Virago Modern Classics (16./19.11.). Veröffentlichen oder die Posts verwerfen; abhaken im Werkzeug unter „Erfüllt“.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "ig-expose",
@@ -142,7 +150,8 @@
         "konto:bluesky",
         "5.6a"
       ],
-      "image": "Vorschaukarte der Sammlung"
+      "image": "Vorschaukarte der Sammlung",
+      "note": ""
     },
     {
       "id": "ig-sf-masterworks",
@@ -157,7 +166,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Folie 1: Bildschirmfoto der Wand; Folien 2–8: die sieben genannten Cover einzeln, Künstler in der Bildbeschreibung"
+      "image": "Folie 1: Bildschirmfoto der Wand; Folien 2–8: die sieben genannten Cover einzeln, Künstler in der Bildbeschreibung",
+      "note": ""
     },
     {
       "id": "bsky-edition-suhrkamp",
@@ -233,7 +243,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "mail-outreach",
@@ -244,7 +255,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-mosaik-twain",
@@ -271,7 +283,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "hn-show",
@@ -314,7 +327,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-peter-and-wendy",
@@ -372,7 +386,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pr-pin-rowohlt",
@@ -397,7 +412,7 @@
       "channel": "bluesky",
       "kind": "feature",
       "status": "vorschlag",
-      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book by its cover.",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.",
       "path": "/versus",
       "needs": [
         "konto:bluesky",
@@ -405,7 +420,7 @@
         "spiel",
         "rechte"
       ],
-      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline „Judge a book by its cover.“ (Julian, 2026-10-06).",
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06).",
       "image": "lab/kalender/out/zug-1080x1350.jpg"
     },
     {
@@ -414,7 +429,7 @@
       "channel": "pinterest",
       "kind": "feature",
       "status": "vorschlag",
-      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book by its cover.",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.",
       "path": "/versus",
       "image": "lab/kalender/out/pinterest-zug.jpg",
       "needs": [
@@ -423,7 +438,7 @@
         "spiel",
         "rechte"
       ],
-      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline „Judge a book by its cover.“ (Julian, 2026-10-06).",
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06).",
       "title": "Which cover would you rather be seen reading on the train?"
     },
     {
@@ -432,7 +447,7 @@
       "channel": "x",
       "kind": "feature",
       "status": "vorschlag",
-      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book by its cover.",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.",
       "path": "/versus",
       "image": "lab/kalender/out/zug-1080x1350.jpg",
       "needs": [
@@ -440,7 +455,7 @@
         "spiel",
         "rechte"
       ],
-      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline „Judge a book by its cover.“ (Julian, 2026-10-06)."
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06)."
     },
     {
       "id": "ig-feminist-press",
@@ -455,7 +470,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln"
+      "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln",
+      "note": ""
     },
     {
       "id": "pr-zug-instagram",
@@ -463,7 +479,7 @@
       "channel": "instagram",
       "kind": "feature",
       "status": "vorschlag",
-      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book by its cover.\n\nLink in bio.\n\n#performativereader #bookcovers #booktok",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.\n\nLink in bio.\n\n#performativereader #bookcovers #booktok",
       "path": "/versus",
       "image": "lab/kalender/out/zug-1080x1350.jpg",
       "needs": [
@@ -472,7 +488,7 @@
         "spiel",
         "rechte"
       ],
-      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline „Judge a book by its cover.“ (Julian, 2026-10-06).",
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06).",
       "time": "18:00"
     },
     {
@@ -581,7 +597,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w3",
@@ -592,7 +609,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-sf-relaunch",
@@ -607,7 +625,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Bildschirmfoto der Wand, dann vier Cover mit der senkrechten Reihenzeile; Künstler aus ISFDB in die Bildbeschreibung"
+      "image": "Bildschirmfoto der Wand, dann vier Cover mit der senkrechten Reihenzeile; Künstler aus ISFDB in die Bildbeschreibung",
+      "note": ""
     },
     {
       "id": "bsky-1984-decades",
@@ -620,7 +639,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w3",
@@ -633,7 +653,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "tt-expose-dune",
@@ -662,7 +683,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-dune-decades",
@@ -677,7 +699,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Je Jahrzehnt ein Cover als Folie, in Reihenfolge; Verlag und Jahr in die Bildbeschreibung"
+      "image": "Je Jahrzehnt ein Cover als Folie, in Reihenfolge; Verlag und Jahr in die Bildbeschreibung",
+      "note": ""
     },
     {
       "id": "gal-edelmann-hanser",
@@ -708,7 +731,8 @@
         "konto:bluesky",
         "5.6a",
         "spiel"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w4",
@@ -719,7 +743,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-iib",
@@ -748,7 +773,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-otherwise",
@@ -763,7 +789,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Bildschirmfoto der Wand, dann vier Cover; Künstler aus ISFDB, wo bekannt"
+      "image": "Bildschirmfoto der Wand, dann vier Cover; Künstler aus ISFDB, wo bekannt",
+      "note": ""
     },
     {
       "id": "bsky-sf-rounded",
@@ -776,7 +803,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "tt-gatsby",
@@ -791,7 +819,8 @@
         "ffmpeg",
         "konto:tiktok"
       ],
-      "image": "Clip „Gatsby“ aus lab/video"
+      "image": "Clip „Gatsby“ aus lab/video",
+      "note": ""
     },
     {
       "id": "ig-hobbit-decades",
@@ -806,7 +835,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Je Jahrzehnt ein Cover als Folie"
+      "image": "Je Jahrzehnt ein Cover als Folie",
+      "note": ""
     },
     {
       "id": "bsky-pride-decades",
@@ -819,7 +849,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "gal-piatti",
@@ -862,7 +893,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-edelmann-tolkien",
@@ -877,7 +909,8 @@
         "konto:instagram",
         "publish:tolkien-covers-by-heinz-edelmann"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-create",
@@ -891,7 +924,8 @@
         "konto:bluesky",
         "5.6a",
         "walls"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w5",
@@ -904,7 +938,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "bsky-piatti",
@@ -935,7 +970,8 @@
         "konto:tiktok",
         "clip:1984"
       ],
-      "image": "neuer Clip, Storyboard in lab/video"
+      "image": "neuer Clip, Storyboard in lab/video",
+      "note": ""
     },
     {
       "id": "ig-penguin-black-band",
@@ -982,7 +1018,8 @@
         "konto:bluesky",
         "5.6a",
         "publish:virago-modern-classics"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w6",
@@ -993,7 +1030,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-piatti",
@@ -1008,7 +1046,8 @@
         "konto:instagram",
         "publish:dtv-phantastica-covers-by-celestino-piatti"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-alice-decades",
@@ -1021,7 +1060,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w6",
@@ -1034,7 +1074,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-virago",
@@ -1049,7 +1090,8 @@
         "konto:instagram",
         "publish:virago-modern-classics"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-great-ideas",
@@ -1063,7 +1105,8 @@
         "konto:bluesky",
         "5.6a",
         "publish:penguin-great-ideas"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "gal-grieder",
@@ -1093,7 +1136,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w7",
@@ -1104,7 +1148,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-great-ideas",
@@ -1119,7 +1164,8 @@
         "konto:instagram",
         "publish:penguin-great-ideas"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-steppenwolf-decades",
@@ -1132,7 +1178,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w7",
@@ -1145,7 +1192,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-1984-decades",
@@ -1159,7 +1207,8 @@
         "rechte",
         "konto:instagram"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "gal-heidelbach",
@@ -1184,7 +1233,8 @@
       "channel": "alle",
       "kind": "review",
       "text": "Auswertung nach PLAN-5.5-5.6 §5 mit der Karte „Kanäle“ (K14) in /admin/insights: je Kanal Besuche, Anteil mit geöffnetem Buch, Anteil mit Klick zu einem Händler. Was trägt, behält seinen Rhythmus; was nicht trägt, wird eingestellt, nicht verbessert. Danach plant Claude die nächsten acht Wochen.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "reddit-answers-w8",
@@ -1195,7 +1245,8 @@
       "status": "vorschlag",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ph-launch",
