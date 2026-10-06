@@ -15,6 +15,6 @@ export async function GET(request: NextRequest) {
   const refused = closed(request, 'inspiration');
   if (refused) return refused;
   const board = parseBoard(request.nextUrl.searchParams);
-  if (filledCount(board) === 0) return json({ books: [], by: board.by });
+  if (filledCount(board) === 0) return json({ books: [], by: board.by, sub: board.sub });
   return json(await describeBoard(board), 200, DAY);
 }

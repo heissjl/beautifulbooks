@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   boardQuery, cleanName, decodeSlot, emptyBoard, encodeSlot, filledCount, firstEmpty, NAME_MAX, parseBoard, place, remove, resize, setCover,
+  SUB_MAX,
   SIZE_WORD, sizeOf, SLOTS, swap,
 } from '../inspiration/board';
 
@@ -22,6 +23,16 @@ describe('board in the address', () => {
     const q = boardQuery(b);
     expect(q).toBe('b=a1fz.7gxh3~~~~j5d3.gabc_D-1~~~~&by=Julian');
     expect(parseBoard(new URLSearchParams(q))).toEqual(b);
+  });
+
+  it('carries a line of the reader\'s own under the title, cleaned and cut like a name', () => {
+    const b = { ...place(emptyBoard(), 0, gatsby), sub: 'Sci-fi & me' };
+    const q = boardQuery(b);
+    expect(q).toBe('b=a1fz.7gxh3~~~~~~~~&sub=Sci-fi%20%26%20me');
+    expect(parseBoard(new URLSearchParams(q))).toEqual(b);
+    const long = parseBoard(new URLSearchParams(`sub=${encodeURIComponent(`  two\nlines ${'x'.repeat(200)}`)}`));
+    expect(long.sub.startsWith('two lines x')).toBe(true);
+    expect([...long.sub]).toHaveLength(SUB_MAX);
   });
 
   it('is empty for an empty board', () => {

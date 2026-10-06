@@ -12,6 +12,7 @@ import { starterPool } from '@/lib/inspiration/starterpool';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { SITE_URL } from '@/lib/seo';
 
 /**
  * "My Shelf-Portrait" (ROADMAP 5.18b): three, six or nine books on a board,
@@ -28,8 +29,9 @@ import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
  */
 export const metadata: Metadata = {
   title: 'My Shelf-Portrait',
-  description: 'The books that inspire you — three, six or nine of them, with your favourite covers. Pick them, then share the picture.',
-  robots: { index: false, follow: false },
+  description: 'The books that define you — three, six or nine of them, each with the cover you love. Pick them, then share the picture.',
+  // Indexed since 2026-10-06 (Julian: „lass sie uns indizieren"); one address, whatever board is in the query.
+  alternates: { canonical: `${SITE_URL}/shelfportrait` },
 };
 
 export const dynamic = 'force-dynamic';

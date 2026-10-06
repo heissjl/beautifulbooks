@@ -4,6 +4,7 @@ import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { liveCollections } from '@/lib/collections-live';
+import { inspirationEnabled } from '@/lib/inspiration/switch';
 
 /**
  * The sitemap (SPEC §10 D11, ROADMAP 5.1).
@@ -84,5 +85,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       filter says so for anyone who runs this under `next dev`.
     */
     ...collections,
+    /*
+      The Shelf-Portrait's editor, where it is switched on (ROADMAP 5.18b, indexed since 2026-10-06).
+      Shared boards stay out and `noindex`: a grid of covers without words is thin, and there is no end to them.
+    */
+    ...(inspirationEnabled() ? [{ url: `${SITE_URL}/shelfportrait`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 }] : []),
   ];
 }

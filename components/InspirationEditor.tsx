@@ -7,6 +7,7 @@ import { coverRefFromUrl, coverUrlFor } from '@/lib/coverurl';
 import { keepNames, keptNames, MINE, rememberMade } from './inspirationMemory';
 import {
   NAME_MAX,
+  SUB_MAX,
   SIZES,
   SIZE_WORD,
   type Board,
@@ -89,6 +90,9 @@ const SIZE_LINE: Record<(typeof SIZES)[number], string> = {
   9: 'A stack of books that changed your outlook.',
 };
 
+/** Lines to start from, as 9things.me offers „Make it specific"; the first is the phrase the trend is searched by. */
+const SUB_IDEAS = ['The books that define me', 'The books that made me', 'Read before I was twelve', 'Most reread'];
+
 /** The editor's public address; the code keeps the name it was built under (`inspiration`). */
 const EDITOR = '/shelfportrait';
 
@@ -119,6 +123,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
   const examples = board.slots.filter((slot, i) => isStarter(slot, starterAt(i))).length;
   // What the reader types, kept apart from the cleaned name: cleaning trims, and a trimmed field cannot take a space.
   const [nameDraft, setNameDraft] = useState(() => board.by);
+  const [subDraft, setSubDraft] = useState(() => board.sub);
   // Titles the server did not send with that first page are remembered from before the step away.
   const [names, setNames] = useState(() => ({ ...keptNames(), ...initialNames }));
   useEffect(() => keepNames(names), [names]);
@@ -351,6 +356,11 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
             <li><span className="mr-2 text-ink-3 tabular-nums">2</span><strong className="font-medium text-ink">Then change the covers.</strong> Each book arrives with its best-known one; a tap on it shows the others — pick the one you love.</li>
             <li><span className="mr-2 text-ink-3 tabular-nums">3</span>Share the picture.</li>
           </ol>
+          {/*
+            The words people search for (Julian, 2026-10-06: „ja, schreib das irgendwo in die shelfportrait
+            creation seite"), without naming the grids they come from („ich will nicht die andere seite referenzieren").
+          */}
+          <p className="mt-4 text-sm text-ink-2">The books that define you — each with the cover you love, and where to find that edition.</p>
           {link.note && <p className="mt-3 text-sm text-accent" role="alert">{link.note}</p>}
 
           <input
@@ -364,6 +374,37 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
             }}
             className="mt-5 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
           />
+          {/*
+            A line of the reader's own under the title (Julian, 2026-10-06), on the picture, the card and the
+            shared page. The suggestions only fill the field; what stands there is the reader's.
+          */}
+          <input
+            value={subDraft}
+            maxLength={SUB_MAX}
+            placeholder="A line under the title (optional)"
+            aria-label="A line of your own under the title, shown on the picture"
+            onChange={(e) => {
+              setSubDraft(e.target.value);
+              setBoard((b) => ({ ...b, sub: cleanName(e.target.value, SUB_MAX) }));
+            }}
+            className="mt-2 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
+          />
+          <div className="mt-2 flex flex-wrap gap-1.5" role="group" aria-label="Suggestions for the line">
+            {SUB_IDEAS.map((idea) => (
+              <button
+                key={idea}
+                type="button"
+                aria-pressed={board.sub === idea}
+                onClick={() => {
+                  setSubDraft(idea);
+                  setBoard((b) => ({ ...b, sub: idea }));
+                }}
+                className={`hit rounded-full border px-2.5 py-0.5 text-xs transition-colors ${board.sub === idea ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`}
+              >
+                {idea}
+              </button>
+            ))}
+          </div>
         </div>
 
         <section className="mt-6 max-w-xl lg:mt-0" aria-label={`Your ${SIZE_WORD[size].toLowerCase()} books`}>
