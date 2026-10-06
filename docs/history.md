@@ -5467,3 +5467,5 @@ Julian nach dem Screenshot des Entwurfs: „ja, bau es auf den billigeren weg um
 ## 2026-10-06 · Jahr und Verlag in die Kaufliste statt unter die Cover (ROADMAP 5.18b)
 
 Julian: „ich glaube es ist besser wenn wir verlag und jahr nur unten beim ausgeklappten finder zeigen, aber nicht im portrait selbst“. Die Zeile steht jetzt in der Kaufliste unter Titel und Autor, je Buch neben „Find this edition“; das Brett zeigt nur die Cover. Angesehen bei 1280 und 390 px (kein Überlauf, Titel und Autor kürzen wie vorher mit „…“). Abfragen unverändert.
+
+**Deploy, 2026-10-06.** Julian: „ja, merge in main und deploye“. `origin/main` von `51ce9ba` auf `8e02ac3` als Fast-Forward (keine fremden Commits dazwischen): Untertitel, Satz zur Suchwendung, Indexierung des Editors, offene Kaufliste mit Jahr · Verlag, Satz unter dem Titel, Datenschutzsatz. Vorher 1.448 Tests, tsc, `next build`. Produktion einmal angesehen: `/shelfportrait` antwortet 200, ohne `noindex`, mit `canonical` auf `https://buyitscovers.com/shelfportrait` und der Beschreibung „The books that define you — …“; die Sitemap nennt `/shelfportrait`.
