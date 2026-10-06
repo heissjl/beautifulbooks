@@ -143,7 +143,7 @@ export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale
           <ul className="list-disc space-y-3 pl-5 marker:text-ink-3">
             {ACCOUNTS.map(account => (
               <li key={account.name}>
-                <a className={ext} href={account.href} target="_blank" rel="me noopener noreferrer">{account.name}</a>{' '}
+                <a className={`${ext} hit`} href={account.href} target="_blank" rel="me noopener noreferrer">{account.name}</a>{' '}
                 <span className="text-ink-3">{account.handle}</span>
               </li>
             ))}

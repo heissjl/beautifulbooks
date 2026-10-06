@@ -16,7 +16,7 @@ type Format = 'story' | 'feed';
 type Look = 'ambient' | 'mosaic' | 'paper';
 
 const choice = (active: boolean) =>
-  `rounded-full border px-3 py-0.5 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
+  `hit rounded-full border px-3 py-0.5 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
 
 function Choice<T extends string>({ label, value, options, onChange }: { label: string; value: T; options: readonly { id: T; label: string }[]; onChange: (next: T) => void }) {
   return (

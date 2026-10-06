@@ -47,6 +47,7 @@ export const de: Readonly<Record<string, string>> = {
   'Take your Shelf-Portrait: the books that inspire you': 'Mach dein Shelf-Portrait: die Bücher, die dich prägen',
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
+  'See all': 'Alle ansehen',
   'Game': 'Spiel',
   '{title} by {author}: seven of its covers. Open the wall.': '{title} von {author}: sieben seiner Cover. Die Wand öffnen.',
   'Site': 'Seite',

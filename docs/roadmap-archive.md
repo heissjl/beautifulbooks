@@ -1103,3 +1103,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
   **Claudes Rat:** 1. bauen (der Abgleich steht schon), 2. als zweiten Schritt, wenn Leser nach fremden Listen fragen; 3. nicht. Vor dem Bau: Datenschutz — die Datei verlässt den Browser nicht, nur Titel, Autor und ISBN gehen an `/api/walls/calibre` wie heute; der Satz in der Datenschutzerklärung zu Calibre deckt das wahrscheinlich, Julian prüft ihn. Analyse-Regel 3 (neue Herkunft) prüfen. Ersetzt die Zeile „Goodreads-CSV-Import“ unter „Zurückgestellt“. Thema: Sammlungen
 
 **Erledigt 2026-10-05**, nur Weg 1 und nur für Sammlungen, als Umschalter in der Calibre-Karte (Julian). → [Historie](history.md)
+
+## 6.92
+
+**6.92 Knöpfe auf dem Telefon besser treffbar; „See all“ wieder neben „Collections“.** Julian, 2026-10-06: „ich habe probleme manche buttons auf dem handy zu drücken. irgendwie reagieren die nciht sauber“ und „bei den collections auf der startseite sollte das "see all" doch wieder zurück“. Ohne Angabe, welche Knöpfe; gemessen wurde auf sechs Seitentypen bei 375 px, ob ein Knopf verdeckt ist (nein) und wie groß er ist (viele 20–30 px). Abhilfe: unsichtbare Tippfläche auf Touch-Geräten, mehr Polsterung beim wichtigsten Knopf des Shelf-Portraits. „See all“ steht wieder rechts neben der Überschrift, ohne Pfeil.
+
+**Erledigt 2026-10-06.** → [Historie](history.md)

@@ -95,7 +95,7 @@ const SILENT = 'Open Library did not answer. Try again in a moment.';
 
 const CHUNK = 60;
 const pill = (active: boolean) =>
-  `rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
+  `hit rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
 const plain = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 export default function InspirationEditor({ initialQuery, initialNames, children }: { initialQuery: string; initialNames: Record<string, Named>; children?: React.ReactNode }) {
@@ -293,7 +293,7 @@ export default function InspirationEditor({ initialQuery, initialNames, children
           <span className="flex-1 font-display text-lg sm:text-xl" role="status">
             {link.busy ? 'Making the link…' : filled === size ? `${SIZE_WORD[size]}. Done.` : `${filled} of ${size}`}
           </span>
-          <button type="button" onClick={finish} disabled={filled === 0 || link.busy} className="rounded-full bg-bg px-4 py-0.5 text-sm text-ink hover:bg-surface disabled:opacity-40">
+          <button type="button" onClick={finish} disabled={filled === 0 || link.busy} className="rounded-full bg-bg px-4 py-2 text-sm text-ink hover:bg-surface disabled:opacity-40 sm:py-0.5">
             Done — share it
           </button>
         </div>

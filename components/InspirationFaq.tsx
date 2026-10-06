@@ -72,7 +72,7 @@ export default function InspirationFaq() {
       <div className="mt-4 grid gap-x-12 lg:grid-cols-2">
         {FAQ.map(({ q, a }) => (
           <details key={q} className="group border-b border-line py-3">
-            <summary className="flex cursor-pointer list-none items-baseline gap-2 text-base text-ink transition-colors hover:text-accent">
+            <summary className="hit flex cursor-pointer list-none items-baseline gap-2 text-base text-ink transition-colors hover:text-accent">
               <span className="inline-block text-accent transition-transform group-open:rotate-90">▸</span>
               {q}
             </summary>
