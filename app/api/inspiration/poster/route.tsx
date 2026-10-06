@@ -8,6 +8,7 @@ import { coverUrlFor } from '@/lib/coverurl';
 import { type BoardSize, filledCount, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
+import { mosaicGround } from '@/lib/inspiration/mosaicground';
 import { titleOf } from '@/lib/inspiration/share';
 import { SITE_URL } from '@/lib/seo';
 
@@ -27,7 +28,9 @@ import { SITE_URL } from '@/lib/seo';
  * covers blurred until only their colours are left, darkened, with the edges
  * drawn in — each picture gets the colour world of its books, and the covers
  * cast a shadow on it (painted into the ground, see `shadows`). `paper` is the site's warm ground with dark type, the
- * way the website itself looks; `plain` is the old flat one, kept to compare.
+ * way the website itself looks; `mosaic` is a field of tiny covers cut from
+ * the loading pictures (`lib/inspiration/mosaicground.ts`, option A of the
+ * mockup, Julian 2026-10-05); `plain` is the old flat one, kept to compare.
  *
  * The covers are fetched here, each with its own budget, and cut to their
  * tile before the generator sees them. One that does not come leaves an empty
@@ -45,11 +48,12 @@ const COVER_TIMEOUT_MS = 8000;
 const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SITE_URL.includes('vercel.app') ? 'buyitscovers.com' : new URL(SITE_URL).host}/shelfportrait`;
 
 type Format = PosterFormat | 'card';
-type Look = 'ambient' | 'paper' | 'plain';
+type Look = 'ambient' | 'paper' | 'mosaic' | 'plain';
 
 /** `shadow` is how dark the covers' shadow falls on the ground, 0 for none. */
 const LOOKS: Record<Look, { bg: string; ink: string; ink2: string; mark: string; empty: string; shadow: number }> = {
   ambient: { bg: OG.bg, ink: OG.ink, ink2: '#d2cbc2', mark: OG.ink, empty: 'rgba(255,255,255,0.08)', shadow: 0.62 },
+  mosaic: { bg: OG.bg, ink: OG.ink, ink2: '#d2cbc2', mark: OG.ink, empty: 'rgba(255,255,255,0.08)', shadow: 0.62 },
   paper: { bg: OG.paper, ink: OG.paperInk, ink2: OG.paperInk2, mark: OG.accent, empty: '#e6dfd3', shadow: 0.3 },
   plain: { bg: OG.bg, ink: OG.ink, ink2: OG.ink2, mark: OG.ink, empty: '#2a2522', shadow: 0 },
 };
@@ -134,12 +138,14 @@ async function shadows(width: number, height: number, rects: Rect[], tiles: (Buf
 }
 
 /** What the covers stand on, as one picture: the wash or the flat colour, and the shadows. Null when it cannot be made — the flat colour stands in. */
-async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[]): Promise<string | null> {
+async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[], seed: string, words: Rect[]): Promise<string | null> {
   const L = LOOKS[look];
   if (L.shadow === 0) return null;
   try {
     const base = look === 'ambient'
       ? await wash(width, height, rects, tiles)
+      : look === 'mosaic'
+      ? await mosaicGround(width, height, seed, words)
       : await sharp({ create: { width, height, channels: 3, background: L.bg } }).png().toBuffer();
     const cast = await shadows(width, height, rects, tiles, L.shadow);
     return dataUrl(await sharp(base).composite(cast ? [{ input: cast }] : []).jpeg({ quality: 90 }).toBuffer());
@@ -267,6 +273,7 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
   const L = LOOKS[look];
   const title = titleOf(by);
   const { words } = plan;
+  const beside = count !== 9;
   const size = wordFit(title, words.width, plan.title);
   // The address must fit its column with the spacing: sixteen letters, measured at 0.41 em each in Xanh italic.
   // "A little larger" (Julian, 2026-10-05): it was half the title's size and capped at 21 px on the card of nine.
@@ -274,16 +281,23 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
   return (
     <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={CARD.width} height={CARD.height} />
-      <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink }}>{title}</div>
+      {/*
+        Beside six or three covers the title and the line stand together in the middle of their
+        column (Julian, 2026-10-05: „der schriftzug in der vorschaukarte muss etwas zentraler,
+        höher, bei x wird es nicht angezeigt"): X lays the page's title over the card's bottom
+        left corner, where the line stood. With nine they keep the first place, top left, which
+        nothing covers.
+      */}
+      <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', ...(beside ? { justifyContent: 'center', alignItems: 'center', textAlign: 'center' } : { justifyContent: 'space-between' }) }}>
+        <div style={{ display: 'flex', flexDirection: 'column', ...(beside ? { alignItems: 'center', marginBottom: Math.round(size * 0.55) } : {}) }}>
+          <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{title}</div>
         </div>
         {/*
           The site's line, "Judge a book, buy its covers", with its second half as the address — one
           word, the way it is typed. Two faces and two colours, so that nobody takes the whole
           phrase for the link (Julian, 2026-10-05); the address a little spaced out, as he asked.
         */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', ...(beside ? { alignItems: 'center' } : {}) }}>
           <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(17, Math.round(sign * 0.7)), color: L.ink2, marginBottom: Math.round(sign * 0.12) }}>Judge a book,</div>
           <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: sign, letterSpacing: sign * 0.045, color: look === 'paper' ? OG.accent : OG.accentDark }}>BuyItsCovers.com</div>
         </div>
@@ -300,7 +314,7 @@ export async function GET(request: NextRequest) {
   const rawFormat = params.get('format');
   const format: Format = rawFormat === 'feed' || rawFormat === 'card' ? rawFormat : 'story';
   const rawLook = params.get('look');
-  const look: Look = rawLook === 'paper' || rawLook === 'plain' ? rawLook : 'ambient';
+  const look: Look = rawLook === 'paper' || rawLook === 'mosaic' || rawLook === 'plain' ? rawLook : 'ambient';
   // Titles and authors under the covers, when the reader asks for them; a link card has no room for them.
   const withTitles = params.get('titles') === '1' && format !== 'card';
   const asked = parseBoard(params);
@@ -319,7 +333,10 @@ export async function GET(request: NextRequest) {
   const captions = described ? described.books.map((b) => (b?.title ? { title: b.title, author: b.author ?? '' } : null)) : null;
   // Kept only when it is whole: every cover came, and every title that was asked for.
   const whole = board.slots.every((s, i) => !s || tiles[i]) && (!captions || board.slots.every((s, i) => !s || captions[i]));
-  const under = await ground(look, size.width, size.height, rects, tiles);
+  // Where the words stand, so the mosaic is darker behind them.
+  const words = layout ? [layout.head, layout.foot] : [cardPlan(count).words];
+  const seed = board.slots.map((s) => s?.coverId ?? '').join();
+  const under = await ground(look, size.width, size.height, rects, tiles, seed, words);
   const images = tiles.map((t) => (t ? dataUrl(t) : null));
 
   const picture = await asJpeg(new ImageResponse(

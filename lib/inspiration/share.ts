@@ -32,9 +32,10 @@ export function titleOf(by: string): string {
 /**
  * Appended to every picture address. The CDN keeps a whole picture for a
  * month under its address; a new number here is how a changed line reaches
- * boards that were already shared.
+ * boards that were already shared. 4 since 2026-10-05: more room under the
+ * covers, the card's words in the middle of their column, the mosaic ground.
  */
-export const PICTURE_VERSION = 3;
+export const PICTURE_VERSION = 4;
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';

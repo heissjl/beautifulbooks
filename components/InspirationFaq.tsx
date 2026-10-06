@@ -41,7 +41,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'What do I get to share?',
-    a: 'A picture for a story (1080 × 1920) or for a post (1080 × 1350), on a ground made from the colours of your covers or on paper, with or without titles and authors under the covers. And a link: posted, it shows as a card with your covers.',
+    a: 'A picture for a story (1080 × 1920) or for a post (1080 × 1350), on a ground made from the colours of your covers, on a mosaic of small covers or on paper, with or without titles and authors under the covers. And a link: posted, it shows as a card with your covers.',
   },
   {
     q: 'Is my name on the picture?',

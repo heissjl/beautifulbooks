@@ -13,7 +13,7 @@ import { PICTURE_VERSION } from '@/lib/inspiration/share';
  */
 
 type Format = 'story' | 'feed';
-type Look = 'ambient' | 'paper';
+type Look = 'ambient' | 'mosaic' | 'paper';
 
 const choice = (active: boolean) =>
   `rounded-full border px-3 py-0.5 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
@@ -65,7 +65,7 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
   const canShare = useSyncExternalStore(() => () => {}, () => typeof navigator.canShare === 'function', () => false);
   const canCopy = useSyncExternalStore(() => () => {}, () => typeof ClipboardItem !== 'undefined' && typeof navigator.clipboard?.write === 'function', () => false);
 
-  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'paper' ? '&look=paper' : ''}${titles ? '&titles=1' : ''}&v=${PICTURE_VERSION}`;
+  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'ambient' ? '' : `&look=${look}`}${titles ? '&titles=1' : ''}&v=${PICTURE_VERSION}`;
   const file = format === 'story' ? 'shelf-portrait-story.jpg' : 'shelf-portrait.jpg';
   const drawing = arrived?.src !== src;
   const failed = !drawing && !arrived?.ok;
@@ -117,7 +117,7 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
       </div>
       <div className="min-w-0 space-y-3">
         <Choice label="Format" value={format} onChange={setFormat} options={[{ id: 'story', label: 'Story' }, { id: 'feed', label: 'Post' }]} />
-        <Choice label="Background" value={look} onChange={setLook} options={[{ id: 'ambient', label: 'Cover colours' }, { id: 'paper', label: 'Paper' }]} />
+        <Choice label="Background" value={look} onChange={setLook} options={[{ id: 'ambient', label: 'Cover colours' }, { id: 'mosaic', label: 'Mosaic' }, { id: 'paper', label: 'Paper' }]} />
         <Choice label="Titles" value={titles ? 'on' : 'off'} onChange={(v) => setTitles(v === 'on')} options={[{ id: 'off', label: 'Covers only' }, { id: 'on', label: 'With title and author' }]} />
         <div className="flex flex-wrap gap-2 pt-1">
           <a href={src} download={file} className="btn btn-accent">Save the picture</a>
