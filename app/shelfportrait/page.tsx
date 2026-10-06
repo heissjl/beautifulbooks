@@ -26,7 +26,7 @@ import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
  */
 export const metadata: Metadata = {
   title: 'My Shelf-Portrait',
-  description: 'The books that inspire you — three, six or nine of them, with your favourite covers. Pick them, then share the picture.',
+  description: 'The books that define you — three, six or nine of them, each with the cover you love. Pick them, then share the picture.',
   robots: { index: false, follow: false },
 };
 

@@ -45,7 +45,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'Is my name on the picture?',
-    a: 'Only if you type one. Without a name the picture says “My Shelf-Portrait”.',
+    a: 'Only if you type one. Without a name the picture says “My Shelf-Portrait”. A line of your own under it is optional too.',
   },
   {
     q: 'Can I change it later?',
@@ -53,7 +53,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'What is stored?',
-    a: 'When you press “Done”: the books, their covers and the name you typed, so that the link can show them. Nothing about you, and no cookie.',
+    a: 'When you press “Done”: the books, their covers, and the name and line you typed, so that the link can show them. Nothing about you, and no cookie.',
   },
   {
     q: 'Where can I buy these editions?',

@@ -25,6 +25,7 @@ export interface DescribedBoard {
   /** Nine entries, row by row; null is an empty place. */
   books: (DescribedBook | null)[];
   by: string;
+  sub: string;
 }
 
 export async function describeBoard(board: Board): Promise<DescribedBoard> {
@@ -38,5 +39,5 @@ export async function describeBoard(board: Board): Promise<DescribedBoard> {
       href: `/book/${slot.workId}/cover/${coverSegment(slot.coverId)}`,
     };
   }));
-  return { books, by: board.by };
+  return { books, by: board.by, sub: board.sub };
 }

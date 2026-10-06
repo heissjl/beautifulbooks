@@ -20,7 +20,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 export async function boardFromSearch(searchParams: Promise<Record<string, string | string[] | undefined>> | undefined): Promise<Board> {
   const raw = (await searchParams) ?? {};
   const params = new URLSearchParams();
-  for (const name of ['b', 'by', 'n']) {
+  for (const name of ['b', 'by', 'sub', 'n']) {
     const value = raw[name];
     const first = Array.isArray(value) ? value[0] : value;
     if (first) params.set(name, first);
@@ -36,7 +36,7 @@ export async function origin(): Promise<string> {
 
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   const title = titleOf(board?.by ?? '');
-  const description = `${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. Take your Shelf-Portrait.`;
+  const description = `${board?.sub ? `${board.sub}. ` : ''}${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. Take your Shelf-Portrait.`;
   // Not indexed while the page lives behind its switch; the card makes a shared link show the covers.
   // Outside /api/, which robots.txt closes and X honours for the image too (2.18q).
   const images = board ? [{ url: `${await origin()}/shelfportrait/card.jpg?${boardQuery(board)}&format=card&v=${PICTURE_VERSION}`, width: 1200, height: 630 }] : undefined;

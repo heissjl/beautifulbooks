@@ -204,7 +204,7 @@ const ONE_LINE = { whiteSpace: 'nowrap', overflow: 'hidden' } as const;
 
 type Caption = { title: string; author: string } | null;
 
-function poster(format: PosterFormat, count: BoardSize, by: string, images: (string | null)[], look: Look, under: string | null, captions: Caption[] | null) {
+function poster(format: PosterFormat, count: BoardSize, by: string, sub: string, images: (string | null)[], look: Look, under: string | null, captions: Caption[] | null) {
   const P = posterLayout(format, count, !!captions);
   const L = LOOKS[look];
   const { head, foot, type } = P;
@@ -212,9 +212,13 @@ function poster(format: PosterFormat, count: BoardSize, by: string, images: (str
   return (
     <div style={{ position: 'relative', width: P.width, height: P.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={P.width} height={P.height} />
-      {/* One line (Julian, 2026-10-05: „lösche den subheader ganz fürs erste"): the name of the thing, and nothing under it. */}
+      {/*
+        The name of the thing (Julian, 2026-10-05: „lösche den subheader ganz fürs erste"), and under it only
+        a line the reader wrote (2026-10-06: „eine möglichkeit … einen eigenen untertitel zu wählen"), on one line.
+      */}
       <div style={{ position: 'absolute', left: head.x, top: head.y, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
+        {sub && <div style={{ ...DISPLAY, ...ONE_LINE, display: 'flex', fontStyle: 'italic', fontSize: Math.round(type.title * 0.56), lineHeight: 1.25, marginTop: Math.round(type.title * 0.12), color: L.ink2 }}>{clip(sub, head.width, Math.round(type.title * 0.56))}</div>}
       </div>
       <Tiles rects={P.tiles} images={images} look={look} />
       {captions && P.caption && P.tiles.map((r, i) => captions[i] && (
@@ -268,7 +272,7 @@ function cardPlan(count: BoardSize): { covers: Rect[]; words: Rect; title: numbe
   return { covers: place(x0, y0, w, h, 3, 3), words: { x: 48, y: y0, width: x0 - 48 - 36, height: h }, title: 50 };
 }
 
-function card(count: BoardSize, by: string, images: (string | null)[], look: Look, under: string | null) {
+function card(count: BoardSize, by: string, sub: string, images: (string | null)[], look: Look, under: string | null) {
   const plan = cardPlan(count);
   const L = LOOKS[look];
   const title = titleOf(by);
@@ -291,6 +295,7 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
       <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', ...(beside ? { justifyContent: 'center', alignItems: 'center', textAlign: 'center' } : { justifyContent: 'space-between' }) }}>
         <div style={{ display: 'flex', flexDirection: 'column', ...(beside ? { alignItems: 'center', marginBottom: Math.round(size * 0.55) } : {}) }}>
           <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{title}</div>
+          {sub && <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: Math.max(18, Math.round(size * 0.5)), lineHeight: 1.2, marginTop: Math.round(size * 0.25), color: L.ink2, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{sub}</div>}
         </div>
         {/*
           The site's line, "Judge a book, buy its covers", with its second half as the address — one
@@ -340,7 +345,7 @@ export async function GET(request: NextRequest) {
   const images = tiles.map((t) => (t ? dataUrl(t) : null));
 
   const picture = await asJpeg(new ImageResponse(
-    format === 'card' ? card(count, board.by, images, look, under) : poster(format, count, board.by, images, look, under, captions),
+    format === 'card' ? card(count, board.by, board.sub, images, look, under) : poster(format, count, board.by, board.sub, images, look, under, captions),
     { ...size, fonts: await ogFonts() },
   // A story or a post is compressed again by Instagram; the card stays small for the messengers.
   ), format !== 'card');

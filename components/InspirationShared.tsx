@@ -38,6 +38,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
           <div className="min-w-0">
             <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{title}</h1>
+            {board.sub && <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{board.sub}</p>}
           </div>
           {/* At the top, where the collection page has "Edit collection": the way back into the board, or into one's own. */}
           <div className="flex flex-wrap gap-2">
