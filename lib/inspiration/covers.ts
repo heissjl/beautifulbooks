@@ -23,6 +23,15 @@ export interface EditionCover {
   publisher?: string;
 }
 
+/**
+ * A publisher's name whose letters were lost before it reached Open Library:
+ * „Do?u Bat? Yay?nlar?" for Doğu Batı Yayınları, stored with literal question
+ * marks. A `?` between two letters, or the replacement character, marks it.
+ * Measured 2026-10-06 on the 581 publisher names in the recorded fixtures: one
+ * such name, and no other `?` at all. Such a name is left out; the year stays.
+ */
+export const garbled = (name: string): boolean => /\p{L}\?\p{L}/u.test(name) || name.includes('\uFFFD');
+
 export function coversOfEditions(editions: readonly SourceEdition[]): EditionCover[] {
   const byCover = new Map<string, { year?: number; publisher?: string }>();
   for (const e of editions) {
@@ -31,9 +40,10 @@ export function coversOfEditions(editions: readonly SourceEdition[]): EditionCov
       // A cover taken off the site on request (2.18k) is not offered for a board either.
       if (!/^ol:\d+$/.test(c.id) || isHiddenCover(c.id)) continue;
       const known = byCover.get(c.id);
+      const publisher = e.publisher && !garbled(e.publisher) ? e.publisher : undefined;
       // The newest printing names the cover; one without a year never replaces one with.
       if (!known || (e.year ?? 0) > (known.year ?? 0)) {
-        byCover.set(c.id, { ...(e.year ? { year: e.year } : {}), ...(e.publisher ? { publisher: e.publisher } : known?.publisher ? { publisher: known.publisher } : {}) });
+        byCover.set(c.id, { ...(e.year ? { year: e.year } : {}), ...(publisher ? { publisher } : known?.publisher ? { publisher: known.publisher } : {}) });
       }
     }
   }
