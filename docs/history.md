@@ -1,3 +1,18 @@
+## 2026-10-05 · Kontakt-Abschnitt auf der Über-Seite, Profiltexte auf drei Kanälen (ROADMAP 5.6b)
+
+Julian: „we can list social media accounts in a contact section within the about page“ und „update bsky and x bio too“.
+
+**Auf der Seite.** Die Über-Seite hat einen Abschnitt „Kontakt“ (deutsch „Kontakt“): die Adresse aus dem Impressum als Einladung zu schreiben, darunter die drei Konten, die posten — Mastodon, Bluesky, X. Sie stehen **an einer Stelle**, der Liste `ACCOUNTS` in `app/about/page.tsx`, und jeder Link trägt `rel="me noopener noreferrer"`. Das `me` ist keine Verzierung: Mastodon setzt den Haken an ein Profilfeld erst, wenn die Seite, auf die das Feld zeigt, so zurückverlinkt — eine zweite Kopie der Adressen anderswo würde diese Prüfung still zerbrechen. Pinterest und die GitHub-Organisation stehen nicht in der Liste, weil dort nichts liegt. Angesehen bei 375 und 1280 px, englisch und deutsch: kein Überlauf, jede Zeile einzeilig; `@buyitscovers@mastodon.social` ist die längste und passt auf dem Telefon. Suite 1.435 Tests, Typprüfung, Lint und Build grün.
+
+**Das Feld bei Mastodon bleibt vorerst unbestätigt**, weil es auf `https://buyitscovers.com` zeigt und der `rel="me"`-Link auf `/about` steht. Nach dem Deploy sind es zwei Wege: das Feld auf `https://buyitscovers.com/about` ändern, oder denselben Link zusätzlich auf die Startseite nehmen. Vorher deployen, sonst prüft Mastodon gegen eine Seite ohne Link und der Haken bleibt aus.
+
+**Die Profiltexte.** Alle drei Konten hatten Bild, Banner und Namen, aber keine Zeile Text. Jetzt:
+
+- **Bluesky** (`@buyitscovers.com`) und **Mastodon**: derselbe Text, 211 Zeichen (Bluesky zählt 215, es erlaubt 256).
+- **X** (`@buyitscovers`): 160 Zeichen sind die Grenze, also eine kurze Fassung in einem Satz — „Judge a book, buy its covers. The covers a book has been printed with, by language and year, from two open catalogues: Open Library and Google Books.“ (149). Dazu das Feld „Website“: `https://buyitscovers.com`, das vorher leer war.
+
+Keine Zahl der Analyse ändert sich dadurch: Die Konten verlinken die Startseite ohne `?via=`, die Besuche zählen über den Referrer (X als `x`, Mastodon und Bluesky wie gehabt).
+
 ## 2026-10-05 · Das Exposé auf Mastodon (ROADMAP 5.6b)
 
 Julian: „post the same expose as on x and bsky on mastodon“. Derselbe Text wie auf Bluesky und X, über Chrome im Konto `@buyitscovers` auf `mastodon.social` gepostet, öffentlich, Sprache Englisch, 258 Zeichen von 500: [mastodon.social/@buyitscovers/117392110664968201](https://mastodon.social/@buyitscovers/117392110664968201). Die Adresse steht wie auf X im Text, ohne `?via=`, weil 5.6a keine Klasse `mastodon` kennt. Die Vorschaukarte holte Mastodon selbst (Titel „Buy Its Covers“, Beschreibung der Startseite, Bild zwischengespeichert).

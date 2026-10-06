@@ -20,7 +20,8 @@
       "channel": "bluesky",
       "kind": "setup",
       "text": "Konto anlegen. Als Handle die Domain selbst: @buyitscovers.com (Bluesky → Einstellungen → Handle → eigene Domain; ein TXT-Eintrag _atproto bei INWX, v=spf1 nicht anfassen). Profiltext: „Judge a book, buy its covers. The covers a book has been printed with, from two open catalogues.“ Website im Profil: https://buyitscovers.com/?via=bluesky",
-      "status": "vorschlag"
+      "status": "gepostet",
+      "note": "Konto und Handle am 2026-10-04 von Julian eingerichtet. Profiltext am 2026-10-05 gesetzt, derselbe wie auf Mastodon (215 von 256 Zeichen). Eine Website trägt Bluesky nicht als Feld — der Handle ist die Domain."
     },
     {
       "id": "setup-instagram",
@@ -72,6 +73,14 @@
       "status": "vorschlag"
     },
     {
+      "id": "setup-x",
+      "date": "2026-10-05",
+      "channel": "x",
+      "kind": "setup",
+      "status": "gepostet",
+      "text": "Konto @buyitscovers (von Julian am 2026-10-04 angelegt, Profilbild W1, banner-right-1500x500.png, Name „Buy Its Covers“). Profiltext am 2026-10-05: „Judge a book, buy its covers. The covers a book has been printed with, by language and year, from two open catalogues: Open Library and Google Books.“ (149 von 160 Zeichen — X nimmt nur 160, deshalb die kurze Fassung). Feld „Website“: https://buyitscovers.com, vorher leer."
+    },
+    {
       "id": "x-expose",
       "date": "2026-10-06",
       "channel": "x",
@@ -89,7 +98,7 @@
       "kind": "setup",
       "status": "gepostet",
       "text": "Konto @buyitscovers auf mastodon.social (von Julian am 2026-10-04 angelegt, Profilbild W1 und banner-right-1500x500.png, Anzeigename „Buy Its Covers“). Profiltext am 2026-10-05 gesetzt: „Judge a book, buy its covers. / Type a title and see the covers it has been printed with, by language and year, then find the edition you’d want on your shelf. From two open catalogues, Open Library and Google Books.“ (211 von 500 Zeichen). Feld „Website“: https://buyitscovers.com, ohne ?via=.",
-      "note": "Das Feld ist **unbestätigt** (`verified_at: null`): Mastodon setzt den grünen Haken erst, wenn buyitscovers.com einen Link mit rel=\"me\" auf https://mastodon.social/@buyitscovers trägt. Die Seite verlinkt bisher kein eigenes Konto — Julians Entscheidung, ob sie das tun soll."
+      "note": "Das Feld ist **unbestätigt** (`verified_at: null`). Seit dem 2026-10-05 steht der Link mit rel=\"me\" auf /about der Seite (Abschnitt „Kontakt“, `ACCOUNTS` in app/about/page.tsx). **Nach dem Deploy**: entweder das Feld auf https://buyitscovers.com/about ändern oder denselben Link auf die Startseite nehmen — Mastodon prüft genau die Adresse, die im Feld steht."
     },
     {
       "id": "mastodon-expose",

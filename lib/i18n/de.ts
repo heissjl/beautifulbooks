@@ -460,6 +460,10 @@ export const de: Readonly<Record<string, string>> = {
   'No link on this site earns money. There are no affiliate links, ads or paid placements.': 'Kein Link auf dieser Seite verdient Geld. Es gibt keine Affiliate-Links, keine Werbung, keine bezahlten Plätze.',
   'The order of the shops follows the ISBN. Its first digits show where it was registered, 978-3 for the German-language area, for example. For a number from another country, marketplaces that sell copies from many countries come first.': 'Die Reihenfolge der Shops folgt der ISBN. Ihre ersten Ziffern sagen, wo sie vergeben wurde, 978-3 etwa für den deutschsprachigen Raum. Bei einer Nummer aus einem anderen Land stehen Marktplätze vorn, die Exemplare aus vielen Ländern verkaufen.',
   'Clicks on buy links are counted: shop, market, ISBN and time. Nothing about you is recorded. Details are in the {privacy}.': 'Klicks auf Kauflinks werden gezählt: Shop, Markt, ISBN und Zeit. Über dich wird nichts festgehalten. Einzelheiten stehen in der {privacy}.',
+  // The contact section of the About page (5.6b, 2026-10-05). „Kontakt“ is what such a section is called;
+  // the invitation is written for German readers rather than rendered word for word.
+  'Contact': 'Kontakt',
+  'Write to {email} — about a cover, a wrong edition, or anything the site gets wrong. The site also posts here:': 'Schreib an {email} — wegen eines Covers, einer falschen Ausgabe oder allem, was die Seite falsch macht. Außerdem postet die Seite hier:',
   'privacy notice': 'Datenschutzerklärung',
   'Legal notice': 'Anbieterkennzeichnung',
   'Responsible for this site': 'Verantwortlich für diese Seite',
