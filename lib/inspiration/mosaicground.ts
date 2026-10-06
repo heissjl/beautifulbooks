@@ -71,20 +71,22 @@ export function arrangement(seed: string, cols: number, rows: number, size: numb
  * How dark the field is at a point, 0 (as it is) to 1 (black): half
  * everywhere, more towards the edges, and more behind the words.
  */
-export function shade(x: number, y: number, width: number, height: number, words: Rect[]): number {
+export function shade(x: number, y: number, width: number, height: number, words: Rect[], windows: Rect[] = [], base = 0.5): number {
+  // A window shows the field nearly as it is: the page's card lets the covers through where a board's places are.
+  for (const w of windows) if (x >= w.x && x < w.x + w.width && y >= w.y && y < w.y + w.height) return 0.12;
   const r = Math.min(1, Math.hypot((x / width - 0.5) * 2, (y / height - 0.5) * 2) / 1.5);
-  let a = 0.5 + 0.3 * Math.max(0, (r - 0.3) / 0.7);
+  let a = base + (0.8 - 0.5) * Math.max(0, (r - 0.3) / 0.7);
   for (const w of words) {
     const dx = Math.max(w.x - x, 0, x - (w.x + w.width));
     const dy = Math.max(w.y - y, 0, y - (w.y + w.height));
     const d = Math.hypot(dx, dy);
-    if (d < 60) a = Math.max(a, 0.78 - 0.28 * (d / 60));
+    if (d < 60) a = Math.max(a, Math.max(base, 0.78) - 0.28 * (d / 60));
   }
   return Math.min(1, a);
 }
 
-/** The field as a raw RGB picture of `width × height`. */
-export async function mosaicGround(width: number, height: number, seed: string, words: Rect[]): Promise<Buffer> {
+/** The field as a PNG of `width × height`; `windows` stay bright, `base` is how dark the rest is (half on a board's picture). */
+export async function mosaicGround(width: number, height: number, seed: string, words: Rect[], windows: Rect[] = [], base = 0.5): Promise<Buffer> {
   const { cells } = await loadLibrary();
   const cols = Math.ceil(width / DRAWN_W);
   const rows = Math.ceil(height / (DRAWN_W * 1.5));
@@ -101,7 +103,7 @@ export async function mosaicGround(width: number, height: number, seed: string, 
     .raw()
     .toBuffer();
   for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-    const a = shade(x, y, width, height, words);
+    const a = Math.min(1, shade(x, y, width, height, words, windows, base));
     const o = (y * width + x) * 3;
     px[o] = px[o] * (1 - a) + 12 * a;
     px[o + 1] = px[o + 1] * (1 - a) + 10 * a;

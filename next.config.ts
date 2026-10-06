@@ -27,6 +27,7 @@ const nextConfig: NextConfig = {
     // The poster also reads the loading pictures for its mosaic ground (lib/inspiration/mosaicground.ts).
     "/api/inspiration/poster": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
     "/shelfportrait/card.jpg": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
+    "/shelfportrait/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
   },
   async redirects() {
     return [
