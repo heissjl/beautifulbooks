@@ -12,7 +12,7 @@ import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { wallsEnabled } from '@/lib/walls/switch';
-import { SITE_CARD, SITE_URL } from '@/lib/seo';
+import { SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: 'Which cover would you rather look at?',
     description: 'Two covers, one click. The standings show which covers readers keep choosing.',
     url: `${SITE_URL}/versus`,
-    images: [SITE_CARD],
+    // The picture comes from `opengraph-image.tsx` beside this file (6.98): the game is two covers and a question.
   },
 };
 

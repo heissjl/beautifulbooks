@@ -130,6 +130,45 @@ export async function asJpeg(card: Response, fine = false): Promise<Response> {
   return new Response(new Uint8Array(jpeg), { status: card.status, headers });
 }
 
+const PAIR_TILE = { width: 320, height: 480 };
+
+/**
+ * The card of a pairing (ROADMAP 6.97, 6.98): two covers side by side and one
+ * line under them — the game's own picture, which is why both the game and a
+ * named pairing share it. A reader decides from the two pictures whether to
+ * open the link, so the card has to be the covers themselves.
+ *
+ * Open Library's images are slow and sometimes silent; a cover that does not
+ * arrive leaves its place empty rather than the card, because a posted link
+ * gets no second chance. `coverUrls` are the two, in order.
+ */
+export async function pairCard({ coverUrls, line }: { coverUrls: string[]; line: string }): Promise<Response> {
+  const covers = coverUrls.length === 2 ? await loadCovers(coverUrls, 2) : [];
+  return asJpeg(new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+          background: OG.bg, padding: '40px 56px', justifyContent: 'space-between', alignItems: 'center',
+        }}
+      >
+        <div style={{ display: 'flex', gap: 40, height: PAIR_TILE.height, alignItems: 'center' }}>
+          {covers.map((url, i) => (
+            // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
+            <img key={i} src={url} alt="" width={PAIR_TILE.width} height={PAIR_TILE.height} style={{ objectFit: 'contain', borderRadius: 6 }} />
+          ))}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+          <Display size={line.length > 44 ? 40 : 52} color={OG.ink}>{line}</Display>
+          <div style={{ ...TEXT, fontSize: 26, color: OG.ink2 }}>·</div>
+          <Wordmark size={26} color={OG.ink2} />
+        </div>
+      </div>
+    ),
+    { ...OG_SIZE, fonts: await ogFonts() },
+  ));
+}
+
 const WALL_COLS = 7;
 const WALL_ROWS = 2;
 const WALL_TILE_W = 140;

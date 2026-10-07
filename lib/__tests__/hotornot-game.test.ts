@@ -3,7 +3,7 @@ import { rng } from '../loading';
 import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
-  fixedPair, nextPairFor, pairingTally, poolBooks, someBooks, type VersusPool,
+  fixedPair, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
   readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
@@ -24,6 +24,29 @@ const pool: VersusPool = {
 };
 const secret = pairSecret(undefined);
 const now = Date.UTC(2026, 8, 11, 12);
+
+describe('the pair on the card of the game (6.98)', () => {
+  const day = 86_400_000;
+
+  it('is the same all day and two different covers of the pool', () => {
+    const noon = Date.UTC(2026, 9, 6, 12);
+    const evening = Date.UTC(2026, 9, 6, 23, 59);
+    const a = pairOfTheDay({ pool, now: noon });
+    const b = pairOfTheDay({ pool, now: evening });
+    expect(a).not.toBeNull();
+    expect(a).toEqual(b);
+    if (!a) return;
+    expect(a.a.id).not.toBe(a.b.id);
+    expect(pool.covers.map(c => c.id)).toContain(a.a.id);
+    expect(pool.covers.map(c => c.id)).toContain(a.b.id);
+  });
+
+  it('is drawn anew on another day', () => {
+    const start = Date.UTC(2026, 9, 6, 12);
+    const pairs = Array.from({ length: 8 }, (_, i) => pairOfTheDay({ pool, now: start + i * day }));
+    expect(new Set(pairs.map(p => `${p?.a.id}|${p?.b.id}`)).size).toBeGreaterThan(1);
+  });
+});
 
 describe('a named pairing (6.97)', () => {
   it('is the two covers asked for, in that order, with a token a vote accepts', () => {

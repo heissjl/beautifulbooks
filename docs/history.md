@@ -5641,3 +5641,15 @@ Julian: „can you make permanent links to specific matchups that i can use for 
 **Die Vorschaukarte** (`app/versus/[pair]/opengraph-image.tsx`) zeigt die beiden Cover nebeneinander und darunter „The Gruffalo or The face in the abyss?“ mit der Wortmarke — über das Klicken entscheiden die zwei Bilder, eine allgemeine Karte würde das verschenken. Gemessen am Dev-Server: **67,8 KB JPEG in 1,9 s**, beide Cover da.
 
 **Geprüft am Dev-Server:** beide Adressen zeigen genau ihr Paar; ein Klick auf ein Cover wurde angenommen und das nächste (zufällige) Paar kam; `/versus/board` antwortet weiter mit 200, `/versus/not-a-pair` mit 404; Titel „The Gruffalo or The face in the abyss: which cover?“, `robots: noindex, follow`, Canonical `…/versus`. Deutsch über den Cookie geprüft. 375 × 812: `scrollWidth` 375, kein seitlicher Überlauf. 1.495 Tests, Typprüfung, ESLint und Build grün.
+
+## 2026-10-06 · Eine eigene Vorschaukarte für das Spiel (ROADMAP 6.98)
+
+Julian: „baue auch eine allgemeine vorschaukarte für das versus game also /versus“.
+
+Bisher lag unter einem geteilten Link auf das Spiel die Website-Karte — die Wand aus buchförmigen Kacheln, die jede Seite ohne eigene bekommt. Sie sagt nichts darüber, was hinter dem Link liegt. Jetzt zeigt die Karte **zwei Cover nebeneinander und darunter „Which cover would you rather look at?“** mit der Wortmarke: dieselbe Karte, die eine benannte Paarung bekommt (6.97), weil das Spiel genau diese zwei Bilder und diese eine Frage ist.
+
+- **Das Paar ist das des Tages.** `pairOfTheDay` in `lib/hotornot/game.ts` zieht nach der Regel des Spiels (`nextPair`), aber mit dem Tag als Startwert statt mit dem Zufall: wer die Karte am selben Tag sieht, sieht dasselbe Bild — das muss eine Karte zusagen, die einen Tag lang zwischengespeichert wird (`revalidate = 86400`) —, und morgen sieht dieselbe Adresse im Feed neu aus. Zwei Tests: gleich über den Tag hinweg, zwei verschiedene Cover aus dem Vorrat, und über acht Tage mehr als ein Paar. **Es ist nicht das Paar, das der Spieler danach bekommt**, und die Karte behauptet es auch nicht — ein Zettel zum Abstimmen hängt nicht daran.
+- **Eine Karte, zwei Benutzer:** das Zeichnen liegt jetzt in `pairCard` in `app/og.tsx`, neben `coverWallCard`; die Karte der Paarung reicht die zwei Titel als Zeile hinein, die Karte des Spiels die Frage.
+- **Gemessen am Dev-Server:** 51 KB JPEG in 1,7 s, beide Cover da (heute *A Court of Thorns and Roses* gegen Baudelaires *Petits Poëmes en prose* — der Gegensatz, um den es im Spiel geht). Die Seite verweist jetzt auf diese Datei statt auf `SITE_CARD`.
+
+1.497 Tests, Typprüfung, ESLint und Build grün.

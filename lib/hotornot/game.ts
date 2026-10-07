@@ -350,6 +350,29 @@ export function readyPairs(
   return out;
 }
 
+/** A day in milliseconds: the span a card of the game keeps its pair (6.98). */
+const CARD_DAY_MS = 86_400_000;
+
+/**
+ * The two covers a link to the game shows today (ROADMAP 6.98; Julian,
+ * 2026-10-06: „baue auch eine allgemeine vorschaukarte für das versus game").
+ *
+ * Drawn by the game's own rule (`nextPair`), but from the day as a seed
+ * instead of chance: every reader who sees the card on the same day sees the
+ * same pair, which is what a cached picture has to promise, and tomorrow the
+ * link looks new in a feed. No token — a card is not a game, nothing can be
+ * voted on it.
+ */
+export function pairOfTheDay({ pool = POOL, now = Date.now() }: { pool?: VersusPool; now?: number } = {}): { a: PoolCover; b: PoolCover } | null {
+  const ids = activeIds(pool, []);
+  const book = new Map(pool.covers.map(c => [c.id, c.workId]));
+  const picked = nextPair(ids, newElo(ids), rng(Math.floor(now / CARD_DAY_MS)), { recent: [], bookOf: id => book.get(id) ?? id, seriesOf });
+  if (!picked) return null;
+  const a = pool.covers.find(c => c.id === picked[0]);
+  const b = pool.covers.find(c => c.id === picked[1]);
+  return a && b ? { a, b } : null;
+}
+
 /**
  * One named pairing, signed like any other (ROADMAP 6.97): the pair behind a
  * permanent address such as `/versus/ol-15154344-vs-ol-10215294`, so a post
