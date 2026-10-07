@@ -140,6 +140,9 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 - **Julians fertiges Starter-Pack** (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero und East of Eden.
   - Als Sharepic ist die zweite Zeile die einzige Überschrift: „The performative reader starter pack“ (Julian, ohne Apostroph) in der proportionalen Xanh der Seite. Der Kopf ist aus dem Mosaik des Posters neu gesetzt (`lab/kalender/sharepic_starterpack.py`).
   - Das Poster der Website bleibt, wie es ist.
+  - **Am selben Tag neu gewählt:** [shelfportrait/tvujl2pk](https://buyitscovers.com/shelfportrait/tvujl2pk), vorher mzyjqzbo.
+  - Das Sharepic ist noch nicht erzeugt. archive.org, wo Open Library die großen Cover ablegt, antwortete mit 502, und das Poster der Seite kam zweimal mit sechs leeren Kacheln zurück.
+  - `lab/kalender/sharepic_starterpack.py` setzt das Bild jetzt selbst aus den neun Covern im Stil des Posters und läuft, sobald die Cover wieder kommen.
 - Beide zeigen geschützte einzelne Cover und **warten auf die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1).
 
 **Das Bild der Wand** ist Julians eigenes Foto. Es liegt nur lokal unter `lab/kalender/out/cache/`, wie seine anderen Fotos auch, und wird von `render_gemeinfrei.py` zum Pin gesetzt.
