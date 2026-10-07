@@ -18,7 +18,8 @@ import {
   type BookSignal,
 } from '../insights/signals';
 import { countSignal } from '../insights/store';
-import { emptySearches, summarizeBooks, summarizeChannels, summarizeSearches, topWorks } from '../insights/visits';
+import type { Entry } from '../insights/signals';
+import { emptySearches, groupSocial, summarizeBooks, summarizeChannels, summarizeSearches, topWorks } from '../insights/visits';
 
 const HOST = 'buyitscovers.com';
 const book: BookSignal = { t: 'book', work: 'OL1168083W', from: 'search', market: 'de', pages: '2', seen: '13-40', picked: true, verdict: 'differs', bought: true, found: false, entry: 'engine' };
@@ -58,7 +59,9 @@ describe('where a visit came from', () => {
     expect(originOf(null, 'https://www.bing.com/search?q=x', HOST)).toBe('engine');
     expect(originOf(null, 'https://t.co/abc', HOST)).toBe('x');
     expect(originOf(null, 'https://www.reddit.com/r/books', HOST)).toBe('reddit');
-    expect(originOf(null, 'https://www.facebook.com/', HOST)).toBe('social');
+    // A class of its own since 2026-10-06; `social` keeps the rest of the old list.
+    expect(originOf(null, 'https://www.facebook.com/', HOST)).toBe('facebook');
+    expect(originOf(null, 'https://www.snapchat.com/', HOST)).toBe('other');
     expect(originOf(null, 'https://someblog.example/post', HOST)).toBe('other');
     expect(originOf(null, `https://${HOST}/?q=dune`, HOST)).toBe('search');
     expect(originOf(null, 'not a url', HOST)).toBe('other');
@@ -80,7 +83,7 @@ describe('channels (ROADMAP 5.6a)', () => {
       ['https://x.com/buyitscovers', 'x'],
       ['https://mobile.twitter.com/someone', 'x'],
       ['https://www.producthunt.com/posts/x', 'producthunt'],
-      ['https://www.linkedin.com/feed', 'social'],
+      ['https://www.linkedin.com/feed', 'linkedin'],
       ['https://notreddit.com.example/', 'other'],
     ];
     for (const [referrer, origin] of cases) expect(originOf(null, referrer, HOST), referrer).toBe(origin);
@@ -280,5 +283,45 @@ describe('storing and adding up', () => {
     expect(report.searches.searches).toBe(1);
     expect(report.works[0]?.work).toBe('OL1168083W');
     expect(report.works[0]?.title).toMatch(/Nineteen Eighty-Four/i);
+  });
+});
+
+describe('each social network its own channel (2026-10-06)', () => {
+  it('tells the networks apart by their hosts and shorteners', () => {
+    const cases: Array<[string, string]> = [
+      ['https://www.linkedin.com/feed/', 'linkedin'],
+      ['https://lnkd.in/abc', 'linkedin'],
+      ['https://l.facebook.com/l.php', 'facebook'],
+      ['https://m.facebook.com/', 'facebook'],
+      ['https://www.threads.net/@someone', 'threads'],
+      ['https://www.youtube.com/watch?v=1', 'youtube'],
+      ['https://youtu.be/1', 'youtube'],
+      ['https://web.whatsapp.com/', 'whatsapp'],
+      ['https://t.me/channel', 'telegram'],
+      ['https://mastodon.social/@x', 'mastodon'],
+      ['https://www.tumblr.com/', 'tumblr'],
+      ['https://discord.com/channels/1', 'discord'],
+      ['https://t.co/xyz', 'x'],
+      // A social site without a class of its own and outside the old list is simply another website.
+      ['https://vk.com/', 'other'],
+    ];
+    for (const [referrer, entry] of cases) expect(entryOf('', referrer, HOST), referrer).toBe(entry);
+  });
+
+  it('takes a ?via= mark for LinkedIn, which its app often sends without a referrer', () => {
+    expect(entryOf('?via=linkedin', '', HOST)).toBe('linkedin');
+    expect(entryOf('?via=threads', '', HOST)).toBe('threads');
+    expect(entryOf('?via=myspace', '', HOST)).toBe('direct');
+  });
+
+  it('sums the social networks into one line that adds up to its members', () => {
+    const row = (entry: Entry, entries: number, bookVisits: number) => ({ entry, entries, opened: Math.floor(entries / 2), bookVisits, bought: Math.floor(bookVisits / 3) });
+    const rows = [row('engine', 40, 30), row('x', 12, 9), row('linkedin', 7, 6), row('direct', 20, 10), row('social', 2, 1)];
+    const lines = groupSocial(rows);
+    const social = lines.find(l => l.kind === 'social');
+    expect(social && social.kind === 'social' && social.members.map(m => m.entry)).toEqual(['x', 'linkedin', 'social']);
+    expect(social && social.kind === 'social' && social.sum).toEqual({ entries: 21, opened: 6 + 3 + 1, bookVisits: 16, bought: 3 + 2 + 0 });
+    expect(lines.map(l => (l.kind === 'row' ? l.row.entry : 'social'))).toEqual(['engine', 'social', 'direct']);
+    expect(groupSocial([row('engine', 1, 1)]).some(l => l.kind === 'social')).toBe(false);
   });
 });
