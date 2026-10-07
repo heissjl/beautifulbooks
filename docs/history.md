@@ -5578,3 +5578,20 @@ Julian, mit seiner Story „John Berger Edition“ (neun Cover, mit Titeln, Mosa
 Julian: „archive fällt gerade ständig aus für die großen cover, wir brauchen einen fallback auf die kleinen versionen“, „klappt das auch für die sharepics, die generiert werden?“ und, mit seinem geteilten Brett (`/shelfportrait/tvujl2pk`: die Story „did not come“, die Linkkarte mit vier leeren Plätzen): „aktuell klappt das aber noch nicht“. **Gemessen** direkt bei Open Library, je L/M/S: `ol:420313` 503/200/200, `ol:6175424` 302/200/200, `ol:13568852` 503/503/503, `ol:10590366` 302/302/503 — archive.org versagt je Datei und je Größe; S hilft kaum, wo M fehlt.
 
 **Gebaut:** (1) `/img/<size>/<cover>` fragt ein Open-Library-L, das nicht kommt, als M nach und ein M als S, liefert das kleinere Bild unter der gefragten Adresse (`X-Cover-Size`), nur eine Stunde am Edge gehalten statt 30 Tage, damit die richtige Größe nachrückt; der Ausfall wird weiter als `bb.img` geloggt. Google-Cover werden nicht nachgefragt (ihre Größen sind Breiten eines Bilds). Zeitlimits 13 + 9 s innerhalb der 25 s der Funktion. (2) **Die Teilen-Bilder holen ihre Cover zuerst über diese eigene Route** — L, dann M — und erst danach Open Libraries M direkt (7 + 7 + 5 s). Der Grund für Julians leere Story: die Bild-Route fragte archive.org direkt, an Vercels Edge vorbei, obwohl genau diese Cover kurz vorher im Editor über `/img/M/…` geladen worden waren und dort 30 Tage liegen. (3) Die Linkkarte eines einzelnen Covers lädt das Bild selbst, L und dann M, statt die L-Adresse dem Generator zu geben, der sonst die ganze Karte scheitern ließ. **Tests ohne Netz:** `img-fallback.test.ts` (L fällt → M mit kurzem Cache; L kommt → langer Cache; beide fallen → 502 `no-store`; Google nur einmal gefragt), `inspiration-full-board.test.ts` (Reihenfolge eigene Route L, M, dann Open Library M; ein Bild entsteht, wenn nur die eigene Route antwortet). **Unter `next dev`:** `/img/L/ol-420313`, `ol-6175424`, `ol-487599` → 200 mit `X-Cover-Size: M`, `ol-13568852` → 502 `no-store`; die Karte eines Covers 200; Julians Brett `tvujl2pk` als Story: alle neun Cover, 3,9 s. Den Vorteil des Edge zeigt erst die Produktion. 1.482 Tests, tsc, ESLint, `next build`. Analyse: nichts betroffen — `/img` zählt Aufrufe wie zuvor (`measure('img')`).
+
+## 2026-10-06 · Apple Books als Bildquelle, erster Lauf (ROADMAP 6.95)
+
+Julian: „können wir die apple book API benutzen?“, dann „ja, bau den lab-Versuch“. Stichprobe vorher, je eine Anfrage: die iTunes Search API (`media=ebook`, kein Schlüssel) liefert E-Book-Ausgaben mit Bild bis 2000 px Kante (1351 × 2000 px gemessen); `lookup?isbn=` trifft E-Book-ISBNs, findet Druck-ISBNs nicht (2 von 2) und gab für die Scribner-ISBN 9780743273565 ein koreanisches E-Book. Treffer tragen keine ISBN, keinen Verlag, keine Sprache.
+
+`lab/apple-books/` ordnet Apple-Treffer (US-, UK-, DE-Store, 45 Anfragen im 4-s-Takt) über Nachname und normalisierten Titel einem Werk zu, hasht die Bilder wie die Seite und faltet sie mit `foldDuplicateCovers` gegen die Wand. Der volle Lauf scheiterte, bevor er eine Antwort bekam: `openlibrary.org` verweigerte diesem Mac am Vormittag die Verbindung (`ECONNREFUSED`, auch curl), `covers.openlibrary.org`, archive.org und Apple antworteten. Daher nur gegen die aufgezeichneten Seiten (`--fixtures`, je Werk Seite 0, Gatsby drei Seiten):
+
+| Werk | Wand nach Faltung | Apple zugeordnet (Alias) | neu (Alias) | gefaltet |
+|---|---|---|---|---|
+| Mumbo Jumbo | 9 | 4 (0) | 4 (0) | 0 |
+| Nineteen Eighty-Four | 21 | 140 (120) | 110 (92) | 6 |
+| Gravity's Rainbow | 22 | 3 (2) | 1 (1) | 1 |
+| The Great Gatsby | 101 | 129 (28) | 108 (22) | 17 |
+| Pride and Prejudice | 60 | 161 (46) | 145 (37) | 6 |
+
+Angesehen: bei Mumbo Jumbo vier echte Verlagscover, die die Wand nicht hat; bei den gemeinfreien Werken überwiegend E-Books kleiner Anbieter (Vorlagen, Stockfotos). Von 17 gefalteten Gatsby-Paaren ist eines falsch (ein gestreiftes *Der große Gatsby* in ein anderes Design). `1984: The Graphic Novel` wurde über den Alias `1984` zugeordnet, weil `normalizeTitle` den Untertitel abschneidet. Nichts auf der Website; offen in ROADMAP 6.95.
+
