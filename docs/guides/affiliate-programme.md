@@ -72,7 +72,11 @@ Für jedes: Bewerbung durch dich (die Netzwerke verlangen Impressum, Datenschutz
 - **Bezahlte Suche:** keine Provision, Markenname in Anzeigen nicht erlaubt — betrifft uns nicht.
 - **Inhalt:** keine erotischen, gewaltbezogenen oder „negativen“ Inhalte; Angaben auf den Werbeflächen müssen richtig und aktuell sein, sonst Ausschluss nach mehrfacher Aufforderung.
 - **Ein Provisionshinweis wird nicht verlangt**; das deutsche Recht verlangt ihn trotzdem, und `commissionNote` setzt ihn im Shop-Modus von selbst.
-- Weiter verwiesen wird auf `genialokal.de/Besonderheiten-Affiliate/` (laut Recherche: Buchpreisbindung, also keine Weitergabe der Provision an Kunden) und die AGB; Rückfragen an affiliate@genialokal.de.
+- Weiter verwiesen wird auf die AGB und auf `genialokal.de/Besonderheiten-Affiliate/`; Rückfragen an affiliate@genialokal.de. **Die Besonderheiten-Seite hat Julian am 2026-10-07 im eigenen Browser geöffnet** (Bildschirmfoto, lokal):
+  - **Keine Weitergabe der Provision aus preisgebundenen Artikeln** an Endkunden oder Dritte — weder als Rabatt, Bonus, Cashback noch **als Spende**. Wer das tut, bekommt keine Vergütung auf Buchverkäufe; ein Verstoß heißt fristlose Kündigung, Stornierung offener Vergütungen und womöglich Schadensersatz (Buchpreisbindungsgesetz). Bei Nicht-Buch-Artikeln ist Weitergabe erlaubt. **Für uns:** eine Idee wie „die Provision geht an Open Library“ oder ein Spendenversprechen auf der Seite ist für genialokal-Buchverkäufe ausgeschlossen. Spenden *an* die Seite (4.9) und ein Spendenlink zu Open Library (4.7) berührt das nicht.
+  - Die Pflicht, Besucher ausdrücklich auf dieses Verbot hinzuweisen, steht im Abschnitt für Spenden- und Cashback-Portale und richtet sich an Publisher, die Provision weitergeben. Wir geben keine weiter, also brauchen wir keinen Hinweis. Im Zweifel bei affiliate@genialokal.de nachfragen.
+  - **E-Mail-Werbung** für genialokal nur nach Genehmigung durch genialokal und nur an Empfänger mit ausdrücklicher Einwilligung, als „Werbung“ gekennzeichnet. Die Seite verschickt heute Mails nur an Julian (`lib/alerts.ts`, `lib/walls/notify.ts`); ein Newsletter mit Shop-Links bräuchte vorher diese Genehmigung.
+  - Gilt eine individuelle Provisionsvereinbarung, fallen Bonusstaffeln und Aktionen weg — betrifft uns nicht.
 
 ## 4. Der Umschalttag, als Checkliste
 
