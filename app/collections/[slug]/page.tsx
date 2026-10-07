@@ -14,6 +14,7 @@ import { friendSignedIn } from '@/lib/suggest/session';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator, type Translate } from '@/lib/i18n/translate';
 import { measure } from '@/app/api/measure';
+import { introParts, introText } from '@/lib/introlinks';
 
 /**
  * One thematic collection (ROADMAP 5.10, SPEC F8): a title, a paragraph and
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!c) return {};
   // Authors only: a series' scope is publishers, and "73 books by Gollancz" named them as writers (2026-09-25).
   const names = c.kind === 'authors' ? authorsShown(c) : [];
-  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind, c.coverSource, c.works.filter(w => w.image).length, c.scope)}. ${c.intro}`.slice(0, 300);
+  const description = `${c.works.length} ${c.works.length === 1 ? 'book' : 'books'}${names.length ? ` by ${nameLine(names)}` : ''}, ${coverLine(c.kind, c.coverSource, c.works.filter(w => w.image).length, c.scope)}. ${introText(c.intro)}`.slice(0, 300);
   return {
     title: c.title,
     description,
@@ -95,7 +96,11 @@ export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }
           </p>
         )}
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{c.title}</h1>
-        <p className="mt-4 max-w-2xl text-base text-ink-2">{c.intro}</p>
+        <p className="mt-4 max-w-2xl text-base text-ink-2">
+          {introParts(c.intro).map((p, i) => ('href' in p
+            ? <a key={i} href={p.href} rel="noopener" className="underline decoration-ink-3 underline-offset-2 hover:text-ink">{p.label}</a>
+            : p.text))}
+        </p>
         {/*
           No count line under the intro (Julian, 2026-10-05: „kill the
           sub-header"; Jules Verne lost it on 2026-09-26). The metadata keeps
