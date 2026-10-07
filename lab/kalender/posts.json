@@ -49,6 +49,22 @@
       "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
     },
     {
+      "id": "bsky-zug2",
+      "date": "2026-10-06",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "gepostet",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.\n\nbuyitscovers.com/versus?via=bluesky",
+      "path": "/versus",
+      "image": "lab/kalender/out/zug2-1080x1350.jpg (The Gruffalo oder Le visage dans l’abîme)",
+      "postedUrl": "https://bsky.app/profile/buyitscovers.com",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Julian, 2026-10-06: „poste das zugwitz bild 2 auf bsky“; von Claude über Chrome gepostet, mit Label „Nudity“ (Vallejo-Akt) und Alternativtext. Damit gilt Julians Entscheidung, einzelne geschützte Cover zu posten, für diesen Post. Der Starter-Pack-Post ist zurückgehalten: die Vorschaukarte der Shelf-Portrait-Seite hatte am selben Tag vier leere Kacheln (archive.org 502), und Bluesky speichert eine Karte beim Posten."
+    },
+    {
       "id": "setup-hn",
       "date": "2026-10-06",
       "channel": "hn",
