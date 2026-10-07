@@ -5377,6 +5377,8 @@ Julian, zum Satz für Rechteinhaber auf About (2.18k): „this should name mail@
 
 Julian, zu „Suggestions for collections (invitation only)": „remove this part". Claude wies darauf hin, dass `/suggest` und `/curate` in Produktion an sind (`SUGGEST_PASSWORD`) und weiter das Cookie `bb_suggest` setzen und Vorschläge mit Notiz und freiwilligem Namen in der Redis speichern, die Erklärung das dann aber nicht mehr nennt; zur Wahl standen kürzen, nur entfernen, oder `/suggest` abschalten (mit eigenem Schalter für `/curate`). **Julian wählte „nur den Text entfernen".** Entfernt in `app/privacy/page.tsx` samt der zwei deutschen Sätze in `lib/i18n/de.ts`; SPEC F8.4 sagt, wann er zurück muss. Dazu Julian zum Einleitungssatz: „nach listed below den satz beenden" — jetzt „What it does process is listed below." / „Was sie verarbeitet, steht unten." (das „in full" / „ohne Auslassung" wäre nach dem Entfernen ohnehin nicht mehr wahr gewesen).
 
+Deployt am 2026-10-05 (`a8af6d5..f6aea96`, Julian: „ja, deployen“), einmal geprüft: `/about`, `/contact` und `/privacy` nennen je `mail@buyitscovers.com` und nicht mehr die private Adresse; der Abschnitt zu Vorschlägen fehlt, der Einleitungssatz endet nach „listed below“.
+
 ## 2026-10-05 · Vorschläge für eine andere Unterzeile auf dem Bild (ROADMAP 5.18b)
 
 Julian: „make a suggestion for another sub-header for the share pic“. Heute steht unter „My Shelf-Portrait“ die Zeile „The books that inspire me“ (mit Namen: „The books that inspire Julian“), aus `subtitleOf` in `lib/inspiration/share.ts`; dieselbe Zeile steht auf der geteilten Seite und in der Link-Karte. Vorschläge, je mit der Fassung mit Namen (ohne Pronomen, weil die Seite keines kennt):
