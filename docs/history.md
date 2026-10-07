@@ -5490,6 +5490,8 @@ Julian nach dem Screenshot des Entwurfs: „ja, bau es auf den billigeren weg um
 
 Julian: „ich glaube es ist besser wenn wir verlag und jahr nur unten beim ausgeklappten finder zeigen, aber nicht im portrait selbst“. Die Zeile steht jetzt in der Kaufliste unter Titel und Autor, je Buch neben „Find this edition“; das Brett zeigt nur die Cover. Angesehen bei 1280 und 390 px (kein Überlauf, Titel und Autor kürzen wie vorher mit „…“). Abfragen unverändert.
 
+**Deploy, 2026-10-06.** Julian: „ja, merge in main und deploye“. `origin/main` von `51ce9ba` auf `8e02ac3` als Fast-Forward (keine fremden Commits dazwischen): Untertitel, Satz zur Suchwendung, Indexierung des Editors, offene Kaufliste mit Jahr · Verlag, Satz unter dem Titel, Datenschutzsatz. Vorher 1.448 Tests, tsc, `next build`. Produktion einmal angesehen: `/shelfportrait` antwortet 200, ohne `noindex`, mit `canonical` auf `https://buyitscovers.com/shelfportrait` und der Beschreibung „The books that define you — …“; die Sitemap nennt `/shelfportrait`.
+
 **Deploy, derselbe Tag.** Julian: „ja, merge und push“. Vorher `origin/main` gemergt (fünf 5.18b-Commits einer anderen Sitzung: Untertitel, Jahr · Verlag, Editor indexiert; Konflikte nur in den 5.18b-Zeilen von ROADMAP, SPEC F10.1, features und in dieser Datei, von Hand zusammengeführt), 1.453 Tests, tsc, ESLint, `next build`, unter `next dev` drei Beispiele. `origin/main` von `8e02ac3` auf `8caed2c`. Produktion einmal angesehen: `/shelfportrait` liefert drei „Example“-Schilder und den Satz „Three examples to start you off“.
 
 ## 2026-10-06 · Das Max-Abo in den Kosten der Analyse (ROADMAP 2.18m, K15)
