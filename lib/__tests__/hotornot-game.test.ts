@@ -3,7 +3,7 @@ import { rng } from '../loading';
 import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
-  nextPairFor, pairingTally, poolBooks, someBooks, type VersusPool,
+  fixedPair, nextPairFor, pairingTally, poolBooks, someBooks, type VersusPool,
   readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
@@ -24,6 +24,24 @@ const pool: VersusPool = {
 };
 const secret = pairSecret(undefined);
 const now = Date.UTC(2026, 8, 11, 12);
+
+describe('a named pairing (6.97)', () => {
+  it('is the two covers asked for, in that order, with a token a vote accepts', () => {
+    const pair = fixedPair(secret, 'ol:2', 'ol:5', { pool, now });
+    expect(pair).not.toBeNull();
+    if (!pair) return;
+    expect([pair.a.id, pair.b.id]).toEqual(['ol:2', 'ol:5']);
+    expect(pair.a.title).toBe('Book 2');
+    expect(pair.covers).toBe(pool.covers.length);
+    expect(verifyPair(secret, pool.name, pair.a.id, pair.b.id, pair.token, now)).toBe(true);
+  });
+
+  it('is nothing when a cover is not in the pool, or faces itself', () => {
+    expect(fixedPair(secret, 'ol:2', 'ol:99', { pool, now })).toBeNull();
+    expect(fixedPair(secret, 'ol:99', 'ol:2', { pool, now })).toBeNull();
+    expect(fixedPair(secret, 'ol:2', 'ol:2', { pool, now })).toBeNull();
+  });
+});
 
 describe('a pair from the server', () => {
   it('is two covers of the pool, through our image route, with a token a vote accepts', async () => {

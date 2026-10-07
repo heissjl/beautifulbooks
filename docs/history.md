@@ -5619,3 +5619,25 @@ Julian, mit einem Bild der geteilten Shelf-Portrait-Seite: „baue diese seitenb
 
 **Nachgezogen am selben Abend** (Julian: „stell den what is buy its covers block zwischen die anderen beiden blöcke, also unter ‚what this is‘“, „Nenne ‚what this is‘ in ‚what is this game‘ um“, „lass die beiden blöcke gleich aussehen, der untere ohne die sidebar“): Die Überschrift heißt **„What is this game“** (deutsch „Was dieses Spiel ist“; „What this is“ bleibt der Über-Seite), der Block steht **zwischen** den beiden Abschnitten statt darunter, und er sieht aus wie der Abschnitt darüber — gleiche Schriftgrößen, kein Seitenstrich. `WhatIsThisSite` hat dafür zwei Formen: `aside` (die Spalte neben einem geteilten Brett, mit Strich) und `section` (ein Abschnitt wie jeder andere). Angesehen bei 760 und 375 px.
 
+## 2026-10-06 · Feste Adressen für einzelne Paarungen (ROADMAP 6.97)
+
+Julian: „can you make permanent links to specific matchups that i can use for advertising? wie das vom zugwitz 2 aus der anderen session“ — gemeint sind die Kampagnenbilder `zug-1080x1350.jpg` und `zug2-1080x1350.jpg` aus `lab/kalender`, die je zwei Cover gegeneinanderstellen.
+
+**Die Adresse.** `/versus/<cover-a>-vs-<cover-b>`, die Cover-IDs geschrieben wie in einem Teilen-Link (`coverPathSegment`, Doppelpunkt → Strich). `lib/hotornot/matchup.ts` schreibt und liest sie (vier Tests, auch für eine Google-ID mit eigenen Strichen), `fixedPair` in `lib/hotornot/game.ts` baut das Paar und unterschreibt es wie jedes andere (zwei Tests). Liegt ein Cover nicht im Vorrat, wurde gemeldet oder ist von der Seite genommen, antwortet die Seite 404 statt einer leeren Kachel. `/versus/board` bleibt seine eigene Seite — eine statische Route gewinnt über die dynamische.
+
+**Die zwei fertigen Links:**
+
+| Bild | Paarung | Adresse |
+| --- | --- | --- |
+| `zug-1080x1350.jpg` | Infinite Jest gegen Fifty Shades of Grey | `https://buyitscovers.com/versus/ol-191075-vs-ol-15163071` |
+| `zug2-1080x1350.jpg` | The Gruffalo gegen Le visage dans l’abîme | `https://buyitscovers.com/versus/ol-15154344-vs-ol-10215294` |
+
+`?via=instagram`, `?via=bluesky`, `?via=x`, `?via=pinterest` (5.6a) wirken daran wie an jeder Adresse; ohne Marke zählt der Besuch über den Referrer.
+
+**Was die Seite ist und was nicht.** Sie ist das Spiel, nur mit vorgegebenem erstem Paar: danach kommen zufällige Paare, zwei davon kommen schon vorgeladen mit (ein zufälliges Paar, das eines der beiden Cover trägt, fällt weg — es käme sonst nach zwei Klicks wieder). Die Stimme trägt denselben signierten Zettel und zählt wie jede andere. **Das hat einen Preis, der hier steht, damit ihn niemand für einen Fehler hält:** ein Werbelink schickt viele Stimmen auf eine Paarung, die Rangliste sieht dieses Paar also viel häufiger als ein zufälliges. Das Modell verkraftet es (Elo und Bradley–Terry rechnen mit Spielen, nicht mit Gleichverteilung), und die Krone verlangt weiter eine über Runden gehaltene Führung (F7.5).
+
+**Nicht indexiert**, Canonical auf `/versus`: eine Landeseite für einen Post, und die Kombinationen sind endlos — die Seite mit dem Text und dem Sitemap-Eintrag bleibt `/versus`.
+
+**Die Vorschaukarte** (`app/versus/[pair]/opengraph-image.tsx`) zeigt die beiden Cover nebeneinander und darunter „The Gruffalo or The face in the abyss?“ mit der Wortmarke — über das Klicken entscheiden die zwei Bilder, eine allgemeine Karte würde das verschenken. Gemessen am Dev-Server: **67,8 KB JPEG in 1,9 s**, beide Cover da.
+
+**Geprüft am Dev-Server:** beide Adressen zeigen genau ihr Paar; ein Klick auf ein Cover wurde angenommen und das nächste (zufällige) Paar kam; `/versus/board` antwortet weiter mit 200, `/versus/not-a-pair` mit 404; Titel „The Gruffalo or The face in the abyss: which cover?“, `robots: noindex, follow`, Canonical `…/versus`. Deutsch über den Cookie geprüft. 375 × 812: `scrollWidth` 375, kein seitlicher Überlauf. 1.495 Tests, Typprüfung, ESLint und Build grün.

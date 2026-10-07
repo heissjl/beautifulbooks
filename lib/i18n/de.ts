@@ -449,6 +449,8 @@ export const de: Readonly<Record<string, string>> = {
   // the wording follows German usage for such pages („Anbieterkennzeichnung“, „Datenschutzerklärung“).
   'What this is': 'Was das hier ist',
   'What is this game': 'Was dieses Spiel ist',
+  'This pair has an address of its own, which is why you were sent to it. Vote, and the game goes on with pairs drawn at random.':
+    'Dieses Paar hat eine eigene Adresse — deshalb bist du hier gelandet. Stimm ab, danach geht es mit zufällig gezogenen Paaren weiter.',
   'A book is printed again and again, often with a new cover each time. This site puts those covers side by side, by language and year, so you can find the edition you would want on your shelf.': 'Ein Buch wird immer wieder gedruckt, oft jedes Mal mit einem neuen Einband. Diese Seite stellt die Cover nebeneinander, nach Sprache und Jahr, damit du die Ausgabe findest, die du im Regal haben willst.',
   'Where the images come from': 'Woher die Bilder kommen',
   'Is one of these covers yours, and you want it off this site? Write to {email} with the address of the page, and it will be taken down. The image stays in the catalogue it came from; that is where it can be deleted.': 'Ist eines dieser Cover von dir und soll hier nicht mehr stehen? Schreib an {email} mit der Adresse der Seite, dann verschwindet es. Das Bild bleibt in dem Katalog, aus dem es kommt; löschen lässt es sich dort.',

@@ -351,6 +351,28 @@ export function readyPairs(
 }
 
 /**
+ * One named pairing, signed like any other (ROADMAP 6.97): the pair behind a
+ * permanent address such as `/versus/ol-15154344-vs-ol-10215294`, so a post
+ * and the page it leads to show the same two covers.
+ *
+ * Null when a cover is not in the pool, was reported or taken off the site
+ * (`activeIds`), or faces itself — the page then answers 404 rather than
+ * showing an empty box. The vote that follows is an ordinary vote: it carries
+ * the same signed token and counts like one from a random pair.
+ */
+export function fixedPair(
+  secret: Buffer,
+  a: string,
+  b: string,
+  { pool = POOL, now = Date.now(), store = 'redis' }: { pool?: VersusPool; now?: number; store?: VoteStore['kind'] } = {},
+): PairResponse | null {
+  if (a === b) return null;
+  const ids = new Set(activeIds(pool, []));
+  if (!ids.has(a) || !ids.has(b)) return null;
+  return { pool: pool.name, store, votes: null, covers: ids.size, a: side(pool, a), b: side(pool, b), token: signPair(secret, pool.name, a, b, now) };
+}
+
+/**
  * `chosen` names the book behind the cover just picked. The pair itself never
  * says it — the cover is judged, not the book — but once the vote is in, the
  * player may want to go to the book (Julian, 2026-09-11: "falls man es so
