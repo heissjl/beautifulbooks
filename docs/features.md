@@ -1,6 +1,6 @@
 # Was die Seite heute kann
 
-Stand: 2026-10-03. Eine Bestandsliste der Funktionen, die **ausgeliefert oder auf `main` gebaut** sind — je Zeile, was der Leser bekommt, seit wann, wo es in der [Spec](../SPEC.md) steht, welcher [Roadmap](../ROADMAP.md)-Punkt es gebaut hat und wo der Code liegt. Die Spec sagt, was die Seite *sein soll*; diese Liste sagt, was sie *ist*. Wer einen Punkt abhakt, trägt hier eine Zeile nach.
+Stand: 2026-10-04. Eine Bestandsliste der Funktionen, die **ausgeliefert oder auf `main` gebaut** sind — je Zeile, was der Leser bekommt, seit wann, wo es in der [Spec](../SPEC.md) steht, welcher [Roadmap](../ROADMAP.md)-Punkt es gebaut hat und wo der Code liegt. Die Spec sagt, was die Seite *sein soll*; diese Liste sagt, was sie *ist*. Wer einen Punkt abhakt, trägt hier eine Zeile nach.
 
 Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
@@ -107,6 +107,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Bei Google Search Console (Domain-Property `buyitscovers.com`, DNS-TXT bei INWX) und Bing Webmaster Tools angemeldet; Sitemap mit 875 Adressen von Google gelesen | 2026-10-04 | — | 2.5 | `app/sitemap.ts`, `app/robots.ts` |
 | Analyse `/admin/insights` (deutsch, nur mit Julians Admin-Cookie, sonst 404): Klickrate der Buchseite, Weg zum Kauf, Klicks zum Händler je Händler × Markt × Linkart aus `/go/` (auch Titelsuchen und lokale Buchhandlungen), Klickposition der Suche und Suchen ohne Ergebnis, gesehene Cover, Verdikt und Kauf, Werke, Herkunft, Betrieb, Verbrauch und Kosten der Regalfoto-Analyse (Fotos, Tokens je Modell, USD je Tag und je Foto); 7/30/90 Tage, je Markt; alles Tagessummen ohne Kennung, gesendet als ein Signal je Seitenbesuch beim Verlassen (`/api/seen`); JSON unter `/api/insights` fürs Cockpit | 2026-10-04 | F5 | 3.1 | `lib/insights/`, `components/useInsights.tsx`, `app/admin/insights/page.tsx`, `app/api/seen/route.ts`, `app/api/insights/route.ts`, `app/go/[provider]/[isbn]/route.ts` |
 | Analyse: Rechenzeit der Funktionen je Route und Abrufer-Klasse (Browser, ClaudeBot, GPTBot, Googlebot, Bingbot, andere Bots), von der Seite selbst gemessen (K14); Kosten im Zeitraum aus festen Kosten, gemessener Vercel-Nutzung zum Listenpreis und den Fotos (K15), USD und EUR getrennt (deployt 2026-10-05) | 2026-10-05 | N11, N12 | 2.18l, 2.18m | `lib/insights/cpu.ts`, `lib/insights/costs.ts`, `app/api/measure.ts`, `app/admin/insights/page.tsx` |
 | `robots.txt`: benannte KI- und SEO-Crawler dürfen die 822 Buch- und Jahrzehnte-Seiten der Sitemap lesen, nichts sonst unter `/book/`, keine Adresse mit Abfrage, keine Bilder; `Crawl-delay: 10`; Suchmaschinen wie zuvor (deployt 2026-10-05) | 2026-10-05 | F2.13 | 2.18n | `lib/robots.ts`, `app/robots.ts`, `lib/__tests__/robots.test.ts` |
