@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { closed, json } from '@/app/api/inspiration/guard';
-import { boardQuery, filledCount, parseBoard } from '@/lib/inspiration/board';
+import { boardQuery, filledCount, isFull, parseBoard } from '@/lib/inspiration/board';
 import { linkStoreFromEnv } from '@/lib/inspiration/store';
 
 /**
@@ -26,6 +26,8 @@ export async function POST(request: NextRequest) {
   }
   const board = parseBoard(new URLSearchParams(q));
   if (filledCount(board) === 0) return json({ error: 'An empty board gets no link.' }, 400);
+  // Only a full board is shared (lib/inspiration/board.ts, isFull); the editor says so before it asks.
+  if (!isFull(board)) return json({ error: 'Fill every place on the board first, or choose a smaller board.' }, 400);
   const long = `/shelfportrait/board?${boardQuery(board)}`;
   const store = linkStoreFromEnv();
   if (!store) return json({ path: long, short: false });

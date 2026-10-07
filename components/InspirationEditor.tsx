@@ -16,6 +16,7 @@ import {
   cleanName,
   filledCount,
   firstEmpty,
+  isFull,
   parseBoard,
   place,
   remove,
@@ -274,6 +275,12 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
   }
 
   async function finish() {
+    // Only a full board is shared (isFull): a tap before then says why instead of making a picture with empty places.
+    if (!isFull(board)) {
+      const smaller = SIZES.find((n) => n === filled);
+      setLink({ busy: false, note: `Fill all ${size} places first${smaller ? ` — or choose ${SIZE_WORD[smaller].toLowerCase()} books above` : ', or choose a smaller board above'}.` });
+      return;
+    }
     setLink({ busy: true, note: '' });
     try {
       const res = await fetch('/api/inspiration/link', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ q: boardQuery(board) }) });
@@ -301,7 +308,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
     <>
       {/* The band: where the board stands and the way out, kept in sight — at the top on a wide screen, at the thumb on a phone. */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-accent bg-ink text-bg sm:sticky sm:bottom-auto sm:top-14 sm:z-10 sm:border-t-0">
-        <div className="mx-auto flex min-h-12 max-w-5xl items-center gap-4 px-4 py-2 sm:px-6 lg:px-8">
+        <div className="mx-auto flex min-h-12 max-w-5xl flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2 sm:px-6 lg:px-8">
           <span className="text-[11px] uppercase tracking-[0.14em] text-bg/70">Your board</span>
           <span className="flex-1 font-display text-lg sm:text-xl" role="status">
             {link.busy ? 'Making the link…' : filled === size ? `${SIZE_WORD[size]}. Done.` : `${filled} of ${size}`}
@@ -309,6 +316,8 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
           <button type="button" onClick={finish} disabled={filled === 0 || link.busy} className="rounded-full bg-bg px-4 py-2 text-sm text-ink hover:bg-surface disabled:opacity-40 sm:py-0.5">
             Done — share it
           </button>
+          {/* On a phone the page's own note is out of sight above; the band, under the thumb, says it too. */}
+          {link.note && <p className="basis-full text-xs text-bg/80 sm:hidden" role="status">{link.note}</p>}
         </div>
       </div>
 

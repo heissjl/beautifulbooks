@@ -156,6 +156,14 @@ export function boardQuery(board: Board): string {
 
 export const filledCount = (board: Board): number => board.slots.filter(Boolean).length;
 
+/**
+ * Every place of the board holds a book. Only a full board is shared — the
+ * link, the story and the post (Julian, 2026-10-06, after a picture of nine
+ * places with three covers: „wie kann man sicher gehen, dass so ein bug mit
+ * nur teilweiser befüllung nie passiert", and asked: „Nur volle Bretter").
+ */
+export const isFull = (board: Board): boolean => board.slots.length > 0 && board.slots.every(Boolean);
+
 function withSlots(board: Board, slots: (Slot | null)[]): Board {
   return { ...board, slots };
 }

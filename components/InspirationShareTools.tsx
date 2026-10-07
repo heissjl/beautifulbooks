@@ -80,7 +80,10 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
 
   async function share() {
     try {
-      const blob = await (await fetch(src)).blob();
+      const res = await fetch(src);
+      // A picture that did not come (a cover missing, 503) is no file to hand on.
+      if (!res.ok) throw new Error(String(res.status));
+      const blob = await res.blob();
       const picture = new File([blob], file, { type: 'image/jpeg' });
       // The link goes with the picture, inside the sentence (Julian, 2026-10-05: WhatsApp shows the words under the picture, and
       // a `url` of its own makes some apps drop the file).
@@ -119,9 +122,14 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
         <Choice label="Background" value={look} onChange={setLook} options={[{ id: 'ambient', label: 'Cover colours' }, { id: 'mosaic', label: 'Mosaic' }, { id: 'paper', label: 'Paper' }]} />
         <Choice label="Titles" value={titles ? 'on' : 'off'} onChange={(v) => setTitles(v === 'on')} options={[{ id: 'off', label: 'Covers only' }, { id: 'on', label: 'With title and author' }]} />
         <div className="flex flex-wrap gap-2 pt-1">
-          <a href={src} download={file} className="btn btn-accent">Save the picture</a>
-          {canCopy && <button type="button" onClick={copy} className="btn">Copy the picture</button>}
-          {canShare && <button type="button" onClick={share} className="btn">Share the picture…</button>}
+          {/* Only the picture shown can be taken away: while it is drawn, or when it did not come, there is nothing to save. */}
+          {drawing || failed ? (
+            <span className="btn btn-accent pointer-events-none opacity-50" aria-disabled="true">Save the picture</span>
+          ) : (
+            <a href={src} download={file} className="btn btn-accent">Save the picture</a>
+          )}
+          {canCopy && <button type="button" onClick={copy} disabled={drawing || failed} className="btn disabled:opacity-50">Copy the picture</button>}
+          {canShare && <button type="button" onClick={share} disabled={drawing || failed} className="btn disabled:opacity-50">Share the picture…</button>}
         </div>
         <p className="min-h-5 text-sm text-ink-2" role="status">{note}</p>
       </div>

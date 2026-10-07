@@ -5,7 +5,7 @@ import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import { coverUrlFor } from '@/lib/coverurl';
-import { type BoardSize, filledCount, parseBoard, sizeOf } from '@/lib/inspiration/board';
+import { type BoardSize, filledCount, isFull, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
 import { mosaicGround } from '@/lib/inspiration/mosaicground';
@@ -44,6 +44,8 @@ import { SITE_URL } from '@/lib/seo';
 export const maxDuration = 30;
 
 const COVER_TIMEOUT_MS = 8000;
+/** The second try, at the medium size: 8 + 6 s stays well inside the function's 30 s with the ground drawn after. */
+const SECOND_TRY_MS = 6000;
 /** The address a reader types from a picture that carries no link. Never localhost or a preview's host: the picture travels. */
 const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SITE_URL.includes('vercel.app') ? 'buyitscovers.com' : new URL(SITE_URL).host}/shelfportrait`;
 
@@ -58,11 +60,21 @@ const LOOKS: Record<Look, { bg: string; ink: string; ink2: string; mark: string;
   plain: { bg: OG.bg, ink: OG.ink, ink2: OG.ink2, mark: OG.ink, empty: '#2a2522', shadow: 0 },
 };
 
+/**
+ * A cover cut to its tile: the large image, and when that does not come in
+ * time the medium one — softer at a story's size, but a soft cover is better
+ * than a gap (Julian, 2026-10-06: „Nachfassen, sonst kein Bild"). What still
+ * does not come is null, and a story or post then gets no picture at all.
+ */
 async function tile(coverId: string, width: number, height: number): Promise<Buffer | null> {
-  const url = coverUrlFor(coverId, 'L');
+  return (await scaled(coverUrlFor(coverId, 'L'), COVER_TIMEOUT_MS, width, height))
+    ?? (await scaled(coverUrlFor(coverId, 'M'), SECOND_TRY_MS, width, height));
+}
+
+async function scaled(url: string | null, timeoutMs: number, width: number, height: number): Promise<Buffer | null> {
   if (!url) return null;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(COVER_TIMEOUT_MS), redirect: 'follow' });
+    const res = await fetch(url, { signal: AbortSignal.timeout(timeoutMs), redirect: 'follow' });
     if (!res.ok || !(res.headers.get('content-type') ?? '').startsWith('image/')) return null;
     const bytes = Buffer.from(await res.arrayBuffer());
     // Open Library answers a missing scan with a 1 × 1 image.
@@ -324,6 +336,9 @@ export async function GET(request: NextRequest) {
   const withTitles = params.get('titles') === '1' && format !== 'card';
   const asked = parseBoard(params);
   if (filledCount(asked) === 0) return json({ error: 'An empty board has no picture.' }, 400);
+  // A story or a post is made only of a full board (isFull, Julian 2026-10-06: „Nur volle Bretter"). The link card of an
+  // older board with gaps is still drawn: without one, X shows no card at all.
+  if (format !== 'card' && !isFull(asked)) return json({ error: 'Only a full board has a picture. Fill every place, or choose a smaller board.' }, 400);
   // A cover taken off the site on request (2.18k) is not drawn: its place stays empty, as on the page.
   const board = { ...asked, slots: asked.slots.map((s) => (s && isHiddenCover(s.coverId) ? null : s)) };
 
@@ -337,6 +352,11 @@ export async function GET(request: NextRequest) {
   ]);
   const captions = described ? described.books.map((b) => (b?.title ? { title: b.title, author: b.author ?? '' } : null)) : null;
   // Kept only when it is whole: every cover came, and every title that was asked for.
+  // No story or post with a gap where a cover did not come: the reader would save and post it. The page then says
+  // „The picture did not come" and a second try usually finds the covers cached. A cover taken off the site (2.18k) is no gap.
+  if (format !== 'card' && board.slots.some((s, i) => s && !tiles[i])) {
+    return json({ error: 'A cover did not come in time. Try again in a moment.' }, 503);
+  }
   const whole = board.slots.every((s, i) => !s || tiles[i]) && (!captions || board.slots.every((s, i) => !s || captions[i]));
   // Where the words stand, so the mosaic is darker behind them.
   const words = layout ? [layout.head, layout.foot] : [cardPlan(count).words];
