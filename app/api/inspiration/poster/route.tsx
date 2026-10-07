@@ -5,7 +5,7 @@ import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import { coverUrlFor } from '@/lib/coverurl';
-import { type BoardSize, filledCount, isFull, parseBoard, sizeOf } from '@/lib/inspiration/board';
+import { type BoardSize, coverSegment, filledCount, isFull, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
 import { captionLines } from '@/lib/inspiration/captionlines';
@@ -44,9 +44,11 @@ import { SITE_URL } from '@/lib/seo';
  */
 export const maxDuration = 30;
 
-const COVER_TIMEOUT_MS = 8000;
-/** The second try, at the medium size: 8 + 6 s stays well inside the function's 30 s with the ground drawn after. */
-const SECOND_TRY_MS = 6000;
+/** Own route, large then medium, then Open Library's medium: 7 + 7 + 5 s, inside the function's 30 s with the ground after. */
+const OWN_L_MS = 7000;
+const OWN_M_MS = 7000;
+/** The last try, Open Library's medium image directly. */
+const SECOND_TRY_MS = 5000;
 /** The address a reader types from a picture that carries no link. Never localhost or a preview's host: the picture travels. */
 const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SITE_URL.includes('vercel.app') ? 'buyitscovers.com' : new URL(SITE_URL).host}/shelfportrait`;
 
@@ -67,8 +69,18 @@ const LOOKS: Record<Look, { bg: string; ink: string; ink2: string; mark: string;
  * than a gap (Julian, 2026-10-06: „Nachfassen, sonst kein Bild"). What still
  * does not come is null, and a story or post then gets no picture at all.
  */
-async function tile(coverId: string, width: number, height: number): Promise<Buffer | null> {
-  return (await scaled(coverUrlFor(coverId, 'L'), COVER_TIMEOUT_MS, width, height))
+async function tile(coverId: string, width: number, height: number, origin: string): Promise<Buffer | null> {
+  /*
+    **Through the site's own image route first** (2026-10-06, while archive.org
+    failed for hours and Julian's board got no story: „aktuell klappt das aber
+    noch nicht"). `/img/<size>/<cover>` is held 30 days at Vercel's edge, and a
+    board's covers were just looked at in the editor — so they are usually
+    there even when archive.org is down, and the route itself falls back from L
+    to M. Open Library directly only after that, for a route that is busy.
+  */
+  const segment = coverSegment(coverId);
+  return (await scaled(`${origin}/img/L/${segment}`, OWN_L_MS, width, height))
+    ?? (await scaled(`${origin}/img/M/${segment}`, OWN_M_MS, width, height))
     ?? (await scaled(coverUrlFor(coverId, 'M'), SECOND_TRY_MS, width, height));
 }
 
@@ -352,7 +364,7 @@ export async function GET(request: NextRequest) {
   const rects = layout ? layout.tiles : cardPlan(count).covers;
   const size = layout ? { width: layout.width, height: layout.height } : { width: CARD.width, height: CARD.height };
   const [tiles, described] = await Promise.all([
-    Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height) : null))),
+    Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height, request.nextUrl.origin) : null))),
     withTitles ? describeBoard(board) : null,
   ]);
   const captions = described ? described.books.map((b) => (b?.title ? { title: b.title, author: b.author ?? '' } : null)) : null;

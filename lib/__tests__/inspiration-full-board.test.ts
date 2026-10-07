@@ -61,7 +61,7 @@ describe('the poster route', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  it('answers 503 instead of a picture with a gap when a cover does not come at either size', async () => {
+  it('answers 503 instead of a picture with a gap when a cover does not come from any source', async () => {
     const asked: string[] = [];
     vi.stubGlobal('fetch', vi.fn(async (url: string) => {
       asked.push(String(url));
@@ -70,8 +70,30 @@ describe('the poster route', () => {
     const res = await poster(`${boardQuery(filled(3, 3))}&format=feed`, '10.0.0.3');
     expect(res.status).toBe(503);
     expect(res.headers.get('cache-control')).toBe('no-store');
-    // Each cover was asked twice: the large image, then the medium one.
-    expect(asked.filter((u) => u.includes('-L.')).length).toBe(3);
-    expect(asked.filter((u) => u.includes('-M.')).length).toBe(3);
+    // Each cover three times: the site's own image route large and medium (the edge often holds them while
+    // archive.org is down), then Open Library's medium image directly.
+    expect(asked.filter((u) => u.includes('/img/L/')).length).toBe(3);
+    expect(asked.filter((u) => u.includes('/img/M/')).length).toBe(3);
+    expect(asked.filter((u) => u.includes('covers.openlibrary.org') && u.includes('-M.')).length).toBe(3);
+    expect(asked.some((u) => u.includes('covers.openlibrary.org') && u.includes('-L.'))).toBe(false);
   });
+});
+
+describe('the poster route, with archive.org down', () => {
+  it('draws the picture from the site\'s own image route when Open Library fails', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      if (String(url).includes('/img/M/')) {
+        const { default: sharp } = await import('sharp');
+        // Noise, not one colour: a flat image compresses below the 1 KB that marks Open Library's empty answer.
+        const pixels = Buffer.from(Array.from({ length: 180 * 270 * 3 }, (_, i) => (i * 7919) % 251));
+        const png = await sharp(pixels, { raw: { width: 180, height: 270, channels: 3 } }).jpeg().toBuffer();
+        return new Response(new Uint8Array(png), { status: 200, headers: { 'content-type': 'image/jpeg' } });
+      }
+      return new Response('', { status: 503 });
+    }));
+    const { GET } = await import('@/app/api/inspiration/poster/route');
+    const res = await GET(new NextRequest(`http://localhost/api/inspiration/poster?${boardQuery(filled(3, 3))}&format=feed&look=plain`, { headers: { 'x-forwarded-for': '10.0.0.4' } }));
+    expect(res.status).toBe(200);
+    expect(res.headers.get('content-type')).toBe('image/jpeg');
+  }, 30000);
 });
