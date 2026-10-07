@@ -141,8 +141,8 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
   - Als Sharepic ist die zweite Zeile die einzige Überschrift: „The performative reader starter pack“ (Julian, ohne Apostroph) in der proportionalen Xanh der Seite. Der Kopf ist aus dem Mosaik des Posters neu gesetzt (`lab/kalender/sharepic_starterpack.py`).
   - Das Poster der Website bleibt, wie es ist.
   - **Am selben Tag neu gewählt:** [shelfportrait/tvujl2pk](https://buyitscovers.com/shelfportrait/tvujl2pk), vorher mzyjqzbo.
-  - Das Sharepic ist noch nicht erzeugt. archive.org, wo Open Library die großen Cover ablegt, antwortete mit 502, und das Poster der Seite kam zweimal mit sechs leeren Kacheln zurück.
-  - `lab/kalender/sharepic_starterpack.py` setzt das Bild jetzt selbst aus den neun Covern im Stil des Posters und läuft, sobald die Cover wieder kommen.
+  - archive.org, wo Open Library die großen Cover ablegt, antwortete stundenlang mit 502/503, und das Poster der Seite kam zweimal mit sechs leeren Kacheln zurück. `lab/kalender/sharepic_starterpack.py` setzt das Bild deshalb selbst aus den neun Covern im Stil des Posters und bricht ab, statt eine Lücke zu zeichnen; vier Kacheln wurden aus Julians eigenem Sharepic geschnitten.
+  - **Auf Bluesky gepostet** (2026-10-06, [Post](https://bsky.app/profile/buyitscovers.com/post/3mxb22vjfys26)) mit diesem Bild und nur `buyitscovers.com/shelfportrait` als Link (Julian: „als link im post nur buyitscovers.com/shelfportrait“). Eine erste Fassung mit Julians Sharepic und dem Link auf tvujl2pk hat Julian gelöscht; Bluesky-Posts lassen sich nicht bearbeiten.
 - Beide zeigen geschützte einzelne Cover und **warten auf die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1).
 
 **Das Bild der Wand** ist Julians eigenes Foto. Es liegt nur lokal unter `lab/kalender/out/cache/`, wie seine anderen Fotos auch, und wird von `render_gemeinfrei.py` zum Pin gesetzt.

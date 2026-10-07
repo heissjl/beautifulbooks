@@ -54,14 +54,14 @@
       "channel": "bluesky",
       "kind": "feature",
       "status": "gepostet",
-      "text": "The performative reader's starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.\n\nbuyitscovers.com/shelfportrait/tvujl2pk?via=bluesky",
-      "image": "lab/kalender/out/starterpack-sharepic.jpg (Julians Sharepic, 1080×1350)",
-      "postedUrl": "https://bsky.app/profile/buyitscovers.com",
+      "text": "The performative reader starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.\n\nbuyitscovers.com/shelfportrait",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg (sharepic_starterpack.py aus tvujl2pk, 1080×1350)",
+      "postedUrl": "https://bsky.app/profile/buyitscovers.com/post/3mxb22vjfys26",
       "needs": [
         "konto:bluesky",
         "5.6a"
       ],
-      "note": "Kampagne „performative readers“. Julian, 2026-10-06: „update das starterpack bild im artefakt und poste auf bsky das bild und als link den link zur shelfportrait seite“. Bild statt Link-Karte (die Karte hatte leere Kacheln), Link im Text ohne #mine. Das Bild zeigt Julians erste Auswahl mit Murakami, Stoner und East of Eden; der Link führt auf seine endgültige Fassung tvujl2pk, dieselben neun Bücher in anderer Reihenfolge. Der Link steht im Text selbst (ein Bild-Post hat keine Link-Karte), deshalb kein path."
+      "note": "Kampagne „performative readers“. Erste Fassung (Julians Sharepic, Link auf /shelfportrait/tvujl2pk?via=bluesky) hat Julian am 2026-10-06 gelöscht; neu gepostet am selben Tag mit dem Bild aus sharepic_starterpack.py (Julians Board tvujl2pk, alle neun Cover von Open Library) und, auf Julians Wunsch („als link im post nur buyitscovers.com/shelfportrait“), nur dem Link auf den Editor, ohne ?via= — Bluesky schickt sich als Herkunft mit. Alt-Text nennt die neun Bücher. Der Link steht im Text selbst, deshalb kein path."
     },
     {
       "id": "bsky-zug2",
