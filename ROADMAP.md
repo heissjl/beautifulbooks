@@ -1297,7 +1297,7 @@ Julian: „can you identify the most derivative claude-prototypical stuff on our
 
 ### Ideen aus my9albums.org (2026-10-04), unbewertet
 
-Julian: „check what we can learn from this website that went viral just now". Befund in [docs/vergleich-my9albums.md](docs/vergleich-my9albums.md) (die Seite selbst war aus der Sitzung nicht erreichbar, nur Suchtreffer). Kern: eine feste Zahl als Aussage über sich selbst, und ein **herunterladbares Hochformat-Bild** statt eines Links. Auslöser wie oben.
+Julian: „check what we can learn from this website that went viral just now". Befund in [docs/vergleich-my9albums.md](docs/vergleich-my9albums.md) (die Seite selbst war aus der Sitzung nicht erreichbar, nur Suchtreffer). Kern: eine feste Zahl als Aussage über sich selbst, und ein **herunterladbares Hochformat-Bild** statt eines Links. Auslöser wie oben. **Nachtrag 2026-10-05** (Julian: „make a research how my9albums went viral“): Verlauf, Herkunft und Folgen für 5.18b in [docs/my9albums-viral-recherche.md](docs/my9albums-viral-recherche.md) — Original ist my9albums.com, die `.org` ein Nachbau; das Format stammt aus Japan (#私を構成する9枚, 2016) und existiert für Bücher schon (my9books.com); ~1.700 → 45.000 → 203.000 Poster in einer Woche, zuerst spanischsprachig. Neue Ideen daraus (mehrere Poster-Stile, Zähler/„Most picked“, Shelf-Portrait auf Deutsch vor einem Start, erster Post persönlich von Julian) dort in §5, unbewertet.
 
 | Idee | Wann |
 |---|---|
