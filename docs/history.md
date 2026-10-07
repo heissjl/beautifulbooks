@@ -1,3 +1,9 @@
+## 2026-10-07 · Die Kuratier-App zeigt, wie groß ein Cover wirklich ist (ROADMAP 6.18)
+
+Julian: „ändere die app so, dass ich weiß ob die cover L, M oder S größe haben und stelle die L vorne an". Jedes Cover lässt sich bei Open Library als S, M und L abrufen, aber das sagt nichts über den Scan: `-L` eines kleinen Originals ist das Original. **Die Kästen, gemessen an zwei Covern** (743781, Original 326 × 500; 15258721, Original 394 × 599): S 38 × 58, M 180 × 276 bzw. 180 × 273, L 326 × 500 bzw. 328 × 500 — L passt in 500 × 500, M ist 180 breit, S 58 hoch. Die App nennt ein Cover **L**, wenn die längere Seite des Originals 500 px erreicht, **M** ab 180 breit oder 360 hoch, sonst **S**.
+
+Die Größe kommt aus dem Datensatz (`/b/id/<n>.json`), wie im Calibre-Werkzeug seit dem 2026-10-04, und dessen Cache wird geteilt (beim Start 1.326 Cover bekannt). **Gemessen:** ein Werk, dessen 125 Cover keiner kannte, in 0,69 s (sechs Fragen gleichzeitig), danach 0,01 s. *Howards End*: 78 Cover, 59 L, 17 M, 2 S. Beim ersten Versuch liefen das offene Werk und drei vorgeladene gleichzeitig in ein festes Budget von 8 s, und ein vorgeladenes Werk kam mit 101 von 105 Größen offen zurück und wurde nie nachgefragt; seitdem nennt der Server die Zahl der noch laufenden Fragen und die Seite fragt nach, bevor sie einmal umsortiert. Code: `lab/curate/serve.ts` (`sizesFor`), `lab/curate/index.html` (`sizeClass`, `loadSizes`).
+
 ## 2026-10-05 · Kontakt-Abschnitt auf der Über-Seite, Profiltexte auf drei Kanälen (ROADMAP 5.6b)
 
 Julian: „we can list social media accounts in a contact section within the about page“ und „update bsky and x bio too“.

@@ -22,6 +22,8 @@ import { createServer } from 'node:http';
 import { readFileSync, writeFileSync, existsSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { robustFirstPublishYear } from '../../lib/firstyear';
+import { CoverSizes, type CoverSize } from '../calibre/download';
+import { defaultBackupRoot } from '../calibre/safety';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const INDEX_FILE = join(ROOT, 'data', 'cover-index.json');
@@ -261,6 +263,41 @@ async function prefetchRest() {
   console.log('curate: background covers done');
 }
 
+/**
+ * How large each cover's scan is (Julian, 2026-10-07: „ändere die app so,
+ * dass ich weiß ob die cover L, M oder S größe haben und stelle die L vorne
+ * an"). Open Library's cover record states the uploaded size in about 0.08 s,
+ * without the image (CLAUDE.md, measured 2026-10-04); the calibre tool asks
+ * the same way and keeps the answers in one file outside the repository,
+ * which this tool shares, so a cover measured there is not asked for again.
+ *
+ * A record without a size makes `CoverSizes` fetch the original instead,
+ * 4–10 s from the Internet Archive. The page should not wait for that one
+ * cover, so a work's answer goes out after `SIZE_BUDGET_MS` with whatever is
+ * known; the rest is filled in on the next visit.
+ */
+const sizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), 'https://buyitscovers.com', 6);
+const SIZE_BUDGET_MS = 8000;
+
+async function sizesFor(workId: string): Promise<{ sizes: Record<string, CoverSize | null>; pending: number }> {
+  const work = works.find(w => w.id === workId);
+  const covers = work?.covers.length ? work.covers : await coversFor(workId);
+  const out: Record<string, CoverSize | null> = {};
+  let pending = 0;
+  const LATE = Symbol('late');
+  const late = new Promise<typeof LATE>(r => setTimeout(() => r(LATE), SIZE_BUDGET_MS));
+  await Promise.all(covers.map(async c => {
+    const known = sizes.peek(c);
+    if (known) { out[c] = known; return; }
+    // Past the budget the question keeps running on the server; the page asks
+    // again and gets it from memory. `null` is only ever "the source said none".
+    const answer = await Promise.race([sizes.get(c), late]);
+    if (answer === LATE) pending += 1;
+    else out[c] = answer;
+  }));
+  return { sizes: out, pending };
+}
+
 const HTML_FILE = join(import.meta.dirname, 'index.html');
 
 const server = createServer(async (req, res) => {
@@ -303,6 +340,13 @@ const server = createServer(async (req, res) => {
     const id = url.searchParams.get('id') ?? '';
     if (!/^OL\d+W$/.test(id)) return send(400, { error: 'bad id' });
     send(200, { covers: await coversFor(id) });
+    return;
+  }
+
+  if (url.pathname === '/api/sizes') {
+    const id = url.searchParams.get('id') ?? '';
+    if (!/^OL\d+W$/.test(id)) return send(400, { error: 'bad id' });
+    send(200, await sizesFor(id));
     return;
   }
 

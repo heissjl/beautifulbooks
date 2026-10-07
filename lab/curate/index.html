@@ -30,6 +30,10 @@
   .tile:hover img, .tile:focus-visible img { outline:3px solid var(--accent); outline-offset:2px; }
   .tile.chosen img { outline:3px solid var(--accent); outline-offset:2px; }
   .tile.cursor img { outline:2px dashed var(--ink3); outline-offset:2px; }
+  .tile .size { position:absolute; top:4px; right:4px; font-size:11px; font-weight:600; line-height:1; padding:3px 5px;
+                border-radius:4px; background:color-mix(in srgb, var(--bg) 85%, transparent); color:var(--ink3); }
+  .tile .size.L { background:var(--accent); color:var(--surface); }
+  .tile .size.S { color:#c0392b; }
   .actions { display:flex; gap:8px; margin:14px 0; flex-wrap:wrap; }
   button.btn { font:inherit; padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); cursor:pointer; }
   button.btn:hover { border-color:var(--accent); color:var(--accent); }
@@ -105,7 +109,7 @@
 <main id="main">Lade …</main>
 
 <script>
-const state = { works: [], struck: [], i: 0, cursor: 0, years: {}, dropped: 0, view: 'pick', order: [], drag: null };
+const state = { works: [], struck: [], i: 0, cursor: 0, years: {}, sizes: {}, dropped: 0, view: 'pick', order: [], drag: null };
 const $ = id => document.getElementById(id);
 const cover = (id, size) => id.startsWith('ol:')
   ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
@@ -136,6 +140,59 @@ async function fetchYears(work) {
   const info = await (await fetch(`/api/years?id=${work.id}`)).json();
   state.years[work.id] = info;
   return info;
+}
+
+/**
+ * Welche Größe Open Library von einem Cover wirklich hat (Julian, 2026-10-07).
+ * Jedes Cover gibt es als -S, -M und -L, aber aus einem kleinen Scan wird
+ * kein großes Bild: -L ist dann nur das Original. Die Kästen, gemessen am
+ * 2026-10-07 an zwei Covern: L passt in 500 × 500, M ist 180 breit (bis 360
+ * hoch), S 58 hoch. „L" heißt also, das Original füllt den L-Kasten.
+ */
+function sizeClass(size) {
+  if (!size) return '?';
+  if (Math.max(size.width, size.height) >= 500) return 'L';
+  if (size.width >= 180 || size.height >= 360) return 'M';
+  return 'S';
+}
+const SIZE_RANK = { L: 0, M: 1, S: 2, '?': 3 };
+
+/**
+ * Holt die Größen eines Werks und stellt seine Cover einmal um: L vorn,
+ * dann M, S und die, deren Größe niemand nennt — innerhalb einer Klasse in
+ * Open Librarys Reihenfolge. Umgestellt wird nur hier, beim Eintreffen,
+ * nie später, damit nichts unter dem Mauszeiger wegrutscht.
+ */
+async function loadSizes(w, quiet = false) {
+  if (state.sizes[w.id] || w.covers.length === 0) return;
+  state.sizes[w.id] = 'pending';
+  let sizes = {};
+  // Der Server antwortet nach spätestens acht Sekunden mit dem, was er hat,
+  // und sagt, wie viele Datensätze noch unterwegs sind; dann wird nachgefragt.
+  // Bei einem kalten Werk mit 150 Covern dauert das ein paar Runden.
+  for (let round = 0; round < 8; round++) {
+    try {
+      const res = await (await fetch(`/api/sizes?id=${w.id}`)).json();
+      sizes = res.sizes ?? {};
+      if (!res.pending) break;
+    } catch {
+      // Ohne Antwort bleiben die Cover in ihrer Reihenfolge und tragen ein „?".
+      break;
+    }
+  }
+  state.sizes[w.id] = sizes;
+  const rank = c => SIZE_RANK[sizeClass(sizes[c])];
+  w.covers = w.covers.map((c, n) => ({ c, n })).sort((a, b) => rank(a.c) - rank(b.c) || a.n - b.n).map(x => x.c);
+  if (!quiet && state.view === 'pick' && state.works[state.i]?.id === w.id) render();
+}
+
+function sizeBadge(w, c) {
+  const sizes = state.sizes[w.id];
+  if (!sizes || sizes === 'pending') return '';
+  const size = sizes[c];
+  const k = sizeClass(size);
+  const title = size ? `${size.width} × ${size.height} px` : 'Größe unbekannt';
+  return `<span class="size ${k}" title="${title}">${k}</span>`;
 }
 
 /** How many tiles the home page shows; the line in the previews marks it. */
@@ -314,14 +371,20 @@ function render() {
 
   const tiles = w.covers.map((c, n) => `
     <button class="tile ${w.pick?.coverId === c ? 'chosen' : ''} ${n === state.cursor ? 'cursor' : ''}"
-            data-cover="${c}" data-n="${n}" title="${c}">
-      <img loading="lazy" src="${cover(c, 'M')}" alt="">
+            data-cover="${c}" data-n="${n}" title="${c}${sizeTitle(w, c)}">
+      <img loading="lazy" src="${cover(c, 'M')}" alt="">${sizeBadge(w, c)}
     </button>`).join('');
+  const sizes = state.sizes[w.id];
+  const counts = { L: 0, M: 0, S: 0, '?': 0 };
+  if (sizes && sizes !== 'pending') for (const c of w.covers) counts[sizeClass(sizes[c])] += 1;
+  const sizeLine = !sizes || sizes === 'pending'
+    ? (w.covers.length ? '· Größen werden gelesen …' : '')
+    : `· ${counts.L} L · ${counts.M} M · ${counts.S} S${counts['?'] ? ` · ${counts['?']} ohne Größe` : ''}`;
 
   $('main').innerHTML = `
     <div class="work">
       <h2>${escapeHtml(w.title)}</h2><span class="author">${escapeHtml(w.author)}</span>
-      <span class="meta">${w.covers.length} Cover</span>
+      <span class="meta">${w.covers.length} Cover ${sizeLine}</span>
       ${w.note ? `<span class="meta">· ${escapeHtml(w.note)}</span>` : ''}
     </div>
     <div class="yearline">
@@ -345,6 +408,7 @@ function render() {
   // und die nächsten drei Werke gleich mit, still im Hintergrund, damit das
   // Weiterklicken nicht jedes Mal wartet (Julian, 2026-09-09).
   if (w.covers.length === 0) loadCovers(w);
+  else loadSizes(w);
   prefetchNext(3);
 
   $('grid').addEventListener('click', e => {
@@ -407,8 +471,15 @@ async function loadCovers(w, quiet = false) {
 function prefetchNext(n) {
   for (let k = 1; k <= n; k++) {
     const next = state.works[state.i + k];
-    if (next && next.covers.length === 0) void loadCovers(next, true);
+    if (!next) continue;
+    if (next.covers.length === 0) void loadCovers(next, true).then(() => loadSizes(next, true));
+    else void loadSizes(next, true);
   }
+}
+
+function sizeTitle(w, c) {
+  const size = state.sizes[w.id]?.[c];
+  return size ? ` · ${size.width} × ${size.height} px` : '';
 }
 
 function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
