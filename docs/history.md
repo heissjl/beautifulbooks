@@ -5709,3 +5709,26 @@ Julian: „double checke die beschreibungen der collections und entwirf welche, 
 **Abgenommen** mit Julians Änderungen: „Nicht belegt … dann erstmal rausnehmen" (Spektrum: Ende 1993 und 279 Titel; Reihe Hanser: Canetti als erster Band; dtv phantastica: 1979), „nimm eines weg" (Feminist Press: der zweite Datensatz von *The Living Is Easy*, `OL3496522W`, mit falscher Autorin „Mary Christopher"; der Datensatz von Dorothy West bleibt), „nimm das zweite weg" (Hugo: „Hyperion [2/2]", `OL24832396W`), „kannst du das machen?" (die Hugo-Wand nach dem Jahr des Preises geordnet, Gleichstände 1966, 1993 und 2010 in der bisherigen Folge; der Text sagt jetzt „in year order"), „bei suhrkamp nimm die anzahl der farben mit" (48 Farben, belegt durch It's Nice That und readymag zu Fleckhaus).
 
 **Wie eingetragen:** Für die elf betroffenen Sammlungen erst den Live-Stand in die Datei übernommen, dann geändert. Der Live-Stand lässt bei Werken aus Online-Entwürfen Felder weg (`from`, `coverIsbn`) und trägt bei der internationalen Relaunch-Wand noch die kaputten ISFDB-Namen („ï¿½"), die die Datei schon repariert hatte. Darum zählen bei gleichem Cover die Felder der Datei; aus dem Live-Stand kamen nur Reihenfolge, Veröffentlichung und Texte. Kein Cover war online getauscht. Danach mit `lab/collections/push-draft.ts <slug> --publish` in die Online-Entwürfe gebracht, damit ein veröffentlichter Entwurf die Datei nicht wieder überdeckt.
+
+## 2026-10-07 · Acht stillgelegte Worktrees geschlossen
+
+Julian: „close inactive working trees“. Dreizehn Arbeitskopien lagen auf der Platte, fünf davon mit einer Sitzung von heute. Entfernt sind die acht übrigen; **jeder Zweig bleibt** — `git worktree remove` nimmt nur die Kopie, nicht die Commits.
+
+| Worktree | Zweig | unveröffentlicht | zuletzt | Größe |
+| --- | --- | --- | --- | --- |
+| `bb-nine` (neben dem Projekt) | `claude/sleepy-wozniak-lodegp` | 0 (gemergt) | 05.10. | 987 MB |
+| `nostalgic-fermi-cce170` | `claude/my9albums-viral-research-37e32d` | 0 (gemergt) | 05.10. | 518 MB |
+| `interface-usability-improvements-ece910` | gleichnamig | 2 | 29.09. | 538 MB |
+| `jev-cover-filtering-9ed86c` | gleichnamig | 9 | 24.09. | 1,2 GB |
+| `vinyl-album-lab-idea-1101ce` | gleichnamig | 17 | 02.10. | 536 MB |
+| `art-collection-funnel-7679cc` | `claude/art-funnel-lab` | 33 | 05.10. | 847 MB |
+| `mockup-byitscovers` | gleichnamig | 1 | 02.10. | 37 MB |
+| `agent-a8766b0b53398557f` | gleichnamig | 2 | 28.09. | 504 MB |
+
+**Was sonst verloren gewesen wäre** (die Regel aus CLAUDE.md: in einem Worktree liegen git-ignorierte Dateien, die es nirgends sonst gibt):
+
+- **Screenshots** aus `docs/tests/` in den Hauptordner kopiert, ohne vorhandene zu überschreiben: **99 → 156 Dateien**, 44 → 73 MB. Darunter die Belege der Shelf-Portrait-Arbeit vom 05.10. und der Oberflächen-Punkte 6.76/6.77 vom 29.09.
+- **Teuer erzeugte Lab-Ausgaben** nach `../bb-lab-cache/` (neben dem Projekt, außerhalb von git) verschoben, auf Julians Wort: `clip/out` **437 MB** (CLIP-Einbettungen aus `lab/clip`, Zweig `jev-cover-filtering`) und `vinyl/` **23 MB** (MusicBrainz-Cache und Ausgaben aus `lab/vinyl`). Wer dort weitermacht, legt sie zurück, statt sie neu zu rechnen.
+- Verloren gegangen ist nur eine ungespeicherte Zeile in `next.config.ts` des art-funnel-Worktrees: `turbopack: { root: __dirname }`, ein Behelf, damit `next dev` **in** einem Worktree nicht die `proxy.ts` des Hauptordners aufgreift. Steht hier, weil er beim nächsten Mal wieder gebraucht wird.
+
+**Stehen geblieben** sind die fünf mit einer Sitzung von heute: `curate-site-collections-08b24a`, `curated-list-more-covers-0e1d48`, `genielokal-affiliate-acceptance-6e23cf`, `organische-reichweite-strategie-08d778` und `collection-editing-ux-562eba` (dort läuft Remote Control).
