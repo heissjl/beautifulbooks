@@ -13,7 +13,8 @@ import { VERCEL_PRICES } from '@/lib/insights/costs';
 import { SOCIAL_ENTRIES } from '@/lib/insights/signals';
 import { groupSocial } from '@/lib/insights/visits';
 import ChannelTable from './ChannelTable';
-import { ORIGIN_NAMES, SOCIAL_NAME } from './names';
+import OriginBars from './OriginBars';
+import { ORIGIN_NAMES } from './names';
 
 /**
  * Julian's analytics (ROADMAP 3.1a, docs/plans/PLAN-3.1-analyse.md §8):
@@ -122,18 +123,14 @@ const POSITION_NAMES: Record<string, string> = { '1': '1', '2': '2', '3': '3', '
 /** Below this many visits, rates are noise (plan §7). */
 const FEW_VISITS = 100;
 
-/**
- * The origins of book visits as bars, with the social networks in one bar
- * whose label names its parts (2026-10-06, as the channel table sums them).
- */
-function originBars(origins: Record<string, number>): Array<{ label: string; value: number }> {
+/** The origins of book visits split for `OriginBars`: the social networks apart, summed and with their parts (2026-10-06). */
+function originGroups(origins: Record<string, number>) {
   const social = new Set<string>(SOCIAL_ENTRIES);
-  const parts = Object.entries(origins).filter(([k, v]) => social.has(k) && v > 0).sort((x, y) => y[1] - x[1]);
-  const rows = Object.entries(origins).filter(([k]) => !social.has(k)).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v }));
-  if (parts.length > 0) {
-    rows.push({ label: `${SOCIAL_NAME} (${parts.map(([k, v]) => `${ORIGIN_NAMES[k] ?? k} ${nf.format(v)}`).join(', ')})`, value: parts.reduce((s, [, v]) => s + v, 0) });
-  }
-  return rows.sort((x, y) => y.value - x.value);
+  const members = Object.entries(origins).filter(([k]) => social.has(k)).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v })).sort((x, y) => y.value - x.value);
+  return {
+    rows: Object.entries(origins).filter(([k]) => !social.has(k)).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v })),
+    social: { value: members.reduce((sum, m) => sum + m.value, 0), members },
+  };
 }
 
 function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
@@ -287,11 +284,7 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           )}
         </Card>
         <Card title="Woher die Buchseiten-Besuche kommen" sub="Im Browser zur Klasse verdichtet; die Herkunftsadresse selbst wird nicht gesendet.">
-          <Bars
-            rows={originBars(books.origins)}
-            total={books.visits}
-            few={few}
-          />
+          <OriginBars {...originGroups(books.origins)} total={books.visits} few={few} />
         </Card>
       </section>
 
@@ -509,7 +502,7 @@ function ChannelSection({ channels }: { channels: Extract<InsightsReport, { ok: 
       )}
       <Note>
         „→ Buch“: Anteil der Einstiege, die ein Buch öffneten; „→ Händler“: Anteil der Buchbesuche mit Klick zu einem Händler.
-        Ein Einstieg ist die erste Seite eines Tabs: eine Einstiegsseite (Startseite, Suchergebnisse, Sammlungen, eine Leser-Sammlung) oder eine Buchseite.
+        Ein Einstieg ist die erste Seite eines Tabs: eine Einstiegsseite (Startseite, Suchergebnisse, Sammlungen, eine Leser-Sammlung, ein geteiltes Shelf-Portrait) oder eine Buchseite.
         Andere Seiten (About, Anlegen einer Sammlung) zählen nicht als Einstieg. Der Kanal lebt nur im Speicher des Tabs; ein Neuladen fragt den
         Referrer neu. In-App-Browser senden oft keinen, deshalb tragen selbst gesetzte Links ?via=… (Liste in docs/plans/PLAN-5.5-5.6-kanaele.md §3).
         {unattributed > 0 && ` ${plural(unattributed, 'Buchbesuch', 'Buchbesuche')} im Zeitraum stammen von vor 5.6a und haben keinen Kanal.`}

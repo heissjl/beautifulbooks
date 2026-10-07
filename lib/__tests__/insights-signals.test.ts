@@ -82,7 +82,8 @@ describe('channels (ROADMAP 5.6a)', () => {
       ['https://t.co/AbC123', 'x'],
       ['https://x.com/buyitscovers', 'x'],
       ['https://mobile.twitter.com/someone', 'x'],
-      ['https://www.producthunt.com/posts/x', 'producthunt'],
+      // Product Hunt left as a class on 2026-10-06.
+      ['https://www.producthunt.com/posts/x', 'other'],
       ['https://www.linkedin.com/feed', 'linkedin'],
       ['https://notreddit.com.example/', 'other'],
     ];

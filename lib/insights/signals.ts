@@ -22,7 +22,8 @@ export const INTERNAL_ORIGINS = ['home', 'search', 'collection', 'shelf', 'book'
  * opened from another tab of this site.
  */
 export const ENTRIES = [
-  'engine', 'reddit', 'pinterest', 'hn', 'instagram', 'tiktok', 'bluesky', 'x', 'producthunt', 'blog', 'mail',
+  // `producthunt` left on 2026-10-06 (Julian: „product hunt kann weg“); its referrer counts as `other`.
+  'engine', 'reddit', 'pinterest', 'hn', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail',
   // Each social platform its own class since 2026-10-06 (Julian: „kannst du hier alle als eigene machen und per klick
   // aufsummieren lassen?"); before, they all stood in `social`, which now holds only social sites with no class.
   'linkedin', 'facebook', 'threads', 'youtube', 'whatsapp', 'telegram', 'mastodon', 'tumblr', 'discord',
@@ -39,7 +40,7 @@ export type Origin = (typeof ORIGINS)[number];
  * do not send. Anything else in `via` is ignored.
  */
 export const VIA = [
-  'pinterest', 'hn', 'reddit', 'producthunt', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail',
+  'pinterest', 'hn', 'reddit', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail',
   // LinkedIn's app often sends no referrer: a link posted there needs the mark to be counted as LinkedIn (2026-10-06).
   'linkedin', 'facebook', 'threads', 'youtube', 'whatsapp', 'telegram', 'mastodon',
 ] as const satisfies readonly Entry[];
@@ -165,7 +166,6 @@ const PLATFORMS: Array<[Entry, RegExp]> = [
   ['bluesky', /(^|\.)(bsky\.app|bsky\.social)$/],
   // X sends its own link shortener as the referrer (Julian, 2026-10-06: X as its own channel).
   ['x', /(^|\.)(x\.com|twitter\.com|t\.co)$/],
-  ['producthunt', /(^|\.)producthunt\.com$/],
   // LinkedIn sends its shortener `lnkd.in` as often as its own host.
   ['linkedin', /(^|\.)(linkedin\.com|lnkd\.in)$/],
   ['facebook', /(^|\.)(facebook\.com|fb\.com|fb\.me|messenger\.com)$/],
