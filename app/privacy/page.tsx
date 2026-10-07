@@ -6,7 +6,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
 import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
-import { affiliateShops } from '@/lib/buylinks';
+import { affiliateNetworks, affiliateShops } from '@/lib/buylinks';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
@@ -48,6 +48,8 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
   // The shops whose links carry a partner id right now (ROADMAP 4.13 step 5): named
   // from the variables that are set, so a partner joins or leaves the notice with them.
   const partners = affiliateShops();
+  // A network link (Awin) reaches the network's server before the shop's, so the notice names it (ROADMAP 4.3).
+  const networks = affiliateNetworks();
   const game = versusEnabled();
   return (
     <div className="flex min-h-screen flex-col">
@@ -112,6 +114,13 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
                 {t('At present these are the links to {shops}. When you follow one, the shop may store a cookie in your browser so that a purchase is credited to this site; that happens on the shop’s own site and under its privacy notice, and this site receives nothing about you from it.', { shops: partners.join(', ') })}
               </>
             )}
+            {/* Drafted 2026-10-07 for genialokal through Awin; waiting for Julian's approval of the sentence. */}
+            {networks.map(({ network, shops }) => (
+              <span key={network}>
+                {' '}
+                {t('Links to {shops} pass through the {network} affiliate network first: {network} records the click and may store its own cookie so that a purchase is credited to this site, under {network}’s privacy notice.', { shops: shops.join(', '), network })}
+              </span>
+            ))}
           </p>
           {availabilityEnabled() && (
             <p>{t('The “Check the shops” button, when you press it, asks this site’s server to load each shop’s page for the ISBN. The shops see the server, not you.')}</p>

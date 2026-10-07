@@ -42,9 +42,28 @@ interface Retailer {
    * confirmed `titel=` sibling. Those two are simply absent (ROADMAP 1.8).
    */
   searchUrl?: (terms: string, affiliate: string | undefined) => string;
+  /**
+   * The affiliate network a tagged link passes through before the shop, when
+   * the programme runs through one. The reader's browser then visits the
+   * network's server first, which the privacy notice must say.
+   */
+  network?: 'Awin';
 }
 
 const enc = encodeURIComponent;
+
+/*
+  Awin does not put an id into the shop's address; it wraps the address in its
+  own click link (ROADMAP 4.3): `cread.php?awinmid=<shop>&awinaffid=<us>&ued=<target>`.
+  The merchant id is public (the shop's profile page at Awin); the publisher id
+  comes from the shop's own variable, so a shop is wrapped only once it has
+  accepted us — Thalia (14158) said no on 2026-10-05, and a link wrapped for a
+  programme that declined earns nothing and counts against the account.
+*/
+const AWIN_GENIALOKAL = '17358';
+
+const viaAwin = (merchant: string, url: string, publisher: string | undefined) =>
+  publisher ? `https://www.awin1.com/cread.php?awinmid=${merchant}&awinaffid=${enc(publisher)}&ued=${enc(url)}` : url;
 
 const withTag = (url: string, key: string, value: string | undefined) =>
   value ? `${url}${url.includes('?') ? '&' : '?'}${key}=${encodeURIComponent(value)}` : url;
@@ -142,9 +161,12 @@ const RETAILERS: Record<Market, Retailer[]> = {
       searchUrl: terms => `https://www.thalia.de/suche?sq=${enc(terms)}`,
     },
     {
+      // Accepted through Awin on 2026-10-07; the variable holds our Awin publisher id.
       id: 'genialokal', label: 'genialokal',
-      url: isbn => `https://www.genialokal.de/Suche/?q=${isbn}`,
-      searchUrl: terms => `https://www.genialokal.de/Suche/?q=${enc(terms)}`,
+      affiliateEnv: 'AFFILIATE_GENIALOKAL_ID_DE',
+      network: 'Awin',
+      url: (isbn, aff) => viaAwin(AWIN_GENIALOKAL, `https://www.genialokal.de/Suche/?q=${isbn}`, aff),
+      searchUrl: (terms, aff) => viaAwin(AWIN_GENIALOKAL, `https://www.genialokal.de/Suche/?q=${enc(terms)}`, aff),
     },
     amazon('de', 'AFFILIATE_AMAZON_TAG_DE'),
     {
@@ -212,6 +234,25 @@ export function affiliateShops(env: Env = process.env, commerce: boolean = comme
     }
   }
   return labels;
+}
+
+/**
+ * The affiliate networks a tagged link passes through right now, each with the
+ * shops behind it — for the privacy notice, because a click on such a link
+ * reaches the network's server before the shop's (ROADMAP 4.3, guide §4 step 5).
+ * Empty in hobby mode and for a shop whose variable is unset.
+ */
+export function affiliateNetworks(env: Env = process.env, commerce: boolean = commerceEnabled()): { network: string; shops: string[] }[] {
+  if (!commerce) return [];
+  const out: { network: string; shops: string[] }[] = [];
+  for (const market of Object.keys(RETAILERS) as Market[]) {
+    for (const r of RETAILERS[market]) {
+      if (!r.network || !r.affiliateEnv || !env[r.affiliateEnv]) continue;
+      const entry = out.find(e => e.network === r.network) ?? (out.push({ network: r.network, shops: [] }), out[out.length - 1]);
+      if (!entry.shops.includes(r.label)) entry.shops.push(r.label);
+    }
+  }
+  return out;
 }
 
 /**
