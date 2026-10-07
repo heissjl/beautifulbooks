@@ -7,7 +7,7 @@ import SiteHeader from '@/components/SiteHeader';
 import Versus from '@/components/Versus';
 import WhatIsThisSite from '@/components/WhatIsThisSite';
 import { preload } from 'react-dom';
-import { POOL, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
+import { POOL, dayNumber, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
 import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
@@ -55,7 +55,8 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
   const t = translator(locale);
   if (!versusEnabled()) notFound();
   const books = poolBooks();
-  const sample = someBooks(SHOWN_BOOKS, { latinOnly: true });
+  // A new set every day (Julian, 2026-10-06), the same one for everyone who comes that day.
+  const sample = someBooks(SHOWN_BOOKS, { latinOnly: true, day: dayNumber() });
   /*
     Three pairs come with the page, drawn from the frozen pool and signed here,
     without a round trip to the store (Julian, 2026-09-25: „the first load of

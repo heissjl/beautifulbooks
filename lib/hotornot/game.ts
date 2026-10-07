@@ -350,8 +350,13 @@ export function readyPairs(
   return out;
 }
 
-/** A day in milliseconds: the span a card of the game keeps its pair (6.98). */
+/** A day in milliseconds: the span over which the game's card and its list of books stay put (6.98, 6.99a). */
 const CARD_DAY_MS = 86_400_000;
+
+/** The day a moment falls in, the seed of everything on the game that turns over daily. */
+export function dayNumber(now: number = Date.now()): number {
+  return Math.floor(now / CARD_DAY_MS);
+}
 
 /**
  * The two covers a link to the game shows today (ROADMAP 6.98; Julian,
@@ -366,7 +371,7 @@ const CARD_DAY_MS = 86_400_000;
 export function pairOfTheDay({ pool = POOL, now = Date.now() }: { pool?: VersusPool; now?: number } = {}): { a: PoolCover; b: PoolCover } | null {
   const ids = activeIds(pool, []);
   const book = new Map(pool.covers.map(c => [c.id, c.workId]));
-  const picked = nextPair(ids, newElo(ids), rng(Math.floor(now / CARD_DAY_MS)), { recent: [], bookOf: id => book.get(id) ?? id, seriesOf });
+  const picked = nextPair(ids, newElo(ids), rng(dayNumber(now)), { recent: [], bookOf: id => book.get(id) ?? id, seriesOf });
   if (!picked) return null;
   const a = pool.covers.find(c => c.id === picked[0]);
   const b = pool.covers.find(c => c.id === picked[1]);
@@ -456,14 +461,30 @@ export function latinTitle(title: string): boolean {
  * of the pool, and the spread is stable because the pool is. `latinOnly`
  * draws from the books whose title a Latin alphabet can be read in.
  */
-export function someBooks(count: number, { pool = POOL, latinOnly = false }: { pool?: VersusPool; latinOnly?: boolean } = {}): PoolBook[] {
+export function someBooks(
+  count: number,
+  { pool = POOL, latinOnly = false, day }: { pool?: VersusPool; latinOnly?: boolean; day?: number } = {},
+): PoolBook[] {
   const all = latinOnly ? poolBooks(pool).filter(b => latinTitle(b.title)) : poolBooks(pool);
   if (count <= 0) return [];
   if (all.length <= count) return all;
   if (count === 1) return [all[0]];
-  // Both ends included, the rest evenly between them: the first and the last
-  // title of the alphabet are as much part of the pool as the middle.
-  return Array.from({ length: count }, (_, i) => all[Math.round((i * (all.length - 1)) / (count - 1))]);
+  if (day === undefined) {
+    // Both ends included, the rest evenly between them: the first and the last
+    // title of the alphabet are as much part of the pool as the middle.
+    return Array.from({ length: count }, (_, i) => all[Math.round((i * (all.length - 1)) / (count - 1))]);
+  }
+  // With a day: the list is cut into `count` stretches of the alphabet and one
+  // book is drawn from each (ROADMAP 6.99a). The spread over the alphabet is
+  // what the list is for, so it survives the turn; what changes is which book
+  // of a stretch stands there. Everyone sees the same list on the same day,
+  // and a reader who comes back tomorrow finds other books.
+  const random = rng(day);
+  return Array.from({ length: count }, (_, i) => {
+    const from = Math.floor((i * all.length) / count);
+    const to = Math.floor(((i + 1) * all.length) / count);
+    return all[from + Math.floor(random() * Math.max(1, to - from))];
+  });
 }
 
 interface PairInput {

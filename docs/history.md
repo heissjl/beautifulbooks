@@ -5676,3 +5676,13 @@ Zwei Änderungen am selben Abend, kurz nach dem Deploy.
 - **Das Buch bleibt im Spiel.** Nur diese Liste lässt es aus; die Zeile darunter nennt weiter den ganzen Vorrat („And 2.847 more“), und die Zahl der Bücher über ihr ebenso.
 
 Am Dev-Server nachgesehen: 12 Buchlinks, alle in lateinischer Schrift, von „J’ai nom Jeanne la Pucelle“ bis „Zwölf um ein Bett“. 1.505 Tests, Typprüfung, ESLint und Build grün.
+
+## 2026-10-06 · Die Bücherliste unter dem Spiel wechselt täglich (ROADMAP 6.99a)
+
+Julian sah die zwölf Titel und fragte: „wird die zufällig neu geladen?“ — **nein**: `someBooks` zog bis dahin in festen Abständen aus der alphabetisch sortierten Liste, ohne Zufall und ohne Speicher, also sah jeder Besucher bei jedem Abruf dieselben zwölf. Das war Absicht (die Liste steht vor allem für Crawler im HTML), und auf die Erklärung hin: „ja, bau die tagesrotation und pushe“.
+
+**Gebaut:** `someBooks(count, { day })` schneidet die Liste in `count` Strecken des Alphabets und zieht aus jeder genau ein Buch, mit `rng(day)`. Damit bleibt, wofür die Liste da ist — die Verteilung von A bis Z —, und es wechselt nur, welches Buch einer Strecke gerade dort steht. `dayNumber` ist dieselbe Tageszahl, die `pairOfTheDay` benutzt. **Ohne `day` bleibt alles wie zuvor**, die feste Verteilung, die ein Test weiter festhält.
+
+**Warum ein Tag und nicht jeder Abruf:** alle, die an einem Tag kommen, sehen dieselbe Seite, ein geteilter Screenshot stimmt noch, und eine Seite, die sich bei jedem Abruf anders liest, ist für die Indexierung schlechter. Drei Tests: gleich über den Tag, verschieden über sieben Tage, und über zwanzig Tage je ein Buch aus jeder Strecke, in alphabetischer Ordnung und ohne Doppelte.
+
+**Am Dev-Server:** zwei Abrufe hintereinander geben dieselben zwölf Titel (*Ailleurs* … *Zwei Krimis in einem Band*), der nächste Tag andere (*Amen*, *Der Strom*, *High Fidelity*, *Spinoza and Politics* …), der übernächste wieder andere. 1.508 Tests, Typprüfung, ESLint und Build grün.

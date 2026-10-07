@@ -3,7 +3,7 @@ import { rng } from '../loading';
 import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
-  fixedPair, latinTitle, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
+  dayNumber, fixedPair, latinTitle, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
   readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
@@ -24,6 +24,38 @@ const pool: VersusPool = {
 };
 const secret = pairSecret(undefined);
 const now = Date.UTC(2026, 8, 11, 12);
+
+describe('the list of books turns over daily (6.99a)', () => {
+  const many: VersusPool = {
+    ...pool,
+    covers: Array.from({ length: 60 }, (_, i) => ({ id: `ol:${i + 1}`, workId: `OL${i + 1}W`, title: `Book ${String(i + 1).padStart(2, '0')}`, author: 'A' })),
+  };
+
+  it('is the same list all day and a different one tomorrow', () => {
+    const day = dayNumber(Date.UTC(2026, 9, 6, 9));
+    expect(dayNumber(Date.UTC(2026, 9, 6, 23))).toBe(day);
+    const morning = someBooks(6, { pool: many, day });
+    expect(someBooks(6, { pool: many, day: dayNumber(Date.UTC(2026, 9, 6, 23)) })).toEqual(morning);
+    const days = Array.from({ length: 7 }, (_, i) => someBooks(6, { pool: many, day: day + i }).map(b => b.title).join('|'));
+    expect(new Set(days).size).toBeGreaterThan(1);
+  });
+
+  it('keeps the spread over the alphabet: one book out of each stretch, in order', () => {
+    for (let d = 0; d < 20; d++) {
+      const titles = someBooks(6, { pool: many, day: d }).map(b => b.title);
+      expect(titles).toHaveLength(6);
+      expect(new Set(titles).size).toBe(6);
+      expect([...titles].sort()).toEqual(titles);
+      // Each of the six stretches of ten books gives exactly one.
+      titles.forEach((t, i) => expect(Math.floor((Number(t.slice(5)) - 1) / 10)).toBe(i));
+    }
+  });
+
+  it('without a day it stays the fixed spread, as a crawler saw it before', () => {
+    expect(someBooks(6, { pool: many })).toEqual(someBooks(6, { pool: many }));
+    expect(someBooks(6, { pool: many })[0].title).toBe('Book 01');
+  });
+});
 
 describe('the books named under the game (6.99)', () => {
   it('reads a title as Latin when every letter of it is, diacritics and punctuation included', () => {
