@@ -1,5 +1,4 @@
-import { OG_SIZE, pairCard } from '@/app/og';
-import { coverUrlFor } from '@/lib/coverurl';
+import { OG_SIZE, pairCard, pairCoverCandidates } from '@/app/og';
 import { POOL } from '@/lib/hotornot/game';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { measure } from '@/app/api/measure';
@@ -32,6 +31,6 @@ const CARD_PAIR = ['ol:15154344', 'ol:10215294'] as const;
 export default async function Image() {
   measure('og');
   const covers = versusEnabled() ? CARD_PAIR.map(id => POOL.covers.find(c => c.id === id) ?? null) : [];
-  const coverUrls = covers.flatMap(c => (c ? [coverUrlFor(c.id, 'L') ?? ''] : [])).filter(Boolean);
-  return pairCard({ coverUrls, line: 'Which cover would you rather look at?' });
+  const sides = covers.flatMap(c => (c ? [pairCoverCandidates(c.id)] : []));
+  return pairCard({ sides, line: 'Which cover would you rather look at?' });
 }

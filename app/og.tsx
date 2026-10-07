@@ -2,7 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
-import { SITE_NAME } from '@/lib/seo';
+import { SITE_NAME, SITE_URL } from '@/lib/seo';
+import { coverUrlFor } from '@/lib/coverurl';
 import { isHiddenCoverUrl } from '@/lib/hiddencovers';
 
 /**
@@ -133,17 +134,52 @@ export async function asJpeg(card: Response, fine = false): Promise<Response> {
 const PAIR_TILE = { width: 320, height: 480 };
 
 /**
+ * Where a pairing card looks for one cover, in order: the site's own image
+ * route, L then M, and Open Library's M directly. `/img/` is held 30 days at
+ * Vercel's edge and falls back from L to M itself; the game's covers are
+ * looked at all day, so they are usually there when archive.org is not —
+ * which on 2026-10-06 it often was not, and WhatsApp showed no card at all
+ * for a named pairing (Julian: „da wird gar keine karte geladen").
+ */
+export function pairCoverCandidates(coverId: string, origin = SITE_URL): string[] {
+  const segment = coverId.replace(':', '-');
+  return [`${origin}/img/L/${segment}`, `${origin}/img/M/${segment}`, coverUrlFor(coverId, 'M')].filter((u): u is string => !!u);
+}
+
+/** Per try, short: an app that reads a card gives up after a few seconds, and the card is drawn once a month after that. */
+const PAIR_COVER_MS = [4000, 3000, 3000];
+
+/**
  * The card of a pairing (ROADMAP 6.97, 6.98): two covers side by side and one
  * line under them — the game's own picture, which is why both the game and a
  * named pairing share it. A reader decides from the two pictures whether to
  * open the link, so the card has to be the covers themselves.
  *
- * Open Library's images are slow and sometimes silent; a cover that does not
- * arrive leaves its place empty rather than the card, because a posted link
- * gets no second chance. `coverUrls` are the two, in order.
+ * `sides` holds, per cover, the addresses to try in order
+ * (`pairCoverCandidates`). A cover that does not arrive leaves its place
+ * empty rather than the card, because a posted link gets no second chance.
+ *
+ * **Held at the edge when both came** (2026-10-06): before, the card was
+ * drawn anew on every request (`max-age=0`, a MISS each time), fetching two
+ * large scans from archive.org while WhatsApp waited — and it does not wait
+ * long. A card with a hole is held five minutes, so it is drawn again soon.
  */
-export async function pairCard({ coverUrls, line }: { coverUrls: string[]; line: string }): Promise<Response> {
-  const covers = coverUrls.length === 2 ? await loadCovers(coverUrls, 2) : [];
+export async function pairCard({ sides, line }: { sides: string[][]; line: string }): Promise<Response> {
+  const covers = sides.length === 2 ? (await Promise.all(sides.map(firstCover))).filter((c): c is string => !!c) : [];
+  const card = await pairCardImage(covers, line);
+  card.headers.set('Cache-Control', covers.length === 2 ? 'public, max-age=3600, s-maxage=2592000' : 'public, max-age=0, s-maxage=300');
+  return card;
+}
+
+async function firstCover(urls: string[]): Promise<string | null> {
+  for (let i = 0; i < urls.length; i++) {
+    const [got] = await loadCovers([urls[i]], 1, PAIR_COVER_MS[i] ?? 3000);
+    if (got) return got;
+  }
+  return null;
+}
+
+async function pairCardImage(covers: string[], line: string): Promise<Response> {
   return asJpeg(new ImageResponse(
     (
       <div
