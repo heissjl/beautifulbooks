@@ -2,7 +2,7 @@
 
 Julian: „double checke die beschreibungen der collections und entwirf welche, wo noch eine fehlt, aber lass sie mich abnehmen".
 
-**Grundlage:** der Live-Stand, einmal aus Produktion gelesen (`scripts/live-collections.ts`): 56 Sammlungen, 48 veröffentlicht, 26 davon mit dem Inhalt eines Online-Entwurfs. Die Texte unten sind Englisch wie alle Sammlungsdaten. **Nichts davon ist eingetragen.** Was Julian abnimmt, kommt in die Online-Entwürfe (/curate) oder in `data/collections.json` — je nachdem, wo die Sammlung heute ihren Inhalt hat.
+**Grundlage:** der Live-Stand, einmal aus Produktion gelesen (`scripts/live-collections.ts`): 56 Sammlungen, 48 veröffentlicht, 26 davon mit dem Inhalt eines Online-Entwurfs. Die Texte unten sind Englisch wie alle Sammlungsdaten. **Abgenommen am 2026-10-06** (Julian: „ansonsten texte ok, trag sie ein, merge und push") mit vier Änderungen: die unbelegten Angaben raus, die zwei Doppel weg, die Hugo-Wand nach Jahren, bei edition suhrkamp die 48 Farben dazu. Eingetragen in `data/collections.json` und in die Online-Entwürfe.
 
 ## A. Sieben veröffentlichte Sammlungen ohne Text
 
