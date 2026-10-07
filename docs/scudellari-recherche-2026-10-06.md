@@ -112,3 +112,7 @@ Julian: „was ist mit den anderen caro bänden zu lbj?" Die Reihe hat fünf gep
 - ***The Passage of Power*** (Knopf 2012): „Jacket design by R.D. Scudellari, adapted by Carol Devine Carson" (Raptis Rare Books, raptisrarebooks.com/?p=173292). Bild bei Open Library: OL25270398M, Cover **7151067** (grauer Umschlag, rot-blaue Schrift). 12869926 ist die britische Ausgabe bei Bodley Head (2014) mit Porträtfoto und gehört nicht hierher.
 
 Damit sind alle vier erschienenen Bände der Johnson-Reihe als Knopf-Umschlag da. Band 4 hat einen geteilten Kredit, und der Beleg für Band 3 ist dünn. **Stand der Knopf-Wand: 22 Werke**, mit *The Russia House* 23.
+
+## Entwurf angelegt (2026-10-07)
+
+Julian: „leg den knopf-entwurf mit russia house an, merge und push". In `data/collections.json` als `knopf-and-random-house-jackets-by-r-d-scudellari`, „Knopf and Random House — jackets by R. D. Scudellari", Reihe mit den Verlagen Knopf, Alfred A. Knopf und Random House, `published: false`. 23 Werke in Jahresfolge, von *Sula* (1973) bis *The Passage of Power* (2012). Werk-IDs, Autorinnen und ISBNs je Ausgabe einzeln bei Open Library nachgesehen, eine Anfrage nach der anderen mit 1,6 s Pause; jedes gewählte Cover hängt an der genannten Ausgabe. Der Text nennt die geteilten Kredite (*Sula*: Art Director für Wendell Minors Bild; letzter Caro-Band: sein Design, angepasst). Lokal am Dev-Server: Seite und 23 Kacheln da. Nach dem Deploy als Online-Entwurf auf /curate (`push-draft.ts`, ohne `--publish`).

@@ -42659,6 +42659,226 @@
           "coverIsbn": "9780802166487"
         }
       ]
+    },
+    {
+      "slug": "knopf-and-random-house-jackets-by-r-d-scudellari",
+      "title": "Knopf and Random House — jackets by R. D. Scudellari",
+      "kind": "series",
+      "intro": "Robert D. Scudellari was corporate art director at Random House in the 1970s and ’80s, over Knopf, Pantheon and Vintage, and designed many of their jackets himself: title and author set large, in a different hand for every book. These are first-edition jackets that a dealer’s listing or Fonts In Use credits to him, in year order, from Toni Morrison’s Sula to Robert Caro’s volumes on Lyndon Johnson. On Sula he was art director for Wendell Minor’s painting, and the last Caro volume adapts his design.",
+      "published": false,
+      "publishers": [
+        "Knopf",
+        "Alfred A. Knopf",
+        "Random House"
+      ],
+      "works": [
+        {
+          "id": "OL50567W",
+          "title": "Sula",
+          "author": "Toni Morrison",
+          "coverId": "ol:8384008",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394480449",
+          "coverIsbn": "0394480449"
+        },
+        {
+          "id": "OL15723131W",
+          "title": "Tinker, Tailor, Soldier, Spy",
+          "author": "John le Carré",
+          "coverId": "ol:253664",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394492196",
+          "coverIsbn": "0394492196"
+        },
+        {
+          "id": "OL77826W",
+          "title": "Interview with the Vampire",
+          "author": "Anne Rice",
+          "coverId": "ol:12452409",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394498216",
+          "coverIsbn": "0394498216"
+        },
+        {
+          "id": "OL50564W",
+          "title": "Song of Solomon",
+          "author": "Toni Morrison",
+          "coverId": "ol:253666",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394497848",
+          "coverIsbn": "0394497848"
+        },
+        {
+          "id": "OL181823W",
+          "title": "The Honourable Schoolboy",
+          "author": "John le Carré",
+          "coverId": "ol:14600037",
+          "addedAt": "2026-10-07",
+          "from": "edition:OL17727588M"
+        },
+        {
+          "id": "OL1992161W",
+          "title": "Falconer",
+          "author": "John Cheever",
+          "coverId": "ol:8261183",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394483472",
+          "coverIsbn": "0394483472"
+        },
+        {
+          "id": "OL1992157W",
+          "title": "The Stories of John Cheever",
+          "author": "John Cheever",
+          "coverId": "ol:253672",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394500873",
+          "coverIsbn": "0394500873"
+        },
+        {
+          "id": "OL10416301W",
+          "title": "The Powers That Be",
+          "author": "David Halberstam",
+          "coverId": "ol:7350106",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394503813",
+          "coverIsbn": "0394503813"
+        },
+        {
+          "id": "OL15723133W",
+          "title": "Smiley's People",
+          "author": "John le Carré",
+          "coverId": "ol:6751545",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394508432",
+          "coverIsbn": "0394508432"
+        },
+        {
+          "id": "OL50557W",
+          "title": "Tar Baby",
+          "author": "Toni Morrison",
+          "coverId": "ol:10620793",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394423291",
+          "coverIsbn": "0394423291"
+        },
+        {
+          "id": "OL4195862W",
+          "title": "The Path to Power",
+          "author": "Robert A. Caro",
+          "coverId": "ol:12869907",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394499735",
+          "coverIsbn": "0394499735"
+        },
+        {
+          "id": "OL181814W",
+          "title": "The Little Drummer Girl",
+          "author": "John le Carré",
+          "coverId": "ol:14600012",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394530152",
+          "coverIsbn": "0394530152"
+        },
+        {
+          "id": "OL15723132W",
+          "title": "A Perfect Spy",
+          "author": "John le Carré",
+          "coverId": "ol:6616089",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394551419",
+          "coverIsbn": "0394551419"
+        },
+        {
+          "id": "OL273581W",
+          "title": "Children of Light",
+          "author": "Robert Stone",
+          "coverId": "ol:9486376",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394525736",
+          "coverIsbn": "0394525736"
+        },
+        {
+          "id": "OL50548W",
+          "title": "Beloved",
+          "author": "Toni Morrison",
+          "coverId": "ol:8261367",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394535979",
+          "coverIsbn": "0394535979"
+        },
+        {
+          "id": "OL1890271W",
+          "title": "Stories in an Almost Classical Mode",
+          "author": "Harold Brodkey",
+          "coverId": "ol:5416267",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394506995",
+          "coverIsbn": "0394506995"
+        },
+        {
+          "id": "OL29778W",
+          "title": "The Russia House",
+          "author": "John le Carré",
+          "coverId": "ol:253895",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394577892",
+          "coverIsbn": "0394577892"
+        },
+        {
+          "id": "OL4195859W",
+          "title": "Means of Ascent",
+          "author": "Robert A. Caro",
+          "coverId": "ol:12869917",
+          "addedAt": "2026-10-07",
+          "from": "isbn:9780394528359",
+          "coverIsbn": "9780394528359"
+        },
+        {
+          "id": "OL29767W",
+          "title": "The Secret Pilgrim",
+          "author": "John le Carré",
+          "coverId": "ol:253992",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394588428",
+          "coverIsbn": "0394588428"
+        },
+        {
+          "id": "OL2915169W",
+          "title": "Brotherly Love",
+          "author": "Pete Dexter",
+          "coverId": "ol:12915140",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394585739",
+          "coverIsbn": "0394585739"
+        },
+        {
+          "id": "OL50563W",
+          "title": "Jazz",
+          "author": "Toni Morrison",
+          "coverId": "ol:9317241",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0679411674",
+          "coverIsbn": "0679411674"
+        },
+        {
+          "id": "OL4195864W",
+          "title": "Master of the Senate",
+          "author": "Robert A. Caro",
+          "coverId": "ol:12869915",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394528360",
+          "coverIsbn": "0394528360"
+        },
+        {
+          "id": "OL16585481W",
+          "title": "The Passage of Power",
+          "author": "Robert A. Caro",
+          "coverId": "ol:7151067",
+          "addedAt": "2026-10-07",
+          "from": "isbn:9780679405078",
+          "coverIsbn": "9780679405078"
+        }
+      ]
     }
   ]
 }
