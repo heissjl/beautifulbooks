@@ -114,7 +114,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
                 {t('At present these are the links to {shops}. When you follow one, the shop may store a cookie in your browser so that a purchase is credited to this site; that happens on the shop’s own site and under its privacy notice, and this site receives nothing about you from it.', { shops: partners.join(', ') })}
               </>
             )}
-            {/* Drafted 2026-10-07 for genialokal through Awin; waiting for Julian's approval of the sentence. */}
+            {/* Wording approved by Julian on 2026-10-07 (genialokal through Awin). */}
             {networks.map(({ network, shops }) => (
               <span key={network}>
                 {' '}
