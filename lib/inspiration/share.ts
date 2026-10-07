@@ -55,17 +55,34 @@ export function shareText(by: string): string {
   return `${titleOf(by)}: ${what}. What’s yours? ${HASHTAG}`;
 }
 
+/**
+ * The link with the platform's `?via=` mark (Julian, 2026-10-06: the share
+ * buttons mark their link, so the analytics can tell over which platform
+ * readers pass a board on). The marks are classes of `VIA` in
+ * `lib/insights/signals.ts`; an address that cannot be parsed goes as it is.
+ */
+export function withVia(link: string, via: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram'): string {
+  try {
+    const url = new URL(link);
+    url.searchParams.set('via', via);
+    return url.toString();
+  } catch {
+    return link;
+  }
+}
+
 export function shareTargets(link: string, by: string): ShareTarget[] {
   const text = shareText(by);
   const t = encodeURIComponent(text);
-  const u = encodeURIComponent(link);
+  const u = (via: Parameters<typeof withVia>[1]) => encodeURIComponent(withVia(link, via));
+  const inText = (via: Parameters<typeof withVia>[1]) => encodeURIComponent(`${text} ${withVia(link, via)}`);
   return [
     // `/intent/tweet`, the address X documents and its apps open as a new post; `/intent/post` opened a message on Julian's phone (2026-10-05).
-    { id: 'x', label: 'X', href: `https://x.com/intent/tweet?text=${t}&url=${u}` },
-    { id: 'threads', label: 'Threads', href: `https://www.threads.net/intent/post?text=${encodeURIComponent(`${text} ${link}`)}` },
-    { id: 'bluesky', label: 'Bluesky', href: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${text} ${link}`)}` },
-    { id: 'whatsapp', label: 'WhatsApp', href: `https://wa.me/?text=${encodeURIComponent(`${text} ${link}`)}` },
-    { id: 'telegram', label: 'Telegram', href: `https://t.me/share/url?url=${u}&text=${t}` },
+    { id: 'x', label: 'X', href: `https://x.com/intent/tweet?text=${t}&url=${u('x')}` },
+    { id: 'threads', label: 'Threads', href: `https://www.threads.net/intent/post?text=${inText('threads')}` },
+    { id: 'bluesky', label: 'Bluesky', href: `https://bsky.app/intent/compose?text=${inText('bluesky')}` },
+    { id: 'whatsapp', label: 'WhatsApp', href: `https://wa.me/?text=${inText('whatsapp')}` },
+    { id: 'telegram', label: 'Telegram', href: `https://t.me/share/url?url=${u('telegram')}&text=${t}` },
   ];
 }
 
