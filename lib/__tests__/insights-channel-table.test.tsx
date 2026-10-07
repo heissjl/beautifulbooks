@@ -19,3 +19,15 @@ describe('the channel table on /admin/insights', () => {
     expect(html).toContain('Suchmaschine');
   });
 });
+
+describe('the origin bars on /admin/insights', () => {
+  it('show the social networks as one bar even when none of them has a visit', async () => {
+    const { default: OriginBars } = await import('@/app/admin/insights/OriginBars');
+    const html = renderToStaticMarkup(
+      <OriginBars rows={[{ label: 'Startseite', value: 5 }]} social={{ value: 0, members: [{ label: 'LinkedIn', value: 0 }] }} total={5} few />,
+    );
+    expect(html).toContain('Soziale Netzwerke');
+    expect(html).toContain('aria-expanded="false"');
+    expect(html).not.toContain('LinkedIn');
+  });
+});
