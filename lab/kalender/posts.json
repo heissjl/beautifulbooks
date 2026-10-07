@@ -49,6 +49,22 @@
       "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
     },
     {
+      "id": "bsky-starter",
+      "date": "2026-10-06",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "gepostet",
+      "text": "The performative reader's starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.\n\nbuyitscovers.com/shelfportrait/tvujl2pk?via=bluesky",
+      "path": "/shelfportrait/tvujl2pk",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg (Julians Sharepic, 1080×1350)",
+      "postedUrl": "https://bsky.app/profile/buyitscovers.com",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“. Julian, 2026-10-06: „update das starterpack bild im artefakt und poste auf bsky das bild und als link den link zur shelfportrait seite“. Bild statt Link-Karte (die Karte hatte leere Kacheln), Link im Text ohne #mine. Das Bild zeigt Julians erste Auswahl mit Murakami, Stoner und East of Eden; der Link führt auf seine endgültige Fassung tvujl2pk, dieselben neun Bücher in anderer Reihenfolge."
+    },
+    {
       "id": "bsky-zug2",
       "date": "2026-10-06",
       "channel": "bluesky",
@@ -512,7 +528,7 @@
       "date": "2026-10-24",
       "channel": "bluesky",
       "kind": "feature",
-      "status": "vorschlag",
+      "status": "verworfen",
       "text": "The performative reader starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
       "path": "/shelfportrait",
       "image": "lab/kalender/out/starterpack-sharepic.jpg — noch nicht erzeugt (python3 lab/kalender/sharepic_starterpack.py, sobald archive.org die Cover wieder ausliefert)",
@@ -521,7 +537,7 @@
         "5.6a",
         "rechte"
       ],
-      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung. Julians fertiges Brett (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero, East of Eden; als Sharepic mit „The performative reader starter pack“ (Julian, ohne Apostroph) als einziger Überschrift. Endgültige Auswahl (Julian, 2026-10-06): https://buyitscovers.com/shelfportrait/tvujl2pk — Meditations, Ulysses, Crime and Punishment, Odyssee, Infinite Jest, OL716850W, OL3511459W, OL23166W und The Stranger (Cover 14814330). Am selben Tag lieferte archive.org die großen Cover mit 502 aus; das Poster der Seite kam zweimal mit sechs leeren Kacheln."
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung. Julians fertiges Brett (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero, East of Eden; als Sharepic mit „The performative reader starter pack“ (Julian, ohne Apostroph) als einziger Überschrift. Endgültige Auswahl (Julian, 2026-10-06): https://buyitscovers.com/shelfportrait/tvujl2pk — Meditations, Ulysses, Crime and Punishment, Odyssee, Infinite Jest, OL716850W, OL3511459W, OL23166W und The Stranger (Cover 14814330). Am selben Tag lieferte archive.org die großen Cover mit 502 aus; das Poster der Seite kam zweimal mit sechs leeren Kacheln. Ersetzt durch bsky-starter, am 2026-10-06 gepostet."
     },
     {
       "id": "pr-starter-pinterest",
