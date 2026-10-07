@@ -30,7 +30,10 @@ OUT = os.path.join(HERE, 'out', 'starterpack-sharepic.jpg')
 FONTS = os.path.join(ROOT, 'assets', 'fonts')
 TITLE = 'The performative reader starter pack'
 
-# Row by row, as the board holds them (decodeBoard of the short link's `b`).
+# Row by row, as the board holds them (decodeBoard of the short link's `b`):
+# Meditations, Ulysses, Crime and Punishment, Odyssey, Infinite Jest,
+# Gödel Escher Bach, Stoner, East of Eden, L'étranger. Four of them were cut
+# from Julian's own share picture into out/cache while archive.org was down.
 COVERS = [107193, 13136689, 14853945, 15161047, 191075, 12212058, 8310729, 9249662, 14814330]
 
 W, H = 1080, 1350
@@ -44,10 +47,21 @@ def cover(cid: int) -> Image.Image:
     path = os.path.join(CACHE, f'starter-{cid}.jpg')
     if not os.path.exists(path):
         req = urllib.request.Request(f'https://covers.openlibrary.org/b/id/{cid}-L.jpg', headers={'User-Agent': 'Buy Its Covers lab (sharepic_starterpack.py)'})
-        with urllib.request.urlopen(req, timeout=60) as r, open(path, 'wb') as f:
-            f.write(r.read())
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                data = r.read()
+        except Exception as err:
+            # archive.org, where Open Library keeps the large images, answered
+            # 502/503 for hours on 2026-10-06; say so instead of drawing a gap.
+            raise SystemExit(f'cover {cid} did not come: {err}. Nothing written; run again later.')
+        with open(path, 'wb') as f:
+            f.write(data)
         time.sleep(2)
-    return Image.open(path).convert('RGB')
+    try:
+        return Image.open(path).convert('RGB')
+    except Exception:
+        os.remove(path)
+        raise SystemExit(f'cover {cid} came back as something other than an image. Nothing written; run again later.')
 
 
 def fill(im: Image.Image, w: int, h: int) -> Image.Image:
