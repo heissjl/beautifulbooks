@@ -71,7 +71,7 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
         <Versus initialPairs={initialPairs} />
 
         <section className="mt-16 border-t border-line pt-8">
-          <h2 className="text-2xl text-ink">{t('What this is')}</h2>
+          <h2 className="text-2xl text-ink">{t('What is this game')}</h2>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-2">
             {rich(t('Two covers of two books, side by side, and one question: which one would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.'), {
               covers: <b className="text-ink tabular-nums">{POOL.covers.length}</b>,
@@ -84,6 +84,19 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
             })}
           </p>
         </section>
+
+        {/*
+          The same block the shared Shelf-Portrait carries (Julian, 2026-10-06), because the game is a
+          page people arrive on from a link without ever having seen the site: what it is, and the ways
+          on — here the Shelf-Portrait in place of the game, which is this page. The switches are read
+          on the server; a link to a page that is off would be a 404.
+        */}
+        <WhatIsThisSite
+          t={t}
+          collection={wallsEnabled()}
+          portrait={inspirationEnabled()}
+          variant="section"
+        />
 
         <section className="mt-10">
           <h2 className="text-xl text-ink">{t('Some of the books in the game')}</h2>
@@ -104,18 +117,6 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
           </p>
         </section>
 
-        {/*
-          The same block the shared Shelf-Portrait carries (Julian, 2026-10-06), because the game is a
-          page people arrive on from a link without ever having seen the site: what it is, and the ways
-          on — here the Shelf-Portrait in place of the game, which is this page. The switches are read
-          on the server; a link to a page that is off would be a 404.
-        */}
-        <WhatIsThisSite
-          t={t}
-          collection={wallsEnabled()}
-          portrait={inspirationEnabled()}
-          className="mt-12 max-w-prose border-l-2 border-line pl-5 text-[15px] leading-relaxed text-ink-2"
-        />
       </main>
       <SiteFooter />
     </div>
