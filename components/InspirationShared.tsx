@@ -2,13 +2,13 @@ import Link from './Link';
 import CoverImage from './CoverImage';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
+import WhatIsThisSite from './WhatIsThisSite';
 import { CopyLink, PictureShare } from './InspirationShareTools';
 import { coverUrlFor } from '@/lib/coverurl';
 import { SIZE_WORD } from '@/lib/inspiration/board';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
 import { PICTURE_VERSION, shareTargets, shareText, titleOf } from '@/lib/inspiration/share';
-import { SITE_NAME } from '@/lib/seo';
 
 /**
  * A finished board as others see it (ROADMAP 5.18b): the covers, each leading
@@ -167,18 +167,8 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         />
       </div>
 
-      {/* For someone who arrived from a picture and has never seen the site: what it is, and what else is here. */}
-      <aside className="max-w-md self-start border-l-2 border-line pl-5 text-[15px] leading-relaxed text-ink-2 lg:sticky lg:top-24">
-        <h2 className="font-display text-xl text-ink">What is <i>{SITE_NAME}</i>?</h2>
-        <p className="mt-2">
-          <strong className="font-medium text-ink">A book has many covers.</strong> <i>{SITE_NAME}</i> shows the ones two open catalogues hold for a title — decades of printings side by side — and, for each, where to find and buy that edition new or used, online or locally.
-        </p>
-        <ul className="mt-4 space-y-2">
-          <li><Link href="/" className={more}>Look up the covers of a book</Link></li>
-          {walls && <li><Link href="/create" className={more}>Gather covers you love into a collection of your own</Link></li>}
-          {versus && <li><Link href="/versus" className={more}>Play the cover game: which one would you rather look at?</Link></li>}
-        </ul>
-      </aside>
+      {/* For someone who arrived from a picture and has never seen the site: what it is, and what else is here. Shared with /versus (6.96). */}
+      <WhatIsThisSite collection={walls} game={versus} />
     </div>
   );
 }

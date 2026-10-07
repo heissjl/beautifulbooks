@@ -5,10 +5,13 @@ import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import Versus from '@/components/Versus';
+import WhatIsThisSite from '@/components/WhatIsThisSite';
 import { preload } from 'react-dom';
 import { POOL, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
 import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
+import { inspirationEnabled } from '@/lib/inspiration/switch';
+import { wallsEnabled } from '@/lib/walls/switch';
 import { SITE_CARD, SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
@@ -100,6 +103,19 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
             })}
           </p>
         </section>
+
+        {/*
+          The same block the shared Shelf-Portrait carries (Julian, 2026-10-06), because the game is a
+          page people arrive on from a link without ever having seen the site: what it is, and the ways
+          on — here the Shelf-Portrait in place of the game, which is this page. The switches are read
+          on the server; a link to a page that is off would be a 404.
+        */}
+        <WhatIsThisSite
+          t={t}
+          collection={wallsEnabled()}
+          portrait={inspirationEnabled()}
+          className="mt-12 max-w-prose border-l-2 border-line pl-5 text-[15px] leading-relaxed text-ink-2"
+        />
       </main>
       <SiteFooter />
     </div>
