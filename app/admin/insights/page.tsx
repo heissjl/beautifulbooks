@@ -112,6 +112,7 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
 
 const LANDING_NAMES: Record<string, string> = {
   home: 'Startseite', search: 'Suchergebnisse', collections: 'Sammlungsübersicht', collection: 'Eine Sammlung', wall: 'Leser-Sammlung',
+  shelf: 'Geteiltes Shelf-Portrait',
 };
 const VERDICT_NAMES: Record<string, string> = {
   verified: 'gleich (verified)', differs: 'anders (differs)', uncompared: 'nicht verglichen', unknown: 'kein Bild (unknown)',

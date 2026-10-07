@@ -325,3 +325,13 @@ describe('each social network its own channel (2026-10-06)', () => {
     expect(groupSocial([row('engine', 1, 1)]).some(l => l.kind === 'social')).toBe(false);
   });
 });
+
+describe('a shared Shelf-Portrait as a landing page (2026-10-06)', () => {
+  it('counts the shared board, never the editor that rewrites its address', () => {
+    expect(landingOf('/shelfportrait/tvujl2pk', '?via=whatsapp')).toBe('shelf');
+    expect(landingOf('/shelfportrait/board', '?b=a.b')).toBe('shelf');
+    expect(landingOf('/shelfportrait', '?b=a.b')).toBeNull();
+    expect(landingOf('/shelfportrait/card.jpg', '')).toBeNull();
+    expect(entryOf('?via=whatsapp', '', HOST)).toBe('whatsapp');
+  });
+});

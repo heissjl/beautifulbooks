@@ -55,7 +55,9 @@ export const SOCIAL_ENTRIES = [
 ] as const satisfies readonly Entry[];
 
 /** Pages whose leaving is summarised as a `landing` signal (5.6a); book pages and searches have their own. */
-export const LANDINGS = ['home', 'search', 'collections', 'collection', 'wall'] as const;
+// `shelf`: a shared Shelf-Portrait (`/shelfportrait/<id>`, `/shelfportrait/board`), since 2026-10-06 — what its share buttons' `?via=` marks are read on.
+// Not the editor: it rewrites its address with every book, and each rewrite would count as a page.
+export const LANDINGS = ['home', 'search', 'collections', 'collection', 'wall', 'shelf'] as const;
 export type Landing = (typeof LANDINGS)[number];
 
 export const PAGES = ['0', '1', '2', '3', '4+'] as const;
@@ -255,6 +257,7 @@ export function landingOf(path: string, search: string): Landing | null {
   if (path === '/collections' || path === '/collections/readers') return 'collections';
   if (/^\/collections\/[^/]+$/.test(path)) return 'collection';
   if (/^\/c\/[^/]+$/.test(path)) return 'wall';
+  if (/^\/shelfportrait\/[a-z0-9]+$/.test(path) && path !== '/shelfportrait/card') return 'shelf';
   return null;
 }
 
