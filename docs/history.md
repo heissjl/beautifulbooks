@@ -5481,3 +5481,42 @@ Julian: „ich glaube es ist besser wenn wir verlag und jahr nur unten beim ausg
 Julian: „füge zur analyse meine anthropic max kosten und meine usage credits hinzu“. Auf Nachfrage: Max 5x, 100 USD im Monat; „vorgestern war die zweite max abrechnung, die erste auch schon reinzählen“ — also seit 2026-09-04; ganz der Seite zugerechnet, mit dem Vermerk, dass das Abo auch für anderes genutzt wird; die Usage Credits fallen „jeden Monat ähnlich“ an. **Eingetragen** in `FIXED_COSTS` (`lib/insights/costs.ts`) als `anthropic-max`, 100 USD/Monat ab 2026-09-04, anteilig je Tag wie die anderen festen Kosten. **Die Credits** stehen, bis Julian den Monatsbetrag nennt, unter „Nicht gemessen“ („Anthropic: Usage Credits (Extra Usage) neben dem Max-Plan — der Monatsbetrag fehlt noch“), nicht als null (N12). Zwei Tests in `insights-cpu.test.ts` halten die Tabelle fest. Lokal ohne Store zeigt `/admin/insights` keine Zahlen; geprüft ist die reine Rechnung.
 
 **Nachtrag, derselbe Tag.** Julian schickte den Stand seines Kontos: „Usage credits $8.03 spent“. Eingetragen als `anthropic-credits`, 8,03 USD im Monat ab 2026-09-04 (er nannte den Betrag monatlich ähnlich), mit Herkunft im Vermerk; die Zeile unter „Nicht gemessen“ ist weg. Ein neuer Kontostand ersetzt den Betrag.
+
+## 2026-10-06 · Welche Reihen im Cover-Spiel sind — und welche nicht (ROADMAP 5.8a)
+
+Julian: „nimm die rororo konterfei serie aus dem cover-spiel“ und „welche serien sind aktuell nicht drin?“
+
+**Die Rowohlts Monographien sind seit dem 2026-10-01 draußen** (Eintrag oben, Commit `e202b39`, in `origin/main`) — die Bitte war schon einmal erfüllt. Nachgeprüft statt angenommen:
+
+- `rowohlts-monographien` steht in `LEFT_OUT` von `scripts/add-collection-covers-to-pool.ts` und in `collections.leftOut` des Vorrats.
+- Von den 154 Covern der Liste `lab/collections/lists/rowohlts-monographien.json` liegt **keines** im Vorrat, und **keines ihrer 154 Werke** ist dort überhaupt vertreten — auch nicht über den Grundvorrat aus dem Index. Kein Eintrag des Vorrats nennt in Titel oder Autor „Monographie“, „rororo“ oder „Rowohlt“.
+- Auch die Rangliste zeigt sie nicht: `board()` wirft Stimmen auf Cover weg, die der Vorrat nicht mehr hält (`lib/hotornot/game.ts`).
+- Produktion einmal geprüft: `/versus` spielt `mix-2000-paperwhite-collections` mit **4.884 Covern aus 2.780 Büchern**, Speicher `redis`, drei Paare vorgeladen — derselbe Stand wie die Datei.
+
+**Welche Reihen nicht mitspielen.** Der Vorrat zieht aus **42 Sammlungen** (2.976 ihrer Cover). `collections.from` ist eingefroren: eine Sammlung, die es beim ersten Lauf nicht gab, kommt nur mit `--add=<slug>` hinzu. Von den 56 Sammlungen der Datei fehlen deshalb 14.
+
+*Auf Julians Wort heraus (5):* edition suhrkamp (198 Cover), Rowohlts Monographien (154), Library of America (72), suhrkamp taschenbuch — Autorenporträts (70), Suhrkamp BasisBibliothek (59). Alle fünf stehen auf der Seite, keines ihrer Cover ist im Spiel.
+
+*Nicht im letzten Lauf (9).* Veröffentlicht und damit die eigentliche Frage: Nebula — Roman (62 Cover, 3 davon über andere Sammlungen schon drin), Ravensburger — Grieder und Schindler (33, 0), Deutscher Buchpreis (21, 0), Fischer Bücherei — Edelmann (10, alle 10 über Fischer Bücherei schon drin). Noch Entwürfe, also auch auf der Seite nicht zu sehen: Virago Modern Classics (141, 0), Penguin Classics — die schwarzen Bänder (98, 0), National Book Award (83, 4), Herder Bücherei — Grieder (44, 0), Penguin Drop Caps (22, 2).
+
+**Umgekehrt spielen drei Sammlungen mit, die auf der Seite nicht stehen** — Penguin English Library, Verso Radical Thinkers, Heinz Edelmann — verschiedene Verlage: ihre Cover kamen in einem früheren Lauf hinein, veröffentlicht sind sie nicht. Kein Fehler, der Vorrat fragt nicht nach Veröffentlichung; es erklärt aber, warum die Zahl der Sammlungen im Spiel nicht die der Seite ist.
+
+**Woraus die Zahlen kommen:** der Vorrat gegen `data/collections.json` und gegen die Live-Seite `/collections` (ein Abruf, 48 Sammlungen). **Die `published`-Flagge der Datei ist dafür unbrauchbar** — nur 7 der 56 stehen dort auf `true`; veröffentlicht wird seit 5.10g im Speicher über `/curate`, und der gewinnt über die Datei. Wer „welche Sammlungen sind live“ aus der Datei liest, liegt um 41 Sammlungen falsch.
+
+## 2026-10-06 · Drei Reihen mehr im Cover-Spiel (ROADMAP 5.8a)
+
+Julian, nach der Übersicht oben: „füg die drei hinzu“ — Nebula — Roman, Ravensburger (Grieder und Schindler), Deutscher Buchpreis.
+
+**Der Lauf.** `COLLECTIONS_FILE=<Live-Stand> npx tsx scripts/add-collection-covers-to-pool.ts --keep-earlier --add=nebula-award-best-novel,ravensburger-covers-by-grieder-and-schindler,deutscher-buchpreis --images=<Zwischenspeicher>`: 112 Kandidaten, **95 aufgenommen** — 9 zu klein oder unscharf, 8 zeigten ein Design, das das Spiel für dasselbe Buch schon hat; jede Anfrage wurde beantwortet. Der Vorrat `mix-2000-paperwhite-collections` wächst von 4.884 auf **4.979 Cover aus 2.859 Büchern**, aus 45 Sammlungen. Im Spiel sind damit 47 der 62 Nebula-Cover, 32 der 32 Ravensburger und 19 der 21 des Buchpreises. **Der Name bleibt, kein Cover ging heraus** — jede bisherige Stimme zählt weiter. Die 95 neuen auf einem Kontaktbogen angesehen: durchweg gestaltete Umschläge, keine Titelseite, kein Aufkleber, kein Foto eines Buchs.
+
+**Erst gemessen, dann gelaufen: die Datei ist nicht, was die Seite zeigt.** Die drei Sammlungen stehen online anders da als in `data/collections.json` — bei *Deutscher Buchpreis* vier ausgetauschte Cover, bei *Nebula* eines, bei *Ravensburger* eines herausgenommen. Wer den Lauf gegen die Datei fährt, nimmt sechs Cover ins Spiel, die Julian dort nicht mehr sehen will. Deshalb neu:
+
+- **`scripts/live-collections.ts`** schreibt die Sammlungen, wie die laufende Seite sie zeigt: Datei, veröffentlichte Entwürfe, Schalter, Reihenfolge — dieselben drei Schichten wie `liveRecords`. Es fragt die Produktion **einmal** (`GET /api/curate/publish`, Admin-Passwort als Bearer, wie das Cockpit), weil der Speicher dort liegt und die `.env.local` des Hauptordners keine `STORAGE_*` hat, und schreibt nur in die genannte Datei — die Momentaufnahme gehört in den Scratch-Ordner, nicht ins Repository. Gegengeprüft: 56 Sammlungen, 48 veröffentlicht, 26 mit Inhalt aus einem Online-Entwurf, und für die drei Reihen stimmen die Cover-IDs genau mit dem überein, was die Live-Seiten zeigen.
+- **Die `published`-Flagge der Datei sagt nichts**: 7 von 56 stehen dort auf `true`, auf der Seite sind es 48.
+
+**Zwei Änderungen am Vorrats-Skript, damit ein Lauf nicht mehr 3.000 Bilder holt.**
+
+- **`--keep-earlier`**: der Vorrat behält jedes Cover, das er hat, und nur die `--add`-Sammlungen werden angesehen. Das ist genau „füg die drei hinzu“ — und es verhindert nebenbei, dass ein Lauf stillschweigend alle anderen Sammlungen auf ihren Online-Stand zieht, also Cover mit Stimmen austauscht. Was es nicht tut: ältere Sammlungen nachführen; dafür braucht es einen Lauf ohne den Schalter.
+- **Signatur-Zwischenspeicher `data/cover-signatures.json`** (9 KB, 138 Einträge): eine Design-Signatur steht nur im Cover-Index, und Sammlungscover stehen nicht im Index — deshalb holte **jeder** Lauf die Bilder aller Sammlungscover neu (am 30.9. waren das 3.386). Jetzt werden sie gespeichert. Dieser Lauf hat **147 Bilder** geholt: 112 Kandidaten und 34 Cover, die der Vorrat schon hält und die sich ein Buch mit einem Kandidaten teilen — ohne ihre Signatur könnte das Skript zwei Scans derselben Jacke nicht erkennen. Das ist zugleich die Antwort auf die Sperre vom 2026-10-04: Open Library wird nicht mehr im Tausender-Schub gefragt.
+
+**Geprüft:** 1.448 Tests, Typprüfung und ESLint grün; am Dev-Server sagt `/versus` „The pool holds 4979 covers from 2859 books“ und liefert drei vorgeladene Paare; ein neues Cover kommt über `/img` in 0,09 s. **Nicht deployt** — der Vorrat liegt auf `main`.
