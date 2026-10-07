@@ -5700,3 +5700,13 @@ Julian: „mach 0.13 und 2.4“, beide vor dem Show HN offen (PLAN-5.6b).
 
 **2.4, mit der Vercel-CLI abgelesen** (`vercel firewall status`, `rules inspect`, `overview`, `diff`): kein Entwurf mehr offen; `api-google-burst` aktiv (`/api/isbn/` oder `/api/works/` ohne `summary=1` und `sibling=1`, 300 je 600 s und IP, Aktion log); Bot Protection *Log*, AI Bots *Log*, Attack Mode aus. Wann veröffentlicht wurde, steht nirgends. Die letzten 24 h (bis 2026-10-07 05:20 UTC): 16,4 k erlaubt, 2,8 k protokolliert, 1,8 k abgewiesen, 334 Challenges (302 davon in der Stunde um 15 Uhr UTC); nach Regel Bot Protection 4,0 k, automatische DDoS-Abwehr 3,3 k, AI Bots 2,4 k; die eigene Regel ohne Treffer. Abweisungen und Challenges kommen von der automatischen DDoS-Abwehr, die auf Hobby nicht einstellbar ist. Offen bleibt Plan 2.4 §5 Schritt 3 (Regel auf 429, AI Bots: Julian).
 
+**Nachtrag, derselbe Abend: auf PromQL umgestellt** (Julian: „hast du absichtlich mql statt promql benutzt?“ — nein, die Vorlage schreibt MQL; „stell auf promql um“). Eine MQL-Bedingung lässt sich im Editor nicht in PromQL umschreiben, also eine neue Richtlinie „Books API daily quota (PromQL)“, Bedingung „Books API daily quota share“, Auswertung alle 30 s, Kanal derselbe, Betreff „Buy Its Covers: Google Books quota above threshold“:
+
+```
+sum by (quota_metric) (increase({"serviceruntime.googleapis.com/quota/rate/net_usage", monitored_resource="consumer_quota", service="books.googleapis.com", quota_metric="books.googleapis.com/default"}[23h]))
+  / max by (quota_metric) (max_over_time({"serviceruntime.googleapis.com/quota/limit", monitored_resource="consumer_quota", service="books.googleapis.com", limit_name="defaultPerDayPerProject"}[23h]))
+  > 0.8
+```
+
+**Ein Fehler, den nur die Probe zeigte:** die erste Fassung teilte durch `quota/limit` als Augenblickswert. Google schreibt diesen Wert nur in Minuten, in denen Anfragen laufen; danach fand die Abfrage keinen Punkt, die Reihe brach um 22:00 ab, und die Probe mit 1 % löste nach fünf Minuten nicht aus. Mit `max_over_time(…[23h])` ist die Kurve über den Tag durchgehend (zwischen etwa 0,02 und 0,06), und die Probe löste um 22:45:06 aus. Danach auf 0,8. **Was die Abfrage anders misst als Googles Zähler:** sie zählt gleitend die letzten 23 Stunden, Google zählt ab Mitternacht Pacific. Um 22:30 zeigte sie 0,04 (40 Anfragen), MQL 0,022 (22 seit Mitternacht) — gestern Abend zählt mit. Sie schlägt also eher zu früh an; in der letzten Stunde vor Mitternacht fällt die erste Stunde des Tages heraus, ein Stoß um Mitternacht kann dann bis zu einer Stunde unterzählt sein. 23 statt 24 Stunden wegen der Grenze für PromQL-Bereiche in Alarmen. Die MQL-Richtlinie aus der Vorlage ist **abgeschaltet, nicht gelöscht**.
+
