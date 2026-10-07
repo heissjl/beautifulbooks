@@ -103,3 +103,12 @@ Damit sind alle drei le-Carré-Umschläge, die bisher keinen Beleg hatten, beleg
 - Styron, Updike, Michener, Tyler.
 
 **Stand:** **20 Werke mit Beleg und Bild**, dazu *The Russia House* mit schwachem Beleg (nur eine Händlerangabe aus der Suche): **21**. Der Agent kam auf 22 oder 23, hatte sich dabei aber verzählt. Seine Liste der neuen Werke hat 11 Einträge, nicht 12. Übersichtsbild: `docs/tests/2026-10-06-scudellari-knopf-2.jpg` (git-ignoriert).
+
+## Die übrigen Caro-Bände zu Lyndon Johnson (2026-10-07)
+
+Julian: „was ist mit den anderen caro bänden zu lbj?" Die Reihe hat fünf geplante Bände, vier sind erschienen. Den dritten und vierten habe ich selbst nachgesehen: zwei Websuchen, vier Anfragen an openlibrary.org und fünf Bilder, alle angesehen.
+
+- ***Master of the Senate*** (Knopf 2002): Kredit „designed by R.D. Scudellari" in einem AbeBooks-Angebot, das der Agent der zweiten Suche gefunden hat; die URL hat er nicht notiert. Eine eigene Suche fand keine weitere Quelle. Der Umschlag führt das Design der Bände 1 und 2 weiter. Bild bei Open Library: OL24961984M, Cover **12869915** (roter Umschlag). Nicht brauchbar sind 12869918 (schwarzer Einband) und 15116809 (Titelseite).
+- ***The Passage of Power*** (Knopf 2012): „Jacket design by R.D. Scudellari, adapted by Carol Devine Carson" (Raptis Rare Books, raptisrarebooks.com/?p=173292). Bild bei Open Library: OL25270398M, Cover **7151067** (grauer Umschlag, rot-blaue Schrift). 12869926 ist die britische Ausgabe bei Bodley Head (2014) mit Porträtfoto und gehört nicht hierher.
+
+Damit sind alle vier erschienenen Bände der Johnson-Reihe als Knopf-Umschlag da. Band 4 hat einen geteilten Kredit, und der Beleg für Band 3 ist dünn. **Stand der Knopf-Wand: 22 Werke**, mit *The Russia House* 23.
