@@ -421,6 +421,15 @@ def rowohlt_pin():
 # The train joke (Julian, 2026-10-06, campaign "performative readers", PLAN-5.6b
 # §4b): the book you want to be seen with against the one you hide. Both covers
 # are in the game's pool. Single protected covers: waits on the rights decision.
+# A second pair (Julian, 2026-10-06, from a round of the game): The Gruffalo
+# against Merritt's "Le visage dans l'abîme" at J'ai Lu, a Boris Vallejo nude.
+TRAIN_PAIR_2 = (
+    dict(key='pool-gruffalo', title='The Gruffalo', imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/15154344-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='pool-merritt-abime', title="Le visage dans l'abîme", imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/10215294-L.jpg', crop=(0, 0, 0, 0)),
+)
+
 TRAIN_PAIR = (
     dict(key='pool-infinite-jest', title='Infinite Jest', imprint='', credit='',
          url='https://covers.openlibrary.org/b/id/191075-L.jpg', crop=(0, 0, 0, 0)),
@@ -429,7 +438,8 @@ TRAIN_PAIR = (
 )
 
 
-def train_post(W: int, H: int, name: str):
+def train_post(W: int, H: int, name: str, pair: tuple = None):
+    pair = pair or TRAIN_PAIR
     s = Image.new('RGBA', (W, H), BG + (255,))
     d = ImageDraw.Draw(s)
     k = W / 1000
@@ -441,7 +451,7 @@ def train_post(W: int, H: int, name: str):
         y += round(72 * k)
     box_h = round((H - y - 330 * k))
     top = y + round(50 * k)
-    for c, cx in ((TRAIN_PAIR[0], W // 4 + round(10 * k)), (TRAIN_PAIR[1], 3 * W // 4 - round(10 * k))):
+    for c, cx in ((pair[0], W // 4 + round(10 * k)), (pair[1], 3 * W // 4 - round(10 * k))):
         im = cover_image(c)
         w = round(im.width * box_h / im.height)
         h = box_h
@@ -469,6 +479,8 @@ if __name__ == '__main__':
     rowohlt_pin()
     train_post(1080, 1350, 'zug-1080x1350.jpg')
     train_post(1000, 1500, 'pinterest-zug.jpg')
+    train_post(1080, 1350, 'zug2-1080x1350.jpg', TRAIN_PAIR_2)
+    train_post(1000, 1500, 'pinterest-zug2.jpg', TRAIN_PAIR_2)
     versus_pin(VERSUS_DRAFT, 'pinterest-versus-entwurf.jpg')
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
         mosaic_carousel()

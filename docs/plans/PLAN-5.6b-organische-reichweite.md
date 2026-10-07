@@ -132,6 +132,11 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 - **Das Starter-Pack am 24.10.** auf Bluesky, X, Instagram und Pinterest, als Shelf-Portrait.
   - Claudes Vorschlag für neun Bücher: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L'étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas) und A Little Life.
   - Julian bearbeitet das Brett im Editor; der Link steht im Kalender beim Eintrag `pr-ig-starter`. Das Bild ist danach das Poster des Shelf-Portraits.
+- **Zug-Witz, zweite Fassung** (Julian, 2026-10-06, aus einer Runde des Spiels): The Gruffalo (OL 15154344) gegen Merritts *Le visage dans l’abîme* bei J’ai Lu (10215294), ein Akt von Boris Vallejo.
+  - Dateien: `zug2-1080x1350.jpg` und `pinterest-zug2.jpg`.
+  - Instagram und Pinterest entfernen nackte Brüste oft oder schränken solche Posts ein. Diese Fassung eignet sich eher für Bluesky und X, dort mit Inhaltswarnung.
+  - Noch nicht im Kalender; Julian wählt zwischen Fassung 1 und 2.
+- **Alle Bilder auf einer Seite:** das private Artefakt [Post-Galerie](https://claude.ai/artifact/MPXdmUDTpTspQvQYRxV9bW), erzeugt von `lab/kalender/galerie.py`, je Post alle Fassungen mit Stand.
 - **Julians fertiges Starter-Pack** (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero und East of Eden.
   - Als Sharepic ist die zweite Zeile die einzige Überschrift: „The performative reader starter pack“ (Julian, ohne Apostroph) in der proportionalen Xanh der Seite. Der Kopf ist aus dem Mosaik des Posters neu gesetzt (`lab/kalender/sharepic_starterpack.py`).
   - Das Poster der Website bleibt, wie es ist.
