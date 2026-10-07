@@ -5663,6 +5663,29 @@ Julian: „ja“ zur Idee, die Teilen-Knöpfe des Shelf-Portraits ihren Link mar
 
 **Freigabe, derselbe Tag.** Julian: „ja, freigegeben, merge und push“ — der Satz der Datenschutzerklärung mit „a shared Shelf-Portrait“ / „ein geteiltes Shelf-Portrait“ gilt.
 
+## 2026-10-06 · Die Karte des Spiels zeigt die gewählte Paarung, und die Bücherliste wird kürzer (ROADMAP 6.98, 6.99)
+
+Zwei Änderungen am selben Abend, kurz nach dem Deploy.
+
+**Die Karte von `/versus` zeigt jetzt ein festes Paar.** Julian: „nimm vorerst die vorschaukarte von diesem matchup auch für die vorschaukarte auf das spiel allgemein“ — The Gruffalo gegen Merritts *Le visage dans l’abîme* bei J’ai Lu, die Paarung des zweiten Kampagnenbildes, von ihm aus einer Runde des Spiels ausgesucht. Ein beworbener Link soll zeigen, was er gewählt hat, nicht was der Tag gezogen hat. `pairOfTheDay` bleibt mit seinen zwei Tests liegen, für den Fall, dass die Karte wieder wechseln soll; das Paar, das der Spieler bekommt, wird ohnehin beim Laden gezogen, und die Karte verspricht nichts anderes. Gemessen: 70 KB JPEG, beide Cover da.
+
+**Die Liste „Some of the books in the game“ ist halb so lang und nur noch lesbar.** Julian: „kürze die liste des some books of the game blocks um die hälfte und lass nur welche mit titel im romanischen alphabet rein“ — vorher standen dort 24 Titel, darunter `雪国` und anderes, was ein Leser dieser Liste nicht lesen kann.
+
+- **12 Titel**, weiter über das Alphabet verteilt (`someBooks`), weiter aus dem eingefrorenen Vorrat, also ohne eine einzige Anfrage.
+- `latinTitle` in `lib/hotornot/game.ts`: jeder Buchstabe des Titels muss lateinisch sein. **Ziffern und Zeichensetzung gehören zu keiner Schrift**, „1984“ bleibt also drin; ein Titel, der Schriften mischt, fällt heraus, weil er sich hier auch nicht lesen lässt. Zwei Tests, einer davon auf einem gemischten Vorrat, der zugleich prüft, dass `poolBooks` unverändert bleibt.
+- **Das Buch bleibt im Spiel.** Nur diese Liste lässt es aus; die Zeile darunter nennt weiter den ganzen Vorrat („And 2.847 more“), und die Zahl der Bücher über ihr ebenso.
+
+Am Dev-Server nachgesehen: 12 Buchlinks, alle in lateinischer Schrift, von „J’ai nom Jeanne la Pucelle“ bis „Zwölf um ein Bett“. 1.505 Tests, Typprüfung, ESLint und Build grün.
+
+## 2026-10-06 · Die Bücherliste unter dem Spiel wechselt täglich (ROADMAP 6.99a)
+
+Julian sah die zwölf Titel und fragte: „wird die zufällig neu geladen?“ — **nein**: `someBooks` zog bis dahin in festen Abständen aus der alphabetisch sortierten Liste, ohne Zufall und ohne Speicher, also sah jeder Besucher bei jedem Abruf dieselben zwölf. Das war Absicht (die Liste steht vor allem für Crawler im HTML), und auf die Erklärung hin: „ja, bau die tagesrotation und pushe“.
+
+**Gebaut:** `someBooks(count, { day })` schneidet die Liste in `count` Strecken des Alphabets und zieht aus jeder genau ein Buch, mit `rng(day)`. Damit bleibt, wofür die Liste da ist — die Verteilung von A bis Z —, und es wechselt nur, welches Buch einer Strecke gerade dort steht. `dayNumber` ist dieselbe Tageszahl, die `pairOfTheDay` benutzt. **Ohne `day` bleibt alles wie zuvor**, die feste Verteilung, die ein Test weiter festhält.
+
+**Warum ein Tag und nicht jeder Abruf:** alle, die an einem Tag kommen, sehen dieselbe Seite, ein geteilter Screenshot stimmt noch, und eine Seite, die sich bei jedem Abruf anders liest, ist für die Indexierung schlechter. Drei Tests: gleich über den Tag, verschieden über sieben Tage, und über zwanzig Tage je ein Buch aus jeder Strecke, in alphabetischer Ordnung und ohne Doppelte.
+
+**Am Dev-Server:** zwei Abrufe hintereinander geben dieselben zwölf Titel (*Ailleurs* … *Zwei Krimis in einem Band*), der nächste Tag andere (*Amen*, *Der Strom*, *High Fidelity*, *Spinoza and Politics* …), der übernächste wieder andere. 1.508 Tests, Typprüfung, ESLint und Build grün.
 **Deploy, derselbe Tag.** `origin/main` von `8f8e013` auf `057bab3` (soziale Netzwerke als eigene Kanäle, `?via=` an den Teilen-Knöpfen, geteiltes Brett als Einstiegsseite, freigegebener Satz). Produktion einmal angesehen: `/privacy` enthält „a collection or a shared Shelf-Portrait“; die Seite `/shelfportrait/tvujl2pk` trägt die fünf Teilen-Links mit `via=x|threads|bluesky|whatsapp|telegram`.
 
 ## 2026-10-06 · Analyse: der Balken „Soziale Netzwerke“ auch bei null, Product Hunt raus (ROADMAP 5.6a, K16)
