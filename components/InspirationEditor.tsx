@@ -25,6 +25,7 @@ import {
   swap,
 } from '@/lib/inspiration/board';
 import type { BrowseList, BrowseWork } from '@/lib/inspiration/browse';
+import { isStarter, type Starter } from '@/lib/inspiration/starters';
 import type { WorkCovers } from '@/lib/inspiration/covers';
 import type { SearchResult } from '@/lib/search';
 import { SITE_NAME } from '@/lib/seo';
@@ -102,7 +103,7 @@ const pill = (active: boolean) =>
   `hit rounded-full border px-4 py-1 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
 const plain = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
-export default function InspirationEditor({ initialQuery, initialNames, children }: { initialQuery: string; initialNames: Record<string, Named>; children?: React.ReactNode }) {
+export default function InspirationEditor({ initialQuery, initialNames, starters = [], children }: { initialQuery: string; initialNames: Record<string, Named>; starters?: Starter[]; children?: React.ReactNode }) {
   const router = useRouter();
   /*
     The board is read from the address the browser shows, not only from what the server was asked:
@@ -112,7 +113,14 @@ export default function InspirationEditor({ initialQuery, initialNames, children
     load both are the same address, so the server's page and the browser's agree.
   */
   // Only while the browser is already at the editor: a link that leads here is still at the page it left when this runs.
-  const [board, setBoard] = useState<Board>(() => parseBoard(new URLSearchParams(typeof window !== 'undefined' && window.location.pathname === EDITOR ? window.location.search : initialQuery)));
+  const [board, setBoard] = useState<Board>(() => {
+    const read = parseBoard(new URLSearchParams(typeof window !== 'undefined' && window.location.pathname === EDITOR ? window.location.search : initialQuery));
+    // An empty board of nine starts with the server's three examples (`lib/inspiration/starters.ts`); they then live in the address like any book.
+    if (filledCount(read) > 0 || sizeOf(read) !== 9) return read;
+    return starters.reduce((b, s) => place(b, s.index, { workId: s.book.id, coverId: s.book.coverId }), read);
+  });
+  const starterAt = (i: number) => starters.find((s) => s.index === i);
+  const examples = board.slots.filter((slot, i) => isStarter(slot, starterAt(i))).length;
   // What the reader types, kept apart from the cleaned name: cleaning trims, and a trimmed field cannot take a space.
   const [nameDraft, setNameDraft] = useState(() => board.by);
   const [subDraft, setSubDraft] = useState(() => board.sub);
@@ -406,6 +414,12 @@ export default function InspirationEditor({ initialQuery, initialNames, children
                 'Tap or click a + to add your first book.'
               ) : (
                 <>
+                  {/*
+                    The examples say what they are (Julian, 2026-10-06: „so people get the idea what to do with
+                    the shelfportrait and have some incentive to interact"): a board that already holds three
+                    covers shows the idea, and the sentence says they are not the reader's yet.
+                  */}
+                  {examples > 0 && <span className="mb-1 block text-ink">{examples === 1 ? 'One example is still on your board' : `${examples === 3 ? 'Three' : 'Two'} examples to start you off`} — keep {examples === 1 ? 'it' : 'them'}, change the cover, or take {examples === 1 ? 'it' : 'them'} out with ✕.</span>}
                   <span className="sm:hidden">Tap a cover to change it for your favourite. Drag ⠿ to move it.</span>
                   <span className="hidden sm:inline">Click a cover to change it for your favourite. Drag a cover to move it.</span>
                 </>
@@ -450,6 +464,9 @@ export default function InspirationEditor({ initialQuery, initialNames, children
                       {...handlers}
                     >
                       {src && <CoverImage src={src} alt={names[slot.workId]?.title ?? ''} sizes="(max-width: 640px) 33vw, 190px" />}
+                      {isStarter(slot, starterAt(i)) && (
+                        <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-[3px] bg-ink/85 px-1.5 py-0.5 text-[11px] leading-4 text-bg">Example</span>
+                      )}
                     </button>
                     {/* On a phone only the grip and ✕: four buttons do not fit under a 109 px cover. The arrows stay for a wide screen and the keyboard. */}
                     <span className="mt-1.5 flex items-center justify-around sm:justify-between">

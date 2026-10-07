@@ -6,7 +6,9 @@ import InspirationFaq from '@/components/InspirationFaq';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { boardFromSearch } from '@/app/shelfportrait/shared';
-import { boardQuery } from '@/lib/inspiration/board';
+import { boardQuery, filledCount, sizeOf } from '@/lib/inspiration/board';
+import { drawStarters } from '@/lib/inspiration/starters';
+import { starterPool } from '@/lib/inspiration/starterpool';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
@@ -42,11 +44,14 @@ export default async function InspirationPage({ searchParams, locale = DEFAULT_L
   const board = await boardFromSearch(searchParams);
   const names: Record<string, Named> = {};
   for (const b of (await describeBoard(board)).books) if (b?.title) names[b.workId] = { title: b.title, author: b.author };
+  // Three examples on an empty board of nine (5.18b, 2026-10-06), drawn anew for every empty visit.
+  const starters = filledCount(board) === 0 && sizeOf(board) === 9 ? drawStarters(await starterPool(), Math.random) : [];
+  for (const s of starters) names[s.book.id] = { title: s.book.title, author: s.book.author };
   return (
     // Room at the bottom on a phone: the editor's band is fixed there and would cover the footer.
     <div className="flex min-h-screen flex-col pb-14 sm:pb-0">
       <SiteHeader search={<HeaderSearch />} />
-      <InspirationEditor initialQuery={boardQuery(board)} initialNames={names}>
+      <InspirationEditor initialQuery={boardQuery(board)} initialNames={names} starters={starters}>
         <InspirationFaq />
       </InspirationEditor>
       <SiteFooter />
