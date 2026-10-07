@@ -1,6 +1,6 @@
 {
  "name": "mix-2000-paperwhite-collections",
- "builtAt": "2026-10-02",
+ "builtAt": "2026-10-06",
  "indexBuiltAt": "2026-09-26",
  "inherits": [
   "mix-200-paperwhite",
@@ -30123,10 +30123,580 @@
    "workId": "OL15032975W",
    "title": "Tessin. Betrachtungen, Gedichte und Aquarelle des Autors.",
    "author": "Hermann Hesse"
+  },
+  {
+   "id": "ol:15260256",
+   "workId": "OL24206044W",
+   "title": "David",
+   "author": "Max Bolliger"
+  },
+  {
+   "id": "ol:10641717",
+   "workId": "OL24201880W",
+   "title": "Das große Lager",
+   "author": "Hans-Georg Noack"
+  },
+  {
+   "id": "ol:15260257",
+   "workId": "OL37359302W",
+   "title": "Vorstoß zum Pazifik",
+   "author": "Hans Baumann"
+  },
+  {
+   "id": "ol:15260258",
+   "workId": "OL4366494W",
+   "title": "Joseph",
+   "author": "Max Bolliger"
+  },
+  {
+   "id": "ol:15260259",
+   "workId": "OL4628121W",
+   "title": "Das silberne Messer",
+   "author": "Ian Serraillier"
+  },
+  {
+   "id": "ol:15260260",
+   "workId": "OL6324153W",
+   "title": "Der wilde Sam",
+   "author": "Fred Gipson"
+  },
+  {
+   "id": "ol:15260261",
+   "workId": "OL6505353W",
+   "title": "Weißer Sohn des kleinen Königs",
+   "author": "Alberto Manzi"
+  },
+  {
+   "id": "ol:15260263",
+   "workId": "OL4366457W",
+   "title": "Daniel",
+   "author": "Max Bolliger"
+  },
+  {
+   "id": "ol:15260262",
+   "workId": "OL7998036W",
+   "title": "Der pfiffige Pirat Jacko",
+   "author": "Peter Dawlish"
+  },
+  {
+   "id": "ol:15260265",
+   "workId": "OL4366464W",
+   "title": "Mose",
+   "author": "Max Bolliger"
+  },
+  {
+   "id": "ol:15260266",
+   "workId": "OL29229809W",
+   "title": "Das Marsungeheuer",
+   "author": "Hanna Bautze"
+  },
+  {
+   "id": "ol:15260264",
+   "workId": "OL1442249W",
+   "title": "Affengeplapper",
+   "author": "Hans Baumann"
+  },
+  {
+   "id": "ol:15260267",
+   "workId": "OL29258064W",
+   "title": "Der irre Müllschlucker",
+   "author": "Hanna Bautze"
+  },
+  {
+   "id": "ol:15260268",
+   "workId": "OL33874408W",
+   "title": "Frei wie die Sonne",
+   "author": "Federica de Cesco"
+  },
+  {
+   "id": "ol:15260269",
+   "workId": "OL46030911W",
+   "title": "Krokodilslieder",
+   "author": "Richard Bletschacher"
+  },
+  {
+   "id": "ol:15260270",
+   "workId": "OL46030910W",
+   "title": "Geschichten aus 1001 Nacht",
+   "author": "Barbara Gehrts"
+  },
+  {
+   "id": "ol:15260271",
+   "workId": "OL41495W",
+   "title": "Spiralnebel 101",
+   "author": "Madeleine L'Engle"
+  },
+  {
+   "id": "ol:15260273",
+   "workId": "OL45809W",
+   "title": "James und der Riesenpfirsich",
+   "author": "Roald Dahl"
+  },
+  {
+   "id": "ol:15260274",
+   "workId": "OL46030914W",
+   "title": "Erben auf schottisch",
+   "author": "Wolfgang Ecke"
+  },
+  {
+   "id": "ol:15260272",
+   "workId": "OL46030913W",
+   "title": "Spaghetti, Spaghetti!",
+   "author": "Barbara Schwindt"
+  },
+  {
+   "id": "ol:15260275",
+   "workId": "OL46030912W",
+   "title": "Die vergessene Stadt",
+   "author": "Hanna Bautze"
+  },
+  {
+   "id": "ol:15260276",
+   "workId": "OL46030916W",
+   "title": "Weltreise mit Korilu",
+   "author": "Thea Beckman"
+  },
+  {
+   "id": "ol:15260277",
+   "workId": "OL46030915W",
+   "title": "Kichergeschichten",
+   "author": "Wolfgang Ecke"
+  },
+  {
+   "id": "ol:15260278",
+   "workId": "OL20134538W",
+   "title": "Das Zeitgericht",
+   "author": ""
+  },
+  {
+   "id": "ol:15260279",
+   "workId": "OL46030917W",
+   "title": "Spiel nach innen",
+   "author": "Helen Stark-Towlson"
+  },
+  {
+   "id": "ol:15260280",
+   "workId": "OL10508370W",
+   "title": "Dominik Dachs und die Katzenpiraten",
+   "author": "'BB'"
+  },
+  {
+   "id": "ol:15260282",
+   "workId": "OL10508340W",
+   "title": "Dominik Dachs und der Schnüffelhannes",
+   "author": "'BB'"
+  },
+  {
+   "id": "ol:15260281",
+   "workId": "OL10508361W",
+   "title": "Dominik Dachs und der verborgene Schatz",
+   "author": "'BB'"
+  },
+  {
+   "id": "ol:15260283",
+   "workId": "OL19388135W",
+   "title": "Dominik Dachs und der Schwarze Napoleon",
+   "author": "'BB'"
+  },
+  {
+   "id": "ol:15260284",
+   "workId": "OL265988W",
+   "title": "Die Wächter",
+   "author": "Sam Youd"
+  },
+  {
+   "id": "ol:15260285",
+   "workId": "OL15406011W",
+   "title": "Die Schweizer Familie Robinson",
+   "author": "Johann David Wyss"
+  },
+  {
+   "id": "ol:15260286",
+   "workId": "OL46030919W",
+   "title": "Wind für Dolly McMolly",
+   "author": "Sigrid Heuck"
+  },
+  {
+   "id": "ol:15161444",
+   "workId": "OL987076W",
+   "title": "Es geht uns gut",
+   "author": "Arno Geiger"
+  },
+  {
+   "id": "ol:9405590",
+   "workId": "OL874786W",
+   "title": "Die Habenichtse",
+   "author": "Katharina Hacker"
+  },
+  {
+   "id": "ol:12518398",
+   "workId": "OL18451123W",
+   "title": "Die Mittagsfrau",
+   "author": "Julia Franck"
+  },
+  {
+   "id": "ol:10564150",
+   "workId": "OL5878982W",
+   "title": "Der Turm",
+   "author": "Uwe Tellkamp"
+  },
+  {
+   "id": "ol:6595990",
+   "workId": "OL15380380W",
+   "title": "Tauben fliegen auf",
+   "author": "Melinda Nadj Abonji"
+  },
+  {
+   "id": "ol:11018444",
+   "workId": "OL16102584W",
+   "title": "In Zeiten des abnehmenden Lichts",
+   "author": "Eugen Ruge"
+  },
+  {
+   "id": "ol:14352365",
+   "workId": "OL19964043W",
+   "title": "Landgericht",
+   "author": "Ursula Krechel"
+  },
+  {
+   "id": "ol:7263051",
+   "workId": "OL16807601W",
+   "title": "Das Ungeheuer",
+   "author": "Terézia Mora"
+  },
+  {
+   "id": "ol:12247535",
+   "workId": "OL20002331W",
+   "title": "Kruso",
+   "author": "Lutz Seiler"
+  },
+  {
+   "id": "ol:8890966",
+   "workId": "OL20236728W",
+   "title": "Die Erfindung der Roten Armee Fraktion durch einen manisch-depressiven Teenager im Sommer 1969",
+   "author": "Frank Witzel"
+  },
+  {
+   "id": "ol:14824913",
+   "workId": "OL20051117W",
+   "title": "Widerfahrnis",
+   "author": "Bodo Kirchhoff"
+  },
+  {
+   "id": "ol:14458588",
+   "workId": "OL19731462W",
+   "title": "Die Hauptstadt",
+   "author": "Robert Menasse"
+  },
+  {
+   "id": "ol:15172770",
+   "workId": "OL20865503W",
+   "title": "Archipel",
+   "author": "Inger-Maria Mahlke"
+  },
+  {
+   "id": "ol:12232728",
+   "workId": "OL26233063W",
+   "title": "Herkunft",
+   "author": "Saša Stanišić"
+  },
+  {
+   "id": "ol:13010601",
+   "workId": "OL26426282W",
+   "title": "Blaue Frau",
+   "author": "Antje Rávic Strubel"
+  },
+  {
+   "id": "ol:12954804",
+   "workId": "OL29182033W",
+   "title": "Blutbuch",
+   "author": "Kim de l'Horizon"
+  },
+  {
+   "id": "ol:13871652",
+   "workId": "OL34961727W",
+   "title": "Echtzeitalter",
+   "author": "Tonio Schachinger"
+  },
+  {
+   "id": "ol:14824941",
+   "workId": "OL41942475W",
+   "title": "Hey guten Morgen, wie geht es dir?",
+   "author": "Martina Hefter"
+  },
+  {
+   "id": "ol:15159118",
+   "workId": "OL44713807W",
+   "title": "Die Holländerinnen",
+   "author": "Dorothee Elmiger"
+  },
+  {
+   "id": "ol:6291052",
+   "workId": "OL56834W",
+   "title": "Babel-17",
+   "author": "Samuel R. Delany"
+  },
+  {
+   "id": "ol:12387587",
+   "workId": "OL515754W",
+   "title": "Flowers for Algernon",
+   "author": "Daniel Keyes"
+  },
+  {
+   "id": "ol:5540956",
+   "workId": "OL56829W",
+   "title": "The Einstein Intersection",
+   "author": "Samuel R. Delany"
+  },
+  {
+   "id": "ol:10190353",
+   "workId": "OL4798474W",
+   "title": "Rite of Passage",
+   "author": "Alexei Panshin"
+  },
+  {
+   "id": "ol:14920821",
+   "workId": "OL59800W",
+   "title": "The Left Hand of Darkness",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:8515444",
+   "workId": "OL510405W",
+   "title": "Ringworld",
+   "author": "Larry Niven"
+  },
+  {
+   "id": "ol:10268213",
+   "workId": "OL1960491W",
+   "title": "A Time of Changes",
+   "author": "Robert Silverberg"
+  },
+  {
+   "id": "ol:13148642",
+   "workId": "OL46395W",
+   "title": "The Gods Themselves",
+   "author": "Isaac Asimov"
+  },
+  {
+   "id": "ol:10801406",
+   "workId": "OL17417W",
+   "title": "Rendezvous with Rama",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:12375387",
+   "workId": "OL59863W",
+   "title": "The Dispossessed",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:6905749",
+   "workId": "OL60939W",
+   "title": "Man Plus",
+   "author": "Frederik Pohl"
+  },
+  {
+   "id": "ol:7267146",
+   "workId": "OL1921526W",
+   "title": "Dreamsnake",
+   "author": "Vonda N. McIntyre"
+  },
+  {
+   "id": "ol:6656063",
+   "workId": "OL17403W",
+   "title": "The Fountains of Paradise",
+   "author": "Arthur C. Clarke"
+  },
+  {
+   "id": "ol:369277",
+   "workId": "OL108288W",
+   "title": "Timescape",
+   "author": "Gregory Benford"
+  },
+  {
+   "id": "ol:13527094",
+   "workId": "OL58710W",
+   "title": "Startide Rising",
+   "author": "David Brin"
+  },
+  {
+   "id": "ol:14538056",
+   "workId": "OL27258W",
+   "title": "Neuromancer",
+   "author": "William Gibson"
+  },
+  {
+   "id": "ol:183786",
+   "workId": "OL49488W",
+   "title": "Ender's Game",
+   "author": "Orson Scott Card"
+  },
+  {
+   "id": "ol:183878",
+   "workId": "OL49580W",
+   "title": "Speaker for the Dead",
+   "author": "Orson Scott Card"
+  },
+  {
+   "id": "ol:6604950",
+   "workId": "OL66835W",
+   "title": "The Falling Woman",
+   "author": "Pat Murphy"
+  },
+  {
+   "id": "ol:12393801",
+   "workId": "OL56895W",
+   "title": "Falling Free",
+   "author": "Lois McMaster Bujold"
+  },
+  {
+   "id": "ol:10137412",
+   "workId": "OL1847100W",
+   "title": "The Healer's War",
+   "author": "Elizabeth Ann Scarborough"
+  },
+  {
+   "id": "ol:433315",
+   "workId": "OL15056578W",
+   "title": "Tehanu",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:9412397",
+   "workId": "OL549274W",
+   "title": "Stations of the Tide",
+   "author": "Michael Swanwick"
+  },
+  {
+   "id": "ol:7265318",
+   "workId": "OL81665W",
+   "title": "Red Mars",
+   "author": "Kim Stanley Robinson"
+  },
+  {
+   "id": "ol:9607475",
+   "workId": "OL16519W",
+   "title": "Moving Mars",
+   "author": "Greg Bear"
+  },
+  {
+   "id": "ol:6568693",
+   "workId": "OL17029W",
+   "title": "The Terminal Experiment",
+   "author": "Robert J. Sawyer"
+  },
+  {
+   "id": "ol:12371989",
+   "workId": "OL1921494W",
+   "title": "The Moon and the Sun",
+   "author": "Vonda N. McIntyre"
+  },
+  {
+   "id": "ol:283616",
+   "workId": "OL271152W",
+   "title": "Forever Peace",
+   "author": "Joe Haldeman"
+  },
+  {
+   "id": "ol:209258",
+   "workId": "OL16508W",
+   "title": "Darwin's Radio",
+   "author": "Greg Bear"
+  },
+  {
+   "id": "ol:183653",
+   "workId": "OL78622W",
+   "title": "The Quantum Rose",
+   "author": "Catherine Asaro"
+  },
+  {
+   "id": "ol:8738694",
+   "workId": "OL14871719W",
+   "title": "The Speed of Dark",
+   "author": "Elizabeth Moon"
+  },
+  {
+   "id": "ol:284292",
+   "workId": "OL15105193W",
+   "title": "Seeker",
+   "author": "Jack McDevitt"
+  },
+  {
+   "id": "ol:1120521",
+   "workId": "OL15056590W",
+   "title": "Powers",
+   "author": "Ursula K. Le Guin"
+  },
+  {
+   "id": "ol:6411364",
+   "workId": "OL14914265W",
+   "title": "Blackout",
+   "author": "Connie Willis"
+  },
+  {
+   "id": "ol:8736994",
+   "workId": "OL16298967W",
+   "title": "2312",
+   "author": "Kim Stanley Robinson"
+  },
+  {
+   "id": "ol:8408974",
+   "workId": "OL17268007W",
+   "title": "Annihilation",
+   "author": "Jeff VanderMeer"
+  },
+  {
+   "id": "ol:10668649",
+   "workId": "OL17345493W",
+   "title": "Uprooted",
+   "author": "Naomi Novik"
+  },
+  {
+   "id": "ol:15142244",
+   "workId": "OL17357379W",
+   "title": "All the Birds in the Sky",
+   "author": "Charlie Jane Anders"
+  },
+  {
+   "id": "ol:8780333",
+   "workId": "OL20127946W",
+   "title": "A Song for a New Day",
+   "author": "Sarah Pinsker"
+  },
+  {
+   "id": "ol:10457293",
+   "workId": "OL22425740W",
+   "title": "A Master of Djinn",
+   "author": "P. Djèlí Clark"
+  },
+  {
+   "id": "ol:12866714",
+   "workId": "OL26443093W",
+   "title": "Babel",
+   "author": "R. F. Kuang"
+  },
+  {
+   "id": "ol:14369806",
+   "workId": "OL28899652W",
+   "title": "The Saint of Bright Doors",
+   "author": "Vajra Chandrasekera"
+  },
+  {
+   "id": "ol:15137458",
+   "workId": "OL37581492W",
+   "title": "Someone You Can Build a Nest In",
+   "author": "John Wiswell"
+  },
+  {
+   "id": "ol:15234922",
+   "workId": "OL45341636W",
+   "title": "The Buffalo Hunter Hunter",
+   "author": "Stephen Jones"
   }
  ],
  "collections": {
-  "addedAt": "2026-10-02",
+  "addedAt": "2026-10-06",
   "from": [
    "feminist-press",
    "sf-masterworks",
@@ -30169,7 +30739,10 @@
    "decouvertes-gallimard",
    "rivages-noir",
    "zytglogge-covers-by-werner-maurer",
-   "insel-taschenbuch"
+   "insel-taschenbuch",
+   "nebula-award-best-novel",
+   "ravensburger-covers-by-grieder-and-schindler",
+   "deutscher-buchpreis"
   ],
   "leftOut": [
    "suhrkamp-taschenbuch-author-portraits",
@@ -33062,7 +33635,102 @@
    "ol:3205069",
    "ol:3205070",
    "ol:2206802",
-   "ol:3205078"
+   "ol:3205078",
+   "ol:15260256",
+   "ol:10641717",
+   "ol:15260257",
+   "ol:15260258",
+   "ol:15260259",
+   "ol:15260260",
+   "ol:15260261",
+   "ol:15260263",
+   "ol:15260262",
+   "ol:15260265",
+   "ol:15260266",
+   "ol:15260264",
+   "ol:15260267",
+   "ol:15260268",
+   "ol:15260269",
+   "ol:15260270",
+   "ol:15260271",
+   "ol:15260273",
+   "ol:15260274",
+   "ol:15260272",
+   "ol:15260275",
+   "ol:15260276",
+   "ol:15260277",
+   "ol:15260278",
+   "ol:15260279",
+   "ol:15260280",
+   "ol:15260282",
+   "ol:15260281",
+   "ol:15260283",
+   "ol:15260284",
+   "ol:15260285",
+   "ol:15260286",
+   "ol:15161444",
+   "ol:9405590",
+   "ol:12518398",
+   "ol:10564150",
+   "ol:6595990",
+   "ol:11018444",
+   "ol:14352365",
+   "ol:7263051",
+   "ol:12247535",
+   "ol:8890966",
+   "ol:14824913",
+   "ol:14458588",
+   "ol:15172770",
+   "ol:12232728",
+   "ol:13010601",
+   "ol:12954804",
+   "ol:13871652",
+   "ol:14824941",
+   "ol:15159118",
+   "ol:6291052",
+   "ol:12387587",
+   "ol:5540956",
+   "ol:10190353",
+   "ol:14920821",
+   "ol:8515444",
+   "ol:10268213",
+   "ol:13148642",
+   "ol:10801406",
+   "ol:12375387",
+   "ol:6905749",
+   "ol:7267146",
+   "ol:6656063",
+   "ol:369277",
+   "ol:13527094",
+   "ol:14538056",
+   "ol:183786",
+   "ol:183878",
+   "ol:6604950",
+   "ol:12393801",
+   "ol:10137412",
+   "ol:433315",
+   "ol:9412397",
+   "ol:7265318",
+   "ol:9607475",
+   "ol:6568693",
+   "ol:12371989",
+   "ol:283616",
+   "ol:209258",
+   "ol:183653",
+   "ol:8738694",
+   "ol:284292",
+   "ol:1120521",
+   "ol:6411364",
+   "ol:8736994",
+   "ol:8408974",
+   "ol:10668649",
+   "ol:15142244",
+   "ol:8780333",
+   "ol:10457293",
+   "ol:12866714",
+   "ol:14369806",
+   "ol:15137458",
+   "ol:15234922"
   ]
  }
 }
