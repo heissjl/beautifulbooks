@@ -257,6 +257,53 @@ export function buyLinksFor(edition: Pick<Edition, 'isbn13'>, market: Market = D
 }
 
 /**
+ * Which shops' links earn right now, per market — the one thing about a shop
+ * link the browser cannot know, because the tags are server variables. A
+ * work page carries it, so a market switch rebuilds the links in the browser
+ * (`buyLinksIn`, `titleSearchLinksIn`) instead of loading every page of the
+ * wall again (Julian, 2026-10-06: „wenn man den markt in der detailansicht
+ * eines covers umstellt, wird die ganze seite neugeladen. sollten nicht nur
+ * die händlerlinks neugeladen werden?"). Names only, never a tag.
+ */
+export type Earning = Record<Market, string[]>;
+
+export function earningNow(env: Env = process.env): Earning {
+  const commerce = commerceEnabled(env.NEXT_PUBLIC_SITE_MODE);
+  const out = {} as Earning;
+  for (const market of Object.keys(RETAILERS) as Market[]) {
+    out[market] = commerce ? RETAILERS[market].filter(r => r.affiliateEnv && env[r.affiliateEnv]).map(r => r.id) : [];
+  }
+  return out;
+}
+
+/**
+ * `buyLinksFor` as the browser can build it: the same shops, labels, kinds
+ * and commission flags, with the shop address untagged. Nothing on the page
+ * opens that address — a buy link is followed through `/go/`, which rebuilds
+ * the target with its tag on the server (`trackedBuyHref`).
+ */
+export function buyLinksIn(edition: Pick<Edition, 'isbn13'>, market: Market, earning: readonly string[]): BuyLink[] {
+  if (!edition.isbn13) return [];
+  const isbn13 = edition.isbn13;
+  return RETAILERS[market].map(r => {
+    const earns = earning.includes(r.id);
+    // A kind asks only whether there is a tag, never what it is.
+    return { provider: r.id, label: r.label, url: r.url(isbn13, undefined), kind: r.kind ? r.kind(isbn13, earns ? 'tagged' : undefined) : 'search', ...(earns ? { affiliate: true } : {}) };
+  });
+}
+
+/** `titleSearchLinksFor` as the browser can build it; followed through `/go/` as well (`trackedSearchHref`). */
+export function titleSearchLinksIn(terms: { title: string; author?: string }, market: Market, earning: readonly string[]): BuyLink[] {
+  const query = [terms.title, terms.author].filter(Boolean).join(' ');
+  if (!query.trim()) return [];
+  return RETAILERS[market].flatMap(r => {
+    if (!r.searchUrl) return [];
+    const earns = earning.includes(r.id);
+    return [{ provider: `${r.id}-title`, label: r.label, url: r.searchUrl(query, undefined), kind: 'search' as const, ...(earns ? { affiliate: true } : {}) }];
+  });
+}
+
+/**
  * The sentence under the shop links in shop mode (ROADMAP 4.11, prepared for
  * the day E20 switches to `shop`).
  *

@@ -1109,3 +1109,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.92 Knöpfe auf dem Telefon besser treffbar; „See all“ wieder neben „Collections“.** Julian, 2026-10-06: „ich habe probleme manche buttons auf dem handy zu drücken. irgendwie reagieren die nciht sauber“ und „bei den collections auf der startseite sollte das "see all" doch wieder zurück“. Ohne Angabe, welche Knöpfe; gemessen wurde auf sechs Seitentypen bei 375 px, ob ein Knopf verdeckt ist (nein) und wie groß er ist (viele 20–30 px). Abhilfe: unsichtbare Tippfläche auf Touch-Geräten, mehr Polsterung beim wichtigsten Knopf des Shelf-Portraits. „See all“ steht wieder rechts neben der Überschrift, ohne Pfeil.
 
 **Erledigt 2026-10-06.** → [Historie](history.md)
+
+## 6.93
+
+**6.93 Ein Marktwechsel auf der Buchseite lädt nur die Händlerlinks neu.** Julian, 2026-10-06: „wenn man den markt in der detailansicht eines covers umstellt, wird die ganze seite neugeladen. sollten nicht nur die händlerlinks neugeladen werden?“ Die Händlerlinks werden jetzt im Browser neu gebaut; Wand, Ladeszene und ISBN-Abfragen bleiben stehen.
+
+**Erledigt 2026-10-06.** → [Historie](history.md)

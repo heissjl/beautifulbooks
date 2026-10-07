@@ -103,7 +103,7 @@ Regeln:
 
 ### 2.4 Kauf-Links und Markt (Entscheidung E9)
 
-Links werden **nicht gespeichert**, sondern zur Anzeige aus der ISBN generiert (`lib/buylinks.ts`). Ein Nutzer hat einen **Markt**: `us` (Default), `uk`, `de`. Erkennung (`lib/market.ts`): `?market=` oder Cookie, dann `x-vercel-ip-country`, dann `Accept-Language`, sonst US; Umschalter in der Seitenleiste, Wahl in Cookie und localStorage. Die Sprache der Oberfläche ist davon unabhängig (§2.6, E23): ein deutscher Markt macht die Seite nicht deutsch.
+Links werden **nicht gespeichert**, sondern zur Anzeige aus der ISBN generiert (`lib/buylinks.ts`). Ein Nutzer hat einen **Markt**: `us` (Default), `uk`, `de`. Erkennung (`lib/market.ts`): `?market=` oder Cookie, dann `x-vercel-ip-country`, dann `Accept-Language`, sonst US; Umschalter in der Seitenleiste, Wahl in Cookie und localStorage. Die Sprache der Oberfläche ist davon unabhängig (§2.6, E23): ein deutscher Markt macht die Seite nicht deutsch. **Ein Marktwechsel lädt nichts nach** (seit 2026-10-06, ROADMAP 6.93; Julian: „wenn man den markt in der detailansicht eines covers umstellt, wird die ganze seite neugeladen. sollten nicht nur die händlerlinks neugeladen werden?“): die Seite eines Werks bringt mit `earning` mit, welche Läden je Markt gerade verdienen (Namen, nie Tags), und der Browser baut bei einem Wechsel die Händlerlinks aller Ausgaben neu (`buyLinksIn`, `titleSearchLinksIn`); geklickt wird weiter über `/go/`, das die Adresse mit Tag auf dem Server baut. Wand, Ladeszene und ISBN-Abfragen hängen nicht mehr am Markt.
 
 | Markt | Händler (Reihenfolge) | Amazon |
 |---|---|---|

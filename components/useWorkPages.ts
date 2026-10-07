@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { WorkPageResponse } from '@/app/api/works/[id]/route';
 import type { Market } from '@/lib/market';
 import type { BuyLink, EditionView, Work } from '@/lib/model';
+import type { Earning } from '@/lib/buylinks';
 import { mergeWorkPages, type MergedWork, type Truncation, type WorkPageData } from '@/lib/pages';
 
 /** Wait before retrying a page that failed once. */
@@ -24,6 +25,8 @@ export interface WorkPagesState {
   market?: Market;
   /** The market's own shops searched by the work's title (ROADMAP 1.11). */
   anyEditionLinks: BuyLink[];
+  /** Which shops earn per market (`earningNow`), for links rebuilt in the browser; absent in a page cached before 2026-10-06. */
+  earning?: Earning;
   merged: MergedWork<EditionView> | null;
   /** Covers of page 0, for the loading scene. */
   firstCovers: WorkPageData['covers'] | null;
@@ -107,8 +110,12 @@ function remember(key: string, p: Progress) {
  * parallel edition requests any faster, and sequential requests fill the
  * shared response cache page by page for the next visitor.
  */
-export function useWorkPages(workId: string, lang: string, market: Market | undefined): WorkPagesState {
-  const requestKey = `${workId} ${lang} ${market ?? ''}`;
+/*
+ * No market: the server reads the reader's choice from its cookie, and a later switch is answered in the
+ * browser from `earning` (2026-10-06) — a market in this key reloaded every page of the wall.
+ */
+export function useWorkPages(workId: string, lang: string): WorkPagesState {
+  const requestKey = `${workId} ${lang}`;
   const [progress, setProgress] = useState<Progress | null>(null);
   /*
     Bumped by „Try again" (ROADMAP 6.75). A failed walk is never remembered in
@@ -131,7 +138,6 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       if (offset > 0) params.set('offset', String(offset));
       if (signatures) params.set('signatures', '1');
       if (sibling) params.set('sibling', '1');
-      if (market) params.set('market', market);
       const qs = params.toString();
       return qs ? `${base}?${qs}` : base;
     };
@@ -275,7 +281,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
     })();
 
     return () => controller.abort();
-  }, [requestKey, workId, market, attempt]);
+  }, [requestKey, workId, attempt]);
 
   return useMemo<WorkPagesState>(() => {
     /*
@@ -301,6 +307,7 @@ export function useWorkPages(workId: string, lang: string, market: Market | unde
       work,
       market: known.market,
       anyEditionLinks: known.pages[0]?.anyEditionLinks ?? [],
+      earning: known.pages[0]?.earning,
       merged: mergeWorkPages(pages, { done: known.done, truncated: known.truncated }),
       firstCovers: known.pages[0]?.covers ?? null,
       page0Hashed: known.page0Hashed,
