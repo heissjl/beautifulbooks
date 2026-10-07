@@ -437,12 +437,27 @@ export function poolBooks(pool: VersusPool = POOL): PoolBook[] {
 }
 
 /**
+ * A title written in the Latin alphabet — every letter of it, diacritics and
+ * punctuation included. The list under the game is read by people who are
+ * going to click a title (ROADMAP 6.99; Julian, 2026-10-06: „lass nur welche
+ * mit titel im romanischen alphabet rein"), and `雪国` or a Cyrillic title says
+ * nothing to a reader who cannot read it. The book stays in the game; only
+ * this list leaves it out, and the count beside it still names the whole pool.
+ */
+export function latinTitle(title: string): boolean {
+  // Digits and punctuation belong to no script: „1984" is readable here, „雪国" is not.
+  for (const ch of title) if (/\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch)) return false;
+  return title.trim().length > 0;
+}
+
+/**
  * `count` books spread evenly over that list rather than the first `count`:
  * naming twenty books from the front of the alphabet would read as a corner
- * of the pool, and the spread is stable because the pool is.
+ * of the pool, and the spread is stable because the pool is. `latinOnly`
+ * draws from the books whose title a Latin alphabet can be read in.
  */
-export function someBooks(count: number, pool: VersusPool = POOL): PoolBook[] {
-  const all = poolBooks(pool);
+export function someBooks(count: number, { pool = POOL, latinOnly = false }: { pool?: VersusPool; latinOnly?: boolean } = {}): PoolBook[] {
+  const all = latinOnly ? poolBooks(pool).filter(b => latinTitle(b.title)) : poolBooks(pool);
   if (count <= 0) return [];
   if (all.length <= count) return all;
   if (count === 1) return [all[0]];

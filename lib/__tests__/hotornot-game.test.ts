@@ -3,7 +3,7 @@ import { rng } from '../loading';
 import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
-  fixedPair, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
+  fixedPair, latinTitle, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
   readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
@@ -24,6 +24,34 @@ const pool: VersusPool = {
 };
 const secret = pairSecret(undefined);
 const now = Date.UTC(2026, 8, 11, 12);
+
+describe('the books named under the game (6.99)', () => {
+  it('reads a title as Latin when every letter of it is, diacritics and punctuation included', () => {
+    expect(latinTitle('Voyage au bout de la nuit')).toBe(true);
+    expect(latinTitle('Toulouse-Lautrec, les lumi\u00e8res de la nuit')).toBe(true);
+    expect(latinTitle('Faust I')).toBe(true);
+    expect(latinTitle('\u96ea\u56fd')).toBe(false);
+    expect(latinTitle('\u041c\u0430\u0441\u0442\u0435\u0440 \u0438 \u041c\u0430\u0440\u0433\u0430\u0440\u0438\u0442\u0430')).toBe(false);
+    // A title that mixes scripts is not one a reader of this list can read either.
+    expect(latinTitle('Kokoro \u3053\u3053\u308d')).toBe(false);
+    // Digits belong to no script, so a numeral title is readable in this list.
+    expect(latinTitle('1984')).toBe(true);
+    expect(latinTitle('   ')).toBe(false);
+  });
+
+  it('leaves the other titles out of the list without touching the pool', () => {
+    const mixed: VersusPool = {
+      ...pool,
+      covers: [
+        { id: 'ol:101', workId: 'OL101W', title: 'Angoul\u00eame', author: 'A' },
+        { id: 'ol:102', workId: 'OL102W', title: '\u96ea\u56fd', author: 'B' },
+        { id: 'ol:103', workId: 'OL103W', title: 'Mobile', author: 'C' },
+      ],
+    };
+    expect(someBooks(3, { pool: mixed, latinOnly: true }).map(b => b.title)).toEqual(['Angoul\u00eame', 'Mobile']);
+    expect(poolBooks(mixed)).toHaveLength(3);
+  });
+});
 
 describe('the pair on the card of the game (6.98)', () => {
   const day = 86_400_000;
@@ -345,10 +373,10 @@ describe('the books behind the pool (the page a crawler reads, SPEC F7.6)', () =
   });
 
   it('spreads a sample over the whole list instead of taking the front of the alphabet', () => {
-    const sample = someBooks(2, many);
+    const sample = someBooks(2, { pool: many });
     expect(sample.map(b => b.title)).toEqual(['Aeneid', 'Zeno']);
-    expect(someBooks(9, many)).toHaveLength(3);
-    expect(someBooks(0, many)).toEqual([]);
+    expect(someBooks(9, { pool: many })).toHaveLength(3);
+    expect(someBooks(0, { pool: many })).toEqual([]);
   });
 
   it('reads the real pool the page ships with', () => {
