@@ -55,14 +55,13 @@
       "kind": "feature",
       "status": "gepostet",
       "text": "The performative reader's starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.\n\nbuyitscovers.com/shelfportrait/tvujl2pk?via=bluesky",
-      "path": "/shelfportrait/tvujl2pk",
       "image": "lab/kalender/out/starterpack-sharepic.jpg (Julians Sharepic, 1080×1350)",
       "postedUrl": "https://bsky.app/profile/buyitscovers.com",
       "needs": [
         "konto:bluesky",
         "5.6a"
       ],
-      "note": "Kampagne „performative readers“. Julian, 2026-10-06: „update das starterpack bild im artefakt und poste auf bsky das bild und als link den link zur shelfportrait seite“. Bild statt Link-Karte (die Karte hatte leere Kacheln), Link im Text ohne #mine. Das Bild zeigt Julians erste Auswahl mit Murakami, Stoner und East of Eden; der Link führt auf seine endgültige Fassung tvujl2pk, dieselben neun Bücher in anderer Reihenfolge."
+      "note": "Kampagne „performative readers“. Julian, 2026-10-06: „update das starterpack bild im artefakt und poste auf bsky das bild und als link den link zur shelfportrait seite“. Bild statt Link-Karte (die Karte hatte leere Kacheln), Link im Text ohne #mine. Das Bild zeigt Julians erste Auswahl mit Murakami, Stoner und East of Eden; der Link führt auf seine endgültige Fassung tvujl2pk, dieselben neun Bücher in anderer Reihenfolge. Der Link steht im Text selbst (ein Bild-Post hat keine Link-Karte), deshalb kein path."
     },
     {
       "id": "bsky-zug2",
@@ -71,14 +70,13 @@
       "kind": "feature",
       "status": "gepostet",
       "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.\n\nbuyitscovers.com/versus?via=bluesky",
-      "path": "/versus",
       "image": "lab/kalender/out/zug2-1080x1350.jpg (The Gruffalo oder Le visage dans l’abîme)",
       "postedUrl": "https://bsky.app/profile/buyitscovers.com",
       "needs": [
         "konto:bluesky",
         "5.6a"
       ],
-      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Julian, 2026-10-06: „poste das zugwitz bild 2 auf bsky“; von Claude über Chrome gepostet, mit Label „Nudity“ (Vallejo-Akt) und Alternativtext. Damit gilt Julians Entscheidung, einzelne geschützte Cover zu posten, für diesen Post. Der Starter-Pack-Post ist zurückgehalten: die Vorschaukarte der Shelf-Portrait-Seite hatte am selben Tag vier leere Kacheln (archive.org 502), und Bluesky speichert eine Karte beim Posten."
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Julian, 2026-10-06: „poste das zugwitz bild 2 auf bsky“; von Claude über Chrome gepostet, mit Label „Nudity“ (Vallejo-Akt) und Alternativtext. Damit gilt Julians Entscheidung, einzelne geschützte Cover zu posten, für diesen Post. Der Starter-Pack-Post ist zurückgehalten: die Vorschaukarte der Shelf-Portrait-Seite hatte am selben Tag vier leere Kacheln (archive.org 502), und Bluesky speichert eine Karte beim Posten. Der Link steht im Text selbst (ein Bild-Post hat keine Link-Karte), deshalb kein path."
     },
     {
       "id": "setup-hn",
