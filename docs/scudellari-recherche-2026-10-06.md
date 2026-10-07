@@ -51,3 +51,55 @@ Belegt (Fonts In Use, Raptis Rare Books, Händlerangaben) und mit einem Bild der
 
 ## Offen, Julian entscheidet
 Welche Wand, oder beide? Für die Modern Library würde der nächste Schritt die übrigen 46 Werke prüfen. Für Knopf ist offen, ob die drei le-Carré-Umschläge ohne Beleg mit auf die Wand dürfen.
+
+## Zweite Suche: Knopf und Random House (2026-10-06)
+
+Julian: „starte die zweite suche". Fast alle Belege sind AbeBooks-Angebote, die den Kredit von der Umschlagklappe zitieren („Jacket design by R. D. Scudellari"); dazu Fonts In Use. Ein Stil allein galt nicht als Beleg. Gefragt wurden 47 Mal openlibrary.org und 29 Mal der Bildserver, eine Anfrage nach der anderen mit 1,6 s Pause, ohne Fehler. Alle Bilder wurden angesehen.
+
+**Jetzt belegt und mit Bild der Erstausgabe:**
+
+| Buch | Verlag, Jahr | Datensatz | Cover |
+|---|---|---|---|
+| *The Honourable Schoolboy* (le Carré) | Knopf 1977 | OL17727588M | 14600037 |
+| *Smiley's People* (le Carré) | Knopf 1980 | OL4401289M | 6751545 |
+| *A Perfect Spy* (le Carré) | Knopf 1986 | OL2551868M | 6616089 |
+| *Jazz* (Morrison) | Knopf 1992 | OL1568554M | 9317241 |
+| *The Path to Power* (Caro) | Knopf 1982 | OL1967101M | 12869907 |
+| *Means of Ascent* (Caro) | Knopf 1990 | OL39471156M | 12869917 |
+| *Children of Light* (Robert Stone) | Knopf 1986 | OL21360534M | 9486376 (Bibliotheksaufkleber) |
+| *Brotherly Love* (Pete Dexter) | Random House 1991 | OL1567219M | 12915140 (Preisaufkleber) |
+| *The Powers That Be* (Halberstam) | Knopf 1979 | OL4732009M | 7350106 |
+| *Stories in an Almost Classical Mode* (Brodkey) | Knopf 1988 | OL2062014M | 5416267 (nur 128 px; 6724115 ungesehen) |
+| *Falconer* (Cheever) | Knopf 1977 | OL20071825M | 8261183 (Foto des Umschlags, leicht schräg) |
+
+Damit sind alle drei le-Carré-Umschläge, die bisher keinen Beleg hatten, belegt.
+
+**Belegt, aber ohne brauchbares Bild bei Open Library:** Bei Open Library liegt hier nur eine Titelseite, ein Einband oder ein späteres Cover.
+- *The Naive and Sentimental Lover* (1971)
+- *The World of Apples* (1973)
+- *Oh What a Paradise It Seems* (1982)
+- *A Flag for Sunrise* (1981)
+- *Myron* (Vidal 1974)
+- *Pitch Dark* (Adler 1983)
+- *The Company of Women* (Gordon 1980)
+- *One to Count Cadence* (Crumley 1969)
+- *The Stars at Noon*
+- *Music for Chameleons*
+- *Woman on the Edge of Time*
+
+**Belegt, bei Open Library nicht geprüft:**
+- *Washington Goes to War* (Brinkley 1988)
+- *The Final Club* (Wolff 1990)
+- *Legacies* (Lord 1990)
+- *Beyond Freedom and Dignity* (Skinner 1971)
+- *Levkas Man* (Innes 1971)
+- *Burnt Toast* (Gould 1971)
+- *Sinatra* (Rockwell 1984)
+- einige Sachbücher
+
+**Ohne Beleg gefunden:**
+- *The Power Broker*. Ein Angebot nennt ihn aber für *Master of the Senate* (2002), die Johnson-Bände behielten also sein Design.
+- Anne Rice außer *Interview*.
+- Styron, Updike, Michener, Tyler.
+
+**Stand:** **20 Werke mit Beleg und Bild**, dazu *The Russia House* mit schwachem Beleg (nur eine Händlerangabe aus der Suche): **21**. Der Agent kam auf 22 oder 23, hatte sich dabei aber verzählt. Seine Liste der neuen Werke hat 11 Einträge, nicht 12. Übersichtsbild: `docs/tests/2026-10-06-scudellari-knopf-2.jpg` (git-ignoriert).
