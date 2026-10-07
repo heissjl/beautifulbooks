@@ -198,6 +198,29 @@ export function applyOp(draft: Draft, raw: Record<string, unknown>, now = new Da
   }
 }
 
+/**
+ * Whether a draft holds exactly what a collection on the site holds: title,
+ * paragraph, list, and the same covers in the same order.
+ */
+export function sameContent(d: Draft, r: CollectionRecord): boolean {
+  const list = (x: CollectionRecord) => JSON.stringify(x.kind === 'series' ? x.publishers ?? [] : (x.authors ?? []).map(a => [a.name, a.keys]));
+  const works = (x: CollectionRecord) => x.works.map(w => `${w.id}:${w.coverId}`).join();
+  return d.slug === r.slug && d.title === r.title && d.intro === r.intro && d.kind === r.kind && list(d) === list(r) && works(d) === works(r);
+}
+
+/**
+ * The draft to open when someone edits a collection from the list
+ * (Julian, 2026-10-05: „so i can easily change collections from the newest
+ * version"): the most recently changed draft that still holds the site's
+ * version, so a second click does not pile up copies — or none, and a new
+ * one is copied from the site.
+ */
+export function draftToContinue(drafts: Draft[], live: CollectionRecord): Draft | null {
+  return drafts
+    .filter(d => !d.deleted && sameContent(d, live))
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;
+}
+
 /** A draft as Julian's tool writes it into `data/collections.json`: the collection fields only. */
 export function toRecord(d: Draft): CollectionRecord {
   return {

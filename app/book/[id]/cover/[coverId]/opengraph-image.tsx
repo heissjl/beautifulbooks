@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import { SITE_NAME, authorLine } from '@/lib/seo';
-import { asJpeg, Display, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
+import { asJpeg, Display, loadCovers, OG, TEXT, Wordmark, ogFonts } from '@/app/og';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { measure } from '@/app/api/measure';
 
@@ -28,7 +28,18 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
   measure('og');
   const { id, coverId } = await params;
   const cover = coverIdFromSegment(coverId);
-  const url = cover && !isHiddenCover(cover) ? coverUrlFor(cover, 'L') : null;
+  const shown = cover && !isHiddenCover(cover) ? cover : null;
+  /*
+    Fetched here, large and then medium, rather than handed to the generator as
+    an address: when archive.org failed for the large image the whole card
+    failed with it (Julian, 2026-10-06: „wir brauchen einen fallback auf die
+    kleinen versionen"). Without either the card shows the words alone.
+  */
+  const url = shown
+    ? (await loadCovers([coverUrlFor(shown, 'L') ?? ''], 1, 8000))[0]
+      ?? (await loadCovers([coverUrlFor(shown, 'M') ?? ''], 1, 6000))[0]
+      ?? null
+    : null;
 
   let title: string = SITE_NAME;
   let author = '';

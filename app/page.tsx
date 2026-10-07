@@ -128,7 +128,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                   <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
                     <Link
                       href="/versus"
-                      className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                      className="hit inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                     >
                       {t('Help us find the prettiest cover of all time!')}
                     </Link>
@@ -137,7 +137,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                     {inspirationEnabled() && (
                       <Link
                         href="/shelfportrait"
-                        className="inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                        className="hit inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
                       >
                         {t('Take your Shelf-Portrait: the books that inspire you')}
                       </Link>

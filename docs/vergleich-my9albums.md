@@ -1,5 +1,7 @@
 # Vergleich mit my9albums.org (2026-10-04)
 
+> **Korrektur 2026-10-05:** das Original ist **my9albums.com** (nays, @nays1_, Start 28.09.2026); `my9albums.org` ist ein Nachbau. Wie die Seite viral ging, woher das Format kommt (Japan, 2016) und dass es für Bücher schon Ableger gibt: [my9albums-viral-recherche.md](my9albums-viral-recherche.md).
+
 Julian, 2026-10-04: „check what we can learn from this website that went viral just now". Die Seite selbst, X und der Blogbeitrag über sie waren aus der Sitzung nicht erreichbar (Egress-Proxy); alles über my9albums stammt aus Suchtreffern, der Selbstbeschreibung der Seite und dem Startbeitrag ihres Autors (@nays1_ auf X). **Was dort nicht steht, ist nicht geprüft** — vor allem das Format des Bildes und ob es die Adresse der Seite trägt.
 
 ## Was my9albums ist

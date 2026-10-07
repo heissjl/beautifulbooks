@@ -176,6 +176,32 @@
   .kicker {
     @apply text-sm text-ink-2;
   }
+  /*
+    A finger needs more than the eye (Julian, 2026-10-06: „ich habe probleme
+    manche buttons auf dem handy zu drücken"). Measured at 375 px: no control
+    was covered by another, but tabs, toggles and small links stood 20–30 px
+    tall, and a fingertip that lands just beside one presses nothing. On a
+    touch screen these take taps from a few pixels around them, with an
+    invisible layer; nothing changes for the eye or for a mouse. Four pixels
+    each way, half the 8 px gap the rows of tabs leave: at six, the language
+    tabs on a book page took each other's taps where a row wrapped.
+  */
+  @media (pointer: coarse) {
+    .chip,
+    .hit {
+      position: relative;
+    }
+    .chip::after,
+    .hit::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+    }
+    /* Measured from inside the border: a chip's 1 px border would leave 3 px. */
+    .chip::after {
+      inset: -5px;
+    }
+  }
 }
 
 @layer components {

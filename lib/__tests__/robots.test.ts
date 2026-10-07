@@ -63,6 +63,8 @@ describe('what crawlers may fetch (ROADMAP 2.18n)', () => {
       expect(mayFetch(rules, agent, card)).toBe(true);
     }
     expect(mayFetch(rules, 'ClaudeBot', card)).toBe(false);
+    // Where the shared page now points: outside /api/, open under `Allow: /`.
+    expect(mayFetch(rules, 'Twitterbot', '/shelfportrait/card.jpg?b=2hxjo.5fq3&n=6&format=card&v=3')).toBe(true);
   });
 
   it('allows exactly the book addresses the sitemap lists', () => {

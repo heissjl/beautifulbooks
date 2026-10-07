@@ -5,11 +5,14 @@ import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import Versus from '@/components/Versus';
+import WhatIsThisSite from '@/components/WhatIsThisSite';
 import { preload } from 'react-dom';
-import { POOL, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
+import { POOL, dayNumber, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
 import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
-import { SITE_CARD, SITE_URL } from '@/lib/seo';
+import { inspirationEnabled } from '@/lib/inspiration/switch';
+import { wallsEnabled } from '@/lib/walls/switch';
+import { SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
@@ -40,18 +43,20 @@ export const metadata: Metadata = {
     title: 'Which cover would you rather look at?',
     description: 'Two covers, one click. The standings show which covers readers keep choosing.',
     url: `${SITE_URL}/versus`,
-    images: [SITE_CARD],
+    // The picture comes from `opengraph-image.tsx` beside this file (6.98): the game is two covers and a question.
   },
 };
 
-const SHOWN_BOOKS = 24;
+/** Half of what it was (Julian, 2026-10-06): a list to glance at, not to read through. */
+const SHOWN_BOOKS = 12;
 
 export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
   measure('page-versus');
   const t = translator(locale);
   if (!versusEnabled()) notFound();
   const books = poolBooks();
-  const sample = someBooks(SHOWN_BOOKS);
+  // A new set every day (Julian, 2026-10-06), the same one for everyone who comes that day.
+  const sample = someBooks(SHOWN_BOOKS, { latinOnly: true, day: dayNumber() });
   /*
     Three pairs come with the page, drawn from the frozen pool and signed here,
     without a round trip to the store (Julian, 2026-09-25: „the first load of
@@ -68,7 +73,7 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
         <Versus initialPairs={initialPairs} />
 
         <section className="mt-16 border-t border-line pt-8">
-          <h2 className="text-2xl text-ink">{t('What this is')}</h2>
+          <h2 className="text-2xl text-ink">{t('What is this game')}</h2>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-2">
             {rich(t('Two covers of two books, side by side, and one question: which one would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.'), {
               covers: <b className="text-ink tabular-nums">{POOL.covers.length}</b>,
@@ -81,6 +86,19 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
             })}
           </p>
         </section>
+
+        {/*
+          The same block the shared Shelf-Portrait carries (Julian, 2026-10-06), because the game is a
+          page people arrive on from a link without ever having seen the site: what it is, and the ways
+          on — here the Shelf-Portrait in place of the game, which is this page. The switches are read
+          on the server; a link to a page that is off would be a 404.
+        */}
+        <WhatIsThisSite
+          t={t}
+          collection={wallsEnabled()}
+          portrait={inspirationEnabled()}
+          variant="section"
+        />
 
         <section className="mt-10">
           <h2 className="text-xl text-ink">{t('Some of the books in the game')}</h2>
@@ -100,6 +118,7 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
             })}
           </p>
         </section>
+
       </main>
       <SiteFooter />
     </div>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { coversOfEditions } from '../inspiration/covers';
+import { coversOfEditions, garbled } from '../inspiration/covers';
 import type { SourceEdition } from '../model';
 
 const edition = (over: Partial<SourceEdition> & { coverIds: string[] }): SourceEdition => ({
@@ -40,6 +40,13 @@ describe('coversOfEditions', () => {
     ]);
     expect(covers.map(c => c.coverId)).toEqual(['ol:6', 'ol:4', 'ol:5']);
     expect(covers[1]).toEqual({ coverId: 'ol:4', publisher: 'Unknown Press' });
+  });
+
+  it('leaves out a publisher whose letters were lost, and keeps the year', () => {
+    expect(garbled('Do?u Bat? Yay?nlar?')).toBe(true);
+    expect(garbled('Can Yay\uFFFDnlar\u0131')).toBe(true);
+    for (const fine of ['Can Yayınları', 'Penguin Random House', 'Who? Press', 'S. Fischer']) expect(garbled(fine)).toBe(false);
+    expect(coversOfEditions([edition({ coverIds: ['ol:7'], year: 2017, publisher: 'Do?u Bat? Yay?nlar?' })])).toEqual([{ coverId: 'ol:7', year: 2017 }]);
   });
 
   it('ignores a cover that is not an Open Library image', () => {

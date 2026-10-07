@@ -33,6 +33,13 @@ export const SLOTS = 9;
 export type BoardSize = 3 | 6 | 9;
 export const SIZES: readonly BoardSize[] = [3, 6, 9];
 export const NAME_MAX = 40;
+/**
+ * A line of the reader's own under the title (Julian, 2026-10-06: „lass uns
+ * eine möglichkeit machen einen eigenen untertitel zu wählen", after
+ * 9things.me's „Make it specific": „9 sci-fi books that define me"). Sixty
+ * characters fit one line on every picture at the line's size.
+ */
+export const SUB_MAX = 60;
 
 /** "Nine" and "Six", for the sentences that count the books. */
 export const SIZE_WORD: Record<BoardSize, string> = { 3: 'Three', 6: 'Six', 9: 'Nine' };
@@ -49,6 +56,8 @@ export interface Board {
   slots: (Slot | null)[];
   /** The name the reader chose to show, possibly empty. */
   by: string;
+  /** The reader's own line under the title, possibly empty. */
+  sub: string;
 }
 
 const WORK = /^OL\d{1,10}W$/;
@@ -59,7 +68,7 @@ export const isWorkId = (s: string): boolean => WORK.test(s);
 export const isCoverId = (s: string): boolean => OL_COVER.test(s) || GB_COVER.test(s);
 
 export function emptyBoard(size: BoardSize = SLOTS): Board {
-  return { slots: Array.from({ length: size }, () => null), by: '' };
+  return { slots: Array.from({ length: size }, () => null), by: '', sub: '' };
 }
 
 export const sizeOf = (board: Board): BoardSize => (board.slots.length === 3 ? 3 : board.slots.length === 6 ? 6 : 9);
@@ -91,10 +100,10 @@ export function resize(board: Board, size: BoardSize, spare: readonly Slot[] = [
   return { board: { ...board, slots }, spare: rest };
 }
 
-/** A name as the poster can print it: one line, no control characters, at most NAME_MAX. */
-export function cleanName(raw: string): string {
+/** A name as the poster can print it: one line, no control characters, at most `max` (NAME_MAX for a name, SUB_MAX for the line under the title). */
+export function cleanName(raw: string, max: number = NAME_MAX): string {
   const one = raw.replace(/[\u0000-\u001f\u007f-\u009f]/g, ' ').replace(/\s+/g, ' ').trim();
-  return [...one].slice(0, NAME_MAX).join('').trim();
+  return [...one].slice(0, max).join('').trim();
 }
 
 /** `OL468431W` → `a1fz`; `ol:12547191` → `7gxh3`; `gb:AbC-1` → `gAbC-1`. */
@@ -130,7 +139,7 @@ export function decodeBoard(b: string, size: BoardSize = SLOTS): (Slot | null)[]
 export function parseBoard(params: URLSearchParams): Board {
   const n = params.get('n');
   const size: BoardSize = n === '3' ? 3 : n === '6' ? 6 : SLOTS;
-  return { slots: decodeBoard(params.get('b') ?? '', size), by: cleanName(params.get('by') ?? '') };
+  return { slots: decodeBoard(params.get('b') ?? '', size), by: cleanName(params.get('by') ?? ''), sub: cleanName(params.get('sub') ?? '', SUB_MAX) };
 }
 
 /** The query string of a board, without the leading `?`; empty for an empty board. */
@@ -141,10 +150,19 @@ export function boardQuery(board: Board): string {
   // Nine is the default and stays unsaid, so every address made before the smaller boards reads as it did.
   if (sizeOf(board) !== SLOTS) parts.push(`n=${sizeOf(board)}`);
   if (board.by) parts.push(`by=${encodeURIComponent(board.by)}`);
+  if (board.sub) parts.push(`sub=${encodeURIComponent(board.sub)}`);
   return parts.join('&');
 }
 
 export const filledCount = (board: Board): number => board.slots.filter(Boolean).length;
+
+/**
+ * Every place of the board holds a book. Only a full board is shared — the
+ * link, the story and the post (Julian, 2026-10-06, after a picture of nine
+ * places with three covers: „wie kann man sicher gehen, dass so ein bug mit
+ * nur teilweiser befüllung nie passiert", and asked: „Nur volle Bretter").
+ */
+export const isFull = (board: Board): boolean => board.slots.length > 0 && board.slots.every(Boolean);
 
 function withSlots(board: Board, slots: (Slot | null)[]): Board {
   return { ...board, slots };

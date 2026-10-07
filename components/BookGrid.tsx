@@ -328,7 +328,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
               type="button"
               aria-expanded={othersOpen}
               onClick={() => setOthersOpenFor(othersOpen ? null : key)}
-              className="kicker inline-flex items-center gap-2 transition-colors hover:text-ink"
+              className="hit kicker inline-flex items-center gap-2 transition-colors hover:text-ink"
             >
               <span aria-hidden="true" className={`inline-block text-accent transition-transform ${othersOpen ? 'rotate-90' : ''}`}>▸</span>
               {t('By other authors ({n})', { n: others.length })}

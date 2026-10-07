@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { buyLinksFor, titleSearchLinksFor } from '@/lib/buylinks';
+import { buyLinksFor, earningNow, titleSearchLinksFor, type Earning } from '@/lib/buylinks';
 import { coverImages } from '@/lib/seo';
 import { cookieValue, detectMarket, MARKET_KEY, type Market } from '@/lib/market';
 import type { BuyLink, Cover, EditionView, Work } from '@/lib/model';
@@ -37,10 +37,15 @@ export interface WorkPageResponse {
    *
    * Built here rather than in the browser for one reason: an affiliate tag
    * lives in a server-only variable, and a link that could earn must be able
-   * to (Phase 4). It follows a market switch because the client refetches
-   * with `?market=`.
+   * to (Phase 4). A market switch rebuilds it in the browser from `earning`.
    */
   anyEditionLinks: BuyLink[];
+  /**
+   * Which shops earn in each market right now — names, never tags. With it the
+   * browser rebuilds every shop link when the reader switches the market,
+   * instead of loading the wall again (2026-10-06, `buyLinksIn`).
+   */
+  earning: Earning;
   /** Page 0: other records of the same book, to be walked with `?sibling=1` (ROADMAP 6.13). */
   siblings?: SiblingWork[];
 }
@@ -154,6 +159,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       page: page.page,
       market,
       anyEditionLinks: titleSearchLinksFor({ title: displayTitle(page.work.title), author: page.work.authors[0] }, market),
+      earning: earningNow(),
       siblings: page.siblings,
     };
     return NextResponse.json(body, {

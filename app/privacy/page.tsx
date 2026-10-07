@@ -93,7 +93,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
             {rich(t('Google is certified under the EU-US Data Privacy Framework; the Internet Archive publishes its own {terms}.'), { terms: <a className={ext} href="https://archive.org/about/terms.php" target="_blank" rel="noopener noreferrer">{t('privacy terms')}</a> })}
           </p>
           <p>{t('Searches and book lookups, by contrast, are made by this site’s server on your behalf. Open Library and Google Books receive the title you searched for or the book you opened, never your IP address.')}</p>
-          <p>{t('If you start a collection from your Calibre library, the file you choose is read in your browser and never sent. For each book, its title, first author and ISBNs go to this server, which looks them up at Open Library as it does a search; they are not stored and not written to the log, which only counts how many books were asked about and found.')}</p>
+          <p>{t('If you start a collection from your Calibre library or your Goodreads export, the file you choose is read in your browser and never sent, and this site does not contact Goodreads. For each book, its title, first author and ISBNs go to this server, which looks them up at Open Library as it does a search; they are not stored and not written to the log, which only counts how many books were asked about and found.')}</p>
         </Section>
 
         <Section title={t('What is kept in your browser')}>
@@ -120,7 +120,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
 
         {/* ROADMAP 3.1b; wording approved by Julian on 2026-10-04. Nothing is stored on the device, hence no consent (§ 25 TDDDG, plan §6). */}
         <Section title={t('What is counted when you leave a page')}>
-          <p>{t('When you leave a book page, a search, the home page or a collection, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. The summary also names the kind of site your visit began on, as one word from a fixed list (a search engine, Reddit, Pinterest, Hacker News and the like), or the word in the “via” part of a link this site posted itself. No identifier, cookie, IP address or address you came from is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
+          <p>{t('When you leave a book page, a search, the home page, a collection or a shared Shelf-Portrait, your browser sends one anonymous summary — for example which book, how many covers came into view, whether a shop link was used — and the site adds it to daily totals. The summary also names the kind of site your visit began on, as one word from a fixed list (a search engine, Reddit, Pinterest, Hacker News and the like), or the word in the “via” part of a link this site posted itself. No identifier, cookie, IP address or address you came from is stored, so a summary cannot be linked to you or to another visit. Searches that found nothing are kept as text for 90 days to improve the catalogue.')}</p>
         </Section>
 
         {game && (
@@ -132,7 +132,7 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         {/* The sentence Julian approved on 2026-10-05, as he approved it (ROADMAP 5.18b). */}
         {inspirationEnabled() && (
           <Section title={t('Your Shelf-Portrait')}>
-            <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name you typed if you typed one. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
+            <p>{t('A Shelf-Portrait you finish is kept under its link: the books, the covers you chose, and the name and the line under the title if you typed them. Nothing else about you is stored with it, and no cookie is set for it. Send us the link and we remove it.')}</p>
           </Section>
         )}
 

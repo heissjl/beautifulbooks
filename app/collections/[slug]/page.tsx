@@ -77,7 +77,6 @@ export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }
   const { slug } = await params;
   const c = await findCollection(slug);
   if (!c) notFound();
-  const names = c.kind === 'authors' ? authorsShown(c) : [];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -98,21 +97,10 @@ export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }
         <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{c.title}</h1>
         <p className="mt-4 max-w-2xl text-base text-ink-2">{c.intro}</p>
         {/*
-          What the wall holds, counted from the file — never "all" or "the
-          best" (CLAUDE.md, SPEC §9.3 step 15). For an author collection the
-          line names only authors with a book on the wall.
+          No count line under the intro (Julian, 2026-10-05: „kill the
+          sub-header"; Jules Verne lost it on 2026-09-26). The metadata keeps
+          the count and how the covers were chosen.
         */}
-        {/*
-          Not on a wall with site-served images (Julian, 2026-09-26, Jules
-          Verne: „lösche den kleinen absatz ganz"); the metadata keeps the line.
-        */}
-        {!c.works.some(w => w.image) && (
-          <p className="mt-3 text-sm text-ink-3">
-            {c.works.length === 1 ? t('{n} book', { n: 1 }) : t('{n} books', { n: c.works.length })}
-            {names.length > 0 && <> {names.length === 1 ? t('by 1 author') : t('by {n} authors', { n: names.length })}</>}
-            , {coverLine(c.kind, c.coverSource, 0, c.scope, t)}.
-          </p>
-        )}
         <div className="mt-8">
           <CoverWall works={c.works} selectCover setSize={c.setSize} from={{ href: `/collections/${c.slug}`, title: c.title }} />
         </div>

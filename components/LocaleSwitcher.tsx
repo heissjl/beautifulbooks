@@ -27,7 +27,7 @@ export default function LocaleSwitcher() {
       type="button"
       lang={other}
       onClick={() => choose(other)}
-      className="shrink-0 rounded-md px-1.5 py-1 text-xs text-ink-2 transition-colors hover:text-ink"
+      className="hit shrink-0 rounded-md px-1.5 py-1 text-xs text-ink-2 transition-colors hover:text-ink"
       title={other === 'de' ? 'Diese Seite auf Deutsch lesen' : 'Read this site in English'}
     >
       {LOCALE_NAME[other]}

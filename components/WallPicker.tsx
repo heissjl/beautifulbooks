@@ -53,7 +53,7 @@ export default function WallPicker({
   useEffect(() => {
     if (focus) document.getElementById('picker')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [focus]);
-  const pages = useWorkPages(workId, '', undefined);
+  const pages = useWorkPages(workId, '');
   const [error, setError] = useState('');
   // The message follows the reader: a line at the top is out of sight when the cover clicked is far down (Julian, 2026-09-29).
   useEffect(() => {

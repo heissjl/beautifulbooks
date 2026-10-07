@@ -650,7 +650,7 @@ Julian, 2026-10-04 vormittags: „lets do a catch all thing for all byitscovers.
 | X | **angelegt** von Julian, `mail@` | vergeben (gesperrt) |
 | Instagram | angelegt, **von Instagram als Bot gesperrt**; Julians Einspruch ging mit einem normalen Foto statt eines Selfies raus — Ausgang offen. Kein zweites Konto anlegen, solange der Einspruch läuft (gilt sonst als Umgehung der Sperre) | vergeben (privat) |
 | Bluesky | **angelegt**, `mail@`; **Handle `@buyitscovers.com` seit 2026-10-04 um 09:50 MESZ** (PLC-Verzeichnis: `at://buyitscovers.com`); E-Mail-Bestätigung bei Bluesky noch offen | offen — Handle `@byitscovers.com` nur per DNS-TXT `_atproto.byitscovers.com`, weil die Domain mit 308 weiterleitet |
-| Mastodon (mastodon.social) | **angelegt**, `@buyitscovers` | offen |
+| Mastodon (mastodon.social) | **angelegt**, `@buyitscovers`; erster Post am 2026-10-05, das Exposé, dazu Profiltext und Feld „Website“ (ROADMAP 5.6b; das Feld ist unbestätigt, dafür bräuchte die Seite einen `rel="me"`-Link zurück) | offen |
 | TikTok | hängte bei der Anmeldung, Julian versucht es am 2026-10-05 erneut | offen |
 | GitHub | **Organisation `OtherCovers` in `buyitscovers` umbenannt** (`github.com/buyitscovers` 200, `OtherCovers` 404) | nicht nötig (Julian) |
 | YouTube | Julian unsicher; Empfehlung: jetzt nicht — ein Kanal ohne Videos bringt nichts, der Name ist frei, und anlegen geht später in Minuten, falls `lab/video` einen Film liefert | — |

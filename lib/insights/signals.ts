@@ -22,7 +22,11 @@ export const INTERNAL_ORIGINS = ['home', 'search', 'collection', 'shelf', 'book'
  * opened from another tab of this site.
  */
 export const ENTRIES = [
-  'engine', 'reddit', 'pinterest', 'hn', 'instagram', 'tiktok', 'bluesky', 'x', 'producthunt', 'blog', 'mail',
+  // `producthunt` left on 2026-10-06 (Julian: „product hunt kann weg“); its referrer counts as `other`.
+  'engine', 'reddit', 'pinterest', 'hn', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail',
+  // Each social platform its own class since 2026-10-06 (Julian: „kannst du hier alle als eigene machen und per klick
+  // aufsummieren lassen?"); before, they all stood in `social`, which now holds only social sites with no class.
+  'linkedin', 'facebook', 'threads', 'youtube', 'whatsapp', 'telegram', 'mastodon', 'tumblr', 'discord',
   'social', 'other', 'site', 'direct',
 ] as const;
 export type Entry = (typeof ENTRIES)[number];
@@ -35,10 +39,26 @@ export type Origin = (typeof ORIGINS)[number];
  * over the referrer, which in-app browsers (Instagram, TikTok, often Reddit)
  * do not send. Anything else in `via` is ignored.
  */
-export const VIA = ['pinterest', 'hn', 'reddit', 'producthunt', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail'] as const satisfies readonly Entry[];
+export const VIA = [
+  'pinterest', 'hn', 'reddit', 'instagram', 'tiktok', 'bluesky', 'x', 'blog', 'mail',
+  // LinkedIn's app often sends no referrer: a link posted there needs the mark to be counted as LinkedIn (2026-10-06).
+  'linkedin', 'facebook', 'threads', 'youtube', 'whatsapp', 'telegram', 'mastodon',
+] as const satisfies readonly Entry[];
+
+/**
+ * The classes that are social networks, summed into one row on
+ * `/admin/insights` and opened with a click (2026-10-06). `social` is the
+ * remainder: a social site without a class of its own.
+ */
+export const SOCIAL_ENTRIES = [
+  'x', 'instagram', 'tiktok', 'reddit', 'pinterest', 'bluesky', 'linkedin', 'facebook', 'threads', 'youtube',
+  'whatsapp', 'telegram', 'mastodon', 'tumblr', 'discord', 'social',
+] as const satisfies readonly Entry[];
 
 /** Pages whose leaving is summarised as a `landing` signal (5.6a); book pages and searches have their own. */
-export const LANDINGS = ['home', 'search', 'collections', 'collection', 'wall'] as const;
+// `shelf`: a shared Shelf-Portrait (`/shelfportrait/<id>`, `/shelfportrait/board`), since 2026-10-06 — what its share buttons' `?via=` marks are read on.
+// Not the editor: it rewrites its address with every book, and each rewrite would count as a page.
+export const LANDINGS = ['home', 'search', 'collections', 'collection', 'wall', 'shelf'] as const;
 export type Landing = (typeof LANDINGS)[number];
 
 export const PAGES = ['0', '1', '2', '3', '4+'] as const;
@@ -146,7 +166,17 @@ const PLATFORMS: Array<[Entry, RegExp]> = [
   ['bluesky', /(^|\.)(bsky\.app|bsky\.social)$/],
   // X sends its own link shortener as the referrer (Julian, 2026-10-06: X as its own channel).
   ['x', /(^|\.)(x\.com|twitter\.com|t\.co)$/],
-  ['producthunt', /(^|\.)producthunt\.com$/],
+  // LinkedIn sends its shortener `lnkd.in` as often as its own host.
+  ['linkedin', /(^|\.)(linkedin\.com|lnkd\.in)$/],
+  ['facebook', /(^|\.)(facebook\.com|fb\.com|fb\.me|messenger\.com)$/],
+  ['threads', /(^|\.)threads\.(net|com)$/],
+  ['youtube', /(^|\.)(youtube\.com|youtu\.be)$/],
+  ['whatsapp', /(^|\.)(whatsapp\.com|wa\.me)$/],
+  ['telegram', /(^|\.)(t\.me|telegram\.org|telegram\.me)$/],
+  // Mastodon is many servers; the big ones carry the name, the others stay in `social` or `other`.
+  ['mastodon', /(^|\.)mastodon\.[a-z.]+$|(^|\.)(mstdn|mas\.to)/],
+  ['tumblr', /(^|\.)tumblr\.com$/],
+  ['discord', /(^|\.)(discord\.com|discord\.gg|discordapp\.com)$/],
 ];
 const SOCIAL = /(^|\.)(facebook|fb|instagram|t\.co|x\.com|twitter|reddit|pinterest|bsky|threads|linkedin|tiktok|youtube|whatsapp|telegram|mastodon|tumblr|discord)\b/;
 
@@ -227,6 +257,7 @@ export function landingOf(path: string, search: string): Landing | null {
   if (path === '/collections' || path === '/collections/readers') return 'collections';
   if (/^\/collections\/[^/]+$/.test(path)) return 'collection';
   if (/^\/c\/[^/]+$/.test(path)) return 'wall';
+  if (/^\/shelfportrait\/[a-z0-9]+$/.test(path) && path !== '/shelfportrait/card') return 'shelf';
   return null;
 }
 

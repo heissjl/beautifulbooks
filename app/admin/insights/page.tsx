@@ -10,6 +10,11 @@ import { adminCookieValid } from '@/lib/suggest/session';
 import { PRICES_AS_OF } from '@/lib/insights/prices';
 import { PHOTOS_PER_DAY } from '@/app/api/walls/photo/route';
 import { VERCEL_PRICES } from '@/lib/insights/costs';
+import { SOCIAL_ENTRIES } from '@/lib/insights/signals';
+import { groupSocial } from '@/lib/insights/visits';
+import ChannelTable from './ChannelTable';
+import OriginBars from './OriginBars';
+import { ORIGIN_NAMES } from './names';
 
 /**
  * Julian's analytics (ROADMAP 3.1a, docs/plans/PLAN-3.1-analyse.md §8):
@@ -106,14 +111,9 @@ function StoreDown({ reason }: { reason: 'no-store' | 'failed' }) {
   );
 }
 
-const ORIGIN_NAMES: Record<string, string> = {
-  engine: 'Suchmaschine', search: 'Suche auf der Seite', home: 'Startseite', collection: 'Sammlung', shelf: 'Shelf-Portrait',
-  book: 'Andere Buchseite', page: 'Andere Seite hier', social: 'Sozial, sonstige', other: 'Andere Website', direct: 'Direkt / unbekannt',
-  reddit: 'Reddit', pinterest: 'Pinterest', hn: 'Hacker News', instagram: 'Instagram', tiktok: 'TikTok', bluesky: 'Bluesky', x: 'X',
-  producthunt: 'Product Hunt', blog: 'Blog (via-Link)', mail: 'Mail (via-Link)', site: 'Anderer Tab dieser Seite',
-};
 const LANDING_NAMES: Record<string, string> = {
   home: 'Startseite', search: 'Suchergebnisse', collections: 'Sammlungsübersicht', collection: 'Eine Sammlung', wall: 'Leser-Sammlung',
+  shelf: 'Geteiltes Shelf-Portrait',
 };
 const VERDICT_NAMES: Record<string, string> = {
   verified: 'gleich (verified)', differs: 'anders (differs)', uncompared: 'nicht verglichen', unknown: 'kein Bild (unknown)',
@@ -122,6 +122,16 @@ const VERDICT_NAMES: Record<string, string> = {
 const POSITION_NAMES: Record<string, string> = { '1': '1', '2': '2', '3': '3', '4-10': '4–10', '11+': '11+', none: 'kein Klick' };
 /** Below this many visits, rates are noise (plan §7). */
 const FEW_VISITS = 100;
+
+/** The origins of book visits split for `OriginBars`: the social networks apart, summed and with their parts (2026-10-06). */
+function originGroups(origins: Record<string, number>) {
+  const social = new Set<string>(SOCIAL_ENTRIES);
+  const members = Object.entries(origins).filter(([k]) => social.has(k)).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v })).sort((x, y) => y.value - x.value);
+  return {
+    rows: Object.entries(origins).filter(([k]) => !social.has(k)).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v })),
+    social: { value: members.reduce((sum, m) => sum + m.value, 0), members },
+  };
+}
 
 function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
   const { clicks, books, searches } = report;
@@ -274,11 +284,7 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           )}
         </Card>
         <Card title="Woher die Buchseiten-Besuche kommen" sub="Im Browser zur Klasse verdichtet; die Herkunftsadresse selbst wird nicht gesendet.">
-          <Bars
-            rows={Object.entries(books.origins).sort((x, y) => y[1] - x[1]).map(([k, v]) => ({ label: ORIGIN_NAMES[k] ?? k, value: v }))}
-            total={books.visits}
-            few={few}
-          />
+          <OriginBars {...originGroups(books.origins)} total={books.visits} few={few} />
         </Card>
       </section>
 
@@ -482,28 +488,7 @@ function ChannelSection({ channels }: { channels: Extract<InsightsReport, { ok: 
         <p className="mt-4 text-sm text-ink-2">Noch kein Einstieg mit Kanal gezählt.</p>
       ) : (
         <div className="mt-4 overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-line text-left text-xs text-ink-3">
-                <th className="py-1.5 pr-2 font-normal">Kanal</th>
-                <th className="py-1.5 pr-2 text-right font-normal">Einstiege</th>
-                <th className="py-1.5 pr-2 text-right font-normal" title="Anteil der Einstiege, die ein Buch öffneten">→ Buch</th>
-                <th className="py-1.5 pr-2 text-right font-normal">Buch&shy;besuche</th>
-                <th className="py-1.5 text-right font-normal" title="Anteil der Buchbesuche mit Klick zum Händler">→ Händler</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(r => (
-                <tr key={r.entry} className="border-b border-line">
-                  <td className="py-1.5 pr-2 text-ink">{ORIGIN_NAMES[r.entry] ?? r.entry}</td>
-                  <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(r.entries)}</td>
-                  <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{r.entries > 0 ? pf.format(r.opened / r.entries) : '–'}</td>
-                  <td className="py-1.5 pr-2 text-right tabular-nums text-ink-2">{nf.format(r.bookVisits)}</td>
-                  <td className="py-1.5 text-right tabular-nums text-ink-2">{r.bookVisits > 0 ? pf.format(r.bought / r.bookVisits) : '–'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ChannelTable lines={groupSocial(rows)} />
         </div>
       )}
       {landingRows.length > 0 && (
@@ -517,7 +502,7 @@ function ChannelSection({ channels }: { channels: Extract<InsightsReport, { ok: 
       )}
       <Note>
         „→ Buch“: Anteil der Einstiege, die ein Buch öffneten; „→ Händler“: Anteil der Buchbesuche mit Klick zu einem Händler.
-        Ein Einstieg ist die erste Seite eines Tabs: eine Einstiegsseite (Startseite, Suchergebnisse, Sammlungen, eine Leser-Sammlung) oder eine Buchseite.
+        Ein Einstieg ist die erste Seite eines Tabs: eine Einstiegsseite (Startseite, Suchergebnisse, Sammlungen, eine Leser-Sammlung, ein geteiltes Shelf-Portrait) oder eine Buchseite.
         Andere Seiten (About, Anlegen einer Sammlung) zählen nicht als Einstieg. Der Kanal lebt nur im Speicher des Tabs; ein Neuladen fragt den
         Referrer neu. In-App-Browser senden oft keinen, deshalb tragen selbst gesetzte Links ?via=… (Liste in docs/plans/PLAN-5.5-5.6-kanaele.md §3).
         {unattributed > 0 && ` ${plural(unattributed, 'Buchbesuch', 'Buchbesuche')} im Zeitraum stammen von vor 5.6a und haben keinen Kanal.`}

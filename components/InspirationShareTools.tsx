@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useSyncExternalStore } from 'react';
-import { wasMade, watchMade } from './inspirationMemory';
 import { PICTURE_VERSION } from '@/lib/inspiration/share';
 
 /**
@@ -13,10 +12,10 @@ import { PICTURE_VERSION } from '@/lib/inspiration/share';
  */
 
 type Format = 'story' | 'feed';
-type Look = 'ambient' | 'paper';
+type Look = 'ambient' | 'mosaic' | 'paper';
 
 const choice = (active: boolean) =>
-  `rounded-full border px-3 py-0.5 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
+  `hit rounded-full border px-3 py-0.5 text-sm transition-colors ${active ? 'border-ink bg-ink text-bg' : 'border-line bg-surface text-ink-2 hover:border-accent hover:text-accent'}`;
 
 function Choice<T extends string>({ label, value, options, onChange }: { label: string; value: T; options: readonly { id: T; label: string }[]; onChange: (next: T) => void }) {
   return (
@@ -65,7 +64,7 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
   const canShare = useSyncExternalStore(() => () => {}, () => typeof navigator.canShare === 'function', () => false);
   const canCopy = useSyncExternalStore(() => () => {}, () => typeof ClipboardItem !== 'undefined' && typeof navigator.clipboard?.write === 'function', () => false);
 
-  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'paper' ? '&look=paper' : ''}${titles ? '&titles=1' : ''}&v=${PICTURE_VERSION}`;
+  const src = `/api/inspiration/poster?${query}&format=${format}${look === 'ambient' ? '' : `&look=${look}`}${titles ? '&titles=1' : ''}&v=${PICTURE_VERSION}`;
   const file = format === 'story' ? 'shelf-portrait-story.jpg' : 'shelf-portrait.jpg';
   const drawing = arrived?.src !== src;
   const failed = !drawing && !arrived?.ok;
@@ -81,7 +80,10 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
 
   async function share() {
     try {
-      const blob = await (await fetch(src)).blob();
+      const res = await fetch(src);
+      // A picture that did not come (a cover missing, 503) is no file to hand on.
+      if (!res.ok) throw new Error(String(res.status));
+      const blob = await res.blob();
       const picture = new File([blob], file, { type: 'image/jpeg' });
       // The link goes with the picture, inside the sentence (Julian, 2026-10-05: WhatsApp shows the words under the picture, and
       // a `url` of its own makes some apps drop the file).
@@ -117,12 +119,17 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
       </div>
       <div className="min-w-0 space-y-3">
         <Choice label="Format" value={format} onChange={setFormat} options={[{ id: 'story', label: 'Story' }, { id: 'feed', label: 'Post' }]} />
-        <Choice label="Background" value={look} onChange={setLook} options={[{ id: 'ambient', label: 'Cover colours' }, { id: 'paper', label: 'Paper' }]} />
+        <Choice label="Background" value={look} onChange={setLook} options={[{ id: 'ambient', label: 'Cover colours' }, { id: 'mosaic', label: 'Mosaic' }, { id: 'paper', label: 'Paper' }]} />
         <Choice label="Titles" value={titles ? 'on' : 'off'} onChange={(v) => setTitles(v === 'on')} options={[{ id: 'off', label: 'Covers only' }, { id: 'on', label: 'With title and author' }]} />
         <div className="flex flex-wrap gap-2 pt-1">
-          <a href={src} download={file} className="btn btn-accent">Save the picture</a>
-          {canCopy && <button type="button" onClick={copy} className="btn">Copy the picture</button>}
-          {canShare && <button type="button" onClick={share} className="btn">Share the picture…</button>}
+          {/* Only the picture shown can be taken away: while it is drawn, or when it did not come, there is nothing to save. */}
+          {drawing || failed ? (
+            <span className="btn btn-accent pointer-events-none opacity-50" aria-disabled="true">Save the picture</span>
+          ) : (
+            <a href={src} download={file} className="btn btn-accent">Save the picture</a>
+          )}
+          {canCopy && <button type="button" onClick={copy} disabled={drawing || failed} className="btn disabled:opacity-50">Copy the picture</button>}
+          {canShare && <button type="button" onClick={share} disabled={drawing || failed} className="btn disabled:opacity-50">Share the picture…</button>}
         </div>
         <p className="min-h-5 text-sm text-ink-2" role="status">{note}</p>
       </div>
@@ -154,14 +161,4 @@ export function CopyLink({ link }: { link: string }) {
       </span>
     </>
   );
-}
-
-/**
- * The buy list's fold: open for the board's maker, closed for a visitor
- * (`inspirationMemory.ts` knows the maker). The server renders it closed;
- * the browser opens it once it knows. A reader may still fold or unfold it.
- */
-export function BuyListDetails({ query, className, children }: { query: string; className: string; children: React.ReactNode }) {
-  const mine = useSyncExternalStore(watchMade, () => wasMade(query), () => false);
-  return <details open={mine || undefined} className={className}>{children}</details>;
 }

@@ -4,7 +4,7 @@
  */
 import type { Market } from '../market';
 import type { DayHash } from './model';
-import { ENTRIES, LANDINGS, ORIGINS, POSITIONS, readField, SEEN, VERDICTS, type Entry, type Landing, type Origin } from './signals';
+import { ENTRIES, LANDINGS, ORIGINS, POSITIONS, readField, SEEN, SOCIAL_ENTRIES, VERDICTS, type Entry, type Landing, type Origin } from './signals';
 
 function n(value: unknown): number {
   const v = typeof value === 'number' ? value : Number(value);
@@ -146,6 +146,28 @@ export function summarizeChannels(days: string[], bookHashes: ReadonlyArray<DayH
   });
   const list = [...rows.values()].sort((a, b) => b.entries - a.entries || b.bookVisits - a.bookVisits || a.entry.localeCompare(b.entry));
   return { rows: list, entries: list.reduce((sum, r) => sum + r.entries, 0), perDay, landings, unattributed };
+}
+
+/** The channel table as `/admin/insights` shows it: social networks in one summed row, opened by a click (2026-10-06). */
+export type ChannelLine =
+  | { kind: 'row'; row: ChannelRow }
+  | { kind: 'social'; sum: Omit<ChannelRow, 'entry'>; members: ChannelRow[] };
+
+/**
+ * Sums the social networks (`SOCIAL_ENTRIES`) into one line and keeps the
+ * others as they are; the lines are sorted the way the rows are. The sum is
+ * the plain sum of its members, so the table adds up either way it is read.
+ */
+export function groupSocial(rows: readonly ChannelRow[]): ChannelLine[] {
+  const social = new Set<string>(SOCIAL_ENTRIES);
+  const members = rows.filter(r => social.has(r.entry));
+  const lines: ChannelLine[] = rows.filter(r => !social.has(r.entry)).map(row => ({ kind: 'row', row }));
+  if (members.length > 0) {
+    const sum = members.reduce((s, r) => ({ entries: s.entries + r.entries, opened: s.opened + r.opened, bookVisits: s.bookVisits + r.bookVisits, bought: s.bought + r.bought }), { entries: 0, opened: 0, bookVisits: 0, bought: 0 });
+    lines.push({ kind: 'social', sum, members: [...members] });
+  }
+  const key = (l: ChannelLine) => (l.kind === 'row' ? l.row : l.sum);
+  return lines.sort((a, b) => key(b).entries - key(a).entries || key(b).bookVisits - key(a).bookVisits);
 }
 
 export interface SearchSummary {

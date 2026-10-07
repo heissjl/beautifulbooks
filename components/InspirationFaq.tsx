@@ -41,11 +41,11 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'What do I get to share?',
-    a: 'A picture for a story (1080 × 1920) or for a post (1080 × 1350), on a ground made from the colours of your covers or on paper, with or without titles and authors under the covers. And a link: posted, it shows as a card with your covers.',
+    a: 'A picture for a story (1080 × 1920) or for a post (1080 × 1350), on a ground made from the colours of your covers, on a mosaic of small covers or on paper, with or without titles and authors under the covers. And a link: posted, it shows as a card with your covers.',
   },
   {
     q: 'Is my name on the picture?',
-    a: 'Only if you type one. Without a name the picture says “My Shelf-Portrait”.',
+    a: 'Only if you type one. Without a name the picture says “My Shelf-Portrait”. A line of your own under it is optional too.',
   },
   {
     q: 'Can I change it later?',
@@ -53,7 +53,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'What is stored?',
-    a: 'When you press “Done”: the books, their covers and the name you typed, so that the link can show them. Nothing about you, and no cookie.',
+    a: 'When you press “Done”: the books, their covers, and the name and line you typed, so that the link can show them. Nothing about you, and no cookie.',
   },
   {
     q: 'Where can I buy these editions?',
@@ -72,7 +72,7 @@ export default function InspirationFaq() {
       <div className="mt-4 grid gap-x-12 lg:grid-cols-2">
         {FAQ.map(({ q, a }) => (
           <details key={q} className="group border-b border-line py-3">
-            <summary className="flex cursor-pointer list-none items-baseline gap-2 text-base text-ink transition-colors hover:text-accent">
+            <summary className="hit flex cursor-pointer list-none items-baseline gap-2 text-base text-ink transition-colors hover:text-accent">
               <span className="inline-block text-accent transition-transform group-open:rotate-90">▸</span>
               {q}
             </summary>

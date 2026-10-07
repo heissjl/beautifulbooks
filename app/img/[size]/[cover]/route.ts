@@ -42,11 +42,27 @@ import { isHiddenCover } from '@/lib/hiddencovers';
  * it in `X-Cover-Upstream` so a browser's network panel shows it too. A 429
  * or 403 from upstream is the throttling signature; a 404 is a missing scan;
  * a timeout is archive.org being archive.org.
+ *
+ * **One size smaller when a size does not come** (Julian, 2026-10-06:
+ * „archive fällt gerade ständig aus für die großen cover, wir brauchen einen
+ * fallback auf die kleinen versionen"). Open Library keeps each size of a
+ * scan in its own zip at archive.org, and on 2026-10-06 the zips failed one
+ * by one: `ol:420313` answered 503 for L and 200 for M. So an Open Library L
+ * that fails is asked again as M, an M as S; the smaller image is served
+ * under the asked address — softer, never empty — and kept only an hour, so
+ * the proper size takes its place once archive.org answers again. A Google
+ * cover is not asked again: its sizes are widths of one image, and what fails
+ * at one fails at the others.
  */
 const SIZES = new Set(['S', 'M', 'L']);
 
 /** Open Library needs a long rope; it is regularly slower than ten seconds. */
-const UPSTREAM_TIMEOUT_MS = 15_000;
+const UPSTREAM_TIMEOUT_MS = 13_000;
+/** The second, smaller ask: 13 + 9 s stays inside `maxDuration`. */
+const SMALLER_TIMEOUT_MS = 9_000;
+const SMALLER: Record<string, 'M' | 'S' | undefined> = { L: 'M', M: 'S', S: undefined };
+/** How long a smaller stand-in is kept at the edge: long enough to spare archive.org, short enough to be replaced. */
+const STAND_IN_SECONDS = 60 * 60;
 
 /** Same 30 days the cover bytes are held for hashing (`lib/coverhash.ts`). */
 const CDN_SECONDS = 60 * 60 * 24 * 30;
@@ -87,29 +103,54 @@ export async function GET(request: NextRequest, context: { params: Promise<{ siz
     return res;
   };
 
+  const first = await ask(upstream, UPSTREAM_TIMEOUT_MS);
+  if (first.ok) return served(first.res, `public, max-age=3600, s-maxage=${CDN_SECONDS}, stale-while-revalidate=86400`, source);
+
+  const smaller = source === 'openlibrary' ? SMALLER[size] : undefined;
+  const fallback = smaller ? coverUrlFor(coverId, smaller) : null;
+  if (fallback) {
+    const second = await ask(fallback, SMALLER_TIMEOUT_MS);
+    if (second.ok) {
+      // The failure of the asked size is still logged: it says archive.org is failing, which is worth knowing.
+      recordCoverFailure({ coverId, size: size as CoverFailure['size'], source, status: first.status, reason: first.reason, ms: Date.now() - started });
+      const res = served(second.res, `public, max-age=600, s-maxage=${STAND_IN_SECONDS}`, source);
+      res.headers.set('X-Cover-Size', smaller ?? '');
+      return res;
+    }
+  }
+  return failed(first.status, first.reason);
+}
+
+type Asked = { ok: true; res: Response } | { ok: false; status: number | null; reason: CoverFailure['reason'] };
+
+async function ask(url: string, timeoutMs: number): Promise<Asked> {
   try {
-    const res = await fetch(upstream, {
+    const res = await fetch(url, {
       headers: { Accept: 'image/*' },
-      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+      signal: AbortSignal.timeout(timeoutMs),
       // The bytes belong in the CDN in front of this route, not in Next's
       // data cache, which is neither meant for images nor shared with it.
       cache: 'no-store',
       redirect: 'follow',
     });
     const type = res.headers.get('content-type') ?? '';
-    if (!res.ok || !res.body) return failed(res.status, 'status');
-    if (!type.startsWith('image/')) return failed(res.status, 'not-image');
-    return new NextResponse(res.body, {
-      headers: {
-        'Content-Type': type,
-        'Cache-Control': `public, max-age=3600, s-maxage=${CDN_SECONDS}, stale-while-revalidate=86400`,
-        // Says nothing about the reader; useful when a wall is slow and the
-        // question is which catalogue is answering.
-        'X-Cover-Source': source,
-      },
-    });
+    if (!res.ok || !res.body) return { ok: false, status: res.status, reason: 'status' };
+    if (!type.startsWith('image/')) return { ok: false, status: res.status, reason: 'not-image' };
+    return { ok: true, res };
   } catch (error) {
     const name = error instanceof Error ? error.name : '';
-    return failed(null, name === 'TimeoutError' || name === 'AbortError' ? 'timeout' : 'error');
+    return { ok: false, status: null, reason: name === 'TimeoutError' || name === 'AbortError' ? 'timeout' : 'error' };
   }
+}
+
+function served(res: Response, cache: string, source: CoverFailure['source']): NextResponse {
+  return new NextResponse(res.body, {
+    headers: {
+      'Content-Type': res.headers.get('content-type') ?? 'image/jpeg',
+      'Cache-Control': cache,
+      // Says nothing about the reader; useful when a wall is slow and the
+      // question is which catalogue is answering.
+      'X-Cover-Source': source,
+    },
+  });
 }

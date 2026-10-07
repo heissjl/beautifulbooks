@@ -350,6 +350,56 @@ export function readyPairs(
   return out;
 }
 
+/** A day in milliseconds: the span over which the game's card and its list of books stay put (6.98, 6.99a). */
+const CARD_DAY_MS = 86_400_000;
+
+/** The day a moment falls in, the seed of everything on the game that turns over daily. */
+export function dayNumber(now: number = Date.now()): number {
+  return Math.floor(now / CARD_DAY_MS);
+}
+
+/**
+ * The two covers a link to the game shows today (ROADMAP 6.98; Julian,
+ * 2026-10-06: „baue auch eine allgemeine vorschaukarte für das versus game").
+ *
+ * Drawn by the game's own rule (`nextPair`), but from the day as a seed
+ * instead of chance: every reader who sees the card on the same day sees the
+ * same pair, which is what a cached picture has to promise, and tomorrow the
+ * link looks new in a feed. No token — a card is not a game, nothing can be
+ * voted on it.
+ */
+export function pairOfTheDay({ pool = POOL, now = Date.now() }: { pool?: VersusPool; now?: number } = {}): { a: PoolCover; b: PoolCover } | null {
+  const ids = activeIds(pool, []);
+  const book = new Map(pool.covers.map(c => [c.id, c.workId]));
+  const picked = nextPair(ids, newElo(ids), rng(dayNumber(now)), { recent: [], bookOf: id => book.get(id) ?? id, seriesOf });
+  if (!picked) return null;
+  const a = pool.covers.find(c => c.id === picked[0]);
+  const b = pool.covers.find(c => c.id === picked[1]);
+  return a && b ? { a, b } : null;
+}
+
+/**
+ * One named pairing, signed like any other (ROADMAP 6.97): the pair behind a
+ * permanent address such as `/versus/ol-15154344-vs-ol-10215294`, so a post
+ * and the page it leads to show the same two covers.
+ *
+ * Null when a cover is not in the pool, was reported or taken off the site
+ * (`activeIds`), or faces itself — the page then answers 404 rather than
+ * showing an empty box. The vote that follows is an ordinary vote: it carries
+ * the same signed token and counts like one from a random pair.
+ */
+export function fixedPair(
+  secret: Buffer,
+  a: string,
+  b: string,
+  { pool = POOL, now = Date.now(), store = 'redis' }: { pool?: VersusPool; now?: number; store?: VoteStore['kind'] } = {},
+): PairResponse | null {
+  if (a === b) return null;
+  const ids = new Set(activeIds(pool, []));
+  if (!ids.has(a) || !ids.has(b)) return null;
+  return { pool: pool.name, store, votes: null, covers: ids.size, a: side(pool, a), b: side(pool, b), token: signPair(secret, pool.name, a, b, now) };
+}
+
 /**
  * `chosen` names the book behind the cover just picked. The pair itself never
  * says it — the cover is judged, not the book — but once the vote is in, the
@@ -392,18 +442,49 @@ export function poolBooks(pool: VersusPool = POOL): PoolBook[] {
 }
 
 /**
+ * A title written in the Latin alphabet — every letter of it, diacritics and
+ * punctuation included. The list under the game is read by people who are
+ * going to click a title (ROADMAP 6.99; Julian, 2026-10-06: „lass nur welche
+ * mit titel im romanischen alphabet rein"), and `雪国` or a Cyrillic title says
+ * nothing to a reader who cannot read it. The book stays in the game; only
+ * this list leaves it out, and the count beside it still names the whole pool.
+ */
+export function latinTitle(title: string): boolean {
+  // Digits and punctuation belong to no script: „1984" is readable here, „雪国" is not.
+  for (const ch of title) if (/\p{L}/u.test(ch) && !/\p{Script=Latin}/u.test(ch)) return false;
+  return title.trim().length > 0;
+}
+
+/**
  * `count` books spread evenly over that list rather than the first `count`:
  * naming twenty books from the front of the alphabet would read as a corner
- * of the pool, and the spread is stable because the pool is.
+ * of the pool, and the spread is stable because the pool is. `latinOnly`
+ * draws from the books whose title a Latin alphabet can be read in.
  */
-export function someBooks(count: number, pool: VersusPool = POOL): PoolBook[] {
-  const all = poolBooks(pool);
+export function someBooks(
+  count: number,
+  { pool = POOL, latinOnly = false, day }: { pool?: VersusPool; latinOnly?: boolean; day?: number } = {},
+): PoolBook[] {
+  const all = latinOnly ? poolBooks(pool).filter(b => latinTitle(b.title)) : poolBooks(pool);
   if (count <= 0) return [];
   if (all.length <= count) return all;
   if (count === 1) return [all[0]];
-  // Both ends included, the rest evenly between them: the first and the last
-  // title of the alphabet are as much part of the pool as the middle.
-  return Array.from({ length: count }, (_, i) => all[Math.round((i * (all.length - 1)) / (count - 1))]);
+  if (day === undefined) {
+    // Both ends included, the rest evenly between them: the first and the last
+    // title of the alphabet are as much part of the pool as the middle.
+    return Array.from({ length: count }, (_, i) => all[Math.round((i * (all.length - 1)) / (count - 1))]);
+  }
+  // With a day: the list is cut into `count` stretches of the alphabet and one
+  // book is drawn from each (ROADMAP 6.99a). The spread over the alphabet is
+  // what the list is for, so it survives the turn; what changes is which book
+  // of a stretch stands there. Everyone sees the same list on the same day,
+  // and a reader who comes back tomorrow finds other books.
+  const random = rng(day);
+  return Array.from({ length: count }, (_, i) => {
+    const from = Math.floor((i * all.length) / count);
+    const to = Math.floor(((i + 1) * all.length) / count);
+    return all[from + Math.floor(random() * Math.max(1, to - from))];
+  });
 }
 
 interface PairInput {

@@ -35,7 +35,7 @@ import { leadCover } from '@/lib/scene';
 import { isbnRuns } from '@/lib/isbnformat';
 import { useOverflowsX } from '@/components/useOverflowsX';
 import { useBookSignal, useReportVerdict, VerdictReport } from './useInsights';
-import { commissionNote, isWordsProvider, searchFacts, searchLinksFor, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
+import { buyLinksIn, commissionNote, isWordsProvider, searchFacts, searchLinksFor, titleSearchLinksIn, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
 import decadePages from '@/data/decade-pages.json';
@@ -201,11 +201,19 @@ function BookDetail() {
   const isDesktop = useIsDesktop();
   // The sidebar scrolls on its own; say so while there is more below (1 + 2, Julian 2026-09-26).
   const { scroller: sideScroller, content: sideContent, overflows: sideOverflows, atEnd: sideAtEnd, hiddenBelow: sideHidden, onScroll: measureSide, scrollMore: sideMore } = useOverflowsY();
-  const requestKey = `${params.id} ${lang} ${chosenMarket ?? ''}`;
+  /*
+    Not the market: a switch of the market rebuilds the shop links below and nothing else (Julian,
+    2026-10-06: „wenn man den markt in der detailansicht eines covers umstellt, wird die ganze seite
+    neugeladen"). With the market in this key every page of the wall, the loading scene and the ISBN
+    lookups — Google's quota among them — started again.
+  */
+  const requestKey = `${params.id} ${lang}`;
 
   // Editions arrive page by page and keep arriving while the user looks
   // around (SPEC §9.3 step 11).
-  const pages = useWorkPages(params.id, lang, chosenMarket);
+  const pages = useWorkPages(params.id, lang);
+  // The reader's choice, else the market the server detected with the first page.
+  const market = chosenMarket ?? pages.market;
 
   // The selected cover lives in the URL (?cover=) so it can be shared (SPEC F2.6).
   /*
@@ -293,16 +301,25 @@ function BookDetail() {
   // Loading scene (SPEC 8.1): paced by the hook; runs at least two covers long
   // and ends once page 0 has been hashed, so it never shows a cover twice.
   const view = useMemo(() => {
-    const { merged, work, market } = pages;
-    if (!merged || !work || !market) return null;
+    const { merged, work } = pages;
+    if (!merged || !work || !pages.market) return null;
     const wall = buildWall(merged, isbnCovers.covers, isbnCovers.signatures, lang || undefined, openedWith);
     const editionsById = new Map(merged.editions.map(e => [e.id, e]));
     const captions = new Map(wall.covers.map(c => [c.id, captionFor(c, editionsById)]));
     // How many covers each edition appears with (to flag reprints, SPEC F2.5).
     const coversPerEdition = new Map<string, number>();
     for (const c of wall.covers) for (const id of c.editionIds) coversPerEdition.set(id, (coversPerEdition.get(id) ?? 0) + 1);
-    return { work, market, merged, ...wall, editionsById, captions, coversPerEdition };
+    return { work, merged, ...wall, editionsById, captions, coversPerEdition };
   }, [pages, lang, isbnCovers, openedWith]);
+
+  // The shop links for the market in force, built here from `earning` (lib/buylinks.ts, buyLinksIn): a switch costs no request.
+  const shopped = useMemo(() => {
+    if (!view || !market) return null;
+    const earning = pages.earning?.[market] ?? [];
+    const editionsById = new Map([...view.editionsById].map(([id, e]) => [id, { ...e, buyLinks: buyLinksIn(e, market, earning) }]));
+    const anyEditionLinks = titleSearchLinksIn({ title: displayTitle(view.work.title), author: view.work.authors[0] }, market, earning);
+    return { market, editionsById, anyEditionLinks };
+  }, [view, market, pages.earning]);
 
   /*
     The scene opens with the cover the reader is already looking at, and hands
@@ -339,7 +356,7 @@ function BookDetail() {
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
   // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
-  const reportVerdict = useBookSignal({ workId: params.id, market: pages.market ?? chosenMarket ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
+  const reportVerdict = useBookSignal({ workId: params.id, market: market ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
 
   if (pages.status === 'notfound' || pages.status === 'error') {
@@ -380,15 +397,15 @@ function BookDetail() {
   const details = selected && (
     <CoverDetails
       cover={selected}
-      editions={selected.editionIds.map(id => view.editionsById.get(id)).filter((e): e is EditionView => !!e)}
+      editions={selected.editionIds.map(id => (shopped ?? view).editionsById.get(id)).filter((e): e is EditionView => !!e)}
       coversPerEdition={view.coversPerEdition}
       workId={work.id}
       workTitle={work.title}
-      anyEditionLinks={pages.anyEditionLinks}
+      anyEditionLinks={shopped?.anyEditionLinks ?? pages.anyEditionLinks}
       editionsByScan={view.editionsByScan}
       author={work.authors[0]}
       query={searchParams.get('q') ?? ''}
-      market={view.market}
+      market={shopped?.market ?? pages.market ?? 'us'}
       onMarketChange={setMarket}
       share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
       verdictFor={isbn13 => verifyIsbnCover(

@@ -5,9 +5,11 @@ import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import { coverUrlFor } from '@/lib/coverurl';
-import { type BoardSize, filledCount, parseBoard, sizeOf } from '@/lib/inspiration/board';
+import { type BoardSize, coverSegment, filledCount, isFull, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
+import { captionLines } from '@/lib/inspiration/captionlines';
+import { mosaicGround } from '@/lib/inspiration/mosaicground';
 import { titleOf } from '@/lib/inspiration/share';
 import { SITE_URL } from '@/lib/seo';
 
@@ -27,7 +29,9 @@ import { SITE_URL } from '@/lib/seo';
  * covers blurred until only their colours are left, darkened, with the edges
  * drawn in — each picture gets the colour world of its books, and the covers
  * cast a shadow on it (painted into the ground, see `shadows`). `paper` is the site's warm ground with dark type, the
- * way the website itself looks; `plain` is the old flat one, kept to compare.
+ * way the website itself looks; `mosaic` is a field of tiny covers cut from
+ * the loading pictures (`lib/inspiration/mosaicground.ts`, option A of the
+ * mockup, Julian 2026-10-05); `plain` is the old flat one, kept to compare.
  *
  * The covers are fetched here, each with its own budget, and cut to their
  * tile before the generator sees them. One that does not come leaves an empty
@@ -40,25 +44,50 @@ import { SITE_URL } from '@/lib/seo';
  */
 export const maxDuration = 30;
 
-const COVER_TIMEOUT_MS = 8000;
+/** Own route, large then medium, then Open Library's medium: 7 + 7 + 5 s, inside the function's 30 s with the ground after. */
+const OWN_L_MS = 7000;
+const OWN_M_MS = 7000;
+/** The last try, Open Library's medium image directly. */
+const SECOND_TRY_MS = 5000;
 /** The address a reader types from a picture that carries no link. Never localhost or a preview's host: the picture travels. */
 const ADDRESS = `${/^https?:\/\/(localhost|127\.|\[::1\])/.test(SITE_URL) || SITE_URL.includes('vercel.app') ? 'buyitscovers.com' : new URL(SITE_URL).host}/shelfportrait`;
 
 type Format = PosterFormat | 'card';
-type Look = 'ambient' | 'paper' | 'plain';
+type Look = 'ambient' | 'paper' | 'mosaic' | 'plain';
 
 /** `shadow` is how dark the covers' shadow falls on the ground, 0 for none. */
 const LOOKS: Record<Look, { bg: string; ink: string; ink2: string; mark: string; empty: string; shadow: number }> = {
   ambient: { bg: OG.bg, ink: OG.ink, ink2: '#d2cbc2', mark: OG.ink, empty: 'rgba(255,255,255,0.08)', shadow: 0.62 },
+  mosaic: { bg: OG.bg, ink: OG.ink, ink2: '#d2cbc2', mark: OG.ink, empty: 'rgba(255,255,255,0.08)', shadow: 0.62 },
   paper: { bg: OG.paper, ink: OG.paperInk, ink2: OG.paperInk2, mark: OG.accent, empty: '#e6dfd3', shadow: 0.3 },
   plain: { bg: OG.bg, ink: OG.ink, ink2: OG.ink2, mark: OG.ink, empty: '#2a2522', shadow: 0 },
 };
 
-async function tile(coverId: string, width: number, height: number): Promise<Buffer | null> {
-  const url = coverUrlFor(coverId, 'L');
+/**
+ * A cover cut to its tile: the large image, and when that does not come in
+ * time the medium one — softer at a story's size, but a soft cover is better
+ * than a gap (Julian, 2026-10-06: „Nachfassen, sonst kein Bild"). What still
+ * does not come is null, and a story or post then gets no picture at all.
+ */
+async function tile(coverId: string, width: number, height: number, origin: string): Promise<Buffer | null> {
+  /*
+    **Through the site's own image route first** (2026-10-06, while archive.org
+    failed for hours and Julian's board got no story: „aktuell klappt das aber
+    noch nicht"). `/img/<size>/<cover>` is held 30 days at Vercel's edge, and a
+    board's covers were just looked at in the editor — so they are usually
+    there even when archive.org is down, and the route itself falls back from L
+    to M. Open Library directly only after that, for a route that is busy.
+  */
+  const segment = coverSegment(coverId);
+  return (await scaled(`${origin}/img/L/${segment}`, OWN_L_MS, width, height))
+    ?? (await scaled(`${origin}/img/M/${segment}`, OWN_M_MS, width, height))
+    ?? (await scaled(coverUrlFor(coverId, 'M'), SECOND_TRY_MS, width, height));
+}
+
+async function scaled(url: string | null, timeoutMs: number, width: number, height: number): Promise<Buffer | null> {
   if (!url) return null;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(COVER_TIMEOUT_MS), redirect: 'follow' });
+    const res = await fetch(url, { signal: AbortSignal.timeout(timeoutMs), redirect: 'follow' });
     if (!res.ok || !(res.headers.get('content-type') ?? '').startsWith('image/')) return null;
     const bytes = Buffer.from(await res.arrayBuffer());
     // Open Library answers a missing scan with a 1 × 1 image.
@@ -134,12 +163,14 @@ async function shadows(width: number, height: number, rects: Rect[], tiles: (Buf
 }
 
 /** What the covers stand on, as one picture: the wash or the flat colour, and the shadows. Null when it cannot be made — the flat colour stands in. */
-async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[]): Promise<string | null> {
+async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[], seed: string, words: Rect[]): Promise<string | null> {
   const L = LOOKS[look];
   if (L.shadow === 0) return null;
   try {
     const base = look === 'ambient'
       ? await wash(width, height, rects, tiles)
+      : look === 'mosaic'
+      ? await mosaicGround(width, height, seed, words)
       : await sharp({ create: { width, height, channels: 3, background: L.bg } }).png().toBuffer();
     const cast = await shadows(width, height, rects, tiles, L.shadow);
     return dataUrl(await sharp(base).composite(cast ? [{ input: cast }] : []).jpeg({ quality: 90 }).toBuffer());
@@ -198,7 +229,7 @@ const ONE_LINE = { whiteSpace: 'nowrap', overflow: 'hidden' } as const;
 
 type Caption = { title: string; author: string } | null;
 
-function poster(format: PosterFormat, count: BoardSize, by: string, images: (string | null)[], look: Look, under: string | null, captions: Caption[] | null) {
+function poster(format: PosterFormat, count: BoardSize, by: string, sub: string, images: (string | null)[], look: Look, under: string | null, captions: Caption[] | null) {
   const P = posterLayout(format, count, !!captions);
   const L = LOOKS[look];
   const { head, foot, type } = P;
@@ -206,18 +237,27 @@ function poster(format: PosterFormat, count: BoardSize, by: string, images: (str
   return (
     <div style={{ position: 'relative', width: P.width, height: P.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={P.width} height={P.height} />
-      {/* One line (Julian, 2026-10-05: „lösche den subheader ganz fürs erste"): the name of the thing, and nothing under it. */}
+      {/*
+        The name of the thing (Julian, 2026-10-05: „lösche den subheader ganz fürs erste"), and under it only
+        a line the reader wrote (2026-10-06: „eine möglichkeit … einen eigenen untertitel zu wählen"), on one line.
+      */}
       <div style={{ position: 'absolute', left: head.x, top: head.y, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
+        {/* 1.45, not 1.25: the line is cut to one with its overflow hidden, and that took the tail of the italic g (Julian, 2026-10-06). */}
+        {sub && <div style={{ ...DISPLAY, ...ONE_LINE, display: 'flex', fontStyle: 'italic', fontSize: Math.round(type.title * 0.56), lineHeight: 1.45, marginTop: Math.round(type.title * 0.12), color: L.ink2 }}>{clip(sub, head.width, Math.round(type.title * 0.56))}</div>}
       </div>
       <Tiles rects={P.tiles} images={images} look={look} />
       {captions && P.caption && P.tiles.map((r, i) => captions[i] && (
         <div key={i} style={{ position: 'absolute', left: r.x, top: r.y + r.height + 10, width: r.width, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.2, color: L.ink }}>{clip(captions[i]?.title ?? '', r.width, P.caption?.title ?? 24)}</div>
+          {/* Up to two lines of title, each its own line so the generator cannot wrap a third (captionLines). */}
+          {captionLines(captions[i]?.title ?? '', Math.floor(r.width / ((P.caption?.title ?? 24) * 0.5))).map((line, k) => (
+            <div key={k} style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.15, color: L.ink }}>{line}</div>
+          ))}
           <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
         </div>
       ))}
-      <div style={{ position: 'absolute', left: foot.x, top: foot.y, width: foot.width, height: foot.height, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      {/* The words keep a distance from the covers above them, not only from the edge below (Julian, 2026-10-05). */}
+      <div style={{ position: 'absolute', left: foot.x, top: foot.y, width: foot.width, height: foot.height, paddingTop: type.site * 0.8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <Wordmark size={type.site} color={L.mark} />
         <div style={{ ...TEXT, display: 'flex', fontSize: type.address, color: L.ink2, marginTop: type.address * 0.15 }}>{ADDRESS}</div>
       </div>
@@ -261,11 +301,12 @@ function cardPlan(count: BoardSize): { covers: Rect[]; words: Rect; title: numbe
   return { covers: place(x0, y0, w, h, 3, 3), words: { x: 48, y: y0, width: x0 - 48 - 36, height: h }, title: 50 };
 }
 
-function card(count: BoardSize, by: string, images: (string | null)[], look: Look, under: string | null) {
+function card(count: BoardSize, by: string, sub: string, images: (string | null)[], look: Look, under: string | null) {
   const plan = cardPlan(count);
   const L = LOOKS[look];
   const title = titleOf(by);
   const { words } = plan;
+  const beside = count !== 9;
   const size = wordFit(title, words.width, plan.title);
   // The address must fit its column with the spacing: sixteen letters, measured at 0.41 em each in Xanh italic.
   // "A little larger" (Julian, 2026-10-05): it was half the title's size and capped at 21 px on the card of nine.
@@ -273,16 +314,24 @@ function card(count: BoardSize, by: string, images: (string | null)[], look: Loo
   return (
     <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
       <Ground src={under} width={CARD.width} height={CARD.height} />
-      <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink }}>{title}</div>
+      {/*
+        Beside six or three covers the title and the line stand together in the middle of their
+        column (Julian, 2026-10-05: „der schriftzug in der vorschaukarte muss etwas zentraler,
+        höher, bei x wird es nicht angezeigt"): X lays the page's title over the card's bottom
+        left corner, where the line stood. With nine they keep the first place, top left, which
+        nothing covers.
+      */}
+      <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', ...(beside ? { justifyContent: 'center', alignItems: 'center', textAlign: 'center' } : { justifyContent: 'space-between' }) }}>
+        <div style={{ display: 'flex', flexDirection: 'column', ...(beside ? { alignItems: 'center', marginBottom: Math.round(size * 0.55) } : {}) }}>
+          <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{title}</div>
+          {sub && <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: Math.max(18, Math.round(size * 0.5)), lineHeight: 1.2, marginTop: Math.round(size * 0.25), color: L.ink2, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{sub}</div>}
         </div>
         {/*
           The site's line, "Judge a book, buy its covers", with its second half as the address — one
           word, the way it is typed. Two faces and two colours, so that nobody takes the whole
           phrase for the link (Julian, 2026-10-05); the address a little spaced out, as he asked.
         */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', ...(beside ? { alignItems: 'center' } : {}) }}>
           <div style={{ ...TEXT, display: 'flex', fontSize: Math.max(17, Math.round(sign * 0.7)), color: L.ink2, marginBottom: Math.round(sign * 0.12) }}>Judge a book,</div>
           <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: sign, letterSpacing: sign * 0.045, color: look === 'paper' ? OG.accent : OG.accentDark }}>BuyItsCovers.com</div>
         </div>
@@ -299,11 +348,14 @@ export async function GET(request: NextRequest) {
   const rawFormat = params.get('format');
   const format: Format = rawFormat === 'feed' || rawFormat === 'card' ? rawFormat : 'story';
   const rawLook = params.get('look');
-  const look: Look = rawLook === 'paper' || rawLook === 'plain' ? rawLook : 'ambient';
+  const look: Look = rawLook === 'paper' || rawLook === 'mosaic' || rawLook === 'plain' ? rawLook : 'ambient';
   // Titles and authors under the covers, when the reader asks for them; a link card has no room for them.
   const withTitles = params.get('titles') === '1' && format !== 'card';
   const asked = parseBoard(params);
   if (filledCount(asked) === 0) return json({ error: 'An empty board has no picture.' }, 400);
+  // A story or a post is made only of a full board (isFull, Julian 2026-10-06: „Nur volle Bretter"). The link card of an
+  // older board with gaps is still drawn: without one, X shows no card at all.
+  if (format !== 'card' && !isFull(asked)) return json({ error: 'Only a full board has a picture. Fill every place, or choose a smaller board.' }, 400);
   // A cover taken off the site on request (2.18k) is not drawn: its place stays empty, as on the page.
   const board = { ...asked, slots: asked.slots.map((s) => (s && isHiddenCover(s.coverId) ? null : s)) };
 
@@ -312,17 +364,25 @@ export async function GET(request: NextRequest) {
   const rects = layout ? layout.tiles : cardPlan(count).covers;
   const size = layout ? { width: layout.width, height: layout.height } : { width: CARD.width, height: CARD.height };
   const [tiles, described] = await Promise.all([
-    Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height) : null))),
+    Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height, request.nextUrl.origin) : null))),
     withTitles ? describeBoard(board) : null,
   ]);
   const captions = described ? described.books.map((b) => (b?.title ? { title: b.title, author: b.author ?? '' } : null)) : null;
   // Kept only when it is whole: every cover came, and every title that was asked for.
+  // No story or post with a gap where a cover did not come: the reader would save and post it. The page then says
+  // „The picture did not come" and a second try usually finds the covers cached. A cover taken off the site (2.18k) is no gap.
+  if (format !== 'card' && board.slots.some((s, i) => s && !tiles[i])) {
+    return json({ error: 'A cover did not come in time. Try again in a moment.' }, 503);
+  }
   const whole = board.slots.every((s, i) => !s || tiles[i]) && (!captions || board.slots.every((s, i) => !s || captions[i]));
-  const under = await ground(look, size.width, size.height, rects, tiles);
+  // Where the words stand, so the mosaic is darker behind them.
+  const words = layout ? [layout.head, layout.foot] : [cardPlan(count).words];
+  const seed = board.slots.map((s) => s?.coverId ?? '').join();
+  const under = await ground(look, size.width, size.height, rects, tiles, seed, words);
   const images = tiles.map((t) => (t ? dataUrl(t) : null));
 
   const picture = await asJpeg(new ImageResponse(
-    format === 'card' ? card(count, board.by, images, look, under) : poster(format, count, board.by, images, look, under, captions),
+    format === 'card' ? card(count, board.by, board.sub, images, look, under) : poster(format, count, board.by, board.sub, images, look, under, captions),
     { ...size, fonts: await ogFonts() },
   // A story or a post is compressed again by Instagram; the card stays small for the messengers.
   ), format !== 'card');
