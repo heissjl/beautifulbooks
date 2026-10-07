@@ -401,7 +401,8 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
             <div className="mt-3 grid grid-cols-2 gap-3 sm:gap-6">
               {[shown.a, shown.b].map((side, i) =>
                 side.workId ? (
-                  <div key={side.id} className="flex items-center justify-center gap-3">
+                  // Stacked on a phone: "Share this cover" beside "Find all covers" took three lines in German in a 173 px half (2026-10-06).
+                  <div key={side.id} className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-3">
                     <ShareMenu
                       workId={side.workId}
                       coverId={side.id}
@@ -409,6 +410,8 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
                       author={side.author}
                       compact
                       align={i === 0 ? 'left' : 'right'}
+                      // Julian, 2026-10-06: „ändere die linktitel von "Share" auf "Share this cover" und von "all covers" auf "Find all covers"".
+                      label={t('Share this cover')}
                       text={t('Beautiful or ugly? {book}', { book: side.author ? t('{title} by {author}', { title: side.title, author: side.author }) : side.title })}
                     />
                     <Link
@@ -418,7 +421,7 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
                       aria-label={t('All covers of {title}', { title: side.title })}
                       className="whitespace-nowrap text-xs text-ink-3 underline underline-offset-2 hover:text-accent"
                     >
-                      {t('All covers')}
+                      {t('Find all covers')}
                     </Link>
                   </div>
                 ) : (

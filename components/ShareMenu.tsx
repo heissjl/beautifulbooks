@@ -30,6 +30,8 @@ interface ShareMenuProps {
   align?: 'left' | 'right';
   /** The sentence that travels with the link, where the default does not fit (the cover game). */
   text?: string;
+  /** The button's words where "Share" alone is unclear (the cover game: „Share this cover"). */
+  label?: string;
 }
 
 function shareUrlFor(workId: string, coverId: string | null | undefined): string {
@@ -40,7 +42,7 @@ function shareUrlFor(workId: string, coverId: string | null | undefined): string
 }
 
 export default function ShareMenu({
-  workId, coverId, title, author, placement = 'down', compact = false, align = 'right', text: ownText,
+  workId, coverId, title, author, placement = 'down', compact = false, align = 'right', text: ownText, label,
 }: ShareMenuProps) {
   const t = useT();
   const [open, setOpen] = useState(false);
@@ -103,12 +105,12 @@ export default function ShareMenu({
     <div className="relative" ref={box}>
       <button
         type="button"
-        className={`btn ${compact ? 'py-1.5 text-xs' : 'py-1.5'}`}
+        className={`btn whitespace-nowrap ${compact ? 'py-1.5 text-xs' : 'py-1.5'}`}
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen(o => !o)}
       >
-        {copied ? t('Link copied') : t('Share')}
+        {copied ? t('Link copied') : (label ?? t('Share'))}
       </button>
 
       {open && (
