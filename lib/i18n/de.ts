@@ -45,6 +45,14 @@ export const de: Readonly<Record<string, string>> = {
   'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
   // The name stays as it is: it is what the picture is called and what the hashtag says.
   'Take your Shelf-Portrait: the books that inspire you': 'Mach dein Shelf-Portrait: die Bücher, die dich prägen',
+  // Der Block „Was ist …?“ auf einer Seite, auf der jemand über einen Link landet (components/WhatIsThisSite.tsx).
+  'What is {name}?': 'Was ist {name}?',
+  'A book has many covers.': 'Ein Buch hat viele Cover.',
+  '{lead} {name} shows the ones two open catalogues hold for a title — decades of printings side by side — and, for each, where to find and buy that edition new or used, online or locally.':
+    '{lead} {name} zeigt die Cover, die zwei offene Kataloge zu einem Titel führen — Ausgaben aus Jahrzehnten nebeneinander — und zum einzelnen Cover, wo sich die Ausgabe neu oder gebraucht findet, online oder in einer Buchhandlung in der Nähe.',
+  'Look up the covers of a book': 'Die Cover eines Buchs nachschlagen',
+  'Gather covers you love into a collection of your own': 'Lieblingscover in einer eigenen Sammlung zusammentragen',
+  'Play the cover game: which one would you rather look at?': 'Das Cover-Spiel spielen: welches würdest du lieber ansehen?',
   'Start with a classic': 'Zum Einstieg ein paar Klassiker',
   'Collections': 'Sammlungen',
   'See all': 'Alle ansehen',
@@ -440,6 +448,9 @@ export const de: Readonly<Record<string, string>> = {
   // About, Impressum and privacy notice (6.85, 2026-10-04). Facts and legal bases stay literal;
   // the wording follows German usage for such pages („Anbieterkennzeichnung“, „Datenschutzerklärung“).
   'What this is': 'Was das hier ist',
+  'What is this game': 'Was dieses Spiel ist',
+  'This pair has an address of its own, which is why you were sent to it. Vote, and the game goes on with pairs drawn at random.':
+    'Dieses Paar hat eine eigene Adresse — deshalb bist du hier gelandet. Stimm ab, danach geht es mit zufällig gezogenen Paaren weiter.',
   'A book is printed again and again, often with a new cover each time. This site puts those covers side by side, by language and year, so you can find the edition you would want on your shelf.': 'Ein Buch wird immer wieder gedruckt, oft jedes Mal mit einem neuen Einband. Diese Seite stellt die Cover nebeneinander, nach Sprache und Jahr, damit du die Ausgabe findest, die du im Regal haben willst.',
   'Where the images come from': 'Woher die Bilder kommen',
   'Is one of these covers yours, and you want it off this site? Write to {email} with the address of the page, and it will be taken down. The image stays in the catalogue it came from; that is where it can be deleted.': 'Ist eines dieser Cover von dir und soll hier nicht mehr stehen? Schreib an {email} mit der Adresse der Seite, dann verschwindet es. Das Bild bleibt in dem Katalog, aus dem es kommt; löschen lässt es sich dort.',
