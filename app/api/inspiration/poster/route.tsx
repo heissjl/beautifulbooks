@@ -8,6 +8,7 @@ import { coverUrlFor } from '@/lib/coverurl';
 import { type BoardSize, filledCount, isFull, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
+import { captionLines } from '@/lib/inspiration/captionlines';
 import { mosaicGround } from '@/lib/inspiration/mosaicground';
 import { titleOf } from '@/lib/inspiration/share';
 import { SITE_URL } from '@/lib/seo';
@@ -230,12 +231,16 @@ function poster(format: PosterFormat, count: BoardSize, by: string, sub: string,
       */}
       <div style={{ position: 'absolute', left: head.x, top: head.y, width: head.width, height: head.height - type.title * 0.3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
         <div style={{ ...DISPLAY, display: 'flex', textAlign: 'center', fontSize: titleSize(title, type.title), lineHeight: 1.12, color: L.ink }}>{title}</div>
-        {sub && <div style={{ ...DISPLAY, ...ONE_LINE, display: 'flex', fontStyle: 'italic', fontSize: Math.round(type.title * 0.56), lineHeight: 1.25, marginTop: Math.round(type.title * 0.12), color: L.ink2 }}>{clip(sub, head.width, Math.round(type.title * 0.56))}</div>}
+        {/* 1.45, not 1.25: the line is cut to one with its overflow hidden, and that took the tail of the italic g (Julian, 2026-10-06). */}
+        {sub && <div style={{ ...DISPLAY, ...ONE_LINE, display: 'flex', fontStyle: 'italic', fontSize: Math.round(type.title * 0.56), lineHeight: 1.45, marginTop: Math.round(type.title * 0.12), color: L.ink2 }}>{clip(sub, head.width, Math.round(type.title * 0.56))}</div>}
       </div>
       <Tiles rects={P.tiles} images={images} look={look} />
       {captions && P.caption && P.tiles.map((r, i) => captions[i] && (
         <div key={i} style={{ position: 'absolute', left: r.x, top: r.y + r.height + 10, width: r.width, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.2, color: L.ink }}>{clip(captions[i]?.title ?? '', r.width, P.caption?.title ?? 24)}</div>
+          {/* Up to two lines of title, each its own line so the generator cannot wrap a third (captionLines). */}
+          {captionLines(captions[i]?.title ?? '', Math.floor(r.width / ((P.caption?.title ?? 24) * 0.5))).map((line, k) => (
+            <div key={k} style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.15, color: L.ink }}>{line}</div>
+          ))}
           <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
         </div>
       ))}

@@ -30,7 +30,7 @@ export interface PosterLayout {
    */
   type: { title: number; site: number; address: number };
   /** The room under each cover and its type sizes, or null when the picture carries no titles. */
-  caption: { height: number; title: number; author: number } | null;
+  caption: { height: number; title: number; author: number; rowGap: number } | null;
 }
 
 interface Spec {
@@ -67,10 +67,13 @@ export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number 
 };
 
 /**
- * How fewer than nine covers stand. Six: two wide and three high in a story,
- * which fills its height at the size nine have there (242 × 363), and three
- * wide and two high in a feed post, where they come out a third larger than
- * nine (308 × 462 against 222 × 333). Three: **one above and two below**
+ * How fewer than nine covers stand. Six: three wide and two high, in a story
+ * and in a post. In a story they stood two wide and three high until
+ * 2026-10-06 — as small as nine there (186 × 279 with titles), with a third of
+ * the width empty, because a story is short of height between Instagram's
+ * bands, not of width (Julian: „hier hätten die cover noch größer sein
+ * können"); three by two gives 304 × 456. In a post six come out a third
+ * larger than nine (308 × 462 against 222 × 333). Three: **one above and two below**
  * (Julian, 2026-10-05: „mach bei 3 bildern eines oben und 2 unten") in a story
  * and in a post alike — the first book stands alone at the top, and in a post
  * the covers come out larger than three side by side would (340 × 510 against
@@ -78,26 +81,36 @@ export const POSTER_SIZES: Record<PosterFormat, { width: number; height: number 
  * first row, not the last.
  */
 const GRID: Record<PosterFormat, Record<3 | 6 | 9, { cols: number; rows: number; lead?: boolean }>> = {
-  story: { 9: { cols: 3, rows: 3 }, 6: { cols: 2, rows: 3 }, 3: { cols: 2, rows: 2, lead: true } },
+  story: { 9: { cols: 3, rows: 3 }, 6: { cols: 3, rows: 2 }, 3: { cols: 2, rows: 2, lead: true } },
   feed: { 9: { cols: 3, rows: 3 }, 6: { cols: 3, rows: 2 }, 3: { cols: 2, rows: 2, lead: true } },
 };
 
-/** Room under each cover for its title and author, when the reader asks for them; type sizes go with it. */
-const CAPTION: Record<PosterFormat, { height: number; title: number; author: number }> = {
-  story: { height: 84, title: 27, author: 23 },
-  feed: { height: 70, title: 23, author: 20 },
+/**
+ * Room under each cover for its title and author, when the reader asks for
+ * them; type sizes go with it. **The title may take two lines** (Julian,
+ * 2026-10-06: „schaffen wir es ganze titel draufzuhaben?" — one line cut
+ * "Ways of Seeing" to "Ways of Seei…" under a 186 px cover). The second line
+ * is paid for with a smaller title and with `rowGap`: under a caption the
+ * rows need less air than bare covers, so nine covers in a story keep almost
+ * their size (184 × 276 against 186 × 279).
+ */
+const CAPTION: Record<PosterFormat, { height: number; title: number; author: number; rowGap: number }> = {
+  story: { height: 98, title: 24, author: 21, rowGap: 12 },
+  feed: { height: 80, title: 20, author: 18, rowGap: 10 },
 };
 
 export function posterLayout(format: PosterFormat, count: 3 | 6 | 9 = 9, captions = false): PosterLayout {
   const s = SPECS[format];
   const { cols, rows, lead } = GRID[format][count];
   const cap = captions ? CAPTION[format].height : 0;
-  const byHeight = Math.floor((s.height - s.head - s.foot - (rows - 1) * s.gap - rows * cap) / rows);
+  // Between rows: a caption already holds the rows apart.
+  const rowGap = captions ? CAPTION[format].rowGap : s.gap;
+  const byHeight = Math.floor((s.height - s.head - s.foot - (rows - 1) * rowGap - rows * cap) / rows);
   const byWidth = Math.floor(((s.width - 2 * s.margin - (cols - 1) * s.gap) / cols) * 1.5);
   // A multiple of three, so that width = height * 2/3 is a whole number exactly.
   const tileH = Math.min(byHeight, byWidth) - (Math.min(byHeight, byWidth) % 3);
   const tileW = (tileH / 3) * 2;
-  const gridH = rows * (tileH + cap) + (rows - 1) * s.gap;
+  const gridH = rows * (tileH + cap) + (rows - 1) * rowGap;
   // The grid sits in the middle of what head and foot leave.
   const y0 = s.head + Math.round((s.height - s.head - s.foot - gridH) / 2);
   // How many covers each row holds: full rows, and the one that is not full first or last.
@@ -107,7 +120,7 @@ export function posterLayout(format: PosterFormat, count: 3 | 6 | 9 = 9, caption
   perRow.forEach((inRow, row) => {
     const rowW = inRow * tileW + (inRow - 1) * s.gap;
     const x0 = Math.round((s.width - rowW) / 2);
-    for (let k = 0; k < inRow; k++) tiles.push({ x: x0 + k * (tileW + s.gap), y: y0 + row * (tileH + cap + s.gap), width: tileW, height: tileH });
+    for (let k = 0; k < inRow; k++) tiles.push({ x: x0 + k * (tileW + s.gap), y: y0 + row * (tileH + cap + rowGap), width: tileW, height: tileH });
   });
   return {
     width: s.width,

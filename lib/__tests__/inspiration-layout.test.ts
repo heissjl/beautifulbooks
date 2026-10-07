@@ -58,13 +58,28 @@ describe.each(['story', 'feed'] as PosterFormat[])('%s poster with six covers', 
   });
 });
 
-it('six covers stand two wide in a story and three wide in a post, where they are larger than nine', () => {
-  const story = posterLayout('story', 6);
-  const feed = posterLayout('feed', 6);
-  expect(new Set(story.tiles.map(t => t.x)).size).toBe(2);
-  expect(new Set(feed.tiles.map(t => t.x)).size).toBe(3);
-  expect(feed.tiles[0].width).toBeGreaterThan(posterLayout('feed', 9).tiles[0].width);
-  expect(story.tiles[0].width).toBe(posterLayout('story', 9).tiles[0].width);
+// Three wide in a story too since 2026-10-06: two wide left a third of the width empty and the covers as small as nine.
+it('six covers stand three wide and two high, larger than nine, with titles or without', () => {
+  for (const format of ['story', 'feed'] as const) {
+    for (const titles of [false, true]) {
+      const six = posterLayout(format, 6, titles);
+      expect(new Set(six.tiles.map(t => t.x)).size).toBe(3);
+      expect(new Set(six.tiles.map(t => t.y)).size).toBe(2);
+      expect(six.tiles[0].width).toBeGreaterThan(posterLayout(format, 9, titles).tiles[0].width);
+    }
+  }
+  expect(posterLayout('story', 6, true).tiles[0]).toMatchObject({ width: 304, height: 456 });
+});
+
+it('keeps two lines of title and the next row apart', () => {
+  for (const format of ['story', 'feed'] as const) {
+    const L = posterLayout(format, 9, true);
+    const cap = L.caption!;
+    // Ten pixels above the caption, two title lines at 1.15, one author line at 1.25.
+    expect(10 + 2 * cap.title * 1.15 + cap.author * 1.25).toBeLessThanOrEqual(cap.height);
+    const [a, , , b] = L.tiles;
+    expect(b.y - (a.y + a.height)).toBe(cap.height + cap.rowGap);
+  }
 });
 
 it('three covers stand one above and two below, in a story and in a post', () => {

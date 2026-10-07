@@ -34,8 +34,9 @@ export function titleOf(by: string): string {
  * month under its address; a new number here is how a changed line reaches
  * boards that were already shared. 4 since 2026-10-05: more room under the
  * covers, the card's words in the middle of their column, the mosaic ground.
+ * 5 since 2026-10-06: six in a story three by two, titles on two lines.
  */
-export const PICTURE_VERSION = 4;
+export const PICTURE_VERSION = 5;
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';
