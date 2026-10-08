@@ -12,7 +12,7 @@ The collection is read from a live snapshot (scripts/live-collections.ts),
 because the site lays online drafts over data/collections.json; the covers are
 Open Library's large images, fetched one at a time and cached in out/cache.
 
-    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain] [--first]
+    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain | --footer-only] [--first]
 """
 import json
 import os
@@ -108,7 +108,7 @@ def brand(d: ImageDraw.ImageDraw, right: int, top: int, size: int) -> int:
     return top + size
 
 
-def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None:
+def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_only: bool = False) -> None:
     data = json.load(open(live))
     records = data if isinstance(data, list) else data.get('collections', data.get('records'))
     coll = next(c for c in records if c['slug'] == slug)
@@ -150,7 +150,8 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None
     for line in intro_lines:
         d.text((MARGIN, y), line, font=intro_f, fill=MUTED)
         y += 62
-    if not plain:
+    # --footer-only: the site's name only at the foot, for forums wary of branding (Julian, 2026-10-08).
+    if not plain and not footer_only:
         b = brand(d, W - MARGIN, MARGIN + 10, 84)
         dom = font('jost', 40, 400)
         d.text((W - MARGIN - d.textlength('buyitscovers.com', font=dom), b + 28), 'buyitscovers.com', font=dom, fill=MUTED)
@@ -196,10 +197,10 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None
         brand(d, W - MARGIN, fy, 84)
 
     # --plain: the same picture without the site's name, for forums that refuse it (Julian, 2026-10-07).
-    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}{"-first" if first else ""}.jpg')
+    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}{"-footer" if footer_only else ""}{"-first" if first else ""}.jpg')
     img.save(out, quality=92)
     print('written', out, img.size)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:], '--first' in sys.argv[3:])
+    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:], '--first' in sys.argv[3:], '--footer-only' in sys.argv[3:])
