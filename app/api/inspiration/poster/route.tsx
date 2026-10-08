@@ -387,7 +387,7 @@ export async function GET(request: NextRequest) {
   // „mach die autoren und titel beim shelfportrait auf mosaik-hintergrund etwas besser lesbar"): small type on a field of
   // tiny covers at half its light was hard to read.
   const captionBands = layout?.caption && captions
-    ? layout.tiles.flatMap((r, i) => (captions[i] ? [{ x: r.x, y: r.y + r.height, width: r.width, height: (layout.caption?.height ?? 0) + 10, dark: 0.9 }] : []))
+    ? layout.tiles.flatMap((r, i) => (captions[i] ? [{ x: r.x, y: r.y + r.height, width: r.width, height: (layout.caption?.height ?? 0) + 10, dark: 0.72 }] : []))
     : [];
   const words = layout ? [layout.head, layout.foot, ...captionBands] : [cardPlan(count).words];
   const seed = board.slots.map((s) => s?.coverId ?? '').join();
