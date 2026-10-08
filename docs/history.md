@@ -5761,3 +5761,12 @@ Julian: „mach die autoren und titel beim shelfportrait auf mosaik-hintergrund 
 ## 2026-10-07 · Rechenzeit des Shelf-Portraits gemessen (ROADMAP 2.18r, K14)
 
 Julian: „ja, mach erst das messen". Das Shelf-Portrait hatte keine CPU-Klasse; seine Rechenzeit lief unter „Sonstiges". Jetzt drei Klassen in `CPU_ROUTES` (`lib/insights/cpu.ts`) mit Beschriftung in /admin/insights: **`portrait-picture`** „Shelf-Portrait: Story, Post, Link-Karte" (`/api/inspiration/poster` und damit `card.jpg`, das denselben Handler exportiert), **`portrait`** „Shelf-Portrait (API)" (board, browse, collections, covers, link; mit Abrufer-Klasse wie die API des Spiels) und **`page-portrait`** „Shelf-Portrait" (Editor, geteiltes Brett unter `/shelfportrait/<id>` und `/shelfportrait/board`). Die allgemeine Link-Karte von `/shelfportrait` bleibt unter „Vorschaukarten" (`og`). Test, dass die Summe die drei Klassen getrennt führt; am Dev-Server Bild, Seite und Liste je einmal aufgerufen, ohne Fehler. 1.521 Tests, tsc, ESLint. **Analyse:** das ist eine Analyse-Änderung (Punkt 7 der Liste in CLAUDE.md: neue Unterteilung von K14) — Plan §3 bei K14 ergänzt; gespeichert wird nichts Neues über Leser, nur Rechenzeit je Klasse.
+
+## 2026-10-07 · SF Masterworks: zwei Cover sind Nachdrucke, nicht die Erstausgabe (5.6b, Sammlung `sf-masterworks`)
+
+Ein Leser auf r/coolscificovers unter Julians Post: „The covers you have for The Forever War and More Than Human are not the original SF Masterwork covers for these books. They changed for later reprints.“ **Stimmt**, in der ISFDB nachgesehen (Publikationsreihe „Millennium / Gollancz SF Masterworks“, pubseries 8):
+
+- *The Forever War* (#1, ISBN 1857988086): der Erstdruck 1999 (pl 109731) zeigt ein Raumschiff, Chris Moore (Variante von *The Buchanan Campaign*, 1995); dasselbe Bild bis 2003. Die Sammlung zeigt den Soldaten mit Helm, das ist der Druck von 2004 (pl 293643, ebenfalls Chris Moore, Bild von 2002). Die Künstlerangabe stimmt also, das Cover ist ein späteres.
+- *More Than Human* (#28, ISBN 1857988523): Erstdruck April 2000 (pl 111081) von Fred Gambino, Kinder vor einer roten Kugel; die Sammlung zeigt das Auge, den Druck von 2003 (pl 253295) von Chris Moore. Bei uns stand kein Künstler.
+
+Ursache: die Sammlung holt das Cover über die ISBN, und Open Library hat zu dieser ISBN das Bild eines Nachdrucks — derselbe Fall, den die Seite selbst erklärt (gleiche ISBN, anderes Cover). Andere Bände können genauso betroffen sein; geprüft sind nur diese zwei.
