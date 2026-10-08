@@ -220,6 +220,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **X Premium? (Julian, 2026-10-07: „should i buy an x subscription for a month? would that help?“)** Empfehlung: nein, nicht jetzt. Premium hebt vor allem Antworten in fremden Threads und das Häkchen; es bringt keine Follower, und ein Post erreicht weiter vor allem die eigenen, das sind fast null. Lohnen würde es sich nur zusammen mit täglichem Antworten unter großen Buch- und Design-Konten — ein Monat Arbeit, nicht ein Kauf. Dieselbe Zeit bringt bei den Gestaltern und Blogs (3) mehr.
 
+**Schritt 3 gestrichen (Julian, 2026-10-07: „ich glaube damit holen wir uns nur rechtliche probleme etc“).** Gestalter, Verlage und Blogs über Buchgestaltung nicht anschreiben und nicht markieren: wer die Rechte an den gezeigten Covern hält, soll nicht durch uns auf die Seite gestoßen werden, solange die Rechte-Entscheidung (PLAN-5.5-5.6 §6 Frage 1) offen ist. Die fünf Mails aus §2 entfallen damit vorerst. Es bleiben Wege, die sich an Leser richten: Shelf-Portraits der Freunde (4), Antworten auf Bluesky (5), MetaFilter Projects, später HN und Reddit, und die Suche (6).
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
