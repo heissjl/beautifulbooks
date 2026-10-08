@@ -35,8 +35,9 @@ export function titleOf(by: string): string {
  * boards that were already shared. 4 since 2026-10-05: more room under the
  * covers, the card's words in the middle of their column, the mosaic ground.
  * 5 since 2026-10-06: six in a story three by two, titles on two lines.
+ * 6 since 2026-10-07: on the mosaic, the field darker behind the captions.
  */
-export const PICTURE_VERSION = 5;
+export const PICTURE_VERSION = 6;
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';
