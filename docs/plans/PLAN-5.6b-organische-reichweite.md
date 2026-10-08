@@ -209,6 +209,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 5. **Auf Bluesky antworten statt nur posten:** in Buch- und Design-Threads (BookSky) mitreden, wo ein Cover-Vergleich passt; Hashtags für die Buch-Feeds. Wenige echte Antworten am Tag.
 6. **Geduld bei Suche und Pinterest:** 875 Seiten in der Sitemap, die Werkseiten bringen Besucher über Wochen, nicht Tage.
 
+**Nachtrag 2026-10-07: Show HN geht noch nicht.** Julian: „show hn lässt mich noch nicht posten als neuling auf dem forum“. HN drosselt Show HN neuer Konten seit der Debatte im März 2026 („Ask HN: Please restrict new accounts from posting“). Wege: (a) Karma sammeln, ehrliche Kommentare über ein, zwei Wochen, dann erneut; (b) jemand mit älterem Konto reicht den Link ein — erlaubt, Stimmen organisieren nicht; (c) ein gewöhnlicher Link ohne „Show HN:“ unterliegt vielleicht nicht derselben Sperre, ungeprüft. **Ähnliche Orte** statt dessen: MetaFilter Projects (projects.metafilter.com; Selbstlinks ausdrücklich erlaubt, braucht ein MetaFilter-Konto, jeder Post geht durch die Moderation, einer im Monat; gute Projekte holt die Gemeinschaft auf die Startseite), Reddit r/InternetIsBeautiful und r/SideProject, Lobsters und Tildes (nur mit Einladung, eher Technik), Indie Hackers, Product Hunt (§2, zuletzt). Für Buchgestaltung eher Menschen als Foren: Blogs und Newsletter aus §2.
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
