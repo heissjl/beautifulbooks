@@ -17,6 +17,8 @@ SHOTS = os.path.join(HERE, 'out', 'reddit')
 
 # Order on the page, where each one goes, and which screenshots belong to it.
 POSTS = [
+    ('x-9books-replies', 'X: Antworten in der 9-Bücher-Welle', 'Antworten, du postest selbst', 'Heute posten, solange die Threads warm sind. Höchstens fünf bis zehn am Tag, keine Automatik.', []),
+    ('bsky-9books-replies', 'Bluesky: Antworten in der 9-Bücher-Welle', 'Antworten und ein eigener Post', 'Kleinere Welle, Links schaden hier nicht.', []),
     ('reddit-claudeai', 'r/ClaudeAI', 'Kommentar im Megathread „Built with Claude“', 'Keine Karma-Grenze. Der beste erste Beitrag für ein neues Konto.', []),
     ('reddit-vibecoding', 'r/vibecoding', 'Text-Post, Projekt', 'Projektposts müssen Werkzeuge, Ablauf und Einsichten nennen.', []),
     ('reddit-bookcoverporn', 'r/bookcoverporn', 'Bild-Post, Text als erster Kommentar', 'Regeln nicht gefunden: Seitenleiste lesen, ob Bildschirmfotos und ein eigener Link erlaubt sind.', ['sf-masterworks', '1984-decades']),
@@ -66,7 +68,7 @@ def main(out: str) -> None:
             fields.append(block('URL', 'https://buyitscovers.com', f'{pid}-url'))
         fields.append(block('Text', text, f'{pid}-text'))
         figs = ''.join(img(s) for s in shots)
-        status = 'wartet auf Reddit-Konto' if 'konto:reddit' in p.get('needs', []) else 'wartet auf HN-Karma'
+        status = ('wartet auf Reddit-Konto' if 'konto:reddit' in p.get('needs', []) else 'wartet auf HN-Karma' if p['channel'] == 'hn' else 'jetzt')
         sections.append(
             f'<section id="{pid}"><header><h2>{html.escape(place)}</h2>'
             f'<p class="meta"><span class="pill">{status}</span> {html.escape(form)}</p>'
@@ -117,7 +119,7 @@ figcaption { font-size: .8rem; color: var(--muted); margin-top: 6px; overflow-wr
 </style>
 <div class="wrap">
 <h1>Forum-<em>Beiträge</em></h1>
-<p class="lede">Alle vorbereiteten Beiträge für Reddit und Hacker News, aus dem Kalender (<code>lab/kalender/posts.json</code>). Reddit braucht zuerst ein Konto mit eigener Geschichte, HN etwas Karma. Bildschirmfotos der Live-Seite vom 7. Oktober; die Originale liegen lokal.</p>
+<p class="lede">Die Antworten für die 9-Bücher-Welle auf X und Bluesky, dann alle vorbereiteten Beiträge für Reddit und Hacker News, aus dem Kalender (<code>lab/kalender/posts.json</code>). Reddit braucht zuerst ein Konto mit eigener Geschichte, HN etwas Karma. Bildschirmfotos der Live-Seite vom 7. Oktober; die Originale liegen lokal.</p>
 <nav>{{NAV}}</nav>
 {{SECTIONS}}
 </div>

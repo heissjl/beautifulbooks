@@ -1383,6 +1383,24 @@
         "konto:reddit"
       ],
       "note": "Kommentar im Megathread „Built with Claude“ von r/ClaudeAI (keine Karma-Grenze; eigene Posts im Feed erst ab 50 Karma, Regel 7). Guter erster Beitrag für ein neues Konto."
+    },
+    {
+      "id": "x-9books-replies",
+      "date": "2026-10-07",
+      "channel": "x",
+      "kind": "answer",
+      "status": "vorschlag",
+      "text": "Antworten in der Welle „9 books I'll never forget“ (gesucht 2026-10-07 abends; am selben Tag posten, sonst sind die Threads kalt). Julian postet selbst, höchstens fünf bis zehn am Tag. Bild = dein eigenes Shelf-Portrait (aufrichtig, nicht das Starter-Pack), Link nur, wo er passt — X zeigt Antworten mit Link schlechter.\n\n1) @paulnovosad — „There are only 9 books you will ever need“ (neunmal Mas-Colell/Whinston/Green), 13 k Aufrufe\nhttps://x.com/paulnovosad/status/2107827227966529678\nNine copies of MWG and not one of them in a different cover. Missed opportunity.\n[optional, erst prüfen, ob die Wand mehrere Cover zeigt: buyitscovers.com/?q=microeconomic+theory]\n\n2) @mattyglesias — neun Jack-Reacher-Bände als „books that formed my character“, 27 k Aufrufe\nhttps://x.com/mattyglesias/status/2107893456349913514\nNine Reachers and they all wear the same Lee Child font. Killing Floor alone has had more faces than that.\n[optional, erst prüfen: buyitscovers.com/?q=killing+floor]\n\n3) @chapterlviii — „the nine books i'll never forget“, nennt die Ausgaben (Penguin Classics, Clockwork Editions), 6 k Aufrufe\nhttps://x.com/chapterlviii/status/2107736487152189940\nLove that you named the editions. That's exactly what these grids lose: the Penguin Classics Northanger Abbey isn't the same book on the shelf as any other. I made a version where each of the nine is the cover you actually own: buyitscovers.com/shelfportrait\n\n4) @OsoBlanc0 — „here's nine books I've loved at various times in my life“\nhttps://x.com/OsoBlanc0/status/2107958110677795067\n„Loved at various times“ is the better framing. Mine, in the editions I read them in: [Bild]\n\n5) @The_Pequod_ — „Top 9 books at the moment…“\nhttps://x.com/The_Pequod_/status/2107897209513505173\nGood list. Mine at the moment, in the covers I'd actually want on the shelf: [Bild]\n\n6) @CultivatedBooks — „9 books I'll never forget“\nhttps://x.com/CultivatedBooks/status/2107951810883588160\n[ein Satz zu einem Buch, das ihr beide habt, wenn es eins gibt] + Mine: [Bild]\n\n7) @literalbanana — „nine books I'll never forget 😇“ (frisch, 1 Std.)\nhttps://x.com/literalbanana/status/2108040156918026702\n[nur antworten, wenn dir zu der Liste wirklich etwas einfällt]\n\nEigener Post dazu (Zitat des Trends oder frei):\nThe 9 books I'll never forget, but in the editions I'd actually want on my shelf. Made it here: buyitscovers.com/shelfportrait\n[Bild: dein Shelf-Portrait]",
+      "note": "Julian, 2026-10-07: „ja, such die threads raus und entwirf antworten / auch auf bsky“. Keine automatisierten Antworten (PLAN-5.6b §6a). Gefunden mit der X-Suche („nine books“ OR „9 books“ OR myninebooks OR my9books, seit 2026-10-05, min. 50 Likes). Die meisten Raster kommen von myninebooks.com: kleine Verlagscover auf Weiß — der Unterschied des Shelf-Portraits ist die gewählte Ausgabe."
+    },
+    {
+      "id": "bsky-9books-replies",
+      "date": "2026-10-07",
+      "channel": "bluesky",
+      "kind": "answer",
+      "status": "vorschlag",
+      "text": "Auf Bluesky ist die Welle kleiner, aber Links schaden dort nicht. Gesucht 2026-10-07.\n\n1) Jarrett Walker (@humantransit.bsky.social) — „Nine books that stay with me. Fiction only.“ mit myninebooks-Link\nhttps://bsky.app/profile/humantransit.bsky.social/post/3mxclgr5xk22b\nGood list. If you ever want them in the editions you actually read, I built a version where you pick each book's cover: buyitscovers.com/shelfportrait\n\n2) Roz (@rozmilner.bsky.social) — „my nine books“\nhttps://bsky.app/profile/rozmilner.bsky.social/post/3mxdb6z7cac2z\n[ein Satz zur Liste] Mine, in the covers I read them in: [Bild]\n\n3) W.E.D.em Boyz (@leftistwonk.bsky.social) — „My nine books“\nhttps://bsky.app/profile/leftistwonk.bsky.social/post/3mxcn4xyyyc2k\n[ein Satz zur Liste] + [Bild]\n\n4) Baskerville (@baskerville.bsky.social) — „Nine books“\nhttps://bsky.app/profile/baskerville.bsky.social/post/3mxcjnugtmk27\n\n5) zal-cryptid — „my nine books“ (frisch)\nhttps://bsky.app/profile/zal-cryptid.bsky.social/post/3mxdi66clik2m\n\nEigener Post:\nMy nine books, each in the edition I'd want on the shelf, not whichever cover a shop shows first. Make yours: buyitscovers.com/shelfportrait #booksky\n[Bild: dein Shelf-Portrait, Alt-Text mit den neun Titeln]\n\nNicht antworten: John Zeleznik (@johnzeleznikauthor) — Illustrator, also Rechteinhaber (Regel vom 2026-10-07).",
+      "note": "Wie oben, Bluesky-Suche „nine books“ (Top)."
     }
   ]
 }

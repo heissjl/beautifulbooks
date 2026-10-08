@@ -229,6 +229,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **Agentisch skalieren? (Julian, 2026-10-07: „ich habe das versucht, aber bekomme selbst nicht genug views damit. gibt es eine möglichkeit das agentisch zu skalieren?“)** Nein für Antworten in Masse: automatisierte, ungebetene Antworten und Erwähnungen verbieten die Automatisierungsregeln von X, sie gelten als Plattform-Manipulation, und das Konto wird gesperrt — der Kanal wäre verloren. Was geht: Claude sucht die passenden Threads der Welle (große Konten, frische Posts mit Antworten), schreibt je einen eigenen Entwurf auf den konkreten Post, Julian postet selbst, wenige am Tag. Und eigene Inhalte darf eine Automatisierung posten (geplante Posts, das eigene Konto).
 
+**Idee r/badscificovers (Julian, 2026-10-07: „we could collect bad sci fi covers to post on here“).** Passt: SF ist die stärkste Sammlung der Seite, und die Wände der Klassiker (SF Masterworks) zeigen neben den schönen auch sehr schlechte Ausgaben. Vorgehen: Kandidaten von den Wänden sammeln (gemächlich, Open Library nicht in Schüben), je Post ein Cover mit Titel, Jahr und Verlag, die Seite nur im Kommentar. Wartet wie alle Reddit-Posts auf `konto:reddit`. Rechte: Spott über ein fremdes Cover zieht eher Aufmerksamkeit der Gestalter an als ein schönes — Julians Abwägung.
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
