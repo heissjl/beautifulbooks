@@ -26,6 +26,7 @@ import {
   swap,
 } from '@/lib/inspiration/board';
 import type { BrowseList, BrowseWork } from '@/lib/inspiration/browse';
+import type { CollectionEntry } from '@/lib/inspiration/collectionbrowse';
 import { isStarter, type Starter } from '@/lib/inspiration/starters';
 import type { WorkCovers } from '@/lib/inspiration/covers';
 import type { SearchResult } from '@/lib/search';
@@ -729,14 +730,48 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
   );
 }
 
+/**
+ * The third list: one of the published collections, chosen from a dropdown
+ * that is itself the third pill (Julian, 2026-10-07: „third pill, with
+ * dropdown"). The index comes with the first look at the lists; a
+ * collection's books come when it is chosen, each with the cover the
+ * collection picked for it.
+ */
+type CollectionIndex = { state: 'loading' } | { state: 'done'; entries: CollectionEntry[] } | { state: 'failed' };
+type CollectionBooks = { slug: string; state: 'loading' } | { slug: string; state: 'done'; title: string; works: BrowseWork[] } | { slug: string; state: 'failed' };
+
 function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Board; onPick: (work: BrowseWork) => void; onRetry: () => void }) {
-  const [listId, setListId] = useState<BrowseList['id']>('curated');
+  const [listId, setListId] = useState<BrowseList['id'] | 'collection'>('curated');
   const [filter, setFilter] = useState('');
   // How many rows are drawn, per list and filter: a new key starts at the first chunk without an effect.
   const [more, setMore] = useState<{ key: string; count: number }>({ key: '', count: CHUNK });
   const sentinel = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState<CollectionIndex | null>(null);
+  const [books, setBooks] = useState<CollectionBooks | null>(null);
 
-  const list = lists.state === 'done' ? lists.lists.find((l) => l.id === listId) ?? lists.lists[0] : null;
+  const listsLoaded = lists.state === 'done';
+  useEffect(() => {
+    if (!listsLoaded || index) return;
+    let gone = false;
+    fetch('/api/inspiration/collections')
+      .then((r) => (r.ok ? (r.json() as Promise<{ collections: CollectionEntry[] }>) : Promise.reject(new Error(String(r.status)))))
+      .then((d) => !gone && setIndex({ state: 'done', entries: d.collections }), () => !gone && setIndex({ state: 'failed' }));
+    return () => { gone = true; };
+  }, [listsLoaded, index]);
+
+  const chooseCollection = (slug: string) => {
+    if (!slug) return;
+    setListId('collection');
+    if (books?.slug === slug && books.state !== 'failed') return;
+    setBooks({ slug, state: 'loading' });
+    fetch(`/api/inspiration/collections?c=${encodeURIComponent(slug)}`)
+      .then((r) => (r.ok ? (r.json() as Promise<{ title: string; works: BrowseWork[] }>) : Promise.reject(new Error(String(r.status)))))
+      .then((d) => setBooks((b) => (b?.slug === slug ? { slug, state: 'done', title: d.title, works: d.works } : b)),
+        () => setBooks((b) => (b?.slug === slug ? { slug, state: 'failed' } : b)));
+  };
+
+  const shown = listId === 'collection' && books?.state === 'done' ? { id: 'collection' as const, works: books.works, builtAt: undefined } : null;
+  const list = lists.state === 'done' ? (listId === 'collection' ? shown : lists.lists.find((l) => l.id === listId) ?? lists.lists[0]) : null;
   const needle = plain(filter.trim());
   const rows = list ? (needle ? list.works.filter((w) => plain(`${w.title} ${w.author}`).includes(needle)) : list.works) : [];
   const key = `${list?.id ?? ''}|${needle}`;
@@ -760,19 +795,43 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
       </p>
     );
   }
-  if (!list) return <p className="text-sm text-ink-2" role="status">Loading the lists…</p>;
+  if (lists.state !== 'done') return <p className="text-sm text-ink-2" role="status">Loading the lists…</p>;
 
   const onBoard = new Set(board.slots.flatMap((s) => (s ? [s.workId] : [])));
   const n = total.toLocaleString('en');
   return (
     <>
       <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Which list">
-        {lists.state === 'done' && lists.lists.map((l) => (
-          <button key={l.id} type="button" role="tab" aria-selected={l.id === list.id} onClick={() => setListId(l.id)} className={pill(l.id === list.id)}>
+        {lists.lists.map((l) => (
+          <button key={l.id} type="button" role="tab" aria-selected={l.id === listId} onClick={() => setListId(l.id)} className={pill(l.id === listId)}>
             {LIST_LABELS[l.id]}
           </button>
         ))}
+        {/* The third pill is the dropdown itself: a phone opens its own picker for a native select. */}
+        {index?.state === 'done' && index.entries.length > 0 && (
+          <span className="relative inline-flex">
+            <select
+              aria-label="Browse a collection"
+              value={listId === 'collection' && books ? books.slug : ''}
+              onChange={(e) => chooseCollection(e.target.value)}
+              onClick={() => listId !== 'collection' && books && books.state !== 'failed' && setListId('collection')}
+              className={`${pill(listId === 'collection')} max-w-[16rem] appearance-none truncate pr-8`}
+            >
+              <option value="" disabled>A collection</option>
+              {index.entries.map((e) => <option key={e.slug} value={e.slug}>{e.title} ({e.count})</option>)}
+            </select>
+            <span aria-hidden="true" className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs ${listId === 'collection' ? 'text-bg' : 'text-ink-3'}`}>▾</span>
+          </span>
+        )}
       </div>
+      {listId === 'collection' && books?.state === 'loading' && <p className="mt-3 text-sm text-ink-2" role="status">Loading the collection…</p>}
+      {listId === 'collection' && books?.state === 'failed' && (
+        <p className="mt-3 text-sm text-ink-2" role="status">
+          The collection did not load.{' '}
+          <button type="button" onClick={() => chooseCollection(books.slug)} className="text-accent underline underline-offset-4">Try again</button>
+        </p>
+      )}
+      {list && <>
       <input
         type="search"
         value={filter}
@@ -785,6 +844,7 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
       <p className="mt-2 text-sm text-ink-2" role="status">
         {needle
           ? total > 0 ? `${n} of ${list.works.length.toLocaleString('en')} match.` : 'Nothing in this list matches. The Search tab asks Open Library’s whole catalogue.'
+          : list.id === 'collection' ? `${n} ${total === 1 ? 'book' : 'books'} from the collection “${books?.state === 'done' ? books.title : ''}”, each with the cover chosen for it there.`
           : list.id === 'curated' ? `${n} books the site picked a cover for by eye.`
           : `${n} works Open Library’s readers marked as read most often, most read first${list.builtAt ? ` (list of ${list.builtAt})` : ''}.`}
       </p>
@@ -810,6 +870,7 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
           <button type="button" onClick={() => setMore({ key, count: count + CHUNK })} className="btn">Show more</button>
         </div>
       )}
+      </>}
     </>
   );
 }

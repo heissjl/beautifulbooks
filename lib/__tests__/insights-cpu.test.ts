@@ -120,6 +120,11 @@ describe('the CPU summary', () => {
     expect(cpu.rows.length).toBe(3);
   });
 
+  it('counts the Shelf-Portrait in its own classes, its pictures apart from its API (2.18r)', () => {
+    const cpu = summarizeCpu(['2026-10-07'], [{ 'portrait-picture|browser|cpu': 2_500_000, 'portrait-picture|browser|n': 1, 'portrait|browser|cpu': 40_000, 'page-portrait|page|cpu': 90_000 }]);
+    expect(cpu.byRoute.map(r => [r.route, r.cpu])).toEqual([['portrait-picture', 2_500_000], ['page-portrait', 90_000], ['portrait', 40_000]]);
+  });
+
   it('is empty for days without a hash', () => {
     expect(summarizeCpu(days, [null, {}]).cpu).toBe(0);
   });

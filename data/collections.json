@@ -5,7 +5,7 @@
       "slug": "feminist-press",
       "title": "Feminist Press",
       "kind": "authors",
-      "intro": "https://feministpress.org/",
+      "intro": "The Feminist Press was founded in New York in 1970 by Florence Howe to bring writing by women back into print — Charlotte Perkins Gilman's The Yellow Wallpaper, Agnes Smedley's Daughter of Earth — and went on to publish new writers and women writing in translation. These are books from its list, gathered from a reader's list on Open Library; the cover shown is not always the Feminist Press printing. The press: https://feministpress.org/",
       "published": true,
       "authors": [
         {
@@ -542,15 +542,6 @@
           "addedAt": "2026-09-26",
           "from": "list:hopeevey/OL203409L",
           "coverIsbn": "1558611371"
-        },
-        {
-          "id": "OL3496522W",
-          "title": "The living is easy",
-          "author": "Mary Christopher",
-          "coverId": "ol:7901586",
-          "addedAt": "2026-09-26",
-          "from": "list:hopeevey/OL203409L",
-          "coverIsbn": "0912670975"
         },
         {
           "id": "OL1938675W",
@@ -4271,7 +4262,7 @@
       "slug": "edition-suhrkamp",
       "title": "edition suhrkamp",
       "kind": "series",
-      "intro": "",
+      "intro": "Suhrkamp's edition suhrkamp, begun in 1963 in Willy Fleckhaus's design: a plain cover set only in type, in forty-eight colours that run through the spectrum from volume to volume, so that forty-eight books side by side make a rainbow. The wall shows volumes from the 1970s and 1980s in number order, where Open Library has the cover.",
       "published": true,
       "publishers": [
         "Suhrkamp",
@@ -6062,8 +6053,8 @@
       "slug": "penguin-clothbound-classics",
       "title": "Penguin Clothbound Classics",
       "kind": "series",
-      "intro": "",
-      "published": false,
+      "intro": "From 2008 Coralie Bickford-Smith dressed Penguin's classics in cloth: a pattern taken from a motif of the book, stamped in foil and repeated across coloured cloth.",
+      "published": true,
       "publishers": [
         "Penguin",
         "Penguin Classics",
@@ -6582,7 +6573,7 @@
       "slug": "tiptree-award",
       "title": "The Otherwise Award",
       "kind": "authors",
-      "intro": "https://otherwiseaward.org/",
+      "intro": "The Otherwise Award, founded in 1991 by Pat Murphy and Karen Joy Fowler as the James Tiptree, Jr. Award and renamed in 2019, goes each year to science fiction and fantasy that explores and expands our understanding of gender. One cover per winning book, from China Mountain Zhang to Rakesfall. The award: https://otherwiseaward.org/",
       "published": true,
       "authors": [
         {
@@ -7288,7 +7279,7 @@
       "slug": "hugo-award-novel",
       "title": "Hugo Award — best novel",
       "kind": "authors",
-      "intro": "",
+      "intro": "The Hugo Award for best novel, voted each year since 1953 by the members of the World Science Fiction Convention. One cover per winning novel in year order, from The Demolished Man, the first winner, to Dune, The Left Hand of Darkness, Neuromancer and the three books of N. K. Jemisin's Broken Earth, which won three years running.",
       "published": true,
       "authors": [
         {
@@ -7618,18 +7609,18 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL53404W",
-          "title": "A Case of Conscience",
-          "author": "James Blish",
-          "coverId": "ol:5540783",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL101943W",
           "title": "The Big Time",
           "author": "Fritz Leiber",
           "coverId": "ol:8784820",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL53404W",
+          "title": "A Case of Conscience",
+          "author": "James Blish",
+          "coverId": "ol:5540783",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7682,14 +7673,6 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL59704W",
-          "title": "The moon is a harsh mistress",
-          "author": "Robert A. Heinlein",
-          "coverId": "ol:14631258",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL893414W",
           "title": "Dune",
           "author": "Frank Herbert",
@@ -7702,6 +7685,14 @@
           "title": "This Immortal",
           "author": "Roger Zelazny",
           "coverId": "ol:8775174",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL59704W",
+          "title": "The moon is a harsh mistress",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14631258",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7754,14 +7745,6 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL58710W",
-          "title": "Startide Rising",
-          "author": "David Brin",
-          "coverId": "ol:12384344",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL17417W",
           "title": "Rendezvous with Rama",
           "author": "Arthur C. Clarke",
@@ -7794,14 +7777,6 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL46302W",
-          "title": "Foundation's Edge",
-          "author": "Isaac Asimov",
-          "coverId": "ol:6700720",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL60924W",
           "title": "Gateway",
           "author": "Frederik Pohl",
@@ -7810,18 +7785,18 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL17403W",
-          "title": "The Fountains of Paradise",
-          "author": "Arthur C. Clarke",
-          "coverId": "ol:6449963",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL1921526W",
           "title": "Dreamsnake",
           "author": "Vonda N. McIntyre",
           "coverId": "ol:7267148",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17403W",
+          "title": "The Fountains of Paradise",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:6449963",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7838,6 +7813,22 @@
           "title": "Downbelow station",
           "author": "C. J. Cherryh",
           "coverId": "ol:683236",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL46302W",
+          "title": "Foundation's Edge",
+          "author": "Isaac Asimov",
+          "coverId": "ol:6700720",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL58710W",
+          "title": "Startide Rising",
+          "author": "David Brin",
+          "coverId": "ol:12384344",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7946,14 +7937,6 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL24832396W",
-          "title": "Hyperion [2/2]",
-          "author": "Dan Simmons",
-          "coverId": "ol:980225",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL81649W",
           "title": "Blue Mars",
           "author": "Kim Stanley Robinson",
@@ -7962,18 +7945,18 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
-          "id": "OL14858392W",
-          "title": "To Say Nothing of the Dog",
-          "author": "Connie Willis",
-          "coverId": "ol:982148",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
           "id": "OL271152W",
           "title": "Forever Peace",
           "author": "Joe Haldeman",
           "coverId": "ol:283721",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL14858392W",
+          "title": "To Say Nothing of the Dog",
+          "author": "Connie Willis",
+          "coverId": "ol:982148",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -7990,14 +7973,6 @@
           "title": "Harry Potter and the Goblet of Fire",
           "author": "J. K. Rowling",
           "coverId": "ol:12059372",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
-          "id": "OL5703422W",
-          "title": "Jonathan Strange and Mr. Norrell",
-          "author": "Susanna Clarke",
-          "coverId": "ol:525391",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -8026,6 +8001,14 @@
           "from": "subject:award:hugo_award=novel"
         },
         {
+          "id": "OL5703422W",
+          "title": "Jonathan Strange and Mr. Norrell",
+          "author": "Susanna Clarke",
+          "coverId": "ol:525391",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
           "id": "OL14951012W",
           "title": "Spin",
           "author": "Robert Charles Wilson",
@@ -8046,14 +8029,6 @@
           "title": "The Yiddish Policemen's Union",
           "author": "Michael Chabon",
           "coverId": "ol:12745258",
-          "addedAt": "2026-09-26",
-          "from": "subject:award:hugo_award=novel"
-        },
-        {
-          "id": "OL17267881W",
-          "title": "三体",
-          "author": "刘慈欣",
-          "coverId": "ol:9157544",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -8110,6 +8085,14 @@
           "title": "Ancillary Justice",
           "author": "Ann Leckie",
           "coverId": "ol:7355949",
+          "addedAt": "2026-09-26",
+          "from": "subject:award:hugo_award=novel"
+        },
+        {
+          "id": "OL17267881W",
+          "title": "三体",
+          "author": "刘慈欣",
+          "coverId": "ol:9157544",
           "addedAt": "2026-09-26",
           "from": "subject:award:hugo_award=novel"
         },
@@ -8200,7 +8183,7 @@
       "slug": "sf-masterworks-rounded",
       "title": "SF Masterworks — the rounded-corner editions (2006)",
       "kind": "series",
-      "intro": "",
+      "intro": "In 2006 Gollancz reissued ten of the SF Masterworks with rounded corners and new covers, all ten by Marc Adams as ISFDB credits them.",
       "published": true,
       "publishers": [
         "Gollancz"
@@ -8343,8 +8326,8 @@
       "slug": "sf-masterworks-relaunch-international",
       "title": "SF Masterworks — international relaunch covers",
       "kind": "series",
-      "intro": "",
-      "published": false,
+      "intro": "The books of the SF Masterworks relaunch, in other languages: each tile is the cover of a translation, as a French, German, Spanish, Russian, Italian, Polish or Japanese publisher dressed the same novel. In the order of the relaunch list, where Open Library holds a translated edition with a cover. Where ISFDB names the cover artist, the name is under the tile.",
+      "published": true,
       "coverCredits": "isfdb",
       "coverSource": "catalogue",
       "publishers": [],
@@ -8459,11 +8442,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL9041083M",
           "coverIsbn": "9783453164185",
-          "coverWork": "OL1819342W",
           "coverArtists": [
             "Jürgen Rogner"
           ],
-          "isfdbRecord": "567199"
+          "isfdbRecord": "567199",
+          "coverWork": "OL1819342W"
         },
         {
           "id": "OL2172402W",
@@ -8549,11 +8532,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL8864496M",
           "coverIsbn": "9782207250587",
-          "coverWork": "OL7917371W",
           "coverArtists": [
             "Stéphane Barry"
           ],
-          "isfdbRecord": "332588"
+          "isfdbRecord": "332588",
+          "coverWork": "OL7917371W"
         },
         {
           "id": "OL56835W",
@@ -8576,11 +8559,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:dut:OL32851971M",
           "coverIsbn": "9789027471246",
-          "coverWork": "OL24744170W",
           "coverArtists": [
             "Han Pieko"
           ],
-          "isfdbRecord": "366072"
+          "isfdbRecord": "366072",
+          "coverWork": "OL24744170W"
         },
         {
           "id": "OL59858W",
@@ -8613,11 +8596,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL35674554M",
           "coverIsbn": "9783426057506",
-          "coverWork": "OL26419808W",
           "coverArtists": [
             "Stanislaw Fernandes"
           ],
-          "isfdbRecord": "390186"
+          "isfdbRecord": "390186",
+          "coverWork": "OL26419808W"
         },
         {
           "id": "OL3332541W",
@@ -8697,11 +8680,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL8864612M",
           "coverIsbn": "9782207500958",
-          "coverWork": "OL892413W",
           "coverArtists": [
             "Thierry Mebarkhi"
           ],
-          "isfdbRecord": "567839"
+          "isfdbRecord": "567839",
+          "coverWork": "OL892413W"
         },
         {
           "id": "OL2172408W",
@@ -9112,11 +9095,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL29490486M",
           "coverIsbn": "9782277229070",
-          "coverWork": "OL21679260W",
           "coverArtists": [
             "Barclay Shaw"
           ],
-          "isfdbRecord": "593207"
+          "isfdbRecord": "593207",
+          "coverWork": "OL21679260W"
         },
         {
           "id": "OL19209380W",
@@ -9149,11 +9132,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL27304754M",
           "coverIsbn": "9783870704391",
-          "coverWork": "OL20124815W",
           "coverArtists": [
             "Bob Atkins"
           ],
-          "isfdbRecord": "425280"
+          "isfdbRecord": "425280",
+          "coverWork": "OL20124815W"
         },
         {
           "id": "OL46395W",
@@ -9232,11 +9215,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL27088950M",
           "coverIsbn": "9783453521865",
-          "coverWork": "OL5724838W",
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "421139"
+          "isfdbRecord": "421139",
+          "coverWork": "OL5724838W"
         },
         {
           "id": "OL17402W",
@@ -9584,11 +9567,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL16169786M",
           "coverIsbn": "2266027204",
-          "coverWork": "OL10571538W",
           "coverArtists": [
             "W. Siudmak"
           ],
-          "isfdbRecord": "338704"
+          "isfdbRecord": "338704",
+          "coverWork": "OL10571538W"
         },
         {
           "id": "OL17415602W",
@@ -9806,11 +9789,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:fre:OL24981328M",
           "coverIsbn": "9782277241348",
-          "coverWork": "OL16084868W",
           "coverArtists": [
             "Hubert de Lartigue"
           ],
-          "isfdbRecord": "374434"
+          "isfdbRecord": "374434",
+          "coverWork": "OL16084868W"
         },
         {
           "id": "OL2643429W",
@@ -9848,11 +9831,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL24335292M",
           "coverIsbn": "3453305841",
-          "coverWork": "OL15348351W",
           "coverArtists": [
             "Eddie Jones"
           ],
-          "isfdbRecord": "470975"
+          "isfdbRecord": "470975",
+          "coverWork": "OL15348351W"
         },
         {
           "id": "OL1960375W",
@@ -10024,11 +10007,11 @@
           "addedAt": "2026-09-26",
           "from": "openlibrary:ger:OL9041049M",
           "coverIsbn": "9783453161115",
-          "coverWork": "OL14931601W",
           "coverArtists": [
             "Ifa-Bilderteam"
           ],
-          "isfdbRecord": "287933"
+          "isfdbRecord": "287933",
+          "coverWork": "OL14931601W"
         },
         {
           "id": "OL37574007W",
@@ -10472,8 +10455,8 @@
       "slug": "reihe-hanser-covers-by-heinz-edelmann",
       "title": "Reihe Hanser — covers by Heinz Edelmann",
       "kind": "series",
-      "intro": "Carl Hanser's paperback series of essays, poems and politics, begun in 1967 with Canetti's Die Stimmen von Marrakesch. Heinz Edelmann designed its yellow covers until the mid-1970s. Shown in the order of the volume numbers.",
-      "published": false,
+      "intro": "Carl Hanser's paperback series of essays, poems and politics, begun in 1967. Heinz Edelmann designed its yellow covers until the mid-1970s. Shown in the order of the volume numbers.",
+      "published": true,
       "publishers": [
         "Hanser",
         "Carl Hanser"
@@ -13515,8 +13498,8 @@
       "slug": "library-of-america",
       "title": "Library of America",
       "kind": "series",
-      "intro": "Volumes of the Library of America in Bruce Campbell’s jacket design: black, with a portrait of the author, the name in script and a red, white and blue band.",
-      "published": false,
+      "intro": "Volumes of the Library of America in the jacket Robert Scudellari designed in the early 1980s: black, with a small portrait of the author, the name lettered by hand by Gun Larson, and a red, white and blue band.",
+      "published": true,
       "publishers": [
         "Library of America"
       ],
@@ -25196,8 +25179,8 @@
       "slug": "spektrum-volk-und-welt",
       "title": "Spektrum — Volk und Welt",
       "kind": "series",
-      "intro": "Spektrum was a paperback series from Verlag Volk und Welt in East Berlin, 1968 to 1993, 279 titles, mostly stories and short novels by foreign authors. Its black jacket — author and title in white at the top, the word „Spektrum“ at the right and one black-grey-white image below, nearly all by Lothar Reher — gave it its nickname, the „black series“. Only the volumes Open Library holds pictures of.",
-      "published": false,
+      "intro": "Spektrum was a paperback series from Verlag Volk und Welt in East Berlin, begun in 1968, mostly stories and short novels by foreign authors. Its black jacket — author and title in white at the top, the word „Spektrum“ at the right and one black-grey-white image below, nearly all by Lothar Reher — gave it its nickname, the „black series“. Only the volumes Open Library holds pictures of.",
+      "published": true,
       "publishers": [
         "Volk und Welt"
       ],
@@ -30858,8 +30841,8 @@
       "slug": "dtv-phantastica-covers-by-celestino-piatti",
       "title": "dtv phantastica — covers by Celestino Piatti",
       "kind": "series",
-      "intro": "From 1979 dtv published a series of fantastic fiction, dtv phantastica, and Celestino Piatti gave every volume the same black ground and a different picture on it: vampires, snails, a werewolf, a spaceship. These are the covers Sammlung Keller shows, in the order of their dtv numbers.",
-      "published": false,
+      "intro": "dtv published a series of fantastic fiction, dtv phantastica, and Celestino Piatti gave every volume the same black ground and a different picture on it: vampires, snails, a werewolf, a spaceship. These are the covers Sammlung Keller shows, in the order of their dtv numbers.",
+      "published": true,
       "publishers": [
         "Deutscher Taschenbuch Verlag",
         "dtv"
@@ -42674,6 +42657,226 @@
           "addedAt": "2026-09-30",
           "from": "isbn:9780802166487",
           "coverIsbn": "9780802166487"
+        }
+      ]
+    },
+    {
+      "slug": "knopf-and-random-house-jackets-by-r-d-scudellari",
+      "title": "Knopf and Random House — jackets by R. D. Scudellari",
+      "kind": "series",
+      "intro": "Robert D. Scudellari was corporate art director at Random House in the 1970s and ’80s, over Knopf, Pantheon and Vintage, and designed many of their jackets himself: title and author set large, in a different hand for every book. These are first-edition jackets that a dealer’s listing or Fonts In Use credits to him, in year order, from Toni Morrison’s Sula to Robert Caro’s volumes on Lyndon Johnson. On Sula he was art director for Wendell Minor’s painting, and the last Caro volume adapts his design.",
+      "published": false,
+      "publishers": [
+        "Knopf",
+        "Alfred A. Knopf",
+        "Random House"
+      ],
+      "works": [
+        {
+          "id": "OL50567W",
+          "title": "Sula",
+          "author": "Toni Morrison",
+          "coverId": "ol:8384008",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394480449",
+          "coverIsbn": "0394480449"
+        },
+        {
+          "id": "OL15723131W",
+          "title": "Tinker, Tailor, Soldier, Spy",
+          "author": "John le Carré",
+          "coverId": "ol:253664",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394492196",
+          "coverIsbn": "0394492196"
+        },
+        {
+          "id": "OL77826W",
+          "title": "Interview with the Vampire",
+          "author": "Anne Rice",
+          "coverId": "ol:12452409",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394498216",
+          "coverIsbn": "0394498216"
+        },
+        {
+          "id": "OL50564W",
+          "title": "Song of Solomon",
+          "author": "Toni Morrison",
+          "coverId": "ol:253666",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394497848",
+          "coverIsbn": "0394497848"
+        },
+        {
+          "id": "OL181823W",
+          "title": "The Honourable Schoolboy",
+          "author": "John le Carré",
+          "coverId": "ol:14600037",
+          "addedAt": "2026-10-07",
+          "from": "edition:OL17727588M"
+        },
+        {
+          "id": "OL1992161W",
+          "title": "Falconer",
+          "author": "John Cheever",
+          "coverId": "ol:8261183",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394483472",
+          "coverIsbn": "0394483472"
+        },
+        {
+          "id": "OL1992157W",
+          "title": "The Stories of John Cheever",
+          "author": "John Cheever",
+          "coverId": "ol:253672",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394500873",
+          "coverIsbn": "0394500873"
+        },
+        {
+          "id": "OL10416301W",
+          "title": "The Powers That Be",
+          "author": "David Halberstam",
+          "coverId": "ol:7350106",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394503813",
+          "coverIsbn": "0394503813"
+        },
+        {
+          "id": "OL15723133W",
+          "title": "Smiley's People",
+          "author": "John le Carré",
+          "coverId": "ol:6751545",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394508432",
+          "coverIsbn": "0394508432"
+        },
+        {
+          "id": "OL50557W",
+          "title": "Tar Baby",
+          "author": "Toni Morrison",
+          "coverId": "ol:10620793",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394423291",
+          "coverIsbn": "0394423291"
+        },
+        {
+          "id": "OL4195862W",
+          "title": "The Path to Power",
+          "author": "Robert A. Caro",
+          "coverId": "ol:12869907",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394499735",
+          "coverIsbn": "0394499735"
+        },
+        {
+          "id": "OL181814W",
+          "title": "The Little Drummer Girl",
+          "author": "John le Carré",
+          "coverId": "ol:14600012",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394530152",
+          "coverIsbn": "0394530152"
+        },
+        {
+          "id": "OL15723132W",
+          "title": "A Perfect Spy",
+          "author": "John le Carré",
+          "coverId": "ol:6616089",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394551419",
+          "coverIsbn": "0394551419"
+        },
+        {
+          "id": "OL273581W",
+          "title": "Children of Light",
+          "author": "Robert Stone",
+          "coverId": "ol:9486376",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394525736",
+          "coverIsbn": "0394525736"
+        },
+        {
+          "id": "OL50548W",
+          "title": "Beloved",
+          "author": "Toni Morrison",
+          "coverId": "ol:8261367",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394535979",
+          "coverIsbn": "0394535979"
+        },
+        {
+          "id": "OL1890271W",
+          "title": "Stories in an Almost Classical Mode",
+          "author": "Harold Brodkey",
+          "coverId": "ol:5416267",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394506995",
+          "coverIsbn": "0394506995"
+        },
+        {
+          "id": "OL29778W",
+          "title": "The Russia House",
+          "author": "John le Carré",
+          "coverId": "ol:253895",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394577892",
+          "coverIsbn": "0394577892"
+        },
+        {
+          "id": "OL4195859W",
+          "title": "Means of Ascent",
+          "author": "Robert A. Caro",
+          "coverId": "ol:12869917",
+          "addedAt": "2026-10-07",
+          "from": "isbn:9780394528359",
+          "coverIsbn": "9780394528359"
+        },
+        {
+          "id": "OL29767W",
+          "title": "The Secret Pilgrim",
+          "author": "John le Carré",
+          "coverId": "ol:253992",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394588428",
+          "coverIsbn": "0394588428"
+        },
+        {
+          "id": "OL2915169W",
+          "title": "Brotherly Love",
+          "author": "Pete Dexter",
+          "coverId": "ol:12915140",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394585739",
+          "coverIsbn": "0394585739"
+        },
+        {
+          "id": "OL50563W",
+          "title": "Jazz",
+          "author": "Toni Morrison",
+          "coverId": "ol:9317241",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0679411674",
+          "coverIsbn": "0679411674"
+        },
+        {
+          "id": "OL4195864W",
+          "title": "Master of the Senate",
+          "author": "Robert A. Caro",
+          "coverId": "ol:12869915",
+          "addedAt": "2026-10-07",
+          "from": "isbn:0394528360",
+          "coverIsbn": "0394528360"
+        },
+        {
+          "id": "OL16585481W",
+          "title": "The Passage of Power",
+          "author": "Robert A. Caro",
+          "coverId": "ol:7151067",
+          "addedAt": "2026-10-07",
+          "from": "isbn:9780679405078",
+          "coverIsbn": "9780679405078"
         }
       ]
     }

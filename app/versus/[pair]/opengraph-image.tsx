@@ -1,5 +1,4 @@
-import { OG_SIZE, pairCard } from '@/app/og';
-import { coverUrlFor } from '@/lib/coverurl';
+import { OG_SIZE, pairCard, pairCoverCandidates } from '@/app/og';
 import { POOL } from '@/lib/hotornot/game';
 import { parseMatchup } from '@/lib/hotornot/matchup';
 import { versusEnabled } from '@/lib/hotornot/switch';
@@ -22,10 +21,10 @@ export default async function Image({ params }: { params: Promise<{ pair: string
   const { pair } = await params;
   const ids = parseMatchup(pair);
   const sides = !ids || !versusEnabled() ? [] : [ids.a, ids.b].map(id => POOL.covers.find(c => c.id === id) ?? null);
-  const coverUrls = sides.flatMap(c => (c ? [coverUrlFor(c.id, 'L') ?? ''] : [])).filter(Boolean);
+  const candidates = sides.flatMap(c => (c ? [pairCoverCandidates(c.id)] : []));
   const titles = sides.flatMap(c => (c?.title ? [c.title] : []));
   return pairCard({
-    coverUrls,
+    sides: candidates,
     line: titles.length === 2 ? `${titles[0]} or ${titles[1]}?` : 'Which cover would you rather look at?',
   });
 }
