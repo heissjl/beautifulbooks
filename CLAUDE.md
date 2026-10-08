@@ -72,7 +72,7 @@ Which cover belongs to which edition and printing is the site's whole claim, so 
 - **A label like "first printing", "later printing" or "reissue" needs a dated record for exactly that image**; without one it is "another cover", or nothing. A report of a check names what was compared ("image against first printing"), not just "all checked".
 - **A correction from outside is checked in the source before it is answered**, the result goes into docs/history.md either way, and the whole collection is checked for the same fault with the edition-first check above.
 - **Writing to someone else's database** (an Open Library cover upload or removal) only with Julian's yes, under his account, onto the edition whose ISBN *and* date match the printing; every change with edition and cover ids in the history.
-- **Collections change without a deploy** (`lab/collections/push-draft.ts <slug> --publish`), but a /curate step carries no credits: keep credits in the file; the site fills them in from it for the same work and cover (`withFileFacts`, `lib/collections.ts`).
+- **Collections change without a deploy** (`lab/collections/push-draft.ts <slug> --publish`), but a /curate step carries no credits: keep credits in the file; the site fills them in from it for the same work and cover (`withFileFacts`, `lib/collections.ts`). A collection that holds one work twice (two designs of one number) cannot be published as a draft: change the file, deploy, and drop its published draft (`POST /api/curate/publish {slug, clearDraft: true}`).
 
 ## Layout
 
