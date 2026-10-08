@@ -58,6 +58,15 @@ Wie man herausfindet, welches Cover zu welcher Ausgabe und welchem Druck gehört
 - Ein Werk darf zweimal in einer Sammlung stehen, wenn die Reihe es in zwei Gestaltungen gedruckt hat; die Einleitung sagt es, die Reihenfolge ist Erstdruck vor Nachdruck. Eine Ausgabe einer *anderen* Reihe gehört nicht hinein.
 - Online-Entwürfe (`/curate`) tragen keine Credits; die Seite ergänzt sie aus der Datei, wenn Werk und Cover übereinstimmen (`withFileFacts` in `lib/collections.ts`, seit 2026-10-08). Credits also immer in der Datei pflegen, dann `push-draft.ts`.
 
-## 5. Wenn jemand von außen widerspricht
+## 5. Wenn jemand von außen widerspricht — und was dabei schiefging
 
-Ein Leser schrieb unter den Reddit-Post: „The covers you have for The Forever War and More Than Human are not the original SF Masterwork covers.“ Er hatte recht. Vorgehen: in der ISFDB nachsehen, bevor geantwortet wird; das Ergebnis — Recht oder Unrecht — in die Historie; dann die ganze Sammlung auf denselben Fehler prüfen, nicht nur die genannten Fälle (73 geprüft, 3 betroffen, darunter einer, den niemand genannt hatte).
+Ein Leser schrieb unter den Reddit-Post: „The covers you have for The Forever War and More Than Human are not the original SF Masterwork covers.“ Er hatte recht. Die anschließende „Prüfung aller 73“ war **nicht** genau, obwohl sie es sein sollte (Julian, 2026-10-08: „der allerletzte punkt stimmt ja aber genau nicht. da hattest du den fehler gemacht, obwohl es ein genauer check sein sollte“):
+
+- Verglichen wurde nur **Bild gegen Bild** (unseres gegen das des ISFDB-Erstdrucks). Wo sie abwichen, stand sofort „späterer Druck“ in den Notizen, in der Sammlung und auf dem Reddit-Bild — ohne nachzusehen, **zu welchem Druck unser Bild gehört**. Bei #73 war es kein späterer Druck, sondern eine gebundene Ausgabe einer anderen Reihe von 2001. Aufgefallen ist das erst, als Julian die Künstler noch einmal prüfen ließ.
+- Nicht verglichen wurde die **ISBN**. Der Abgleich unserer `coverIsbn` mit den ISBN, die die ISFDB für jede Nummer der Reihe führt, findet die falsche Ausgabe in einer Zeile; nachgeholt am 2026-10-08, Ergebnis: zwei Treffer, #71 *Dune* (9780575073340, gebundene HC-Reihe 2001; nummeriert ist 0575081503) und #72 *The Moon Is a Harsh Mistress* (9780575073364; nummeriert 0575082410). #73 war da schon korrigiert. Die ISBN je Nummer stehen jetzt in `lab/collections/lists/sf-masterworks-isfdb-first.tsv`.
+
+**Daraus die Regeln für jede Prüfung einer Reihe:**
+1. Zuerst die **Ausgabe** prüfen (ISBN der Kachel gegen die ISBN der Reihe und Nummer in der ISFDB), dann den **Druck** (Datum), erst dann das **Bild**. Ein Bildvergleich allein sagt nur „anders“, nie „warum“.
+2. Jede Beschriftung wie „späterer Druck“, „Erstdruck“, „Neuauflage“ braucht einen Datensatz mit Datum für genau dieses Bild. Ohne ihn heißt es „anderes Cover“ — oder nichts.
+3. Ein Widerspruch von außen wird in der Quelle geprüft, bevor geantwortet wird; das Ergebnis geht in die Historie; dann die ganze Sammlung auf denselben Fehler — mit Regel 1, nicht nur mit dem Bildvergleich.
+4. Was als „geprüft“ gemeldet wird, nennt, **was** geprüft wurde („Bild gegen Erstdruck“), nicht nur „alle 73 geprüft“.
