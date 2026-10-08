@@ -12,7 +12,7 @@ The collection is read from a live snapshot (scripts/live-collections.ts),
 because the site lays online drafts over data/collections.json; the covers are
 Open Library's large images, fetched one at a time and cached in out/cache.
 
-    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain]
+    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain] [--first]
 """
 import json
 import os
@@ -38,6 +38,12 @@ GAP_X = 40
 GAP_Y = 64
 RATIO = 1.55       # height over width of an SF Masterworks paperback
 TEXT_H = 172
+
+# SF Masterworks numbers whose cover on Open Library is a later printing; with
+# --first the picture takes the first printing's image and artist from ISFDB
+# (lab/collections/lists/sf-masterworks-isfdb-first.tsv, checked by eye
+# 2026-10-07; Open Library holds none of the three).
+FIRST_PRINTING = {1, 28, 73}
 
 
 def font(name: str, size: int, weight: int | None = None) -> ImageFont.FreeTypeFont:
@@ -102,14 +108,23 @@ def brand(d: ImageDraw.ImageDraw, right: int, top: int, size: int) -> int:
     return top + size
 
 
-def main(live: str, slug: str, plain: bool = False) -> None:
+def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None:
     data = json.load(open(live))
     records = data if isinstance(data, list) else data.get('collections', data.get('records'))
     coll = next(c for c in records if c['slug'] == slug)
     works = coll['works']
     os.makedirs(CACHE, exist_ok=True)
+    isfdb = {}
+    if first:
+        import csv
+        for r in csv.DictReader(open(os.path.join(ROOT, 'lab', 'collections', 'lists', 'sf-masterworks-isfdb-first.tsv')), delimiter='\t'):
+            isfdb[int(r['no'])] = r['cover_artist'].split(' (variant')[0]
     tiles = []
     for i, w in enumerate(works):
+        if first and i + 1 in FIRST_PRINTING:
+            tiles.append(Image.open(os.path.join(CACHE, 'isfdb', f'{i + 1:02d}.jpg')).convert('RGB'))
+            works[i] = {**w, 'coverArtists': [isfdb[i + 1]]}
+            continue
         tiles.append(cover(w['coverId']))
         print(f'{i + 1}/{len(works)}', w['title'], flush=True)
 
@@ -151,7 +166,10 @@ def main(live: str, slug: str, plain: bool = False) -> None:
         y = header_h + r * (th + TEXT_H + GAP_Y)
         img.paste(fill(tile, tw, th), (x, y))
         ty = y + th + 16
-        num = f'{i + 1}  '
+        # A work printed in two designs keeps its series number; the second tile says so.
+        repeat = i > 0 and works[i - 1]['id'] == w['id']
+        number = sum(1 for k, x in enumerate(works[:i + 1]) if k == 0 or works[k - 1]['id'] != x['id'])
+        num = f'{number}  '
         d.text((x, ty + 4), num, font=n_f, fill=MUTED)
         nx = x + d.textlength(num, font=n_f)
         # The title gets two lines; the first is indented past the number.
@@ -163,7 +181,7 @@ def main(live: str, slug: str, plain: bool = False) -> None:
         if len(lines) > 1:
             d.text((x, ty + 36), lines[1], font=t_f, fill=CREAM)
         ay = ty + 36 * len(lines) + 6
-        d.text((x, ay), fit_text(d, w.get('author', ''), a_f, tw), font=a_f, fill=MUTED)
+        d.text((x, ay), fit_text(d, 'later printing' if repeat else w.get('author', ''), a_f, tw), font=a_f, fill=MUTED)
         artists = w.get('coverArtists') or []
         if artists:
             d.text((x, ay + 36), fit_text(d, 'Cover: ' + ', '.join(artists), c_f, tw), font=c_f, fill=ACCENT)
@@ -178,10 +196,10 @@ def main(live: str, slug: str, plain: bool = False) -> None:
         brand(d, W - MARGIN, fy, 84)
 
     # --plain: the same picture without the site's name, for forums that refuse it (Julian, 2026-10-07).
-    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}.jpg')
+    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}{"-first" if first else ""}.jpg')
     img.save(out, quality=92)
     print('written', out, img.size)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:])
+    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:], '--first' in sys.argv[3:])

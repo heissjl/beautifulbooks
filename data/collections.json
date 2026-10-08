@@ -1094,7 +1094,7 @@
       "slug": "sf-masterworks",
       "title": "SF Masterworks",
       "kind": "series",
-      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Behind each cover is the wall of the other faces we found for the book.",
+      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Three of them changed covers in later printings and appear twice, the first printing first. Behind each cover is the wall of the other faces we found for the book.",
       "published": true,
       "publishers": [
         "Gollancz",
@@ -1102,6 +1102,19 @@
         "Orion"
       ],
       "works": [
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverIsbn": "1857988086",
+          "isfdbRecord": "109731",
+          "coverId": "ol:15263131",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "addedAt": "2026-10-08",
+          "from": "isbn:1857988086"
+        },
         {
           "id": "OL271163W",
           "title": "The Forever War",
@@ -1457,10 +1470,25 @@
           "id": "OL14868264W",
           "title": "More Than Human",
           "author": "Theodore Sturgeon",
+          "coverIsbn": "1857988523",
+          "coverId": "ol:15263133",
+          "coverArtists": [
+            "Fred Gambino"
+          ],
+          "addedAt": "2026-10-08",
+          "from": "isbn:1857988523"
+        },
+        {
+          "id": "OL14868264W",
+          "title": "More Than Human",
+          "author": "Theodore Sturgeon",
           "coverId": "ol:911136",
           "addedAt": "2026-09-25",
           "from": "isbn:1857988523",
-          "coverIsbn": "1857988523"
+          "coverIsbn": "1857988523",
+          "coverArtists": [
+            "Chris Moore"
+          ]
         },
         {
           "id": "OL60939W",
@@ -2025,6 +2053,19 @@
             "Chris Moore"
           ],
           "isfdbRecord": "44307"
+        },
+        {
+          "id": "OL2172403W",
+          "title": "The Man in the High Castle",
+          "author": "Philip K. Dick",
+          "coverIsbn": "9780575073357",
+          "isfdbRecord": "230897",
+          "coverId": "ol:15263141",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "addedAt": "2026-10-08",
+          "from": "checked:original-design"
         },
         {
           "id": "OL2172403W",
