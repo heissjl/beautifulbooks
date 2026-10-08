@@ -23,7 +23,7 @@ const IN = path.join(__dirname, 'in');
 // Small copies (300 px, made with Pillow): the decoder refuses pictures of several megapixels.
 const PICS = path.join(IN, 'badscificovers-small');
 const CACHE = path.join(IN, 'badscificovers-cache.json');
-const OUT = path.join(IN, 'badscificovers-matches.json');
+const OUT = path.join(IN, process.env.OUT_NAME ?? 'badscificovers-matches.json');
 
 /** Rank in the listing, title and author as the post names them. Crude titles and non-books are left out. */
 const POSTS: [number, string, string][] = [
@@ -76,9 +76,42 @@ const save = () => fs.writeFileSync(CACHE, JSON.stringify(cache));
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
+/**
+ * Through the live site instead of from this Mac (`VIA_SITE=1`, 2026-10-08): Open Library
+ * refused this address twice in a week, and the site asks it from Vercel with its own cache.
+ * Its search and its Shelf-Portrait cover list are what the site serves anyway; one request
+ * every six seconds keeps inside their rate limits.
+ */
+const VIA_SITE = process.env.VIA_SITE === '1';
+const SITE = 'https://buyitscovers.com';
+const SITE_PAUSE_MS = 6000;
+const ONLY = process.env.ONLY ? new Set(process.env.ONLY.split(',').map(Number)) : null;
+
+async function siteJson<T>(url: string): Promise<T> {
+  await sleep(SITE_PAUSE_MS);
+  const res = await fetch(url, { headers: { 'user-agent': 'BuyItsCovers-curation/1.0' }, signal: AbortSignal.timeout(40000) });
+  if (!res.ok) throw new Error(`${res.status} from ${url}`);
+  return (await res.json()) as T;
+}
+
 async function findWork(title: string, author: string) {
   const key = `${title}|${author}`;
-  if (key in cache.works) return cache.works[key];
+  if (key in cache.works && (cache.works[key] || !VIA_SITE)) return cache.works[key];
+  if (VIA_SITE) {
+    // Title and author first, then the title alone: the site's search finds nothing for some
+    // pairs (hyphens, a pen name) and the author then sorts the title's results.
+    const surname = norm(author).split(' ').pop() ?? '';
+    const plain = title.replace(/[-:]/g, ' ');
+    let hit: { id: string; title: string; authors: string[] } | undefined;
+    for (const q of [`${plain} ${surname}`, plain]) {
+      const { works } = await siteJson<{ works: { id: string; title: string; authors: string[] }[] }>(`${SITE}/api/search?q=${encodeURIComponent(q)}`);
+      hit = works.find((w) => w.authors.some((a) => norm(a).includes(surname)));
+      if (hit) break;
+    }
+    cache.works[key] = hit ? { id: hit.id, title: hit.title, author: hit.authors[0] ?? author } : null;
+    save();
+    return cache.works[key];
+  }
   await sleep(CATALOGUE_PAUSE_MS);
   const docs = await searchWorks(`${title} ${author}`);
   const surname = norm(author).split(' ').pop() ?? '';
@@ -91,6 +124,16 @@ async function findWork(title: string, author: string) {
 async function editionsOf(workId: string) {
   if (cache.editions[workId]) return cache.editions[workId];
   const out: Cache['editions'][string] = [];
+  if (VIA_SITE) {
+    for (let from = 0; from < MAX_EDITIONS; from += 300) {
+      const page = await siteJson<{ covers: { coverId: string; year?: number; publisher?: string }[]; checked: number; total: number }>(`${SITE}/api/inspiration/covers/${workId}${from ? `?from=${from}` : ''}`);
+      for (const c of page.covers) out.push({ coverId: Number(c.coverId.replace('ol:', '')), publisher: c.publisher, year: c.year ? String(c.year) : undefined });
+      if (page.checked >= page.total) break;
+    }
+    cache.editions[workId] = out.filter((e) => e.coverId > 0);
+    save();
+    return cache.editions[workId];
+  }
   for (let offset = 0; offset < MAX_EDITIONS; offset += 100) {
     await sleep(CATALOGUE_PAUSE_MS);
     const page = await getEditionsPage(workId, offset, 100);
@@ -129,7 +172,7 @@ function postHash(rank: number): string | null {
 
 async function main() {
   const results: { rank: number; title: string; author: string; status: string; [k: string]: unknown }[] = [];
-  for (const [rank, title, author] of POSTS) {
+  for (const [rank, title, author] of POSTS.filter(([r]) => !ONLY || ONLY.has(r))) {
     const mine = postHash(rank);
     const work = await findWork(title, author);
     if (!mine || !work) {

@@ -223,6 +223,18 @@
       "checked": "by eye, 2026-10-07"
     },
     {
+      "rank": 47,
+      "post": "The Texas-Israeli War: 1999",
+      "workId": "OL1855977W",
+      "title": "The Texas-Israeli War: 1999",
+      "author": "Howard Waldrop",
+      "coverId": "ol:12729575",
+      "publisher": "Del Rey",
+      "year": "1982",
+      "distance": 19,
+      "checked": "by eye, 2026-10-08"
+    },
+    {
       "rank": 48,
       "post": "The Little People",
       "workId": "OL32949082W",
@@ -234,6 +246,18 @@
       "isbn": null,
       "distance": 9,
       "checked": "by eye, 2026-10-07"
+    },
+    {
+      "rank": 51,
+      "post": "Tik-Tok",
+      "workId": "OL11291679W",
+      "title": "Tik-Tok",
+      "author": "John Sladek",
+      "coverId": "ol:15261636",
+      "publisher": "DAW",
+      "year": "1985",
+      "distance": 17,
+      "checked": "by eye, 2026-10-08"
     },
     {
       "rank": 54,
@@ -407,10 +431,10 @@
     "93": "cover not on Open Library",
     "94": "cover not on Open Library",
     "97": "same work as #6, kept the higher-ranked post",
-    "99": "cover not on Open Library"
+    "99": "cover not on Open Library",
+    "17": "only the Wildside Press edition on Open Library (searched again 2026-10-08)"
   },
   "noWork": [
-    17,
     18,
     19,
     21,
@@ -420,8 +444,6 @@
     31,
     43,
     46,
-    47,
-    51,
     57,
     59,
     61,
