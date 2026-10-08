@@ -43182,7 +43182,7 @@
       "slug": "shelves-from-a-house-tour",
       "title": "Shelves from a house tour",
       "kind": "series",
-      "intro": "Books whose spines can be read on three stills from a video house tour, posted on X in October 2026 as Dakota Johnson’s bookshelves: Pynchon, DeLillo, Saramago, Sorokin in the NYRB edition, Anne Boyer, a run of Isaac Bashevis Singer. One cover each, in the order they stand on the shelves.",
+      "intro": "Books whose spines can be read on three stills from a video house tour, posted on X in October 2026 as Dakota Johnson’s bookshelves — Saramago, Sorokin in the NYRB edition, DeLillo, Anne Boyer, a run of Isaac Bashevis Singer — in the order they stand on the shelves. After them the books the post names but the stills do not show: the rest of Pynchon, Gaddis, Bolaño, Carlos Fuentes’s Terra Nostra in the Dalkey Archive edition and Sebald’s The Rings of Saturn in its first New Directions edition.",
       "published": false,
       "publishers": [],
       "works": [
@@ -43345,6 +43345,134 @@
           "coverId": "ol:13152060",
           "addedAt": "2026-10-08",
           "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL2636676W",
+          "title": "V.",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:6678023",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636675W",
+          "title": "Gravity's Rainbow",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:97894",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636671W",
+          "title": "Slow Learner",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:9627018",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636662W",
+          "title": "Vineland",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:5273728",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636672W",
+          "title": "Mason & Dixon",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:579445",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636670W",
+          "title": "Against the Day",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:872335",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL44220096W",
+          "title": "Shadow Ticket",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:15130634",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412512W",
+          "title": "The Recognitions",
+          "author": "William Gaddis",
+          "coverId": "ol:97727",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412515W",
+          "title": "J R",
+          "author": "William Gaddis",
+          "coverId": "ol:97726",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412502W",
+          "title": "Carpenter's Gothic",
+          "author": "William Gaddis",
+          "coverId": "ol:107769",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412514W",
+          "title": "A Frolic of His Own",
+          "author": "William Gaddis",
+          "coverId": "ol:3938926",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412501W",
+          "title": "Agapē Agape",
+          "author": "William Gaddis",
+          "coverId": "ol:110588",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL712025W",
+          "title": "2666",
+          "author": "Roberto Bolaño",
+          "coverId": "ol:1047310",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL712032W",
+          "title": "The Savage Detectives",
+          "author": "Roberto Bolaño",
+          "coverId": "ol:3706128",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL872223W",
+          "title": "Terra Nostra",
+          "author": "Carlos Fuentes",
+          "coverId": "ol:801632",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL46611W",
+          "title": "The Rings of Saturn",
+          "author": "W. G. Sebald",
+          "coverId": "ol:598261",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
         }
       ]
     }
