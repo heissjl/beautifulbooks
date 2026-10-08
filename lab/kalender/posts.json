@@ -1330,6 +1330,32 @@
         "kapazitaet"
       ],
       "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist. Einschätzung 2026-10-06 (Julian: „macht product hunt überhaupt sinn für dieses produkt?“): eher nein. Das Publikum sind Gründer und Tech-Leute, die Werkzeuge für ihre Arbeit suchen, nicht Leser; ein Launch trägt einen Tag und braucht Vorbereitung und Unterstützer, und ohne Provision (Hobby-Modus) bringt er nichts Messbares außer Besuchen. Erst entscheiden, wenn HN und Reddit ausgewertet sind."
+    },
+    {
+      "id": "reddit-bookcoverporn",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "collection",
+      "status": "vorschlag",
+      "title": "The first SF Masterworks run (1999–2007) in number order: Chris Moore, Jim Burns, Les Edwards, Fred Gambino and others",
+      "text": "Bild-Post mit lab/kalender/out/reddit/sf-masterworks.png (Bildschirmfoto der Sammlung, 1280 px breit), zweites Bild 1984-decades.png.\n\nErster Kommentar:\nThe numbered Millennium/Gollancz run, with the cover artist under each book where the catalogue or the jacket names one. I put this together on a site I'm building that shows the covers a book has been printed with; each of these leads to the other faces the book has had: buyitscovers.com/collections/sf-masterworks?via=reddit",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Julian, 2026-10-07: „https://www.reddit.com/r/bookcoverporn/ … prepare a post (text and screenshots of site) for each. they can differ“. Regeln von r/bookcoverporn nicht auffindbar (kein Eintrag in gummysearch, reddit.com für Claude gesperrt): vor dem Posten Seitenleiste lesen, ob Bildschirmfotos und ein eigener Link erlaubt sind; sonst nur das Bild und der Link erst auf Nachfrage. Inhalt zuerst, die Künstler im Titel. Bildschirmfotos einmal von der Produktion aufgenommen (headless Chrome, 2026-10-07), liegen nur lokal."
+    },
+    {
+      "id": "reddit-books",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "decades",
+      "status": "vorschlag",
+      "title": "Do you ever pick an edition for its cover? I looked at 343 covers of Nineteen Eighty-Four, from the 1940s to now",
+      "text": "Text-Post, ohne Link (r/books verbietet Selbstwerbung).\n\nI've been collecting the covers books have been printed with, and Nineteen Eighty-Four is the one I keep coming back to: 343 covers with a known year, from 349 printings, going back to the 1940s.\n\nThe 2020s alone have 93 of them, from 84 different publishers, and the eye is everywhere: red eyes, eyes in television screens, eyes behind bars, eyes made of type. I suspect a lot of what we each remember as \"the\" cover of the book depends on when and where we first read it.\n\nWhich edition do you own, and did you choose it for the cover? Is there a cover of a classic you went looking for specifically?\n\n(Bilder, falls das Forum Bilder in Text-Posts zulässt: 1984-decades.png, 1984.png.)",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Julian, 2026-10-07, wie oben. r/books verbietet Selbstwerbung und Verkaufslinks ausdrücklich (Wiki, gelesen über einen Spiegel 2026-10-07); Ausnahme nur „Author Spotlight“ für Autoren nach Freigabe der Moderation, passt nicht. Deshalb ein Gesprächsbeitrag ohne Link und ohne den Namen der Seite; fragt jemand, wo die Cover herkommen, ehrlich antworten, dass Julian die Seite gebaut hat — auch das kann entfernt werden. Die Zahlen stehen so auf /book/OL1168083W/decades (abgelesen 2026-10-07): 343 Cover aus 349 Drucken mit Jahr, 2020er 93 Cover, 84 Verlage."
     }
   ]
 }
