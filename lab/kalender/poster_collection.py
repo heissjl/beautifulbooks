@@ -43,7 +43,7 @@ TEXT_H = 172
 # --first the picture takes the first printing's image and artist from ISFDB
 # (lab/collections/lists/sf-masterworks-isfdb-first.tsv, checked by eye
 # 2026-10-07; Open Library holds none of the three).
-FIRST_PRINTING = {1, 28, 73}
+FIRST_PRINTING = {1, 28, 73}  # only for snapshots made before the collection carried the first printings itself
 
 
 def font(name: str, size: int, weight: int | None = None) -> ImageFont.FreeTypeFont:

@@ -1094,7 +1094,7 @@
       "slug": "sf-masterworks",
       "title": "SF Masterworks",
       "kind": "series",
-      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Three of them changed covers in later printings and appear twice, the first printing first. Behind each cover is the wall of the other faces we found for the book.",
+      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Two of them changed covers in later printings and appear twice, the first printing first. Behind each cover is the wall of the other faces we found for the book.",
       "published": true,
       "publishers": [
         "Gollancz",
@@ -1126,7 +1126,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "109731"
+          "isfdbRecord": "293643"
         },
         {
           "id": "OL11374287W",
@@ -1476,7 +1476,8 @@
             "Fred Gambino"
           ],
           "addedAt": "2026-10-08",
-          "from": "isbn:1857988523"
+          "from": "isbn:1857988523",
+          "isfdbRecord": "111081"
         },
         {
           "id": "OL14868264W",
@@ -1488,7 +1489,8 @@
           "coverIsbn": "1857988523",
           "coverArtists": [
             "Chris Moore"
-          ]
+          ],
+          "isfdbRecord": "253295"
         },
         {
           "id": "OL60939W",
@@ -2058,27 +2060,14 @@
           "id": "OL2172403W",
           "title": "The Man in the High Castle",
           "author": "Philip K. Dick",
-          "coverIsbn": "9780575073357",
-          "isfdbRecord": "230897",
-          "coverId": "ol:15263141",
+          "coverIsbn": "9780575082052",
+          "isfdbRecord": "263703",
+          "coverId": "ol:15263156",
           "coverArtists": [
             "Chris Moore"
           ],
           "addedAt": "2026-10-08",
           "from": "checked:original-design"
-        },
-        {
-          "id": "OL2172403W",
-          "title": "The Man in the High Castle",
-          "author": "Philip K. Dick",
-          "coverId": "ol:380098",
-          "addedAt": "2026-09-25",
-          "from": "checked:original-design",
-          "coverIsbn": "9780575073357",
-          "coverArtists": [
-            "Chris Moore"
-          ],
-          "isfdbRecord": "230897"
         }
       ],
       "coverCredits": "isfdb"
