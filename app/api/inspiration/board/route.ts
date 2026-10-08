@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import { closed, DAY, json } from '@/app/api/inspiration/guard';
 import { filledCount, parseBoard } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
@@ -12,6 +13,7 @@ import { describeBoard } from '@/lib/inspiration/describe';
 export const maxDuration = 30;
 
 export async function GET(request: NextRequest) {
+  measure('portrait', request);
   const refused = closed(request, 'inspiration');
   if (refused) return refused;
   const board = parseBoard(request.nextUrl.searchParams);

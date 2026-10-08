@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { browseLists } from '@/lib/inspiration/browse';
 
@@ -9,6 +10,7 @@ import { browseLists } from '@/lib/inspiration/browse';
  * changes with a deploy; the edge keeps it a week.
  */
 export async function GET(request: NextRequest) {
+  measure('portrait', request);
   const refused = closed(request, 'inspiration');
   if (refused) return refused;
   return json({ lists: browseLists() }, 200, 'public, max-age=0, s-maxage=604800, stale-while-revalidate=604800');

@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import { closed, DAY, json, SILENT } from '@/app/api/inspiration/guard';
 import { isWorkId } from '@/lib/inspiration/board';
 import { MAX_FROM, PAGE, workCovers } from '@/lib/inspiration/covers';
@@ -17,6 +18,7 @@ import { MAX_FROM, PAGE, workCovers } from '@/lib/inspiration/covers';
 export const maxDuration = 30;
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  measure('portrait', request);
   const refused = closed(request, 'inspiration');
   if (refused) return refused;
   const { id } = await context.params;

@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { boardQuery, filledCount, isFull, parseBoard } from '@/lib/inspiration/board';
 import { linkStoreFromEnv } from '@/lib/inspiration/store';
@@ -14,6 +15,7 @@ import { linkStoreFromEnv } from '@/lib/inspiration/store';
  * the record is the board and the name they put on the picture.
  */
 export async function POST(request: NextRequest) {
+  measure('portrait', request);
   const refused = closed(request, 'inspiration');
   if (refused) return refused;
   if (!(request.headers.get('content-type') ?? '').startsWith('application/json')) return json({ error: 'Send JSON.' }, 415);

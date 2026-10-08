@@ -14,6 +14,7 @@ import { liveCollections } from '@/lib/collections-live';
 import { SITE_URL } from '@/lib/seo';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/translate';
+import { introText } from '@/lib/introlinks';
 import { measure } from '@/app/api/measure';
 
 /**
@@ -66,7 +67,7 @@ export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { loc
                     {c.works.length === 1 ? t('{n} book', { n: 1 }) : t('{n} books', { n: c.works.length })}
                   </p>
                 </div>
-                <p className="mt-3 line-clamp-2 max-w-2xl text-sm text-ink-2">{c.intro}</p>
+                <p className="mt-3 line-clamp-2 max-w-2xl text-sm text-ink-2">{introText(c.intro)}</p>
               </Link>
               <CollectionGrid slug={c.slug} title={c.title} works={c.works} total={c.works.length} />
             </li>

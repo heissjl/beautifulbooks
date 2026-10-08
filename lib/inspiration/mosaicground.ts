@@ -71,7 +71,10 @@ export function arrangement(seed: string, cols: number, rows: number, size: numb
  * How dark the field is at a point, 0 (as it is) to 1 (black): half
  * everywhere, more towards the edges, and more behind the words.
  */
-export function shade(x: number, y: number, width: number, height: number, words: Rect[], windows: Rect[] = [], base = 0.5): number {
+/** Where words stand; `dark` is how dark the field gets right behind them (0.78 unless set). */
+export type WordArea = Rect & { dark?: number };
+
+export function shade(x: number, y: number, width: number, height: number, words: WordArea[], windows: Rect[] = [], base = 0.5): number {
   // A window shows the field nearly as it is: the page's card lets the covers through where a board's places are.
   for (const w of windows) if (x >= w.x && x < w.x + w.width && y >= w.y && y < w.y + w.height) return 0.12;
   const r = Math.min(1, Math.hypot((x / width - 0.5) * 2, (y / height - 0.5) * 2) / 1.5);
@@ -80,13 +83,13 @@ export function shade(x: number, y: number, width: number, height: number, words
     const dx = Math.max(w.x - x, 0, x - (w.x + w.width));
     const dy = Math.max(w.y - y, 0, y - (w.y + w.height));
     const d = Math.hypot(dx, dy);
-    if (d < 60) a = Math.max(a, Math.max(base, 0.78) - 0.28 * (d / 60));
+    if (d < 60) a = Math.max(a, Math.max(base, w.dark ?? 0.78) - 0.28 * (d / 60));
   }
   return Math.min(1, a);
 }
 
 /** The field as a PNG of `width × height`; `windows` stay bright, `base` is how dark the rest is (half on a board's picture). */
-export async function mosaicGround(width: number, height: number, seed: string, words: Rect[], windows: Rect[] = [], base = 0.5): Promise<Buffer> {
+export async function mosaicGround(width: number, height: number, seed: string, words: WordArea[], windows: Rect[] = [], base = 0.5): Promise<Buffer> {
   const { cells } = await loadLibrary();
   const cols = Math.ceil(width / DRAWN_W);
   const rows = Math.ceil(height / (DRAWN_W * 1.5));

@@ -4,6 +4,7 @@ import { boardFromSearch, sharedMetadata, SharedPage } from '@/app/shelfportrait
 import { boardQuery, filledCount } from '@/lib/inspiration/board';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import type { Locale } from '@/lib/i18n/locale';
+import { measure } from '@/app/api/measure';
 
 /**
  * A shared board under its long address, `/shelfportrait/board?b=…&by=…`
@@ -21,6 +22,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function InspirationBoardPage({ searchParams }: Props) {
+  measure('page-portrait');
   if (!inspirationEnabled()) notFound();
   const board = await boardFromSearch(searchParams);
   const filled = filledCount(board) > 0;
