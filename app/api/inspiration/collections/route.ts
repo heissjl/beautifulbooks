@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { isCollectionSlug } from '@/lib/collections';
 import { liveCollections } from '@/lib/collections-live';
@@ -16,6 +17,7 @@ import { collectionEntries, pickerWorks } from '@/lib/inspiration/collectionbrow
 const HOUR = 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400';
 
 export async function GET(request: NextRequest) {
+  measure('portrait', request);
   const refused = closed(request, 'inspiration');
   if (refused) return refused;
   const slug = request.nextUrl.searchParams.get('c');

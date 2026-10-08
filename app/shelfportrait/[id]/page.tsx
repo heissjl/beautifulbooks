@@ -6,6 +6,7 @@ import { ID } from '@/lib/inspiration/shortid';
 import { linkStoreFromEnv } from '@/lib/inspiration/store';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import type { Locale } from '@/lib/i18n/locale';
+import { measure } from '@/app/api/measure';
 
 /**
  * A shared board under its short link, `/shelfportrait/<8 characters>`
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function InspirationLinkPage({ params }: Props) {
+  measure('page-portrait');
   const { id } = await params;
   if (!inspirationEnabled() || !ID.test(id)) notFound();
   const found = await load(id);

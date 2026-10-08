@@ -13,6 +13,7 @@ import { describeBoard } from '@/lib/inspiration/describe';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { SITE_URL } from '@/lib/seo';
+import { measure } from '@/app/api/measure';
 
 /**
  * "My Shelf-Portrait" (ROADMAP 5.18b): three, six or nine books on a board,
@@ -40,6 +41,7 @@ type Props = { searchParams?: Promise<Record<string, string | string[] | undefin
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- `locale` is the mirror's contract (see above)
 export default async function InspirationPage({ searchParams, locale = DEFAULT_LOCALE }: Props) {
+  measure('page-portrait');
   if (!inspirationEnabled()) notFound();
   const board = await boardFromSearch(searchParams);
   const names: Record<string, Named> = {};

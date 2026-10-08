@@ -370,6 +370,8 @@ const ROUTE_LABELS: Record<string, string> = {
   versus: 'Cover-Spiel (API)',
   curate: 'Kuratieren, Vorschläge, Analyse',
   og: 'Vorschaukarten',
+  portrait: 'Shelf-Portrait (API)',
+  'portrait-picture': 'Shelf-Portrait: Story, Post, Link-Karte',
   'page-home': 'Startseite',
   'page-book': 'Buchseite',
   'page-cover': 'Seite eines Covers',
@@ -378,6 +380,7 @@ const ROUTE_LABELS: Record<string, string> = {
   'page-wall': 'Sammlung eines Lesers',
   'page-create': 'Sammlung anlegen',
   'page-versus': 'Cover-Spiel',
+  'page-portrait': 'Shelf-Portrait',
   other: 'Sonstiges',
   idle: 'Start und Leerlauf der Instanzen',
 };

@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import sharp from 'sharp';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
@@ -350,6 +351,7 @@ function card(count: BoardSize, by: string, sub: string, images: (string | null)
 }
 
 export async function GET(request: NextRequest) {
+  measure('portrait-picture', request);
   const refused = closed(request, 'inspirationPoster');
   if (refused) return refused;
   const params = request.nextUrl.searchParams;
