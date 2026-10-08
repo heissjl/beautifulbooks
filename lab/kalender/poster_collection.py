@@ -12,7 +12,7 @@ The collection is read from a live snapshot (scripts/live-collections.ts),
 because the site lays online drafts over data/collections.json; the covers are
 Open Library's large images, fetched one at a time and cached in out/cache.
 
-    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks
+    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain]
 """
 import json
 import os
@@ -102,7 +102,7 @@ def brand(d: ImageDraw.ImageDraw, right: int, top: int, size: int) -> int:
     return top + size
 
 
-def main(live: str, slug: str) -> None:
+def main(live: str, slug: str, plain: bool = False) -> None:
     data = json.load(open(live))
     records = data if isinstance(data, list) else data.get('collections', data.get('records'))
     coll = next(c for c in records if c['slug'] == slug)
@@ -123,7 +123,7 @@ def main(live: str, slug: str) -> None:
     intro = coll['intro'].split(' Behind each cover')[0]
     intro_lines = wrap(probe, intro, intro_f, 2200)
     header_h = MARGIN + 150 + 40 + len(intro_lines) * 62 + 110
-    footer_h = 260
+    footer_h = 120 if plain else 260
     H = header_h + rows * (th + TEXT_H + GAP_Y) - GAP_Y + footer_h
 
     img = Image.new('RGB', (W, H), BG)
@@ -135,9 +135,10 @@ def main(live: str, slug: str) -> None:
     for line in intro_lines:
         d.text((MARGIN, y), line, font=intro_f, fill=MUTED)
         y += 62
-    b = brand(d, W - MARGIN, MARGIN + 10, 84)
-    dom = font('jost', 40, 400)
-    d.text((W - MARGIN - d.textlength('buyitscovers.com', font=dom), b + 28), 'buyitscovers.com', font=dom, fill=MUTED)
+    if not plain:
+        b = brand(d, W - MARGIN, MARGIN + 10, 84)
+        dom = font('jost', 40, 400)
+        d.text((W - MARGIN - d.textlength('buyitscovers.com', font=dom), b + 28), 'buyitscovers.com', font=dom, fill=MUTED)
     d.line((MARGIN, header_h - 60, W - MARGIN, header_h - 60), fill=(52, 48, 43), width=2)
 
     # The grid, in the order of the numbers; the last row is centred.
@@ -168,17 +169,19 @@ def main(live: str, slug: str) -> None:
             d.text((x, ay + 36), fit_text(d, 'Cover: ' + ', '.join(artists), c_f, tw), font=c_f, fill=ACCENT)
 
     # Footer: the site and the address of this collection.
-    fy = H - footer_h + 70
-    d.line((MARGIN, fy - 40, W - MARGIN, fy - 40), fill=(52, 48, 43), width=2)
-    link = f'buyitscovers.com/collections/{slug}'
-    lf = font('jost', 52, 400)
-    d.text((MARGIN, fy + 14), link, font=lf, fill=CREAM)
-    brand(d, W - MARGIN, fy, 84)
+    if not plain:
+        fy = H - footer_h + 70
+        d.line((MARGIN, fy - 40, W - MARGIN, fy - 40), fill=(52, 48, 43), width=2)
+        link = f'buyitscovers.com/collections/{slug}'
+        lf = font('jost', 52, 400)
+        d.text((MARGIN, fy + 14), link, font=lf, fill=CREAM)
+        brand(d, W - MARGIN, fy, 84)
 
-    out = os.path.join(HERE, 'out', f'collection-{slug}.jpg')
+    # --plain: the same picture without the site's name, for forums that refuse it (Julian, 2026-10-07).
+    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}.jpg')
     img.save(out, quality=92)
     print('written', out, img.size)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:])
