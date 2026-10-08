@@ -42879,6 +42879,304 @@
           "coverIsbn": "9780679405078"
         }
       ]
+    },
+    {
+      "slug": "hemingways-reading-list",
+      "title": "Hemingway’s reading list",
+      "kind": "series",
+      "intro": "In 1934 a young man named Arnold Samuelson hitchhiked to Key West to ask Ernest Hemingway about writing, and Hemingway wrote him a list of two stories and fourteen books, among them War and Peace, Madame Bovary, Dubliners and The Brothers Karamazov; Samuelson told the story in With Hemingway (1984). A longer version of the list goes round online, adding books Hemingway named on other occasions — Marryat, Fielding, Turgenev, Proust. This wall follows the longer list, one cover each.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL24317882W",
+          "title": "The Common Reader",
+          "author": "Virginia Woolf",
+          "coverId": "ol:9109265",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL5912613W",
+          "title": "House Divided",
+          "author": "Ben Ames Williams",
+          "coverId": "ol:1875318",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL99611W",
+          "title": "The Republic",
+          "author": "Charles Austin Beard",
+          "coverId": "ol:13843206",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL17860766W",
+          "title": "African Hunting",
+          "author": "William Charles Baldwin",
+          "coverId": "ol:8164214",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL15136245W",
+          "title": "Collected Poems",
+          "author": "T. S. Eliot",
+          "coverId": "ol:376558",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL86318W",
+          "title": "Ulysses",
+          "author": "James Joyce",
+          "coverId": "ol:14909921",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL86320W",
+          "title": "Dubliners",
+          "author": "James Joyce",
+          "coverId": "ol:8216412",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL86343W",
+          "title": "A Portrait of the Artist as a Young Man",
+          "author": "James Joyce",
+          "coverId": "ol:13638237",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL259026W",
+          "title": "King Lear",
+          "author": "William Shakespeare",
+          "coverId": "ol:2005713",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL20805W",
+          "title": "The Open Boat and Other Stories",
+          "author": "Stephen Crane",
+          "coverId": "ol:9204519",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL20844W",
+          "title": "The Red Badge of Courage",
+          "author": "Stephen Crane",
+          "coverId": "ol:12044954",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL893707W",
+          "title": "Madame Bovary",
+          "author": "Gustave Flaubert",
+          "coverId": "ol:15009957",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL893802W",
+          "title": "Sentimental Education",
+          "author": "Gustave Flaubert",
+          "coverId": "ol:10507050",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL733640W",
+          "title": "The Red and the Black",
+          "author": "Stendhal",
+          "coverId": "ol:8231413",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL505781W",
+          "title": "Of Human Bondage",
+          "author": "William Somerset Maugham",
+          "coverId": "ol:5277723",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL267096W",
+          "title": "Anna Karenina",
+          "author": "Лев Толстой",
+          "coverId": "ol:2560652",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL267171W",
+          "title": "War and Peace",
+          "author": "Лев Толстой",
+          "coverId": "ol:12621906",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL14867081W",
+          "title": "Buddenbrooks",
+          "author": "Thomas Mann",
+          "coverId": "ol:10461264",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL2060369W",
+          "title": "Hail and Farewell",
+          "author": "George Moore",
+          "coverId": "ol:762302",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL10432709W",
+          "title": "The Brothers Karamazov",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:14889162",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL21077191W",
+          "title": "The Enormous Room",
+          "author": "E. E. Cummings",
+          "coverId": "ol:10458629",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL21177W",
+          "title": "Wuthering Heights",
+          "author": "Emily Brontë",
+          "coverId": "ol:12818862",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL879152W",
+          "title": "Far Away and Long Ago",
+          "author": "W. H. Hudson",
+          "coverId": "ol:10508061",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL276314W",
+          "title": "The American",
+          "author": "Henry James",
+          "coverId": "ol:8245158",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL166779W",
+          "title": "Mr. Midshipman Easy",
+          "author": "Frederick Marryat",
+          "coverId": "ol:8242328",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL166766W",
+          "title": "Frank Mildmay",
+          "author": "Frederick Marryat",
+          "coverId": "ol:2843846",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL166775W",
+          "title": "Peter Simple",
+          "author": "Frederick Marryat",
+          "coverId": "ol:12036844",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL45623W",
+          "title": "Tom Jones",
+          "author": "Henry Fielding",
+          "coverId": "ol:2560603",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL45709W",
+          "title": "Joseph Andrews",
+          "author": "Henry Fielding",
+          "coverId": "ol:5955750",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL53908W",
+          "title": "Adventures of Huckleberry Finn",
+          "author": "Mark Twain",
+          "coverId": "ol:8157718",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL38786W",
+          "title": "Autobiographies",
+          "author": "William Butler Yeats",
+          "coverId": "ol:427652",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL43369W",
+          "title": "A Sportsman's Sketches",
+          "author": "Ivan Sergeevich Turgenev",
+          "coverId": "ol:8292905",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL43370W",
+          "title": "Fathers and Sons",
+          "author": "Ivan Sergeevich Turgenev",
+          "coverId": "ol:8236420",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL15212580W",
+          "title": "Winesburg, Ohio",
+          "author": "Sherwood Anderson",
+          "coverId": "ol:14002129",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL36827W",
+          "title": "Queen Margot",
+          "author": "Alexandre Dumas",
+          "coverId": "ol:14557277",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL1190289W",
+          "title": "In Search of Lost Time",
+          "author": "Marcel Proust",
+          "coverId": "ol:12332709",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        }
+      ]
     }
   ]
 }
