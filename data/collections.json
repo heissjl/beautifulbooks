@@ -42922,7 +42922,7 @@
       "slug": "bad-sf-covers",
       "title": "Bad SF Covers",
       "kind": "series",
-      "intro": "The covers readers of r/badscificovers voted to the top of the subreddit: from its hundred most-upvoted posts of all time, the books whose very cover from the post Open Library holds, in the order of their votes. Behind each cover is the wall of the book's other faces, most of them kinder.",
+      "intro": "The covers readers of r/badscificovers voted to the top of the subreddit: from its two hundred most-upvoted posts of all time, the books whose very cover from the post Open Library holds, in the order of their votes. Behind each cover is the wall of the book's other faces, most of them kinder.",
       "published": false,
       "publishers": [],
       "works": [
@@ -43000,7 +43000,7 @@
         },
         {
           "id": "OL3290749W",
-          "title": "Philosophy and living",
+          "title": "Odd John",
           "author": "Olaf Stapledon",
           "coverId": "ol:8310918",
           "addedAt": "2026-10-07",
@@ -43188,6 +43188,270 @@
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#91",
           "coverIsbn": "9781621050407"
+        },
+        {
+          "id": "OL2172403W",
+          "title": "The Man in the High Castle",
+          "author": "Philip K. Dick",
+          "coverId": "ol:6624881",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#100"
+        },
+        {
+          "id": "OL10587215W",
+          "title": "Gladiator-at-Law",
+          "author": "Frederik Pohl",
+          "coverId": "ol:14607106",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#105"
+        },
+        {
+          "id": "OL41822W",
+          "title": "Manseed",
+          "author": "Jack Williamson",
+          "coverId": "ol:6683007",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#110"
+        },
+        {
+          "id": "OL33883098W",
+          "title": "Stress Pattern",
+          "author": "Neal Barrett",
+          "coverId": "ol:15071140",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#115"
+        },
+        {
+          "id": "OL59706W",
+          "title": "Friday",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:10709137",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#119"
+        },
+        {
+          "id": "OL41495W",
+          "title": "A Wrinkle in Time",
+          "author": "Madeleine L'Engle",
+          "coverId": "ol:14482191",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#123"
+        },
+        {
+          "id": "OL2172525W",
+          "title": "The Zap Gun",
+          "author": "Philip K. Dick",
+          "coverId": "ol:9251923",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#127"
+        },
+        {
+          "id": "OL3749880W",
+          "title": "Gumshoe Gorilla",
+          "author": "Keith Hartman",
+          "coverId": "ol:940832",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#128"
+        },
+        {
+          "id": "OL893510W",
+          "title": "The Heaven Makers",
+          "author": "Frank Herbert",
+          "coverId": "ol:9260732",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#131"
+        },
+        {
+          "id": "OL1418244W",
+          "title": "The Chessmen of Mars",
+          "author": "Edgar Rice Burroughs",
+          "coverId": "ol:14422816",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#132"
+        },
+        {
+          "id": "OL6673188W",
+          "title": "Chrome",
+          "author": "George Nader",
+          "coverId": "ol:10961503",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#133"
+        },
+        {
+          "id": "OL4978451W",
+          "title": "Winter World",
+          "author": "Carla J. Mills",
+          "coverId": "ol:6634108",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#134"
+        },
+        {
+          "id": "OL20920063W",
+          "title": "The Rivals of Dracula",
+          "author": "Michel Parry",
+          "coverId": "ol:10290370",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#139"
+        },
+        {
+          "id": "OL8997343W",
+          "title": "Crystal Line",
+          "author": "Anne McCaffrey",
+          "coverId": "ol:7009627",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#143"
+        },
+        {
+          "id": "OL172992W",
+          "title": "Marauders of Gor",
+          "author": "John Norman",
+          "coverId": "ol:7241564",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#146"
+        },
+        {
+          "id": "OL5821184W",
+          "title": "Rats, Bats & Vats",
+          "author": "Dave Freer",
+          "coverId": "ol:8677100",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#149"
+        },
+        {
+          "id": "OL90703W",
+          "title": "A Coven of Vampires",
+          "author": "Brian Lumley",
+          "coverId": "ol:2398045",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#150"
+        },
+        {
+          "id": "OL155436W",
+          "title": "The Right to Arm Bears",
+          "author": "Gordon R. Dickson",
+          "coverId": "ol:405564",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#151"
+        },
+        {
+          "id": "OL49488W",
+          "title": "Ender's Game",
+          "author": "Orson Scott Card",
+          "coverId": "ol:14478204",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#152"
+        },
+        {
+          "id": "OL24206076W",
+          "title": "Taurus Four",
+          "author": "Rena M. Vale",
+          "coverId": "ol:10650296",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#153"
+        },
+        {
+          "id": "OL20538481W",
+          "title": "The Fascinating Life of Animal Robots",
+          "author": "T.K. Wade",
+          "coverId": "ol:9186705",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#154"
+        },
+        {
+          "id": "OL4045682W",
+          "title": "Dagger's Point",
+          "author": "Anne Logston",
+          "coverId": "ol:12189422",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#155"
+        },
+        {
+          "id": "OL24894427W",
+          "title": "Glitter Ponies",
+          "author": "Lita Burke",
+          "coverId": "ol:11793212",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#158"
+        },
+        {
+          "id": "OL5510993W",
+          "title": "Star Surgeon",
+          "author": "James White",
+          "coverId": "ol:15149226",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#160"
+        },
+        {
+          "id": "OL102598W",
+          "title": "Cat-a-Lyst",
+          "author": "Alan Dean Foster",
+          "coverId": "ol:6885777",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#162"
+        },
+        {
+          "id": "OL466790W",
+          "title": "Flux",
+          "author": "Ron Goulart",
+          "coverId": "ol:14579562",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#164"
+        },
+        {
+          "id": "OL175676W",
+          "title": "Bug Park",
+          "author": "James P. Hogan",
+          "coverId": "ol:409575",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#168"
+        },
+        {
+          "id": "OL1816214W",
+          "title": "The Three-Legged Hootch Dancer",
+          "author": "Mike Resnick",
+          "coverId": "ol:13206185",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#170"
+        },
+        {
+          "id": "OL101934W",
+          "title": "Swords in the Mist",
+          "author": "Fritz Leiber",
+          "coverId": "ol:13551120",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#183"
+        },
+        {
+          "id": "OL59797W",
+          "title": "The Word for World Is Forest",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:13210652",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#188"
+        },
+        {
+          "id": "OL467280W",
+          "title": "The Stainless Steel Rat for President",
+          "author": "Harry Harrison",
+          "coverId": "ol:6970629",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#195"
+        },
+        {
+          "id": "OL273059W",
+          "title": "Venus on the Half-Shell",
+          "author": "Philip José Farmer",
+          "coverId": "ol:7431565",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#196"
+        },
+        {
+          "id": "OL15184122W",
+          "title": "Bill, the Galactic Hero",
+          "author": "Harry Harrison",
+          "coverId": "ol:13008855",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#198"
         }
       ]
     },
