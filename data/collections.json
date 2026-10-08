@@ -2042,27 +2042,27 @@
           "id": "OL893414W",
           "title": "Dune",
           "author": "Frank Herbert",
-          "coverId": "ol:380097",
+          "coverId": "ol:15263351",
           "addedAt": "2026-09-25",
-          "from": "checked:original-design",
-          "coverIsbn": "9780575073340",
+          "from": "isbn:0575081503, image uploaded to Open Library from ISFDB 2026-10-08",
+          "coverIsbn": "9780575081505",
           "coverArtists": [
             "John Schoenherr"
           ],
-          "isfdbRecord": "11581"
+          "isfdbRecord": "279556"
         },
         {
           "id": "OL59704W",
           "title": "The moon is a harsh mistress",
           "author": "Robert A. Heinlein",
-          "coverId": "ol:380099",
+          "coverId": "ol:15263157",
           "addedAt": "2026-09-25",
-          "from": "checked:original-design",
-          "coverIsbn": "9780575073364",
+          "from": "isbn:0575082410, image uploaded to Open Library from ISFDB 2026-10-08",
+          "coverIsbn": "9780575082410",
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "44307"
+          "isfdbRecord": "261784"
         },
         {
           "id": "OL2172403W",
