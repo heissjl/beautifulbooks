@@ -60,6 +60,18 @@ Steps 1–9 (data layer) and 10–16 (the trust plan: ranking, paged cover wall,
 - **Open Library's cover host states a scan's size without the scan**: `https://covers.openlibrary.org/b/id/<n>.json` is the cover's record, with `width` and `height` of the image as uploaded, answered in about 0.08 s. Measured 2026-10-04 on 40 covers whose size had been read from the image itself: 39 the same, one record without a size. The images are another matter — most are handed on to zip archives at the Internet Archive and take 0.1 to 10 s each (a 600 KB original 4–10 s, a medium image up to 6 s). Never fetch originals to learn their size (`CoverSizes` in `lab/calibre/download.ts`).
 - Open Library regularly takes 2–7 s for a search and 3–10 s for an editions page from Germany, occasionally much longer. Every external call needs a timeout and a cache (§4 N3, N4); the values live in `OL_TIMEOUTS`.
 
+## Editions, printings and covers — the facts the site lives on
+
+Which cover belongs to which edition and printing is the site's whole claim, so research on it follows [docs/ausgaben-recherche.md](docs/ausgaben-recherche.md) (one section per source: ISFDB, Open Library, Google Books, Wikipedia lists, Reddit). The rules that must hold (from the SF Masterworks check, 2026-10-08, after a reader on Reddit was right):
+
+- **An ISBN is not a printing and not a cover.** Publishers keep an ISBN across printings and change the image (SF Masterworks #1: one ISBN 1999–2004, two covers). Never call the image Open Library or Google holds for an ISBN "the first edition's cover"; that claim needs a dated printing record showing that image — for SF, the ISFDB publication.
+- **Read series name and number on the printing before assigning it to a series.** "Gollancz SF Masterworks (HC)" No. III (2001) is not "Millennium / Gollancz SF Masterworks" #73 (2009).
+- **A credit and its `isfdbRecord` describe the printing whose image is shown**, not the ISBN's first printing (6.52). When a cover changes, its artist, ISBN and record change with it or go.
+- **Images are compared by looking.** A hash only ranks candidates: a photo of the same cover sits 18–26 bits from the scan, a different crop of the same art up to 31. Decide on a contact sheet; "not in the catalogue" only after walking all of a work's editions.
+- **A correction from outside is checked in the source before it is answered**, the result goes into docs/history.md either way, and the whole collection is checked for the same fault, not just the cases named.
+- **Writing to someone else's database** (an Open Library cover upload or removal) only with Julian's yes, under his account, onto the edition whose ISBN *and* date match the printing; every change with edition and cover ids in the history.
+- **Collections change without a deploy** (`lab/collections/push-draft.ts <slug> --publish`), but a /curate step carries no credits: keep credits in the file; the site fills them in from it for the same work and cover (`withFileFacts`, `lib/collections.ts`).
+
 ## Layout
 
 ```
