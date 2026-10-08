@@ -314,11 +314,11 @@
       "channel": "mail",
       "kind": "outreach",
       "text": "Fünf Blogger oder BookTok-Leute, deren Bücher in den Sammlungen stehen: Claude liefert je Person einen Link auf „ihr“ Buch oder Cover (mit ?via=blog bzw. ?via=mail) und prüft die Vorschaukarte. Das Anschreiben schreibst du.",
-      "status": "vorschlag",
+      "status": "verworfen",
       "needs": [
         "5.6a"
       ],
-      "note": ""
+      "note": "Verworfen 2026-10-07 (Julian: „ich glaube damit holen wir uns nur rechtliche probleme etc“): keine Ansprache von Gestaltern, Verlagen oder Design-Blogs, solange die Rechte-Entscheidung offen ist."
     },
     {
       "id": "pin-mosaik-twain",
