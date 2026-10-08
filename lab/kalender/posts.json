@@ -164,7 +164,7 @@
       "kind": "setup",
       "text": "Eigenes Konto prüfen (Alter, Karma); die Regeln von r/InternetIsBeautiful, r/books, r/printSF und r/suggestmeabook lesen und hier notieren, was für Selbstwerbung gilt.",
       "status": "vorschlag",
-      "note": ""
+      "note": "2026-10-07: Julian hat kein Reddit-Konto; Reddit zurückgestellt. Ein neues Konto bräuchte Wochen eigener Beiträge, bevor die 90/10-Regel einen eigenen Link zulässt."
     },
     {
       "id": "setup-decision",
@@ -344,7 +344,8 @@
       "text": "Fenster für bis zu drei Antworten diese Woche, nur wo jemand nach einer Ausgabe oder einem Cover fragt. Die Antwort hilft auch ohne Link; der Link geht auf das passende Cover (/book/<id>/cover/<coverId>?via=reddit). Nie kopiert. Claude liefert auf Zuruf eine Suchliste.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },
@@ -670,7 +671,8 @@
       "text": "Antwort-Fenster, höchstens drei, wie Woche 2.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },
@@ -804,13 +806,14 @@
       "text": "Antwort-Fenster, höchstens drei. In der Launch-Woche lieber eine weniger.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },
     {
       "id": "reddit-iib",
-      "date": "2026-10-07",
+      "date": "2026-11-03",
       "channel": "reddit",
       "kind": "expose",
       "text": "I built this because I kept wanting a particular edition of a book for its cover, and shops only show one.\n\nType a title and the site asks two open catalogues, Open Library and Google Books, for the book's editions and shows their covers as one wall, grouped by language and year; near-identical scans are folded together. Pick a cover and you get links to look for that edition by its ISBN, plus a note on whether the publisher's current image for that ISBN is still the same cover (reprints often change it).\n\nFree, no account, no ads, and no link on it earns anything. It only knows what the two catalogues hold, which is a fraction of what was printed, so some books have three covers and some have three hundred.\n\nTry The Great Gatsby or Nineteen Eighty-Four.",
@@ -821,7 +824,7 @@
         "5.6a",
         "konto:reddit"
       ],
-      "note": "r/InternetIsBeautiful, auf 2026-10-07 vorgezogen (PLAN-5.6b §6a; Show HN ist für neue Konten gesperrt). Titel = Linkpost auf https://buyitscovers.com/?via=reddit, Text = erster Kommentar von Julian. Regeln, gelesen 2026-10-07 über rankhog.com und gummysearch-ähnliche Übersichten (reddit.com selbst ist für Claude gesperrt; vor dem Posten die Seitenleiste selbst ansehen): keine Sammlungen/Aggregatoren, nichts Bekanntes oder kürzlich Gepostetes, keine Webspiele und Quizze, keine Artikel oder Bildergalerien, keine Läden oder bezahlten Dienste, keine Anmeldung, keine Downloads, keine Politik, nichts, dessen Hauptinhalt KI erzeugt, Selbstwerbung nur nach der 90/10-Regel (das Konto muss überwiegend anderes tun), Seiten, die unter Last ausfallen, fliegen vorübergehend raus. Risiken: (1) **Aggregator** — die Seite zeigt Katalog-Cover; deshalb als Werkzeug beschrieben (ein Titel rein, eine Wand raus), nicht als Sammlung, und auf die Startseite verlinkt, nicht auf /collections. (2) **90/10** — Julians Reddit-Konto braucht eine Geschichte ohne eigene Links; ohne sie lieber erst kommentieren. (3) KI nicht erwähnen (anders als im HN-Text), Spiel nicht verlinken. (4) Ansturm: Seiten aus dem CDN; das Google-Kontingent kann leerlaufen, dann trägt der Open-Library-Rückweg (1.12), und der Alarm (0.13) meldet 80 %. Tageszeit: US-Vormittag, etwa 15–16 Uhr deutscher Zeit, werktags."
+      "note": "Zurückgestellt 2026-10-07 (Julian: „ich habe kein konto, stell Reddit also erstmal zurück“). Text und Titel bleiben fertig. r/InternetIsBeautiful, auf 2026-10-07 vorgezogen (PLAN-5.6b §6a; Show HN ist für neue Konten gesperrt). Titel = Linkpost auf https://buyitscovers.com/?via=reddit, Text = erster Kommentar von Julian. Regeln, gelesen 2026-10-07 über rankhog.com und gummysearch-ähnliche Übersichten (reddit.com selbst ist für Claude gesperrt; vor dem Posten die Seitenleiste selbst ansehen): keine Sammlungen/Aggregatoren, nichts Bekanntes oder kürzlich Gepostetes, keine Webspiele und Quizze, keine Artikel oder Bildergalerien, keine Läden oder bezahlten Dienste, keine Anmeldung, keine Downloads, keine Politik, nichts, dessen Hauptinhalt KI erzeugt, Selbstwerbung nur nach der 90/10-Regel (das Konto muss überwiegend anderes tun), Seiten, die unter Last ausfallen, fliegen vorübergehend raus. Risiken: (1) **Aggregator** — die Seite zeigt Katalog-Cover; deshalb als Werkzeug beschrieben (ein Titel rein, eine Wand raus), nicht als Sammlung, und auf die Startseite verlinkt, nicht auf /collections. (2) **90/10** — Julians Reddit-Konto braucht eine Geschichte ohne eigene Links; ohne sie lieber erst kommentieren. (3) KI nicht erwähnen (anders als im HN-Text), Spiel nicht verlinken. (4) Ansturm: Seiten aus dem CDN; das Google-Kontingent kann leerlaufen, dann trägt der Open-Library-Rückweg (1.12), und der Alarm (0.13) meldet 80 %. Tageszeit: US-Vormittag, etwa 15–16 Uhr deutscher Zeit, werktags."
     },
     {
       "id": "pin-batch-w4",
@@ -953,7 +956,8 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },
@@ -1090,7 +1094,8 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },
@@ -1208,7 +1213,8 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },
@@ -1305,7 +1311,8 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
+        "5.6a",
+        "konto:reddit"
       ],
       "note": ""
     },

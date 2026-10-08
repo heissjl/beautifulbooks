@@ -211,6 +211,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **Nachtrag 2026-10-07: Show HN geht noch nicht.** Julian: „show hn lässt mich noch nicht posten als neuling auf dem forum“. HN drosselt Show HN neuer Konten seit der Debatte im März 2026 („Ask HN: Please restrict new accounts from posting“). Wege: (a) Karma sammeln, ehrliche Kommentare über ein, zwei Wochen, dann erneut; (b) jemand mit älterem Konto reicht den Link ein — erlaubt, Stimmen organisieren nicht; (c) ein gewöhnlicher Link ohne „Show HN:“ unterliegt vielleicht nicht derselben Sperre, ungeprüft. **Ähnliche Orte** statt dessen: MetaFilter Projects (projects.metafilter.com; Selbstlinks ausdrücklich erlaubt, braucht ein MetaFilter-Konto, jeder Post geht durch die Moderation, einer im Monat; gute Projekte holt die Gemeinschaft auf die Startseite), Reddit r/InternetIsBeautiful und r/SideProject, Lobsters und Tildes (nur mit Einladung, eher Technik), Indie Hackers, Product Hunt (§2, zuletzt). Für Buchgestaltung eher Menschen als Foren: Blogs und Newsletter aus §2.
 
+**Nachtrag 2026-10-07: Reddit zurückgestellt.** Julian hat kein Reddit-Konto („stell Reddit also erstmal zurück“). Der Beitrag für r/InternetIsBeautiful liegt fertig im Kalender (`reddit-iib`, Voraussetzung `konto:reddit`), die Antwort-Fenster warten ebenfalls. Damit bleiben für jetzt: MetaFilter Projects, die Gestalter und Blogs (3), die Shelf-Portraits der Freunde (4), Antworten auf Bluesky (5), und HN, sobald das Konto Karma hat.
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
