@@ -224,6 +224,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **Unterforen für mit KI gebaute Projekte, gesucht 2026-10-07** (Julian: „can you look for ai project showcasing reddits?“; Quellen: gummysearch, thehiveindex, Spiegel der Regelposts): r/ClaudeAI — „Built with Claude“-Megathread, **ohne Karma-Grenze**, für neue Konten ausdrücklich empfohlen; eigene Posts im Feed erst ab 50 Karma, Regel 7. r/vibecoding (rund 284 k) — Projektposts müssen erklären, wie gebaut wurde (Werkzeuge, Ablauf, Einsichten). r/ChatGPTCoding (rund 390 k) — eigene Fäden für Selbstwerbung. r/cursor (rund 58 k) — wöchentlicher Showcase-Faden, eher für Cursor-Projekte. r/aipromptprogramming (rund 231 k). **Einordnung:** Das Publikum baut selbst mit KI, liest aber kaum Bücher — Sichtbarkeit und Rückmeldung, keine Leser. Gut als erster Schritt für ein neues Reddit-Konto (Megathread zuerst), und der Text darf hier erzählen, wie die Seite gebaut wurde (anders als in r/InternetIsBeautiful, das KI-Inhalte ausschließt).
 
+**Gelegenheit, gesehen 2026-10-07 auf X:** Unter „Today’s News“ stand „Readers Share 3x3 Grids of Books That Stayed With Them“ (1.342 Posts, seit drei Stunden), in der Zeitleiste Raster mit neun Büchern und „The 9 books I’ll never forget“. Das ist genau das Format des Shelf-Portraits. Solange die Welle läuft: unter diesen Posts antworten und ein eigenes Shelf-Portrait mit der Adresse posten — Leser, nicht Rechteinhaber.
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians

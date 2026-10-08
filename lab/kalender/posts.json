@@ -1356,6 +1356,33 @@
         "konto:reddit"
       ],
       "note": "Julian, 2026-10-07, wie oben. r/books verbietet Selbstwerbung und Verkaufslinks ausdrücklich (Wiki, gelesen über einen Spiegel 2026-10-07); Ausnahme nur „Author Spotlight“ für Autoren nach Freigabe der Moderation, passt nicht. Deshalb ein Gesprächsbeitrag ohne Link und ohne den Namen der Seite; fragt jemand, wo die Cover herkommen, ehrlich antworten, dass Julian die Seite gebaut hat — auch das kann entfernt werden. Die Zahlen stehen so auf /book/OL1168083W/decades (abgelesen 2026-10-07): 343 Cover aus 349 Drucken mit Jahr, 2020er 93 Cover, 84 Verlage."
+    },
+    {
+      "id": "reddit-vibecoding",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "launch",
+      "status": "vorschlag",
+      "title": "I built a site that shows the covers a book has been printed with: about 1,080 commits with Claude Code in a month, after giving up in January",
+      "text": "**What it is.** Type a book's title; the site asks two open catalogues (Open Library and Google Books) for its editions and shows their covers as one wall, grouped by language and year. Near-identical scans are folded together by a perceptual hash in the browser. Pick a cover and you get links to look for that edition by ISBN, plus a check whether the publisher's current image for that ISBN is still the same cover (reprints often change it). There's also a Shelf-Portrait: nine books, each in the cover you love, shared as one picture. buyitscovers.com\n\n**Tools.** Claude Code (Fable 5.1, Opus 5 and Opus 5.5), Next.js 16 on Vercel, Redis for the few things it stores, the Open Library and Google Books APIs. I'm not a front-end engineer.\n\n**Process.**\n- First try in January with Sonnet 4.5: four commits, then I gave up.\n- Restarted in September. Since then about 1,080 commits, almost all co-authored by Claude.\n- Three files carry the project, not the chat: a spec (requirements with acceptance queries, numbered decisions), a roadmap where every item appears exactly once with an owner, and a history where every measurement goes. One rule in CLAUDE.md does most of the work: \"Nothing is finished in the chat.\" A number that was only said in conversation is lost, and the next session re-measures it or, worse, guesses it.\n- Several sessions run in parallel, each in its own git worktree. A small script shows every branch's distance to production, because once my local main was six commits ahead of and fifteen behind what was live, and nothing showed it.\n- Experiments live in a lab/ folder the site never imports.\n\n**What I learned.**\n1. Record real API responses. The model's assumptions about an API were plausible and wrong: Open Library returns an edition's authors as keys, not names. Tests run against recorded responses now, never against what the model remembers.\n2. Measure the expensive thing. A cold book page cost 11 Google requests against a free quota of 1,000 a day. Now it's 2, and a test asserts it.\n3. Set thresholds by looking. Duplicate covers are folded by thresholds I chose by looking at pairs. Over 58,000 random pairs, any blended score loose enough to be interesting let everything through.\n4. A sensible-sounding rule can destroy data. \"Hide covers that look blank\" flagged 4 of 8 real covers of Nineteen Eighty-Four, among them the 1949 first edition. Now such covers only move to the end.\n5. Change a prompt only against a test set. For the feature that reads a photo of your shelf, three photos carried a wrong explanation for two days. Now there are fourteen photos with truth lists.\n6. Don't let the agent poll production. Repeated checks tripped Vercel's bot protection, which answers 403 and looks exactly like an outage. Check once after a deploy.\n\nHappy to answer questions about the setup.",
+      "path": "/",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Julian, 2026-10-07: „prepare a post for that. look also at my x draft (without posting it!)“. Den X-Entwurf fand Claude nicht: unter @buyitscovers liegt nur eine Antwort („performative reader detected“), keine Artikel-Entwürfe; vielleicht in Julians persönlichem Konto. Die Zahlen aus git (origin/main, 2026-10-07): 4 Commits im Januar 2026, 1.085 seit September, 983 davon mit Claude als Co-Autor (Opus 5.5 495, Opus 5 261, Fable 5.1 227). r/vibecoding verlangt bei Projektposts Werkzeuge, Ablauf und Einsichten. Link ohne ?via= im Text, weil der Post sonst wie Werbung aussieht; Reddit-Apps schicken oft keinen Referrer, ein Teil kommt als direct an."
+    },
+    {
+      "id": "reddit-claudeai",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "launch",
+      "status": "vorschlag",
+      "text": "**Buy Its Covers** (buyitscovers.com): type a book's title and see the covers it has been printed with, by language and year, folded by a perceptual hash, with a check whether the publisher's current image for an ISBN is still that cover.\n\nBuilt with Claude Code over about a month, after a first attempt with Sonnet 4.5 in January stalled at four commits. Since September about 1,080 commits with Fable 5.1, Opus 5 and Opus 5.5; Next.js 16 on Vercel; I'm not a front-end engineer.\n\nWhat made it work for me: a spec, a roadmap and a history file as the project's memory, and one CLAUDE.md rule, \"Nothing is finished in the chat\": every finding and measurement lands in a file before the turn ends. Parallel sessions in their own git worktrees. Tests against recorded API responses, because the model's guesses about Open Library's format were plausible and wrong. And never letting the agent poll production: it tripped Vercel's bot protection once.\n\nFeedback welcome, especially on the cover wall on a phone.",
+      "path": "/",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Kommentar im Megathread „Built with Claude“ von r/ClaudeAI (keine Karma-Grenze; eigene Posts im Feed erst ab 50 Karma, Regel 7). Guter erster Beitrag für ein neues Konto."
     }
   ]
 }
