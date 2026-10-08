@@ -1336,13 +1336,13 @@
       "date": "2026-11-03",
       "channel": "reddit",
       "kind": "collection",
-      "status": "vorschlag",
+      "status": "gepostet",
       "title": "The first SF Masterworks run (1999–2007) in number order: Chris Moore, Jim Burns, Les Edwards, Fred Gambino and others",
       "text": "Bild-Post mit lab/kalender/out/reddit/sf-masterworks.png (Bildschirmfoto der Sammlung, 1280 px breit), zweites Bild 1984-decades.png.\n\nErster Kommentar:\nThe numbered Millennium/Gollancz run, with the cover artist under each book where the catalogue or the jacket names one. I put this together on a site I'm building that shows the covers a book has been printed with; each of these leads to the other faces the book has had: buyitscovers.com/collections/sf-masterworks?via=reddit",
       "needs": [
         "konto:reddit"
       ],
-      "note": "Julian, 2026-10-07: „https://www.reddit.com/r/bookcoverporn/ … prepare a post (text and screenshots of site) for each. they can differ“. Regeln von r/bookcoverporn nicht auffindbar (kein Eintrag in gummysearch, reddit.com für Claude gesperrt): vor dem Posten Seitenleiste lesen, ob Bildschirmfotos und ein eigener Link erlaubt sind; sonst nur das Bild und der Link erst auf Nachfrage. Inhalt zuerst, die Künstler im Titel. Bildschirmfotos einmal von der Produktion aufgenommen (headless Chrome, 2026-10-07), liegen nur lokal."
+      "note": "Julian, 2026-10-07: „https://www.reddit.com/r/bookcoverporn/ … prepare a post (text and screenshots of site) for each. they can differ“. Regeln von r/bookcoverporn nicht auffindbar (kein Eintrag in gummysearch, reddit.com für Claude gesperrt): vor dem Posten Seitenleiste lesen, ob Bildschirmfotos und ein eigener Link erlaubt sind; sonst nur das Bild und der Link erst auf Nachfrage. Inhalt zuerst, die Künstler im Titel. Bildschirmfotos einmal von der Produktion aufgenommen (headless Chrome, 2026-10-07), liegen nur lokal. 2026-10-07: von Julian als u/buyitscovers gepostet, mit eigenem Titel und Text; erschien ohne Bildvorschau (als Text-Post). Danach das Bild aller 73 Cover in hoher Auflösung gesetzt: lab/kalender/out/collection-sf-masterworks.jpg (3600 px breit, lab/kalender/poster_collection.py aus dem Live-Stand der Sammlung), mit Kopf (Name, Beschreibung, Marke rechts) und Fuß (Adresse der Sammlung)."
     },
     {
       "id": "reddit-books",
