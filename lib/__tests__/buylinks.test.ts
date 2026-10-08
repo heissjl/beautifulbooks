@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AMAZON_ASSOCIATE_NOTE, buyLinksFor, COMMISSION_NOTE, commissionNote, retailersFor, searchLinksFor, titleSearchLinksFor, affiliateShops } from '../buylinks';
+import { AMAZON_ASSOCIATE_NOTE, buyLinksFor, COMMISSION_NOTE, commissionNote, retailersFor, searchLinksFor, titleSearchLinksFor, affiliateShops, affiliateNetworks } from '../buylinks';
 import { cookieValue, detectMarket, normalizeMarket } from '../market';
 import { isbn13to10 } from '../normalize';
 
@@ -192,3 +192,44 @@ describe('affiliateShops (what the privacy notice names, ROADMAP 4.13)', () => {
   });
 });
 
+
+describe('genialokal through Awin (ROADMAP 4.3, accepted 2026-10-07)', () => {
+  const isbn = { isbn13: '9783499130656' };
+  const genialokal = (env: Record<string, string>) => buyLinksFor(isbn, 'de', env).find(l => l.provider === 'genialokal')!;
+  const shop = { NEXT_PUBLIC_SITE_MODE: 'shop' };
+
+  it('is the plain search without the variable, and in hobby mode with it', () => {
+    expect(genialokal({ ...shop }).url).toBe('https://www.genialokal.de/Suche/?q=9783499130656');
+    expect(genialokal({ AFFILIATE_GENIALOKAL_ID_DE: '3114726' }).url).toBe('https://www.genialokal.de/Suche/?q=9783499130656');
+    expect(genialokal({ AFFILIATE_GENIALOKAL_ID_DE: '3114726' }).affiliate).toBeUndefined();
+  });
+
+  it('wraps the same search in an Awin click link in shop mode', () => {
+    const link = genialokal({ ...shop, AFFILIATE_GENIALOKAL_ID_DE: '3114726' });
+    const url = new URL(link.url);
+    expect(url.origin + url.pathname).toBe('https://www.awin1.com/cread.php');
+    expect(url.searchParams.get('awinmid')).toBe('17358');
+    expect(url.searchParams.get('awinaffid')).toBe('3114726');
+    expect(url.searchParams.get('ued')).toBe('https://www.genialokal.de/Suche/?q=9783499130656');
+    expect(link).toMatchObject({ kind: 'search', affiliate: true });
+    expect(commissionNote([link])).toBe(COMMISSION_NOTE);
+  });
+
+  it('wraps the search by words too, with the words intact', () => {
+    const link = titleSearchLinksFor({ title: 'Der Steppenwolf', author: 'Hermann Hesse' }, 'de', { ...shop, AFFILIATE_GENIALOKAL_ID_DE: '3114726' })
+      .find(l => l.provider === 'genialokal-title')!;
+    expect(new URL(link.url).searchParams.get('ued')).toBe('https://www.genialokal.de/Suche/?q=Der%20Steppenwolf%20Hermann%20Hesse');
+  });
+
+  it('leaves every other German shop as it was', () => {
+    const tagged = buyLinksFor(isbn, 'de', { ...shop, AFFILIATE_GENIALOKAL_ID_DE: '3114726' }).filter(l => l.provider !== 'genialokal');
+    expect(tagged).toEqual(buyLinksFor(isbn, 'de', {}).filter(l => l.provider !== 'genialokal'));
+  });
+
+  it('names Awin for the privacy notice only when a link goes through it', () => {
+    expect(affiliateNetworks({ AFFILIATE_GENIALOKAL_ID_DE: '3114726' }, false)).toEqual([]);
+    expect(affiliateNetworks({ AFFILIATE_BOOKSHOP_ID_US: '129426' }, true)).toEqual([]);
+    expect(affiliateNetworks({ AFFILIATE_GENIALOKAL_ID_DE: '3114726' }, true)).toEqual([{ network: 'Awin', shops: ['genialokal'] }]);
+    expect(affiliateShops({ AFFILIATE_GENIALOKAL_ID_DE: '3114726' }, true)).toEqual(['genialokal']);
+  });
+});
