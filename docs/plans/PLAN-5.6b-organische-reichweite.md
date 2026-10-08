@@ -218,6 +218,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 - *Thema passt, Werbung meist nicht:* r/BookCollecting (rund 110 k, Ausgaben, Erstausgaben, „no sales“) — Inhalt posten, etwa *Gatsby* durch die Jahrzehnte, die Seite nur nennen, wenn jemand fragt; r/BookCovers (rund 31 k, Gestalter und Selbstverleger, Flair „Showcase“, Werbung für Dienste üblich) — als Recherchewerkzeug für Cover-Gestaltung; r/TerribleBookCovers (rund 90 k) — die schlimmsten Funde von der Seite als Bild, Link im Kommentar; r/printSF — die SF-Masterworks-Sammlung als Inhalt.
 - *Eher nicht:* r/books, r/graphic_design, r/GraphicNovels (verbietet eigene Seiten ausdrücklich).
 
+**X Premium? (Julian, 2026-10-07: „should i buy an x subscription for a month? would that help?“)** Empfehlung: nein, nicht jetzt. Premium hebt vor allem Antworten in fremden Threads und das Häkchen; es bringt keine Follower, und ein Post erreicht weiter vor allem die eigenen, das sind fast null. Lohnen würde es sich nur zusammen mit täglichem Antworten unter großen Buch- und Design-Konten — ein Monat Arbeit, nicht ein Kauf. Dieselbe Zeit bringt bei den Gestaltern und Blogs (3) mehr.
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
