@@ -266,9 +266,42 @@ export function collectionRecords(): CollectionRecord[] {
  */
 export type ContentOverrides = Record<string, CollectionRecord>;
 
+/**
+ * What a pick says about the printing behind its image. A /curate step can
+ * only name a book and a cover (`applyOp` keeps friends from typing credits),
+ * so a cover added to a draft arrives without them; the file, written by
+ * Julian's tool from ISFDB and the printings themselves, has them.
+ */
+const PRINTING_FACTS = ['coverIsbn', 'coverArtists', 'coverArt', 'coverArtSource', 'isfdbRecord', 'creditWithheld'] as const;
+
+/**
+ * A published draft's content with the file's printing facts filled in where
+ * the draft has none. Matched on work and cover together: a credit belongs to
+ * one printing's image (6.52), so a draft that chose another cover for a work
+ * gets nothing from the file's old one.
+ */
+function withFileFacts(draft: CollectionRecord, file: CollectionRecord): CollectionRecord {
+  const byCover = new Map(file.works.map(w => [`${w.id}|${w.coverId}`, w]));
+  const works = draft.works.map(w => {
+    const known = byCover.get(`${w.id}|${w.coverId}`);
+    if (!known) return w;
+    const add: Partial<CollectionPick> = {};
+    for (const key of PRINTING_FACTS) {
+      if (w[key] === undefined && known[key] !== undefined) Object.assign(add, { [key]: known[key] });
+    }
+    return { ...w, ...add };
+  });
+  return {
+    ...draft,
+    works,
+    ...(draft.coverCredits === undefined && file.coverCredits !== undefined ? { coverCredits: file.coverCredits } : {}),
+  };
+}
+
 export function applyContent(records: CollectionRecord[], content: ContentOverrides): CollectionRecord[] {
-  // A /curate draft knows no wall layout, so the file's set size survives its content.
-  const out = records.map(r => (content[r.slug] ? { ...content[r.slug], ...(r.setSize ? { setSize: r.setSize } : {}) } : r));
+  // A /curate draft knows no wall layout, so the file's set size survives its content;
+  // nor printing facts, so the file's credits fill the covers it has too (withFileFacts).
+  const out = records.map(r => (content[r.slug] ? { ...withFileFacts(content[r.slug], r), ...(r.setSize ? { setSize: r.setSize } : {}) } : r));
   for (const [slug, r] of Object.entries(content)) if (!records.some(x => x.slug === slug)) out.push(r);
   return out;
 }
