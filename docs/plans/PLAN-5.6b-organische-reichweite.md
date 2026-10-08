@@ -213,6 +213,11 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **Nachtrag 2026-10-07: Reddit zurückgestellt.** Julian hat kein Reddit-Konto („stell Reddit also erstmal zurück“). Der Beitrag für r/InternetIsBeautiful liegt fertig im Kalender (`reddit-iib`, Voraussetzung `konto:reddit`), die Antwort-Fenster warten ebenfalls. Damit bleiben für jetzt: MetaFilter Projects, die Gestalter und Blogs (3), die Shelf-Portraits der Freunde (4), Antworten auf Bluesky (5), und HN, sobald das Konto Karma hat.
 
+**Weitere Unterforen, gesucht 2026-10-07** (Julian: „look for other subreddits i could post the project on“; reddit.com ist für Claude gesperrt, Zahlen aus gummysearch und Leitfäden, Regeln vor dem Posten selbst lesen; alle brauchen ein Konto mit Geschichte):
+- *Selbstwerbung ausdrücklich erlaubt:* r/SideProject (rund 300 k, das offenste, Publikum baut selbst), r/webdev nur im Faden „Showoff Saturday“ (1,5 M, Entwickler), r/AlphaandBetausers (Rückmeldungen), r/InternetIsBeautiful (fertig, `reddit-iib`).
+- *Thema passt, Werbung meist nicht:* r/BookCollecting (rund 110 k, Ausgaben, Erstausgaben, „no sales“) — Inhalt posten, etwa *Gatsby* durch die Jahrzehnte, die Seite nur nennen, wenn jemand fragt; r/BookCovers (rund 31 k, Gestalter und Selbstverleger, Flair „Showcase“, Werbung für Dienste üblich) — als Recherchewerkzeug für Cover-Gestaltung; r/TerribleBookCovers (rund 90 k) — die schlimmsten Funde von der Seite als Bild, Link im Kommentar; r/printSF — die SF-Masterworks-Sammlung als Inhalt.
+- *Eher nicht:* r/books, r/graphic_design, r/GraphicNovels (verbietet eigene Seiten ausdrücklich).
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
