@@ -810,19 +810,18 @@
     },
     {
       "id": "reddit-iib",
-      "date": "2026-11-03",
+      "date": "2026-10-07",
       "channel": "reddit",
       "kind": "expose",
-      "text": "Type a book's title and see the covers it has been printed with, by language and year, then find the edition behind the one you like. Covers from Open Library and Google Books; no accounts, no ads.",
+      "text": "I built this because I kept wanting a particular edition of a book for its cover, and shops only show one.\n\nType a title and the site asks two open catalogues, Open Library and Google Books, for the book's editions and shows their covers as one wall, grouped by language and year; near-identical scans are folded together. Pick a cover and you get links to look for that edition by its ISBN, plus a note on whether the publisher's current image for that ISBN is still the same cover (reprints often change it).\n\nFree, no account, no ads, and no link on it earns anything. It only knows what the two catalogues hold, which is a fraction of what was printed, so some books have three covers and some have three hundred.\n\nTry The Great Gatsby or Nineteen Eighty-Four.",
       "status": "vorschlag",
-      "title": "Buy Its Covers – see the covers a book has been printed with, and find that edition",
+      "title": "Type a book's title and see the covers it has been printed with, by language and year",
       "path": "/",
-      "time": "15:00",
       "needs": [
         "5.6a",
-        "kapazitaet"
+        "konto:reddit"
       ],
-      "note": "r/InternetIsBeautiful. Zwei Wochen nach HN, damit die Messung die beiden trennt. Vorher die Regeln der Community noch einmal lesen; Reddit-Apps senden oft keinen Referrer, deshalb ?via=reddit."
+      "note": "r/InternetIsBeautiful, auf 2026-10-07 vorgezogen (PLAN-5.6b §6a; Show HN ist für neue Konten gesperrt). Titel = Linkpost auf https://buyitscovers.com/?via=reddit, Text = erster Kommentar von Julian. Regeln, gelesen 2026-10-07 über rankhog.com und gummysearch-ähnliche Übersichten (reddit.com selbst ist für Claude gesperrt; vor dem Posten die Seitenleiste selbst ansehen): keine Sammlungen/Aggregatoren, nichts Bekanntes oder kürzlich Gepostetes, keine Webspiele und Quizze, keine Artikel oder Bildergalerien, keine Läden oder bezahlten Dienste, keine Anmeldung, keine Downloads, keine Politik, nichts, dessen Hauptinhalt KI erzeugt, Selbstwerbung nur nach der 90/10-Regel (das Konto muss überwiegend anderes tun), Seiten, die unter Last ausfallen, fliegen vorübergehend raus. Risiken: (1) **Aggregator** — die Seite zeigt Katalog-Cover; deshalb als Werkzeug beschrieben (ein Titel rein, eine Wand raus), nicht als Sammlung, und auf die Startseite verlinkt, nicht auf /collections. (2) **90/10** — Julians Reddit-Konto braucht eine Geschichte ohne eigene Links; ohne sie lieber erst kommentieren. (3) KI nicht erwähnen (anders als im HN-Text), Spiel nicht verlinken. (4) Ansturm: Seiten aus dem CDN; das Google-Kontingent kann leerlaufen, dann trägt der Open-Library-Rückweg (1.12), und der Alarm (0.13) meldet 80 %. Tageszeit: US-Vormittag, etwa 15–16 Uhr deutscher Zeit, werktags."
     },
     {
       "id": "pin-batch-w4",
