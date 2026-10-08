@@ -1094,7 +1094,7 @@
       "slug": "sf-masterworks",
       "title": "SF Masterworks",
       "kind": "series",
-      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Behind each cover is the wall of the other faces we found for the book.",
+      "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Two of them changed covers in later printings and appear twice, the first printing first. Behind each cover is the wall of the other faces we found for the book.",
       "published": true,
       "publishers": [
         "Gollancz",
@@ -1106,6 +1106,19 @@
           "id": "OL271163W",
           "title": "The Forever War",
           "author": "Joe Haldeman",
+          "coverIsbn": "1857988086",
+          "isfdbRecord": "109731",
+          "coverId": "ol:15263131",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "addedAt": "2026-10-08",
+          "from": "isbn:1857988086"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
           "coverId": "ol:911108",
           "addedAt": "2026-09-25",
           "from": "isbn:1857988086",
@@ -1113,7 +1126,7 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "109731"
+          "isfdbRecord": "293643"
         },
         {
           "id": "OL11374287W",
@@ -1457,10 +1470,27 @@
           "id": "OL14868264W",
           "title": "More Than Human",
           "author": "Theodore Sturgeon",
+          "coverIsbn": "1857988523",
+          "coverId": "ol:15263133",
+          "coverArtists": [
+            "Fred Gambino"
+          ],
+          "addedAt": "2026-10-08",
+          "from": "isbn:1857988523",
+          "isfdbRecord": "111081"
+        },
+        {
+          "id": "OL14868264W",
+          "title": "More Than Human",
+          "author": "Theodore Sturgeon",
           "coverId": "ol:911136",
           "addedAt": "2026-09-25",
           "from": "isbn:1857988523",
-          "coverIsbn": "1857988523"
+          "coverIsbn": "1857988523",
+          "coverArtists": [
+            "Chris Moore"
+          ],
+          "isfdbRecord": "253295"
         },
         {
           "id": "OL60939W",
@@ -1547,7 +1577,11 @@
           "coverId": "ol:911192",
           "addedAt": "2026-09-25",
           "from": "isbn:1857989376",
-          "coverIsbn": "1857989376"
+          "coverIsbn": "1857989376",
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "239121"
         },
         {
           "id": "OL2172519W",
@@ -1959,7 +1993,11 @@
           "coverId": "ol:15258704",
           "addedAt": "2026-09-25",
           "from": "uploaded to Open Library 2026-09-25 from ISFDB",
-          "coverIsbn": "9780575079144"
+          "coverIsbn": "9780575079144",
+          "coverArtists": [
+            "Jon Sullivan"
+          ],
+          "isfdbRecord": "122231"
         },
         {
           "id": "OL7967812W",
@@ -2004,40 +2042,40 @@
           "id": "OL893414W",
           "title": "Dune",
           "author": "Frank Herbert",
-          "coverId": "ol:380097",
+          "coverId": "ol:15263351",
           "addedAt": "2026-09-25",
-          "from": "checked:original-design",
-          "coverIsbn": "9780575073340",
+          "from": "isbn:0575081503, image uploaded to Open Library from ISFDB 2026-10-08",
+          "coverIsbn": "9780575081505",
           "coverArtists": [
             "John Schoenherr"
           ],
-          "isfdbRecord": "11581"
+          "isfdbRecord": "279556"
         },
         {
           "id": "OL59704W",
           "title": "The moon is a harsh mistress",
           "author": "Robert A. Heinlein",
-          "coverId": "ol:380099",
+          "coverId": "ol:15263157",
           "addedAt": "2026-09-25",
-          "from": "checked:original-design",
-          "coverIsbn": "9780575073364",
+          "from": "isbn:0575082410, image uploaded to Open Library from ISFDB 2026-10-08",
+          "coverIsbn": "9780575082410",
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "44307"
+          "isfdbRecord": "261784"
         },
         {
           "id": "OL2172403W",
           "title": "The Man in the High Castle",
           "author": "Philip K. Dick",
-          "coverId": "ol:380098",
-          "addedAt": "2026-09-25",
-          "from": "checked:original-design",
-          "coverIsbn": "9780575073357",
+          "coverIsbn": "9780575082052",
+          "isfdbRecord": "263703",
+          "coverId": "ol:15263156",
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "230897"
+          "addedAt": "2026-10-08",
+          "from": "checked:original-design"
         }
       ],
       "coverCredits": "isfdb"
@@ -42877,6 +42915,263 @@
           "addedAt": "2026-10-07",
           "from": "isbn:9780679405078",
           "coverIsbn": "9780679405078"
+        }
+      ]
+    },
+    {
+      "slug": "bad-sf-covers",
+      "title": "Bad SF Covers",
+      "kind": "series",
+      "intro": "The covers readers of r/badscificovers voted to the top of the subreddit: from its hundred most-upvoted posts of all time, the books whose very cover from the post Open Library holds, in the order of their votes. Behind each cover is the wall of the book's other faces, most of them kinder.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL27482W",
+          "title": "The Hobbit",
+          "author": "J.R.R. Tolkien",
+          "coverId": "ol:8406783",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#0",
+          "coverIsbn": "9780345339683"
+        },
+        {
+          "id": "OL173934W",
+          "title": "The Cat from Outer Space",
+          "author": "Ted Key",
+          "coverId": "ol:6619081",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#5",
+          "coverIsbn": "0671561065"
+        },
+        {
+          "id": "OL1168083W",
+          "title": "Nineteen Eighty-Four",
+          "author": "George Orwell",
+          "coverId": "ol:274853",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#6",
+          "coverIsbn": "9780435123574"
+        },
+        {
+          "id": "OL15411603W",
+          "title": "Space wasters",
+          "author": "David S. Garnett",
+          "coverId": "ol:6632314",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#11",
+          "coverIsbn": "9781841490120"
+        },
+        {
+          "id": "OL2687383W",
+          "title": "The boy with dinosaur hands",
+          "author": "Al Carusone",
+          "coverId": "ol:1196712",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#12",
+          "coverIsbn": "0395775159"
+        },
+        {
+          "id": "OL3181362W",
+          "title": "To Keep the Ship",
+          "author": "A. Bertram Chandler",
+          "coverId": "ol:6612255",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#14",
+          "coverIsbn": "9780879973858"
+        },
+        {
+          "id": "OL893515W",
+          "title": "God Emperor of Dune",
+          "author": "Frank Herbert",
+          "coverId": "ol:677695",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#15",
+          "coverIsbn": "9780881036350"
+        },
+        {
+          "id": "OL33817493W",
+          "title": "Attack of the Rockoids (Volume 1)",
+          "author": "Gene Steinberg",
+          "coverId": "ol:942631",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#16",
+          "coverIsbn": "9781893407077"
+        },
+        {
+          "id": "OL3290749W",
+          "title": "Philosophy and living",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:8310918",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#20"
+        },
+        {
+          "id": "OL15400938W",
+          "title": "The computer that ate my brother",
+          "author": "Dean Marney",
+          "coverId": "ol:6621404",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#22",
+          "coverIsbn": "9780590402675"
+        },
+        {
+          "id": "OL893414W",
+          "title": "Dune",
+          "author": "Frank Herbert",
+          "coverId": "ol:15092781",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#26"
+        },
+        {
+          "id": "OL3071321W",
+          "title": "Surfing Samurai Robots",
+          "author": "Mel Gilden",
+          "coverId": "ol:13354500",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#30",
+          "coverIsbn": "0451451007"
+        },
+        {
+          "id": "OL55607W",
+          "title": "Interstellar Pig",
+          "author": "William Sleator",
+          "coverId": "ol:206171",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#33",
+          "coverIsbn": "9780340850626"
+        },
+        {
+          "id": "OL155505W",
+          "title": "Space Paw",
+          "author": "Gordon R. Dickson",
+          "coverId": "ol:10422395",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#39"
+        },
+        {
+          "id": "OL9181159W",
+          "title": "Starhammer",
+          "author": "Christopher Rowley",
+          "coverId": "ol:6632676",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#42",
+          "coverIsbn": "9780345314901"
+        },
+        {
+          "id": "OL9465901W",
+          "title": "The Spawn of Cthulhu",
+          "author": "Lin Carter",
+          "coverId": "ol:14538830",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#44",
+          "coverIsbn": "9780345023940"
+        },
+        {
+          "id": "OL3290731W",
+          "title": "Last and First Men",
+          "author": "Olaf Stapledon",
+          "coverId": "ol:8310926",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#45"
+        },
+        {
+          "id": "OL32949082W",
+          "title": "The Little People",
+          "author": "John Christopher",
+          "coverId": "ol:15242010",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#48"
+        },
+        {
+          "id": "OL4482724W",
+          "title": "Who censored Roger Rabbit?",
+          "author": "Gary K. Wolf",
+          "coverId": "ol:8764250",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#54",
+          "coverIsbn": "9780345303257"
+        },
+        {
+          "id": "OL5112717W",
+          "title": "Skin of the Soul",
+          "author": "Lisa Tuttle",
+          "coverId": "ol:8281623",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#56",
+          "coverIsbn": "9780671703349"
+        },
+        {
+          "id": "OL18765421W",
+          "title": "Antinomy",
+          "author": "Spider Robinson",
+          "coverId": "ol:12458469",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#58",
+          "coverIsbn": "9780440102359"
+        },
+        {
+          "id": "OL30108W",
+          "title": "Choose Your Own Adventure - You Are a Shark",
+          "author": "Edward Packard",
+          "coverId": "ol:12664899",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#60",
+          "coverIsbn": "0553249630"
+        },
+        {
+          "id": "OL273077W",
+          "title": "Strange Relations",
+          "author": "Philip José Farmer",
+          "coverId": "ol:1786969",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#64",
+          "coverIsbn": "9781416555261"
+        },
+        {
+          "id": "OL8861817W",
+          "title": "Bimbos of the Death Sun",
+          "author": "Sharyn McCrumb",
+          "coverId": "ol:7122587",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#65",
+          "coverIsbn": "0880384557"
+        },
+        {
+          "id": "OL19221701W",
+          "title": "Alternate warriors",
+          "author": "Mike Resnick",
+          "coverId": "ol:10123025",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#67",
+          "coverIsbn": "0812523466"
+        },
+        {
+          "id": "OL461369W",
+          "title": "The land of laughs",
+          "author": "Jonathan Carroll",
+          "coverId": "ol:6375233",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#81",
+          "coverIsbn": "9780441469871"
+        },
+        {
+          "id": "OL510355W",
+          "title": "The Best of All Possible Wars",
+          "author": "Larry Niven",
+          "coverId": "ol:409635",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#83",
+          "coverIsbn": "9780671878795"
+        },
+        {
+          "id": "OL20278680W",
+          "title": "The Egg Man",
+          "author": "Carlton III Mellick",
+          "coverId": "ol:8936563",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#91",
+          "coverIsbn": "9781621050407"
         }
       ]
     },

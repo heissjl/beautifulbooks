@@ -73,6 +73,7 @@ export const NEEDS: Record<string, string> = {
   'konto:instagram': 'Instagram-Konto angelegt',
   'konto:pinterest': 'Pinterest-Unternehmenskonto angelegt, Website bestätigt',
   'konto:tiktok': 'TikTok-Konto angelegt',
+  'konto:reddit': 'Reddit-Konto mit eigener Geschichte (90/10-Regel)',
   spiel: 'Das Cover-Spiel (/versus) ist in Produktion eingeschaltet',
   walls: 'Eigene Sammlungen (/create) sind in Produktion eingeschaltet',
 };

@@ -189,6 +189,28 @@ describe('publishing a draft from /curate (5.10g)', () => {
   });
 });
 
+describe('printing facts behind a published draft (5.6b, 2026-10-08)', () => {
+  const pick = (id: string, coverId: string, extra = {}) => ({ id, title: id, author: 'A', coverId, ...extra });
+  it('fills credits the draft lacks from the file, for the same work and cover only', () => {
+    const file = [record({ slug: 'sf-masterworks', coverCredits: 'isfdb', works: [
+      pick('OL1W', 'ol:1', { coverArtists: ['Fred Gambino'], isfdbRecord: '111081', coverIsbn: '1857988523' }),
+      pick('OL2W', 'ol:2', { coverArtists: ['Chris Moore'] }),
+    ] })];
+    // A cover added online arrives bare; another work got a different cover online.
+    const draft = record({ slug: 'sf-masterworks', works: [pick('OL1W', 'ol:1'), pick('OL2W', 'ol:9')] });
+    const [out] = applyContent(file, { 'sf-masterworks': draft });
+    expect(out.coverCredits).toBe('isfdb');
+    expect(out.works[0]).toMatchObject({ coverArtists: ['Fred Gambino'], isfdbRecord: '111081', coverIsbn: '1857988523' });
+    expect(out.works[1].coverArtists).toBeUndefined();
+  });
+
+  it('never overwrites a credit the draft already carries', () => {
+    const file = [record({ slug: 's', works: [pick('OL1W', 'ol:1', { coverArtists: ['Old'] })] })];
+    const draft = record({ slug: 's', works: [pick('OL1W', 'ol:1', { coverArtists: ['New'] })] });
+    expect(applyContent(file, { s: draft })[0].works[0].coverArtists).toEqual(['New']);
+  });
+});
+
 describe('arranging the collections (5.10h)', () => {
   it('puts the named slugs first, in that order, and keeps the rest after them in file order', () => {
     const recs = ['a', 'b', 'c', 'd'].map(slug => record({ slug }));

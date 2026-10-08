@@ -118,6 +118,18 @@ def tight_text(d: ImageDraw.ImageDraw, xy: tuple[int, int], text: str, f, fill, 
             x += d.textlength(mark, font=f) - pull
 
 
+def slogan(d: ImageDraw.ImageDraw, xy: tuple[int, int], size: int):
+    """The home page's hero line as the site sets it (app/page.tsx): "Judge a
+    book," upright in ink, "buy its covers." in italics in the accent, in the
+    site's proportional Xanh (assets/fonts, the files the share cards use)
+    (Julian, 2026-10-06: "besser doch unseren hero slogan von der startseite")."""
+    root = os.path.join(HERE, '..', '..', 'assets', 'fonts')
+    upright = ImageFont.truetype(os.path.join(root, 'xanh-proportional-regular.woff'), size)
+    italic = ImageFont.truetype(os.path.join(root, 'xanh-proportional-italic.woff'), size)
+    x, y = xy
+    d.text((x, y), 'Judge a book, ', font=upright, fill=INK)
+    d.text((x + d.textlength('Judge a book, ', font=upright), y), 'buy its covers.', font=italic, fill=ACCENT)
+
 def wrap(d: ImageDraw.ImageDraw, text: str, f, max_w: int) -> list[str]:
     lines, line = [], ''
     for word in text.split():
@@ -373,8 +385,89 @@ def versus_pin(pair=None, name='pinterest-versus.jpg'):
         d.text((cx - d.textlength(label, font=lf) / 2, top + box_h + 30), label, font=lf, fill=MUTED)
     # Julian, 2026-10-05: no explaining sentences under the tagline, and tidy
     # its spacing — Xanh Mono is monospaced, so a full-width space reads as a gap.
-    tight_text(d, (70, 1180), 'Judge the cover, not the book.', font('xanh-italic', 58), ACCENT)
+    slogan(d, (70, 1180), 58)
     d.text((72, 1330), 'buyitscovers.com/versus', font=font('xanh-italic', 40), fill=INK)
+    s.convert('RGB').save(os.path.join(OUT, name), quality=92)
+
+
+def rowohlt_pin():
+    """A pin from Julian's photograph of his framed wall of Rowohlts Monographien
+    (2026-10-06, "einen pinterest post, der das bild hier nutzt"). The photo is
+    his and stays local (out/cache is git-ignored, like docs/tests images)."""
+    src = os.path.join(CACHE, 'rowohlt-wand.jpg')
+    if not os.path.exists(src):
+        return
+    W, H = 1000, 1500
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    photo = Image.open(src).convert('RGB')
+    # The frame, with a little of the wall around it.
+    photo = photo.crop((150, 70, 1055, 1545))
+    ph = 1180
+    pw = round(photo.width * ph / photo.height)
+    photo = photo.resize((pw, ph), Image.LANCZOS)
+    x = (W - pw) // 2
+    shadow = Image.new('RGBA', s.size, (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rectangle((x + 8, 34, x + pw + 8, 34 + ph + 16), fill=(20, 16, 12, 60))
+    s.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(18)))
+    s.paste(photo, (x, 30))
+    d = ImageDraw.Draw(s)
+    tight_text(d, (60, 1250), 'A hundred and ten lives,', font('xanh', 50), INK)
+    tight_text(d, (60, 1312), 'one wall.', font('xanh-italic', 50), ACCENT)
+    d.text((62, 1392), 'Rowohlts Monographien, framed. The covers and their editions:', font=font('jost', 26, 400), fill=INK)
+    d.text((62, 1430), 'buyitscovers.com', font=font('xanh-italic', 36), fill=ACCENT)
+    s.convert('RGB').save(os.path.join(OUT, 'pinterest-rowohlt-wand.jpg'), quality=92)
+
+
+# The train joke (Julian, 2026-10-06, campaign "performative readers", PLAN-5.6b
+# §4b): the book you want to be seen with against the one you hide. Both covers
+# are in the game's pool. Single protected covers: waits on the rights decision.
+# A second pair (Julian, 2026-10-06, from a round of the game): The Gruffalo
+# against Merritt's "Le visage dans l'abîme" at J'ai Lu, a Boris Vallejo nude.
+TRAIN_PAIR_2 = (
+    dict(key='pool-gruffalo', title='The Gruffalo', imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/15154344-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='pool-merritt-abime', title="Le visage dans l'abîme", imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/10215294-L.jpg', crop=(0, 0, 0, 0)),
+)
+
+TRAIN_PAIR = (
+    dict(key='pool-infinite-jest', title='Infinite Jest', imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/191075-L.jpg', crop=(0, 0, 0, 0)),
+    dict(key='pool-fifty-shades', title='Fifty Shades of Grey', imprint='', credit='',
+         url='https://covers.openlibrary.org/b/id/15163071-L.jpg', crop=(0, 0, 0, 0)),
+)
+
+
+def train_post(W: int, H: int, name: str, pair: tuple = None):
+    pair = pair or TRAIN_PAIR
+    s = Image.new('RGBA', (W, H), BG + (255,))
+    d = ImageDraw.Draw(s)
+    k = W / 1000
+    d.text((round(70 * k), round(60 * k)), 'Buy Its Covers', font=font('xanh-italic', round(40 * k)), fill=INK)
+    q = font('xanh', round(58 * k))
+    y = round(160 * k)
+    for line in ('Which cover would you', 'rather be seen reading', 'on the train?'):
+        tight_text(d, (round(70 * k), y), line, q, INK)
+        y += round(72 * k)
+    box_h = round((H - y - 330 * k))
+    top = y + round(50 * k)
+    for c, cx in ((pair[0], W // 4 + round(10 * k)), (pair[1], 3 * W // 4 - round(10 * k))):
+        im = cover_image(c)
+        w = round(im.width * box_h / im.height)
+        h = box_h
+        if w > round(400 * k):
+            w = round(400 * k); h = round(im.height * w / im.width)
+        im = im.resize((w, h), Image.LANCZOS)
+        x, yy = cx - w // 2, top + (box_h - h) // 2
+        sh = Image.new('RGBA', s.size, (0, 0, 0, 0))
+        ImageDraw.Draw(sh).rectangle((x + 6, yy + 14, x + w + 6, yy + h + 14), fill=(20, 16, 12, 70))
+        s.alpha_composite(sh.filter(ImageFilter.GaussianBlur(16)))
+        s.paste(im, (x, yy))
+    d = ImageDraw.Draw(s)
+    of = font('xanh-italic', round(48 * k))
+    d.text(((W - d.textlength('or', font=of)) / 2, top + box_h // 2 - round(30 * k)), 'or', font=of, fill=MUTED)
+    slogan(d, (round(70 * k), H - round(230 * k)), round(54 * k))
+    d.text((round(72 * k), H - round(130 * k)), 'buyitscovers.com/versus', font=font('xanh-italic', round(38 * k)), fill=INK)
     s.convert('RGB').save(os.path.join(OUT, name), quality=92)
 
 
@@ -383,6 +476,11 @@ if __name__ == '__main__':
     carousel()
     pin()
     versus_pin()
+    rowohlt_pin()
+    train_post(1080, 1350, 'zug-1080x1350.jpg')
+    train_post(1000, 1500, 'pinterest-zug.jpg')
+    train_post(1080, 1350, 'zug2-1080x1350.jpg', TRAIN_PAIR_2)
+    train_post(1000, 1500, 'pinterest-zug2.jpg', TRAIN_PAIR_2)
     versus_pin(VERSUS_DRAFT, 'pinterest-versus-entwurf.jpg')
     if os.path.exists(os.path.join(OUT, 'mosaic-mark-twain.png')):
         mosaic_carousel()
