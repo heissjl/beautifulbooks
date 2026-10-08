@@ -43177,6 +43177,176 @@
           "from": "x:Kulambq/2107900436959117418"
         }
       ]
+    },
+    {
+      "slug": "shelves-from-a-house-tour",
+      "title": "Shelves from a house tour",
+      "kind": "series",
+      "intro": "Books whose spines can be read on three stills from a video house tour, posted on X in October 2026 as Dakota Johnson’s bookshelves: Pynchon, DeLillo, Saramago, Sorokin in the NYRB edition, Anne Boyer, a run of Isaac Bashevis Singer. One cover each, in the order they stand on the shelves.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL318886W",
+          "title": "Prose Poems",
+          "author": "Kahlil Gibran",
+          "coverId": "ol:9538647",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL27415W",
+          "title": "All the Names",
+          "author": "José Saramago",
+          "coverId": "ol:11755893",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL865722W",
+          "title": "The Queue",
+          "author": "Vladimir Sorokin",
+          "coverId": "ol:13858227",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1846845W",
+          "title": "The Poisonwood Bible",
+          "author": "Barbara Kingsolver",
+          "coverId": "ol:853663",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1921185W",
+          "title": "Underworld",
+          "author": "Don DeLillo",
+          "coverId": "ol:426968",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL2636648W",
+          "title": "Inherent Vice",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:7153487",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL17797130W",
+          "title": "A Gentleman in Moscow",
+          "author": "Amor Towles",
+          "coverId": "ol:11326818",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL12472708W",
+          "title": "Shadow Country",
+          "author": "Peter Matthiessen",
+          "coverId": "ol:11845096",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL676009W",
+          "title": "The Master and Margarita",
+          "author": "Mikhail Bulgakov",
+          "coverId": "ol:12947486",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345095W",
+          "title": "The Manor",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:7018468",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345101W",
+          "title": "Shosha",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:15062456",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL2636665W",
+          "title": "The Crying of Lot 49",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:39754",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345089W",
+          "title": "Scum",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:225195",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345096W",
+          "title": "The Family Moskat",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:224568",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL20916852W",
+          "title": "The Undying",
+          "author": "Anne Boyer",
+          "coverId": "ol:10285512",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345097W",
+          "title": "In My Father's Court",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:224580",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL22163654W",
+          "title": "Apeirogon",
+          "author": "Colum McCann",
+          "coverId": "ol:9282671",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL276798W",
+          "title": "Catch-22",
+          "author": "Joseph Heller",
+          "coverId": "ol:6468653",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL15894505W",
+          "title": "Jewish Pirates of the Caribbean",
+          "author": "Edward Kritzler",
+          "coverId": "ol:8033374",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL17094387W",
+          "title": "Bleeding Edge",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:13152060",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        }
+      ]
     }
   ]
 }
