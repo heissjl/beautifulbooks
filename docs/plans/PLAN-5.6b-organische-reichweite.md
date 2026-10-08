@@ -195,6 +195,22 @@ Ein Post ist erst ausgewertet, wenn er in K14 (Karte „Kanäle“ in `/admin/in
 
 Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender setzt nur `?via=`-Werte aus der Liste `VIA` (`bluesky`, `instagram`, `pinterest`, `tiktok`, `reddit`, `hn`, `producthunt`, `mail`; für Blogs `blog` von Hand im Pfad). Ein neuer Kanal braucht zuerst eine neue Klasse in 5.6a.
 
+## 6a. Lage nach zwei Tagen (2026-10-07) und was daraus folgt
+
+Julian: „i can't get any traffic whatsoever, even with posting on x and bluesky for two days. how can i get any visibility/traction?“
+
+**Befund:** Das ist kein Fehler der Posts, sondern die Lage neuer Konten. Bluesky `@buyitscovers.com` hatte am 2026-10-06 zwei Follower, X und Mastodon ähnlich; ein Post erreicht dort fast nur die eigenen Follower, und X zeigt Posts mit Link neuer Konten kaum jemandem. Eigene Kanäle tragen erst nach Monaten. Reichweite am Anfang kommt nur von **fremden Publikum**: Orte, an denen schon Leute sind, und Menschen, die schon gehört werden.
+
+**Neue Reihenfolge**, vor dem Kalender aus §5:
+1. **Show HN vorziehen.** Die größte einzelne Chance; 0.13 und 2.4 sind erledigt, das Formular ist vorbereitet. Werktag, 15:30 deutscher Zeit, Julian den Tag über in den Kommentaren.
+2. **Reddit als Beitrag, nicht als Link-Abwurf:** je Unterforum ein Bild oder eine Sammlung, die dort von sich aus interessiert (SF Masterworks in einem SF-Forum, eine Gestalter-Galerie in einem Design-Forum), mit einem Satz, dass Julian die Seite gebaut hat. Vorher die Regeln des Forums lesen; r/InternetIsBeautiful einmal.
+3. **Die Menschen hinter den Covern ansprechen:** lebende Gestalter aus [research-gestalter-galerien.md](research-gestalter-galerien.md) in der Galerie nennen und markieren, dazu die fünf Mails aus §2 (Blogs und Newsletter zu Buchgestaltung). Ein Repost von dort erreicht mehr als jeder eigene Post.
+4. **Das Shelf-Portrait als Schleife:** zehn Freunde bitten, ihres zu bauen und auf ihren eigenen Konten zu teilen; jedes trägt die Adresse. Das Produkt hat damit seine eigene Verbreitung, die eigenen Konten nicht.
+5. **Auf Bluesky antworten statt nur posten:** in Buch- und Design-Threads (BookSky) mitreden, wo ein Cover-Vergleich passt; Hashtags für die Buch-Feeds. Wenige echte Antworten am Tag.
+6. **Geduld bei Suche und Pinterest:** 875 Seiten in der Sitemap, die Werkseiten bringen Besucher über Wochen, nicht Tage.
+
+Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
+
 ## 7. Offene Entscheidungen, alle Julians
 
 1. **Die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1). Sie hält 30 der 70 Einträge zurück: alles auf Instagram außer dem Exposé, alles auf Pinterest und TikTok, und die sieben Galerien.
