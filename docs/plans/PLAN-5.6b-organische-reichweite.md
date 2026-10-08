@@ -227,6 +227,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **Gelegenheit, gesehen 2026-10-07 auf X:** Unter „Today’s News“ stand „Readers Share 3x3 Grids of Books That Stayed With Them“ (1.342 Posts, seit drei Stunden), in der Zeitleiste Raster mit neun Büchern und „The 9 books I’ll never forget“. Das ist genau das Format des Shelf-Portraits. Solange die Welle läuft: unter diesen Posts antworten und ein eigenes Shelf-Portrait mit der Adresse posten — Leser, nicht Rechteinhaber.
 
+**Agentisch skalieren? (Julian, 2026-10-07: „ich habe das versucht, aber bekomme selbst nicht genug views damit. gibt es eine möglichkeit das agentisch zu skalieren?“)** Nein für Antworten in Masse: automatisierte, ungebetene Antworten und Erwähnungen verbieten die Automatisierungsregeln von X, sie gelten als Plattform-Manipulation, und das Konto wird gesperrt — der Kanal wäre verloren. Was geht: Claude sucht die passenden Threads der Welle (große Konten, frische Posts mit Antworten), schreibt je einen eigenen Entwurf auf den konkreten Post, Julian postet selbst, wenige am Tag. Und eigene Inhalte darf eine Automatisierung posten (geplante Posts, das eigene Konto).
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
