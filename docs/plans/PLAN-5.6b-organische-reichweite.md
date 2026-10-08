@@ -137,6 +137,7 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
   - Dateien: `zug2-1080x1350.jpg` und `pinterest-zug2.jpg`.
   - Instagram und Pinterest entfernen nackte Brüste oft oder schränken solche Posts ein. Diese Fassung eignet sich eher für Bluesky und X, dort mit Inhaltswarnung.
   - Noch nicht im Kalender; Julian wählt zwischen Fassung 1 und 2.
+- **Alle Forum-Beiträge auf einer Seite:** das private Artefakt [Forum-Beiträge](https://claude.ai/artifact/5GM8kjqjqD6pZkuZnngVLu), erzeugt von `lab/kalender/beitraege.py` aus posts.json.
 - **Alle Bilder auf einer Seite:** das private Artefakt [Post-Galerie](https://claude.ai/artifact/MPXdmUDTpTspQvQYRxV9bW), erzeugt von `lab/kalender/galerie.py`, je Post alle Fassungen mit Stand.
 - **Julians fertiges Starter-Pack** (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero und East of Eden.
   - Als Sharepic ist die zweite Zeile die einzige Überschrift: „The performative reader starter pack“ (Julian, ohne Apostroph) in der proportionalen Xanh der Seite. Der Kopf ist aus dem Mosaik des Posters neu gesetzt (`lab/kalender/sharepic_starterpack.py`).
