@@ -235,6 +235,8 @@ Julian: „i can't get any traffic whatsoever, even with posting on x and bluesk
 
 **Entscheidungen dazu (Julian, 2026-10-07):** genau das Cover aus dem Reddit-Post, nicht das schlechteste der Wand; die derben Bizarro-Titel (Ass Goblins of Auschwitz, The Haunted Vagina, The Magic Fart …) bleiben weg. Die Liste liegt unter `lab/collections/in/badscificovers-top100.json` (100 Posts, rund 80 verschiedene Bücher; 82 Bilder auf i.redd.it, 17 auf imgur, einer ist der Regelpost gegen KI-Cover). Die Bilder lädt Julian selbst (`lab/collections/badscificovers_download.py`), danach gleicht Claude sie per Bild-Signatur mit den Covern der Werke bei Open Library ab.
 
+**r/coolscificovers nimmt nur Bilder auf Reddit oder imgur (Julian, 2026-10-07: „meine posts … get taken down because their not hosted on imgur and reddit“).** Also als Bild-Post hochladen (Reddit legt die Datei auf i.redd.it) oder bei imgur hochladen und den direkten Link `i.imgur.com/….jpg` posten; die Seite gehört in einen Kommentar, nie als Ziel des Posts. Das Bild `lab/kalender/out/collection-sf-masterworks.jpg` hat 4,3 MB und liegt unter beiden Grenzen (20 MB).
+
 Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
 
 ## 7. Offene Entscheidungen, alle Julians
