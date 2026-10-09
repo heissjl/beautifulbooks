@@ -71,6 +71,8 @@ const NAMED_EXTRAS: Extra[] = [
     is his call to make.
   */
   { id: 'OL20042286W', title: 'The Babysitter at Rest', author: 'Jen George', note: '1 Ausgabe · ab 2016' },
+  // Julian, 2026-10-08, with the book page: „nimm das buch in die kuratierte liste mit auf, cover wähle ich noch aus".
+  { id: 'OL44237703W', title: 'Paradiso', author: 'José Lezama Lima', note: '72 Ausgaben · ab 1966' },
 ];
 
 /**
