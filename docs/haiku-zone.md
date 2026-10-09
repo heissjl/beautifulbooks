@@ -53,3 +53,5 @@ Ein Lab-Experiment `lab/haiku/` (6.101): 200 Cover aus dem Index, je eine Beschr
 durch ein Modell, Text-Embedding, und ein Kontaktbogen der nächsten Nachbarn neben denen aus 6.10.
 Frage: findet die Textachse Paare, die Julian „gehören zusammen“ nennt und die Farbe/Struktur nicht
 finden? Erst messen, dann über die Seite reden.
+
+**Gemessen am 2026-10-08:** [lab/haiku/README.md](../lab/haiku/README.md).
