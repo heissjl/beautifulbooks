@@ -52,12 +52,13 @@ ja oder nein zu sagen.
 
 1. **`components/InspirationShared.tsx`:** der Absatz „To an open database" (5.18c a, gebaut; seit 2026-10-09 zwischen
    „As a picture" und „As a link", „an experiment by Joe Weisenthal") bekommt das Feld, nur für den Macher, nur bei
-   neun Büchern — offen oder hinter einem Knopf, siehe „Opt-out" unten.
+   neun Büchern — **offen, nicht hinter einem Knopf** (entschieden 2026-10-09, siehe „Opt-out" unten).
 2. **Neue Komponente `InspirationNineBooks.tsx`:** ein aufklappbares Feld darunter —
    - die neun Titel mit Autor (aus dem Board, wie sie in der Bestellliste stehen),
    - „Anonymous" (Standard) oder „With my name" (vorbelegt mit dem `by` des Boards),
-   - Kästchen mit seinem Einwilligungstext (CC0, öffentlich, nicht zurücknehmbar — wörtlich von ihm übernommen),
-   - „Send" → `fetch('https://ninebooks-api.pages.dev/api/lists/reviewed', …)` aus dem Browser,
+   - sein Einwilligungstext (CC0, öffentlich, nicht zurücknehmbar — wörtlich von ihm) direkt über dem Knopf, ohne
+     Kästchen: der Klick auf „Add my nine to Nine Books" ist die Einwilligung,
+   - der Knopf → `fetch('https://ninebooks-api.pages.dev/api/lists/reviewed', …)` aus dem Browser,
    - danach: „Added — see your list on Nine Books" mit seinem Listenlink, oder seine Fehlermeldung wörtlich, nie eine
      erfundene („A failure must never be reported as a finding").
 3. **`lib/inspiration/ninebooks.ts` (rein, getestet):** baut den Request-Körper aus dem Board (Titel, Erstautor,
@@ -98,6 +99,6 @@ ja oder nein zu sagen.
   gesetztes Häkchen ist nach EuGH *Planet49* (C-673/17) keine Einwilligung; (3) seine Seite bekäme Listen von Leuten,
   die nicht wissen, dass es sie gibt. **Was dem Wunsch nahekommt:** das Feld steht schon offen da (nicht hinter einem
   Knopf), anonym ist vorgewählt, und *ein* Klick auf „Add my nine" ist zugleich die Einwilligung — ein Schritt statt
-  drei. Julian entscheidet.
+  drei. **Entschieden 2026-10-09** (Julian: „ok“ zu beidem): Opt-in bleibt, das Feld steht offen, anonym vorgewählt, ein Klick sendet und willigt ein.
 - Kennung des Mitwirkenden: sein Paar-Code (`reader_token`) verknüpft Listen eines Menschen. Wir lassen ihn weg; jede
   geschickte Liste ist ein neuer Mitwirkender. Sonst müssten wir seinen Code im Browser halten.
