@@ -5885,3 +5885,17 @@ Julian: „make a only footer branding high res picture of the badscifi cover co
 ## 2026-10-09 · Tom Adams' Christie als Online-Entwurf (5.10r)
 
 Julian: „put the draft on the website, so i can look at it and keep researching the other covers“. Der Datensatz `tom-adams-christie` (42 Kacheln, `published: false`) ging mit dem Deploy 314t2obuv in die Datei; daraus der Online-Entwurf **uzGLb7CQw18D** in `/curate` (`push-draft.ts`, unveröffentlicht). Ein Entwurf hält jedes Werk einmal, also zeigt er die zweite Fassung von *Ordeal by Innocence* und *Hercule Poirot's Christmas* nicht; veröffentlicht wird die Sammlung deshalb später über die Datei und ihren Schalter, nicht aus dem Entwurf. Beim Mergen in `main` fiel auf: der Hauptordner stand auf dem Zweig `research/haiku-zone` einer anderen Session — dort nichts gemergt (ein angefangener Merge abgebrochen, Zweig unverändert), stattdessen aus dem Worktree `git push origin HEAD:main`, nachdem der Zweig `origin/main` enthielt.
+
+## 2026-10-09 · Drei schräge Christie-Fotos entzerrt und zu Open Library (5.10r)
+
+Drei Kacheln der Tom-Adams-Sammlung zeigten Händlerfotos, schräg auf dem Tisch. `lab/collections/straighten.py` entzerrt sie per Perspektiv-Transformation aus vier Ecken des Vorderdeckels. Die Ecken werden von Hand auf einem doppelt vergrößerten Bild mit 10-px-Raster abgelesen, zuerst die Kanten, dann ihre Schnittpunkte. Der erste Versuch mit Ecken vom 50-px-Raster blieb sichtbar schräg; bei *Sparkling Cyanide* lag eine Ecke etwa 50 px daneben. Die Ausgabebreite ist die längere Kante im Foto, also 220–303 px bei Vorlagen von 375 × 500; hochgerechnet wird nicht.
+
+Mit Julians Ja unter `wertstoffhof` hochgeladen, jeweils auf die Ausgabe, deren ISBN und Jahr zur Kachel passen. Das neue Bild ist Hauptcover, das alte bleibt dahinter:
+
+| Werk | Ausgabe | ISBN | alt → neu |
+|---|---|---|---|
+| The Hollow | OL14875715M (1968) | 0006118208 | 13679047 → 15263592 |
+| Sparkling Cyanide | OL31991698M (1971) | 0006110096 | 10663008 → 15263593 |
+| Destination Unknown | OL9919200M (1973) | 0006133746 | 14155494 → 15263594 |
+
+Die neuen Bilder stehen in `data/collections.json` und im Online-Entwurf `uzGLb7CQw18D`. Geändert wurden dort nur diese drei Kacheln, über eine `pick`-Operation mit `was`, damit Julians laufende Bearbeitung nicht überschrieben wird. Aus diesem Entwurf ist das Reddit-Bild entstanden, nur mit Fußzeile: 42 Kacheln, 3600 × 6746, `lab/kalender/out/`.
