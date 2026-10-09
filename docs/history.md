@@ -4,6 +4,8 @@ Julian: „ändere die app so, dass ich weiß ob die cover L, M oder S größe h
 
 Die Größe kommt aus dem Datensatz (`/b/id/<n>.json`), wie im Calibre-Werkzeug seit dem 2026-10-04, und dessen Cache wird geteilt (beim Start 1.326 Cover bekannt). **Gemessen:** ein Werk, dessen 125 Cover keiner kannte, in 0,69 s (sechs Fragen gleichzeitig), danach 0,01 s. *Howards End*: 78 Cover, 59 L, 17 M, 2 S. Beim ersten Versuch liefen das offene Werk und drei vorgeladene gleichzeitig in ein festes Budget von 8 s, und ein vorgeladenes Werk kam mit 101 von 105 Größen offen zurück und wurde nie nachgefragt; seitdem nennt der Server die Zahl der noch laufenden Fragen und die Seite fragt nach, bevor sie einmal umsortiert. Code: `lab/curate/serve.ts` (`sizesFor`), `lab/curate/index.html` (`sizeClass`, `loadSizes`).
 
+**Deployt am 2026-10-08** mit 75 neuen Einträgen aus Julians Durchgang und neu gebauten Ringen (99 → 134 kuratierte Werke mit Ring, Sammlungsringe unverändert). Der Push nach `main` baute keine Produktion, weil derselbe Commit schon als Vorschau des Branches gebaut war; `vercel promote` der Vorschau brachte ihn live. Einmal geprüft: *Watchmen* steht in der Sitemap.
+
 ## 2026-10-05 · Kontakt-Abschnitt auf der Über-Seite, Profiltexte auf drei Kanälen (ROADMAP 5.6b)
 
 Julian: „we can list social media accounts in a contact section within the about page“ und „update bsky and x bio too“.
