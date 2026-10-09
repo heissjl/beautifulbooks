@@ -43223,6 +43223,307 @@
         }
       ],
       "coverCredits": "isfdb"
+    },
+    {
+      "slug": "tom-adams-christie",
+      "title": "Tom Adams' Agatha Christie",
+      "kind": "series",
+      "published": false,
+      "publishers": [
+        "Fontana"
+      ],
+      "intro": "From 1963 to 1979 Tom Adams painted the covers of Agatha Christie's Fontana paperbacks, most titles more than once: still lifes of the objects in a case, often with a clue hidden among them. These are the paintings the collector David Morris credits to Adams from the Fontana printings themselves (collectingchristie.com), in the order Fontana first used them, each matched to a cover Open Library holds. Behind each cover is the wall of the book's other faces.",
+      "works": [
+        {
+          "id": "OL472145W",
+          "title": "Ordeal by Innocence",
+          "author": "Agatha Christie",
+          "coverId": "ol:15130644",
+          "addedAt": "2026-10-09",
+          "from": "fontana:798 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471895W",
+          "title": "The Murder at the Vicarage",
+          "author": "Agatha Christie",
+          "coverId": "ol:9159",
+          "addedAt": "2026-10-09",
+          "from": "fontana:839 (collectingchristie.com)",
+          "coverIsbn": "0007120850"
+        },
+        {
+          "id": "OL472526W",
+          "title": "The Hollow",
+          "author": "Agatha Christie",
+          "coverId": "ol:13679047",
+          "addedAt": "2026-10-09",
+          "from": "fontana:864 (collectingchristie.com)",
+          "coverIsbn": "0006118208"
+        },
+        {
+          "id": "OL471841W",
+          "title": "Hercule Poirot's Christmas",
+          "author": "Agatha Christie",
+          "coverId": "ol:12855074",
+          "addedAt": "2026-10-09",
+          "from": "fontana:901 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472572W",
+          "title": "Murder in Mesopotamia",
+          "author": "Agatha Christie",
+          "coverId": "ol:10555802",
+          "addedAt": "2026-10-09",
+          "from": "fontana:939 (collectingchristie.com)",
+          "coverIsbn": "0006128599"
+        },
+        {
+          "id": "OL471883W",
+          "title": "The Hound of Death",
+          "author": "Agatha Christie",
+          "coverId": "ol:13698499",
+          "addedAt": "2026-10-09",
+          "from": "fontana:970 (collectingchristie.com)",
+          "coverIsbn": "0006141994"
+        },
+        {
+          "id": "OL472074W",
+          "title": "Murder in the Mews",
+          "author": "Agatha Christie",
+          "coverId": "ol:14560304",
+          "addedAt": "2026-10-09",
+          "from": "fontana:984 (collectingchristie.com)",
+          "coverIsbn": "0006128610"
+        },
+        {
+          "id": "OL471919W",
+          "title": "The Pale Horse",
+          "author": "Agatha Christie",
+          "coverId": "ol:14586372",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1000 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471983W",
+          "title": "Sparkling Cyanide",
+          "author": "Agatha Christie",
+          "coverId": "ol:10663008",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1009 (collectingchristie.com)",
+          "coverIsbn": "0006110096"
+        },
+        {
+          "id": "OL471891W",
+          "title": "Crooked House",
+          "author": "Agatha Christie",
+          "coverId": "ol:15240679",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1030 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472043W",
+          "title": "The Mysterious Mr. Quin",
+          "author": "Agatha Christie",
+          "coverId": "ol:14586400",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1050 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471990W",
+          "title": "The Mirror Crack'd from Side to Side",
+          "author": "Agatha Christie",
+          "coverId": "ol:6539918",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1077 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471905W",
+          "title": "The Moving Finger",
+          "author": "Agatha Christie",
+          "coverId": "ol:7266328",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1163 (collectingchristie.com)",
+          "coverIsbn": "0006111637"
+        },
+        {
+          "id": "OL471670W",
+          "title": "The Clocks",
+          "author": "Agatha Christie",
+          "coverId": "ol:15205394",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1268 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472328W",
+          "title": "Towards Zero",
+          "author": "Agatha Christie",
+          "coverId": "ol:13670802",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1301 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472619W",
+          "title": "A Pocket Full of Rye",
+          "author": "Agatha Christie",
+          "coverId": "ol:15207798",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1401 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472458W",
+          "title": "A Caribbean Mystery",
+          "author": "Agatha Christie",
+          "coverId": "ol:11477286",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1418.r (collectingchristie.com)",
+          "coverIsbn": "0006114180"
+        },
+        {
+          "id": "OL471738W",
+          "title": "Destination Unknown",
+          "author": "Agatha Christie",
+          "coverId": "ol:14155494",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1506 (collectingchristie.com)",
+          "coverIsbn": "0006133746"
+        },
+        {
+          "id": "OL471500W",
+          "title": "4.50 from Paddington",
+          "author": "Agatha Christie",
+          "coverId": "ol:14590069",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1511 (collectingchristie.com)"
+        },
+        {
+          "id": "OL265415W",
+          "title": "At Bertram's Hotel",
+          "author": "Agatha Christie",
+          "coverId": "ol:14577273",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1521 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471784W",
+          "title": "The Seven Dials Mystery",
+          "author": "Agatha Christie",
+          "coverId": "ol:12996420",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1561 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472049W",
+          "title": "Evil Under the Sun",
+          "author": "Agatha Christie",
+          "coverId": "ol:15217665",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1633 (collectingchristie.com)",
+          "coverIsbn": "0006139825"
+        },
+        {
+          "id": "OL471898W",
+          "title": "Death Comes as the End",
+          "author": "Agatha Christie",
+          "coverId": "ol:13267895",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1736 (collectingchristie.com)",
+          "coverIsbn": "0006117368"
+        },
+        {
+          "id": "OL472536W",
+          "title": "Third Girl",
+          "author": "Agatha Christie",
+          "coverId": "ol:14589311",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1759 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472324W",
+          "title": "Death in the Clouds",
+          "author": "Agatha Christie",
+          "coverId": "ol:14895285",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1923 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471702W",
+          "title": "One, Two, Buckle my Shoe",
+          "author": "Agatha Christie",
+          "coverId": "ol:12884448",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2022 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471767W",
+          "title": "Lord Edgware Dies",
+          "author": "Agatha Christie",
+          "coverId": "ol:15217681",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2036 (collectingchristie.com)",
+          "coverIsbn": "000614215X"
+        },
+        {
+          "id": "OL472279W",
+          "title": "Taken at the Flood",
+          "author": "Agatha Christie",
+          "coverId": "ol:13670254",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2279 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471713W",
+          "title": "Dead Man's Folly",
+          "author": "Agatha Christie",
+          "coverId": "ol:11434438",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2305 (collectingchristie.com)",
+          "coverIsbn": "0006132413"
+        },
+        {
+          "id": "OL472145W",
+          "title": "Ordeal by Innocence",
+          "author": "Agatha Christie",
+          "coverId": "ol:15130643",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2450 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471664W",
+          "title": "The Sittaford Mystery",
+          "author": "Agatha Christie",
+          "coverId": "ol:15218253",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2550 (collectingchristie.com)",
+          "coverIsbn": "0006125506"
+        },
+        {
+          "id": "OL471666W",
+          "title": "Five Little Pigs",
+          "author": "Agatha Christie",
+          "coverId": "ol:3287",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2603 (collectingchristie.com)",
+          "coverIsbn": "0006126030"
+        },
+        {
+          "id": "OL472388W",
+          "title": "Why Didn't They Ask Evans?",
+          "author": "Agatha Christie",
+          "coverId": "ol:13918610",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3076 (collectingchristie.com)",
+          "coverIsbn": "0006142087"
+        },
+        {
+          "id": "OL471841W",
+          "title": "Hercule Poirot's Christmas",
+          "author": "Agatha Christie",
+          "coverId": "ol:14569319",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3090 (collectingchristie.com)",
+          "coverIsbn": "0006130909"
+        }
+      ]
     }
   ]
 }
