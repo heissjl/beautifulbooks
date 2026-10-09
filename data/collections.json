@@ -43044,6 +43044,19 @@
           "from": "reddit:badscificovers#26"
         },
         {
+          "id": "OL3071321W",
+          "title": "Surfing Samurai Robots",
+          "author": "Mel Gilden",
+          "coverId": "ol:13354500",
+          "addedAt": "2026-10-07",
+          "from": "reddit:badscificovers#30",
+          "coverIsbn": "0451451007",
+          "coverArtists": [
+            "Dave Dorman"
+          ],
+          "isfdbRecord": "33865"
+        },
+        {
           "id": "OL55607W",
           "title": "Interstellar Pig",
           "author": "William Sleator",

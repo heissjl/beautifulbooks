@@ -146,6 +146,19 @@
       "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
+      "rank": 30,
+      "post": "Surfing Samurai Robots",
+      "workId": "OL3071321W",
+      "title": "Surfing Samurai Robots",
+      "author": "Mel Gilden",
+      "coverId": "ol:13354500",
+      "publisher": "ROC",
+      "year": "1988",
+      "isbn": "0451451007",
+      "distance": 20,
+      "checked": "same painting, different lettering; kept on Julian's word 2026-10-09"
+    },
+    {
       "rank": 33,
       "post": "Interstellar Pig",
       "workId": "OL55607W",
@@ -370,7 +383,6 @@
     "94": "cover not on Open Library",
     "97": "same work as #6, kept the higher-ranked post",
     "99": "cover not on Open Library",
-    "30": "#30: same painting, different lettering and layout - not the post's cover",
     "39": "#39: our cover is the German \"Der Agent\", not the post (misread contact sheet, found 2026-10-09 side by side)",
     "45": "#45: post shows the Walter White cover, ours was the grey 1930 design"
   },
