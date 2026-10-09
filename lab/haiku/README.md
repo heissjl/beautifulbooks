@@ -58,3 +58,35 @@ JSON, dann *Motiv allein* einbetten; die Haiku-Form erzwingt Bildsprache, verwä
 „light/dark“; (2) schlichte Titelseiten vorher aussortieren (6.10 kennt Kontrast und Sättigung schon); (3) ein
 Bild-Embedding (6.23 b) auf derselben Stichprobe als Gegenprobe, ob der Text-Umweg überhaupt nötig ist. Erst
 danach eine Zeile auf der Buchseite.
+
+## 6.101a — erst das Index aufräumen (2026-10-09)
+
+Julian, 2026-10-09: „first we need to scrap more of the faulty or boring covers from the index. like the ones that are
+only a title page in cream … only once we have a refined index we can think about indexing it.“
+
+**Kontrast allein trennt nicht** (`plain.ts`, Bogen `out/plain.html`, 60 Zufallscover je Band). Die zehn cremefarbenen
+Titelseiten der Haiku-Stichprobe haben dHash-Kontrast 7–15, echte Gestaltungen ab 18 — aber im ganzen Index stehen
+unter ≤ 8 auch *Lolita* (goldene Figur), Lovecraft, *Ulysses* in Grün, Baudelaire in Orange, und unter 16–20 noch viele
+Titelseiten (*Howards End*, *Middlemarch*, *Sister Carrie*, *Genji*). Bänder: ≤ 8: 1.354, 9–12: 1.336, 13–15: 1.110,
+16–20: 1.940 von 35.351.
+
+**CLIP Zero-Shot trennt** (`plainclip.ts`, Bogen `out/plainclip.html`, 40 Zufallscover je Band). Über die Vektoren aus
+`lab/clip` (Branch `claude/jev-cover-filtering-9ed86c`, `clip.ts` und `score.ts` unverändert übernommen, Cache in
+`../bb-lab-cache/clip/out/`, kein Bild neu geholt): vier „schlichte“ Beschreibungen (Titelseite auf Creme, rein
+typografisch klein, Leinentafel einer Farbe, Textseite) gegen fünf „gestaltete“. 21.316 der 35.351 Cover haben einen
+Vektor.
+
+| schlicht ≥ | Cover | angesehen |
+|---|---|---|
+| 0,9 | 245 | alles Textseiten, Titelseiten, leere Tafeln, ein Ausleihzettel |
+| 0,7–0,9 | 448 | fast alles schlicht; Ausnahme *Il pendolo di Foucault* (griechisch, typografisch) |
+| 0,5–0,7 | 520 | überwiegend schlicht; dazwischen echte Gestaltungen (*Invisible Man*, *The Color Purple*) und eine Rückseite (*Wonder*) |
+| 0,4–0,5 | 397 | etwa drei Viertel schlicht (Titelseiten, Tafeln, ein Barcode); *The Woman in White* mit Porträt, *To the Lighthouse* |
+| 0,3–0,4 | 477 | nicht angesehen |
+| < 0,3 | 19.225 | Stichprobe 0–0,4: fast nur Gestaltungen; durchgerutscht eine schwarze Tafel (0,38) und eine Werther-Titelseite (0,29) |
+
+Also rund **1.600 Cover ≥ 0,4 (7,6 %)**, ein Rand von rund 500 zwischen 0,3 und 0,4. Wie in lab/clip: eine Rangfolge
+für den Blick, keine Löschregel. **Offen, Julian:** (1) ob „aussortiert“ heißt *nicht im Ähnlichkeits- und
+Haiku-Index* (Wand unverändert, dort sortiert `looksLikeScannedPage` schon ans Ende) oder mehr; (2) ob die
+fehlenden 14.035 Cover einen CLIP-Vektor bekommen (Bilder von `covers.openlibrary.org`, lab/clip maß 2.523 in 470 s,
+also grob 45 Minuten); (3) die Schwelle, nach einem Prüfbogen des Rands 0,3–0,5.

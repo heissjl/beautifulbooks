@@ -26,6 +26,7 @@
     "redis": "^6.2.1"
   },
   "devDependencies": {
+    "@huggingface/transformers": "~3.5.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pngjs": "^6.0.5",

@@ -14,3 +14,12 @@ describe('haiku rank', () => {
     expect(n.map((x) => x.index)).toEqual([1, 2]);
   });
 });
+
+import { pick } from '../plain';
+describe('plain pick', () => {
+  it('is deterministic and never repeats', () => {
+    const xs = Array.from({ length: 50 }, (_, i) => i);
+    expect(pick(xs, 10)).toEqual(pick(xs, 10));
+    expect(new Set(pick(xs, 10)).size).toBe(10);
+  });
+});
