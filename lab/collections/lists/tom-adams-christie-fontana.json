@@ -16,7 +16,10 @@
       "3295",
       "5764",
       "657 and others without a matching cover"
-    ]
+    ],
+    "2803,5764": "collector image on the page belongs to another title",
+    "3018": "same painting as 2682, reversed",
+    "2777": "no matching cover on Open Library"
   },
   "picks": [
     {
@@ -457,6 +460,66 @@
       "isbn": "",
       "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-5-1965-1966 (Fontana 2043, credited to Tom Adams; image compared by eye 2026-10-09)",
       "note": "Open Library lists the publisher as Librairie des Champs-Elysees (1971); the cover is the Fontana design with the Adams painting"
+    },
+    {
+      "fontana": "2615",
+      "title": "Peril at End House",
+      "workId": "OL472165W",
+      "coverId": "ol:10767288",
+      "edition": "OL32108953M",
+      "olPublisher": "fontana/ collins",
+      "olDate": "1977",
+      "isbn": "",
+      "distance": 12,
+      "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-8-1971-1972 (Fontana 2615, credited to Tom Adams; image compared by eye 2026-10-09)"
+    },
+    {
+      "fontana": "2682",
+      "title": "By the Pricking of My Thumbs",
+      "workId": "OL471619W",
+      "coverId": "ol:15217424",
+      "edition": "OL47761464M",
+      "olPublisher": "collins/fontana.",
+      "olDate": "1971-01-01",
+      "isbn": "0671823302",
+      "distance": 5,
+      "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-8-1971-1972 (Fontana 2682, credited to Tom Adams; image compared by eye 2026-10-09)"
+    },
+    {
+      "fontana": "2878",
+      "title": "The Big Four",
+      "workId": "OL471947W",
+      "coverId": "ol:11163918",
+      "edition": "OL7257892M",
+      "olPublisher": "fontana",
+      "olDate": "1978",
+      "isbn": "0006151701",
+      "distance": 21,
+      "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-8-1971-1972 (Fontana 2878, credited to Tom Adams; image compared by eye 2026-10-09)"
+    },
+    {
+      "fontana": "3005",
+      "title": "Hallowe'en Party",
+      "workId": "OL471832W",
+      "coverId": "ol:13671197",
+      "edition": "OL43063711M",
+      "olPublisher": "fontana/collins",
+      "olDate": "1972",
+      "isbn": "",
+      "distance": 2,
+      "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-8-1971-1972 (Fontana 3005, credited to Tom Adams; image compared by eye 2026-10-09)"
+    },
+    {
+      "fontana": "3295",
+      "title": "Passenger to Frankfurt",
+      "workId": "OL472159W",
+      "coverId": "ol:14571631",
+      "edition": "OL7257781M",
+      "olPublisher": "fontana / collins",
+      "olDate": "1972",
+      "isbn": "0006132952",
+      "distance": 17,
+      "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-8-1971-1972 (Fontana 3295, credited to Tom Adams; image compared by eye 2026-10-09)"
     }
   ]
 }

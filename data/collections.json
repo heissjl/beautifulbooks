@@ -43532,6 +43532,40 @@
           "coverIsbn": "0006126030"
         },
         {
+          "id": "OL472165W",
+          "title": "Peril at End House",
+          "author": "Agatha Christie",
+          "coverId": "ol:10767288",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2615 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471619W",
+          "title": "By the Pricking of My Thumbs",
+          "author": "Agatha Christie",
+          "coverId": "ol:15217424",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2682 (collectingchristie.com)",
+          "coverIsbn": "0671823302"
+        },
+        {
+          "id": "OL471947W",
+          "title": "The Big Four",
+          "author": "Agatha Christie",
+          "coverId": "ol:11163918",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2878 (collectingchristie.com)",
+          "coverIsbn": "0006151701"
+        },
+        {
+          "id": "OL471832W",
+          "title": "Hallowe'en Party",
+          "author": "Agatha Christie",
+          "coverId": "ol:13671197",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3005 (collectingchristie.com)"
+        },
+        {
           "id": "OL472388W",
           "title": "Why Didn't They Ask Evans?",
           "author": "Agatha Christie",
@@ -43548,6 +43582,15 @@
           "addedAt": "2026-10-09",
           "from": "fontana:3090 (collectingchristie.com)",
           "coverIsbn": "0006130909"
+        },
+        {
+          "id": "OL472159W",
+          "title": "Passenger to Frankfurt",
+          "author": "Agatha Christie",
+          "coverId": "ol:14571631",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3295 (collectingchristie.com)",
+          "coverIsbn": "0006132952"
         }
       ]
     }
