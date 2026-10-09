@@ -12,7 +12,7 @@
       "year": "1988-09",
       "isbn": "9780345339683",
       "distance": 17,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 5,
@@ -25,7 +25,7 @@
       "year": "June 1978",
       "isbn": "0671561065",
       "distance": 18,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 6,
@@ -38,7 +38,7 @@
       "year": "February 23, 1990",
       "isbn": "9780435123574",
       "distance": 15,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 11,
@@ -51,7 +51,7 @@
       "year": "2001",
       "isbn": "9781841490120",
       "distance": 24,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 12,
@@ -64,7 +64,7 @@
       "year": "1998",
       "isbn": "0395775159",
       "distance": 22,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 14,
@@ -77,7 +77,7 @@
       "year": "June 6, 1978",
       "isbn": "9780879973858",
       "distance": 25,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 15,
@@ -90,7 +90,7 @@
       "year": "October 1999",
       "isbn": "9780881036350",
       "distance": 13,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 16,
@@ -103,20 +103,21 @@
       "year": "April 2002",
       "isbn": "9781893407077",
       "distance": 16,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 20,
       "post": "Odd John",
       "workId": "OL3290749W",
-      "title": "Philosophy and living",
+      "title": "Odd John",
       "author": "Olaf Stapledon",
       "coverId": "ol:8310918",
       "publisher": "Galaxy Pub. Corp.",
       "year": "1959",
       "isbn": null,
       "distance": 10,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09",
+      "note": "Open Library files the 1959 Galaxy edition (OL23049377M) under the work \"Philosophy and living\""
     },
     {
       "rank": 22,
@@ -129,7 +130,7 @@
       "year": "1987",
       "isbn": "9780590402675",
       "distance": 20,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 26,
@@ -142,20 +143,7 @@
       "year": "1965",
       "isbn": null,
       "distance": 21,
-      "checked": "by eye, 2026-10-07"
-    },
-    {
-      "rank": 30,
-      "post": "Surfing Samurai Robots",
-      "workId": "OL3071321W",
-      "title": "Surfing Samurai Robots",
-      "author": "Mel Gilden",
-      "coverId": "ol:13354500",
-      "publisher": "ROC",
-      "year": "1988",
-      "isbn": "0451451007",
-      "distance": 20,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 33,
@@ -168,20 +156,7 @@
       "year": "December 6, 2001",
       "isbn": "9780340850626",
       "distance": 8,
-      "checked": "by eye, 2026-10-07"
-    },
-    {
-      "rank": 39,
-      "post": "Spacepaw",
-      "workId": "OL155505W",
-      "title": "Space Paw",
-      "author": "Gordon R. Dickson",
-      "coverId": "ol:10422395",
-      "publisher": "Erich Pabel Verlag",
-      "year": "1978-02-07",
-      "isbn": null,
-      "distance": 29,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 42,
@@ -194,7 +169,7 @@
       "year": "January 12, 1986",
       "isbn": "9780345314901",
       "distance": 28,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 44,
@@ -207,20 +182,7 @@
       "year": "1971",
       "isbn": "9780345023940",
       "distance": 29,
-      "checked": "by eye, 2026-10-07"
-    },
-    {
-      "rank": 45,
-      "post": "Last and First Men",
-      "workId": "OL3290731W",
-      "title": "Last and First Men",
-      "author": "Olaf Stapledon",
-      "coverId": "ol:8310926",
-      "publisher": "J. Cape and H. Smith",
-      "year": "1931",
-      "isbn": null,
-      "distance": 19,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 48,
@@ -233,7 +195,7 @@
       "year": "1966",
       "isbn": null,
       "distance": 9,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 54,
@@ -246,7 +208,7 @@
       "year": "Jul 25, 1988",
       "isbn": "9780345303257",
       "distance": 2,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 56,
@@ -259,7 +221,7 @@
       "year": "October 1, 1991",
       "isbn": "9780671703349",
       "distance": 6,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 58,
@@ -272,7 +234,7 @@
       "year": "September 1980",
       "isbn": "9780440102359",
       "distance": 27,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 60,
@@ -285,7 +247,7 @@
       "year": "1985",
       "isbn": "0553249630",
       "distance": 8,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 64,
@@ -298,7 +260,7 @@
       "year": "January 29, 2008",
       "isbn": "9781416555261",
       "distance": 25,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 65,
@@ -311,7 +273,7 @@
       "year": "1987",
       "isbn": "0880384557",
       "distance": 27,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 67,
@@ -324,7 +286,7 @@
       "year": "1993",
       "isbn": "0812523466",
       "distance": 21,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 81,
@@ -337,7 +299,7 @@
       "year": "October 1, 1983",
       "isbn": "9780441469871",
       "distance": 32,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 83,
@@ -350,7 +312,7 @@
       "year": "May 1, 1998",
       "isbn": "9780671878795",
       "distance": 31,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     },
     {
       "rank": 91,
@@ -363,7 +325,7 @@
       "year": "Oct 02, 2013",
       "isbn": "9781621050407",
       "distance": 4,
-      "checked": "by eye, 2026-10-07"
+      "checked": "by eye, side by side with the post, 2026-10-09"
     }
   ],
   "rejected": {
@@ -407,7 +369,10 @@
     "93": "cover not on Open Library",
     "94": "cover not on Open Library",
     "97": "same work as #6, kept the higher-ranked post",
-    "99": "cover not on Open Library"
+    "99": "cover not on Open Library",
+    "30": "#30: same painting, different lettering and layout - not the post's cover",
+    "39": "#39: our cover is the German \"Der Agent\", not the post (misread contact sheet, found 2026-10-09 side by side)",
+    "45": "#45: post shows the Walter White cover, ours was the grey 1930 design"
   },
   "noWork": [
     17,

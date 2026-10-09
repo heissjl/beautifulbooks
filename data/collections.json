@@ -42933,7 +42933,11 @@
           "coverId": "ol:8406783",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#0",
-          "coverIsbn": "9780345339683"
+          "coverIsbn": "9780345339683",
+          "coverArtists": [
+            "Michael Herring"
+          ],
+          "isfdbRecord": "41567"
         },
         {
           "id": "OL173934W",
@@ -42960,7 +42964,11 @@
           "coverId": "ol:6632314",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#11",
-          "coverIsbn": "9781841490120"
+          "coverIsbn": "9781841490120",
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "247073"
         },
         {
           "id": "OL2687383W",
@@ -42978,7 +42986,11 @@
           "coverId": "ol:6612255",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#14",
-          "coverIsbn": "9780879973858"
+          "coverIsbn": "9780879973858",
+          "coverArtists": [
+            "H. R. Van Dongen"
+          ],
+          "isfdbRecord": "51772"
         },
         {
           "id": "OL893515W",
@@ -42987,7 +42999,11 @@
           "coverId": "ol:677695",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#15",
-          "coverIsbn": "9780881036350"
+          "coverIsbn": "9780881036350",
+          "coverArtists": [
+            "Vincent Di Fate"
+          ],
+          "isfdbRecord": "166841"
         },
         {
           "id": "OL33817493W",
@@ -43000,11 +43016,15 @@
         },
         {
           "id": "OL3290749W",
-          "title": "Philosophy and living",
+          "title": "Odd John",
           "author": "Olaf Stapledon",
           "coverId": "ol:8310918",
           "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#20"
+          "from": "reddit:badscificovers#20",
+          "coverArtists": [
+            "Robert Stanley"
+          ],
+          "isfdbRecord": "24716"
         },
         {
           "id": "OL15400938W",
@@ -43024,30 +43044,17 @@
           "from": "reddit:badscificovers#26"
         },
         {
-          "id": "OL3071321W",
-          "title": "Surfing Samurai Robots",
-          "author": "Mel Gilden",
-          "coverId": "ol:13354500",
-          "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#30",
-          "coverIsbn": "0451451007"
-        },
-        {
           "id": "OL55607W",
           "title": "Interstellar Pig",
           "author": "William Sleator",
           "coverId": "ol:206171",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#33",
-          "coverIsbn": "9780340850626"
-        },
-        {
-          "id": "OL155505W",
-          "title": "Space Paw",
-          "author": "Gordon R. Dickson",
-          "coverId": "ol:10422395",
-          "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#39"
+          "coverIsbn": "9780340850626",
+          "coverArtists": [
+            "Anthony Robinson"
+          ],
+          "isfdbRecord": "251565"
         },
         {
           "id": "OL9181159W",
@@ -43056,7 +43063,11 @@
           "coverId": "ol:6632676",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#42",
-          "coverIsbn": "9780345314901"
+          "coverIsbn": "9780345314901",
+          "coverArtists": [
+            "David Schleinkofer"
+          ],
+          "isfdbRecord": "32977"
         },
         {
           "id": "OL9465901W",
@@ -43065,15 +43076,11 @@
           "coverId": "ol:14538830",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#44",
-          "coverIsbn": "9780345023940"
-        },
-        {
-          "id": "OL3290731W",
-          "title": "Last and First Men",
-          "author": "Olaf Stapledon",
-          "coverId": "ol:8310926",
-          "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#45"
+          "coverIsbn": "9780345023940",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "47631"
         },
         {
           "id": "OL32949082W",
@@ -43099,7 +43106,11 @@
           "coverId": "ol:8281623",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#56",
-          "coverIsbn": "9780671703349"
+          "coverIsbn": "9780671703349",
+          "coverArtists": [
+            "Mark Gerber and Stephanie Gerber"
+          ],
+          "isfdbRecord": "30692"
         },
         {
           "id": "OL18765421W",
@@ -43108,7 +43119,11 @@
           "coverId": "ol:12458469",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#58",
-          "coverIsbn": "9780440102359"
+          "coverIsbn": "9780440102359",
+          "coverArtists": [
+            "Larry Kresek"
+          ],
+          "isfdbRecord": "129261"
         },
         {
           "id": "OL30108W",
@@ -43126,7 +43141,11 @@
           "coverId": "ol:1786969",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#64",
-          "coverIsbn": "9781416555261"
+          "coverIsbn": "9781416555261",
+          "coverArtists": [
+            "Clyde Caldwell"
+          ],
+          "isfdbRecord": "284218"
         },
         {
           "id": "OL8861817W",
@@ -43135,7 +43154,11 @@
           "coverId": "ol:7122587",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#65",
-          "coverIsbn": "0880384557"
+          "coverIsbn": "0880384557",
+          "coverArtists": [
+            "Jeff Easley"
+          ],
+          "isfdbRecord": "626789"
         },
         {
           "id": "OL19221701W",
@@ -43144,7 +43167,11 @@
           "coverId": "ol:10123025",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#67",
-          "coverIsbn": "0812523466"
+          "coverIsbn": "0812523466",
+          "coverArtists": [
+            "Barclay Shaw"
+          ],
+          "isfdbRecord": "2304"
         },
         {
           "id": "OL461369W",
@@ -43153,7 +43180,11 @@
           "coverId": "ol:6375233",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#81",
-          "coverIsbn": "9780441469871"
+          "coverIsbn": "9780441469871",
+          "coverArtists": [
+            "David Mattingly"
+          ],
+          "isfdbRecord": "42663"
         },
         {
           "id": "OL510355W",
@@ -43162,7 +43193,11 @@
           "coverId": "ol:409635",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#83",
-          "coverIsbn": "9780671878795"
+          "coverIsbn": "9780671878795",
+          "coverArtists": [
+            "Stephen Hickman"
+          ],
+          "isfdbRecord": "35744"
         },
         {
           "id": "OL20278680W",
@@ -43173,7 +43208,8 @@
           "from": "reddit:badscificovers#91",
           "coverIsbn": "9781621050407"
         }
-      ]
+      ],
+      "coverCredits": "isfdb"
     }
   ]
 }

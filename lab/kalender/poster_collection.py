@@ -12,7 +12,7 @@ The collection is read from a live snapshot (scripts/live-collections.ts),
 because the site lays online drafts over data/collections.json; the covers are
 Open Library's large images, fetched one at a time and cached in out/cache.
 
-    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain | --footer-only] [--first]
+    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain | --footer-only] [--first] [--cols=N]
 """
 import json
 import os
@@ -128,9 +128,10 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
         tiles.append(cover(w['coverId']))
         print(f'{i + 1}/{len(works)}', w['title'], flush=True)
 
-    tw = (W - 2 * MARGIN - (COLS - 1) * GAP_X) // COLS
+    cols = next((int(a.split('=')[1]) for a in sys.argv[3:] if a.startswith('--cols=')), COLS)
+    tw = (W - 2 * MARGIN - (cols - 1) * GAP_X) // cols
     th = round(tw * RATIO)
-    rows = -(-len(works) // COLS)
+    rows = -(-len(works) // cols)
 
     probe = ImageDraw.Draw(Image.new('RGB', (1, 1)))
     title_f = font('regular', 150)
@@ -160,8 +161,8 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
     # The grid, in the order of the numbers; the last row is centred.
     t_f, a_f, c_f, n_f = font('jost', 30, 500), font('jost', 26, 400), font('jost', 24, 400), font('jost', 24, 400)
     for i, (w, tile) in enumerate(zip(works, tiles)):
-        r, c = divmod(i, COLS)
-        in_row = min(COLS, len(works) - r * COLS)
+        r, c = divmod(i, cols)
+        in_row = min(cols, len(works) - r * cols)
         x0 = (W - (in_row * tw + (in_row - 1) * GAP_X)) // 2
         x = x0 + c * (tw + GAP_X)
         y = header_h + r * (th + TEXT_H + GAP_Y)
