@@ -7,7 +7,6 @@ import { storeWorkPreview } from './useWorkPreview';
 import { wallCover, type CuratedWork } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
 import { tileTitle } from '@/lib/normalize';
-import { tileRatio } from '@/lib/tileratio';
 import { useT } from './i18n';
 
 type Tile = CuratedWork | WallWork;
@@ -51,7 +50,7 @@ const SETS: Record<3 | 7, string> = {
 const keyOf = (w: Tile) => `${w.id}:${'image' in w && w.image ? w.image : w.coverId}`;
 const anchorOf = (w: Tile) => tileAnchor(w.id, w.coverId);
 
-function CoverTile({ w, selectCover, caption, hideAuthor = false, from, shaped = false }: { w: Tile; selectCover: boolean; caption: boolean; hideAuthor?: boolean; from?: { href: string; title: string }; shaped?: boolean }) {
+function CoverTile({ w, selectCover, caption, hideAuthor = false, from }: { w: Tile; selectCover: boolean; caption: boolean; hideAuthor?: boolean; from?: { href: string; title: string } }) {
   const t = useT();
   const target = ('coverWork' in w && w.coverWork) || w.id;
   // A site-served image is on no wall of Open Library's, so there is no cover to select there.
@@ -59,28 +58,18 @@ function CoverTile({ w, selectCover, caption, hideAuthor = false, from, shaped =
   return (
     <Link
       href={selectCover && !image ? `/book/${target}?cover=${encodeURIComponent(`ol:${w.coverId}`)}` : `/book/${target}`}
-      className={shaped ? 'group row-span-2 grid grid-rows-subgrid focus-visible:outline-none' : 'group block focus-visible:outline-none'}
+      className="group block focus-visible:outline-none"
       title={caption ? undefined : `${tileTitle(w.title)} — ${w.author}`}
       onClick={() => {
         storeWorkPreview(target, { title: w.title, authors: [w.author], coverUrls: [wallCover({ coverId: w.coverId, image }, 'L')] });
         if (from) rememberWall({ href: `${from.href}#${anchorOf(w)}`, title: from.title, workId: target });
       }}
     >
-      {/*
-        A shaped wall (its tiles carry coverRatio) shows each cover in its own
-        shape, bottoms on one line like books on a shelf; the caption row below
-        is shared across the row through the subgrid, so titles line up too.
-      */}
-      <div className={shaped ? 'flex items-end' : undefined}>
-        <div
-          className={`cover-shadow relative w-full ${shaped ? '' : 'aspect-[2/3] '}overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg`}
-          style={shaped ? { aspectRatio: `1 / ${tileRatio('coverRatio' in w ? w.coverRatio : undefined)}` } : undefined}
-        >
-          <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={t('{title} by {author}', { title: w.title, author: w.author })} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
-        </div>
+      <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
+        <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={t('{title} by {author}', { title: w.title, author: w.author })} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
       </div>
       {caption && (
-        <div>
+        <>
           {/*
             Two lines each, as on the result cards. One line cut 9 of 18
             titles on a phone and 1 on a desktop — "Der…" is not a
@@ -100,7 +89,7 @@ function CoverTile({ w, selectCover, caption, hideAuthor = false, from, shaped =
           {'coverArt' in w && w.coverArt && (
             <p className="mt-0.5 line-clamp-2 text-[11px] italic leading-snug text-ink-3" title={w.coverArt}>Cover: {w.coverArt}</p>
           )}
-        </div>
+        </>
       )}
     </Link>
   );
@@ -145,11 +134,10 @@ export default function CoverWall({ works, selectCover = false, setSize, hideAut
       </div>
     );
   }
-  const shaped = works.some(w => 'coverRatio' in w && w.coverRatio);
   return (
-    <ul className={gridClassName ?? `grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6${shaped ? ' gap-y-0 lg:gap-y-0' : ''}`}>
+    <ul className={gridClassName ?? 'grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6'}>
       {works.map(w => (
-        <li key={keyOf(w)} id={from ? anchorOf(w) : undefined} className={shaped ? 'row-span-2 grid scroll-mt-24 grid-rows-subgrid pb-4 lg:pb-6' : 'scroll-mt-24'}><CoverTile w={w} selectCover={selectCover} caption hideAuthor={hideAuthor} from={from} shaped={shaped} /></li>
+        <li key={keyOf(w)} id={from ? anchorOf(w) : undefined} className="scroll-mt-24"><CoverTile w={w} selectCover={selectCover} caption hideAuthor={hideAuthor} from={from} /></li>
       ))}
     </ul>
   );
