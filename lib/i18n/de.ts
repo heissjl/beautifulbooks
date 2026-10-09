@@ -45,6 +45,7 @@ export const de: Readonly<Record<string, string>> = {
   'Create your own collection of covers': 'Stell dir deine eigene Coverwand zusammen',
   // The name stays as it is: it is what the picture is called and what the hashtag says.
   'Take your Shelf-Portrait: the books that inspire you': 'Mach dein Shelf-Portrait: die Bücher, die dich prägen',
+  'Add your nine favourite books to Joe Weisenthal’s open database ↗': 'Deine neun Lieblingsbücher für Joe Weisenthals offene Datenbank ↗',
   // Der Block „Was ist …?“ auf einer Seite, auf der jemand über einen Link landet (components/WhatIsThisSite.tsx).
   'What is {name}?': 'Was ist {name}?',
   'A book has many covers.': 'Ein Buch hat viele Cover.',
