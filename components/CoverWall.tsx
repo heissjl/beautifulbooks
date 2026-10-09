@@ -33,6 +33,8 @@ interface CoverWallProps {
   hideAuthor?: boolean;
   /** The grid's classes, for a row that needs other columns than the wall (6.53: 3 / 6). */
   gridClassName?: string;
+  /** 5:8 tiles instead of 2:3, for a series printed taller (Collection.tileShape). */
+  tall?: boolean;
   /** The page this wall stands on, so a book opened from it can lead back by name (components/cameFrom.ts). */
   from?: { href: string; title: string };
 }
@@ -50,7 +52,7 @@ const SETS: Record<3 | 7, string> = {
 const keyOf = (w: Tile) => `${w.id}:${'image' in w && w.image ? w.image : w.coverId}`;
 const anchorOf = (w: Tile) => tileAnchor(w.id, w.coverId);
 
-function CoverTile({ w, selectCover, caption, hideAuthor = false, from }: { w: Tile; selectCover: boolean; caption: boolean; hideAuthor?: boolean; from?: { href: string; title: string } }) {
+function CoverTile({ w, selectCover, caption, hideAuthor = false, from, tall = false }: { w: Tile; selectCover: boolean; caption: boolean; hideAuthor?: boolean; from?: { href: string; title: string }; tall?: boolean }) {
   const t = useT();
   const target = ('coverWork' in w && w.coverWork) || w.id;
   // A site-served image is on no wall of Open Library's, so there is no cover to select there.
@@ -65,7 +67,7 @@ function CoverTile({ w, selectCover, caption, hideAuthor = false, from }: { w: T
         if (from) rememberWall({ href: `${from.href}#${anchorOf(w)}`, title: from.title, workId: target });
       }}
     >
-      <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
+      <div className={`cover-shadow relative ${tall ? 'aspect-[5/8]' : 'aspect-[2/3]'} overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg`}>
         <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={t('{title} by {author}', { title: w.title, author: w.author })} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
       </div>
       {caption && (
@@ -117,7 +119,7 @@ function groupSets(works: readonly Tile[], size: number): Array<{ name?: string;
  * a block under its name instead: the same seven titles under every row said
  * nothing, and the name of the edition is what tells the rows apart.
  */
-export default function CoverWall({ works, selectCover = false, setSize, hideAuthor = false, gridClassName, from }: CoverWallProps) {
+export default function CoverWall({ works, selectCover = false, setSize, hideAuthor = false, gridClassName, from, tall = false }: CoverWallProps) {
   if (setSize) {
     return (
       <div className={SETS[setSize]}>
@@ -137,7 +139,7 @@ export default function CoverWall({ works, selectCover = false, setSize, hideAut
   return (
     <ul className={gridClassName ?? 'grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:gap-6'}>
       {works.map(w => (
-        <li key={keyOf(w)} id={from ? anchorOf(w) : undefined} className="scroll-mt-24"><CoverTile w={w} selectCover={selectCover} caption hideAuthor={hideAuthor} from={from} /></li>
+        <li key={keyOf(w)} id={from ? anchorOf(w) : undefined} className="scroll-mt-24"><CoverTile w={w} selectCover={selectCover} caption hideAuthor={hideAuthor} from={from} tall={tall} /></li>
       ))}
     </ul>
   );

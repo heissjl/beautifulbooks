@@ -44468,7 +44468,8 @@
           "from": "fontana:3295 (collectingchristie.com)",
           "coverIsbn": "0006132952"
         }
-      ]
+      ],
+      "tileShape": "tall"
     }
   ]
 }
