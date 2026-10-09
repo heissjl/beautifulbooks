@@ -4,7 +4,7 @@
 
 Hi! I run [Buy Its Covers](https://buyitscovers.com), a small hobby site that shows the many covers a book has had. One part of it, [Shelf-Portrait](https://buyitscovers.com/shelfportrait), lets people pick their nine favourite books and the cover they love for each, then share the result as a picture.
 
-That is your format exactly, and several people have asked whether their nine could go into Nine Books. Today they would have to save the picture and upload it to you, and then your model reads back titles we already know. Would you consider a way to accept the list directly?
+That is your format exactly, so it seems natural to let people add their nine to Nine Books. Today they would have to save the picture and upload it to you, and then your model reads back titles we already know. Would you consider a way to accept the list directly?
 
 **Why the titles are already checked:** on our side each of the nine is an [Open Library](https://openlibrary.org) work that the reader searched for and chose themselves. There's nothing to recognise and nothing to proofread.
 
