@@ -40,7 +40,7 @@ https://thestalwart.com`.
 3. **Migration `0003_source.sql`:** Spalte `lists.source` (`'image'` Standard, `'buyitscovers'` für den neuen Weg).
    Im Export (`lists.csv`, `lists.jsonl`) als Spalte, damit, wer die Daten nutzt, Listen ohne Bild trennen kann —
    bei uns sind die Positionen die Plätze im Board, nicht Positionen in einem Foto; das sagt der Data Dictionary.
-4. **Seine Oberfläche:** eine Zeile „via Buy Its Covers" an einer solchen Liste, als Link auf `source_url`.
+4. **Seine Oberfläche, optional** (Julian, 2026-10-09: „this is optional"): eine Zeile „via Buy Its Covers" an einer solchen Liste, als Link auf `source_url`. Nicht Bedingung; der PR bietet sie an.
 5. **Tests** in `test/worker.test.js`: fremder Origin 403, acht Titel 400, ohne Einwilligung 400, Dublette ergibt
    dieselbe ID, Quote greift.
 6. **CORS:** sein `Access-Control-Allow-Origin` für POST muss `PARTNER_ORIGINS` mit einschließen (Zeile ~877).
@@ -50,8 +50,9 @@ ja oder nein zu sagen.
 
 ## Was sich bei uns ändert
 
-1. **`components/InspirationShared.tsx`:** der Absatz „To an open database" (5.18c a, gebaut) bekommt einen Knopf
-   „Add these nine to Nine Books…", nur für den Macher, nur bei neun Büchern.
+1. **`components/InspirationShared.tsx`:** der Absatz „To an open database" (5.18c a, gebaut; seit 2026-10-09 zwischen
+   „As a picture" und „As a link", „an experiment by Joe Weisenthal") bekommt das Feld, nur für den Macher, nur bei
+   neun Büchern — offen oder hinter einem Knopf, siehe „Opt-out" unten.
 2. **Neue Komponente `InspirationNineBooks.tsx`:** ein aufklappbares Feld darunter —
    - die neun Titel mit Autor (aus dem Board, wie sie in der Bestellliste stehen),
    - „Anonymous" (Standard) oder „With my name" (vorbelegt mit dem `by` des Boards),
@@ -86,6 +87,17 @@ ja oder nein zu sagen.
 ## Was offen bleibt
 
 - Ob er Listen ohne Bild überhaupt will — sein Datensatz misst „neun Bücher auf einem Foto"; ein Board ist eine
-  Auswahl am Bildschirm. Die Spalte `source` lässt beides unterscheidbar.
+  Auswahl am Bildschirm. **Julians Antwort für das Gespräch** (2026-10-09: „i think it's okay because we will have done
+  the vetting of the titles"): jeder Titel eines Boards ist ein Open-Library-Werk, das der Leser selbst gesucht und
+  gewählt hat — geprüfter als eine Erkennung aus einem Foto, die er erst gegenlesen lassen muss. Das gehört in den
+  PR-Text. Die Spalte `source` hält beides trotzdem unterscheidbar.
+- **Opt-out statt Opt-in?** (Julian, 2026-10-09: „make it opt out instead of opt in?") **Nicht als Voreinstellung,
+  die ohne Klick sendet**, aus drei Gründen: (1) sein Server verlangt eine ausdrückliche Einwilligung in CC0, und CC0
+  ist nicht zurücknehmbar — eine Liste, die jemand nur fürs Teilen gebaut hat, wäre ohne sein Zutun für immer
+  gemeinfrei; (2) mit Namen ist es eine Übermittlung personenbezogener Daten an einen Dritten, und ein vorab
+  gesetztes Häkchen ist nach EuGH *Planet49* (C-673/17) keine Einwilligung; (3) seine Seite bekäme Listen von Leuten,
+  die nicht wissen, dass es sie gibt. **Was dem Wunsch nahekommt:** das Feld steht schon offen da (nicht hinter einem
+  Knopf), anonym ist vorgewählt, und *ein* Klick auf „Add my nine" ist zugleich die Einwilligung — ein Schritt statt
+  drei. Julian entscheidet.
 - Kennung des Mitwirkenden: sein Paar-Code (`reader_token`) verknüpft Listen eines Menschen. Wir lassen ihn weg; jede
   geschickte Liste ist ein neuer Mitwirkender. Sonst müssten wir seinen Code im Browser halten.
