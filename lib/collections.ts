@@ -108,7 +108,7 @@ export interface CollectionRecord {
    */
   setSize?: 3 | 7;
   /**
-   * Taller tiles for a series printed taller than 2:3: `tall` is 5:8, so a
+   * Taller tiles for a series printed taller than 2:3: `tall` is 1:1.65, so a
    * Fontana paperback (about 1:1.62) keeps its title band instead of losing it
    * to the crop (Julian, 2026-10-09, for Tom Adams' Christie only for now).
    */

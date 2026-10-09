@@ -33,7 +33,7 @@ interface CoverWallProps {
   hideAuthor?: boolean;
   /** The grid's classes, for a row that needs other columns than the wall (6.53: 3 / 6). */
   gridClassName?: string;
-  /** 5:8 tiles instead of 2:3, for a series printed taller (Collection.tileShape). */
+  /** 1:1.65 tiles instead of 2:3, for a series printed taller (Collection.tileShape). */
   tall?: boolean;
   /** The page this wall stands on, so a book opened from it can lead back by name (components/cameFrom.ts). */
   from?: { href: string; title: string };
@@ -67,7 +67,7 @@ function CoverTile({ w, selectCover, caption, hideAuthor = false, from, tall = f
         if (from) rememberWall({ href: `${from.href}#${anchorOf(w)}`, title: from.title, workId: target });
       }}
     >
-      <div className={`cover-shadow relative ${tall ? 'aspect-[5/8]' : 'aspect-[2/3]'} overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg`}>
+      <div className={`cover-shadow relative ${tall ? 'aspect-[20/33]' : 'aspect-[2/3]'} overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg`}>
         <CoverImage src={wallCover({ coverId: w.coverId, image }, 'M')} alt={t('{title} by {author}', { title: w.title, author: w.author })} sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw" />
       </div>
       {caption && (
