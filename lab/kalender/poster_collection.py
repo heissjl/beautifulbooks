@@ -36,7 +36,6 @@ MARGIN = 140
 COLS = 11          # 73 = 6 × 11 + 7: the last row is nearly full
 GAP_X = 40
 GAP_Y = 64
-RATIO = 1.55       # height over width of an SF Masterworks paperback
 TEXT_H = 172
 
 # SF Masterworks numbers whose cover on Open Library is a later printing; with
@@ -130,7 +129,13 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
 
     cols = next((int(a.split('=')[1]) for a in sys.argv[3:] if a.startswith('--cols=')), COLS)
     tw = (W - 2 * MARGIN - (cols - 1) * GAP_X) // cols
-    th = round(tw * RATIO)
+    # The tile takes the median shape of this collection's scans, so a series
+    # printed taller than the SF Masterworks (Fontana ~1.62) keeps its title band;
+    # a scan of another shape is fitted whole, never cut (Julian, 2026-10-09:
+    # "einige cover aus der collection sind oben etwas abgeschnitten").
+    ratios = sorted(t.height / t.width for t in tiles)
+    ratio = ratios[len(ratios) // 2]
+    th = round(tw * ratio)
     rows = -(-len(works) // cols)
 
     probe = ImageDraw.Draw(Image.new('RGB', (1, 1)))
@@ -166,7 +171,13 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
         x0 = (W - (in_row * tw + (in_row - 1) * GAP_X)) // 2
         x = x0 + c * (tw + GAP_X)
         y = header_h + r * (th + TEXT_H + GAP_Y)
-        img.paste(fill(tile, tw, th), (x, y))
+        r = tile.height / tile.width
+        if abs(r - ratio) / ratio < 0.03:
+            img.paste(fill(tile, tw, th), (x, y))
+        else:
+            k = min(tw / tile.width, th / tile.height)
+            fitted = tile.resize((round(tile.width * k), round(tile.height * k)), Image.LANCZOS)
+            img.paste(fitted, (x + (tw - fitted.width) // 2, y + th - fitted.height))
         ty = y + th + 16
         # A work printed in two designs keeps its series number; the second tile says so.
         repeat = i > 0 and works[i - 1]['id'] == w['id']
