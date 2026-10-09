@@ -47,7 +47,8 @@ const EXCLUDED = new Set([
  * once from Open Library and cached beside this file — the only place where
  * this tool loads a cover list over the network, and it is a handful of works.
  */
-interface Extra { id: string; title: string; author: string; note?: string }
+/** `first`: a book Julian named and wants to pick soon; it leads the run and the open list instead of waiting behind the index. */
+interface Extra { id: string; title: string; author: string; note?: string; first?: boolean }
 
 const NAMED_EXTRAS: Extra[] = [
   { id: 'OL63055W', title: 'The Garden of Eden', author: 'Ernest Hemingway' },
@@ -74,7 +75,7 @@ const NAMED_EXTRAS: Extra[] = [
   */
   { id: 'OL20042286W', title: 'The Babysitter at Rest', author: 'Jen George', note: '1 Ausgabe · ab 2016' },
   // Julian, 2026-10-08, with the book page: „nimm das buch in die kuratierte liste mit auf, cover wähle ich noch aus".
-  { id: 'OL44237703W', title: 'Paradiso', author: 'José Lezama Lima', note: '72 Ausgaben · ab 1966' },
+  { id: 'OL44237703W', title: 'Paradiso', author: 'José Lezama Lima', note: '72 Ausgaben · ab 1966', first: true },
 ];
 
 /**
@@ -142,12 +143,17 @@ const extraCovers: Record<string, string[]> = existsSync(EXTRA_COVERS_FILE)
   ? JSON.parse(readFileSync(EXTRA_COVERS_FILE, 'utf8'))
   : {};
 
+// Julian, 2026-10-08: „paradiso habe ich nicht gefunden" — it stood 252nd of 275 open works.
+const FIRST = new Set(EXTRA_WORKS.filter(w => w.first).map(w => w.id));
 const works: Array<{ id: string; title: string; author: string; note?: string; covers: string[] }> = [
+  ...EXTRA_WORKS
+    .filter(w => FIRST.has(w.id) && !EXCLUDED.has(w.id))
+    .map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
   ...index.works
     .map(([id, title, author], i) => ({ id, title, author, covers: coversByWork.get(i) ?? [] }))
     .filter(w => !EXCLUDED.has(w.id)),
   ...EXTRA_WORKS
-    .filter(w => !EXCLUDED.has(w.id) && !index.works.some(([id]) => id === w.id))
+    .filter(w => !FIRST.has(w.id) && !EXCLUDED.has(w.id) && !index.works.some(([id]) => id === w.id))
     .map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
 ];
 
