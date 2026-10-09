@@ -7,8 +7,12 @@ picture, then its nearest Open Library covers with their distance, and the
 decision is made by looking. Six rows per sheet, written to
 lab/collections/in/badscificovers-sheets/ (git-ignored).
 
-    python3 lab/collections/badscificovers_sheets.py
+    python3 lab/collections/badscificovers_sheets.py [matches file] [sheet prefix]
+
+Defaults: badscificovers-matches.json and sheet-; for page 2 of the listing,
+`badscificovers-matches-200.json p2-` (2026-10-08).
 """
+import sys
 import json
 import os
 import time
@@ -49,7 +53,7 @@ def fit(im: Image.Image) -> Image.Image:
 def main() -> None:
     os.makedirs(COVERS, exist_ok=True)
     os.makedirs(OUT, exist_ok=True)
-    rows = [r for r in json.load(open(os.path.join(IN, 'badscificovers-matches.json'))) if r.get('candidates')]
+    rows = [r for r in json.load(open(os.path.join(IN, sys.argv[1] if len(sys.argv) > 1 else 'badscificovers-matches.json'))) if r.get('candidates')]
     font = ImageFont.load_default()
     for s in range(0, len(rows), ROWS):
         chunk = rows[s:s + ROWS]
@@ -66,7 +70,7 @@ def main() -> None:
                 if im:
                     sheet.paste(fit(im), (x, y + 18))
                 d.text((x, y + 18 + TH + 2), f'{c["coverId"]} d={c["distance"]}', fill=(200, 200, 200), font=font)
-        name = os.path.join(OUT, f'sheet-{s // ROWS + 1:02d}.jpg')
+        name = os.path.join(OUT, f'{sys.argv[2] if len(sys.argv) > 2 else "sheet-"}{s // ROWS + 1:02d}.jpg')
         sheet.save(name, quality=85)
         print('written', name)
 
