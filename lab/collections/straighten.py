@@ -13,9 +13,9 @@ def straighten(path, corners, out, ratio=1.62, w=420):
     dst=[(0,0),(w,0),(w,h),(0,h)]
     im.transform((w,h),Image.PERSPECTIVE,coeffs(dst,corners),Image.BICUBIC).save(out,quality=95)
 if __name__=='__main__':
-    C={'13679047':[(43,4),(326,1),(326,488),(45,490)],
-       '10663008':[(49,63),(289,43),(297,486),(53,485)],
-       '14155494':[(74,52),(288,55),(290,429),(76,431)]}
+    C={'13679047':[(47,6),(330,17),(320,482),(49,492)],
+       '10663008':[(50,66),(283,59),(350,474),(47,482)],
+       '14155494':[(72,54),(290,67),(292,415),(73,440)]}
     for k,c in C.items(): straighten(f'{k}.jpg',c,f'flat-{k}.jpg')
     ims=[Image.open(f'{k}.jpg') for k in C]+[Image.open(f'flat-{k}.jpg') for k in C]
     s=Image.new('RGB',(6*260,440),(20,20,20))
