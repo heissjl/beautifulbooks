@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+import { measure } from '@/app/api/measure';
 import sharp from 'sharp';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { asJpeg, DISPLAY, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
@@ -9,7 +10,7 @@ import { type BoardSize, coverSegment, filledCount, isFull, parseBoard, sizeOf }
 import { describeBoard } from '@/lib/inspiration/describe';
 import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
 import { captionLines } from '@/lib/inspiration/captionlines';
-import { mosaicGround } from '@/lib/inspiration/mosaicground';
+import { mosaicGround, type WordArea } from '@/lib/inspiration/mosaicground';
 import { titleOf } from '@/lib/inspiration/share';
 import { SITE_URL } from '@/lib/seo';
 
@@ -163,7 +164,7 @@ async function shadows(width: number, height: number, rects: Rect[], tiles: (Buf
 }
 
 /** What the covers stand on, as one picture: the wash or the flat colour, and the shadows. Null when it cannot be made — the flat colour stands in. */
-async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[], seed: string, words: Rect[]): Promise<string | null> {
+async function ground(look: Look, width: number, height: number, rects: Rect[], tiles: (Buffer | null)[], seed: string, words: WordArea[]): Promise<string | null> {
   const L = LOOKS[look];
   if (L.shadow === 0) return null;
   try {
@@ -227,6 +228,14 @@ function clip(text: string, width: number, size: number): string {
 /** A caption never takes a second line: the next row of covers begins where it would stand. */
 const ONE_LINE = { whiteSpace: 'nowrap', overflow: 'hidden' } as const;
 
+/** On the mosaic a dark halo holds small type off the bright little covers that still show through; the other grounds are calm enough without. */
+const CAPTION_SHADOW: Record<Look, { textShadow?: string }> = {
+  mosaic: { textShadow: '0 1px 3px rgba(0,0,0,0.95), 0 0 8px rgba(0,0,0,0.8)' },
+  ambient: {},
+  paper: {},
+  plain: {},
+};
+
 type Caption = { title: string; author: string } | null;
 
 function poster(format: PosterFormat, count: BoardSize, by: string, sub: string, images: (string | null)[], look: Look, under: string | null, captions: Caption[] | null) {
@@ -251,9 +260,9 @@ function poster(format: PosterFormat, count: BoardSize, by: string, sub: string,
         <div key={i} style={{ position: 'absolute', left: r.x, top: r.y + r.height + 10, width: r.width, display: 'flex', flexDirection: 'column' }}>
           {/* Up to two lines of title, each its own line so the generator cannot wrap a third (captionLines). */}
           {captionLines(captions[i]?.title ?? '', Math.floor(r.width / ((P.caption?.title ?? 24) * 0.5))).map((line, k) => (
-            <div key={k} style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.title, lineHeight: 1.15, color: L.ink }}>{line}</div>
+            <div key={k} style={{ ...TEXT, ...ONE_LINE, ...CAPTION_SHADOW[look], display: 'flex', fontSize: P.caption?.title, lineHeight: 1.15, color: L.ink }}>{line}</div>
           ))}
-          <div style={{ ...TEXT, ...ONE_LINE, display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
+          <div style={{ ...TEXT, ...ONE_LINE, ...CAPTION_SHADOW[look], display: 'flex', fontSize: P.caption?.author, lineHeight: 1.25, color: look === 'mosaic' ? L.ink : L.ink2 }}>{clip(captions[i]?.author ?? '', r.width, P.caption?.author ?? 20)}</div>
         </div>
       ))}
       {/* The words keep a distance from the covers above them, not only from the edge below (Julian, 2026-10-05). */}
@@ -342,6 +351,7 @@ function card(count: BoardSize, by: string, sub: string, images: (string | null)
 }
 
 export async function GET(request: NextRequest) {
+  measure('portrait-picture', request);
   const refused = closed(request, 'inspirationPoster');
   if (refused) return refused;
   const params = request.nextUrl.searchParams;
@@ -375,8 +385,13 @@ export async function GET(request: NextRequest) {
     return json({ error: 'A cover did not come in time. Try again in a moment.' }, 503);
   }
   const whole = board.slots.every((s, i) => !s || tiles[i]) && (!captions || board.slots.every((s, i) => !s || captions[i]));
-  // Where the words stand, so the mosaic is darker behind them.
-  const words = layout ? [layout.head, layout.foot] : [cardPlan(count).words];
+  // Where the words stand, so the mosaic is darker behind them — the captions under the covers too (Julian, 2026-10-07:
+  // „mach die autoren und titel beim shelfportrait auf mosaik-hintergrund etwas besser lesbar"): small type on a field of
+  // tiny covers at half its light was hard to read.
+  const captionBands = layout?.caption && captions
+    ? layout.tiles.flatMap((r, i) => (captions[i] ? [{ x: r.x, y: r.y + r.height, width: r.width, height: (layout.caption?.height ?? 0) + 10, dark: 0.72 }] : []))
+    : [];
+  const words = layout ? [layout.head, layout.foot, ...captionBands] : [cardPlan(count).words];
   const seed = board.slots.map((s) => s?.coverId ?? '').join();
   const under = await ground(look, size.width, size.height, rects, tiles, seed, words);
   const images = tiles.map((t) => (t ? dataUrl(t) : null));

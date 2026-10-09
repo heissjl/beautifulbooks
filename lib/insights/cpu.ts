@@ -21,8 +21,8 @@ import type { DayHash } from './model';
 
 export const CPU_ROUTES = [
   'img', 'works', 'works-summary', 'search', 'isbn', 'authors', 'similar', 'seen', 'go',
-  'walls', 'photo', 'versus', 'curate', 'og',
-  'page-home', 'page-book', 'page-cover', 'page-decades', 'page-collections', 'page-wall', 'page-create', 'page-versus',
+  'walls', 'photo', 'versus', 'curate', 'og', 'portrait', 'portrait-picture',
+  'page-home', 'page-book', 'page-cover', 'page-decades', 'page-collections', 'page-wall', 'page-create', 'page-versus', 'page-portrait',
   'other', 'idle',
 ] as const;
 export type CpuRoute = (typeof CPU_ROUTES)[number];

@@ -109,6 +109,51 @@ Nur die Grieder-Galerie wartet noch auf `publish:herder-bucherei-covers-by-walte
 
 **X ist der Kanal des Vorbilds, steht aber nicht im Kalender:** 5.6a kennt keine Klasse `x`, und ohne sie ist ein Besuch von dort „social“ oder „direkt“. Soll X dazukommen, braucht `VIA` den Eintrag (Analyse-Regel 6, Julian gibt den Satz frei), dann ist es ein weiterer Kanal im Werkzeug.
 
+## 4b. Kampagne „performative readers“
+
+(Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“, nachdem er den Begriff in seinen Show-HN-Text geschrieben hatte.) „Performative reader“ ist ein Spottwort für Leute, die Bücher lesen oder tragen, um gesehen zu werden.
+
+**Die Haltung:** Die Kampagne nimmt das Wort selbstironisch an und spottet über niemanden. Der Satz, der sie trägt: Das Cover ist der Teil eines Buches, den alle anderen sehen. Genau dafür ist die Seite da, denn sie zeigt die Cover und führt zur Ausgabe dahinter. Ein Post darf nie Leser auslachen, auch nicht die, die das Wort meint.
+
+**Eine Woche, im Kalender vom 21. bis 25.10., direkt nach dem Show HN:**
+
+| Tag | Kanal | Post | Wartet auf |
+|---|---|---|---|
+| Di 21.10. | Bluesky, X | „A note for the performative readers: the cover is the part of a book everyone else sees.“, Link auf die Startseite | Konto, 5.6a |
+| Mi 22.10. | Pinterest | Julians gerahmte Wand aus 110 Rowohlts Monographien: „A hundred and ten lives, one wall.“, verlinkt auf die Sammlung | Konto |
+| Do 23.10. | Bluesky | Das Cover-Spiel: „Which cover would you rather be seen reading on the train?“ | Konto |
+| Fr 24.10. | Instagram | „The performative reader's starter pack“ als Shelf-Portrait mit neun Covern | Konto, **Rechte-Entscheidung** (einzelne Cover) |
+| Sa 25.10. | Bluesky | Shelf-Portrait: „Performative reading, done properly“ | Konto |
+
+**Zwei Posts für alle Plattformen** (Julian, 2026-10-06):
+
+- **Der Zug-Witz am 23.10.** auf Bluesky, X, Instagram und Pinterest.
+  - Infinite Jest (das Wolken-Cover, OL 191075) gegen Fifty Shades of Grey (die Filmausgabe, 15163071), beide aus dem Pool des Spiels. Unter der Frage stehen der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06), und `buyitscovers.com/versus`.
+  - Bilder: `lab/kalender/out/zug-1080x1350.jpg` und `pinterest-zug.jpg`.
+- **Das Starter-Pack am 24.10.** auf Bluesky, X, Instagram und Pinterest, als Shelf-Portrait.
+  - Claudes Vorschlag für neun Bücher: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L'étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas) und A Little Life.
+  - Julian bearbeitet das Brett im Editor; der Link steht im Kalender beim Eintrag `pr-ig-starter`. Das Bild ist danach das Poster des Shelf-Portraits.
+- **Zug-Witz, zweite Fassung** (Julian, 2026-10-06, aus einer Runde des Spiels): The Gruffalo (OL 15154344) gegen Merritts *Le visage dans l’abîme* bei J’ai Lu (10215294), ein Akt von Boris Vallejo.
+  - Dateien: `zug2-1080x1350.jpg` und `pinterest-zug2.jpg`.
+  - Instagram und Pinterest entfernen nackte Brüste oft oder schränken solche Posts ein. Diese Fassung eignet sich eher für Bluesky und X, dort mit Inhaltswarnung.
+  - Noch nicht im Kalender; Julian wählt zwischen Fassung 1 und 2.
+- **Alle Forum-Beiträge auf einer Seite:** das private Artefakt [Forum-Beiträge](https://claude.ai/artifact/5GM8kjqjqD6pZkuZnngVLu), erzeugt von `lab/kalender/beitraege.py` aus posts.json.
+- **Alle Bilder auf einer Seite:** das private Artefakt [Post-Galerie](https://claude.ai/artifact/MPXdmUDTpTspQvQYRxV9bW), erzeugt von `lab/kalender/galerie.py`, je Post alle Fassungen mit Stand.
+- **Julians fertiges Starter-Pack** (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero und East of Eden.
+  - Als Sharepic ist die zweite Zeile die einzige Überschrift: „The performative reader starter pack“ (Julian, ohne Apostroph) in der proportionalen Xanh der Seite. Der Kopf ist aus dem Mosaik des Posters neu gesetzt (`lab/kalender/sharepic_starterpack.py`).
+  - Das Poster der Website bleibt, wie es ist.
+  - **Am selben Tag neu gewählt:** [shelfportrait/tvujl2pk](https://buyitscovers.com/shelfportrait/tvujl2pk), vorher mzyjqzbo.
+  - archive.org, wo Open Library die großen Cover ablegt, antwortete stundenlang mit 502/503, und das Poster der Seite kam zweimal mit sechs leeren Kacheln zurück. `lab/kalender/sharepic_starterpack.py` setzt das Bild deshalb selbst aus den neun Covern im Stil des Posters und bricht ab, statt eine Lücke zu zeichnen; vier Kacheln wurden aus Julians eigenem Sharepic geschnitten.
+  - **Auf Bluesky gepostet** (2026-10-06, [Post](https://bsky.app/profile/buyitscovers.com/post/3mxb22vjfys26)) mit diesem Bild und nur `buyitscovers.com/shelfportrait` als Link (Julian: „als link im post nur buyitscovers.com/shelfportrait“). Eine erste Fassung mit Julians Sharepic und dem Link auf tvujl2pk hat Julian gelöscht; Bluesky-Posts lassen sich nicht bearbeiten.
+- Beide zeigen geschützte einzelne Cover und **warten auf die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1).
+
+**Das Bild der Wand** ist Julians eigenes Foto. Es liegt nur lokal unter `lab/kalender/out/cache/`, wie seine anderen Fotos auch, und wird von `render_gemeinfrei.py` zum Pin gesetzt.
+- Gezählt sind es 110 Bände, zehn mal elf, nicht 120.
+- Im Glas spiegelt sich in der Mitte schwach eine Person. Wer das nicht will, fotografiert schräg oder ohne Licht von vorn.
+- Rechtlich sind es wie bei einem Mosaik viele kleine Cover, die Mosaike hat Julian freigegeben. Ob das Foto genauso behandelt wird, ist Julians Entscheidung; er hat den Pin gewollt.
+
+**Gemessen** wird mit K16 wie alles andere. Die Kampagne trägt, wenn in der Woche mehr Besuche von Bluesky und X ein Buch öffnen als in der Woche davor.
+
 ## 5. Der Kalender und wie man eingreift
 
 **Wo:** `lab/kalender/posts.json` ist die einzige Liste. Das Werkzeug liest und schreibt nur diese Datei; man kann sie auch von Hand ändern.
@@ -151,6 +196,51 @@ Ein Post ist erst ausgewertet, wenn er in K14 (Karte „Kanäle“ in `/admin/in
 
 Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender setzt nur `?via=`-Werte aus der Liste `VIA` (`bluesky`, `instagram`, `pinterest`, `tiktok`, `reddit`, `hn`, `producthunt`, `mail`; für Blogs `blog` von Hand im Pfad). Ein neuer Kanal braucht zuerst eine neue Klasse in 5.6a.
 
+## 6a. Lage nach zwei Tagen (2026-10-07) und was daraus folgt
+
+Julian: „i can't get any traffic whatsoever, even with posting on x and bluesky for two days. how can i get any visibility/traction?“
+
+**Befund:** Das ist kein Fehler der Posts, sondern die Lage neuer Konten. Bluesky `@buyitscovers.com` hatte am 2026-10-06 zwei Follower, X und Mastodon ähnlich; ein Post erreicht dort fast nur die eigenen Follower, und X zeigt Posts mit Link neuer Konten kaum jemandem. Eigene Kanäle tragen erst nach Monaten. Reichweite am Anfang kommt nur von **fremden Publikum**: Orte, an denen schon Leute sind, und Menschen, die schon gehört werden.
+
+**Neue Reihenfolge**, vor dem Kalender aus §5:
+1. **Show HN vorziehen.** Die größte einzelne Chance; 0.13 und 2.4 sind erledigt, das Formular ist vorbereitet. Werktag, 15:30 deutscher Zeit, Julian den Tag über in den Kommentaren.
+2. **Reddit als Beitrag, nicht als Link-Abwurf:** je Unterforum ein Bild oder eine Sammlung, die dort von sich aus interessiert (SF Masterworks in einem SF-Forum, eine Gestalter-Galerie in einem Design-Forum), mit einem Satz, dass Julian die Seite gebaut hat. Vorher die Regeln des Forums lesen; r/InternetIsBeautiful einmal.
+3. **Die Menschen hinter den Covern ansprechen:** lebende Gestalter aus [research-gestalter-galerien.md](research-gestalter-galerien.md) in der Galerie nennen und markieren, dazu die fünf Mails aus §2 (Blogs und Newsletter zu Buchgestaltung). Ein Repost von dort erreicht mehr als jeder eigene Post.
+4. **Das Shelf-Portrait als Schleife:** zehn Freunde bitten, ihres zu bauen und auf ihren eigenen Konten zu teilen; jedes trägt die Adresse. Das Produkt hat damit seine eigene Verbreitung, die eigenen Konten nicht.
+5. **Auf Bluesky antworten statt nur posten:** in Buch- und Design-Threads (BookSky) mitreden, wo ein Cover-Vergleich passt; Hashtags für die Buch-Feeds. Wenige echte Antworten am Tag.
+6. **Geduld bei Suche und Pinterest:** 875 Seiten in der Sitemap, die Werkseiten bringen Besucher über Wochen, nicht Tage.
+
+**Nachtrag 2026-10-07: Show HN geht noch nicht.** Julian: „show hn lässt mich noch nicht posten als neuling auf dem forum“. HN drosselt Show HN neuer Konten seit der Debatte im März 2026 („Ask HN: Please restrict new accounts from posting“). Wege: (a) Karma sammeln, ehrliche Kommentare über ein, zwei Wochen, dann erneut; (b) jemand mit älterem Konto reicht den Link ein — erlaubt, Stimmen organisieren nicht; (c) ein gewöhnlicher Link ohne „Show HN:“ unterliegt vielleicht nicht derselben Sperre, ungeprüft. **Ähnliche Orte** statt dessen: MetaFilter Projects (projects.metafilter.com; Selbstlinks ausdrücklich erlaubt, braucht ein MetaFilter-Konto, jeder Post geht durch die Moderation, einer im Monat; gute Projekte holt die Gemeinschaft auf die Startseite), Reddit r/InternetIsBeautiful und r/SideProject, Lobsters und Tildes (nur mit Einladung, eher Technik), Indie Hackers, Product Hunt (§2, zuletzt). Für Buchgestaltung eher Menschen als Foren: Blogs und Newsletter aus §2.
+
+**Nachtrag 2026-10-07: Reddit zurückgestellt.** Julian hat kein Reddit-Konto („stell Reddit also erstmal zurück“). Der Beitrag für r/InternetIsBeautiful liegt fertig im Kalender (`reddit-iib`, Voraussetzung `konto:reddit`), die Antwort-Fenster warten ebenfalls. Damit bleiben für jetzt: MetaFilter Projects, die Gestalter und Blogs (3), die Shelf-Portraits der Freunde (4), Antworten auf Bluesky (5), und HN, sobald das Konto Karma hat.
+
+**Weitere Unterforen, gesucht 2026-10-07** (Julian: „look for other subreddits i could post the project on“; reddit.com ist für Claude gesperrt, Zahlen aus gummysearch und Leitfäden, Regeln vor dem Posten selbst lesen; alle brauchen ein Konto mit Geschichte):
+- *Selbstwerbung ausdrücklich erlaubt:* r/SideProject (rund 300 k, das offenste, Publikum baut selbst), r/webdev nur im Faden „Showoff Saturday“ (1,5 M, Entwickler), r/AlphaandBetausers (Rückmeldungen), r/InternetIsBeautiful (fertig, `reddit-iib`).
+- *Thema passt, Werbung meist nicht:* r/BookCollecting (rund 110 k, Ausgaben, Erstausgaben, „no sales“) — Inhalt posten, etwa *Gatsby* durch die Jahrzehnte, die Seite nur nennen, wenn jemand fragt; r/BookCovers (rund 31 k, Gestalter und Selbstverleger, Flair „Showcase“, Werbung für Dienste üblich) — als Recherchewerkzeug für Cover-Gestaltung; r/TerribleBookCovers (rund 90 k) — die schlimmsten Funde von der Seite als Bild, Link im Kommentar; r/printSF — die SF-Masterworks-Sammlung als Inhalt.
+- *Eher nicht:* r/books, r/graphic_design, r/GraphicNovels (verbietet eigene Seiten ausdrücklich).
+
+**X Premium? (Julian, 2026-10-07: „should i buy an x subscription for a month? would that help?“)** Empfehlung: nein, nicht jetzt. Premium hebt vor allem Antworten in fremden Threads und das Häkchen; es bringt keine Follower, und ein Post erreicht weiter vor allem die eigenen, das sind fast null. Lohnen würde es sich nur zusammen mit täglichem Antworten unter großen Buch- und Design-Konten — ein Monat Arbeit, nicht ein Kauf. Dieselbe Zeit bringt bei den Gestaltern und Blogs (3) mehr.
+
+**Schritt 3 gestrichen (Julian, 2026-10-07: „ich glaube damit holen wir uns nur rechtliche probleme etc“).** Gestalter, Verlage und Blogs über Buchgestaltung nicht anschreiben und nicht markieren: wer die Rechte an den gezeigten Covern hält, soll nicht durch uns auf die Seite gestoßen werden, solange die Rechte-Entscheidung (PLAN-5.5-5.6 §6 Frage 1) offen ist. Die fünf Mails aus §2 entfallen damit vorerst. Es bleiben Wege, die sich an Leser richten: Shelf-Portraits der Freunde (4), Antworten auf Bluesky (5), MetaFilter Projects, später HN und Reddit, und die Suche (6).
+
+**Unterforen für mit KI gebaute Projekte, gesucht 2026-10-07** (Julian: „can you look for ai project showcasing reddits?“; Quellen: gummysearch, thehiveindex, Spiegel der Regelposts): r/ClaudeAI — „Built with Claude“-Megathread, **ohne Karma-Grenze**, für neue Konten ausdrücklich empfohlen; eigene Posts im Feed erst ab 50 Karma, Regel 7. r/vibecoding (rund 284 k) — Projektposts müssen erklären, wie gebaut wurde (Werkzeuge, Ablauf, Einsichten). r/ChatGPTCoding (rund 390 k) — eigene Fäden für Selbstwerbung. r/cursor (rund 58 k) — wöchentlicher Showcase-Faden, eher für Cursor-Projekte. r/aipromptprogramming (rund 231 k). **Einordnung:** Das Publikum baut selbst mit KI, liest aber kaum Bücher — Sichtbarkeit und Rückmeldung, keine Leser. Gut als erster Schritt für ein neues Reddit-Konto (Megathread zuerst), und der Text darf hier erzählen, wie die Seite gebaut wurde (anders als in r/InternetIsBeautiful, das KI-Inhalte ausschließt).
+
+**Gelegenheit, gesehen 2026-10-07 auf X:** Unter „Today’s News“ stand „Readers Share 3x3 Grids of Books That Stayed With Them“ (1.342 Posts, seit drei Stunden), in der Zeitleiste Raster mit neun Büchern und „The 9 books I’ll never forget“. Das ist genau das Format des Shelf-Portraits. Solange die Welle läuft: unter diesen Posts antworten und ein eigenes Shelf-Portrait mit der Adresse posten — Leser, nicht Rechteinhaber.
+
+**Agentisch skalieren? (Julian, 2026-10-07: „ich habe das versucht, aber bekomme selbst nicht genug views damit. gibt es eine möglichkeit das agentisch zu skalieren?“)** Nein für Antworten in Masse: automatisierte, ungebetene Antworten und Erwähnungen verbieten die Automatisierungsregeln von X, sie gelten als Plattform-Manipulation, und das Konto wird gesperrt — der Kanal wäre verloren. Was geht: Claude sucht die passenden Threads der Welle (große Konten, frische Posts mit Antworten), schreibt je einen eigenen Entwurf auf den konkreten Post, Julian postet selbst, wenige am Tag. Und eigene Inhalte darf eine Automatisierung posten (geplante Posts, das eigene Konto).
+
+**Idee r/badscificovers (Julian, 2026-10-07: „we could collect bad sci fi covers to post on here“).** Passt: SF ist die stärkste Sammlung der Seite, und die Wände der Klassiker (SF Masterworks) zeigen neben den schönen auch sehr schlechte Ausgaben. Vorgehen: Kandidaten von den Wänden sammeln (gemächlich, Open Library nicht in Schüben), je Post ein Cover mit Titel, Jahr und Verlag, die Seite nur im Kommentar. Wartet wie alle Reddit-Posts auf `konto:reddit`. Rechte: Spott über ein fremdes Cover zieht eher Aufmerksamkeit der Gestalter an als ein schönes — Julians Abwägung.
+
+**Sammlung aus den Top-100 von r/badscificovers? (Julian, 2026-10-07: „kannst du die top 100 posts ever aus der subreddit scrapen und damit eine collection erstellen?“)** reddit.com ist für Claude gesperrt (Chrome-Erweiterung und Abruf), und über Spiegelseiten auszuweichen umginge die Sperre — nicht so. Weg: Julian öffnet `https://www.reddit.com/r/badscificovers/top.json?t=all&limit=100` in seinem Browser und legt die Antwort als `lab/collections/in/badscificovers-top100.json` ab (git-ignoriert anlegen). Claude liest Titel und Autor aus den Post-Titeln, sucht je Buch das Werk bei Open Library (ein Aufruf nach dem anderen, mit Pause), und nimmt **das Cover von Open Library**, nicht das Bild aus dem Reddit-Post; Treffer, bei denen das gemeinte Cover nicht im Katalog steht, fallen heraus. Ergebnis als Entwurf im Sammlungs-Werkzeug, Julian veröffentlicht. Zu erwarten: viele Posts sind Scans ohne Titel im Text oder Ausgaben, die Open Library nicht hat — eher 30 als 100.
+
+**Entscheidungen dazu (Julian, 2026-10-07):** genau das Cover aus dem Reddit-Post, nicht das schlechteste der Wand; die derben Bizarro-Titel (Ass Goblins of Auschwitz, The Haunted Vagina, The Magic Fart …) bleiben weg. Die Liste liegt unter `lab/collections/in/badscificovers-top100.json` (100 Posts, rund 80 verschiedene Bücher; 82 Bilder auf i.redd.it, 17 auf imgur, einer ist der Regelpost gegen KI-Cover). Die Bilder lädt Julian selbst (`lab/collections/badscificovers_download.py`), danach gleicht Claude sie per Bild-Signatur mit den Covern der Werke bei Open Library ab.
+
+**Weiter bis 60 (Julian, 2026-10-08: „kannst du den prozess für die bad sf covers weiterführen bis wir 60 klare kandidaten haben").** Stand: die Top 100 sind ausgeschöpft — 28 Treffer, 41 begründet verworfen, 23 ohne Werk. Die 23 noch einmal gesucht, diesmal über die Suche der eigenen Seite (`VIA_SITE=1` in `badscificovers-match.ts`, eine Anfrage je 6 s; erst Titel mit Nachname, dann der Titel allein): drei Werke gefunden, zwei mit genau dem Cover des Posts (*The Texas-Israeli War: 1999*, Del Rey 1982; *Tik-Tok*, DAW 1985), eins nicht (*Clash of Star-Kings*, nur Wildside). **30 Treffer.** Für 60 braucht es weitere Posts: Julian speichert `top.json?t=all&limit=100&after=t3_doq2z0` als `badscificovers-top200.json` (und danach Seite 3), lädt die Bilder mit `badscificovers_download.py` (liest jetzt alle gespeicherten Seiten, zählt die Posts durch und macht die 300-px-Kopien selbst, mit `sips`); Claude liest Titel und Autor, gleicht ab und sieht jeden Kandidaten an. Die übrigen 18 ohne Werk sind fast alle Selbstverlage und Kleinstausgaben, die Open Library nicht führt. **Seite 2 (Posts 100–199), 2026-10-08** (Julian: „fange erstemal mit seite 2 an, das reicht"): Julian speicherte die Liste und lud 97 Bilder; Abgleich über die eigene Seite (68 Werke gefunden, 25 ohne). Alle 68 auf zwölf Kontaktbögen angesehen: **35 Posts zeigen ein Cover, das Open Library hat**, davon zwei Werke schon auf der Wand (*The Little People*, *Odd John*) — **33 neu, zusammen 63**. Ausgelassen von Seite 2: eine Zeitschrift, Chuck Tingle, ein Erotik-Titel, eine Galerie, ein ISFDB-Link. Bei *The Heaven Makers* griff der Hash einen Platzhalter („cover coming soon“) — von Hand durch die Del-Rey-Ausgabe 1982 ersetzt. Ein älterer Eintrag hieß „Philosophy and living“: Open Library führt *Odd John* unter einem falsch betitelten Werk (OL3290749W); der Titel an der Kachel ist jetzt „Odd John“, das Werk bleibt.
+
+**r/coolscificovers nimmt nur Bilder auf Reddit oder imgur (Julian, 2026-10-07: „meine posts … get taken down because their not hosted on imgur and reddit“).** Also als Bild-Post hochladen (Reddit legt die Datei auf i.redd.it) oder bei imgur hochladen und den direkten Link `i.imgur.com/….jpg` posten; die Seite gehört in einen Kommentar, nie als Ziel des Posts. Das Bild `lab/kalender/out/collection-sf-masterworks.jpg` hat 4,3 MB und liegt unter beiden Grenzen (20 MB).
+
+Was weiterläuft: die eigenen Kanäle als Schaufenster für die, die über 1–5 kommen. Was gemessen wird: K16 nach Herkunft, je Schritt eine Woche.
+
 ## 7. Offene Entscheidungen, alle Julians
 
 1. **Die Rechte-Entscheidung** (PLAN-5.5-5.6 §6 Frage 1). Sie hält 30 der 70 Einträge zurück: alles auf Instagram außer dem Exposé, alles auf Pinterest und TikTok, und die sieben Galerien.
@@ -172,7 +262,7 @@ Die Analyse-Regel aus CLAUDE.md ist berührt, aber nicht verletzt: Der Kalender 
      - **Neun Autorinnen versucht:** Eliot, Shelley und Cather wurden zu weich; bei Montgomery, Brontë und Burnett war das Gesicht unscharf oder abgeschnitten.
      - **Weniger Kacheln im Mosaik** (26 bis 28 Spalten statt 45) lesen sich schlechter; mit 20 % Überblendung ginge es, aber Julian will keine.
    - **Das Pinterest-Exposé zeigt das Cover-Spiel** (Julian, 2026-10-05: „bereite ein pinterest expose der website vor, dass das versus spiel zeigt“).
-     - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“ und „Judge the cover, not the book.“
+     - Frage und Zeile kommen aus dem Spiel: „Which cover would you rather look at?“; die Zeile darunter war „Judge the cover, not the book.“ aus dem Spiel und hieß am 2026-10-06 kurz „Judge a book by its cover.“ und ist seitdem auf allen Bildern der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian: „besser doch unseren hero slogan von der startseite“)
      - Gezeigt mit zwei gemeinfreien Covern: Peter and Wendy 1911 und La guerre des mondes 1906, verlinkt auf `/versus`. Zuerst waren es Pinocchio und das Jungle Book; Julian wollte zwei andere, weil diese schon im Instagram-Exposé stehen. /versus läuft in Produktion, einmal geprüft am 2026-10-05.
      - Der Peter-and-Wendy-Pin ist damit der zweite Pin (21.10.).
      - **Entwurf ohne die Gemeinfreiheits-Grenze** (Julian, 2026-10-05: „mache mal einen entwurf, wenn gemeinfrei nicht relevant wäre“): `lab/kalender/out/pinterest-versus-entwurf.jpg` zeigt The Great Gatsby (OL-Cover 12547003) gegen Dune in den SF Masterworks (380097), beide aus dem Pool des Spiels (`data/versus-pool.json`). **Nicht zum Posten freigegeben**, solange die Rechte-Frage für einzelne Cover offen ist. Im Kalender steht weiter die gemeinfreie Fassung.

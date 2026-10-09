@@ -10,6 +10,7 @@
     "publish:kipling-at-haffmans-covers-by-nikolaus-heidelbach",
     "publish:penguin-great-ideas",
     "publish:reihe-hanser-covers-by-heinz-edelmann",
+    "publish:rowohlts-monographien",
     "publish:tolkien-covers-by-heinz-edelmann",
     "spiel"
   ],
@@ -29,7 +30,8 @@
       "channel": "instagram",
       "kind": "setup",
       "text": "Konto @buyitscovers (Creator- oder Business-Konto, damit es Statistiken gibt). Link im Profil: https://buyitscovers.com/?via=instagram. Profiltext wie bei Bluesky. Noch nichts mit Covern posten, solange die Rechte-Entscheidung offen ist.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "bsky-expose",
@@ -48,6 +50,36 @@
       "note": "Anpinnen. Danach in den Antworten bleiben, wenn jemand fragt. Am 2026-10-05 von Julian gepostet, eine Woche vor dem Plan, Text ohne Link, die Karte trägt ?via=bluesky."
     },
     {
+      "id": "bsky-starter",
+      "date": "2026-10-06",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "gepostet",
+      "text": "The performative reader starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.\n\nbuyitscovers.com/shelfportrait",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg (sharepic_starterpack.py aus tvujl2pk, 1080×1350)",
+      "postedUrl": "https://bsky.app/profile/buyitscovers.com/post/3mxb22vjfys26",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“. Erste Fassung (Julians Sharepic, Link auf /shelfportrait/tvujl2pk?via=bluesky) hat Julian am 2026-10-06 gelöscht; neu gepostet am selben Tag mit dem Bild aus sharepic_starterpack.py (Julians Board tvujl2pk, alle neun Cover von Open Library) und, auf Julians Wunsch („als link im post nur buyitscovers.com/shelfportrait“), nur dem Link auf den Editor, ohne ?via= — Bluesky schickt sich als Herkunft mit. Alt-Text nennt die neun Bücher. Der Link steht im Text selbst, deshalb kein path."
+    },
+    {
+      "id": "bsky-zug2",
+      "date": "2026-10-06",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "gepostet",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.\n\nbuyitscovers.com/versus?via=bluesky",
+      "image": "lab/kalender/out/zug2-1080x1350.jpg (The Gruffalo oder Le visage dans l’abîme)",
+      "postedUrl": "https://bsky.app/profile/buyitscovers.com",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Julian, 2026-10-06: „poste das zugwitz bild 2 auf bsky“; von Claude über Chrome gepostet, mit Label „Nudity“ (Vallejo-Akt) und Alternativtext. Damit gilt Julians Entscheidung, einzelne geschützte Cover zu posten, für diesen Post. Der Starter-Pack-Post ist zurückgehalten: die Vorschaukarte der Shelf-Portrait-Seite hatte am selben Tag vier leere Kacheln (archive.org 502), und Bluesky speichert eine Karte beim Posten. Der Link steht im Text selbst (ein Bild-Post hat keine Link-Karte), deshalb kein path."
+    },
+    {
       "id": "setup-hn",
       "date": "2026-10-06",
       "channel": "hn",
@@ -62,7 +94,8 @@
       "channel": "pinterest",
       "kind": "setup",
       "text": "Unternehmenskonto, Website bestätigen (DNS-TXT bei INWX, PLAN-5.5-5.6 §7), Pinnwände anlegen: eine je veröffentlichter Sammlung, dazu „Covers through the decades“. Nichts pinnen vor Rechte-Entscheidung und 5.5a.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-tiktok",
@@ -70,7 +103,8 @@
       "channel": "tiktok",
       "kind": "setup",
       "text": "Namen @buyitscovers reservieren, Link im Profil mit ?via=tiktok. Posten erst, wenn die Clips kodiert sind und die Rechte-Entscheidung gefallen ist.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-x",
@@ -120,7 +154,8 @@
       "channel": "alle",
       "kind": "setup",
       "text": "Vor dem ersten Link: 5.6a deployen (Satz der Datenschutzerklärung freigeben), damit ?via= zählt. Vor HN und Reddit zusätzlich 0.2, 0.13, 2.4 (Kapazität).",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-reddit",
@@ -128,7 +163,8 @@
       "channel": "reddit",
       "kind": "setup",
       "text": "Eigenes Konto prüfen (Alter, Karma); die Regeln von r/InternetIsBeautiful, r/books, r/printSF und r/suggestmeabook lesen und hier notieren, was für Selbstwerbung gilt.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": "2026-10-07: Julian hat kein Reddit-Konto; Reddit zurückgestellt. Ein neues Konto bräuchte Wochen eigener Beiträge, bevor die 90/10-Regel einen eigenen Link zulässt."
     },
     {
       "id": "setup-decision",
@@ -136,7 +172,8 @@
       "channel": "alle",
       "kind": "setup",
       "text": "Rechte-Entscheidung (PLAN-5.5-5.6 §6 Frage 1): (a) Cover auf fremden Plattformen mit Quellenangabe, (b) nur gemeinfreie, (c) nur Links mit Vorschaukarte. Ohne Antwort gilt (c): Bluesky, Reddit, HN laufen, Instagram nur mit dem Typografie-Exposé, Pinterest und TikTok warten.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "setup-publish",
@@ -144,7 +181,8 @@
       "channel": "alle",
       "kind": "setup",
       "text": "Online schon veröffentlicht (Stand 2026-10-04, einmal von buyitscovers.com/collections gelesen): Edelmann (Reihe Hanser, Tolkien, Jules Verne, Fischer), Piatti (dtv phantastica, Steinbeck), Kurt Wirth, Heidelbach (Haffmans, Kipling), Penguin Great Ideas und 30 weitere. Noch Entwurf, und der Kalender wartet darauf: Herder Bücherei von Walter Grieder (Galerie 22.11.), Penguin Classics black band (13.11.), Virago Modern Classics (16./19.11.). Veröffentlichen oder die Posts verwerfen; abhaken im Werkzeug unter „Erfüllt“.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "ig-expose",
@@ -174,7 +212,8 @@
         "konto:bluesky",
         "5.6a"
       ],
-      "image": "Vorschaukarte der Sammlung"
+      "image": "Vorschaukarte der Sammlung",
+      "note": ""
     },
     {
       "id": "ig-sf-masterworks",
@@ -189,7 +228,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Folie 1: Bildschirmfoto der Wand; Folien 2–8: die sieben genannten Cover einzeln, Künstler in der Bildbeschreibung"
+      "image": "Folie 1: Bildschirmfoto der Wand; Folien 2–8: die sieben genannten Cover einzeln, Künstler in der Bildbeschreibung",
+      "note": ""
     },
     {
       "id": "bsky-edition-suhrkamp",
@@ -265,7 +305,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "mail-outreach",
@@ -273,10 +314,11 @@
       "channel": "mail",
       "kind": "outreach",
       "text": "Fünf Blogger oder BookTok-Leute, deren Bücher in den Sammlungen stehen: Claude liefert je Person einen Link auf „ihr“ Buch oder Cover (mit ?via=blog bzw. ?via=mail) und prüft die Vorschaukarte. Das Anschreiben schreibst du.",
-      "status": "vorschlag",
+      "status": "verworfen",
       "needs": [
         "5.6a"
-      ]
+      ],
+      "note": "Verworfen 2026-10-07 (Julian: „ich glaube damit holen wir uns nur rechtliche probleme etc“): keine Ansprache von Gestaltern, Verlagen oder Design-Blogs, solange die Rechte-Entscheidung offen ist."
     },
     {
       "id": "pin-mosaik-twain",
@@ -302,15 +344,17 @@
       "text": "Fenster für bis zu drei Antworten diese Woche, nur wo jemand nach einer Ausgabe oder einem Cover fragt. Die Antwort hilft auch ohne Link; der Link geht auf das passende Cover (/book/<id>/cover/<coverId>?via=reddit). Nie kopiert. Claude liefert auf Zuruf eine Suchliste.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "hn-show",
       "date": "2026-10-20",
       "channel": "hn",
       "kind": "expose",
-      "text": "A book is often reprinted with a different cover, and a shop page rarely tells you which one you will get.\n\nYou type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nThere is also a small cover game (two covers, pick one) and curated walls of book series, such as the SF Masterworks in number order.\n\nWhat it can't do: it only knows what two open catalogues hold, a fraction of what was printed, and it doesn't check stock. No accounts and no ads; it's a hobby project.\n\nBuilt with Next.js on Vercel.",
+      "text": "I tried creating this website a few months ago, but the models weren't good enough and I'm not experienced as a front-end engineer. But with Fable et al I could finally create a niche product that fills my own needs. May be interesting to some performative readers out there.\n\nThe concept is simple: You type a title; the site asks Open Library (and Google Books) for its editions and shows their covers as a wall, grouped by language and year, with near-duplicates folded together in the browser by a perceptual hash. Pick a cover and you get shop links for that edition's ISBN, plus a check whether the publisher's registered image for that ISBN is still this cover; reprints often change the cover under the same ISBN.\n\nThere is also a small cover game (two covers, pick one) and curated walls of book series, such as the SF Masterworks series. \n\nAnd a Shelf-Portrait: put three, six or nine books on one shelf, each with the cover you love, and share it as a single picture.\n\nWhat it can't do: it only knows what two open catalogues hold, a fraction of what was printed, and it doesn't check stock. No accounts and no ads; it's a hobby project.\n\nBuilt with Next.js on Vercel and with a lot of tokens.",
       "status": "vorschlag",
       "title": "Show HN: Buy Its Covers – the covers a book has been printed with",
       "path": "/",
@@ -319,7 +363,21 @@
         "5.6a",
         "kapazitaet"
       ],
-      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer. Text am 2026-10-06 geprüft: Platzhalter ersetzt (Julian kommentiert sonst nicht, deshalb kein persönlicher Grund), Satz über nicht prüfbare Shops gestrichen (die Verfügbarkeitsprüfung ist nicht in Produktion), Spiel und Sammlungen ergänzt. Link ohne ?via=: HN zeigt die Adresse, der Referrer news.ycombinator.com ergibt die Klasse hn. Offen vor dem Post: 0.13 (Kontingent-Alarm) und 2.4 (Firewall auf Log)."
+      "note": "Ziel ist die Startseite (vorgerendert, kostet kein Kontingent). Den ganzen Tag in den Kommentaren bleiben; Antworten auf Quellenfragen stehen in /about. Werktags, US-Vormittag. HN zeigt keinen ?via=-Wert an, die Herkunft kommt dort über den Referrer. Text am 2026-10-06 geprüft: Platzhalter ersetzt (Julian kommentiert sonst nicht, deshalb kein persönlicher Grund), Satz über nicht prüfbare Shops gestrichen (die Verfügbarkeitsprüfung ist nicht in Produktion), Spiel und Sammlungen ergänzt. Link ohne ?via=: HN zeigt die Adresse, der Referrer news.ycombinator.com ergibt die Klasse hn. Offen vor dem Post: 0.13 (Kontingent-Alarm) und 2.4 (Firewall auf Log). Text am 2026-10-06 von Julian selbst überarbeitet (erster Absatz sein eigener Grund) und so ins Formular gesetzt."
+    },
+    {
+      "id": "pr-bsky",
+      "date": "2026-10-21",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "A note for the performative readers: the cover is the part of a book everyone else sees.\n\nBuy Its Covers shows the covers a title has been printed with, so you can find the edition you'd want to be seen with.",
+      "path": "/",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Auftakt am Tag nach dem Show HN, der den Begriff schon nennt."
     },
     {
       "id": "pin-batch-w2",
@@ -332,7 +390,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-peter-and-wendy",
@@ -349,6 +408,19 @@
       ],
       "image": "Pin 1000×1500: lab/kalender/out/pinterest-1.jpg (von Hand gebaut, ohne 5.5a)",
       "note": "Zweiter Pin, nach dem Exposé. Gemeinfrei (Bedford †1954), braucht deshalb keine Rechte-Entscheidung. Pinnwand „Covers through the decades“. Belegt in docs/plans/research-gemeinfreie-cover.md."
+    },
+    {
+      "id": "pr-x",
+      "date": "2026-10-21",
+      "channel": "x",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "A note for the performative readers: the cover is the part of a book everyone else sees.\n\nBuy Its Covers shows the covers a title has been printed with, so you can find the edition you'd want to be seen with.",
+      "path": "/",
+      "needs": [
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Wie auf Bluesky; auf X bleibt der Link im Text."
     },
     {
       "id": "ig-edition-suhrkamp",
@@ -377,7 +449,76 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
+    },
+    {
+      "id": "pr-pin-rowohlt",
+      "date": "2026-10-22",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "title": "A hundred and ten lives, one wall: Rowohlts Monographien, framed",
+      "text": "A wall of Rowohlts Monographien, the small paperback lives Rowohlt has published since 1958, each with a portrait tinted in one colour. Framed at home: 110 covers, ten by eleven. On Buy Its Covers, the series as a wall and the editions behind each cover.",
+      "path": "/collections/rowohlts-monographien",
+      "image": "Pin 1000×1500: lab/kalender/out/pinterest-rowohlt-wand.jpg, aus Julians Foto seiner gerahmten Wand (bleibt lokal)",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "publish:rowohlts-monographien"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Das Foto zeigt 110 echte Umschläge hinter Glas; im Glas spiegelt sich in der Mitte schwach eine Person. Rechtlich wie ein Mosaik viele kleine Cover; Julian hat es als Pin gewollt. 1958 steht in der Einleitung unserer Sammlung."
+    },
+    {
+      "id": "pr-versus",
+      "date": "2026-10-23",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.",
+      "path": "/versus",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06).",
+      "image": "lab/kalender/out/zug-1080x1350.jpg"
+    },
+    {
+      "id": "pr-zug-pinterest",
+      "date": "2026-10-23",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.",
+      "path": "/versus",
+      "image": "lab/kalender/out/pinterest-zug.jpg",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06).",
+      "title": "Which cover would you rather be seen reading on the train?"
+    },
+    {
+      "id": "pr-zug-x",
+      "date": "2026-10-23",
+      "channel": "x",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.",
+      "path": "/versus",
+      "image": "lab/kalender/out/zug-1080x1350.jpg",
+      "needs": [
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06)."
     },
     {
       "id": "ig-feminist-press",
@@ -392,7 +533,91 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln"
+      "image": "Bildschirmfoto der Wand, dann drei bis fünf Cover einzeln",
+      "note": ""
+    },
+    {
+      "id": "pr-zug-instagram",
+      "date": "2026-10-23",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Which cover would you rather be seen reading on the train?\n\nTwo covers, one click: a small game on Buy Its Covers. Judge a book, buy its covers.\n\nLink in bio.\n\n#performativereader #bookcovers #booktok",
+      "path": "/versus",
+      "image": "lab/kalender/out/zug-1080x1350.jpg",
+      "needs": [
+        "konto:instagram",
+        "5.6a",
+        "spiel",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Zug-Witz (Julian, 2026-10-06: „bereite hierzu einen post vor, den wir auf allen plattformen absetzen können“): Infinite Jest (OL-Cover 191075) gegen Fifty Shades of Grey (15163071), beide aus dem Pool des Spiels. Bilder: lab/kalender/out/zug-1080x1350.jpg (Instagram, Bluesky, X), pinterest-zug.jpg. Zeigt geschützte Einzelcover: wartet auf die Rechte-Entscheidung. Tagline: der Slogan der Startseite, „Judge a book, buy its covers.“ (Julian, 2026-10-06).",
+      "time": "18:00"
+    },
+    {
+      "id": "pr-starter-bluesky",
+      "date": "2026-10-24",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "verworfen",
+      "text": "The performative reader starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
+      "path": "/shelfportrait",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg — noch nicht erzeugt (python3 lab/kalender/sharepic_starterpack.py, sobald archive.org die Cover wieder ausliefert)",
+      "needs": [
+        "konto:bluesky",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung. Julians fertiges Brett (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero, East of Eden; als Sharepic mit „The performative reader starter pack“ (Julian, ohne Apostroph) als einziger Überschrift. Endgültige Auswahl (Julian, 2026-10-06): https://buyitscovers.com/shelfportrait/tvujl2pk — Meditations, Ulysses, Crime and Punishment, Odyssee, Infinite Jest, OL716850W, OL3511459W, OL23166W und The Stranger (Cover 14814330). Am selben Tag lieferte archive.org die großen Cover mit 502 aus; das Poster der Seite kam zweimal mit sechs leeren Kacheln. Ersetzt durch bsky-starter, am 2026-10-06 gepostet."
+    },
+    {
+      "id": "pr-starter-pinterest",
+      "date": "2026-10-24",
+      "channel": "pinterest",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
+      "path": "/shelfportrait",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg — noch nicht erzeugt (python3 lab/kalender/sharepic_starterpack.py, sobald archive.org die Cover wieder ausliefert)",
+      "needs": [
+        "konto:pinterest",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung. Julians fertiges Brett (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero, East of Eden; als Sharepic mit „The performative reader starter pack“ (Julian, ohne Apostroph) als einziger Überschrift. Endgültige Auswahl (Julian, 2026-10-06): https://buyitscovers.com/shelfportrait/tvujl2pk — Meditations, Ulysses, Crime and Punishment, Odyssee, Infinite Jest, OL716850W, OL3511459W, OL23166W und The Stranger (Cover 14814330). Am selben Tag lieferte archive.org die großen Cover mit 502 aus; das Poster der Seite kam zweimal mit sechs leeren Kacheln.",
+      "title": "The performative reader starter pack: nine books, nine covers"
+    },
+    {
+      "id": "pr-starter-x",
+      "date": "2026-10-24",
+      "channel": "x",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader starter pack: nine books, each in the cover you'd want to be seen with.\n\nMake your own Shelf-Portrait on Buy Its Covers: three, six or nine books, shared as one picture.",
+      "path": "/shelfportrait",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg — noch nicht erzeugt (python3 lab/kalender/sharepic_starterpack.py, sobald archive.org die Cover wieder ausliefert)",
+      "needs": [
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung. Julians fertiges Brett (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero, East of Eden; als Sharepic mit „The performative reader starter pack“ (Julian, ohne Apostroph) als einziger Überschrift. Endgültige Auswahl (Julian, 2026-10-06): https://buyitscovers.com/shelfportrait/tvujl2pk — Meditations, Ulysses, Crime and Punishment, Odyssee, Infinite Jest, OL716850W, OL3511459W, OL23166W und The Stranger (Cover 14814330). Am selben Tag lieferte archive.org die großen Cover mit 502 aus; das Poster der Seite kam zweimal mit sechs leeren Kacheln."
+    },
+    {
+      "id": "pr-ig-starter",
+      "date": "2026-10-24",
+      "time": "18:00",
+      "channel": "instagram",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "The performative reader starter pack: nine books, each in the cover you'd be seen with.\n\nMake your own on Buy Its Covers: a Shelf-Portrait of three, six or nine books, shared as one picture. Link in bio.\n\n#performativereader #bookstagram #bookcovers",
+      "path": "/shelfportrait",
+      "image": "lab/kalender/out/starterpack-sharepic.jpg — noch nicht erzeugt (python3 lab/kalender/sharepic_starterpack.py, sobald archive.org die Cover wieder ausliefert)",
+      "needs": [
+        "konto:instagram",
+        "5.6a",
+        "rechte"
+      ],
+      "note": "Kampagne „performative readers“ (PLAN-5.6b §4b). Starter-Pack (Julian: „mach du einen vorschlag für das portrait, ich editiere dann“). Vorschlag: Infinite Jest, Ulysses (Penguin Clothbound), The Secret History, Norwegian Wood, L’étranger, Crime and Punishment (Penguin Clothbound), The Bell Jar, Meditations (Great Ideas), A Little Life. Zum Bearbeiten: https://buyitscovers.com/shelfportrait?b=1r3aq.43fn~1ulq.7jijh~2km7p.8ts88~1k9td.6v2ke~qdjp.7wjvi~3kry.59d0y~13zg8.7un2p~s8d7.2apl~acax6.65d5f ; danach das Poster aus dem Shelf-Portrait als Bild (Story 9:16 für Instagram/TikTok, Post für Bluesky/X/Pinterest). Vorschau: lab/kalender/out/starterpack-vorschlag.jpg. Zeigt Einzelcover: wartet auf die Rechte-Entscheidung. Julians fertiges Brett (2026-10-06): Infinite Jest, Ulysses, Norwegian Wood, Odyssee, Meditations, Crime and Punishment, Stoner, El extranjero, East of Eden; als Sharepic mit „The performative reader starter pack“ (Julian, ohne Apostroph) als einziger Überschrift. Endgültige Auswahl (Julian, 2026-10-06): https://buyitscovers.com/shelfportrait/tvujl2pk — Meditations, Ulysses, Crime and Punishment, Odyssee, Infinite Jest, OL716850W, OL3511459W, OL23166W und The Stranger (Cover 14814330). Am selben Tag lieferte archive.org die großen Cover mit 502 aus; das Poster der Seite kam zweimal mit sechs leeren Kacheln."
     },
     {
       "id": "gal-dominic-harman",
@@ -411,6 +636,20 @@
       "note": "Belegt in docs/plans/research-gestalter-galerien.md. Antwort-Aufhänger: er malte für beide Gesichter der Reihe, schon für Nr. 59, 64, 66, 70 der nummerierten. Format nach @luusssso (Depero für Campari, X, 2026-10-04, 48K Aufrufe): ein Satz, vier Bilder, kein Link im Post. Der Link (Kopieren gibt ihn nicht mit) kommt als erste Antwort, mit ?via=bluesky."
     },
     {
+      "id": "pr-bsky-shelf",
+      "date": "2026-10-25",
+      "channel": "bluesky",
+      "kind": "feature",
+      "status": "vorschlag",
+      "text": "Performative reading, done properly: put three, six or nine books on one shelf, each in the cover you love, and share it as a single picture.",
+      "path": "/shelfportrait",
+      "needs": [
+        "konto:bluesky",
+        "5.6a"
+      ],
+      "note": "Kampagne „performative readers“ (Julian, 2026-10-06: „ich würde sogar eine kleine kampagne um das thema performative readers herum bauen“; PLAN-5.6b §4b). Schluss der Woche."
+    },
+    {
       "id": "bsky-hugo",
       "date": "2026-10-26",
       "channel": "bluesky",
@@ -421,7 +660,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w3",
@@ -431,8 +671,10 @@
       "text": "Antwort-Fenster, höchstens drei, wie Woche 2.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "ig-sf-relaunch",
@@ -447,7 +689,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Bildschirmfoto der Wand, dann vier Cover mit der senkrechten Reihenzeile; Künstler aus ISFDB in die Bildbeschreibung"
+      "image": "Bildschirmfoto der Wand, dann vier Cover mit der senkrechten Reihenzeile; Künstler aus ISFDB in die Bildbeschreibung",
+      "note": ""
     },
     {
       "id": "bsky-1984-decades",
@@ -460,7 +703,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w3",
@@ -473,7 +717,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "tt-expose-dune",
@@ -502,7 +747,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-dune-decades",
@@ -517,7 +763,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Je Jahrzehnt ein Cover als Folie, in Reihenfolge; Verlag und Jahr in die Bildbeschreibung"
+      "image": "Je Jahrzehnt ein Cover als Folie, in Reihenfolge; Verlag und Jahr in die Bildbeschreibung",
+      "note": ""
     },
     {
       "id": "gal-edelmann-hanser",
@@ -548,7 +795,8 @@
         "konto:bluesky",
         "5.6a",
         "spiel"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w4",
@@ -558,24 +806,25 @@
       "text": "Antwort-Fenster, höchstens drei. In der Launch-Woche lieber eine weniger.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "reddit-iib",
       "date": "2026-11-03",
       "channel": "reddit",
       "kind": "expose",
-      "text": "Type a book's title and see the covers it has been printed with, by language and year, then find the edition behind the one you like. Covers from Open Library and Google Books; no accounts, no ads.",
+      "text": "I built this because I kept wanting a particular edition of a book for its cover, and shops only show one.\n\nType a title and the site asks two open catalogues, Open Library and Google Books, for the book's editions and shows their covers as one wall, grouped by language and year; near-identical scans are folded together. Pick a cover and you get links to look for that edition by its ISBN, plus a note on whether the publisher's current image for that ISBN is still the same cover (reprints often change it).\n\nFree, no account, no ads, and no link on it earns anything. It only knows what the two catalogues hold, which is a fraction of what was printed, so some books have three covers and some have three hundred.\n\nTry The Great Gatsby or Nineteen Eighty-Four.",
       "status": "vorschlag",
-      "title": "Buy Its Covers – see the covers a book has been printed with, and find that edition",
+      "title": "Type a book's title and see the covers it has been printed with, by language and year",
       "path": "/",
-      "time": "15:00",
       "needs": [
         "5.6a",
-        "kapazitaet"
+        "konto:reddit"
       ],
-      "note": "r/InternetIsBeautiful. Zwei Wochen nach HN, damit die Messung die beiden trennt. Vorher die Regeln der Community noch einmal lesen; Reddit-Apps senden oft keinen Referrer, deshalb ?via=reddit."
+      "note": "Zurückgestellt 2026-10-07 (Julian: „ich habe kein konto, stell Reddit also erstmal zurück“). Text und Titel bleiben fertig. r/InternetIsBeautiful, auf 2026-10-07 vorgezogen (PLAN-5.6b §6a; Show HN ist für neue Konten gesperrt). Titel = Linkpost auf https://buyitscovers.com/?via=reddit, Text = erster Kommentar von Julian. Regeln, gelesen 2026-10-07 über rankhog.com und gummysearch-ähnliche Übersichten (reddit.com selbst ist für Claude gesperrt; vor dem Posten die Seitenleiste selbst ansehen): keine Sammlungen/Aggregatoren, nichts Bekanntes oder kürzlich Gepostetes, keine Webspiele und Quizze, keine Artikel oder Bildergalerien, keine Läden oder bezahlten Dienste, keine Anmeldung, keine Downloads, keine Politik, nichts, dessen Hauptinhalt KI erzeugt, Selbstwerbung nur nach der 90/10-Regel (das Konto muss überwiegend anderes tun), Seiten, die unter Last ausfallen, fliegen vorübergehend raus. Risiken: (1) **Aggregator** — die Seite zeigt Katalog-Cover; deshalb als Werkzeug beschrieben (ein Titel rein, eine Wand raus), nicht als Sammlung, und auf die Startseite verlinkt, nicht auf /collections. (2) **90/10** — Julians Reddit-Konto braucht eine Geschichte ohne eigene Links; ohne sie lieber erst kommentieren. (3) KI nicht erwähnen (anders als im HN-Text), Spiel nicht verlinken. (4) Ansturm: Seiten aus dem CDN; das Google-Kontingent kann leerlaufen, dann trägt der Open-Library-Rückweg (1.12), und der Alarm (0.13) meldet 80 %. Tageszeit: US-Vormittag, etwa 15–16 Uhr deutscher Zeit, werktags."
     },
     {
       "id": "pin-batch-w4",
@@ -588,7 +837,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-otherwise",
@@ -603,7 +853,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Bildschirmfoto der Wand, dann vier Cover; Künstler aus ISFDB, wo bekannt"
+      "image": "Bildschirmfoto der Wand, dann vier Cover; Künstler aus ISFDB, wo bekannt",
+      "note": ""
     },
     {
       "id": "bsky-sf-rounded",
@@ -616,7 +867,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "tt-gatsby",
@@ -631,7 +883,8 @@
         "ffmpeg",
         "konto:tiktok"
       ],
-      "image": "Clip „Gatsby“ aus lab/video"
+      "image": "Clip „Gatsby“ aus lab/video",
+      "note": ""
     },
     {
       "id": "ig-hobbit-decades",
@@ -646,7 +899,8 @@
         "konto:instagram"
       ],
       "time": "18:00",
-      "image": "Je Jahrzehnt ein Cover als Folie"
+      "image": "Je Jahrzehnt ein Cover als Folie",
+      "note": ""
     },
     {
       "id": "bsky-pride-decades",
@@ -659,7 +913,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "gal-piatti",
@@ -701,8 +956,10 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "ig-edelmann-tolkien",
@@ -717,7 +974,8 @@
         "konto:instagram",
         "publish:tolkien-covers-by-heinz-edelmann"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-create",
@@ -731,7 +989,8 @@
         "konto:bluesky",
         "5.6a",
         "walls"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w5",
@@ -744,7 +1003,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "bsky-piatti",
@@ -775,7 +1035,8 @@
         "konto:tiktok",
         "clip:1984"
       ],
-      "image": "neuer Clip, Storyboard in lab/video"
+      "image": "neuer Clip, Storyboard in lab/video",
+      "note": ""
     },
     {
       "id": "ig-penguin-black-band",
@@ -822,7 +1083,8 @@
         "konto:bluesky",
         "5.6a",
         "publish:virago-modern-classics"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w6",
@@ -832,8 +1094,10 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "ig-piatti",
@@ -848,7 +1112,8 @@
         "konto:instagram",
         "publish:dtv-phantastica-covers-by-celestino-piatti"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-alice-decades",
@@ -861,7 +1126,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w6",
@@ -874,7 +1140,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-virago",
@@ -889,7 +1156,8 @@
         "konto:instagram",
         "publish:virago-modern-classics"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-great-ideas",
@@ -903,7 +1171,8 @@
         "konto:bluesky",
         "5.6a",
         "publish:penguin-great-ideas"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "gal-grieder",
@@ -933,7 +1202,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "reddit-answers-w7",
@@ -943,8 +1213,10 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "ig-great-ideas",
@@ -959,7 +1231,8 @@
         "konto:instagram",
         "publish:penguin-great-ideas"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "bsky-steppenwolf-decades",
@@ -972,7 +1245,8 @@
       "needs": [
         "konto:bluesky",
         "5.6a"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "pin-batch-w7",
@@ -985,7 +1259,8 @@
         "rechte",
         "5.5a",
         "konto:pinterest"
-      ]
+      ],
+      "note": ""
     },
     {
       "id": "ig-1984-decades",
@@ -999,7 +1274,8 @@
         "rechte",
         "konto:instagram"
       ],
-      "time": "18:00"
+      "time": "18:00",
+      "note": ""
     },
     {
       "id": "gal-heidelbach",
@@ -1024,7 +1300,8 @@
       "channel": "alle",
       "kind": "review",
       "text": "Auswertung nach PLAN-5.5-5.6 §5 mit der Karte „Kanäle“ (K14) in /admin/insights: je Kanal Besuche, Anteil mit geöffnetem Buch, Anteil mit Klick zu einem Händler. Was trägt, behält seinen Rhythmus; was nicht trägt, wird eingestellt, nicht verbessert. Danach plant Claude die nächsten acht Wochen.",
-      "status": "vorschlag"
+      "status": "vorschlag",
+      "note": ""
     },
     {
       "id": "reddit-answers-w8",
@@ -1034,8 +1311,10 @@
       "text": "Antwort-Fenster, höchstens drei.",
       "status": "vorschlag",
       "needs": [
-        "5.6a"
-      ]
+        "5.6a",
+        "konto:reddit"
+      ],
+      "note": ""
     },
     {
       "id": "ph-launch",
@@ -1051,6 +1330,77 @@
         "kapazitaet"
       ],
       "note": "Optional. Nur, wenn HN und Reddit ausgewertet sind und Zeit für Galerie (Bildschirmfotos der Seite), Maker-Kommentar und einen Tag Antworten da ist. Einschätzung 2026-10-06 (Julian: „macht product hunt überhaupt sinn für dieses produkt?“): eher nein. Das Publikum sind Gründer und Tech-Leute, die Werkzeuge für ihre Arbeit suchen, nicht Leser; ein Launch trägt einen Tag und braucht Vorbereitung und Unterstützer, und ohne Provision (Hobby-Modus) bringt er nichts Messbares außer Besuchen. Erst entscheiden, wenn HN und Reddit ausgewertet sind."
+    },
+    {
+      "id": "reddit-bookcoverporn",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "collection",
+      "status": "gepostet",
+      "title": "The first SF Masterworks run (1999–2007) in number order: Chris Moore, Jim Burns, Les Edwards, Fred Gambino and others",
+      "text": "Bild-Post mit lab/kalender/out/reddit/sf-masterworks.png (Bildschirmfoto der Sammlung, 1280 px breit), zweites Bild 1984-decades.png.\n\nErster Kommentar:\nThe numbered Millennium/Gollancz run, with the cover artist under each book where the catalogue or the jacket names one. I put this together on a site I'm building that shows the covers a book has been printed with; each of these leads to the other faces the book has had: buyitscovers.com/collections/sf-masterworks?via=reddit",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Julian, 2026-10-07: „https://www.reddit.com/r/bookcoverporn/ … prepare a post (text and screenshots of site) for each. they can differ“. Regeln von r/bookcoverporn nicht auffindbar (kein Eintrag in gummysearch, reddit.com für Claude gesperrt): vor dem Posten Seitenleiste lesen, ob Bildschirmfotos und ein eigener Link erlaubt sind; sonst nur das Bild und der Link erst auf Nachfrage. Inhalt zuerst, die Künstler im Titel. Bildschirmfotos einmal von der Produktion aufgenommen (headless Chrome, 2026-10-07), liegen nur lokal. 2026-10-07: von Julian als u/buyitscovers gepostet, mit eigenem Titel und Text; erschien ohne Bildvorschau (als Text-Post). Danach das Bild aller 73 Cover in hoher Auflösung gesetzt: lab/kalender/out/collection-sf-masterworks.jpg (3600 px breit, lab/kalender/poster_collection.py aus dem Live-Stand der Sammlung), mit Kopf (Name, Beschreibung, Marke rechts) und Fuß (Adresse der Sammlung)."
+    },
+    {
+      "id": "reddit-books",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "decades",
+      "status": "vorschlag",
+      "title": "Do you ever pick an edition for its cover? I looked at 343 covers of Nineteen Eighty-Four, from the 1940s to now",
+      "text": "Text-Post, ohne Link (r/books verbietet Selbstwerbung).\n\nI've been collecting the covers books have been printed with, and Nineteen Eighty-Four is the one I keep coming back to: 343 covers with a known year, from 349 printings, going back to the 1940s.\n\nThe 2020s alone have 93 of them, from 84 different publishers, and the eye is everywhere: red eyes, eyes inside television sets, surveillance cameras, an eye with the title as its pupil. I suspect a lot of what we each remember as \"the\" cover of the book depends on when and where we first read it.\n\nWhich edition do you own, and did you choose it for the cover? Is there a cover of a classic you went looking for specifically?\n\n(Bilder, falls das Forum Bilder in Text-Posts zulässt: 1984-decades.png, 1984.png.)",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Julian, 2026-10-07, wie oben. r/books verbietet Selbstwerbung und Verkaufslinks ausdrücklich (Wiki, gelesen über einen Spiegel 2026-10-07); Ausnahme nur „Author Spotlight“ für Autoren nach Freigabe der Moderation, passt nicht. Deshalb ein Gesprächsbeitrag ohne Link und ohne den Namen der Seite; fragt jemand, wo die Cover herkommen, ehrlich antworten, dass Julian die Seite gebaut hat — auch das kann entfernt werden. Die Zahlen stehen so auf /book/OL1168083W/decades (abgelesen 2026-10-07): 343 Cover aus 349 Drucken mit Jahr, 2020er 93 Cover, 84 Verlage."
+    },
+    {
+      "id": "reddit-vibecoding",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "launch",
+      "status": "vorschlag",
+      "title": "I spent my vacation vibe-coding a site that shows the covers a book has been printed with. About 2–3 weeks and $150 in tokens and hosting",
+      "text": "**What it is.** Type a book's title; the site asks two open catalogues (Open Library and Google Books) for its editions and shows their covers as one wall, grouped by language and year. Near-identical scans are folded together by a perceptual hash in the browser. Pick a cover and you get links to look for that edition by ISBN, plus a check whether the publisher's current image for that ISBN is still the same cover (reprints often change it). I built it because I kept wanting the nicest edition of a book, with the nicest cover, and shops only show one. buyitscovers.com\n\n**Tools.** Claude Code (Fable 5.1, then Opus 5 and 5.5), Next.js 16 on Vercel, Redis for the few things it stores, the Open Library and Google Books APIs. I had never coded a website.\n\n**Process.**\n- I tried this once before and ran into problems neither the model nor I could solve. In September I tried again, and Fable got me to a working MVP. About 2–3 weeks of vacation and $150 in tokens and hosting later, it's live; git says about 1,080 commits, almost all co-authored by Claude.\n- I kept Claude on a tight leash, and changed how I vibe-code along the way: every design and code decision gets written down. Three files carry the project instead of the chat: a spec (requirements, numbered decisions), a roadmap where every item appears once with an owner, and a history of every measurement. One rule in CLAUDE.md does most of the work: \"Nothing is finished in the chat.\"\n- I was torn between how easy this is and the fear of producing slop. Sites that are obviously made by Claude gave me the ick, so I made deliberate design choices instead of taking the defaults. (Please call me out if you still see slop on mine.)\n- Several sessions ran in parallel, each in its own git worktree, mostly from cafés while I was visiting friends and family in NYC and SF.\n\n**What I learned.**\n1. Record real API responses. The model's assumptions were plausible and wrong: Open Library returns an edition's authors as keys, not names. Tests run against recorded responses now.\n2. Measure the expensive thing. A cold book page cost 11 Google requests against a free quota of 1,000 a day. Now it's 2, and a test asserts it.\n3. A sensible-sounding rule can destroy data. \"Hide covers that look blank\" flagged 4 of 8 real covers of Nineteen Eighty-Four, among them the 1949 first edition.\n4. Change a prompt only against a test set. The feature that reads a photo of your shelf carried a wrong explanation for three photos for two days; now there are fourteen photos with truth lists.\n5. Don't let the agent poll production. Repeated checks tripped Vercel's bot protection, which answers 403 and looks exactly like an outage.\n6. Building is the easy part now. The week I went live, \"9 books\" grids took off, and sites made for exactly that got the traffic. I added a Shelf-Portrait (nine books, each in the cover you love: buyitscovers.com/shelfportrait), but I know very little about getting anyone to see it.\n\nHappy to answer questions about the setup, and to hear what you'd do about the last point.",
+      "path": "/",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Julian, 2026-10-07: „prepare a post for that. look also at my x draft (without posting it!)“. Überarbeitet nach Julians X-Thread-Entwurf im persönlichen Konto (13 Teile, gelesen, nicht verändert, nicht gepostet): Urlaubsprojekt, erster Versuch gescheitert, im September Fable bis zum MVP, Claude an der kurzen Leine, jede Entscheidung festgehalten, Sorge vor Slop und bewusste Gestaltung, Cafés in NYC und SF, die „9 books“-Welle kurz vor dem Start, 2–3 Wochen und 150 $ für Tokens und Hosting. Zahlen aus git (origin/main, 2026-10-07): 1.085 Commits seit September, 983 mit Claude als Co-Autor. Die Konkurrenz mit Namen (myninebooks mit Amazon-Affiliate-Links) steht im X-Thread, hier bewusst nicht. r/vibecoding verlangt bei Projektposts Werkzeuge, Ablauf und Einsichten."
+    },
+    {
+      "id": "reddit-claudeai",
+      "date": "2026-11-03",
+      "channel": "reddit",
+      "kind": "launch",
+      "status": "vorschlag",
+      "text": "**Buy Its Covers** (buyitscovers.com): type a book's title and see the covers it has been printed with, by language and year, with a check whether the publisher's current image for an ISBN is still that cover.\n\nA vacation project: I'd tried once before and got stuck; in September Fable got me to a working MVP, and about 2–3 weeks and $150 in tokens and hosting later it's live (Opus 5 and 5.5 for the rest; I had never coded a website).\n\nWhat made it work: Claude on a tight leash, and every decision written down. A spec, a roadmap and a history file are the project's memory, with one CLAUDE.md rule, \"Nothing is finished in the chat.\" Parallel sessions in their own git worktrees. Tests against recorded API responses, because the model's guesses about Open Library's format were plausible and wrong. And deliberate design choices, because I didn't want it to look like every other Claude-made site. Tell me if it still does.",
+      "path": "/",
+      "needs": [
+        "konto:reddit"
+      ],
+      "note": "Kommentar im Megathread „Built with Claude“ von r/ClaudeAI (keine Karma-Grenze; eigene Posts im Feed erst ab 50 Karma, Regel 7). Guter erster Beitrag für ein neues Konto."
+    },
+    {
+      "id": "x-9books-replies",
+      "date": "2026-10-07",
+      "channel": "x",
+      "kind": "answer",
+      "status": "vorschlag",
+      "text": "Antworten in der Welle „9 books I'll never forget“ (gesucht 2026-10-07 abends; am selben Tag posten, sonst sind die Threads kalt). Julian postet selbst, höchstens fünf bis zehn am Tag. Bild = dein eigenes Shelf-Portrait (aufrichtig, nicht das Starter-Pack), Link nur, wo er passt — X zeigt Antworten mit Link schlechter.\n\n1) @paulnovosad — „There are only 9 books you will ever need“ (neunmal Mas-Colell/Whinston/Green), 13 k Aufrufe\nhttps://x.com/paulnovosad/status/2107827227966529678\nNine copies of MWG and not one of them in a different cover. Missed opportunity.\n[optional, erst prüfen, ob die Wand mehrere Cover zeigt: buyitscovers.com/?q=microeconomic+theory]\n\n2) @mattyglesias — neun Jack-Reacher-Bände als „books that formed my character“, 27 k Aufrufe\nhttps://x.com/mattyglesias/status/2107893456349913514\nNine Reachers and they all wear the same Lee Child font. Killing Floor alone has had more faces than that.\n[optional, erst prüfen: buyitscovers.com/?q=killing+floor]\n\n3) @chapterlviii — „the nine books i'll never forget“, nennt die Ausgaben (Penguin Classics, Clockwork Editions), 6 k Aufrufe\nhttps://x.com/chapterlviii/status/2107736487152189940\nLove that you named the editions. That's exactly what these grids lose: the Penguin Classics Northanger Abbey isn't the same book on the shelf as any other. I made a version where each of the nine is the cover you actually own: buyitscovers.com/shelfportrait\n\n4) @OsoBlanc0 — „here's nine books I've loved at various times in my life“\nhttps://x.com/OsoBlanc0/status/2107958110677795067\n„Loved at various times“ is the better framing. Mine, in the editions I read them in: [Bild]\n\n5) @The_Pequod_ — „Top 9 books at the moment…“\nhttps://x.com/The_Pequod_/status/2107897209513505173\nGood list. Mine at the moment, in the covers I'd actually want on the shelf: [Bild]\n\n6) @CultivatedBooks — „9 books I'll never forget“\nhttps://x.com/CultivatedBooks/status/2107951810883588160\n[ein Satz zu einem Buch, das ihr beide habt, wenn es eins gibt] + Mine: [Bild]\n\n7) @literalbanana — „nine books I'll never forget 😇“ (frisch, 1 Std.)\nhttps://x.com/literalbanana/status/2108040156918026702\n[nur antworten, wenn dir zu der Liste wirklich etwas einfällt]\n\nEigener Post dazu (Zitat des Trends oder frei):\nThe 9 books I'll never forget, but in the editions I'd actually want on my shelf. Made it here: buyitscovers.com/shelfportrait\n[Bild: dein Shelf-Portrait]",
+      "note": "Julian, 2026-10-07: „ja, such die threads raus und entwirf antworten / auch auf bsky“. Keine automatisierten Antworten (PLAN-5.6b §6a). Gefunden mit der X-Suche („nine books“ OR „9 books“ OR myninebooks OR my9books, seit 2026-10-05, min. 50 Likes). Die meisten Raster kommen von myninebooks.com: kleine Verlagscover auf Weiß — der Unterschied des Shelf-Portraits ist die gewählte Ausgabe."
+    },
+    {
+      "id": "bsky-9books-replies",
+      "date": "2026-10-07",
+      "channel": "bluesky",
+      "kind": "answer",
+      "status": "vorschlag",
+      "text": "Auf Bluesky ist die Welle kleiner, aber Links schaden dort nicht. Gesucht 2026-10-07.\n\n1) Jarrett Walker (@humantransit.bsky.social) — „Nine books that stay with me. Fiction only.“ mit myninebooks-Link\nhttps://bsky.app/profile/humantransit.bsky.social/post/3mxclgr5xk22b\nGood list. If you ever want them in the editions you actually read, I built a version where you pick each book's cover: buyitscovers.com/shelfportrait\n\n2) Roz (@rozmilner.bsky.social) — „my nine books“\nhttps://bsky.app/profile/rozmilner.bsky.social/post/3mxdb6z7cac2z\n[ein Satz zur Liste] Mine, in the covers I read them in: [Bild]\n\n3) W.E.D.em Boyz (@leftistwonk.bsky.social) — „My nine books“\nhttps://bsky.app/profile/leftistwonk.bsky.social/post/3mxcn4xyyyc2k\n[ein Satz zur Liste] + [Bild]\n\n4) Baskerville (@baskerville.bsky.social) — „Nine books“\nhttps://bsky.app/profile/baskerville.bsky.social/post/3mxcjnugtmk27\n\n5) zal-cryptid — „my nine books“ (frisch)\nhttps://bsky.app/profile/zal-cryptid.bsky.social/post/3mxdi66clik2m\n\nEigener Post:\nMy nine books, each in the edition I'd want on the shelf, not whichever cover a shop shows first. Make yours: buyitscovers.com/shelfportrait #booksky\n[Bild: dein Shelf-Portrait, Alt-Text mit den neun Titeln]\n\nNicht antworten: John Zeleznik (@johnzeleznikauthor) — Illustrator, also Rechteinhaber (Regel vom 2026-10-07).",
+      "note": "Wie oben, Bluesky-Suche „nine books“ (Top)."
     }
   ]
 }

@@ -1121,3 +1121,25 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.93 Ein Marktwechsel auf der Buchseite lädt nur die Händlerlinks neu.** Julian, 2026-10-06: „wenn man den markt in der detailansicht eines covers umstellt, wird die ganze seite neugeladen. sollten nicht nur die händlerlinks neugeladen werden?“ Die Händlerlinks werden jetzt im Browser neu gebaut; Wand, Ladeszene und ISBN-Abfragen bleiben stehen.
 
 **Erledigt 2026-10-06.** → [Historie](history.md)
+
+## 0.13
+
+**0.13 Alarm, bevor das Google-Kontingent voll ist.** (Julian, 2026-09-09: „stelle mir Vercel so ein, dass ich Bescheid bekomme, bevor mein Google-Tageslimit gesprengt wird.“) **Vercel kann das nicht** — und das ist keine Einstellung, die man findet, sondern eine Eigenschaft der Lage: Vercel sieht nur die eigenen Anfragen, nicht Googles Zähler, und die Seite selbst darf nicht mitzählen (Datencache, N9). Dazu die Grenzen des Hobby-Plans, am 2026-09-09 nachgelesen: **Cron nur einmal am Tag** und höchstens zwei je Projekt, mit einer Stunde Streuung; **Log Drains und Log-Alarme erst ab Pro**, und dann noch mit einem fremden Ziel (Datadog, Axiom) davor. Ein Alarm über Vercel wäre also teurer, gröber und ungenauer als der, den Google verschenkt.
+
+  **Der Alarm gehört in Cloud Monitoring, weil dort der einzige ehrliche Zähler steht** — er zählt, was wirklich bei Google ankam, nicht was diese Seite abgeschickt hat. Kostenlos: Google berechnet Alarmrichtlinien frühestens ab dem 1. September 2027 (dann 0,35 USD im Monat je Metrik-Verweis). Zehn Minuten in der Konsole:
+
+  1. **IAM & Verwaltung → Kontingente und Systemlimits**, nach Dienst `Books API` filtern, Zeile **„Queries per day"** (das Limit aus der Fehlermeldung `quota metric 'Queries' … of service 'books.googleapis.com'`).
+  2. Rechts im Zeilenmenü **„Nutzungswarnung erstellen"** (*Create usage alert*), Schwelle **80 %**, als Kanal die eigene **E-Mail**, anlegen.
+  3. **Einmal prüfen, dass die Mail wirklich kommt:** Schwelle vorübergehend auf einen Wert unter dem heutigen Verbrauch setzen (5 %), auf die Mail warten, dann zurück auf 80 %. Ein Alarm, von dem niemand weiß, ob er auslöst, ist keiner.
+  4. Ergebnis hier eintragen: hat die Zeile das Menü, wie lange lag die Mail hinter dem Verbrauch, und bei welchem Stand kam sie.
+
+  **Von Hand, falls die Vorlage fehlt** (nicht jeder Dienst liefert Kontingent-Metriken): Monitoring → Alerting → Richtlinie mit PromQL, `quota/rate/net_usage` gegen `quota/limit`, Verhältnis > 0,8. Für ein Tageslimit ist der **Ausrichtungszeitraum 23 Stunden**, nicht 24 — PromQL darf nur 25 Stunden Daten verlangen und der Aligner legt eine Stunde drauf.
+
+  **Drei Haken, die dazugehören:**
+  - Der Alarm setzt vermutlich ein **verknüpftes Abrechnungskonto** voraus (0.3). Das kostet für die Books API nichts, ist aber eine Entscheidung und keine Nebensache — zuerst 0.3, dann dieser Punkt.
+  - 80 % sind **200 Anfragen Rest**, unter Last Minuten. Die Mail ist ein Anlass hinzusehen, kein Puffer.
+  - Solange ein Schlüssel Arbeit und Betrieb bedient (**0.2**), schlägt der Alarm auch bei einer Entwicklungssitzung an, und der Betrieb merkt nichts davon.
+
+  *Codeseitig erledigt 2026-09-09 (Claude): `lib/googlequota.ts` schreibt jetzt **eine ungeschützte Zeile** `bb.google {"event":"daily-limit"|"rate-limit","pausedForS":…,"until":…,"at":…}`, genau eine je Öffnung des Automaten, nach dem Muster von `lib/clicks.ts`. Vorher stand dort ein `debug()`-Aufruf, und weil `DEBUG` in der Produktion nicht gesetzt ist, hinterließ der Tag, an dem Google zumachte, **keine Spur außer in der Cloud-Konsole**. Das ist die Nachricht „es ist passiert", nicht „es passiert gleich" — die kann nur Google geben. Tests in `lib/__tests__/googlequota.test.ts`; SPEC N9 nachgezogen.*
+
+**Erledigt 2026-10-06.** → [Historie](history.md)
