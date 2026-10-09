@@ -13,11 +13,12 @@ Two steps, because the corners are read by eye, not detected:
         on 2026-10-09 corners guessed straight off a 50 px grid left two of
         three covers visibly slanted, one corner ~50 px out.
 
-    python3 lab/collections/straighten.py flat <photo.jpg> TLx,TLy TRx,TRy BRx,BRy BLx,BLy [--ratio=1.62] [--width=N]
+    python3 lab/collections/straighten.py flat <photo.jpg> TLx,TLy TRx,TRy BRx,BRy BLx,BLy [--ratio=1.62] [--width=N] [--contrast]
         writes flat-<photo>.jpg: the quadrilateral mapped onto a rectangle of
         height/width = ratio (Fontana paperbacks ~1.62, SF Masterworks ~1.53).
         The width defaults to the longer of the top and bottom edges, so the
-        result is never blown up beyond what the photo holds.
+        result is never blown up beyond what the photo holds. --contrast stretches
+        the levels of a washed-out photo (Death Comes as the End, 2026-10-09).
 
 Then look at the result beside the photo. Title lines horizontal and the
 spine edge vertical is the test; a sliver of table or spine at one side means
@@ -26,7 +27,7 @@ a corner is a few pixels out.
 import sys
 import os
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 
 
 def coeffs(dst, src):
@@ -38,8 +39,11 @@ def coeffs(dst, src):
     return np.linalg.solve(np.array(a, float), np.array(b, float)).tolist()
 
 
-def straighten(path, corners, out, ratio=1.62, width=None):
+def straighten(path, corners, out, ratio=1.62, width=None, contrast=False):
     im = Image.open(path).convert('RGB')
+    if contrast:
+        # A washed-out photo: stretch the levels, cutting the brightest and darkest 1%.
+        im = ImageOps.autocontrast(im, cutoff=1)
     (tl, tr, br, bl) = corners
     w = width or round(max(np.hypot(tr[0] - tl[0], tr[1] - tl[1]), np.hypot(br[0] - bl[0], br[1] - bl[1])))
     h = round(w * ratio)
@@ -78,9 +82,9 @@ if __name__ == '__main__':
         grid(path, os.path.join(folder, f'grid-{stem}.png'))
     elif cmd == 'flat':
         pts = [tuple(int(n) for n in p.split(',')) for p in sys.argv[3:7]]
-        opts = dict(a[2:].split('=') for a in sys.argv[7:] if a.startswith('--'))
+        opts = dict(a[2:].split('=') for a in sys.argv[7:] if a.startswith('--') and '=' in a)
         out = os.path.join(folder, f'flat-{stem}.jpg')
-        flat = straighten(path, pts, out, float(opts.get('ratio', 1.62)), int(opts['width']) if 'width' in opts else None)
+        flat = straighten(path, pts, out, float(opts.get('ratio', 1.62)), int(opts['width']) if 'width' in opts else None, '--contrast' in sys.argv[7:])
         beside(path, flat, os.path.join(folder, f'beside-{stem}.jpg'))
         print('written', out, flat.size)
     else:

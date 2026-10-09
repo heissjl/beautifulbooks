@@ -5899,3 +5899,9 @@ Mit Julians Ja unter `wertstoffhof` hochgeladen, jeweils auf die Ausgabe, deren 
 | Destination Unknown | OL9919200M (1973) | 0006133746 | 14155494 → 15263594 |
 
 Die neuen Bilder stehen in `data/collections.json` und im Online-Entwurf `uzGLb7CQw18D`. Geändert wurden dort nur diese drei Kacheln, über eine `pick`-Operation mit `was`, damit Julians laufende Bearbeitung nicht überschrieben wird. Aus diesem Entwurf ist das Reddit-Bild entstanden, nur mit Fußzeile: 42 Kacheln, 3600 × 6746, `lab/kalender/out/`.
+
+Nachtrag am selben Tag. *Death Comes as the End* war kaum schräg, aber blass. Die Ecken wurden auf einem 5-px-Raster mit vierfacher Vergrößerung abgelesen. Entzerrt mit dem eigenen Seitenverhältnis 1,67, Tonwerte mit dem neuen `--contrast` gestreckt (1 % abgeschnitten). Hochgeladen auf OL20938098M (Fontana 1970, 0006117368), 13267895 → 15263597. `poster_collection.py --no-credit` lässt die Künstlerzeile je Kachel weg, für Sammlungen eines einzigen Künstlers. Das Christie-Bild hat jetzt 9 Spalten: 3600 × 4669.
+
+## 2026-10-09 · X-Thread „Cover, die wie Bier aussehen“ vorbereitet (5.6b)
+
+Julians Idee kam aus einer eigenen Antwort auf X. Die Kandidaten stammen aus einer CLIP-Textsuche über die 21.866 Cover-Vektoren im Lab-Cache (`bb-lab-cache/clip`, Modell `Xenova/clip-vit-base-patch32`). Gesucht wurde mit zwölf Beschreibungen, zum Beispiel „pint of dark stout“, „vintage beer bottle label“ und „craft beer can“. Ausgewählt wurden die Cover von Hand auf Kontaktbögen. Am besten trafen die Etiketten- und Dosen-Abfragen: *Half of a Yellow Sun* (4th Estate) trägt tatsächlich zwei Flaschen, die *Unendliche Geschichte* bei Thienemann ein ovales Etikett. Die Stout-Abfragen fanden dagegen nur dunkle Leineneinbände. Zehn Cover, jedes mit Ausgabe und Werk aus Open Library: `lab/kalender/bier-thread.md`; Bilder in `lab/kalender/out/bier-thread/`. Nicht gepostet.
