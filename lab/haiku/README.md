@@ -1,6 +1,6 @@
 # haiku — Cover beschreiben, dann einbetten
 
-**Frage** (ROADMAP 6.101, nach [docs/haiku-zone.md](../../docs/haiku-zone.md)). Findet eine Textachse — ein Modell
+**Frage** (ROADMAP 6.102, nach [docs/haiku-zone.md](../../docs/haiku-zone.md)). Findet eine Textachse — ein Modell
 beschreibt jedes Cover in drei Haikus, die Haikus werden eingebettet — Paare, die zusammengehören und die das
 heutige „sieht so aus“ (6.10, Farbe und Struktur) nicht findet?
 
@@ -59,7 +59,7 @@ JSON, dann *Motiv allein* einbetten; die Haiku-Form erzwingt Bildsprache, verwä
 Bild-Embedding (6.23 b) auf derselben Stichprobe als Gegenprobe, ob der Text-Umweg überhaupt nötig ist. Erst
 danach eine Zeile auf der Buchseite.
 
-## 6.101a — erst das Index aufräumen (2026-10-09)
+## 6.102a — erst das Index aufräumen (2026-10-09)
 
 Julian, 2026-10-09: „first we need to scrap more of the faulty or boring covers from the index. like the ones that are
 only a title page in cream … only once we have a refined index we can think about indexing it.“

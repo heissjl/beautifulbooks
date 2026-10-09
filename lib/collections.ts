@@ -108,6 +108,12 @@ export interface CollectionRecord {
    */
   setSize?: 3 | 7;
   /**
+   * Taller tiles for a series printed taller than 2:3: `tall` is 1:1.65, so a
+   * Fontana paperback (about 1:1.62) keeps its title band instead of losing it
+   * to the crop (Julian, 2026-10-09, for Tom Adams' Christie only for now).
+   */
+  tileShape?: 'tall';
+  /**
    * Where the covers come from when not every one was picked by eye: a list
    * or a tag brings the catalogue's image (5.10f). Absent means by hand for
    * an author collection and the series printing for a series. Set back by
@@ -132,6 +138,7 @@ export interface Collection {
   coverCredits?: 'isfdb' | 'artwork';
   coverSource?: 'catalogue';
   setSize?: 3 | 7;
+  tileShape?: 'tall';
   works: WallWork[];
 }
 
@@ -181,7 +188,7 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}), ...(r.setSize && p.set ? { set: p.set } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
-    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}) });
+    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}), ...(r.tileShape === 'tall' ? { tileShape: 'tall' as const } : {}) });
   }
   return out;
 }
@@ -301,7 +308,7 @@ function withFileFacts(draft: CollectionRecord, file: CollectionRecord): Collect
 export function applyContent(records: CollectionRecord[], content: ContentOverrides): CollectionRecord[] {
   // A /curate draft knows no wall layout, so the file's set size survives its content;
   // nor printing facts, so the file's credits fill the covers it has too (withFileFacts).
-  const out = records.map(r => (content[r.slug] ? { ...withFileFacts(content[r.slug], r), ...(r.setSize ? { setSize: r.setSize } : {}) } : r));
+  const out = records.map(r => (content[r.slug] ? { ...withFileFacts(content[r.slug], r), ...(r.setSize ? { setSize: r.setSize } : {}), ...(r.tileShape ? { tileShape: r.tileShape } : {}) } : r));
   for (const [slug, r] of Object.entries(content)) if (!records.some(x => x.slug === slug)) out.push(r);
   return out;
 }

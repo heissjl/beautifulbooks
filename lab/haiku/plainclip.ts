@@ -1,5 +1,5 @@
 /**
- * ROADMAP 6.101a: rank the index's covers by how much they look like a plain title page or a bare board, with
+ * ROADMAP 6.102a: rank the index's covers by how much they look like a plain title page or a bare board, with
  * CLIP zero-shot over the vectors lab/clip already computed (no image is fetched here). A ranking for a human to
  * look at, never a deletion rule (lab/clip, question A; CLAUDE.md "never delete a cover for looking blank").
  * Writes lab/haiku/out/plainclip.json (score per cover) and plainclip.html (a sheet per score band).
@@ -53,7 +53,7 @@ async function main(): Promise<void> {
   writeFileSync('lab/haiku/out/plainclip.html', `<!doctype html><meta charset="utf-8"><title>plain by CLIP</title>
 <style>body{font:13px system-ui;margin:16px;background:#faf8f4;color:#222}.grid{display:flex;flex-wrap:wrap;gap:8px}
 figure{margin:0;width:100px}img{width:100px;height:150px;object-fit:cover;background:#ddd}figcaption{font-size:10px}</style>
-<h1>"Plain" by CLIP zero-shot (ROADMAP 6.101a)</h1><p>${scored.length} of ${covers.length} index covers have a CLIP vector. 40 random per band; c = dHash contrast.</p>${sections}`);
+<h1>"Plain" by CLIP zero-shot (ROADMAP 6.102a)</h1><p>${scored.length} of ${covers.length} index covers have a CLIP vector. 40 random per band; c = dHash contrast.</p>${sections}`);
   console.log(scored.length, 'scored;', bands.map(([lo, hi]) => `${lo}: ${scored.filter((s) => s.p >= lo && s.p < hi).length}`).join(', '));
 }
 

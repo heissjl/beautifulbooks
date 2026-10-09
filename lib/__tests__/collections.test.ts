@@ -211,6 +211,13 @@ describe('printing facts behind a published draft (5.6b, 2026-10-08)', () => {
   });
 });
 
+describe('taller tiles (5.10r, 2026-10-09)', () => {
+  it('keeps the file\'s tile shape under a published draft', () => {
+    const [out] = applyContent([record({ slug: 's', tileShape: 'tall' })], { s: record({ slug: 's', title: 'Edited' }) });
+    expect(out.tileShape).toBe('tall');
+  });
+});
+
 describe('arranging the collections (5.10h)', () => {
   it('puts the named slugs first, in that order, and keeps the rest after them in file order', () => {
     const recs = ['a', 'b', 'c', 'd'].map(slug => record({ slug }));

@@ -1,4 +1,4 @@
-/** Pure helpers for the haiku experiment (ROADMAP 6.101): sampling and nearest neighbours by cosine. */
+/** Pure helpers for the haiku experiment (ROADMAP 6.102): sampling and nearest neighbours by cosine. */
 
 export interface SampleCover {
   coverId: string;

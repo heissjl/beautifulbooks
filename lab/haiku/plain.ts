@@ -1,5 +1,5 @@
 /**
- * ROADMAP 6.101a: which covers in the index are plain title pages? A contact sheet per contrast band, 60 random
+ * ROADMAP 6.102a: which covers in the index are plain title pages? A contact sheet per contrast band, 60 random
  * covers each (fixed seed), so the line is drawn by looking (rule from 6.10), not by a number alone.
  * Nothing is removed here. Writes lab/haiku/out/plain.html.
  *
@@ -35,7 +35,7 @@ if (process.argv[1]?.endsWith('plain.ts')) {
   writeFileSync('lab/haiku/out/plain.html', `<!doctype html><meta charset="utf-8"><title>plain covers</title>
 <style>body{font:13px system-ui;margin:16px;background:#faf8f4;color:#222}.grid{display:flex;flex-wrap:wrap;gap:8px}
 figure{margin:0;width:100px}img{width:100px;height:150px;object-fit:cover;background:#ddd}figcaption{font-size:10px}</style>
-<h1>Plain covers in the index, by contrast (ROADMAP 6.101a)</h1>
+<h1>Plain covers in the index, by contrast (ROADMAP 6.102a)</h1>
 <p>${covers.length} covers. 60 random per band. Where does "plain title page" end and "a design" begin?</p>${sections}`);
   console.log('written lab/haiku/out/plain.html');
 }

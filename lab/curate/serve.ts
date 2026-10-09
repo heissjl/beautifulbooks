@@ -19,9 +19,11 @@
  * says when the two disagree.
  */
 import { createServer } from 'node:http';
-import { readFileSync, writeFileSync, existsSync, renameSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, renameSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { robustFirstPublishYear } from '../../lib/firstyear';
+import { CoverSizes, type CoverSize } from '../calibre/download';
+import { defaultBackupRoot } from '../calibre/safety';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const INDEX_FILE = join(ROOT, 'data', 'cover-index.json');
@@ -45,7 +47,8 @@ const EXCLUDED = new Set([
  * once from Open Library and cached beside this file — the only place where
  * this tool loads a cover list over the network, and it is a handful of works.
  */
-interface Extra { id: string; title: string; author: string; note?: string }
+/** `first`: a book Julian named and wants to pick soon; it leads the run and the open list instead of waiting behind the index. */
+interface Extra { id: string; title: string; author: string; note?: string; first?: boolean }
 
 const NAMED_EXTRAS: Extra[] = [
   { id: 'OL63055W', title: 'The Garden of Eden', author: 'Ernest Hemingway' },
@@ -71,6 +74,8 @@ const NAMED_EXTRAS: Extra[] = [
     is his call to make.
   */
   { id: 'OL20042286W', title: 'The Babysitter at Rest', author: 'Jen George', note: '1 Ausgabe · ab 2016' },
+  // Julian, 2026-10-08, with the book page: „nimm das buch in die kuratierte liste mit auf, cover wähle ich noch aus".
+  { id: 'OL44237703W', title: 'Paradiso', author: 'José Lezama Lima', note: '72 Ausgaben · ab 1966', first: true },
 ];
 
 /**
@@ -138,12 +143,17 @@ const extraCovers: Record<string, string[]> = existsSync(EXTRA_COVERS_FILE)
   ? JSON.parse(readFileSync(EXTRA_COVERS_FILE, 'utf8'))
   : {};
 
+// Julian, 2026-10-08: „paradiso habe ich nicht gefunden" — it stood 252nd of 275 open works.
+const FIRST = new Set(EXTRA_WORKS.filter(w => w.first).map(w => w.id));
 const works: Array<{ id: string; title: string; author: string; note?: string; covers: string[] }> = [
+  ...EXTRA_WORKS
+    .filter(w => FIRST.has(w.id) && !EXCLUDED.has(w.id))
+    .map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
   ...index.works
     .map(([id, title, author], i) => ({ id, title, author, covers: coversByWork.get(i) ?? [] }))
     .filter(w => !EXCLUDED.has(w.id)),
   ...EXTRA_WORKS
-    .filter(w => !EXCLUDED.has(w.id) && !index.works.some(([id]) => id === w.id))
+    .filter(w => !FIRST.has(w.id) && !EXCLUDED.has(w.id) && !index.works.some(([id]) => id === w.id))
     .map(w => ({ ...w, covers: extraCovers[w.id] ?? [] })),
 ];
 
@@ -261,6 +271,98 @@ async function prefetchRest() {
   console.log('curate: background covers done');
 }
 
+/**
+ * How large each cover's scan is (Julian, 2026-10-07: „ändere die app so,
+ * dass ich weiß ob die cover L, M oder S größe haben und stelle die L vorne
+ * an"). Open Library's cover record states the uploaded size in about 0.08 s,
+ * without the image (CLAUDE.md, measured 2026-10-04); the calibre tool asks
+ * the same way and keeps the answers in one file outside the repository,
+ * which this tool shares, so a cover measured there is not asked for again.
+ *
+ * A record without a size makes `CoverSizes` fetch the original instead,
+ * 4–10 s from the Internet Archive. The page should not wait for that one
+ * cover, so a work's answer goes out after `SIZE_BUDGET_MS` with whatever is
+ * known; the rest is filled in on the next visit.
+ */
+const sizes = new CoverSizes(join(defaultBackupRoot(), 'cover-sizes.json'), 'https://buyitscovers.com', 6);
+const SIZE_BUDGET_MS = 8000;
+
+async function sizesFor(workId: string): Promise<{ sizes: Record<string, CoverSize | null>; pending: number }> {
+  const work = works.find(w => w.id === workId);
+  const covers = work?.covers.length ? work.covers : await coversFor(workId);
+  const out: Record<string, CoverSize | null> = {};
+  let pending = 0;
+  const LATE = Symbol('late');
+  const late = new Promise<typeof LATE>(r => setTimeout(() => r(LATE), SIZE_BUDGET_MS));
+  await Promise.all(covers.map(async c => {
+    const known = sizes.peek(c);
+    if (known) { out[c] = known; return; }
+    // Past the budget the question keeps running on the server; the page asks
+    // again and gets it from memory. `null` is only ever "the source said none".
+    const answer = await Promise.race([sizes.get(c), late]);
+    if (answer === LATE) pending += 1;
+    else out[c] = answer;
+  }));
+  return { sizes: out, pending };
+}
+
+/**
+ * Cover images through the tool itself (Julian, 2026-10-08: „bei mir werden viele cover nicht
+ * geladen"). The page used to load every cover of a work straight from covers.openlibrary.org —
+ * for a classic several hundred at once, each handed on to archive.org and taking 0.1–3 s
+ * (twelve sampled that day), so the browser's few parallel requests queued and many tiles stayed
+ * empty or gave up. Now the page asks `/img/<size>/<id>.jpg` here: an image fetched once is kept
+ * on disk (`img-cache/`, git-ignored) and comes back at once on the next visit; at most six go
+ * out to Open Library at a time, each with a 20 s timeout and one retry, and a large image that
+ * does not come is answered with the medium one. A failure is a 504, never a placeholder.
+ */
+const IMG_DIR = join(import.meta.dirname, 'img-cache');
+mkdirSync(IMG_DIR, { recursive: true });
+const IMG_PARALLEL = 6;
+let imgRunning = 0;
+const imgWaiting: Array<() => void> = [];
+const imgInFlight = new Map<string, Promise<Buffer | null>>();
+
+async function imgSlot<T>(job: () => Promise<T>): Promise<T> {
+  if (imgRunning >= IMG_PARALLEL) await new Promise<void>(r => imgWaiting.push(r));
+  imgRunning++;
+  try {
+    return await job();
+  } finally {
+    imgRunning--;
+    imgWaiting.shift()?.();
+  }
+}
+
+async function fetchCover(id: string, size: string): Promise<Buffer | null> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(`https://covers.openlibrary.org/b/id/${id}-${size}.jpg`, { signal: AbortSignal.timeout(20_000) });
+      if (res.ok && (res.headers.get('content-type') ?? '').startsWith('image/')) return Buffer.from(await res.arrayBuffer());
+    } catch {
+      // timeout or refused: one more try after a pause
+    }
+    await new Promise(r => setTimeout(r, 2000));
+  }
+  return null;
+}
+
+function coverImage(id: string, size: string): Promise<Buffer | null> {
+  const file = join(IMG_DIR, `${id}-${size}.jpg`);
+  if (existsSync(file)) return Promise.resolve(readFileSync(file));
+  const key = `${id}-${size}`;
+  let job = imgInFlight.get(key);
+  if (!job) {
+    job = imgSlot(async () => {
+      const got = (await fetchCover(id, size)) ?? (size === 'L' ? await fetchCover(id, 'M') : null);
+      if (got) writeFileSync(file, got);
+      return got;
+    }).finally(() => imgInFlight.delete(key));
+    imgInFlight.set(key, job);
+  }
+  return job;
+}
+
 const HTML_FILE = join(import.meta.dirname, 'index.html');
 
 const server = createServer(async (req, res) => {
@@ -275,6 +377,19 @@ const server = createServer(async (req, res) => {
     // it runs, and a stale page that looks wrong costs more than a file read.
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
     res.end(readFileSync(HTML_FILE, 'utf8'));
+    return;
+  }
+
+  const img = /^\/img\/(S|M|L)\/(\d+)\.jpg$/.exec(url.pathname);
+  if (img) {
+    const body = await coverImage(img[2], img[1]);
+    if (!body) {
+      res.writeHead(504, { 'cache-control': 'no-store' });
+      res.end();
+      return;
+    }
+    res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'max-age=31536000, immutable' });
+    res.end(body);
     return;
   }
 
@@ -303,6 +418,13 @@ const server = createServer(async (req, res) => {
     const id = url.searchParams.get('id') ?? '';
     if (!/^OL\d+W$/.test(id)) return send(400, { error: 'bad id' });
     send(200, { covers: await coversFor(id) });
+    return;
+  }
+
+  if (url.pathname === '/api/sizes') {
+    const id = url.searchParams.get('id') ?? '';
+    if (!/^OL\d+W$/.test(id)) return send(400, { error: 'bad id' });
+    send(200, await sizesFor(id));
     return;
   }
 

@@ -1,6 +1,6 @@
 # haiku.zone — was wir davon lernen können
 
-Angesehen am 2026-10-08 auf Julians Hinweis (ROADMAP 6.101). Quellen: eine geteilte Reise
+Angesehen am 2026-10-08 auf Julians Hinweis (ROADMAP 6.102). Quellen: eine geteilte Reise
 (`haiku.zone/journey/c0947ae…`), die Startseite, eine Suche nach *The Great Gatsby*, und der
 Beitrag des Machers Joe Weisenthal auf X vom selben Tag.
 
@@ -49,7 +49,7 @@ Parfum und Autos derselben Stimmung, nicht bei anderen Romanen der Zwanziger.
 
 ## Vorschlag
 
-Ein Lab-Experiment `lab/haiku/` (6.101): 200 Cover aus dem Index, je eine Beschreibung in fester Form
+Ein Lab-Experiment `lab/haiku/` (6.102): 200 Cover aus dem Index, je eine Beschreibung in fester Form
 durch ein Modell, Text-Embedding, und ein Kontaktbogen der nächsten Nachbarn neben denen aus 6.10.
 Frage: findet die Textachse Paare, die Julian „gehören zusammen“ nennt und die Farbe/Struktur nicht
 finden? Erst messen, dann über die Seite reden.

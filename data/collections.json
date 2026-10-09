@@ -42922,7 +42922,7 @@
       "slug": "bad-sf-covers",
       "title": "Bad SF Covers",
       "kind": "series",
-      "intro": "The covers readers of r/badscificovers voted to the top of the subreddit: from its hundred most-upvoted posts of all time, the books whose very cover from the post Open Library holds, in the order of their votes. Behind each cover is the wall of the book's other faces, most of them kinder.",
+      "intro": "The covers readers of r/badscificovers voted to the top of the subreddit: from its two hundred most-upvoted posts of all time, the books whose very cover from the post Open Library holds, in the order of their votes. Behind each cover is the wall of the book's other faces, most of them kinder.",
       "published": false,
       "publishers": [],
       "works": [
@@ -42933,7 +42933,11 @@
           "coverId": "ol:8406783",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#0",
-          "coverIsbn": "9780345339683"
+          "coverIsbn": "9780345339683",
+          "coverArtists": [
+            "Michael Herring"
+          ],
+          "isfdbRecord": "41567"
         },
         {
           "id": "OL173934W",
@@ -42957,10 +42961,14 @@
           "id": "OL15411603W",
           "title": "Space wasters",
           "author": "David S. Garnett",
-          "coverId": "ol:6632314",
+          "coverId": "ol:15263469",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#11",
-          "coverIsbn": "9781841490120"
+          "coverIsbn": "9781841490120",
+          "coverArtists": [
+            "Jim Burns"
+          ],
+          "isfdbRecord": "247073"
         },
         {
           "id": "OL2687383W",
@@ -42978,7 +42986,11 @@
           "coverId": "ol:6612255",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#14",
-          "coverIsbn": "9780879973858"
+          "coverIsbn": "9780879973858",
+          "coverArtists": [
+            "H. R. Van Dongen"
+          ],
+          "isfdbRecord": "51772"
         },
         {
           "id": "OL893515W",
@@ -42987,7 +42999,11 @@
           "coverId": "ol:677695",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#15",
-          "coverIsbn": "9780881036350"
+          "coverIsbn": "9780881036350",
+          "coverArtists": [
+            "Vincent Di Fate"
+          ],
+          "isfdbRecord": "166841"
         },
         {
           "id": "OL33817493W",
@@ -43000,11 +43016,15 @@
         },
         {
           "id": "OL3290749W",
-          "title": "Philosophy and living",
+          "title": "Odd John",
           "author": "Olaf Stapledon",
           "coverId": "ol:8310918",
           "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#20"
+          "from": "reddit:badscificovers#20",
+          "coverArtists": [
+            "Robert Stanley"
+          ],
+          "isfdbRecord": "24716"
         },
         {
           "id": "OL15400938W",
@@ -43030,7 +43050,11 @@
           "coverId": "ol:13354500",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#30",
-          "coverIsbn": "0451451007"
+          "coverIsbn": "0451451007",
+          "coverArtists": [
+            "Dave Dorman"
+          ],
+          "isfdbRecord": "33865"
         },
         {
           "id": "OL55607W",
@@ -43039,15 +43063,11 @@
           "coverId": "ol:206171",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#33",
-          "coverIsbn": "9780340850626"
-        },
-        {
-          "id": "OL155505W",
-          "title": "Space Paw",
-          "author": "Gordon R. Dickson",
-          "coverId": "ol:10422395",
-          "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#39"
+          "coverIsbn": "9780340850626",
+          "coverArtists": [
+            "Anthony Robinson"
+          ],
+          "isfdbRecord": "251565"
         },
         {
           "id": "OL9181159W",
@@ -43056,7 +43076,11 @@
           "coverId": "ol:6632676",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#42",
-          "coverIsbn": "9780345314901"
+          "coverIsbn": "9780345314901",
+          "coverArtists": [
+            "David Schleinkofer"
+          ],
+          "isfdbRecord": "32977"
         },
         {
           "id": "OL9465901W",
@@ -43065,15 +43089,19 @@
           "coverId": "ol:14538830",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#44",
-          "coverIsbn": "9780345023940"
+          "coverIsbn": "9780345023940",
+          "coverArtists": [
+            "Gervasio Gallardo"
+          ],
+          "isfdbRecord": "47631"
         },
         {
-          "id": "OL3290731W",
-          "title": "Last and First Men",
-          "author": "Olaf Stapledon",
-          "coverId": "ol:8310926",
-          "addedAt": "2026-10-07",
-          "from": "reddit:badscificovers#45"
+          "id": "OL1855977W",
+          "title": "The Texas-Israeli War: 1999",
+          "author": "Howard Waldrop",
+          "coverId": "ol:12729575",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#47"
         },
         {
           "id": "OL32949082W",
@@ -43082,6 +43110,14 @@
           "coverId": "ol:15242010",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#48"
+        },
+        {
+          "id": "OL11291679W",
+          "title": "Tik-Tok",
+          "author": "John Sladek",
+          "coverId": "ol:15261636",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#51"
         },
         {
           "id": "OL4482724W",
@@ -43099,7 +43135,11 @@
           "coverId": "ol:8281623",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#56",
-          "coverIsbn": "9780671703349"
+          "coverIsbn": "9780671703349",
+          "coverArtists": [
+            "Mark Gerber and Stephanie Gerber"
+          ],
+          "isfdbRecord": "30692"
         },
         {
           "id": "OL18765421W",
@@ -43108,7 +43148,11 @@
           "coverId": "ol:12458469",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#58",
-          "coverIsbn": "9780440102359"
+          "coverIsbn": "9780440102359",
+          "coverArtists": [
+            "Larry Kresek"
+          ],
+          "isfdbRecord": "129261"
         },
         {
           "id": "OL30108W",
@@ -43126,7 +43170,11 @@
           "coverId": "ol:1786969",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#64",
-          "coverIsbn": "9781416555261"
+          "coverIsbn": "9781416555261",
+          "coverArtists": [
+            "Clyde Caldwell"
+          ],
+          "isfdbRecord": "284218"
         },
         {
           "id": "OL8861817W",
@@ -43135,7 +43183,11 @@
           "coverId": "ol:7122587",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#65",
-          "coverIsbn": "0880384557"
+          "coverIsbn": "0880384557",
+          "coverArtists": [
+            "Jeff Easley"
+          ],
+          "isfdbRecord": "626789"
         },
         {
           "id": "OL19221701W",
@@ -43144,7 +43196,11 @@
           "coverId": "ol:10123025",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#67",
-          "coverIsbn": "0812523466"
+          "coverIsbn": "0812523466",
+          "coverArtists": [
+            "Barclay Shaw"
+          ],
+          "isfdbRecord": "2304"
         },
         {
           "id": "OL461369W",
@@ -43153,7 +43209,11 @@
           "coverId": "ol:6375233",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#81",
-          "coverIsbn": "9780441469871"
+          "coverIsbn": "9780441469871",
+          "coverArtists": [
+            "David Mattingly"
+          ],
+          "isfdbRecord": "42663"
         },
         {
           "id": "OL510355W",
@@ -43162,7 +43222,11 @@
           "coverId": "ol:409635",
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#83",
-          "coverIsbn": "9780671878795"
+          "coverIsbn": "9780671878795",
+          "coverArtists": [
+            "Stephen Hickman"
+          ],
+          "isfdbRecord": "35744"
         },
         {
           "id": "OL20278680W",
@@ -43172,8 +43236,1240 @@
           "addedAt": "2026-10-07",
           "from": "reddit:badscificovers#91",
           "coverIsbn": "9781621050407"
+        },
+        {
+          "id": "OL2172403W",
+          "title": "The Man in the High Castle",
+          "author": "Philip K. Dick",
+          "coverId": "ol:6624881",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#100"
+        },
+        {
+          "id": "OL10587215W",
+          "title": "Gladiator-at-Law",
+          "author": "Frederik Pohl",
+          "coverId": "ol:14607106",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#105"
+        },
+        {
+          "id": "OL41822W",
+          "title": "Manseed",
+          "author": "Jack Williamson",
+          "coverId": "ol:6683007",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#110"
+        },
+        {
+          "id": "OL33883098W",
+          "title": "Stress Pattern",
+          "author": "Neal Barrett",
+          "coverId": "ol:15071140",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#115"
+        },
+        {
+          "id": "OL59706W",
+          "title": "Friday",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:10709137",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#119"
+        },
+        {
+          "id": "OL41495W",
+          "title": "A Wrinkle in Time",
+          "author": "Madeleine L'Engle",
+          "coverId": "ol:14482191",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#123"
+        },
+        {
+          "id": "OL2172525W",
+          "title": "The Zap Gun",
+          "author": "Philip K. Dick",
+          "coverId": "ol:9251923",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#127"
+        },
+        {
+          "id": "OL3749880W",
+          "title": "Gumshoe Gorilla",
+          "author": "Keith Hartman",
+          "coverId": "ol:940832",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#128"
+        },
+        {
+          "id": "OL893510W",
+          "title": "The Heaven Makers",
+          "author": "Frank Herbert",
+          "coverId": "ol:9260732",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#131"
+        },
+        {
+          "id": "OL1418244W",
+          "title": "The Chessmen of Mars",
+          "author": "Edgar Rice Burroughs",
+          "coverId": "ol:14422816",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#132"
+        },
+        {
+          "id": "OL6673188W",
+          "title": "Chrome",
+          "author": "George Nader",
+          "coverId": "ol:10961503",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#133"
+        },
+        {
+          "id": "OL4978451W",
+          "title": "Winter World",
+          "author": "Carla J. Mills",
+          "coverId": "ol:6634108",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#134"
+        },
+        {
+          "id": "OL20920063W",
+          "title": "The Rivals of Dracula",
+          "author": "Michel Parry",
+          "coverId": "ol:10290370",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#139"
+        },
+        {
+          "id": "OL8997343W",
+          "title": "Crystal Line",
+          "author": "Anne McCaffrey",
+          "coverId": "ol:7009627",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#143"
+        },
+        {
+          "id": "OL172992W",
+          "title": "Marauders of Gor",
+          "author": "John Norman",
+          "coverId": "ol:7241564",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#146"
+        },
+        {
+          "id": "OL5821184W",
+          "title": "Rats, Bats & Vats",
+          "author": "Dave Freer",
+          "coverId": "ol:8677100",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#149"
+        },
+        {
+          "id": "OL90703W",
+          "title": "A Coven of Vampires",
+          "author": "Brian Lumley",
+          "coverId": "ol:2398045",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#150"
+        },
+        {
+          "id": "OL155436W",
+          "title": "The Right to Arm Bears",
+          "author": "Gordon R. Dickson",
+          "coverId": "ol:405564",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#151"
+        },
+        {
+          "id": "OL49488W",
+          "title": "Ender's Game",
+          "author": "Orson Scott Card",
+          "coverId": "ol:14478204",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#152"
+        },
+        {
+          "id": "OL24206076W",
+          "title": "Taurus Four",
+          "author": "Rena M. Vale",
+          "coverId": "ol:10650296",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#153"
+        },
+        {
+          "id": "OL20538481W",
+          "title": "The Fascinating Life of Animal Robots",
+          "author": "T.K. Wade",
+          "coverId": "ol:9186705",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#154"
+        },
+        {
+          "id": "OL4045682W",
+          "title": "Dagger's Point",
+          "author": "Anne Logston",
+          "coverId": "ol:12189422",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#155"
+        },
+        {
+          "id": "OL24894427W",
+          "title": "Glitter Ponies",
+          "author": "Lita Burke",
+          "coverId": "ol:11793212",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#158"
+        },
+        {
+          "id": "OL5510993W",
+          "title": "Star Surgeon",
+          "author": "James White",
+          "coverId": "ol:15149226",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#160"
+        },
+        {
+          "id": "OL102598W",
+          "title": "Cat-a-Lyst",
+          "author": "Alan Dean Foster",
+          "coverId": "ol:6885777",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#162"
+        },
+        {
+          "id": "OL466790W",
+          "title": "Flux",
+          "author": "Ron Goulart",
+          "coverId": "ol:14579562",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#164"
+        },
+        {
+          "id": "OL175676W",
+          "title": "Bug Park",
+          "author": "James P. Hogan",
+          "coverId": "ol:409575",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#168"
+        },
+        {
+          "id": "OL1816214W",
+          "title": "The Three-Legged Hootch Dancer",
+          "author": "Mike Resnick",
+          "coverId": "ol:13206185",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#170"
+        },
+        {
+          "id": "OL101934W",
+          "title": "Swords in the Mist",
+          "author": "Fritz Leiber",
+          "coverId": "ol:13551120",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#183"
+        },
+        {
+          "id": "OL59797W",
+          "title": "The Word for World Is Forest",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:13210652",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#188"
+        },
+        {
+          "id": "OL467280W",
+          "title": "The Stainless Steel Rat for President",
+          "author": "Harry Harrison",
+          "coverId": "ol:6970629",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#195"
+        },
+        {
+          "id": "OL273059W",
+          "title": "Venus on the Half-Shell",
+          "author": "Philip José Farmer",
+          "coverId": "ol:7431565",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#196"
+        },
+        {
+          "id": "OL15184122W",
+          "title": "Bill, the Galactic Hero",
+          "author": "Harry Harrison",
+          "coverId": "ol:13008855",
+          "addedAt": "2026-10-08",
+          "from": "reddit:badscificovers#198"
         }
       ]
+    },
+    {
+      "slug": "hemingways-reading-list",
+      "title": "Hemingway’s reading list",
+      "kind": "series",
+      "intro": "In 1934 a young man named Arnold Samuelson hitchhiked to Key West to ask Ernest Hemingway about writing, and Hemingway wrote him a list of two stories and fourteen books, among them War and Peace, Madame Bovary, Dubliners and The Brothers Karamazov; Samuelson told the story in With Hemingway (1984). A longer version of the list goes round online, adding books Hemingway named on other occasions — Marryat, Fielding, Turgenev, Proust. This wall follows the longer list, one cover each.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL24317882W",
+          "title": "The Common Reader",
+          "author": "Virginia Woolf",
+          "coverId": "ol:9109265",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL5912613W",
+          "title": "House Divided",
+          "author": "Ben Ames Williams",
+          "coverId": "ol:1875318",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL99611W",
+          "title": "The Republic",
+          "author": "Charles Austin Beard",
+          "coverId": "ol:13843206",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL17860766W",
+          "title": "African Hunting",
+          "author": "William Charles Baldwin",
+          "coverId": "ol:8164214",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL15136245W",
+          "title": "Collected Poems",
+          "author": "T. S. Eliot",
+          "coverId": "ol:376558",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL86318W",
+          "title": "Ulysses",
+          "author": "James Joyce",
+          "coverId": "ol:14909921",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL86320W",
+          "title": "Dubliners",
+          "author": "James Joyce",
+          "coverId": "ol:8216412",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL86343W",
+          "title": "A Portrait of the Artist as a Young Man",
+          "author": "James Joyce",
+          "coverId": "ol:13638237",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL259026W",
+          "title": "King Lear",
+          "author": "William Shakespeare",
+          "coverId": "ol:2005713",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL20805W",
+          "title": "The Open Boat and Other Stories",
+          "author": "Stephen Crane",
+          "coverId": "ol:9204519",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL20844W",
+          "title": "The Red Badge of Courage",
+          "author": "Stephen Crane",
+          "coverId": "ol:12044954",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL893707W",
+          "title": "Madame Bovary",
+          "author": "Gustave Flaubert",
+          "coverId": "ol:15009957",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL893802W",
+          "title": "Sentimental Education",
+          "author": "Gustave Flaubert",
+          "coverId": "ol:10507050",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL733640W",
+          "title": "The Red and the Black",
+          "author": "Stendhal",
+          "coverId": "ol:8231413",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL505781W",
+          "title": "Of Human Bondage",
+          "author": "William Somerset Maugham",
+          "coverId": "ol:5277723",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL267096W",
+          "title": "Anna Karenina",
+          "author": "Лев Толстой",
+          "coverId": "ol:2560652",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL267171W",
+          "title": "War and Peace",
+          "author": "Лев Толстой",
+          "coverId": "ol:12621906",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL14867081W",
+          "title": "Buddenbrooks",
+          "author": "Thomas Mann",
+          "coverId": "ol:10461264",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL2060369W",
+          "title": "Hail and Farewell",
+          "author": "George Moore",
+          "coverId": "ol:762302",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL10432709W",
+          "title": "The Brothers Karamazov",
+          "author": "Fiódor Dostoievski",
+          "coverId": "ol:14889162",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL21077191W",
+          "title": "The Enormous Room",
+          "author": "E. E. Cummings",
+          "coverId": "ol:10458629",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL21177W",
+          "title": "Wuthering Heights",
+          "author": "Emily Brontë",
+          "coverId": "ol:12818862",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL879152W",
+          "title": "Far Away and Long Ago",
+          "author": "W. H. Hudson",
+          "coverId": "ol:10508061",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL276314W",
+          "title": "The American",
+          "author": "Henry James",
+          "coverId": "ol:8245158",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL166779W",
+          "title": "Mr. Midshipman Easy",
+          "author": "Frederick Marryat",
+          "coverId": "ol:8242328",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL166766W",
+          "title": "Frank Mildmay",
+          "author": "Frederick Marryat",
+          "coverId": "ol:2843846",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL166775W",
+          "title": "Peter Simple",
+          "author": "Frederick Marryat",
+          "coverId": "ol:12036844",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL45623W",
+          "title": "Tom Jones",
+          "author": "Henry Fielding",
+          "coverId": "ol:2560603",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL45709W",
+          "title": "Joseph Andrews",
+          "author": "Henry Fielding",
+          "coverId": "ol:5955750",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL53908W",
+          "title": "Adventures of Huckleberry Finn",
+          "author": "Mark Twain",
+          "coverId": "ol:8157718",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL38786W",
+          "title": "Autobiographies",
+          "author": "William Butler Yeats",
+          "coverId": "ol:427652",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL43369W",
+          "title": "A Sportsman's Sketches",
+          "author": "Ivan Sergeevich Turgenev",
+          "coverId": "ol:8292905",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL43370W",
+          "title": "Fathers and Sons",
+          "author": "Ivan Sergeevich Turgenev",
+          "coverId": "ol:8236420",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL15212580W",
+          "title": "Winesburg, Ohio",
+          "author": "Sherwood Anderson",
+          "coverId": "ol:14002129",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL36827W",
+          "title": "Queen Margot",
+          "author": "Alexandre Dumas",
+          "coverId": "ol:14557277",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        },
+        {
+          "id": "OL1190289W",
+          "title": "In Search of Lost Time",
+          "author": "Marcel Proust",
+          "coverId": "ol:12332709",
+          "addedAt": "2026-10-08",
+          "from": "x:Kulambq/2107900436959117418"
+        }
+      ]
+    },
+    {
+      "slug": "shelves-from-a-house-tour",
+      "title": "Shelves from a house tour",
+      "kind": "series",
+      "intro": "Books whose spines can be read on three stills from a video house tour, posted on X in October 2026 as Dakota Johnson’s bookshelves — Saramago, Sorokin in the NYRB edition, DeLillo, Anne Boyer, a run of Isaac Bashevis Singer — in the order they stand on the shelves. After them the books the post names but the stills do not show: the rest of Pynchon, Gaddis, Bolaño, Carlos Fuentes’s Terra Nostra in the Dalkey Archive edition and Sebald’s The Rings of Saturn in its first New Directions edition.",
+      "published": false,
+      "publishers": [],
+      "works": [
+        {
+          "id": "OL318886W",
+          "title": "Prose Poems",
+          "author": "Kahlil Gibran",
+          "coverId": "ol:9538647",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL27415W",
+          "title": "All the Names",
+          "author": "José Saramago",
+          "coverId": "ol:11755893",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL865722W",
+          "title": "The Queue",
+          "author": "Vladimir Sorokin",
+          "coverId": "ol:13858227",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1846845W",
+          "title": "The Poisonwood Bible",
+          "author": "Barbara Kingsolver",
+          "coverId": "ol:853663",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1921185W",
+          "title": "Underworld",
+          "author": "Don DeLillo",
+          "coverId": "ol:426968",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL2636648W",
+          "title": "Inherent Vice",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:7153487",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL17797130W",
+          "title": "A Gentleman in Moscow",
+          "author": "Amor Towles",
+          "coverId": "ol:11326818",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL12472708W",
+          "title": "Shadow Country",
+          "author": "Peter Matthiessen",
+          "coverId": "ol:11845096",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL676009W",
+          "title": "The Master and Margarita",
+          "author": "Mikhail Bulgakov",
+          "coverId": "ol:12947486",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345095W",
+          "title": "The Manor",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:7018468",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345101W",
+          "title": "Shosha",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:15062456",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL2636665W",
+          "title": "The Crying of Lot 49",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:39754",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345089W",
+          "title": "Scum",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:225195",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345096W",
+          "title": "The Family Moskat",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:224568",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL20916852W",
+          "title": "The Undying",
+          "author": "Anne Boyer",
+          "coverId": "ol:10285512",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL1345097W",
+          "title": "In My Father's Court",
+          "author": "Isaac Bashevis Singer",
+          "coverId": "ol:224580",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL22163654W",
+          "title": "Apeirogon",
+          "author": "Colum McCann",
+          "coverId": "ol:9282671",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL276798W",
+          "title": "Catch-22",
+          "author": "Joseph Heller",
+          "coverId": "ol:6468653",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL15894505W",
+          "title": "Jewish Pirates of the Caribbean",
+          "author": "Edward Kritzler",
+          "coverId": "ol:8033374",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL17094387W",
+          "title": "Bleeding Edge",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:13152060",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644"
+        },
+        {
+          "id": "OL2636676W",
+          "title": "V.",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:6678023",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636675W",
+          "title": "Gravity's Rainbow",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:97894",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636671W",
+          "title": "Slow Learner",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:9627018",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636662W",
+          "title": "Vineland",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:5273728",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636672W",
+          "title": "Mason & Dixon",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:579445",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL2636670W",
+          "title": "Against the Day",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:872335",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL44220096W",
+          "title": "Shadow Ticket",
+          "author": "Thomas Pynchon",
+          "coverId": "ol:15130634",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412512W",
+          "title": "The Recognitions",
+          "author": "William Gaddis",
+          "coverId": "ol:97727",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412515W",
+          "title": "J R",
+          "author": "William Gaddis",
+          "coverId": "ol:97726",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412502W",
+          "title": "Carpenter's Gothic",
+          "author": "William Gaddis",
+          "coverId": "ol:107769",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412514W",
+          "title": "A Frolic of His Own",
+          "author": "William Gaddis",
+          "coverId": "ol:3938926",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL3412501W",
+          "title": "Agapē Agape",
+          "author": "William Gaddis",
+          "coverId": "ol:110588",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL712025W",
+          "title": "2666",
+          "author": "Roberto Bolaño",
+          "coverId": "ol:1047310",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL712032W",
+          "title": "The Savage Detectives",
+          "author": "Roberto Bolaño",
+          "coverId": "ol:3706128",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL872223W",
+          "title": "Terra Nostra",
+          "author": "Carlos Fuentes",
+          "coverId": "ol:801632",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        },
+        {
+          "id": "OL46611W",
+          "title": "The Rings of Saturn",
+          "author": "W. G. Sebald",
+          "coverId": "ol:598261",
+          "addedAt": "2026-10-08",
+          "from": "x:exhaustdata/2108233087612305644 (named, not seen)"
+        }
+      ],
+      "coverCredits": "isfdb"
+    },
+    {
+      "slug": "tom-adams-christie",
+      "title": "Tom Adams' Agatha Christie",
+      "kind": "series",
+      "published": false,
+      "publishers": [
+        "Fontana"
+      ],
+      "intro": "From 1963 to 1979 Tom Adams painted the covers of Agatha Christie's Fontana paperbacks, most titles more than once: still lifes of the objects in a case, often with a clue hidden among them. These are the paintings the collector David Morris credits to Adams from the Fontana printings themselves (collectingchristie.com), in the order Fontana first used them, each matched to a cover Open Library holds. Behind each cover is the wall of the book's other faces.",
+      "works": [
+        {
+          "id": "OL472145W",
+          "title": "Ordeal by Innocence",
+          "author": "Agatha Christie",
+          "coverId": "ol:15130644",
+          "addedAt": "2026-10-09",
+          "from": "fontana:798 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471895W",
+          "title": "The Murder at the Vicarage",
+          "author": "Agatha Christie",
+          "coverId": "ol:7267514",
+          "addedAt": "2026-10-09",
+          "from": "fontana:839 (collectingchristie.com)",
+          "coverIsbn": "0006120601"
+        },
+        {
+          "id": "OL472526W",
+          "title": "The Hollow",
+          "author": "Agatha Christie",
+          "coverId": "ol:13679047",
+          "addedAt": "2026-10-09",
+          "from": "fontana:864 (collectingchristie.com)",
+          "coverIsbn": "0006118208"
+        },
+        {
+          "id": "OL472416W",
+          "title": "The Adventure of the Christmas Pudding",
+          "author": "Agatha Christie",
+          "coverId": "ol:15263581",
+          "addedAt": "2026-10-09",
+          "from": "fontana:896 (collectingchristie.com)",
+          "coverWork": "OL42970331W"
+        },
+        {
+          "id": "OL471841W",
+          "title": "Hercule Poirot's Christmas",
+          "author": "Agatha Christie",
+          "coverId": "ol:12855074",
+          "addedAt": "2026-10-09",
+          "from": "fontana:901 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472572W",
+          "title": "Murder in Mesopotamia",
+          "author": "Agatha Christie",
+          "coverId": "ol:10555802",
+          "addedAt": "2026-10-09",
+          "from": "fontana:939 (collectingchristie.com)",
+          "coverIsbn": "0006128599"
+        },
+        {
+          "id": "OL471641W",
+          "title": "Cat Among the Pigeons",
+          "author": "Agatha Christie",
+          "coverId": "ol:12852588",
+          "addedAt": "2026-10-09",
+          "from": "fontana:950 (collectingchristie.com)",
+          "coverIsbn": "0006132804"
+        },
+        {
+          "id": "OL471883W",
+          "title": "The Hound of Death",
+          "author": "Agatha Christie",
+          "coverId": "ol:13698499",
+          "addedAt": "2026-10-09",
+          "from": "fontana:970 (collectingchristie.com)",
+          "coverIsbn": "0006141994"
+        },
+        {
+          "id": "OL472074W",
+          "title": "Murder in the Mews",
+          "author": "Agatha Christie",
+          "coverId": "ol:14560304",
+          "addedAt": "2026-10-09",
+          "from": "fontana:984 (collectingchristie.com)",
+          "coverIsbn": "0006128610"
+        },
+        {
+          "id": "OL471919W",
+          "title": "The Pale Horse",
+          "author": "Agatha Christie",
+          "coverId": "ol:14586372",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1000 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471983W",
+          "title": "Sparkling Cyanide",
+          "author": "Agatha Christie",
+          "coverId": "ol:10663008",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1009 (collectingchristie.com)",
+          "coverIsbn": "0006110096"
+        },
+        {
+          "id": "OL471891W",
+          "title": "Crooked House",
+          "author": "Agatha Christie",
+          "coverId": "ol:15240679",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1030 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472043W",
+          "title": "The Mysterious Mr. Quin",
+          "author": "Agatha Christie",
+          "coverId": "ol:14586400",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1050 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471990W",
+          "title": "The Mirror Crack'd from Side to Side",
+          "author": "Agatha Christie",
+          "coverId": "ol:6539918",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1077 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471905W",
+          "title": "The Moving Finger",
+          "author": "Agatha Christie",
+          "coverId": "ol:7266328",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1163 (collectingchristie.com)",
+          "coverIsbn": "0006111637"
+        },
+        {
+          "id": "OL471670W",
+          "title": "The Clocks",
+          "author": "Agatha Christie",
+          "coverId": "ol:15205394",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1268 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472328W",
+          "title": "Towards Zero",
+          "author": "Agatha Christie",
+          "coverId": "ol:13670802",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1301 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472619W",
+          "title": "A Pocket Full of Rye",
+          "author": "Agatha Christie",
+          "coverId": "ol:15207798",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1401 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472458W",
+          "title": "A Caribbean Mystery",
+          "author": "Agatha Christie",
+          "coverId": "ol:11477286",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1418.r (collectingchristie.com)",
+          "coverIsbn": "0006114180"
+        },
+        {
+          "id": "OL471738W",
+          "title": "Destination Unknown",
+          "author": "Agatha Christie",
+          "coverId": "ol:14155494",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1506 (collectingchristie.com)",
+          "coverIsbn": "0006133746"
+        },
+        {
+          "id": "OL471500W",
+          "title": "4.50 from Paddington",
+          "author": "Agatha Christie",
+          "coverId": "ol:14590069",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1511 (collectingchristie.com)"
+        },
+        {
+          "id": "OL265415W",
+          "title": "At Bertram's Hotel",
+          "author": "Agatha Christie",
+          "coverId": "ol:14577273",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1521 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471784W",
+          "title": "The Seven Dials Mystery",
+          "author": "Agatha Christie",
+          "coverId": "ol:12996420",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1561 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472049W",
+          "title": "Evil Under the Sun",
+          "author": "Agatha Christie",
+          "coverId": "ol:15217665",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1633 (collectingchristie.com)",
+          "coverIsbn": "0006139825"
+        },
+        {
+          "id": "OL471898W",
+          "title": "Death Comes as the End",
+          "author": "Agatha Christie",
+          "coverId": "ol:13267895",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1736 (collectingchristie.com)",
+          "coverIsbn": "0006117368"
+        },
+        {
+          "id": "OL472536W",
+          "title": "Third Girl",
+          "author": "Agatha Christie",
+          "coverId": "ol:14589311",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1759 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472324W",
+          "title": "Death in the Clouds",
+          "author": "Agatha Christie",
+          "coverId": "ol:14895285",
+          "addedAt": "2026-10-09",
+          "from": "fontana:1923 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471702W",
+          "title": "One, Two, Buckle my Shoe",
+          "author": "Agatha Christie",
+          "coverId": "ol:12884448",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2022 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471767W",
+          "title": "Lord Edgware Dies",
+          "author": "Agatha Christie",
+          "coverId": "ol:15217681",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2036 (collectingchristie.com)",
+          "coverIsbn": "000614215X"
+        },
+        {
+          "id": "OL472884W",
+          "title": "Parker Pyne Investigates",
+          "author": "Agatha Christie",
+          "coverId": "ol:14586887",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2043 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472279W",
+          "title": "Taken at the Flood",
+          "author": "Agatha Christie",
+          "coverId": "ol:13670254",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2279 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471713W",
+          "title": "Dead Man's Folly",
+          "author": "Agatha Christie",
+          "coverId": "ol:11434438",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2305 (collectingchristie.com)",
+          "coverIsbn": "0006132413"
+        },
+        {
+          "id": "OL472145W",
+          "title": "Ordeal by Innocence",
+          "author": "Agatha Christie",
+          "coverId": "ol:15130643",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2450 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471664W",
+          "title": "The Sittaford Mystery",
+          "author": "Agatha Christie",
+          "coverId": "ol:15218253",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2550 (collectingchristie.com)",
+          "coverIsbn": "0006125506"
+        },
+        {
+          "id": "OL471666W",
+          "title": "Five Little Pigs",
+          "author": "Agatha Christie",
+          "coverId": "ol:3287",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2603 (collectingchristie.com)",
+          "coverIsbn": "0006126030"
+        },
+        {
+          "id": "OL472165W",
+          "title": "Peril at End House",
+          "author": "Agatha Christie",
+          "coverId": "ol:10767288",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2615 (collectingchristie.com)"
+        },
+        {
+          "id": "OL471619W",
+          "title": "By the Pricking of My Thumbs",
+          "author": "Agatha Christie",
+          "coverId": "ol:15217424",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2682 (collectingchristie.com)",
+          "coverIsbn": "0671823302"
+        },
+        {
+          "id": "OL471947W",
+          "title": "The Big Four",
+          "author": "Agatha Christie",
+          "coverId": "ol:11163918",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2878 (collectingchristie.com)",
+          "coverIsbn": "0006151701"
+        },
+        {
+          "id": "OL471832W",
+          "title": "Hallowe'en Party",
+          "author": "Agatha Christie",
+          "coverId": "ol:13671197",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3005 (collectingchristie.com)"
+        },
+        {
+          "id": "OL472388W",
+          "title": "Why Didn't They Ask Evans?",
+          "author": "Agatha Christie",
+          "coverId": "ol:13918610",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3076 (collectingchristie.com)",
+          "coverIsbn": "0006142087"
+        },
+        {
+          "id": "OL471841W",
+          "title": "Hercule Poirot's Christmas",
+          "author": "Agatha Christie",
+          "coverId": "ol:14569319",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3090 (collectingchristie.com)",
+          "coverIsbn": "0006130909"
+        },
+        {
+          "id": "OL472159W",
+          "title": "Passenger to Frankfurt",
+          "author": "Agatha Christie",
+          "coverId": "ol:14571631",
+          "addedAt": "2026-10-09",
+          "from": "fontana:3295 (collectingchristie.com)",
+          "coverIsbn": "0006132952"
+        }
+      ],
+      "tileShape": "tall"
     }
   ]
 }

@@ -1,4 +1,4 @@
-"""ROADMAP 6.101, step 2: embed the haikus locally (fastembed, BAAI/bge-small-en-v1.5, no API, no cost).
+"""ROADMAP 6.102, step 2: embed the haikus locally (fastembed, BAAI/bge-small-en-v1.5, no API, no cost).
 Reads lab/haiku/out/sample.json, writes lab/haiku/out/vectors.json (one vector per cover, null where no text).
 
   ../bb-lab-cache/haiku/venv/bin/python lab/haiku/embed.py

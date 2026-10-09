@@ -1,5 +1,5 @@
 /**
- * ROADMAP 6.101, step 1: 200 covers from the built index, one per work, each described by a model in a fixed
+ * ROADMAP 6.102, step 1: 200 covers from the built index, one per work, each described by a model in a fixed
  * form (three haikus about the look, never the book). Answers are cached in ../bb-lab-cache/haiku/desc/, so a
  * second run asks nothing. Writes lab/haiku/out/sample.json with descriptions, 6.10 neighbours and the cost.
  *

@@ -1,5 +1,5 @@
 {
-  "curatedAt": "2026-09-26",
+  "curatedAt": "2026-10-09",
   "works": [
     {
       "id": "OL39349W",
@@ -15,7 +15,7 @@
       "author": "Ingeborg Bachmann",
       "coverId": "ol:12273691",
       "firstPublished": 1971,
-      "pickedAt": "2026-09-24T22:04:13.785Z"
+      "pickedAt": "2026-10-09T03:57:58.738Z"
     },
     {
       "id": "OL109524W",
@@ -840,17 +840,17 @@
       "id": "OL675722W",
       "title": "Oryx and Crake",
       "author": "Margaret Atwood",
-      "coverId": "ol:14534480",
+      "coverId": "ol:14339094",
       "firstPublished": 2002,
-      "pickedAt": "2026-09-24T22:00:37.157Z"
+      "pickedAt": "2026-10-07T18:09:12.732Z"
     },
     {
       "id": "OL12791W",
       "title": "My Ántonia",
       "author": "Willa Cather",
-      "coverId": "ol:13675554",
-      "firstPublished": 1918,
-      "pickedAt": "2026-09-24T22:01:31.251Z"
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-07T18:22:30.612Z"
     },
     {
       "id": "OL80021W",
@@ -858,7 +858,7 @@
       "author": "Maya Angelou",
       "coverId": "ol:15204141",
       "firstPublished": 1969,
-      "pickedAt": "2026-09-24T22:04:07.446Z"
+      "pickedAt": "2026-10-08T05:08:29.123Z"
     },
     {
       "id": "OL8769634W",
@@ -866,15 +866,15 @@
       "author": "Anna Seghers",
       "coverId": "ol:1023901",
       "firstPublished": 1942,
-      "pickedAt": "2026-09-24T22:04:23.199Z"
+      "pickedAt": "2026-10-08T05:08:35.753Z"
     },
     {
       "id": "OL50565W",
       "title": "The Bluest Eye",
       "author": "Toni Morrison",
-      "coverId": "ol:2153522",
+      "coverId": "ol:9255403",
       "firstPublished": 1970,
-      "pickedAt": "2026-09-24T22:07:28.701Z"
+      "pickedAt": "2026-10-08T05:08:56.397Z"
     },
     {
       "id": "OL39396W",
@@ -1458,6 +1458,602 @@
       "author": "Лев Толстой",
       "coverId": "ol:15228735",
       "pickedAt": "2026-09-08T20:30:37.982Z"
+    },
+    {
+      "id": "OL767941W",
+      "title": "Le Deuxième Sexe",
+      "author": "Simone de Beauvoir",
+      "coverId": "ol:12604966",
+      "firstPublished": 1949,
+      "pickedAt": "2026-10-07T18:08:48.527Z"
+    },
+    {
+      "id": "OL2056818W",
+      "title": "Maus I",
+      "author": "Art Spiegelman",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-07T18:08:52.017Z"
+    },
+    {
+      "id": "OL2897798W",
+      "title": "Watchmen",
+      "author": "Alan Moore",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-07T18:08:58.807Z"
+    },
+    {
+      "id": "OL505439W",
+      "title": "Under the Volcano",
+      "author": "Malcolm Lowry",
+      "coverId": "ol:45606",
+      "firstPublished": 1947,
+      "pickedAt": "2026-10-07T18:09:19.377Z"
+    },
+    {
+      "id": "OL88813W",
+      "title": "A Room with a View",
+      "author": "E. M. Forster",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-07T18:09:33.498Z"
+    },
+    {
+      "id": "OL38684W",
+      "title": "Lord Jim",
+      "author": "Joseph Conrad",
+      "coverId": "ol:15244279",
+      "pickedAt": "2026-10-07T18:22:11.178Z"
+    },
+    {
+      "id": "OL88881W",
+      "title": "Howards End",
+      "author": "E. M. Forster",
+      "coverId": "ol:12622122",
+      "firstPublished": 1910,
+      "pickedAt": "2026-10-07T18:22:09.027Z"
+    },
+    {
+      "id": "OL98491W",
+      "title": "The Age of Innocence",
+      "author": "Edith Wharton",
+      "coverId": "ol:10085704",
+      "pickedAt": "2026-10-07T18:22:17.475Z"
+    },
+    {
+      "id": "OL114967W",
+      "title": "The Jungle",
+      "author": "Upton Sinclair",
+      "coverId": "ol:793745",
+      "pickedAt": "2026-10-07T18:22:38.509Z"
+    },
+    {
+      "id": "OL4321141W",
+      "title": "The Secret History",
+      "author": "Donna Tartt",
+      "coverId": "ol:14827487",
+      "pickedAt": "2026-10-07T18:22:52.274Z"
+    },
+    {
+      "id": "OL16809803W",
+      "title": "The Goldfinch",
+      "author": "Donna Tartt",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-07T18:22:58.949Z"
+    },
+    {
+      "id": "OL16509148W",
+      "title": "The Song of Achilles",
+      "author": "Madeline Miller",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-07T18:23:06.432Z"
+    },
+    {
+      "id": "OL18012166W",
+      "title": "Circe",
+      "author": "Madeline Miller",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-07T18:23:09.025Z"
+    },
+    {
+      "id": "OL20150260W",
+      "title": "Normal People",
+      "author": "Sally Rooney",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:01:40.136Z"
+    },
+    {
+      "id": "OL5720023W",
+      "title": "Twilight",
+      "author": "Stephenie Meyer",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-07T18:23:28.760Z"
+    },
+    {
+      "id": "OL5735363W",
+      "title": "The Hunger Games",
+      "author": "Suzanne Collins",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-07T18:23:33.172Z"
+    },
+    {
+      "id": "OL82563W",
+      "title": "Harry Potter and the Philosopher's Stone",
+      "author": "J. K. Rowling",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T03:54:11.622Z"
+    },
+    {
+      "id": "OL16444438W",
+      "title": "The Fault in Our Stars",
+      "author": "John Green",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T03:54:17.434Z"
+    },
+    {
+      "id": "OL16239762W",
+      "title": "Gone Girl",
+      "author": "Gillian Flynn",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-07T18:26:32.333Z"
+    },
+    {
+      "id": "OL875437W",
+      "title": "The Perks of Being a Wallflower",
+      "author": "Stephen Chbosky",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T03:54:18.936Z"
+    },
+    {
+      "id": "OL16086747W",
+      "title": "The Night Circus",
+      "author": "Erin Morgenstern",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:01:41.865Z"
+    },
+    {
+      "id": "OL5819456W",
+      "title": "The Book Thief",
+      "author": "Markus Zusak",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:01:45.752Z"
+    },
+    {
+      "id": "OL3923952W",
+      "title": "人間失格",
+      "author": "太宰 治",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:01:48.788Z"
+    },
+    {
+      "id": "OL796465W",
+      "title": "O Alquimista",
+      "author": "Paulo Coelho",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:01:55.803Z"
+    },
+    {
+      "id": "OL2827199W",
+      "title": "Life of Pi",
+      "author": "Yann Martel",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:02:02.936Z"
+    },
+    {
+      "id": "OL29983W",
+      "title": "Little Women",
+      "author": "Louisa May Alcott",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-08T04:54:54.897Z"
+    },
+    {
+      "id": "OL1168007W",
+      "title": "Animal Farm",
+      "author": "George Orwell",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-08T04:55:15.561Z"
+    },
+    {
+      "id": "OL71037W",
+      "title": "The Lion, the Witch and the Wardrobe",
+      "author": "C. S. Lewis",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T04:55:18.361Z"
+    },
+    {
+      "id": "OL257943W",
+      "title": "A Game of Thrones",
+      "author": "George R. R. Martin",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T04:55:20.102Z"
+    },
+    {
+      "id": "OL8479867W",
+      "title": "The Name of the Wind",
+      "author": "Patrick Rothfuss",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-08T04:55:23.755Z"
+    },
+    {
+      "id": "OL81613W",
+      "title": "It",
+      "author": "Stephen King",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T04:55:51.834Z"
+    },
+    {
+      "id": "OL45846W",
+      "title": "Matilda",
+      "author": "Roald Dahl",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T04:55:54.185Z"
+    },
+    {
+      "id": "OL45790W",
+      "title": "Charlie and the Chocolate Factory",
+      "author": "Roald Dahl",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T04:55:56.072Z"
+    },
+    {
+      "id": "OL2718328W",
+      "title": "The Outsiders",
+      "author": "S. E. Hinton",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T04:56:06.856Z"
+    },
+    {
+      "id": "OL267933W",
+      "title": "Gone With the Wind",
+      "author": "Margaret Mitchell",
+      "coverId": "",
+      "skipped": true,
+      "pickedAt": "2026-10-08T04:56:09.715Z"
+    },
+    {
+      "id": "OL1673205W",
+      "title": "The Godfather",
+      "author": "Mario Puzo",
+      "coverId": "ol:14820194",
+      "firstPublished": 1969,
+      "pickedAt": "2026-10-08T05:04:34.870Z"
+    },
+    {
+      "id": "OL23481W",
+      "title": "The Silence of the Lambs",
+      "author": "Thomas Harris",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T05:04:43.244Z"
+    },
+    {
+      "id": "OL262454W",
+      "title": "The Hound of the Baskervilles",
+      "author": "Arthur Conan Doyle",
+      "coverId": "ol:13533632",
+      "firstPublished": 1900,
+      "pickedAt": "2026-10-08T05:05:01.330Z"
+    },
+    {
+      "id": "OL471576W",
+      "title": "Murder on the Orient Express",
+      "author": "Agatha Christie",
+      "coverId": "ol:10198586",
+      "firstPublished": 1933,
+      "pickedAt": "2026-10-08T05:05:21.369Z"
+    },
+    {
+      "id": "OL471565W",
+      "title": "And Then There Were None",
+      "author": "Agatha Christie",
+      "coverId": "ol:14586885",
+      "firstPublished": 1939,
+      "pickedAt": "2026-10-08T05:05:27.941Z"
+    },
+    {
+      "id": "OL15400582W",
+      "title": "The Big Sleep",
+      "author": "Raymond Chandler",
+      "coverId": "ol:13626544",
+      "firstPublished": 1939,
+      "pickedAt": "2026-10-08T05:05:44.054Z"
+    },
+    {
+      "id": "OL47266W",
+      "title": "The Maltese Falcon",
+      "author": "Dashiell Hammett",
+      "coverId": "ol:15011005",
+      "firstPublished": 1929,
+      "pickedAt": "2026-10-08T05:05:51.899Z"
+    },
+    {
+      "id": "OL103134W",
+      "title": "The Martian Chronicles",
+      "author": "Ray Bradbury",
+      "coverId": "ol:14828149",
+      "firstPublished": 1950,
+      "pickedAt": "2026-10-08T05:07:21.829Z"
+    },
+    {
+      "id": "OL59688W",
+      "title": "Stranger in a Strange Land",
+      "author": "Robert A. Heinlein",
+      "coverId": "ol:14350985",
+      "firstPublished": 1961,
+      "pickedAt": "2026-10-08T05:07:52.415Z"
+    },
+    {
+      "id": "OL482454W",
+      "title": "Cloud Atlas",
+      "author": "David Mitchell",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T05:08:01.992Z"
+    },
+    {
+      "id": "OL816259W",
+      "title": "Trainspotting",
+      "author": "Irvine Welsh",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-08T05:08:03.570Z"
+    },
+    {
+      "id": "OL49488W",
+      "title": "Ender's Game",
+      "author": "Orson Scott Card",
+      "coverId": "ol:183785",
+      "firstPublished": 1985,
+      "pickedAt": "2026-10-09T03:57:16.445Z"
+    },
+    {
+      "id": "OL2096536W",
+      "title": "Watership Down",
+      "author": "Richard Adams",
+      "coverId": "ol:13269319",
+      "firstPublished": 1972,
+      "pickedAt": "2026-10-09T03:57:33.810Z"
+    },
+    {
+      "id": "OL44995W",
+      "title": "Far from the Madding Crowd",
+      "author": "Thomas Hardy",
+      "coverId": "ol:7155684",
+      "firstPublished": 1874,
+      "pickedAt": "2026-10-09T03:57:46.690Z"
+    },
+    {
+      "id": "OL531767W",
+      "title": "The Canterbury Tales",
+      "author": "Geoffrey Chaucer",
+      "coverId": "ol:12017760",
+      "firstPublished": 1970,
+      "pickedAt": "2026-10-09T04:03:03.074Z"
+    },
+    {
+      "id": "OL810991W",
+      "title": "Paradise Lost",
+      "author": "John Milton",
+      "coverId": "ol:11692295",
+      "firstPublished": 1667,
+      "pickedAt": "2026-10-09T04:03:39.610Z"
+    },
+    {
+      "id": "OL15366912W",
+      "title": "Utopia",
+      "author": "Thomas More",
+      "coverId": "ol:407804",
+      "firstPublished": 1518,
+      "pickedAt": "2026-10-09T04:04:08.343Z"
+    },
+    {
+      "id": "OL7180368W",
+      "title": "Decamerone",
+      "author": "Giovanni Boccaccio",
+      "coverId": "ol:12278311",
+      "firstPublished": 1516,
+      "pickedAt": "2026-10-09T04:05:10.108Z"
+    },
+    {
+      "id": "OL733640W",
+      "title": "Le rouge et le noir",
+      "author": "Stendhal",
+      "coverId": "ol:15050027",
+      "firstPublished": 1830,
+      "pickedAt": "2026-10-09T04:06:05.010Z"
+    },
+    {
+      "id": "OL5738260W",
+      "title": "Everything Is Illuminated",
+      "author": "Jonathan Safran Foer",
+      "coverId": "ol:10325599",
+      "firstPublished": 2002,
+      "pickedAt": "2026-10-09T04:07:45.561Z"
+    },
+    {
+      "id": "OL7990014W",
+      "title": "The Brief Wondrous Life of Oscar Wao",
+      "author": "Junot Díaz",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:07:49.216Z"
+    },
+    {
+      "id": "OL2001056W",
+      "title": "El Buen Nombre (Lingua Franca)",
+      "author": "Jhumpa Lahiri",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:07:54.411Z"
+    },
+    {
+      "id": "OL53071W",
+      "title": "The English Patient",
+      "author": "Michael Ondaatje",
+      "coverId": "ol:253452",
+      "firstPublished": 1992,
+      "pickedAt": "2026-10-09T04:08:21.914Z"
+    },
+    {
+      "id": "OL1326310W",
+      "title": "The Sea, the Sea",
+      "author": "Iris Murdoch",
+      "coverId": "ol:15158106",
+      "firstPublished": 1978,
+      "pickedAt": "2026-10-09T04:08:34.109Z"
+    },
+    {
+      "id": "OL100784W",
+      "title": "The Wasp Factory",
+      "author": "Iain Banks",
+      "coverId": "",
+      "dropped": true,
+      "pickedAt": "2026-10-09T04:08:37.603Z"
+    },
+    {
+      "id": "OL771125W",
+      "title": "Woyzeck",
+      "author": "Georg Büchner",
+      "coverId": "ol:261247",
+      "firstPublished": 1900,
+      "pickedAt": "2026-10-09T04:09:11.354Z"
+    },
+    {
+      "id": "OL995265W",
+      "title": "Der Schimmelreiter",
+      "author": "Theodor Storm",
+      "coverId": "ol:9775195",
+      "firstPublished": 1908,
+      "pickedAt": "2026-10-09T04:09:21.451Z"
+    },
+    {
+      "id": "OL28429W",
+      "title": "Schachnovelle",
+      "author": "Stefan Zweig",
+      "coverId": "ol:9030142",
+      "firstPublished": 1943,
+      "pickedAt": "2026-10-09T04:09:42.546Z"
+    },
+    {
+      "id": "OL712032W",
+      "title": "Los detectives salvajes",
+      "author": "Roberto Bolaño",
+      "coverId": "ol:15210253",
+      "firstPublished": 1998,
+      "pickedAt": "2026-10-09T04:10:14.015Z"
+    },
+    {
+      "id": "OL712025W",
+      "title": "2666",
+      "author": "Roberto Bolaño",
+      "coverId": "ol:15209906",
+      "firstPublished": 2004,
+      "pickedAt": "2026-10-09T04:10:33.606Z"
+    },
+    {
+      "id": "OL944359W",
+      "title": "La familia de Pascual Duarte",
+      "author": "Camilo José Cela",
+      "coverId": "ol:14361498",
+      "firstPublished": 1942,
+      "pickedAt": "2026-10-09T04:10:42.764Z"
+    },
+    {
+      "id": "OL274518W",
+      "title": "El amor en los tiempos del cólera",
+      "author": "Gabriel García Márquez",
+      "coverId": "ol:7908954",
+      "firstPublished": 1985,
+      "pickedAt": "2026-10-09T04:12:13.115Z"
+    },
+    {
+      "id": "OL1905255W",
+      "title": "La casa de los espíritus",
+      "author": "Isabel Allende",
+      "coverId": "ol:5488980",
+      "firstPublished": 1982,
+      "pickedAt": "2026-10-09T04:11:57.575Z"
+    },
+    {
+      "id": "OL857544W",
+      "title": "La ciudad y los perros",
+      "author": "Mario Vargas Llosa",
+      "coverId": "ol:12524438",
+      "firstPublished": 1963,
+      "pickedAt": "2026-10-09T04:12:19.786Z"
+    },
+    {
+      "id": "OL979517W",
+      "title": "Veinte poemas de amor y una canción desesperada",
+      "author": "Pablo Neruda",
+      "coverId": "ol:10976042",
+      "firstPublished": 1924,
+      "pickedAt": "2026-10-09T04:12:33.101Z"
+    },
+    {
+      "id": "OL617847W",
+      "title": "El túnel",
+      "author": "Ernesto Sabato",
+      "coverId": "ol:14953103",
+      "firstPublished": 1948,
+      "pickedAt": "2026-10-09T04:12:38.441Z"
+    },
+    {
+      "id": "OL1003040W",
+      "title": "Dom Casmurro",
+      "author": "Machado de Assis",
+      "coverId": "ol:1188836",
+      "firstPublished": 1982,
+      "pickedAt": "2026-10-09T04:12:49.993Z"
+    },
+    {
+      "id": "OL260101W",
+      "title": "The Tenant of Wildfell Hall",
+      "author": "Anne Brontë",
+      "coverId": "ol:11954156",
+      "firstPublished": 1847,
+      "pickedAt": "2026-10-09T04:14:00.470Z"
+    },
+    {
+      "id": "OL505781W",
+      "title": "Of Human Bondage",
+      "author": "William Somerset Maugham",
+      "coverId": "ol:11996470",
+      "firstPublished": 1913,
+      "pickedAt": "2026-10-09T04:14:50.215Z"
+    },
+    {
+      "id": "OL27776452W",
+      "title": "The Importance of Being Earnest",
+      "author": "Oscar Wilde",
+      "coverId": "ol:12621856",
+      "firstPublished": 1893,
+      "pickedAt": "2026-10-09T04:15:22.429Z"
     }
   ]
 }

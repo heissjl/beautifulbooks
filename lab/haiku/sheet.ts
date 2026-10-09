@@ -1,5 +1,5 @@
 /**
- * ROADMAP 6.101, step 3: the contact sheet. Per cover: its haikus, the five nearest covers by haiku embedding
+ * ROADMAP 6.102, step 3: the contact sheet. Per cover: its haikus, the five nearest covers by haiku embedding
  * (within the 200 of the sample) and the five from "looks like this" (6.10, over the whole index).
  * Writes lab/haiku/out/sheet.html; open it in a browser — images load from covers.openlibrary.org.
  *
@@ -36,7 +36,7 @@ writeFileSync('lab/haiku/out/sheet.html', `<!doctype html><meta charset="utf-8">
 <style>body{font:13px system-ui;margin:16px;background:#faf8f4;color:#222}section{display:grid;grid-template-columns:260px 1fr;gap:16px;border-top:1px solid #ccc;padding:12px 0}
 .row{display:flex;gap:8px}figure{margin:0;width:110px}img{width:110px;height:165px;object-fit:cover;background:#ddd}figcaption{font-size:11px}
 .q img{width:150px;height:225px}pre{white-space:pre-wrap;font:12px Georgia;margin:6px 0}h3{margin:4px 0;font-size:12px;color:#666}.none{color:#999}.pairs{display:flex;flex-wrap:wrap;gap:20px}.pair{display:flex;gap:4px}</style>
-<h1>Haiku contact sheet (ROADMAP 6.101)</h1>
+<h1>Haiku contact sheet (ROADMAP 6.102)</h1>
 <p>${usable.length} covers, one per work, described by ${sample.model} (USD ${sample.usd.toFixed(3)} for this run), embedded with ${embedModel}.
 Haiku neighbours come from the ${usable.length} of the sample only; 6.10 searches all covers in the index — ${withSimilar} of ${usable.length} have any 6.10 neighbour.</p>
 <h2>The 20 closest pairs by haiku</h2><div class="pairs">${top}</div>\n${rows}`);
