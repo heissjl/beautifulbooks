@@ -23,12 +23,12 @@
       "fontana": "839",
       "title": "The Murder at the Vicarage",
       "workId": "OL471895W",
-      "coverId": "ol:9159",
-      "edition": "OL9216326M",
-      "olPublisher": "harpercollins publishers ltd",
-      "olDate": "March 4, 2002",
-      "isbn": "0007120850",
-      "distance": 24,
+      "coverId": "ol:7267514",
+      "edition": "OL14875746M",
+      "olPublisher": "fontana",
+      "olDate": "1977",
+      "isbn": "0006120601",
+      "distance": 30,
       "evidence": "collectingchristie.com/post/agatha-christie-tom-adams-fontana-1963-1964 (Fontana 839, cover credited to Tom Adams there; image compared by eye 2026-10-09)"
     },
     {
@@ -426,6 +426,37 @@
       "isbn": "0006130909",
       "distance": 19,
       "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-8-1971-1972 (Fontana 3090, cover credited to Tom Adams there; image compared by eye 2026-10-09)"
+    },
+    {
+      "fontana": "896",
+      "title": "The Adventure of the Christmas Pudding",
+      "workId": "OL472416W",
+      "coverId": "ol:15263581",
+      "edition": "OL58543106M",
+      "isbn": "",
+      "evidence": "collectingchristie.com/post/agatha-christie-tom-adams-fontana-1963-1964 (Fontana 896, credited to Tom Adams; image compared by eye 2026-10-09)",
+      "coverWork": "OL42970331W",
+      "note": "cover from the Internet Archive scan adventureofchris0000unse_b8t4, uploaded to Open Library 2026-10-09"
+    },
+    {
+      "fontana": "950",
+      "title": "Cat Among the Pigeons",
+      "workId": "OL471641W",
+      "coverId": "ol:12852588",
+      "edition": "OL39215574M",
+      "isbn": "0006132804",
+      "evidence": "collectingchristie.com/post/agatha-christie-tom-adams-fontana-1963-1964 (Fontana 950, credited to Tom Adams; image compared by eye 2026-10-09)",
+      "note": "Internet Archive scan catamongpigeons0000chri_j9s9 confirms the painting on this printing"
+    },
+    {
+      "fontana": "2043",
+      "title": "Parker Pyne Investigates",
+      "workId": "OL472884W",
+      "coverId": "ol:14586887",
+      "edition": "OL51152919M",
+      "isbn": "",
+      "evidence": "collectingchristie.com/post/agatha-christie-fontana-paperbacks-part-5-1965-1966 (Fontana 2043, credited to Tom Adams; image compared by eye 2026-10-09)",
+      "note": "Open Library lists the publisher as Librairie des Champs-Elysees (1971); the cover is the Fontana design with the Adams painting"
     }
   ]
 }

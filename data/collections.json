@@ -43246,10 +43246,10 @@
           "id": "OL471895W",
           "title": "The Murder at the Vicarage",
           "author": "Agatha Christie",
-          "coverId": "ol:9159",
+          "coverId": "ol:7267514",
           "addedAt": "2026-10-09",
           "from": "fontana:839 (collectingchristie.com)",
-          "coverIsbn": "0007120850"
+          "coverIsbn": "0006120601"
         },
         {
           "id": "OL472526W",
@@ -43259,6 +43259,15 @@
           "addedAt": "2026-10-09",
           "from": "fontana:864 (collectingchristie.com)",
           "coverIsbn": "0006118208"
+        },
+        {
+          "id": "OL472416W",
+          "title": "The Adventure of the Christmas Pudding",
+          "author": "Agatha Christie",
+          "coverId": "ol:15263581",
+          "addedAt": "2026-10-09",
+          "from": "fontana:896 (collectingchristie.com)",
+          "coverWork": "OL42970331W"
         },
         {
           "id": "OL471841W",
@@ -43276,6 +43285,15 @@
           "addedAt": "2026-10-09",
           "from": "fontana:939 (collectingchristie.com)",
           "coverIsbn": "0006128599"
+        },
+        {
+          "id": "OL471641W",
+          "title": "Cat Among the Pigeons",
+          "author": "Agatha Christie",
+          "coverId": "ol:12852588",
+          "addedAt": "2026-10-09",
+          "from": "fontana:950 (collectingchristie.com)",
+          "coverIsbn": "0006132804"
         },
         {
           "id": "OL471883W",
@@ -43461,6 +43479,14 @@
           "addedAt": "2026-10-09",
           "from": "fontana:2036 (collectingchristie.com)",
           "coverIsbn": "000614215X"
+        },
+        {
+          "id": "OL472884W",
+          "title": "Parker Pyne Investigates",
+          "author": "Agatha Christie",
+          "coverId": "ol:14586887",
+          "addedAt": "2026-10-09",
+          "from": "fontana:2043 (collectingchristie.com)"
         },
         {
           "id": "OL472279W",
