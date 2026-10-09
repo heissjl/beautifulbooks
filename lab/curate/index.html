@@ -111,8 +111,17 @@
 <script>
 const state = { works: [], struck: [], i: 0, cursor: 0, years: {}, sizes: {}, dropped: 0, view: 'pick', order: [], drag: null };
 const $ = id => document.getElementById(id);
-const cover = (id, size) => id.startsWith('ol:')
-  ? `https://covers.openlibrary.org/b/id/${id.slice(3)}-${size}.jpg` : '';
+// Through the tool, which keeps every image it fetched and sends at most six to Open Library at once (serve.ts, coverImage).
+const cover = (id, size) => id.startsWith('ol:') ? `/img/${size}/${id.slice(3)}.jpg` : '';
+// A cover that did not come is asked again twice, a few seconds apart; the server's 504 means Open Library stayed silent.
+document.addEventListener('error', (e) => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.src.includes('/img/')) return;
+  const tries = Number(img.dataset.tries ?? 0);
+  if (tries >= 2) return;
+  img.dataset.tries = String(tries + 1);
+  setTimeout(() => { img.src = img.src.split('?')[0] + '?try=' + (tries + 1); }, 3000 * (tries + 1));
+}, true);
 
 async function load() {
   const data = await (await fetch('/api/works')).json();

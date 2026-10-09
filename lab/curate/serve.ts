@@ -19,7 +19,7 @@
  * says when the two disagree.
  */
 import { createServer } from 'node:http';
-import { readFileSync, writeFileSync, existsSync, renameSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, renameSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { robustFirstPublishYear } from '../../lib/firstyear';
 import { CoverSizes, type CoverSize } from '../calibre/download';
@@ -73,6 +73,8 @@ const NAMED_EXTRAS: Extra[] = [
     is his call to make.
   */
   { id: 'OL20042286W', title: 'The Babysitter at Rest', author: 'Jen George', note: '1 Ausgabe · ab 2016' },
+  // Julian, 2026-10-08, with the book page: „nimm das buch in die kuratierte liste mit auf, cover wähle ich noch aus".
+  { id: 'OL44237703W', title: 'Paradiso', author: 'José Lezama Lima', note: '72 Ausgaben · ab 1966' },
 ];
 
 /**
@@ -298,6 +300,63 @@ async function sizesFor(workId: string): Promise<{ sizes: Record<string, CoverSi
   return { sizes: out, pending };
 }
 
+/**
+ * Cover images through the tool itself (Julian, 2026-10-08: „bei mir werden viele cover nicht
+ * geladen"). The page used to load every cover of a work straight from covers.openlibrary.org —
+ * for a classic several hundred at once, each handed on to archive.org and taking 0.1–3 s
+ * (twelve sampled that day), so the browser's few parallel requests queued and many tiles stayed
+ * empty or gave up. Now the page asks `/img/<size>/<id>.jpg` here: an image fetched once is kept
+ * on disk (`img-cache/`, git-ignored) and comes back at once on the next visit; at most six go
+ * out to Open Library at a time, each with a 20 s timeout and one retry, and a large image that
+ * does not come is answered with the medium one. A failure is a 504, never a placeholder.
+ */
+const IMG_DIR = join(import.meta.dirname, 'img-cache');
+mkdirSync(IMG_DIR, { recursive: true });
+const IMG_PARALLEL = 6;
+let imgRunning = 0;
+const imgWaiting: Array<() => void> = [];
+const imgInFlight = new Map<string, Promise<Buffer | null>>();
+
+async function imgSlot<T>(job: () => Promise<T>): Promise<T> {
+  if (imgRunning >= IMG_PARALLEL) await new Promise<void>(r => imgWaiting.push(r));
+  imgRunning++;
+  try {
+    return await job();
+  } finally {
+    imgRunning--;
+    imgWaiting.shift()?.();
+  }
+}
+
+async function fetchCover(id: string, size: string): Promise<Buffer | null> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(`https://covers.openlibrary.org/b/id/${id}-${size}.jpg`, { signal: AbortSignal.timeout(20_000) });
+      if (res.ok && (res.headers.get('content-type') ?? '').startsWith('image/')) return Buffer.from(await res.arrayBuffer());
+    } catch {
+      // timeout or refused: one more try after a pause
+    }
+    await new Promise(r => setTimeout(r, 2000));
+  }
+  return null;
+}
+
+function coverImage(id: string, size: string): Promise<Buffer | null> {
+  const file = join(IMG_DIR, `${id}-${size}.jpg`);
+  if (existsSync(file)) return Promise.resolve(readFileSync(file));
+  const key = `${id}-${size}`;
+  let job = imgInFlight.get(key);
+  if (!job) {
+    job = imgSlot(async () => {
+      const got = (await fetchCover(id, size)) ?? (size === 'L' ? await fetchCover(id, 'M') : null);
+      if (got) writeFileSync(file, got);
+      return got;
+    }).finally(() => imgInFlight.delete(key));
+    imgInFlight.set(key, job);
+  }
+  return job;
+}
+
 const HTML_FILE = join(import.meta.dirname, 'index.html');
 
 const server = createServer(async (req, res) => {
@@ -312,6 +371,19 @@ const server = createServer(async (req, res) => {
     // it runs, and a stale page that looks wrong costs more than a file read.
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
     res.end(readFileSync(HTML_FILE, 'utf8'));
+    return;
+  }
+
+  const img = /^\/img\/(S|M|L)\/(\d+)\.jpg$/.exec(url.pathname);
+  if (img) {
+    const body = await coverImage(img[2], img[1]);
+    if (!body) {
+      res.writeHead(504, { 'cache-control': 'no-store' });
+      res.end();
+      return;
+    }
+    res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'max-age=31536000, immutable' });
+    res.end(body);
     return;
   }
 
