@@ -1113,7 +1113,8 @@
             "Chris Moore"
           ],
           "addedAt": "2026-10-08",
-          "from": "isbn:1857988086"
+          "from": "isbn:1857988086",
+          "coverRatio": 1.547
         },
         {
           "id": "OL271163W",
@@ -1126,7 +1127,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "293643"
+          "isfdbRecord": "293643",
+          "coverRatio": 1.689
         },
         {
           "id": "OL11374287W",
@@ -1139,7 +1141,8 @@
           "coverArtists": [
             "Jim Thiesen"
           ],
-          "isfdbRecord": "109741"
+          "isfdbRecord": "109741",
+          "coverRatio": 1.539
         },
         {
           "id": "OL53400W",
@@ -1152,7 +1155,8 @@
           "coverArtists": [
             "John Harris"
           ],
-          "isfdbRecord": "7127"
+          "isfdbRecord": "7127",
+          "coverRatio": 1.515
         },
         {
           "id": "OL2172356W",
@@ -1165,7 +1169,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "10310"
+          "isfdbRecord": "10310",
+          "coverRatio": 1.572
         },
         {
           "id": "OL1819353W",
@@ -1178,7 +1183,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "47896"
+          "isfdbRecord": "47896",
+          "coverRatio": 1.537
         },
         {
           "id": "OL56834W",
@@ -1191,7 +1197,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "3445"
+          "isfdbRecord": "3445",
+          "coverRatio": 1.592
         },
         {
           "id": "OL13992W",
@@ -1204,7 +1211,8 @@
           "coverArtists": [
             "Fred Gambino"
           ],
-          "isfdbRecord": "109761"
+          "isfdbRecord": "109761",
+          "coverRatio": 1.613
         },
         {
           "id": "OL14871904W",
@@ -1217,7 +1225,8 @@
           "coverArtists": [
             "Fred Gambino"
           ],
-          "isfdbRecord": "109771"
+          "isfdbRecord": "109771",
+          "coverRatio": 1.547
         },
         {
           "id": "OL60924W",
@@ -1230,7 +1239,8 @@
           "coverArtists": [
             "Boris Vallejo"
           ],
-          "isfdbRecord": "109781"
+          "isfdbRecord": "109781",
+          "coverRatio": 1.608
         },
         {
           "id": "OL3535579W",
@@ -1243,7 +1253,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "109801"
+          "isfdbRecord": "109801",
+          "coverRatio": 1.645
         },
         {
           "id": "OL3290731W",
@@ -1256,7 +1267,8 @@
           "coverArtists": [
             "Les Edwards"
           ],
-          "isfdbRecord": "109861"
+          "isfdbRecord": "109861",
+          "coverRatio": 1.542
         },
         {
           "id": "OL2321336W",
@@ -1269,7 +1281,8 @@
           "coverArtists": [
             "Les Edwards"
           ],
-          "isfdbRecord": "109811"
+          "isfdbRecord": "109811",
+          "coverRatio": 1.634
         },
         {
           "id": "OL2172408W",
@@ -1282,7 +1295,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "165001"
+          "isfdbRecord": "165001",
+          "coverRatio": 1.557
         },
         {
           "id": "OL16027965W",
@@ -1295,7 +1309,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "109821"
+          "isfdbRecord": "109821",
+          "coverRatio": 1.537
         },
         {
           "id": "OL3521966W",
@@ -1308,7 +1323,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "438522"
+          "isfdbRecord": "438522",
+          "coverRatio": 1.522
         },
         {
           "id": "OL59863W",
@@ -1321,7 +1337,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "289330"
+          "isfdbRecord": "289330",
+          "coverRatio": 1.522
         },
         {
           "id": "OL2745976W",
@@ -1334,7 +1351,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "158991"
+          "isfdbRecord": "158991",
+          "coverRatio": 1.522
         },
         {
           "id": "OL98485W",
@@ -1347,7 +1365,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "109831"
+          "isfdbRecord": "109831",
+          "coverRatio": 1.523
         },
         {
           "id": "OL2071382W",
@@ -1360,7 +1379,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115131"
+          "isfdbRecord": "115131",
+          "coverRatio": 1.522
         },
         {
           "id": "OL2172433W",
@@ -1373,7 +1393,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115141"
+          "isfdbRecord": "115141",
+          "coverRatio": 1.613
         },
         {
           "id": "OL3290739W",
@@ -1386,7 +1407,8 @@
           "coverArtists": [
             "Les Edwards"
           ],
-          "isfdbRecord": "115151"
+          "isfdbRecord": "115151",
+          "coverRatio": 1.547
         },
         {
           "id": "OL2697365W",
@@ -1399,7 +1421,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "115171"
+          "isfdbRecord": "115171",
+          "coverRatio": 1.618
         },
         {
           "id": "OL1960643W",
@@ -1412,7 +1435,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "115181"
+          "isfdbRecord": "115181",
+          "coverRatio": 1.513
         },
         {
           "id": "OL52267W",
@@ -1425,7 +1449,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115191"
+          "isfdbRecord": "115191",
+          "coverRatio": 1.577
         },
         {
           "id": "OL515754W",
@@ -1438,7 +1463,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "114511"
+          "isfdbRecord": "114511",
+          "coverRatio": 1.513
         },
         {
           "id": "OL2172454W",
@@ -1451,7 +1477,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115201"
+          "isfdbRecord": "115201",
+          "coverRatio": 1.567
         },
         {
           "id": "OL108288W",
@@ -1464,7 +1491,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115211"
+          "isfdbRecord": "115211",
+          "coverRatio": 1.563
         },
         {
           "id": "OL14868264W",
@@ -1477,7 +1505,8 @@
           ],
           "addedAt": "2026-10-08",
           "from": "isbn:1857988523",
-          "isfdbRecord": "111081"
+          "isfdbRecord": "111081",
+          "coverRatio": 1.523
         },
         {
           "id": "OL14868264W",
@@ -1490,7 +1519,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "253295"
+          "isfdbRecord": "253295",
+          "coverRatio": 1.629
         },
         {
           "id": "OL60939W",
@@ -1503,7 +1533,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "111111"
+          "isfdbRecord": "111111",
+          "coverRatio": 1.532
         },
         {
           "id": "OL53404W",
@@ -1516,7 +1547,8 @@
           "coverArtists": [
             "Fred Gambino"
           ],
-          "isfdbRecord": "114241"
+          "isfdbRecord": "114241",
+          "coverRatio": 1.567
         },
         {
           "id": "OL261853W",
@@ -1529,7 +1561,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "114271"
+          "isfdbRecord": "114271",
+          "coverRatio": 1.558
         },
         {
           "id": "OL2172502W",
@@ -1542,7 +1575,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115221"
+          "isfdbRecord": "115221",
+          "coverRatio": 1.561
         },
         {
           "id": "OL892520W",
@@ -1555,7 +1589,8 @@
           "coverArtists": [
             "Fred Gambino"
           ],
-          "isfdbRecord": "115231"
+          "isfdbRecord": "115231",
+          "coverRatio": 1.511
         },
         {
           "id": "OL17403W",
@@ -1568,7 +1603,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115241"
+          "isfdbRecord": "115241",
+          "coverRatio": 1.517
         },
         {
           "id": "OL27780752W",
@@ -1581,7 +1617,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "239121"
+          "isfdbRecord": "239121",
+          "coverRatio": 1.587
         },
         {
           "id": "OL2172519W",
@@ -1594,7 +1631,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115511"
+          "isfdbRecord": "115511",
+          "coverRatio": 1.548
         },
         {
           "id": "OL56833W",
@@ -1607,7 +1645,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115521"
+          "isfdbRecord": "115521",
+          "coverRatio": 1.603
         },
         {
           "id": "OL52260W",
@@ -1620,7 +1659,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115531"
+          "isfdbRecord": "115531",
+          "coverRatio": 1.532
         },
         {
           "id": "OL14931580W",
@@ -1633,7 +1673,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "117231"
+          "isfdbRecord": "117231",
+          "coverRatio": 1.534
         },
         {
           "id": "OL16513W",
@@ -1646,7 +1687,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115501"
+          "isfdbRecord": "115501",
+          "coverRatio": 1.534
         },
         {
           "id": "OL60942W",
@@ -1659,7 +1701,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "115541"
+          "isfdbRecord": "115541",
+          "coverRatio": 1.582
         },
         {
           "id": "OL2778305W",
@@ -1672,7 +1715,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "117241"
+          "isfdbRecord": "117241",
+          "coverRatio": 1.563
         },
         {
           "id": "OL2172524W",
@@ -1685,7 +1729,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "117251"
+          "isfdbRecord": "117251",
+          "coverRatio": 1.529
         },
         {
           "id": "OL59858W",
@@ -1698,7 +1743,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "42932"
+          "isfdbRecord": "42932",
+          "coverRatio": 1.545
         },
         {
           "id": "OL8260926W",
@@ -1711,7 +1757,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "225205"
+          "isfdbRecord": "225205",
+          "coverRatio": 1.558
         },
         {
           "id": "OL2172518W",
@@ -1724,7 +1771,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "14032"
+          "isfdbRecord": "14032",
+          "coverRatio": 1.53
         },
         {
           "id": "OL52266W",
@@ -1737,7 +1785,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "122211"
+          "isfdbRecord": "122211",
+          "coverRatio": 1.537
         },
         {
           "id": "OL104514W",
@@ -1750,7 +1799,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "118931"
+          "isfdbRecord": "118931",
+          "coverRatio": 1.639
         },
         {
           "id": "OL17402W",
@@ -1763,7 +1813,8 @@
           "coverArtists": [
             "Fred Gambino"
           ],
-          "isfdbRecord": "114501"
+          "isfdbRecord": "114501",
+          "coverRatio": 1.548
         },
         {
           "id": "OL16518W",
@@ -1776,7 +1827,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "252028"
+          "isfdbRecord": "252028",
+          "coverRatio": 1.558
         },
         {
           "id": "OL64219W",
@@ -1789,7 +1841,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "188265"
+          "isfdbRecord": "188265",
+          "coverRatio": 1.534
         },
         {
           "id": "OL2172402W",
@@ -1802,7 +1855,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "122191"
+          "isfdbRecord": "122191",
+          "coverRatio": 1.553
         },
         {
           "id": "OL2697390W",
@@ -1815,7 +1869,8 @@
           "coverArtists": [
             "Steve Stone"
           ],
-          "isfdbRecord": "122611"
+          "isfdbRecord": "122611",
+          "coverRatio": 1.553
         },
         {
           "id": "OL60943W",
@@ -1828,7 +1883,8 @@
           "coverArtists": [
             "Steve Stone"
           ],
-          "isfdbRecord": "110781"
+          "isfdbRecord": "110781",
+          "coverRatio": 1.538
         },
         {
           "id": "OL2172523W",
@@ -1841,7 +1897,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "122271"
+          "isfdbRecord": "122271",
+          "coverRatio": 1.563
         },
         {
           "id": "OL1960368W",
@@ -1854,7 +1911,8 @@
           "coverArtists": [
             "Jim Burns"
           ],
-          "isfdbRecord": "122201"
+          "isfdbRecord": "122201",
+          "coverRatio": 1.603
         },
         {
           "id": "OL2172517W",
@@ -1867,7 +1925,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "122261"
+          "isfdbRecord": "122261",
+          "coverRatio": 1.538
         },
         {
           "id": "OL2172396W",
@@ -1880,7 +1939,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "81367"
+          "isfdbRecord": "81367",
+          "coverRatio": 1.543
         },
         {
           "id": "OL1960371W",
@@ -1893,7 +1953,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "122241"
+          "isfdbRecord": "122241",
+          "coverRatio": 1.532
         },
         {
           "id": "OL510405W",
@@ -1906,7 +1967,8 @@
           "coverArtists": [
             "Steven Vincent Johnson"
           ],
-          "isfdbRecord": "122251"
+          "isfdbRecord": "122251",
+          "coverRatio": 1.534
         },
         {
           "id": "OL1920272W",
@@ -1919,7 +1981,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "252030"
+          "isfdbRecord": "252030",
+          "coverRatio": 1.534
         },
         {
           "id": "OL8400747W",
@@ -1932,7 +1995,8 @@
           "coverArtists": [
             "John Picacio"
           ],
-          "isfdbRecord": "109721"
+          "isfdbRecord": "109721",
+          "coverRatio": 1.529
         },
         {
           "id": "OL2172352W",
@@ -1945,7 +2009,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "87268"
+          "isfdbRecord": "87268",
+          "coverRatio": 1.568
         },
         {
           "id": "OL90571W",
@@ -1958,7 +2023,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "109711"
+          "isfdbRecord": "109711",
+          "coverRatio": 1.534
         },
         {
           "id": "OL17417W",
@@ -1971,7 +2037,8 @@
           "coverArtists": [
             "Steve Stone"
           ],
-          "isfdbRecord": "252032"
+          "isfdbRecord": "252032",
+          "coverRatio": 1.534
         },
         {
           "id": "OL54951W",
@@ -1984,7 +2051,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "155971"
+          "isfdbRecord": "155971",
+          "coverRatio": 1.553
         },
         {
           "id": "OL506264W",
@@ -1997,7 +2065,8 @@
           "coverArtists": [
             "Jon Sullivan"
           ],
-          "isfdbRecord": "122231"
+          "isfdbRecord": "122231",
+          "coverRatio": 1.533
         },
         {
           "id": "OL7967812W",
@@ -2010,7 +2079,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "89429"
+          "isfdbRecord": "89429",
+          "coverRatio": 1.538
         },
         {
           "id": "OL19546464W",
@@ -2023,7 +2093,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "251217"
+          "isfdbRecord": "251217",
+          "coverRatio": 1.534
         },
         {
           "id": "OL83885W",
@@ -2036,7 +2107,8 @@
           "coverArtists": [
             "Dominic Harman"
           ],
-          "isfdbRecord": "258865"
+          "isfdbRecord": "258865",
+          "coverRatio": 1.538
         },
         {
           "id": "OL893414W",
@@ -2049,7 +2121,8 @@
           "coverArtists": [
             "John Schoenherr"
           ],
-          "isfdbRecord": "279556"
+          "isfdbRecord": "279556",
+          "coverRatio": 1.572
         },
         {
           "id": "OL59704W",
@@ -2062,7 +2135,8 @@
           "coverArtists": [
             "Chris Moore"
           ],
-          "isfdbRecord": "261784"
+          "isfdbRecord": "261784",
+          "coverRatio": 1.531
         },
         {
           "id": "OL2172403W",
@@ -2075,7 +2149,8 @@
             "Chris Moore"
           ],
           "addedAt": "2026-10-08",
-          "from": "checked:original-design"
+          "from": "checked:original-design",
+          "coverRatio": 1.553
         }
       ],
       "coverCredits": "isfdb"
@@ -44116,7 +44191,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:15130644",
           "addedAt": "2026-10-09",
-          "from": "fontana:798 (collectingchristie.com)"
+          "from": "fontana:798 (collectingchristie.com)",
+          "coverRatio": 1.697
         },
         {
           "id": "OL471895W",
@@ -44125,7 +44201,8 @@
           "coverId": "ol:7267514",
           "addedAt": "2026-10-09",
           "from": "fontana:839 (collectingchristie.com)",
-          "coverIsbn": "0006120601"
+          "coverIsbn": "0006120601",
+          "coverRatio": 1.667
         },
         {
           "id": "OL472526W",
@@ -44134,7 +44211,8 @@
           "coverId": "ol:13679047",
           "addedAt": "2026-10-09",
           "from": "fontana:864 (collectingchristie.com)",
-          "coverIsbn": "0006118208"
+          "coverIsbn": "0006118208",
+          "coverRatio": 1.333
         },
         {
           "id": "OL472416W",
@@ -44143,7 +44221,8 @@
           "coverId": "ol:15263581",
           "addedAt": "2026-10-09",
           "from": "fontana:896 (collectingchristie.com)",
-          "coverWork": "OL42970331W"
+          "coverWork": "OL42970331W",
+          "coverRatio": 1.75
         },
         {
           "id": "OL471841W",
@@ -44151,7 +44230,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:12855074",
           "addedAt": "2026-10-09",
-          "from": "fontana:901 (collectingchristie.com)"
+          "from": "fontana:901 (collectingchristie.com)",
+          "coverRatio": 1.689
         },
         {
           "id": "OL472572W",
@@ -44160,7 +44240,8 @@
           "coverId": "ol:10555802",
           "addedAt": "2026-10-09",
           "from": "fontana:939 (collectingchristie.com)",
-          "coverIsbn": "0006128599"
+          "coverIsbn": "0006128599",
+          "coverRatio": 1.695
         },
         {
           "id": "OL471641W",
@@ -44169,7 +44250,8 @@
           "coverId": "ol:12852588",
           "addedAt": "2026-10-09",
           "from": "fontana:950 (collectingchristie.com)",
-          "coverIsbn": "0006132804"
+          "coverIsbn": "0006132804",
+          "coverRatio": 1.664
         },
         {
           "id": "OL471883W",
@@ -44178,7 +44260,8 @@
           "coverId": "ol:13698499",
           "addedAt": "2026-10-09",
           "from": "fontana:970 (collectingchristie.com)",
-          "coverIsbn": "0006141994"
+          "coverIsbn": "0006141994",
+          "coverRatio": 1.684
         },
         {
           "id": "OL472074W",
@@ -44187,7 +44270,8 @@
           "coverId": "ol:14560304",
           "addedAt": "2026-10-09",
           "from": "fontana:984 (collectingchristie.com)",
-          "coverIsbn": "0006128610"
+          "coverIsbn": "0006128610",
+          "coverRatio": 1.71
         },
         {
           "id": "OL471919W",
@@ -44195,7 +44279,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14586372",
           "addedAt": "2026-10-09",
-          "from": "fontana:1000 (collectingchristie.com)"
+          "from": "fontana:1000 (collectingchristie.com)",
+          "coverRatio": 1.696
         },
         {
           "id": "OL471983W",
@@ -44204,7 +44289,8 @@
           "coverId": "ol:10663008",
           "addedAt": "2026-10-09",
           "from": "fontana:1009 (collectingchristie.com)",
-          "coverIsbn": "0006110096"
+          "coverIsbn": "0006110096",
+          "coverRatio": 1.333
         },
         {
           "id": "OL471891W",
@@ -44212,7 +44298,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:15240679",
           "addedAt": "2026-10-09",
-          "from": "fontana:1030 (collectingchristie.com)"
+          "from": "fontana:1030 (collectingchristie.com)",
+          "coverRatio": 1.684
         },
         {
           "id": "OL472043W",
@@ -44220,7 +44307,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14586400",
           "addedAt": "2026-10-09",
-          "from": "fontana:1050 (collectingchristie.com)"
+          "from": "fontana:1050 (collectingchristie.com)",
+          "coverRatio": 1.564
         },
         {
           "id": "OL471990W",
@@ -44228,7 +44316,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:6539918",
           "addedAt": "2026-10-09",
-          "from": "fontana:1077 (collectingchristie.com)"
+          "from": "fontana:1077 (collectingchristie.com)",
+          "coverRatio": 1.679
         },
         {
           "id": "OL471905W",
@@ -44237,7 +44326,8 @@
           "coverId": "ol:7266328",
           "addedAt": "2026-10-09",
           "from": "fontana:1163 (collectingchristie.com)",
-          "coverIsbn": "0006111637"
+          "coverIsbn": "0006111637",
+          "coverRatio": 1.681
         },
         {
           "id": "OL471670W",
@@ -44245,7 +44335,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:15205394",
           "addedAt": "2026-10-09",
-          "from": "fontana:1268 (collectingchristie.com)"
+          "from": "fontana:1268 (collectingchristie.com)",
+          "coverRatio": 1.694
         },
         {
           "id": "OL472328W",
@@ -44253,7 +44344,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:13670802",
           "addedAt": "2026-10-09",
-          "from": "fontana:1301 (collectingchristie.com)"
+          "from": "fontana:1301 (collectingchristie.com)",
+          "coverRatio": 1.699
         },
         {
           "id": "OL472619W",
@@ -44261,7 +44353,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:15207798",
           "addedAt": "2026-10-09",
-          "from": "fontana:1401 (collectingchristie.com)"
+          "from": "fontana:1401 (collectingchristie.com)",
+          "coverRatio": 1.665
         },
         {
           "id": "OL472458W",
@@ -44270,7 +44363,8 @@
           "coverId": "ol:11477286",
           "addedAt": "2026-10-09",
           "from": "fontana:1418.r (collectingchristie.com)",
-          "coverIsbn": "0006114180"
+          "coverIsbn": "0006114180",
+          "coverRatio": 1.662
         },
         {
           "id": "OL471738W",
@@ -44279,7 +44373,8 @@
           "coverId": "ol:14155494",
           "addedAt": "2026-10-09",
           "from": "fontana:1506 (collectingchristie.com)",
-          "coverIsbn": "0006133746"
+          "coverIsbn": "0006133746",
+          "coverRatio": 1.333
         },
         {
           "id": "OL471500W",
@@ -44287,7 +44382,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14590069",
           "addedAt": "2026-10-09",
-          "from": "fontana:1511 (collectingchristie.com)"
+          "from": "fontana:1511 (collectingchristie.com)",
+          "coverRatio": 1.724
         },
         {
           "id": "OL265415W",
@@ -44295,7 +44391,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14577273",
           "addedAt": "2026-10-09",
-          "from": "fontana:1521 (collectingchristie.com)"
+          "from": "fontana:1521 (collectingchristie.com)",
+          "coverRatio": 1.71
         },
         {
           "id": "OL471784W",
@@ -44303,7 +44400,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:12996420",
           "addedAt": "2026-10-09",
-          "from": "fontana:1561 (collectingchristie.com)"
+          "from": "fontana:1561 (collectingchristie.com)",
+          "coverRatio": 1.699
         },
         {
           "id": "OL472049W",
@@ -44312,7 +44410,8 @@
           "coverId": "ol:15217665",
           "addedAt": "2026-10-09",
           "from": "fontana:1633 (collectingchristie.com)",
-          "coverIsbn": "0006139825"
+          "coverIsbn": "0006139825",
+          "coverRatio": 1.647
         },
         {
           "id": "OL471898W",
@@ -44321,7 +44420,8 @@
           "coverId": "ol:13267895",
           "addedAt": "2026-10-09",
           "from": "fontana:1736 (collectingchristie.com)",
-          "coverIsbn": "0006117368"
+          "coverIsbn": "0006117368",
+          "coverRatio": 1.333
         },
         {
           "id": "OL472536W",
@@ -44329,7 +44429,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14589311",
           "addedAt": "2026-10-09",
-          "from": "fontana:1759 (collectingchristie.com)"
+          "from": "fontana:1759 (collectingchristie.com)",
+          "coverRatio": 1.725
         },
         {
           "id": "OL472324W",
@@ -44337,7 +44438,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14895285",
           "addedAt": "2026-10-09",
-          "from": "fontana:1923 (collectingchristie.com)"
+          "from": "fontana:1923 (collectingchristie.com)",
+          "coverRatio": 1.668
         },
         {
           "id": "OL471702W",
@@ -44345,7 +44447,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:12884448",
           "addedAt": "2026-10-09",
-          "from": "fontana:2022 (collectingchristie.com)"
+          "from": "fontana:2022 (collectingchristie.com)",
+          "coverRatio": 1.644
         },
         {
           "id": "OL471767W",
@@ -44354,7 +44457,8 @@
           "coverId": "ol:15217681",
           "addedAt": "2026-10-09",
           "from": "fontana:2036 (collectingchristie.com)",
-          "coverIsbn": "000614215X"
+          "coverIsbn": "000614215X",
+          "coverRatio": 1.695
         },
         {
           "id": "OL472884W",
@@ -44362,7 +44466,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:14586887",
           "addedAt": "2026-10-09",
-          "from": "fontana:2043 (collectingchristie.com)"
+          "from": "fontana:2043 (collectingchristie.com)",
+          "coverRatio": 1.673
         },
         {
           "id": "OL472279W",
@@ -44370,7 +44475,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:13670254",
           "addedAt": "2026-10-09",
-          "from": "fontana:2279 (collectingchristie.com)"
+          "from": "fontana:2279 (collectingchristie.com)",
+          "coverRatio": 1.678
         },
         {
           "id": "OL471713W",
@@ -44379,7 +44485,8 @@
           "coverId": "ol:11434438",
           "addedAt": "2026-10-09",
           "from": "fontana:2305 (collectingchristie.com)",
-          "coverIsbn": "0006132413"
+          "coverIsbn": "0006132413",
+          "coverRatio": 1.707
         },
         {
           "id": "OL472145W",
@@ -44387,7 +44494,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:15130643",
           "addedAt": "2026-10-09",
-          "from": "fontana:2450 (collectingchristie.com)"
+          "from": "fontana:2450 (collectingchristie.com)",
+          "coverRatio": 1.657
         },
         {
           "id": "OL471664W",
@@ -44396,7 +44504,8 @@
           "coverId": "ol:15218253",
           "addedAt": "2026-10-09",
           "from": "fontana:2550 (collectingchristie.com)",
-          "coverIsbn": "0006125506"
+          "coverIsbn": "0006125506",
+          "coverRatio": 1.66
         },
         {
           "id": "OL471666W",
@@ -44405,7 +44514,8 @@
           "coverId": "ol:3287",
           "addedAt": "2026-10-09",
           "from": "fontana:2603 (collectingchristie.com)",
-          "coverIsbn": "0006126030"
+          "coverIsbn": "0006126030",
+          "coverRatio": 1.65
         },
         {
           "id": "OL472165W",
@@ -44413,7 +44523,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:10767288",
           "addedAt": "2026-10-09",
-          "from": "fontana:2615 (collectingchristie.com)"
+          "from": "fontana:2615 (collectingchristie.com)",
+          "coverRatio": 1.714
         },
         {
           "id": "OL471619W",
@@ -44422,7 +44533,8 @@
           "coverId": "ol:15217424",
           "addedAt": "2026-10-09",
           "from": "fontana:2682 (collectingchristie.com)",
-          "coverIsbn": "0671823302"
+          "coverIsbn": "0671823302",
+          "coverRatio": 1.723
         },
         {
           "id": "OL471947W",
@@ -44431,7 +44543,8 @@
           "coverId": "ol:11163918",
           "addedAt": "2026-10-09",
           "from": "fontana:2878 (collectingchristie.com)",
-          "coverIsbn": "0006151701"
+          "coverIsbn": "0006151701",
+          "coverRatio": 1.668
         },
         {
           "id": "OL471832W",
@@ -44439,7 +44552,8 @@
           "author": "Agatha Christie",
           "coverId": "ol:13671197",
           "addedAt": "2026-10-09",
-          "from": "fontana:3005 (collectingchristie.com)"
+          "from": "fontana:3005 (collectingchristie.com)",
+          "coverRatio": 1.651
         },
         {
           "id": "OL472388W",
@@ -44448,7 +44562,8 @@
           "coverId": "ol:13918610",
           "addedAt": "2026-10-09",
           "from": "fontana:3076 (collectingchristie.com)",
-          "coverIsbn": "0006142087"
+          "coverIsbn": "0006142087",
+          "coverRatio": 1.712
         },
         {
           "id": "OL471841W",
@@ -44457,7 +44572,8 @@
           "coverId": "ol:14569319",
           "addedAt": "2026-10-09",
           "from": "fontana:3090 (collectingchristie.com)",
-          "coverIsbn": "0006130909"
+          "coverIsbn": "0006130909",
+          "coverRatio": 1.71
         },
         {
           "id": "OL472159W",
@@ -44466,7 +44582,8 @@
           "coverId": "ol:14571631",
           "addedAt": "2026-10-09",
           "from": "fontana:3295 (collectingchristie.com)",
-          "coverIsbn": "0006132952"
+          "coverIsbn": "0006132952",
+          "coverRatio": 1.683
         }
       ]
     }

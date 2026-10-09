@@ -57,6 +57,13 @@ export interface CollectionPick {
    */
   coverWork?: string;
   /**
+   * Height over width of the scan under `coverId`, read from Open Library's
+   * cover record (`lab/collections/cover-ratios.ts`). A wall whose tiles carry
+   * it shows each cover in its own shape instead of cutting it to 2:3
+   * (Julian, 2026-10-09: Fontana's title band was cut off).
+   */
+  coverRatio?: number;
+  /**
    * A cover served from the site itself, `/collection-covers/<slug>/<file>.jpg`,
    * for a printing Open Library has no image of and cannot take one for yet
    * (its cover store was down on 2026-09-26 when the Jules Verne collection
@@ -75,6 +82,8 @@ export interface WallWork extends CuratedWork {
   coverArt?: string;
   /** The work whose wall holds this cover, when it is not `id` (see CollectionPick). */
   coverWork?: string;
+  /** The scan's height over width (see CollectionPick). */
+  coverRatio?: number;
   /** The site's own image, when the pick has one (see CollectionPick); `coverId` is then 0. */
   image?: string;
   /** The edition's name on a wall of sets. */
@@ -178,7 +187,7 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       seen.add(key);
       const credit = r.coverCredits === 'isfdb' && p.coverArtists?.length ? { coverArtists: p.coverArtists }
         : r.coverCredits === 'artwork' && p.coverArt ? { coverArt: p.coverArt } : {};
-      works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}), ...(r.setSize && p.set ? { set: p.set } : {}) });
+      works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(p.coverRatio && !image ? { coverRatio: p.coverRatio } : {}), ...(image ? { image } : {}), ...(r.setSize && p.set ? { set: p.set } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
     out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}) });
@@ -272,7 +281,7 @@ export type ContentOverrides = Record<string, CollectionRecord>;
  * so a cover added to a draft arrives without them; the file, written by
  * Julian's tool from ISFDB and the printings themselves, has them.
  */
-const PRINTING_FACTS = ['coverIsbn', 'coverArtists', 'coverArt', 'coverArtSource', 'isfdbRecord', 'creditWithheld'] as const;
+const PRINTING_FACTS = ['coverIsbn', 'coverArtists', 'coverArt', 'coverArtSource', 'isfdbRecord', 'creditWithheld', 'coverRatio'] as const;
 
 /**
  * A published draft's content with the file's printing facts filled in where
@@ -320,4 +329,5 @@ export function applyOrder(records: CollectionRecord[], order: string[]): Collec
     .sort((a, b) => a.key - b.key)
     .map(x => x.r);
 }
+
 
