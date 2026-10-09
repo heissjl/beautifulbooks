@@ -5792,3 +5792,21 @@ Ursache: die Sammlung holt das Cover über die ISBN, und Open Library hat zu die
 **Nachtrag: #71 und #72 auf die nummerierte Ausgabe umgestellt** (Julian: „stell #71 und #72 auf die nummerierte Ausgabe um“). Beide Kacheln trugen `from: checked:original-design` — eine frühere Session hatte die gebundenen Ausgaben 2001 bewusst gewählt, weil die nummerierten Ausgaben bei Open Library das Cover der Neuauflage zeigen (*Dune* 0575081503: 8440265, Neuauflage-Gestaltung). Jetzt: #71 *Dune* — ISFDB-Bild der nummerierten #71 (pl 279556, John Schoenherr) auf OL26787281M hochgeladen → 15263351, Kachel `coverIsbn` 9780575081505; #72 *The Moon Is a Harsh Mistress* — das schon hochgeladene 15263157 auf OL26775673M, `coverIsbn` 9780575082410, pl 261784, Chris Moore. Das Motiv beider Kacheln bleibt gleich; ISBN, Datensatz und Ausgabe stimmen jetzt mit der Reihe überein. Der ISBN-Abgleich gegen die ISFDB ergibt danach keine Abweichung mehr.
 
 Live gestellt: der Online-Entwurf ließ sich nicht mehr veröffentlichen („more than a draft can hold … one book under several covers“), weil die deployte Datei seit dem Vormittag ein Werk doppelt führt. Nach dem Deploy (2g960eg20) den veröffentlichten Entwurf von `sf-masterworks` entfernt (`clearDraft`); die Seite zeigt jetzt die Datei: 75 Kacheln, #71 15263351 John Schoenherr, #72 15263157 Chris Moore, #28 beide Kacheln mit Künstler. Einmal live gelesen (`scripts/live-collections.ts`).
+
+## 2026-10-09 · Ein Shelf-Portrait für einen fremden Haul: Teddy Rook (5.6b)
+
+Julian: „mach ein shelfportrait für das hier (lad das bild runter) https://x.com/TeddyRookBook/status/2108325713858416802“. Das Foto („Midweek book haul!“, 9 Bücher) liegt lokal unter `lab/kalender/out/cache/teddyrook/haul.jpg`. Vorgehen nach docs/ausgaben-recherche.md, Ausgabe vor Bild: je Buch die ISBN der gezeigten Ausgabe, das Verlagsbild über `images.penguinrandomhouse.com/cover/<isbn13>` (liefert auch Scribner-Titel; „Cover Coming Soon“ heißt kein Bild), Vergleich mit dem Ausschnitt aus dem Foto auf einem Kontaktbogen, dann die Ausgabe bei Open Library per ISBN. Der erste Abgleich über Werke hatte vier richtige Penguin-Cover übersehen, weil die Ausgaben unter anderen Werken stehen (Livy OL1261147W, Boethius OL15425898W, Tolstoi OL267162W, Melville OL21112624W) — **per ISBN suchen, nicht über das bekannteste Werk**.
+
+| Buch | ISBN | Open Library | Cover |
+|---|---|---|---|
+| Livy, The Early History of Rome | 9780140448092 | OL3658297M | 104306 (vorhanden) |
+| Augustine, Confessions (OWC, Chadwick) | — | OL137872W | 15254462 (vorhanden) |
+| Boethius, The Consolation of Philosophy | 9780140447804 | OL24394685M | 6649737 (vorhanden) |
+| Tolstoy, The Death of Ivan Ilyich and Other Stories | 9780140449617 | OL25975290M | 7492390 (vorhanden) |
+| Melville, Billy Budd, Bartleby, and Other Stories | 9780143107606 | OL28578590M | 10864547 (vorhanden) |
+| The Song of Roland (Sayers) | 9780140440751 | OL7355076M | **15263443 hochgeladen** (vorher alte Gestaltung 103656) |
+| C. S. Lewis, Out of the Silent Planet | 9780743234900 | OL7927772M | **15263444 hochgeladen** (2003er Gestaltung 472868 bleibt an zweiter Stelle) |
+| Perelandra | 9780743234917 | OL7927773M | **15263445 hochgeladen** |
+| That Hideous Strength | 9780743234924 | OL7927774M | **15263446 hochgeladen** |
+
+Bei Livy und Tolstoi zeigt das Verlagsbild das Band in oranger Kursive, Teddys Exemplare in weißen Großbuchstaben — dieselbe Ausgabe, eine Satzvariante. Die Lewis-ISBN von 2003 tragen seit etwa 2012 die neue Gestaltung (wieder: eine ISBN, zwei Cover). Shelf-Portrait: https://buyitscovers.com/shelfportrait/que5kd6e („Teddy Rook“, „Midweek book haul“), Bild `lab/kalender/out/teddyrook-shelfportrait.jpg` (Poster einmal geladen, alle neun Cover da).
