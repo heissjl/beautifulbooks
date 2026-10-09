@@ -5820,3 +5820,5 @@ Julian: „make a only footer branding high res picture of the badscifi cover co
 **Nachtrag:** #30 *Surfing Samurai Robots* wieder aufgenommen (Julian: „nimm das wieder rein“) — dasselbe Gemälde wie im Post, andere Schrift: unser Cover ist die Roc-Ausgabe 1991 (ISBN 0451451007), in der ISFDB pl 33865, Bild gleich, Künstler Dave Dorman (Gemälde von 1988). Damit 26 Kacheln, 16 mit Künstler.
 
 **Nachtrag 2026-10-09: „no Bradbury?“** — ein Leser auf r/bookcoverporn: „Did I miss it, or is there no Bradbury?“ Geprüft: keine der vier Masterworks-Sammlungen und keine Liste der Wikipedia (nummeriert 1999–2007, gebunden 2001, ab 2010) enthält Bradbury. Er erschien in Großbritannien bei anderen Verlagen (lange HarperCollins/Flamingo), nicht in Gollancz' Reihe. Kein Fehler der Sammlung.
+
+**Nachtrag: *Space Wasters* ohne Preisaufkleber** (Julian: „ein anderes bild bei space wasters ohne sticker drauf“). Das Bild bei Open Library (6632314) war ein Exemplar mit Aufkleber. Das ISFDB-Bild desselben Drucks (Orbit 2001, ISBN 9781841490120, pl 247073, Jim Burns) auf die Ausgabe OL24381888M hochgeladen, unter Julians Konto; die Kachel zeigt das neue Hauptcover.
