@@ -1312,20 +1312,6 @@
    ]
   },
   {
-   "workId": "OL12791W",
-   "title": "My Ántonia",
-   "author": "Willa Cather",
-   "coverIds": [
-    "ol:2959127",
-    "ol:11637788",
-    "ol:13342070",
-    "ol:8889738",
-    "ol:12584207",
-    "ol:9658480",
-    "ol:14669624"
-   ]
-  },
-  {
    "workId": "OL80021W",
    "title": "I Know Why the Caged Bird Sings",
    "author": "Maya Angelou",
@@ -1393,6 +1379,510 @@
     "ol:12369923",
     "ol:13515944",
     "ol:15126320"
+   ]
+  },
+  {
+   "workId": "OL767941W",
+   "title": "Le Deuxième Sexe",
+   "author": "Simone de Beauvoir",
+   "coverIds": [
+    "ol:10532905",
+    "ol:12334391",
+    "ol:14606925",
+    "ol:14859194",
+    "ol:419874",
+    "ol:6684929",
+    "ol:12980058"
+   ]
+  },
+  {
+   "workId": "OL505439W",
+   "title": "Under the Volcano",
+   "author": "Malcolm Lowry",
+   "coverIds": [
+    "ol:6395314",
+    "ol:15136170",
+    "ol:45607",
+    "ol:5376303",
+    "ol:4924045",
+    "ol:41885",
+    "ol:6786515"
+   ]
+  },
+  {
+   "workId": "OL38684W",
+   "title": "Lord Jim",
+   "author": "Joseph Conrad",
+   "coverIds": [
+    "ol:9060496",
+    "ol:9792775",
+    "ol:1032008",
+    "ol:2136619",
+    "ol:8684733",
+    "ol:4340533",
+    "ol:10139016"
+   ]
+  },
+  {
+   "workId": "OL88881W",
+   "title": "Howards End",
+   "author": "E. M. Forster",
+   "coverIds": [
+    "ol:5358368",
+    "ol:5409461",
+    "ol:12139058",
+    "ol:2891441",
+    "ol:173238",
+    "ol:10527029",
+    "ol:252652"
+   ]
+  },
+  {
+   "workId": "OL98491W",
+   "title": "The Age of Innocence",
+   "author": "Edith Wharton",
+   "coverIds": [
+    "ol:10719368",
+    "ol:3333712",
+    "ol:5158784",
+    "ol:9329509",
+    "ol:41935",
+    "ol:342535",
+    "ol:952403"
+   ]
+  },
+  {
+   "workId": "OL114967W",
+   "title": "The Jungle",
+   "author": "Upton Sinclair",
+   "coverIds": [
+    "ol:15166224",
+    "ol:6824337",
+    "ol:869600",
+    "ol:12720544",
+    "ol:3216466",
+    "ol:1470933",
+    "ol:111526"
+   ]
+  },
+  {
+   "workId": "OL4321141W",
+   "title": "The Secret History",
+   "author": "Donna Tartt",
+   "coverIds": [
+    "ol:14137623",
+    "ol:10696520",
+    "ol:6623129",
+    "ol:744854",
+    "ol:14944365",
+    "ol:14826536",
+    "ol:10992256"
+   ]
+  },
+  {
+   "workId": "OL1673205W",
+   "title": "The Godfather",
+   "author": "Mario Puzo",
+   "coverIds": [
+    "ol:1014491",
+    "ol:8088462",
+    "ol:11276994",
+    "ol:13201115",
+    "ol:15183066",
+    "ol:10586213",
+    "ol:3098667"
+   ]
+  },
+  {
+   "workId": "OL262454W",
+   "title": "The Hound of the Baskervilles",
+   "author": "Arthur Conan Doyle",
+   "coverIds": [
+    "ol:13525975",
+    "ol:12866692",
+    "ol:10150397",
+    "ol:10662795",
+    "ol:11233737",
+    "ol:11045895",
+    "ol:13122501"
+   ]
+  },
+  {
+   "workId": "OL471576W",
+   "title": "Murder on the Orient Express",
+   "author": "Agatha Christie",
+   "coverIds": [
+    "ol:14586379",
+    "ol:3545",
+    "ol:13259",
+    "ol:1015390",
+    "ol:13470495",
+    "ol:2175538",
+    "ol:7675637"
+   ]
+  },
+  {
+   "workId": "OL471565W",
+   "title": "And Then There Were None",
+   "author": "Agatha Christie",
+   "coverIds": [
+    "ol:6745050",
+    "ol:13622482",
+    "ol:10705964",
+    "ol:15232806",
+    "ol:12836906",
+    "ol:11433845",
+    "ol:13154573"
+   ]
+  },
+  {
+   "workId": "OL15400582W",
+   "title": "The Big Sleep",
+   "author": "Raymond Chandler",
+   "coverIds": [
+    "ol:13850248",
+    "ol:11722615",
+    "ol:15216430",
+    "ol:8710640",
+    "ol:13942845",
+    "ol:14581965",
+    "ol:968459"
+   ]
+  },
+  {
+   "workId": "OL47266W",
+   "title": "The Maltese Falcon",
+   "author": "Dashiell Hammett",
+   "coverIds": [
+    "ol:499586",
+    "ol:968511",
+    "ol:14545496",
+    "ol:499000",
+    "ol:14848211",
+    "ol:7138379",
+    "ol:12152876"
+   ]
+  },
+  {
+   "workId": "OL103134W",
+   "title": "The Martian Chronicles",
+   "author": "Ray Bradbury",
+   "coverIds": [
+    "ol:13147157",
+    "ol:10153525",
+    "ol:10323186",
+    "ol:13558647",
+    "ol:12376828",
+    "ol:7316878",
+    "ol:3696167"
+   ]
+  },
+  {
+   "workId": "OL59688W",
+   "title": "Stranger in a Strange Land",
+   "author": "Robert A. Heinlein",
+   "coverIds": [
+    "ol:14382164",
+    "ol:8758205",
+    "ol:14350985",
+    "ol:14631257",
+    "ol:12628588",
+    "ol:14850358",
+    "ol:14630879"
+   ]
+  },
+  {
+   "workId": "OL49488W",
+   "title": "Ender's Game",
+   "author": "Orson Scott Card",
+   "coverIds": [
+    "ol:14839537",
+    "ol:11277711",
+    "ol:12996033",
+    "ol:182379",
+    "ol:14700676",
+    "ol:14492966",
+    "ol:8447568"
+   ]
+  },
+  {
+   "workId": "OL2096536W",
+   "title": "Watership Down",
+   "author": "Richard Adams",
+   "coverIds": [
+    "ol:13269327",
+    "ol:15168377",
+    "ol:9409962",
+    "ol:102021",
+    "ol:15166829",
+    "ol:475022",
+    "ol:10896978"
+   ]
+  },
+  {
+   "workId": "OL44995W",
+   "title": "Far from the Madding Crowd",
+   "author": "Thomas Hardy",
+   "coverIds": [
+    "ol:8757829",
+    "ol:9010716",
+    "ol:10117416",
+    "ol:13409499",
+    "ol:117719",
+    "ol:10966170",
+    "ol:10754383"
+   ]
+  },
+  {
+   "workId": "OL531767W",
+   "title": "The Canterbury Tales",
+   "author": "Geoffrey Chaucer",
+   "coverIds": [
+    "ol:313947",
+    "ol:6929395",
+    "ol:13837922",
+    "ol:12187514",
+    "ol:840076",
+    "ol:102552",
+    "ol:10737343"
+   ]
+  },
+  {
+   "workId": "OL810991W",
+   "title": "Paradise Lost",
+   "author": "John Milton",
+   "coverIds": [
+    "ol:9486060",
+    "ol:6319794",
+    "ol:330864",
+    "ol:14581",
+    "ol:330810",
+    "ol:11404437",
+    "ol:330846"
+   ]
+  },
+  {
+   "workId": "OL15366912W",
+   "title": "Utopia",
+   "author": "Thomas More",
+   "coverIds": [
+    "ol:1813780",
+    "ol:252418",
+    "ol:297858",
+    "ol:4658802",
+    "ol:2886041",
+    "ol:2804793",
+    "ol:104339"
+   ]
+  },
+  {
+   "workId": "OL7180368W",
+   "title": "Decamerone",
+   "author": "Giovanni Boccaccio",
+   "coverIds": [
+    "ol:10554608",
+    "ol:11994834",
+    "ol:12922396",
+    "ol:14708128",
+    "ol:15157909",
+    "ol:7241118",
+    "ol:8941398"
+   ]
+  },
+  {
+   "workId": "OL733640W",
+   "title": "Le rouge et le noir",
+   "author": "Stendhal",
+   "coverIds": [
+    "ol:13341518",
+    "ol:13164370",
+    "ol:13207402",
+    "ol:118313",
+    "ol:365581",
+    "ol:967069",
+    "ol:419454"
+   ]
+  },
+  {
+   "workId": "OL1326310W",
+   "title": "The Sea, the Sea",
+   "author": "Iris Murdoch",
+   "coverIds": [
+    "ol:15158106",
+    "ol:15131863",
+    "ol:15131859",
+    "ol:3176019",
+    "ol:15157440",
+    "ol:15157434",
+    "ol:15131856"
+   ]
+  },
+  {
+   "workId": "OL28429W",
+   "title": "Schachnovelle",
+   "author": "Stefan Zweig",
+   "coverIds": [
+    "ol:12254570",
+    "ol:12262529",
+    "ol:12303201",
+    "ol:3265908",
+    "ol:12294936",
+    "ol:2191693",
+    "ol:5548285"
+   ]
+  },
+  {
+   "workId": "OL712032W",
+   "title": "Los detectives salvajes",
+   "author": "Roberto Bolaño",
+   "coverIds": [
+    "ol:15210078",
+    "ol:15210289",
+    "ol:15210299",
+    "ol:10126142",
+    "ol:14801379",
+    "ol:13340419",
+    "ol:15210298"
+   ]
+  },
+  {
+   "workId": "OL712025W",
+   "title": "2666",
+   "author": "Roberto Bolaño",
+   "coverIds": [
+    "ol:15209873",
+    "ol:15209328",
+    "ol:13539949",
+    "ol:15209846",
+    "ol:15209789",
+    "ol:15209866",
+    "ol:15209906"
+   ]
+  },
+  {
+   "workId": "OL274518W",
+   "title": "El amor en los tiempos del cólera",
+   "author": "Gabriel García Márquez",
+   "coverIds": [
+    "ol:10861054",
+    "ol:9372722",
+    "ol:10096442",
+    "ol:13550031",
+    "ol:10217382",
+    "ol:2207156",
+    "ol:9347119"
+   ]
+  },
+  {
+   "workId": "OL1905255W",
+   "title": "La casa de los espíritus",
+   "author": "Isabel Allende",
+   "coverIds": [
+    "ol:8240301",
+    "ol:7009789",
+    "ol:8442431",
+    "ol:976794",
+    "ol:5256858",
+    "ol:12726316",
+    "ol:974313"
+   ]
+  },
+  {
+   "workId": "OL857544W",
+   "title": "La ciudad y los perros",
+   "author": "Mario Vargas Llosa",
+   "coverIds": [
+    "ol:12520279",
+    "ol:12518779",
+    "ol:12524443",
+    "ol:12524459",
+    "ol:12518829",
+    "ol:12519723",
+    "ol:12520282"
+   ]
+  },
+  {
+   "workId": "OL979517W",
+   "title": "Veinte poemas de amor y una canción desesperada",
+   "author": "Pablo Neruda",
+   "coverIds": [
+    "ol:110595",
+    "ol:599333",
+    "ol:13548604",
+    "ol:13500389",
+    "ol:13749495",
+    "ol:10523964",
+    "ol:10510595"
+   ]
+  },
+  {
+   "workId": "OL617847W",
+   "title": "El túnel",
+   "author": "Ernesto Sabato",
+   "coverIds": [
+    "ol:12390800",
+    "ol:15240000",
+    "ol:12390749",
+    "ol:12389562",
+    "ol:12390167",
+    "ol:14953103",
+    "ol:2270075"
+   ]
+  },
+  {
+   "workId": "OL1003040W",
+   "title": "Dom Casmurro",
+   "author": "Machado de Assis",
+   "coverIds": [
+    "ol:647501",
+    "ol:3150035",
+    "ol:14710032",
+    "ol:9080625",
+    "ol:15167286",
+    "ol:104166",
+    "ol:15156099"
+   ]
+  },
+  {
+   "workId": "OL260101W",
+   "title": "The Tenant of Wildfell Hall",
+   "author": "Anne Brontë",
+   "coverIds": [
+    "ol:1023552",
+    "ol:11580180",
+    "ol:8726488",
+    "ol:2423070",
+    "ol:11380300",
+    "ol:10504046",
+    "ol:15113307"
+   ]
+  },
+  {
+   "workId": "OL505781W",
+   "title": "Of Human Bondage",
+   "author": "William Somerset Maugham",
+   "coverIds": [
+    "ol:13226986",
+    "ol:9024686",
+    "ol:13226987",
+    "ol:14268386",
+    "ol:230031",
+    "ol:368552",
+    "ol:13866983"
+   ]
+  },
+  {
+   "workId": "OL27776452W",
+   "title": "The Importance of Being Earnest",
+   "author": "Oscar Wilde",
+   "coverIds": [
+    "ol:10517045",
+    "ol:10141558",
+    "ol:234736",
+    "ol:9315876",
+    "ol:13226346",
+    "ol:10456179",
+    "ol:8991070"
    ]
   }
  ],
