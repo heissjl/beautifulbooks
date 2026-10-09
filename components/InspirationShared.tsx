@@ -99,27 +99,27 @@ export default function InspirationShared({ board, query, link, walls, versus }:
     <section className="mt-10 border-t border-line pt-6">
               <h2 className="font-display text-2xl text-ink">Share it</h2>
 
-              <h3 className="mt-4 text-lg text-ink">As a picture</h3>
-              <p className="mt-1 text-sm text-ink-2">For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.</p>
-              <PictureShare query={query} link={link} text={shareText(board.by)} />
-
               {/*
                 ROADMAP 5.18c (Julian, 2026-10-09: „do this right away", then „a bit higher" and „say that it's an
-                experimental thing by Weisenthal" — so it sits between the picture, which it needs, and the link).
-                Joe Weisenthal's Nine Books collects pictures of nine favourites as open (CC0) data. Its API only takes an upload from its own page,
-                read by its own model, so this is a link and nothing more: the reader takes the picture there
+                experimental thing by Weisenthal", then „move it above the picture generator": first under "Share it").
+                Joe Weisenthal's Nine Books collects pictures of nine favourites as open (CC0) data. Its API only
+                takes an upload from its own page, read by its own model, so this is a link and nothing more: the reader takes the picture there
                 themselves, this site sends nothing, and the privacy notice stays as it is. Nine books only — his format.
               */}
               {size === 9 && books.length === 9 && (
                 <>
-                  <h3 className="mt-7 text-lg text-ink">To an open database</h3>
+                  <h3 className="mt-4 text-lg text-ink">To an open database</h3>
                   <p className="mt-1 text-sm text-ink-2">
                     <a href="https://thestalwart.com/ninebooks/" target="_blank" rel="noopener" className={more}>Nine Books</a> is
                     an experiment by Joe Weisenthal: people’s favourite nines, collected as open data anyone may use. Save the
-                    picture above and upload it there — it is his project, and this site sends it nothing.
+                    picture below and upload it there — it is his project, and this site sends it nothing.
                   </p>
                 </>
               )}
+
+              <h3 className={`${size === 9 && books.length === 9 ? 'mt-7' : 'mt-4'} text-lg text-ink`}>As a picture</h3>
+              <p className="mt-1 text-sm text-ink-2">For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.</p>
+              <PictureShare query={query} link={link} text={shareText(board.by)} />
 
               <h3 className="mt-7 text-lg text-ink">As a link</h3>
               <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
