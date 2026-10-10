@@ -126,6 +126,8 @@ export const RATE_RULES = {
    * script feeding reports fills the log for nothing.
    */
   csp: { capacity: 20, refillPerMinute: 10 },
+  /** The uptime monitor (2.18g): one look every few minutes; a crawler gets little out of it. */
+  health: { capacity: 10, refillPerMinute: 10 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;
