@@ -12,6 +12,8 @@ import { PHOTOS_PER_DAY } from '@/app/api/walls/photo/route';
 import { VERCEL_PRICES } from '@/lib/insights/costs';
 import { SOCIAL_ENTRIES } from '@/lib/insights/signals';
 import { groupSocial } from '@/lib/insights/visits';
+import { coverUrlFor } from '@/lib/coverurl';
+import { linkStoreFromEnv, type LinkList } from '@/lib/inspiration/store';
 import ChannelTable from './ChannelTable';
 import OriginBars from './OriginBars';
 import { ORIGIN_NAMES } from './names';
@@ -48,6 +50,9 @@ export default async function InsightsPage({ searchParams }: Props) {
   const days = parseRange(one(params.days));
   const market = parseMarket(one(params.market));
   const report = await buildReport(days, market, undefined);
+  // K17: every Shelf-Portrait that got a short link, read from the links' store (not from the daily totals, so it
+  // also shows the boards made before the counter existed). A silent store is said as such, never as "none".
+  const links: LinkList | null | 'down' = await (linkStoreFromEnv()?.list?.(300) ?? Promise.resolve(null)).catch(() => 'down' as const);
   const href = (next: { days?: number; market?: Market | null }) => {
     const q = new URLSearchParams();
     q.set('days', String(next.days ?? days));
@@ -77,6 +82,8 @@ export default async function InsightsPage({ searchParams }: Props) {
         </nav>
 
         {report.ok ? <Report report={report} /> : <StoreDown reason={report.reason} />}
+
+        <Portraits links={links} ops={report.ok ? report.ops : null} days={days} />
 
       </main>
       <SiteFooter />
@@ -291,7 +298,7 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
       <section className="mt-6">
         <Card
           title="Kanäle"
-          sub="Womit ein Besuch begann — Plattform aus dem Referrer oder die Marke ?via= eines selbst gesetzten Links — und was diese Leser taten (K16). Alle Märkte."
+          sub="Womit ein Besuch begann — Plattform aus dem Referrer oder die Marke ?via= eines selbst gesetzten Links — und was diese Leser taten (K17). Alle Märkte."
         >
           <ChannelSection channels={report.channels} />
         </Card>
@@ -566,6 +573,55 @@ function PhotoSection({ photos }: { photos: Extract<InsightsReport, { ok: true }
         kann Tokens gekostet haben, die hier fehlen. Deine eigenen Fotos zählen mit — sie kosten dasselbe.
       </Note>
     </>
+  );
+}
+
+/**
+ * Shelf-Portraits (K17, ROADMAP 5.18b; Julian 2026-10-10: „ja, bau beides"): who made boards in the period — readers
+ * or Julian, from the daily totals since the counter exists — and every board in the links' store, newest first, as a
+ * row of small covers, so Julian tells his own from the rest by looking.
+ */
+function Portraits({ links, ops, days }: { links: LinkList | null | 'down'; ops: Extract<InsightsReport, { ok: true }>['ops'] | null; days: number }) {
+  return (
+    <section className="mt-6">
+      <Card title="Shelf-Portraits" sub="Boards mit Kurzlink. Wer sie gemacht hat, weiß die Seite nicht — nur, ob mit deinem Admin-Cookie.">
+        {ops && (
+          <p className="text-sm text-ink">
+            In {days} Tagen: <b>{plural(ops.totals['portrait-made'], 'Board', 'Boards')}</b> von Lesern,{' '}
+            {plural(ops.totals['portrait-mine'], 'Board', 'Boards')} von dir.{' '}
+            <span className="text-ink-2">Gezählt seit dem 2026-10-10; frühere Boards nur in der Liste darunter.</span>
+          </p>
+        )}
+        {links === 'down' ? (
+          <p className="mt-3 text-sm text-ink-2">Der Speicher der Kurzlinks antwortet gerade nicht — die Liste fehlt, nicht die Boards.</p>
+        ) : links === null ? (
+          <p className="mt-3 text-sm text-ink-2">Kein Speicher, der sich auflisten lässt (lokal ohne Redis).</p>
+        ) : (
+          <>
+            <p className="mt-3 text-sm text-ink-2">
+              {plural(links.count, 'Kurzlink', 'Kurzlinks')} insgesamt{links.truncated ? `, die neuesten ${links.links.length} hier` : ''}.
+            </p>
+            <ul className="mt-3 divide-y divide-line">
+              {links.links.map(row => (
+                <li key={row.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-2 text-sm">
+                  <span className="w-24 tabular-nums text-ink-2">{row.at ? shortDay(row.at) : '—'}</span>
+                  <a className="w-40 truncate text-accent hover:underline" href={`/shelfportrait/${row.id}`} target="_blank" rel="noopener">
+                    {row.board.by || 'ohne Namen'}
+                  </a>
+                  <span className="flex gap-1">
+                    {row.board.slots.map((slot, i) => {
+                      const src = slot ? coverUrlFor(slot.coverId, 'S') : null;
+                      // eslint-disable-next-line @next/next/no-img-element -- one admin page, small catalogue thumbnails
+                      return src ? <img key={i} src={src} alt="" width={22} height={33} loading="lazy" className="h-[33px] w-[22px] rounded-sm bg-surface-2 object-cover" /> : <span key={i} className="h-[33px] w-[22px] rounded-sm bg-surface-2" />;
+                    })}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </Card>
+    </section>
   );
 }
 

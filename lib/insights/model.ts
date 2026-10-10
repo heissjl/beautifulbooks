@@ -33,8 +33,12 @@ export const EMPTY_RETENTION_SECONDS = 90 * 24 * 60 * 60;
  * Events of the operation that the code can actually see (K11). Not the
  * Google request count: the Next data cache hides which calls left the
  * machine (CLAUDE.md), so that number lives in the Cloud console only.
+ *
+ * `portrait-made` / `portrait-mine` (K17, ROADMAP 5.18b, Julian 2026-10-10: „ja, bau beides"): a Shelf-Portrait
+ * that got a new short link — by a reader, or by Julian (his admin cookie). Counted when the link is first written,
+ * so the same board shared twice is one; nothing about the maker, only which of the two it was.
  */
-export const OPS = ['google-stop', 'ol-failed'] as const;
+export const OPS = ['google-stop', 'ol-failed', 'portrait-made', 'portrait-mine'] as const;
 export type Op = (typeof OPS)[number];
 
 export type ClickKind = 'product' | 'search';
@@ -146,8 +150,8 @@ export interface OpsSummary {
 }
 
 export function summarizeOps(days: string[], hashes: ReadonlyArray<DayHash | null>): OpsSummary {
-  const daysWith = { 'google-stop': [], 'ol-failed': [] } as Record<Op, string[]>;
-  const totals = { 'google-stop': 0, 'ol-failed': 0 } as Record<Op, number>;
+  const daysWith = Object.fromEntries(OPS.map(op => [op, []])) as unknown as Record<Op, string[]>;
+  const totals = Object.fromEntries(OPS.map(op => [op, 0])) as Record<Op, number>;
   days.forEach((day, i) => {
     for (const op of OPS) {
       const n = count((hashes[i] ?? {})[op]);

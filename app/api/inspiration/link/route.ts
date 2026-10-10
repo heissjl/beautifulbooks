@@ -3,6 +3,8 @@ import { measure } from '@/app/api/measure';
 import { closed, json } from '@/app/api/inspiration/guard';
 import { boardQuery, filledCount, isFull, parseBoard } from '@/lib/inspiration/board';
 import { linkStoreFromEnv } from '@/lib/inspiration/store';
+import { countOpAfter } from '@/app/api/count';
+import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 
 /**
  * POST /api/inspiration/link { q } — the address a finished board is shared
@@ -13,6 +15,10 @@ import { linkStoreFromEnv } from '@/lib/inspiration/store';
  * store because the board is in it. Either way the reader gets a link that
  * works; `short` says which one it is. Nothing about the reader is kept —
  * the record is the board and the name they put on the picture.
+ *
+ * A link written for the first time adds one to the day's total (K17): `portrait-mine` when the request carries
+ * Julian's admin cookie, `portrait-made` otherwise — which of the two, nothing more. A board without a store (the
+ * long address) is not counted: nothing was made that could be told from a second share of the same board.
  */
 export async function POST(request: NextRequest) {
   measure('portrait', request);
@@ -34,7 +40,9 @@ export async function POST(request: NextRequest) {
   const store = linkStoreFromEnv();
   if (!store) return json({ path: long, short: false });
   try {
-    return json({ path: `/shelfportrait/${await store.put(board)}`, short: true }, 201);
+    const mine = adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value);
+    const id = await store.put(board, () => countOpAfter(mine ? 'portrait-mine' : 'portrait-made'));
+    return json({ path: `/shelfportrait/${id}`, short: true }, 201);
   } catch {
     return json({ path: long, short: false });
   }
