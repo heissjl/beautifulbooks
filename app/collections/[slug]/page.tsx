@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import CoverWall from '@/components/CoverWall';
 import HeaderSearch from '@/components/HeaderSearch';
@@ -7,6 +6,7 @@ import SiteFooter from '@/components/SiteFooter';
 import WallsInvite from '@/components/WallsInvite';
 import { wallsEnabled } from '@/lib/walls/switch';
 import SiteHeader from '@/components/SiteHeader';
+import BackLink from '@/components/BackLink';
 import { authorsShown, coverLine } from '@/lib/collections';
 import { liveCollectionBySlug } from '@/lib/collections-live';
 import { SITE_URL } from '@/lib/seo';
@@ -82,11 +82,7 @@ export default async function CollectionPage({ params, locale = DEFAULT_LOCALE }
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader
-        left={
-          <Link href="/collections" className="rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-            ← {t('Collections')}
-          </Link>
-        }
+        left={<BackLink href="/collections" label={t('Collections')} />}
         search={<HeaderSearch />}
       />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">

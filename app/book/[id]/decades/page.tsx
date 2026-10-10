@@ -6,6 +6,7 @@ import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
+import BackLink from '@/components/BackLink';
 import { indexSignatures } from '@/lib/coverindex';
 import { decadeLine, groupByDecade, worthAPage } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
@@ -155,11 +156,7 @@ export default async function Page({ params, locale = DEFAULT_LOCALE }: PageProp
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader
-        left={
-          <Link href={`/book/${id}`} className="rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink">
-            ← {t('The wall')}
-          </Link>
-        }
+        left={<BackLink href={`/book/${id}`} label={t('The wall')} />}
         search={<HeaderSearch />}
       />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-8 sm:px-6">

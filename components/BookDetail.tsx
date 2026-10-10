@@ -21,6 +21,7 @@ import AddToWall from '@/components/AddToWall';
 import EditingBand from '@/components/EditingBand';
 import { useCameFrom } from '@/components/cameFrom';
 import SiteHeader from '@/components/SiteHeader';
+import SharedBackLink from '@/components/BackLink';
 import HeaderSearch from '@/components/HeaderSearch';
 import { flyCovers } from '@/components/flyCovers';
 import { SCENE_FIRST_ROW, useLoadingScene } from '@/components/useLoadingScene';
@@ -65,19 +66,8 @@ import { useLocale, useT } from '@/components/i18n';
 */
 function BackLink({ href, toResults, wall }: { href: string; toResults: boolean; wall?: string }) {
   const t = useT();
-  return (
-    <Link
-      href={href}
-      title={wall ? t('Back to {wall}', { wall }) : undefined}
-      className="inline-flex min-w-0 items-center gap-1.5 rounded-md py-1 pr-2 text-sm text-ink-2 transition-colors hover:text-ink"
-    >
-      <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-      </svg>
-      {/* The wall one came from, by name (Julian, 2026-10-03); cut short, the header has a logo and a search beside it. */}
-      {wall ? <span className="max-w-[9rem] truncate sm:max-w-[16rem]">{wall}</span> : toResults ? t('Results') : t('Home')}
-    </Link>
-  );
+  // The wall one came from, by name (Julian, 2026-10-03).
+  return <SharedBackLink href={href} label={wall ?? (toResults ? t('Results') : t('Home'))} title={wall ? t('Back to {wall}', { wall }) : undefined} truncate={!!wall} />;
 }
 
 /**
