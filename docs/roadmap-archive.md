@@ -1161,3 +1161,21 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.70 Keine Nicht-Cover im Mosaik einer Karte.** (Aus der [Durchsicht von außen](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): Buchrücken, leere Vorsatzblätter, halbe Scans in den Mosaiken der Treffer.) Der Mosaik-Pfad (`?summary=1`) holt keine Signaturen, `looksLikeScannedPage` greift dort nie. Zwei Stufen ohne neue externe Anfrage: für Werke im Index die Signaturen von der Platte (`indexSignatures`) und nach hinten sortieren wie auf der Wand; für alle anderen im Browser das Seitenverhältnis prüfen (0,5–0,85 wie F7.2) und die Kachel mit dem nächsten von sechs Kandidaten füllen. Nichts wird gelöscht. Ein halber Tag, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
 
 **Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 1.13
+
+**1.13 Google Books findet mit Feldsuche nichts mehr.** (Gefunden 2026-10-09 beim Bau von 5.5b.) Mit dem Schlüssel der Seite antwortet Google auf jede Suche mit `isbn:`, `intitle:` oder `inauthor:` mit `totalItems: 0` und ohne Fehler — auch für *To Kill a Mockingbird* (Harper Perennial 2006, 9780061120084) und `isbn:9780439708180`; dieselbe Anfrage ohne Operatoren („to kill a mockingbird“, 353) antwortet. Die Produktion gab beim einen Prüfabruf für 9780061120084 ebenfalls `covers: []`. Beide Google-Aufrufe der Seite benutzen die Operatoren (`lib/sources/googlebooks.ts` Z. 49 und 76): die Titelsuche auf Seite 0 und die ISBN-Abfrage des Urteils. **Folge:** jedes Urteil wird `unknown` („kein Verlagsbild“) statt `unavailable` — ein Ausfall, der als Befund erscheint (N12), und seit 6.100 führt dann überall AbeBooks; der Ausweg über Open Library (1.12) springt nicht an, weil Google formal antwortet. Seit wann, ist unbekannt (Logs halten eine Stunde). **Vorschlag (Claude):** ein Prüfstein — antwortet Google auf eine bekannte ISBN mit null Treffern, gilt Google wie bei `dailyLimitExceeded` als nicht gefragt, und das Urteil geht den Weg aus 1.12; dazu morgen einmal nachsehen, ob es vorübergehend war. **Am Abend des 2026-10-09 erneut geprüft, je eine Anfrage:** `isbn:9780061120084` 0, `intitle:mockingbird inauthor:lee` 0, „to kill a mockingbird“ 355 — unverändert. Wartet auf Julian. Thema: Kauf-Links
+
+**Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 6.3
+
+**6.3 Die Ladeszene endet zu spät, wenn ein Sprachfilter gesetzt ist. [T15]** *1984* mit `lang=de`: über 20 Sekunden Bühne, weil `leadLanguagesSettled` auf die deutsche Gruppe wartet und deutsche Ausgaben bei Open Library erst auf Seite 3 bis 4 liegen; ohne Filter war dieselbe Seite nach 8 Sekunden da. Die Obergrenze greift, aber 20 Sekunden fühlen sich wie ein Hänger an. Kandidaten: die Wand früher zeigen und den gewünschten Reiter nachrücken lassen, sobald er da ist (das war genau das, was 2026-09-07 abgestellt wurde, also nur mit ruhigem Übergang); oder die Grenze von 300 geprüften Ausgaben auf 200 senken; oder während der Wartezeit sagen, worauf gewartet wird. **Stand 2026-10-09** (Julian: „haben wir noch sprachfilter?“): Sprach-Pillen gibt es seit 6.60 nicht mehr; `?lang=` kommt nur noch über eine alte Adresse oder wird von der Kopfzeilen-Suche weitergetragen. Der Fall trifft also kaum noch jemanden — Vorschlag: schließen, sobald Julian zustimmt.
+
+**Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 6.87
+
+**6.87 Open Librarys robots.txt sperrt `/search` — auch `search.json`?** — **Julian entscheidet.** (Befund eines Agenten, 2026-09-30, selbst nachgesehen.) `https://openlibrary.org/robots.txt` hat unter `User-agent: *` die Zeile `Disallow: /search`; als Präfix trifft sie auch `/search.json`. Das nutzen die Suche der Website (`lib/sources/openlibrary.ts`) und die Lab-Werkzeuge (`from-openlibrary.ts`, die Listen-Agenten). Dagegen steht, dass Open Library `search.json` als öffentliche API dokumentiert und zur Nutzung einlädt (openlibrary.org/dev/docs/api/search); robots.txt richtet sich an Crawler. Zu klären: bei Open Library nachfragen oder die Nutzung so lassen, und ob die Lab-Agenten künftig ohne `search.json` auskommen sollen (ISBN- und Werk-Abfragen sind nicht betroffen).
+
+**Erledigt 2026-10-09.** → [Historie](history.md)
