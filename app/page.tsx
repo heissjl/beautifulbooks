@@ -142,19 +142,6 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                         {t('Take your Shelf-Portrait: the books that inspire you')}
                       </Link>
                     )}
-                    {/*
-                      Not ours, and said so (ROADMAP 5.18c; Julian, 2026-10-09: „create a link to weisenthals project on
-                      our starting page like the links to our own subpages"): Joe Weisenthal's Nine Books, an open
-                      database of people's favourite nines. A plain external link — no /go/, nothing counted or sent.
-                    */}
-                    <a
-                      href="https://thestalwart.com/ninebooks/"
-                      target="_blank"
-                      rel="noopener"
-                      className="hit inline-flex items-center gap-1.5 text-accent underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
-                    >
-                      {t('Add your nine favourite books to Joe Weisenthal’s open database ↗')}
-                    </a>
                   </div>
                 )}
               </div>

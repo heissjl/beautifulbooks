@@ -126,7 +126,7 @@ export default function AboutPage({ locale = DEFAULT_LOCALE }: { locale?: Locale
           ) : (
             <p>{t('No link on this site earns money. There are no affiliate links, ads or paid placements.')}</p>
           )}
-          <p>{t('The order of the shops follows the ISBN. Its first digits show where it was registered, 978-3 for the German-language area, for example. For a number from another country, marketplaces that sell copies from many countries come first.')}</p>
+          <p>{t('The order of the shops follows the ISBN. Its first digits show where it was registered, 978-3 for the German-language area, for example. For a number from another country, marketplaces that sell copies from many countries come first. Some shops sell only new books; they come first only when the publisher’s current image for the ISBN is this cover, a sign that this printing is still sold new. Otherwise a marketplace for used copies leads.')}</p>
           <p>
             {rich(t('Clicks on buy links are counted: shop, market, ISBN and time. Nothing about you is recorded. Details are in the {privacy}.'), {
               privacy: <Link href="/privacy" className={ext}>{t('privacy notice')}</Link>,

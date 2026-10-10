@@ -129,10 +129,15 @@ describe('linkPlan order', () => {
     expect(p.rest.map(l => l.label)).toEqual(expect.arrayContaining(['Bookshop.org by ISBN', 'Amazon by ISBN']));
   });
 
-  it('adds the antiquarian search when no publisher image is on record (lever 4)', () => {
+  it('leads with the antiquarian search unless the publisher shows this very cover (6.100)', () => {
     // Only the order changes; "unknown" still says nothing about buying.
-    expect(plan(EN, 'us', { verdict: 'unknown' }).lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN', 'AbeBooks by ISBN']);
+    for (const verdict of ['unknown', 'unavailable', 'uncompared', 'catalogueVerified', 'catalogueUnknown'] as const) {
+      expect(plan(EN, 'us', { verdict }).lead.map(l => l.label)).toEqual(['AbeBooks by ISBN', 'Bookshop.org by ISBN', 'Amazon by ISBN']);
+    }
     expect(plan(EN, 'us', { verdict: 'verified' }).lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN']);
+    // No answer yet: the order stays, so it does not jump when `verified` arrives.
+    expect(plan(EN, 'us', { verdict: 'pending' }).lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN']);
+    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN']);
   });
 
   it('says nothing in the home case, where there is no order to explain', () => {
