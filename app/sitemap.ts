@@ -1,94 +1,64 @@
 import type { MetadataRoute } from 'next';
-import { PUBLISHED_WORKS } from '@/lib/published';
 import decadePages from '@/data/decade-pages.json';
 import { SITE_URL } from '@/lib/seo';
-import { versusEnabled } from '@/lib/hotornot/switch';
-import { liveCollections } from '@/lib/collections-live';
+import { liveCollections, liveRecords } from '@/lib/collections-live';
+import { decadePagesToOffer, lastGrown } from '@/lib/sitemapplan';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 
 /**
  * The sitemap (SPEC §10 D11, ROADMAP 5.1).
  *
- * **Every work whose cover was picked by hand**, a hundred at 2026-09-09,
- * where until then it was the eighteen of the home page — and a work page a
- * crawler is never pointed at does not exist for it. The list grows with the
- * curation; nothing is invented, because dead URLs in front of a crawler are
- * worse than a short sitemap.
+ * **Since 2026-10-10 the collections and some decade pages, no book pages**
+ * (ROADMAP 6.107, lib/sitemapplan.ts says why). Until then it listed every
+ * index work (500) and every decade page (322), each dated "now".
  *
  * Search pages stay out on purpose: `/?q=…` is a question, not a document.
  */
 /** Hourly, so a collection published from /curate reaches the sitemap without a deploy (5.10g). */
 export const revalidate = 3600;
 
+/** When the text of the About page last changed; move it with the text (a date a crawler can trust, 6.107). */
+const ABOUT_UPDATED = '2026-10-09';
+/** When the Shelf-Portrait editor's page last changed. */
+const SHELFPORTRAIT_UPDATED = '2026-10-06';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-  /*
-    The cover game only when it is switched on (ROADMAP 5.8a, SPEC F7.1): off,
-    both addresses answer 404, and a sitemap that names a 404 is worse than one
-    that is short. The standings change with every vote, the game page with the
-    pool, which is frozen — hence the different frequencies.
-  */
-  const game = versusEnabled()
-    ? [
-        { url: `${SITE_URL}/versus`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
-        { url: `${SITE_URL}/versus/board`, lastModified: now, changeFrequency: 'daily' as const, priority: 0.7 },
-      ]
-    : [];
   const published = (await liveCollections({ includeDrafts: false })).filter(c => c.published);
+  // The picks with their dates live in the records; the published switches in the parsed collections.
+  const records = new Map((await liveRecords()).map(r => [r.slug, r]));
+  const grown = new Map(published.map(c => [c.slug, lastGrown(records.get(c.slug)?.works.map(w => w.addedAt) ?? [])]));
+  const newest = [...grown.values()].filter((d): d is string => !!d).sort().at(-1);
+  const inCollections = new Set(published.flatMap(c => c.works.map(w => w.id)));
+
   const collections = published.length
     ? [
-        { url: `${SITE_URL}/collections`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
-        ...published.map(c => ({
-          url: `${SITE_URL}/collections/${c.slug}`,
-          lastModified: now,
-          changeFrequency: 'monthly' as const,
-          priority: 0.7,
-        })),
+        { url: `${SITE_URL}/collections`, ...(newest ? { lastModified: newest } : {}) },
+        ...published.map(c => {
+          const day = grown.get(c.slug);
+          return { url: `${SITE_URL}/collections/${c.slug}`, ...(day ? { lastModified: day } : {}) };
+        }),
       ]
     : [];
+  /*
+    Decade pages: the work is in a published collection and has enough covers
+    for the page to say something (`DECADE_MIN_COVERS`). Dated by the decade
+    index's build, which is when their content was last measured.
+  */
+  const decades = decadePagesToOffer(decadePages.pages, inCollections).map(page => ({
+    url: `${SITE_URL}/book/${page.id}/decades`,
+    lastModified: decadePages.builtAt.slice(0, 10),
+  }));
+
+  // No changeFrequency, no priority: both engines ignore them (Google, Bing, 2025–2026).
   return [
-    { url: SITE_URL, lastModified: now, changeFrequency: 'weekly', priority: 1 },
-    { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.1 },
-    { url: `${SITE_URL}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.1 },
-    /*
-      Every work we point at, not only the curated ones (ROADMAP 5.1): a work
-      page exists for a crawler once something links to it, and nothing did
-      for the works outside the curation — *Nineteen Eighty-Four* among them,
-      with a full wall and a decade page nobody could find (2026-09-09).
-      `PUBLISHED_WORKS` is the index list, so every entry here has cover
-      signatures on disk and folds like the rest of the site.
-    */
-    ...PUBLISHED_WORKS.map(work => ({
-      url: `${SITE_URL}/book/${work.id}`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    })),
-    /*
-      Only the works that actually carry a decade page (ROADMAP 5.4a): the
-      threshold is 20 covers across 4 decades, and `scripts/find-decade-pages.ts`
-      measures which of the published works clear it. Putting the others in
-      here would send a crawler to a 404.
-    */
-    ...decadePages.pages.map(page => ({
-      url: `${SITE_URL}/book/${page.id}/decades`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    })),
-    ...game,
-    /*
-      Published collections only (ROADMAP 5.10, SPEC F8). A production build
-      never sees a draft; `liveCollections` also applies what was published from
-      /curate (5.10g), which is why the sitemap is rebuilt hourly; the
-      filter says so for anyone who runs this under `next dev`.
-    */
+    { url: SITE_URL, ...(newest ? { lastModified: newest } : {}) },
+    { url: `${SITE_URL}/about`, lastModified: ABOUT_UPDATED },
     ...collections,
+    ...decades,
     /*
       The Shelf-Portrait's editor, where it is switched on (ROADMAP 5.18b, indexed since 2026-10-06).
       Shared boards stay out and `noindex`: a grid of covers without words is thin, and there is no end to them.
     */
-    ...(inspirationEnabled() ? [{ url: `${SITE_URL}/shelfportrait`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 }] : []),
+    ...(inspirationEnabled() ? [{ url: `${SITE_URL}/shelfportrait`, lastModified: SHELFPORTRAIT_UPDATED }] : []),
   ];
 }
