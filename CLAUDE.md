@@ -128,6 +128,8 @@ npm run build      # must pass before a step is considered done
 
 ## Working rules
 
+- **Before the first use of an external service or tool in a session, read its section in [docs/umgang.md](docs/umgang.md)** (Julian, 2026-10-09): Open Library, Google Books, shops, the production site and Vercel CLI, the browser pane, headless Chrome, clips, research agents, double checking, the dev server, git. It is the one place per tool for what was learned the hard way; a new finding about a tool goes there in the same session, dated. The tool rules still in this file move there with 6.44.
+
 - **`lib/coverindex.ts` and `data/cover-index.json` are server-only.** The file is 410 KB at fifty works and would go to the browser whole if a client component imported it; the client asks `/api/similar/<coverId>` instead. Same trap as `lib/imagehash.ts`. The index is built by `scripts/build-cover-index.ts` and committed — never rebuilt in a request handler, which would call Open Library thousands of times.
 
 - **Similarity thresholds were set by looking, not by arithmetic** (SPEC §2.5, ROADMAP 6.10). Colour ≤ 0.055 and structure ≤ 0.28 are two gates, not a weighted blend: measured over 58,000 random pairs the median is 0.51 colour and 0.48 structure, so any blended threshold loose enough to be interesting admits everything. At the current gates 11% of covers have any neighbour at all. If you change them, look at the pairs again — the numbers alone will mislead you.
