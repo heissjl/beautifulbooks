@@ -44470,6 +44470,345 @@
         }
       ],
       "tileShape": "tall"
+    },
+    {
+      "slug": "gene-szafran",
+      "title": "Gene Szafran",
+      "kind": "series",
+      "intro": "In the early 1970s Gene Szafran painted the covers of Signet's Heinlein paperbacks and dozens of other science fiction books for Signet, Ballantine, Bantam and Lancer: airbrushed figures in rainbow halos, mandalas and melting colour. These are the covers the ISFDB credits to him, each matched by eye to a cover Open Library holds, in the order they were first printed.",
+      "published": false,
+      "publishers": [],
+      "coverCredits": "isfdb",
+      "works": [
+        {
+          "id": "OL34005507W",
+          "title": "The Stars Around Us",
+          "author": "Robert Hoskins",
+          "coverId": "ol:15068796",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:47877",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "47877"
+        },
+        {
+          "id": "OL59725W",
+          "title": "The Menace from Earth",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:14631589",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:801304",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "801304"
+        },
+        {
+          "id": "OL1960649W",
+          "title": "Nightwings",
+          "author": "Robert Silverberg",
+          "coverId": "ol:13079865",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:314843",
+          "coverIsbn": "0380414678",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "314843"
+        },
+        {
+          "id": "OL59721W",
+          "title": "Assignment in Eternity",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:5544518",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:439565",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "439565"
+        },
+        {
+          "id": "OL6552297W",
+          "title": "Pstalemate",
+          "author": "Lester del Rey",
+          "coverId": "ol:8389710",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:26904",
+          "coverIsbn": "0399106642",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "26904"
+        },
+        {
+          "id": "OL59729W",
+          "title": "The Puppet Masters",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:13565019",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:491309",
+          "coverIsbn": "0451085388",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "491309"
+        },
+        {
+          "id": "OL1960368W",
+          "title": "Downward to the Earth",
+          "author": "Robert Silverberg",
+          "coverId": "ol:10865282",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:10806",
+          "coverIsbn": "0451044975",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "10806"
+        },
+        {
+          "id": "OL103156W",
+          "title": "I Sing the Body Electric!",
+          "author": "Ray Bradbury",
+          "coverId": "ol:14414387",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:219029",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "219029"
+        },
+        {
+          "id": "OL15673050W",
+          "title": "Those Who Watch",
+          "author": "Robert Silverberg",
+          "coverId": "ol:6821488",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:268759",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "268759"
+        },
+        {
+          "id": "OL28316W",
+          "title": "This Perfect Day",
+          "author": "Ira Levin",
+          "coverId": "ol:5541317",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:270584",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "270584"
+        },
+        {
+          "id": "OL20096506W",
+          "title": "The Book of Stier",
+          "author": "Robin Sanborn",
+          "coverId": "ol:8759723",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:286830",
+          "coverIsbn": "0425020193",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "286830"
+        },
+        {
+          "id": "OL1960452W",
+          "title": "Moonferns and Starsongs",
+          "author": "Robert Silverberg",
+          "coverId": "ol:2404587",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:22746",
+          "coverIsbn": "0345022785",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "22746"
+        },
+        {
+          "id": "OL1960652W",
+          "title": "Son of Man",
+          "author": "Robert Silverberg",
+          "coverId": "ol:14303727",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:31167",
+          "coverIsbn": "0345022777",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "31167"
+        },
+        {
+          "id": "OL90540W",
+          "title": "The Byworlder",
+          "author": "Poul Anderson",
+          "coverId": "ol:15183595",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:156471",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "156471"
+        },
+        {
+          "id": "OL16816343W",
+          "title": "Protostars",
+          "author": "David Gerrold",
+          "coverId": "ol:12232609",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:26870",
+          "coverIsbn": "345023935095",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "26870"
+        },
+        {
+          "id": "OL20121670W",
+          "title": "The Goat Without Horns",
+          "author": "Thomas Burnett Swann",
+          "coverId": "ol:8776064",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:40683",
+          "coverIsbn": "0345023951",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "40683"
+        },
+        {
+          "id": "OL90566W",
+          "title": "The Dancer from Atlantis",
+          "author": "Poul Anderson",
+          "coverId": "ol:8035094",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:199725",
+          "coverIsbn": "0451048946",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "199725"
+        },
+        {
+          "id": "OL7214682W",
+          "title": "The Waters of Centaurus",
+          "author": "Rosel George Brown",
+          "coverId": "ol:8440586",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:49699",
+          "coverIsbn": "44775278095",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "49699"
+        },
+        {
+          "id": "OL17961233W",
+          "title": "The Time Masters",
+          "author": "Wilson Tucker",
+          "coverId": "ol:14609171",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:88986",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "88986"
+        },
+        {
+          "id": "OL2876999W",
+          "title": "Wolfwinter",
+          "author": "Thomas Burnett Swann",
+          "coverId": "ol:2404588",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:55260",
+          "coverIsbn": "0345029054",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "55260"
+        },
+        {
+          "id": "OL10587657W",
+          "title": "Syzygy",
+          "author": "Michael G. Coney",
+          "coverId": "ol:14174520",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:175961",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "175961"
+        },
+        {
+          "id": "OL8997643W",
+          "title": "To Ride Pegasus",
+          "author": "Anne McCaffrey",
+          "coverId": "ol:8535738",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:51798",
+          "coverIsbn": "0345234170",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "51798"
+        },
+        {
+          "id": "OL11334034W",
+          "title": "Ice",
+          "author": "Anna Kavan",
+          "coverId": "ol:7284070",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:17711",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "17711"
+        },
+        {
+          "id": "OL1841637W",
+          "title": "Saturday, the Twelfth of October",
+          "author": "Norma Fox Mazer",
+          "coverId": "ol:13828610",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:943475",
+          "coverIsbn": "044005947X",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "943475"
+        },
+        {
+          "id": "OL2798253W",
+          "title": "A Funeral for the Eyes of Fire",
+          "author": "Michael Bishop",
+          "coverId": "ol:10043967",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:603",
+          "coverIsbn": "0345243501",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "603"
+        },
+        {
+          "id": "OL59734W",
+          "title": "The Green Hills of Earth",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:8742633",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:263619",
+          "coverIsbn": "0451084373",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "263619"
+        }
+      ]
     }
   ]
 }
