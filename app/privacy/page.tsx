@@ -9,6 +9,8 @@ import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
 import { affiliateNetworks, affiliateShops } from '@/lib/buylinks';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
+import { wallsEnabled } from '@/lib/walls/switch';
+import { hasApiKey } from '@/lib/recognize';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/server';
 
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
   description: 'What this site does with data, which is little, and who is responsible for it.',
 };
 
-const UPDATED = '5 October 2026';
+const UPDATED = '10 October 2026';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -137,6 +139,14 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         {game && (
           <Section title={t('The cover game')}>
             <p>{t('Picking a cover in the game writes one line to a database: the two covers that were shown, which of them you picked, and the day — not the minute. Nothing about you is written with it: no IP address, no cookie, no browser details, no identifier of any kind, so two picks of yours cannot be recognised as yours or as belonging together. Reporting a cover as “not a cover” writes the cover and the reason, again with nothing about you, and the game stores nothing in your browser. These lines are what the ranking is counted from; they are kept while the game runs, because deleting them would delete the ranking. They live in a Redis database that this site rents from Redis through Vercel’s marketplace; it holds the lines on this site’s behalf. Legal basis: legitimate interest in a ranking that reflects what readers picked (Art. 6(1)(f) GDPR).')}</p>
+          </Section>
+        )}
+
+        {/* Both sentences approved by Julian on 2026-10-10, as he approved them (ROADMAP 2.19); the cookie's name was taken out at his word. */}
+        {wallsEnabled() && (
+          <Section title={t('Your collections')}>
+            <p>{t('If you make a collection, your browser gets a cookie with a random ID, set only at that moment and kept for two years. It tells this site which collections this browser may change, nothing else; the site stores a one-way hash of the ID next to each collection, not the ID itself. If you only look, no cookie is set. Delete it and your collections stay online, but can be changed from this browser only after you paste your ID again.')}</p>
+            {hasApiKey() && <p>{t('Your photo is sent once to Anthropic, a company in the United States, whose model reads the book titles on it. We send the picture and nothing else — no name, no cookie, no address — and we do not keep it: it is not stored on our side and does not appear in our logs. Anthropic processes it to answer and, under its API terms, does not use it to train its models.')}</p>}
           </Section>
         )}
 
