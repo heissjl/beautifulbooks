@@ -5915,3 +5915,26 @@ Julian: „see if we can find enough sci fi covers with art by Gene Szafran for 
 Der Entwurf `gene-szafran` hat 26 Kacheln, ist unveröffentlicht und liegt in der Datei und online als `eLn8gBWQlDhU`. Jede Kachel trägt `coverArtists: ['Gene Szafran']` und als `isfdbRecord` den verglichenen Druck. Der erste Name „Gene Szafran's Science Fiction“ ergab online eine andere Adresse als in der Datei. Er wurde auf „Gene Szafran“ gekürzt, Entwurf und Datei heißen jetzt beide `gene-szafran`.
 
 Julians nächster Schritt (2026-10-09: „da wo der OL scan fehlt, können wir ja jederzeit den isfdb scan reinnehmen und zu OL hochladen“): Fehlt bei Open Library das Bild, wird der ISFDB-Scan unter `wertstoffhof` hochgeladen. Ziel ist die Ausgabe, deren ISBN und Jahr zum ISFDB-Druck passen.
+
+Nachtrag: elf ISFDB-Scans zu Open Library hochgeladen, mit Julians Ja, unter `wertstoffhof`. Gesucht hat sie `szafran_upload_targets.py`. In Frage kam jede Ausgabe des Werks, deren ISBN der des ISFDB-Drucks entspricht. Bei Drucken ohne ISBN genügten derselbe Verlag und dasselbe Jahr. Zielausgaben, alt → neu:
+
+| Werk | Ausgabe | Datum (OL) | ISFDB-Druck | neues Cover |
+|---|---|---|---|---|
+| Down in the Black Gang | OL10269905M | Okt. 1971 | 181345 | 15263651 |
+| All the Gods of Eisernon | OL43060107M | 1973 | 2170 | 15263652 |
+| Walk to the End of the World | OL10682057M | Jan. 1974 | 237717 | 15263653 |
+| Third from the Sun | OL44935908M | 1970 | 246849 | 15263654 |
+| The Star Fox | OL10269878M | Juli 1971 | 262490 | 15263655 (vorher 13237774, „cover coming soon“) |
+| Doctor Orient | OL27048027M | Juli 1974 | 269731 | 15263656 (vorher 8666901, Textplatzhalter) |
+| Methuselah's Children | OL10269532M | Apr. 1970 | 307924 | 15263657 |
+| The Far-Out People | OL58834170M | 1971 | 39623 | 15263658 |
+| Beyond Control | OL7523476M | Feb. 1974 | 4304 | 15263659 |
+| Clarion | OL22947381M | 1971 | 7271 | 15263660 |
+| Time's Last Gift | OL10681181M | 1972 | 51614 | 15263661 (Vorderseite aus einem Rundum-Scan geschnitten) |
+
+Nicht hochgeladen:
+- *Beastchild*: Der ISFDB-Scan ist seitlich abgeschnitten.
+- *Beyond This Horizon*: Die ISBN 0-451-07599-4 passt, aber Open Library datiert die Ausgabe auf 1960, die ISFDB auf 1976. Nach der Regel müssen ISBN und Datum passen.
+- *The House on the Strand*: noch nicht angesehen.
+
+Die Sammlung hat jetzt 37 Kacheln in Datei und Entwurf. Rund 44 Arbeiten haben bei Open Library keine Ausgabe des passenden Drucks. Ein Upload ginge dort nur, wenn man eine neue Ausgabe anlegt; das ist nicht geschehen.

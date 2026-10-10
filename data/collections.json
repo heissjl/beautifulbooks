@@ -44505,6 +44505,18 @@
           "isfdbRecord": "801304"
         },
         {
+          "id": "OL33070162W",
+          "title": "Third from the Sun",
+          "author": "Richard Matheson",
+          "coverId": "ol:15263654",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:246849",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "246849"
+        },
+        {
           "id": "OL1960649W",
           "title": "Nightwings",
           "author": "Robert Silverberg",
@@ -44644,6 +44656,43 @@
           "isfdbRecord": "31167"
         },
         {
+          "id": "OL2934022W",
+          "title": "Clarion",
+          "author": "Robin Scott Wilson",
+          "coverId": "ol:15263660",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:7271",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "7271"
+        },
+        {
+          "id": "OL90568W",
+          "title": "The Star Fox",
+          "author": "Poul Anderson",
+          "coverId": "ol:15263655",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:262490",
+          "coverIsbn": "045104763X",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "262490"
+        },
+        {
+          "id": "OL43198741W",
+          "title": "The Far-Out People",
+          "author": "Robert Hoskins",
+          "coverId": "ol:15263658",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:39623",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "39623"
+        },
+        {
           "id": "OL90540W",
           "title": "The Byworlder",
           "author": "Poul Anderson",
@@ -44682,6 +44731,19 @@
           "isfdbRecord": "40683"
         },
         {
+          "id": "OL1840382W",
+          "title": "Down in the Black Gang",
+          "author": "Philip Jose Farmer",
+          "coverId": "ol:15263651",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:181345",
+          "coverIsbn": "0451048059",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "181345"
+        },
+        {
           "id": "OL90566W",
           "title": "The Dancer from Atlantis",
           "author": "Poul Anderson",
@@ -44693,6 +44755,19 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "199725"
+        },
+        {
+          "id": "OL273070W",
+          "title": "Time's Last Gift",
+          "author": "Philip Jose Farmer",
+          "coverId": "ol:15263661",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:51614",
+          "coverIsbn": "0345024680",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "51614"
         },
         {
           "id": "OL7214682W",
@@ -44745,6 +44820,19 @@
           "isfdbRecord": "175961"
         },
         {
+          "id": "OL20401767W",
+          "title": "All the Gods of Eisernon",
+          "author": "Simon Lang",
+          "coverId": "ol:15263652",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:2170",
+          "coverIsbn": "0380153394",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "2170"
+        },
+        {
           "id": "OL8997643W",
           "title": "To Ride Pegasus",
           "author": "Anne McCaffrey",
@@ -44758,6 +44846,32 @@
           "isfdbRecord": "51798"
         },
         {
+          "id": "OL175618W",
+          "title": "Walk to the End of the World",
+          "author": "Suzy McKee Charnas",
+          "coverId": "ol:15263653",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:237717",
+          "coverIsbn": "0345237889",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "237717"
+        },
+        {
+          "id": "OL1960344W",
+          "title": "Beyond Control",
+          "author": "Robert Silverberg",
+          "coverId": "ol:15263659",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:4304",
+          "coverIsbn": "0440921120",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "4304"
+        },
+        {
           "id": "OL11334034W",
           "title": "Ice",
           "author": "Anna Kavan",
@@ -44768,6 +44882,19 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "17711"
+        },
+        {
+          "id": "OL19860319W",
+          "title": "Doctor Orient",
+          "author": "Frank Lauria",
+          "coverId": "ol:15263656",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:269731",
+          "coverIsbn": "0552680788",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "269731"
         },
         {
           "id": "OL1841637W",
@@ -44807,6 +44934,19 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "263619"
+        },
+        {
+          "id": "OL59726W",
+          "title": "Methuselah's Children",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263657",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:307924",
+          "coverIsbn": "0451042263",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "307924"
         }
       ]
     }
