@@ -471,6 +471,7 @@ function BookDetail() {
               onSelectCover={c => selectCover(c.id)}
               captions={view.captions}
               belowTabs={hasDecades ? <DecadeLink workId={work.id} /> : undefined}
+              settled={merged.done}
             />
             <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-3">
               {t('Covers come from Open Library and Google Books. Most edition records carry no scan, so a book has had covers neither catalogue knows.')}

@@ -431,7 +431,7 @@ export const de: Readonly<Record<string, string>> = {
   'and {n} editions, the most printed first.': 'und {n} Ausgaben, die meistgedruckten zuerst.',
   'All collections by readers': 'Alle Sammlungen von Lesern',
   'Open Library dates the book to {year}.': 'Open Library datiert das Buch auf {year}.',
-  '{covers} from {checked} of {total} editions checked': '{covers} aus {checked} von {total} geprüften Ausgaben',
+  '{covers} so far, from {checked} of {total} editions checked': 'Bisher {covers} aus {checked} von {total} geprüften Ausgaben',
   '{covers} from the first {checked} of {total} editions': '{covers} aus den ersten {checked} von {total} Ausgaben',
   '{covers} from {checked} of {total} editions; the source stopped answering': '{covers} aus {checked} von {total} Ausgaben; die Quelle hat aufgehört zu antworten',
   '{covers} covers from {records} printings with a known year': '{covers} Cover aus {records} Drucken mit bekanntem Jahr',

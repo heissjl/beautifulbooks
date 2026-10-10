@@ -72,7 +72,9 @@ export function captionFor(cover: Cover, editionsById: ReadonlyMap<string, Editi
 export function progressLabel(covers: number, merged: Pick<MergedWork, 'checked' | 'total' | 'done' | 'truncated'>, t: Translate = english): string {
   const n = covers === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n: covers });
   const { checked, total } = merged;
-  if (!merged.done) return t('{covers} from {checked} of {total} editions checked', { covers: n, checked, total });
+  // While pages still come, the count is a running one and says so (ROADMAP 6.71b):
+  // "254 covers" that becomes 287 a moment later read as a page that cannot count.
+  if (!merged.done) return t('{covers} so far, from {checked} of {total} editions checked', { covers: n, checked, total });
   const reason: Record<Exclude<Truncation, null>, string> = {
     cap: t('{covers} from the first {checked} of {total} editions', { covers: n, checked, total }),
     error: t('{covers} from {checked} of {total} editions; the source stopped answering', { covers: n, checked, total }),

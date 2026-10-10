@@ -1185,3 +1185,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **2.12 Antwort-Header und `security.txt`.** (Sicherheits-Durchsicht 2026-10-02, §3.) Die Produktion schickt außer `strict-transport-security` keinen Sicherheits-Header. In `next.config.ts`: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `frame-ancestors 'none'`, eine `Permissions-Policy`, und eine `Content-Security-Policy` **zuerst als Report-Only**, weil Next eigene Inline-Skripte schreibt und Vercels Analytics dazukommt. Dazu `/.well-known/security.txt` mit der Adresse aus dem Impressum. Claude, halber Tag.
 
 **Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 6.71b
+
+**6.71b Der Zähler der Wand läuft beim Nachladen.** Abgetrennt am 2026-09-30 von 6.71 (Teil b aus Teil A der Durchsicht, A4): „254 covers · 1,100 of 1,180 editions checked“ → 283 → 287, die Reiter zählen mit. Solange Seiten nachkommen „so far“ und Reiter ohne Zahl, Endzahlen erst nach der letzten Seite; E17 (Reiter frieren ein) beachten. Ein bis zwei Stunden, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+**Erledigt 2026-10-09.** → [Historie](history.md)

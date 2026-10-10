@@ -42,6 +42,13 @@ interface CoverGalleryProps {
   markLabel?: string;
   /** Open on "All languages" rather than the first language (the wall picker; Julian, 2026-09-28). */
   allFirst?: boolean;
+  /**
+   * False while edition pages still come (ROADMAP 6.71b): the pills then
+   * show no number, because a number that climbs with every page is a page
+   * that cannot count. The space stays, so nothing shifts when the numbers
+   * arrive. Default true: a finished wall, and every other caller.
+   */
+  settled?: boolean;
 }
 
 const tabKey = (g: CoverTab) => g.language ?? 'unknown';
@@ -86,7 +93,7 @@ function visibleLanguages(
   return new Set([...others.slice(0, kept), activeKey]);
 }
 
-export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, markLabel, allFirst }: CoverGalleryProps) {
+export default function CoverGallery({ groups, allCovers, selectedCover, onSelectCover, captions, belowTabs, marked, markLabel, allFirst, settled = true }: CoverGalleryProps) {
   const t = useT();
   const locale = useLocale();
   // The tab follows the selected cover unless the user picked a tab since
@@ -136,7 +143,7 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       className={`chip shrink-0 ${extra}`}
     >
       {label}
-      <span className="text-xs opacity-70">{count}</span>
+      <span className={`text-xs opacity-70 ${settled ? '' : 'invisible'}`}>{count}</span>
     </button>
   );
   const tab = (g: CoverTab) => pill(tabKey(g), languageName(g.language, locale), g.covers.length, isTucked(g) ? tuckedClass : '');
