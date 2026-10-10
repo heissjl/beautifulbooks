@@ -12,7 +12,7 @@ The collection is read from a live snapshot (scripts/live-collections.ts),
 because the site lays online drafts over data/collections.json; the covers are
 Open Library's large images, fetched one at a time and cached in out/cache.
 
-    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain] [--first]
+    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain | --footer-only] [--first] [--cols=N]
 """
 import json
 import os
@@ -36,7 +36,6 @@ MARGIN = 140
 COLS = 11          # 73 = 6 × 11 + 7: the last row is nearly full
 GAP_X = 40
 GAP_Y = 64
-RATIO = 1.55       # height over width of an SF Masterworks paperback
 TEXT_H = 172
 
 # SF Masterworks numbers whose cover on Open Library is a later printing; with
@@ -108,7 +107,7 @@ def brand(d: ImageDraw.ImageDraw, right: int, top: int, size: int) -> int:
     return top + size
 
 
-def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None:
+def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_only: bool = False) -> None:
     data = json.load(open(live))
     records = data if isinstance(data, list) else data.get('collections', data.get('records'))
     coll = next(c for c in records if c['slug'] == slug)
@@ -128,9 +127,16 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None
         tiles.append(cover(w['coverId']))
         print(f'{i + 1}/{len(works)}', w['title'], flush=True)
 
-    tw = (W - 2 * MARGIN - (COLS - 1) * GAP_X) // COLS
-    th = round(tw * RATIO)
-    rows = -(-len(works) // COLS)
+    cols = next((int(a.split('=')[1]) for a in sys.argv[3:] if a.startswith('--cols=')), COLS)
+    tw = (W - 2 * MARGIN - (cols - 1) * GAP_X) // cols
+    # The tile takes the median shape of this collection's scans, so a series
+    # printed taller than the SF Masterworks (Fontana ~1.62) keeps its title band;
+    # a scan of another shape is fitted whole, never cut (Julian, 2026-10-09:
+    # "einige cover aus der collection sind oben etwas abgeschnitten").
+    ratios = sorted(t.height / t.width for t in tiles)
+    ratio = ratios[len(ratios) // 2]
+    th = round(tw * ratio)
+    rows = -(-len(works) // cols)
 
     probe = ImageDraw.Draw(Image.new('RGB', (1, 1)))
     title_f = font('regular', 150)
@@ -150,7 +156,8 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None
     for line in intro_lines:
         d.text((MARGIN, y), line, font=intro_f, fill=MUTED)
         y += 62
-    if not plain:
+    # --footer-only: the site's name only at the foot, for forums wary of branding (Julian, 2026-10-08).
+    if not plain and not footer_only:
         b = brand(d, W - MARGIN, MARGIN + 10, 84)
         dom = font('jost', 40, 400)
         d.text((W - MARGIN - d.textlength('buyitscovers.com', font=dom), b + 28), 'buyitscovers.com', font=dom, fill=MUTED)
@@ -159,12 +166,18 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None
     # The grid, in the order of the numbers; the last row is centred.
     t_f, a_f, c_f, n_f = font('jost', 30, 500), font('jost', 26, 400), font('jost', 24, 400), font('jost', 24, 400)
     for i, (w, tile) in enumerate(zip(works, tiles)):
-        r, c = divmod(i, COLS)
-        in_row = min(COLS, len(works) - r * COLS)
+        r, c = divmod(i, cols)
+        in_row = min(cols, len(works) - r * cols)
         x0 = (W - (in_row * tw + (in_row - 1) * GAP_X)) // 2
         x = x0 + c * (tw + GAP_X)
         y = header_h + r * (th + TEXT_H + GAP_Y)
-        img.paste(fill(tile, tw, th), (x, y))
+        r = tile.height / tile.width
+        if abs(r - ratio) / ratio < 0.03:
+            img.paste(fill(tile, tw, th), (x, y))
+        else:
+            k = min(tw / tile.width, th / tile.height)
+            fitted = tile.resize((round(tile.width * k), round(tile.height * k)), Image.LANCZOS)
+            img.paste(fitted, (x + (tw - fitted.width) // 2, y + th - fitted.height))
         ty = y + th + 16
         # A work printed in two designs keeps its series number; the second tile says so.
         repeat = i > 0 and works[i - 1]['id'] == w['id']
@@ -196,10 +209,10 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False) -> None
         brand(d, W - MARGIN, fy, 84)
 
     # --plain: the same picture without the site's name, for forums that refuse it (Julian, 2026-10-07).
-    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}{"-first" if first else ""}.jpg')
+    out = os.path.join(HERE, 'out', f'collection-{slug}{"-plain" if plain else ""}{"-footer" if footer_only else ""}{"-first" if first else ""}.jpg')
     img.save(out, quality=92)
     print('written', out, img.size)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:], '--first' in sys.argv[3:])
+    main(sys.argv[1], sys.argv[2], '--plain' in sys.argv[3:], '--first' in sys.argv[3:], '--footer-only' in sys.argv[3:])

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nine Books sketch</title>
+<style>
+:root{--bg:#f4efe6;--ink:#2b2622;--ink2:#6b625a;--line:#ddd3c4;--accent:#9a4f36;--nb:#dfeedd;--nbline:#b9cdb6}
+*{box-sizing:border-box}body{margin:0;background:#e9e6e1;font:15px/1.5 system-ui,sans-serif;color:var(--ink)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+h1{font:600 24px Georgia,serif;margin:0 0 4px}.lead{color:#555;margin:0 0 24px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}@media(max-width:820px){.cols{grid-template-columns:1fr}}
+.label{font:600 12px system-ui;text-transform:uppercase;letter-spacing:.06em;color:#777;margin:18px 0 6px}
+.site{border-radius:10px;overflow:hidden;box-shadow:0 1px 3px #0002}
+.bb{background:var(--bg);padding:20px}.bb h3{font:400 19px Georgia,serif;margin:14px 0 4px}.bb p{color:var(--ink2);font-size:14px;margin:4px 0}
+.bb a{color:var(--accent)}.btn{display:inline-block;border-radius:999px;padding:6px 14px;font-size:14px;border:1px solid var(--line);background:#fff;margin-top:8px}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.panel{border:1px solid var(--line);background:#fffaf2;border-radius:10px;padding:14px;margin-top:10px}
+.panel ol{margin:6px 0 10px;padding-left:22px;font-size:13px}.panel li span{color:var(--ink2)}
+.radio{font-size:13px;margin:4px 0}.consent{font-size:12px;color:var(--ink2);border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
+.new{outline:2px dashed #3a8f5a;outline-offset:4px;border-radius:6px}
+.nb{background:var(--nb);padding:20px;font-family:Georgia,serif}.nb .brand{font:700 14px system-ui}
+.card{border-top:1px solid var(--nbline);padding-top:12px;margin-top:12px}.card h4{margin:0;font-size:17px}.card .date{font:12px system-ui;color:#555}
+.card ol{font-size:13px;columns:2;padding-left:22px;margin:8px 0}.card .links{font:13px system-ui;text-decoration:underline}
+.via{font:13px system-ui;color:#2d6a3f;margin-top:6px}
+.code{font:12px ui-monospace,monospace;background:#1f1f1f;color:#e6e6e6;border-radius:8px;padding:12px;white-space:pre;overflow:auto}
+.note{font-size:13px;color:#555}
+</style></head><body><div class="wrap">
+<h1>Nine Books, one click — what would change</h1>
+<p class="lead">Sketch for ROADMAP 5.18c (b), 2026-10-09. Nothing here is built or sent. Dashed green = new.
+Plan: <code>PLAN-5.18c-ninebooks.md</code>.</p>
+
+<div class="cols">
+<div>
+  <div class="label">Buy Its Covers — today (built, 5.18c a)</div>
+  <div class="site bb">
+    <h3>As a link</h3><p>X · Threads · Bluesky · WhatsApp · Telegram · Copy link</p>
+    <h3>To an open database</h3>
+    <p><a href="#">Nine Books</a> collects people’s favourite nines as open data anyone may use. Save the picture above and upload it there — it is someone else’s project, and this site sends it nothing.</p>
+  </div>
+
+  <div class="label">Buy Its Covers — after (b): a button</div>
+  <div class="site bb">
+    <h3>To an open database</h3>
+    <p><a href="#">Nine Books</a> collects people’s favourite nines as open data anyone may use.</p>
+    <p class="note">(no button — the panel below stands open)</p>
+  </div>
+
+  <div class="label">… the panel, open from the start: one click sends and consents</div>
+  <div class="site bb">
+    <div class="panel new">
+      <b style="font-size:14px">Your nine, as Nine Books will publish them</b>
+      <ol><li>Nineteen Eighty-Four <span>— George Orwell</span></li><li>Neuromancer <span>— William Gibson</span></li><li>Lolita <span>— Vladimir Nabokov</span></li><li>Gravity’s Rainbow <span>— Thomas Pynchon</span></li><li>Frankenstein <span>— Mary Shelley</span></li><li>Pride and Prejudice <span>— Jane Austen</span></li><li>Dracula <span>— Bram Stoker</span></li><li>Jane Eyre <span>— Charlotte Brontë</span></li><li>Il Gattopardo <span>— Giuseppe Tomasi di Lampedusa</span></li></ol>
+      <div class="radio">◉ Anonymous &nbsp; ○ With my name: <u>Julian</u></div>
+      <div class="radio">Nine Books publishes this list as public-domain (CC0) data. It cannot be taken back.</div>
+      <span class="btn primary">Add my nine to Nine Books</span>
+      <div class="consent">Your browser sends this straight to Nine Books (someone else’s project). This site does not receive or keep it.</div>
+    </div>
+  </div>
+
+  <div class="label">… afterwards</div>
+  <div class="site bb"><div class="panel new"><b>Added.</b> <a href="#">See your list on Nine Books ↗</a></div>
+  <p class="note" style="margin-top:8px">On an error: his message, word for word — never “nothing found”.</p></div>
+</div>
+
+<div>
+  <div class="label">Nine Books — a list that came from Buy Its Covers</div>
+  <div class="site nb">
+    <div class="brand">nine / nine</div>
+    <div class="card">
+      <h4>An anonymous contributor’s nine books</h4><div class="date">Oct 9, 2026</div>
+      <ol><li>Nineteen Eighty-Four</li><li>Neuromancer</li><li>Lolita</li><li>Gravity’s Rainbow</li><li>Frankenstein</li><li>Pride and Prejudice</li><li>Dracula</li><li>Jane Eyre</li><li>Il Gattopardo</li></ol>
+      <div class="via new">via Buy Its Covers — see the covers ↗ <i>(optional)</i></div>
+      <div class="links">Open this list · This person’s books &amp; albums</div>
+    </div>
+    <div class="card">
+      <h4>An anonymous contributor’s nine books</h4><div class="date">Oct 9, 2026</div>
+      <ol><li>A Heart so White</li><li>The Possessed</li><li>…</li></ol>
+      <div class="links">Open this list · This person’s books &amp; albums</div>
+      <p class="note">An image upload looks as it does today.</p>
+    </div>
+  </div>
+
+  <div class="label">Nine Books — under the hood (his pull request)</div>
+  <div class="code">wrangler.toml
++ PARTNER_ORIGINS = "https://buyitscovers.com"
++ PARTNER_DAILY_LIMIT = "200"
+
+src/worker.js
++ POST /api/lists/reviewed   (only from PARTNER_ORIGINS)
++   kind "book", exactly 9 { title, creator }
++   consent "ninebooks-cc0-v2", attribution as today
++   source_url may be buyitscovers.com/shelfportrait/&lt;id&gt;
++   duplicate key = hash of the 9 item ids (no image)
++   same IP quota, own daily cap — no model call
+  CORS for POST includes PARTNER_ORIGINS
+
+migrations/0003_source.sql
++ ALTER TABLE lists ADD COLUMN source TEXT DEFAULT 'image'
+
+export: lists.csv / lists.jsonl gain "source"
+test/worker.test.js: 5 new tests</div>
+
+  <div class="label">Buy Its Covers — under the hood</div>
+  <div class="code">components/InspirationNineBooks.tsx   new: button, panel, fetch from the browser
+lib/inspiration/ninebooks.ts         new, pure + tested: board → request body
+components/InspirationShared.tsx     the paragraph gets the button
+app/privacy/page.tsx, lib/i18n/de.ts one sentence (Julian approves)
+docs/recht-hobbyseite.md §4          third party named
+(optional) /api/seen class           daily count, no id, no titles</div>
+</div>
+</div>
+</div></body></html>

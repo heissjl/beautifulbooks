@@ -30,4 +30,5 @@ Stand: 2026-10-03 (Zeilen zu 6.63, 2.0 und der Suche nachgezogen). Ein Plan ist 
 | [PLAN-5.5-5.6-kanaele.md](PLAN-5.5-5.6-kanaele.md) | 5.5, 5.6 (+ 5.5a, 5.6a): Reichweite außerhalb der Suche — Link-Kanäle, Bild-Kanäle, Messung je Kanal, Reihenfolge, Abbruchschwellen | **offen**, Plan 2026-10-04; 5.6a (Kanäle messen) zuerst, vier Entscheidungen Julians in §6 |
 | [PLAN-5-reichweite.md](PLAN-5-reichweite.md) | Phase 5: Seitengattungen, Agenten-Kette, Regeln gegen Slop | offen, wartet auf Phase 2–4; die Reihen-Seiten (5.4b) sind seit 5.10 eine Art Sammlung, siehe Roadmap |
 | [PLAN-4-einnahmen.md](PLAN-4-einnahmen.md) | 4.6–4.8: Einnahmen jenseits der Affiliate-Links | Analyse fertig, Regeln als E19; Bau wartet auf Reichweite |
+| [PLAN-5.18c-ninebooks.md](PLAN-5.18c-ninebooks.md) | 5.18c (b): ein Shelf-Portrait mit einem Klick an Nine Books — sein Pull Request und unsere Seite, mit Skizze | **Entwurf** 2026-10-09; wartet auf Julian, dann auf ihn |
 | [PLAN-struktur.md](PLAN-struktur.md) | 0.11: Ordnerstruktur, `lab/`, der Clip als erstes Experiment | **entschieden** 2026-09-08 (`fe8f156`): Option A, `lab/` angelegt; der Clip wartet (5.5) |

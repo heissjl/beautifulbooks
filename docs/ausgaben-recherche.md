@@ -57,6 +57,7 @@ Wie man herausfindet, welches Cover zu welcher Ausgabe und welchem Druck gehört
 - **Der `isfdbRecord` zeigt auf den Druck, dessen Bild gezeigt wird**, nicht auf den Erstdruck der ISBN (2026-10-08: die Soldaten-Kachel zeigte auf 1999).
 - Ein Werk darf zweimal in einer Sammlung stehen, wenn die Reihe es in zwei Gestaltungen gedruckt hat; die Einleitung sagt es, die Reihenfolge ist Erstdruck vor Nachdruck. Eine Ausgabe einer *anderen* Reihe gehört nicht hinein.
 - Online-Entwürfe (`/curate`) tragen keine Credits; die Seite ergänzt sie aus der Datei, wenn Werk und Cover übereinstimmen (`withFileFacts` in `lib/collections.ts`, seit 2026-10-08). Credits also immer in der Datei pflegen, dann `push-draft.ts`.
+- **Steht ein Werk zweimal in der Sammlung, geht kein Online-Entwurf mehr** (die Seite lehnt das Veröffentlichen ab, sobald die *deployte* Datei ein Werk doppelt führt — ein Entwurf hält jedes Werk einmal). Dann: Datei ändern, deployen, den veröffentlichten Entwurf entfernen (`POST /api/curate/publish` mit `{ slug, clearDraft: true }`, Admin-Passwort als Bearer; dasselbe tut `lab/collections/serve.ts`), der Schalter bleibt an. So geschehen mit `sf-masterworks` am 2026-10-08.
 
 ## 5. Wenn jemand von außen widerspricht — und was dabei schiefging
 
