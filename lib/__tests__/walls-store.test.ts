@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import type { RedisCommands } from '../hotornot/store';
+import type { RedisCommands } from '../redis';
 import { hashVisitor, newVisitorId, newWall } from '../walls/owner';
-import { moderate } from '../walls/model';
-import { commandsWallStore, memoryWallStore, moderationList, shownWalls, wallsOf, WallStoreUnavailableError, type WallStore } from '../walls/store';
+import { MAX_WALLS_PER_OWNER, moderate, WALLS_CAP } from '../walls/model';
+import { commandsWallStore, memoryWallStore, moderationList, ownerAtCap, shownWalls, siteAtCap, wallsOf, WallStoreUnavailableError, type WallStore } from '../walls/store';
 
 function fakeCommands(): RedisCommands {
   const kv = new Map<string, string>();
@@ -21,7 +21,13 @@ function fakeCommands(): RedisCommands {
       hashes.set(k, h);
       return Number(h.get(f));
     },
-    hSetNX: async () => 1,
+    hSetNX: async (k, f, v) => {
+      const h = hashes.get(k) ?? new Map<string, string>();
+      hashes.set(k, h);
+      if (h.has(f)) return 0;
+      h.set(f, v);
+      return 1;
+    },
     setNx: async () => 'OK',
   };
 }
@@ -59,9 +65,34 @@ for (const [name, make] of [['memory', memoryWallStore], ['redis', () => command
       await store.submitted('aaaaaaaaaa');
       await store.view('aaaaaaaaaa');
       await store.view('aaaaaaaaaa');
-      await store.report('bbbbbbbbbb');
+      await store.report('bbbbbbbbbb', hashVisitor(YOU));
       expect((await shownWalls(store)).map((s) => [s.wall.id, s.views])).toEqual([['aaaaaaaaaa', 2]]);
       expect((await moderationList(store)).map((s) => [s.wall.id, s.reports])).toEqual([['bbbbbbbbbb', 1], ['aaaaaaaaaa', 0]]);
+    });
+
+    it('counts a report once per browser (2.20): five presses of one browser are one report', async () => {
+      const store: WallStore = make();
+      const me = hashVisitor(ME);
+      expect(await store.report('aaaaaaaaaa', me)).toEqual({ fresh: true, count: 1 });
+      for (let i = 0; i < 4; i++) expect((await store.report('aaaaaaaaaa', me)).fresh).toBe(false);
+      expect(await store.report('aaaaaaaaaa', hashVisitor(YOU))).toEqual({ fresh: true, count: 2 });
+      expect((await store.reports()).get('aaaaaaaaaa')).toBe(2);
+    });
+
+    it('caps collections per browser and saved collections on the site (2.20)', async () => {
+      const store: WallStore = make();
+      const me = hashVisitor(ME);
+      expect(await ownerAtCap(store, me)).toBe(false);
+      for (let i = 0; i < MAX_WALLS_PER_OWNER; i++) {
+        const w = newWall(`w${String(i).padStart(9, '0')}`, ME, `W${i}`, '2026-09-01T00:00:00Z');
+        await store.put(w);
+        await store.register(w);
+      }
+      expect(await ownerAtCap(store, me)).toBe(true);
+      expect(await ownerAtCap(store, hashVisitor(YOU))).toBe(false);
+      expect(await siteAtCap(store)).toBe(false);
+      for (let i = 0; i < WALLS_CAP; i++) await store.counted(`c${i}`);
+      expect(await siteAtCap(store)).toBe(true);
     });
   });
 }

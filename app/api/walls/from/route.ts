@@ -2,7 +2,8 @@ import { NextRequest } from 'next/server';
 import { liveCollectionBySlug } from '@/lib/collections-live';
 import { tilesFromCurated, tilesFromWall } from '@/lib/walls/jumpstart';
 import { isWallId, toPublic } from '@/lib/walls/model';
-import { newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
+import { hashVisitor, newVisitorId, newWall, newWallId } from '@/lib/walls/owner';
+import { ownerAtCap } from '@/lib/walls/store';
 import { json, openWalls, readJson, setVisitor, storeDown, visitorOf } from '../guard';
 import { measure } from '@/app/api/measure';
 
@@ -74,6 +75,10 @@ export async function POST(request: NextRequest) {
   const visitor = existing ?? newVisitorId();
   const wall = newWall(newWallId(), visitor, title, new Date().toISOString(), started.tiles);
   try {
+    // At most MAX_WALLS_PER_OWNER collections per browser (ROADMAP 2.20).
+    if (existing && (await ownerAtCap(open.store, hashVisitor(existing)))) {
+      return json({ error: 'This browser has as many collections as one may keep. Delete one to make another.' }, 429);
+    }
     await open.store.put(wall);
     await open.store.register(wall);
   } catch {

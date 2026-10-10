@@ -1,15 +1,21 @@
 import { NextRequest } from 'next/server';
 import { afterReport, isWallId } from '@/lib/walls/model';
 import { sendReportMail } from '@/lib/walls/notify';
-import { json, openWalls, storeDown } from '../../guard';
+import { hashVisitor } from '@/lib/walls/owner';
+import { json, openWalls, storeDown, visitorOf } from '../../guard';
 import { measure } from '@/app/api/measure';
 
 /**
  * POST /api/walls/<id>/report — anyone may flag a shown collection (ROADMAP
  * 5.13d). The first report mails Julian; the fifth takes the collection down
  * until he looks (Julian, 2026-09-28: „ab 1 meldung eine mail an mich, ab 5
- * vorerst runternehmen und in review so vermerken“). A count per collection;
- * nothing about who pressed it.
+ * vorerst runternehmen und in review so vermerken“).
+ *
+ * **Five different browsers, not five presses** (ROADMAP 2.20; red team M1:
+ * five anonymous POSTs took any collection down and mailed Julian twice). A
+ * report needs the visitor cookie a browser gets with its first collection,
+ * and counts once per browser; what is kept is the same one-way hash a wall's
+ * owner is stored as, only to recognise a second press.
  */
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   measure('walls', request);
@@ -20,7 +26,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   try {
     const wall = await open.store.get(id);
     if (!wall || wall.showcase !== 'shown') return json({ error: 'No such collection among readers’ collections.' }, 404);
-    const reports = await open.store.report(id);
+    const visitor = visitorOf(request);
+    if (!visitor) return json({ error: 'no-visitor' }, 403);
+    const { fresh, count: reports } = await open.store.report(id, hashVisitor(visitor));
+    // A second press from the same browser changes nothing and mails nobody.
+    if (!fresh) return json({ reported: true });
     const next = afterReport(wall, reports, new Date().toISOString());
     if (next !== wall) await open.store.put(next);
     const mail =

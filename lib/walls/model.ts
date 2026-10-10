@@ -83,6 +83,16 @@ export const DEFAULT_COLUMNS = 4;
 export const MAX_INTRO = 600;
 /** How long an unsaved collection is kept (5.13j). */
 export const UNSAVED_HOURS = 48;
+/**
+ * Deckel in der Redis (ROADMAP 2.20, red team M2): the store is shared with
+ * the game, the drafts and the analytics, and under `noeviction` a full store
+ * refuses every write. An unsaved wall expires by itself (UNSAVED_HOURS), so
+ * what accumulates is saved walls: at most this many per browser, and at most
+ * WALLS_CAP saved walls on the site — about 2,000 × ~300 KB at the very most
+ * is 600 MB in theory, but a real wall is a few KB.
+ */
+export const MAX_WALLS_PER_OWNER = 50;
+export const WALLS_CAP = 2000;
 export const MAX_BY = 60;
 /** One cover is enough to show a collection (Julian, 2026-09-28: „don't set a minimum … i am fine with public collections with as few as 1 book“). */
 export const MIN_SHOWCASE_TILES = 1;

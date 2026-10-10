@@ -1,3 +1,4 @@
+import { siteAtCap } from '@/lib/walls/store';
 import { NextRequest } from 'next/server';
 import { applyOp, isWallId, toPublic, WallError, type Wall, type WallOp } from '@/lib/walls/model';
 import { isOwner } from '@/lib/walls/owner';
@@ -54,6 +55,10 @@ export async function POST(request: NextRequest, { params }: Params) {
     // Into the list of shown walls first, whenever it is newly shown (5.13d):
     // if that fails nothing has changed, and the answer "did not answer" is true.
     // A listed id whose wall is not saved as shown is skipped on reading.
+    // Saving makes a try a collection; the site keeps at most WALLS_CAP of them (ROADMAP 2.20). A refusal, never a 500.
+    if (wall.unsaved && !next.unsaved && (await siteAtCap(open.store))) {
+      return json({ error: 'The site holds as many saved collections as it can for now. Your collection stays as a try for two days.' }, 503);
+    }
     if (next.showcase === 'shown' && wall.showcase !== 'shown') await open.store.submitted(next.id);
     await open.store.put(next);
     // Counted once, when it stops being a try (5.13j).

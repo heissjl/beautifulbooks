@@ -213,7 +213,16 @@ function Report({ id, t }: { id: string; t: Translate }) {
           className="underline underline-offset-2 hover:text-accent"
           onClick={() =>
             fetch(`/api/walls/${id}/report`, { method: 'POST' })
-              .then((r) => setDone(r.ok ? t('Thank you — we will have a look.') : t('That did not go through.')))
+              // 403: this browser has no collection of its own, and reports count once per browser (2.20).
+              .then((r) =>
+                setDone(
+                  r.ok
+                    ? t('Thank you — we will have a look.')
+                    : r.status === 403
+                      ? t('Reports come from browsers that have made a collection here. You can also write to us through Imprint & contact.')
+                      : t('That did not go through.'),
+                ),
+              )
               .catch(() => setDone(t('That did not go through.')))
           }
         >

@@ -9,7 +9,7 @@
  * gives: API routes and pages get separate copies of a module there.
  */
 import { commandsFromEnv, type RedisCommands } from '../redis';
-import { toPublic, UNSAVED_HOURS, type PublicWall, type Wall } from './model';
+import { MAX_WALLS_PER_OWNER, toPublic, UNSAVED_HOURS, WALLS_CAP, type PublicWall, type Wall } from './model';
 import { pageOf, readerOrder } from './order';
 
 export interface WallStore {
@@ -28,8 +28,14 @@ export interface WallStore {
   /** One more view of a wall by someone not its owner. Nothing about the viewer. */
   view(id: string): Promise<void>;
   views(): Promise<Map<string, number>>;
-  /** Someone pressed "Report" on a shown wall; answers the count so far. Nothing about who. */
-  report(id: string): Promise<number>;
+  /**
+   * A browser pressed "Report" on a shown wall (ROADMAP 2.20). Counted once per
+   * reporter: `by` is the hash of the reporter's visitor id, the same one-way
+   * hash a wall's owner is stored as — kept only to tell a second press from a
+   * new reporter, never shown. `fresh` is false when this browser had already
+   * reported the wall; `count` is the number of distinct reporters after a fresh report.
+   */
+  report(id: string, by: string): Promise<{ fresh: boolean; count: number }>;
   reports(): Promise<Map<string, number>>;
   /** One more photo read on this day (UTC, `YYYY-MM-DD`); answers the day's count so far, for the daily cap (5.11a). Nothing about who. */
   countPhoto(day: string): Promise<number>;
@@ -49,6 +55,16 @@ export async function wallsOf(store: WallStore, ownerHash: string): Promise<Wall
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
+/** This browser already has as many collections as one may (ROADMAP 2.20); expired tries do not count. */
+export async function ownerAtCap(store: WallStore, ownerHash: string): Promise<boolean> {
+  return (await wallsOf(store, ownerHash)).length >= MAX_WALLS_PER_OWNER;
+}
+
+/** The site holds as many saved collections as it will (ROADMAP 2.20). */
+export async function siteAtCap(store: WallStore): Promise<boolean> {
+  return (await store.count()) >= WALLS_CAP;
+}
+
 export function memoryWallStore(now: () => number = Date.now): WallStore {
   const walls = new Map<string, string>();
   const expires = new Map<string, number>();
@@ -57,6 +73,7 @@ export function memoryWallStore(now: () => number = Date.now): WallStore {
   const showcase: string[] = [];
   const counts = new Map<string, number>();
   const flags = new Map<string, number>();
+  const reporters = new Map<string, Set<string>>();
   const photos = new Map<string, number>();
   const spent = new Map<string, number>();
   return {
@@ -110,9 +127,13 @@ export function memoryWallStore(now: () => number = Date.now): WallStore {
     async views() {
       return new Map(counts);
     },
-    async report(id) {
+    async report(id, by) {
+      const seen = reporters.get(id) ?? new Set<string>();
+      reporters.set(id, seen);
+      if (seen.has(by)) return { fresh: false, count: flags.get(id) ?? 0 };
+      seen.add(by);
       flags.set(id, (flags.get(id) ?? 0) + 1);
-      return flags.get(id) ?? 0;
+      return { fresh: true, count: flags.get(id) ?? 0 };
     },
     async reports() {
       return new Map(flags);
@@ -129,6 +150,8 @@ const KEYS = {
   showcase: 'walls:showcase',
   views: 'walls:views',
   reports: 'walls:reports',
+  /** Hash per wall: reporter hash → 1. Lets one browser report a wall once (2.20). */
+  reporters: (id: string) => `walls:reporters:${id}`,
 };
 
 function parseWall(raw: unknown): Wall | null {
@@ -177,7 +200,15 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
       guarded(commands.lRange(KEYS.showcase, 0, -1).then((r) => [...new Set(Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : [])])),
     view: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.views, id, 1) : Promise.resolve()).then(() => undefined)),
     views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
-    report: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.reports, id, 1) : Promise.resolve(0)).then((n) => Number(n) || 0)),
+    report: (id, by) =>
+      guarded(
+        (async () => {
+          const fresh = Number(await commands.hSetNX(KEYS.reporters(id), by, '1')) === 1;
+          if (!fresh) return { fresh: false, count: 0 };
+          const n = commands.hIncrBy ? await commands.hIncrBy(KEYS.reports, id, 1) : 0;
+          return { fresh: true, count: Number(n) || 0 };
+        })(),
+      ),
     reports: () => guarded(commands.hGetAll(KEYS.reports).then(countsFrom)),
     // Without HINCRBY (a test double) the cap cannot count and does not bind.
     // Without HINCRBY the budget cannot count and does not bind, like the cap.
