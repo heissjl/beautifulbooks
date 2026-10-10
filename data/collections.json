@@ -44906,6 +44906,18 @@
           "isfdbRecord": "51614"
         },
         {
+          "id": "OL35365909W",
+          "title": "The Golden Olive",
+          "author": "Cristabel",
+          "coverId": "ol:15263707",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:195149",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "195149"
+        },
+        {
           "id": "OL7214682W",
           "title": "The Waters of Centaurus",
           "author": "Rosel George Brown",

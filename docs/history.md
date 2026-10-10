@@ -6008,3 +6008,19 @@ Julian: „versuche diese alle durch weitere recherchen zu lösen“. Zwölf der
 - **Offen bleibt *The Four-Gated City*** (Bantam 1970). Szafrans Bild belegt nur die Bibliografie bei glimmergraphicsprints.net, ohne Abbildung. Das Internet Archive hat Bantam-Drucke von 1978 und 1980; ob deren Cover Szafrans ist und schon 1970 so aussah, belegt keine Quelle. Open Library hat fünf Bantam-Ausgaben von 1970, alle ohne Bild.
 
 Nachtrag: bookscans.com geprüft (Julian: „check if bookscans.com is a good resource for the future“). Die Bewertung steht in `docs/ausgaben-recherche.md` §2. Kurz: Die Seite ist eine gute Suchhilfe für US-Taschenbücher von 1939 bis 1979, geordnet nach Verlag und Katalognummer. Die Bilder sind absichtlich klein, etwa 250 px. Künstler, Datum und Druck stehen nicht dabei; die kommen weiter aus der ISFDB. Die Scans von *Timestop!* (Lancer 74616) und *Raga Six* (Bantam Q7249) sind „Courtesy of Bob Gaines“, also eingesandt. Für eingesandte Scans verweist der Betreiber Bruce Black Anfragen an den Einsender. Beide Scans waren zu diesem Zeitpunkt schon zu Open Library hochgeladen (Cover 15263697 und 15263696). Ob sie bleiben, entscheidet Julian.
+
+Nachtrag: Wie sich die Einträge verteilen (Julian: „wie verteilen sich die 280 einträge jezt auf die 87 cover?“). Beim Nachzählen fiel eine Lücke auf. *The Golden Olive* (Cristabel, Curtis Books 09146, 1972, ISFDB-Druck 195149) stand in der ISFDB-Liste, war aber beim Abtippen in `szafran-isfdb.tsv` verloren gegangen. Jetzt ist die Zeile nachgetragen. Der ISFDB-Scan mit Szafrans Signatur liegt auf OL47784247M (Curtis 1972, vorher ohne Bild), Cover 15263707. **Die Sammlung hat 88 Kacheln.**
+
+Szafrans Cover-Liste in der ISFDB hat 101 Einträge:
+- **89 eigene Gestaltungen** (Erstauftritt eines Bildes auf einem englischen Buch). 88 sind Kacheln, eine ist offen: *The Four-Gated City*.
+- **12 Einträge, die ein schon gezähltes Bild wiederverwenden:**
+  - 5 Übersetzungen: *Planet der Verbannten* (= *Those Who Watch*), *Die letzten der Unsterblichen* (= *This Perfect Day*), *Sirius #2* (= *Protostars*), *O vampiro* (= *Raga Six*) und *Baron Orgaz* bei Heyne 1984.
+  - 4 Sammel- oder Titelvarianten: *There Will Be Time / The Dancer from Atlantis* (1982), *Eyes of Fire* (1980, der neue Titel von *A Funeral for the Eyes of Fire*), *The Rebel Worlds / A Knight of Ghosts and Shadows* (1982) und *Today We Choose Faces / Bridge of Ashes* (1981).
+  - 3 Einträge für die PM-Press-Anthologie *Dangerous Visions and New Worlds* (2021), die die Cover von *Son of Man* und *Ice* abbildet.
+
+Die rund 280 Druck-Einträge sind alle Drucke, auf denen eines dieser Bilder steht. Je Gestaltung zeigt die Sammlung genau einen Druck, und zwar den frühesten, für den es einen Scan gibt. Die übrigen etwa 190 sind:
+- Nachdrucke derselben Gestaltung, vor allem bei den Signet-Heinleins: *The Puppet Masters* 15 Einträge; *The Day After Tomorrow*, *The Door into Summer* und *I Sing the Body Electric!* je 9; *The Man Who Sold the Moon*, *The Menace from Earth* und *Beyond This Horizon* je 8.
+- die kanadischen Parallelausgaben von New American Library.
+- die Übersetzungen, Sammelbände und die Anthologie von oben.
+
+Die genaue Zahl je Gruppe ist nicht gespeichert, weil die Liste der 280 nur im Browser lag.
