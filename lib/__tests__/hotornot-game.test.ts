@@ -3,7 +3,7 @@ import { rng } from '../loading';
 import { CROWN_HOLD, ELO_START, applyVote, newElo } from '../hotornot/rating';
 import {
   BOARD_SECONDS, POOL, TALLY_SAVE_EVERY, board, cachedBoard, castVote, flagCover, forgetBoards, forgetTallies, imagePath,
-  dayNumber, fixedPair, latinTitle, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
+  dayNumber, fixedPair, inPlay, latinTitle, nextPairFor, pairOfTheDay, pairingTally, poolBooks, someBooks, type VersusPool,
   readyPairs,
 } from '../hotornot/game';
 import { StoreUnavailableError, memoryStore, type VoteStore } from '../hotornot/store';
@@ -449,5 +449,20 @@ describe('series families for pairing', () => {
     ]);
     expect(index.get('ol:1')).toEqual(['sf-masterworks']);
     expect(index.has('ol:2')).toBe(false);
+  });
+});
+
+describe('the count in play (2026-10-09)', () => {
+  it('leaves out a reported cover and the book it was the only cover of', async () => {
+    const store = memoryStore();
+    expect(await inPlay(store, pool)).toEqual({ covers: 6, books: 6 });
+    await store.flag('test', { id: 'ol:2', reason: 'reported' });
+    expect(await inPlay(store, pool)).toEqual({ covers: 5, books: 5 });
+  });
+
+  it('answers with the pool when there is no store or it is silent', async () => {
+    expect(await inPlay(null, pool)).toEqual({ covers: 6, books: 6 });
+    const silent = { ...memoryStore(), flags: () => Promise.reject(new StoreUnavailableError('down')) } as VoteStore;
+    expect(await inPlay(silent, pool)).toEqual({ covers: 6, books: 6 });
   });
 });

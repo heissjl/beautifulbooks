@@ -73,6 +73,20 @@ function activeIds(pool: VersusPool, flags: readonly CoverFlag[]): string[] {
 export const POOL = poolFile as VersusPool;
 
 /**
+ * How many covers and books are in play, the number the header shows with
+ * every pair (Julian, 2026-10-09: the page's text said 5018 under a header
+ * saying 4,965). Without a store, or when it is silent, the whole pool minus
+ * the covers taken off the site — the same answer a pair would give with no
+ * report read.
+ */
+export async function inPlay(store: VoteStore | null, pool: VersusPool = POOL): Promise<{ covers: number; books: number }> {
+  const flags = store ? await flagsOf(store, pool).catch(() => []) : [];
+  const ids = new Set(activeIds(pool, flags));
+  const books = new Set(pool.covers.filter(c => ids.has(c.id)).map(c => c.workId));
+  return { covers: ids.size, books: books.size };
+}
+
+/**
  * The family of a series collection: its slug's first two words, so the
  * four SF Masterworks walls count as one series, and the two suhrkamp
  * taschenbuch and the two Verso walls as one each.

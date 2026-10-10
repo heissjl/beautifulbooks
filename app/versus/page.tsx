@@ -7,7 +7,7 @@ import SiteHeader from '@/components/SiteHeader';
 import Versus from '@/components/Versus';
 import WhatIsThisSite from '@/components/WhatIsThisSite';
 import { preload } from 'react-dom';
-import { POOL, dayNumber, poolBooks, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
+import { dayNumber, inPlay, readyPairs, secretForEnv, someBooks } from '@/lib/hotornot/game';
 import { storeFromEnv } from '@/lib/hotornot/store';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
@@ -15,7 +15,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 import { SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { formatNumber, translator } from '@/lib/i18n/translate';
 import { measure } from '@/app/api/measure';
 
 /**
@@ -27,8 +27,9 @@ import { measure } from '@/app/api/measure';
  * is why the page carries more than the playing field. The pair itself comes
  * from the browser and is different at every visit, so for a crawler the game
  * alone was 325 characters and no book: below it stands what the game is,
- * how large the pool is and a spread of the books in it — all read from the
- * frozen pool (E18), so the page costs no request and reads the same twice.
+ * how large the pool is and a spread of the books in it — read from the
+ * frozen pool (E18). One store read: the reports, so the count in the text
+ * is the one the header shows with each pair (2026-10-09).
  * Nothing here claims a cover is the best one; that sentence belongs to the
  * standings, which only say it once the crown has held (F7.5, N12).
  */
@@ -50,11 +51,13 @@ export const metadata: Metadata = {
 /** Half of what it was (Julian, 2026-10-06): a list to glance at, not to read through. */
 const SHOWN_BOOKS = 12;
 
-export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
+export default async function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
   measure('page-versus');
   const t = translator(locale);
   if (!versusEnabled()) notFound();
-  const books = poolBooks();
+  // The same count the header shows with each pair: reported covers are out of play (2026-10-09).
+  const store = storeFromEnv();
+  const playing = await inPlay(store);
   // A new set every day (Julian, 2026-10-06), the same one for everyone who comes that day.
   const sample = someBooks(SHOWN_BOOKS, { latinOnly: true, day: dayNumber() });
   /*
@@ -64,7 +67,7 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
     preloaded pairs ready"). The first pair's images are announced to the
     browser in the head, so they load alongside the page.
   */
-  const initialPairs = readyPairs(secretForEnv(), 3, { store: storeFromEnv()?.kind ?? 'memory' });
+  const initialPairs = readyPairs(secretForEnv(), 3, { store: store?.kind ?? 'memory' });
   for (const side of initialPairs.slice(0, 1).flatMap(p => [p.a, p.b])) preload(side.src, { as: 'image' });
   return (
     <div className="flex min-h-screen flex-col">
@@ -76,8 +79,8 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
           <h2 className="text-2xl text-ink">{t('What is this game')}</h2>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-2">
             {rich(t('Two covers of two books, side by side, and one question: which one would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.'), {
-              covers: <b className="text-ink tabular-nums">{POOL.covers.length}</b>,
-              books: <b className="text-ink tabular-nums">{books.length}</b>,
+              covers: <b className="text-ink tabular-nums">{formatNumber(playing.covers, locale)}</b>,
+              books: <b className="text-ink tabular-nums">{formatNumber(playing.books, locale)}</b>,
             })}
           </p>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-2">
@@ -113,7 +116,7 @@ export default function VersusPage({ locale = DEFAULT_LOCALE }: { locale?: Local
             ))}
           </ul>
           <p className="mt-4 text-sm text-ink-3">
-            {rich(t('And {n} more. {search} to see its covers.', { n: books.length - sample.length }), {
+            {rich(t('And {n} more. {search} to see its covers.', { n: playing.books - sample.length }), {
               search: <Link href="/" className="text-accent underline underline-offset-4">{t('Search for any title')}</Link>,
             })}
           </p>
