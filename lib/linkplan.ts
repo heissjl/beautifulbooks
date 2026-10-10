@@ -178,15 +178,27 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
   const pool = [...input.buyLinks.filter(l => !withdrawn.has(l.provider)).map(honest), ...input.searchLinks];
   /*
     The verdict outranks the case. `differs` replaces the row outright; on
-    `unknown` — Google holds no image for this number at all — the antiquarian
-    search joins the end of it, which is lever 4 of ROADMAP 1.11: only the
-    order changes, never a sentence. "unknown" still does not mean "not for
-    sale", and the wording in `lib/verdicts.ts` is untouched.
+    any other answer but `verified` the antiquarian search leads it (lever 4
+    of ROADMAP 1.11, widened by 6.100 below): only the order changes, never a
+    sentence. "unknown" still does not mean "not for sale", and the wording
+    in `lib/verdicts.ts` is untouched.
   */
+  /*
+    In the home case the market's first shop sells new books only — Bookshop.org
+    ships from Ingram's (US) or Gardners' (UK) stock, Thalia from the
+    wholesalers — so it can answer only for a printing still in print. The one
+    evidence of that is the publisher registering this very image (`verified`).
+    Every other answer leaves an older printing likely, and the antiquarian
+    marketplace leads (Julian, 2026-10-09, ROADMAP 6.100). No year threshold:
+    none was measured. `pending` keeps the order, so the row does not jump
+    for the common verified case.
+  */
+  const usedFirst = linkCase === 'home' && input.verdict !== undefined
+    && input.verdict !== 'verified' && input.verdict !== 'pending';
   const wanted = input.verdict === 'differs'
     ? LEAD_DIFFERS
-    : input.verdict === 'unknown'
-      ? [...LEAD[market][linkCase], 'abebooks']
+    : usedFirst
+      ? ['abebooks', ...LEAD[market][linkCase]]
       : LEAD[market][linkCase];
   /*
     **The ISBN goes first whenever there is one** (Julian, 2026-09-10). A shop
