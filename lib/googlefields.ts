@@ -45,7 +45,9 @@ export function fieldSearchKnownBroken(now = Date.now()): boolean {
 /**
  * A field query answered nothing: is that Google's answer or Google's fault?
  * `countFor` asks Google how many items it lists for an ISBN, by `isbn:`.
- * Concurrent callers share one check.
+ * Concurrent callers share one check. True when the answer must not be
+ * believed: both canaries empty (the breaker opens for an hour), or a canary
+ * failed (the breaker stays shut).
  */
 export function fieldSearchBroken(countFor: (isbn13: string) => Promise<number>, now = Date.now()): Promise<boolean> {
   if (now < brokenUntil) return Promise.resolve(true);
@@ -63,8 +65,15 @@ export function fieldSearchBroken(countFor: (isbn13: string) => Promise<number>,
         logFieldEvent(now);
         return true;
       } catch {
-        // A canary that fails is no evidence either way; the caller keeps the empty answer.
-        return false;
+        /*
+          A canary that fails cannot vouch for the empty answer, so the empty
+          answer is not believed (N12) — but the breaker stays shut: one 503 is
+          no evidence the field search is broken. Seen 2026-10-10: Google
+          answered 503 to everything, the ISBN lookup came from Next's data
+          cache as an old empty answer, and the earlier rule ("no evidence, keep
+          the answer") let it stand as "no publisher's image" for a day.
+        */
+        return true;
       } finally {
         checking = null;
       }

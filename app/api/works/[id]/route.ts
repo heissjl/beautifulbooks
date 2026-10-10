@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { CACHE_FULL, worksCacheControl } from '@/lib/cachepolicy';
 import { buyLinksFor, earningNow, titleSearchLinksFor, type Earning } from '@/lib/buylinks';
 import { coverImages } from '@/lib/seo';
 import { cookieValue, detectMarket, MARKET_KEY, type Market } from '@/lib/market';
@@ -148,7 +149,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       const coverUrls = coverImages(page.covers, MOSAIC_CANDIDATES, page.editions);
       const body: WorkSummaryResponse = { id, coverUrls };
       return NextResponse.json(body, {
-        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },
+        headers: { 'Cache-Control': CACHE_FULL },
       });
     }
     const body: WorkPageResponse = {
@@ -165,7 +166,8 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     return NextResponse.json(body, {
       // Varies by market, so shared caches must key on the cookie and country too.
       headers: {
-        'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
+        // A minute when Google was silent on page 0, a day otherwise (ROADMAP 2.18e, lib/cachepolicy.ts).
+        'Cache-Control': worksCacheControl(page),
         Vary: 'Cookie, X-Vercel-IP-Country, Accept-Language',
       },
     });

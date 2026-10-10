@@ -43,13 +43,14 @@ describe('fieldSearchBroken', () => {
     expect(await fieldSearchBroken(second, T0)).toBe(false);
   });
 
-  it('a failing canary is no evidence, and concurrent callers share one check', async () => {
+  it('a failing canary cannot vouch for an empty answer, but opens no breaker; callers share one check', async () => {
     let asks = 0;
     const failing = async () => { asks += 1; throw new Error('503'); };
     const [a, b] = await Promise.all([fieldSearchBroken(failing, T0), fieldSearchBroken(failing, T0)]);
-    expect(a).toBe(false);
-    expect(b).toBe(false);
+    expect(a).toBe(true);
+    expect(b).toBe(true);
     expect(asks).toBe(1);
+    expect(fieldSearchKnownBroken(T0 + 1)).toBe(false);
     expect(warn).not.toHaveBeenCalled();
   });
 });

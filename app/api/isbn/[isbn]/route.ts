@@ -3,6 +3,7 @@ import { getIsbnCovers, type IsbnCovers } from '@/lib/isbn';
 import { rateLimited } from '@/app/api/rate';
 import { countGoogleStopsAfter } from '@/app/api/count';
 import { measure } from '@/app/api/measure';
+import { isbnCacheControl } from '@/lib/cachepolicy';
 
 export type IsbnCoversResponse = IsbnCovers;
 
@@ -29,7 +30,8 @@ export async function GET(request: NextRequest, context: { params: Promise<{ isb
   if (!covers) {
     return NextResponse.json({ error: 'Malformed ISBN' }, { status: 400 });
   }
+  // Never keep "nobody answered", an hour for the catalogue's stand-in, a day for Google (ROADMAP 2.18e).
   return NextResponse.json(covers, {
-    headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800' },
+    headers: { 'Cache-Control': isbnCacheControl(covers) },
   });
 }

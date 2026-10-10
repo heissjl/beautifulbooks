@@ -70,7 +70,8 @@ async function answer(run: () => Promise<unknown>, tooShort: boolean): Promise<N
       // A day, matching OL_REVALIDATE.search (SPEC §4 N4, ROADMAP 1.10): the
       // list of works for a title does not change by the hour, and a source
       // this unreliable is better asked once a day than once an hour.
-      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400' },
+      // stale-if-error: when Open Library stops answering, the CDN keeps serving the last good list (ROADMAP 2.18e).
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400, stale-if-error=86400' },
     });
   } catch (err) {
     if (err instanceof SourceUnavailableError) {

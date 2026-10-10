@@ -18,7 +18,7 @@ import type { Cover, Edition, LanguageGroup, Work } from './model';
 import type { ImageSignature } from './imagesig';
 import type { PageInfo } from './pages';
 import { hashCovers } from './coverhash';
-import { searchEditionCandidates } from './sources/googlebooks';
+import { searchEditionCandidatesChecked } from './sources/googlebooks';
 import { indexSignatures } from './coverindex';
 import { OL_EDITIONS_PAGE, getEditionsPage, getWork, searchSiblingWorks, getWorkDescription } from './sources/openlibrary';
 import { parseEditions } from './sources/openlibrary-parse';
@@ -63,6 +63,12 @@ export interface WorkPage {
    * and there are none.
    */
   siblings?: SiblingWork[];
+  /**
+   * Page 0 was built without Google's answer although it was asked (quota,
+   * an error, the broken field search of 1.13): the route caches it a minute,
+   * not a day (ROADMAP 2.18e). Absent when Google answered or was not asked.
+   */
+  googleSilent?: true;
 }
 
 export interface WorkPageOptions {
@@ -159,9 +165,9 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
   // The work's own description: eagerly beside the editions page when the
   // switch says so, otherwise only after the page shows no edition has one.
   const descriptionPolicy = first ? (options.workDescription ?? workDescriptionPolicy()) : 'never';
-  const [page, gbCandidates, siblings, eagerDescription] = await Promise.all([
+  const [page, gb, siblings, eagerDescription] = await Promise.all([
     getEditionsPage(workId, offset, OL_EDITIONS_PAGE),
-    askGoogle ? searchEditionCandidates(work.title, work.authors[0]) : Promise.resolve([]),
+    askGoogle ? searchEditionCandidatesChecked(work.title, work.authors[0]) : Promise.resolve({ candidates: [], silent: false }),
     askSiblings
       ? searchSiblingWorks(work).then(cs => siblingsOf(work, cs), () => undefined)
       : Promise.resolve(undefined),
@@ -172,7 +178,7 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
 
   const { editions, covers } = assembleEditions([
     ...olEditions,
-    ...candidatesToSourceEditions(work, gbCandidates),
+    ...candidatesToSourceEditions(work, gb.candidates),
   ]);
 
   /*
@@ -201,6 +207,7 @@ export async function getWorkPage(workId: string, options: WorkPageOptions = {})
     },
   };
   if (siblings) result.siblings = siblings;
+  if (askGoogle && gb.silent) result.googleSilent = true;
 
   if (options.signatures) {
     /*

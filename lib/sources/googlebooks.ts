@@ -44,23 +44,33 @@ function apiKeyParam(): string {
 /**
  * Candidates for the detail page: title + author search, up to 40 results.
  * Assignment to the work happens in works.ts (candidatesToEditions).
+ *
+ * `silent` says Google did not really answer — not asked (quota, broken field
+ * search), an error, or nothing where the canaries say the field search is
+ * down (1.13) — so the page can be cached for a minute instead of a day
+ * (ROADMAP 2.18e). An empty answer with the canaries listed is an answer.
  */
-export async function searchEditionCandidates(title: string, author: string | undefined): Promise<EditionCandidate[]> {
-  if (!googleAvailable()) return [];
+export async function searchEditionCandidatesChecked(title: string, author: string | undefined): Promise<{ candidates: EditionCandidate[]; silent: boolean }> {
+  if (!googleAvailable()) return { candidates: [], silent: true };
   // The field search is answering nothing for everyone (ROADMAP 1.13): asking would only spend quota.
-  if (fieldSearchKnownBroken()) return [];
+  if (fieldSearchKnownBroken()) return { candidates: [], silent: true };
   const q = author ? `intitle:${title} inauthor:${author}` : `intitle:${title}`;
   const url = `${BASE}?q=${encodeURIComponent(q)}&maxResults=40&printType=books&orderBy=relevance${apiKeyParam()}`;
   try {
     const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_REVALIDATE });
     // Nothing for a title with hundreds of printings is suspect; the canaries decide (1.13).
-    if (!data.items?.length) await fieldSearchBroken(countForIsbn);
-    return parseVolumes(data.items);
+    if (!data.items?.length) return { candidates: [], silent: await fieldSearchBroken(countForIsbn) };
+    return { candidates: parseVolumes(data.items), silent: false };
   } catch (err) {
     noteGoogleFailure(err);
     debug('googlebooks', `editions failed: ${(err as Error).message}`);
-    return [];
+    return { candidates: [], silent: true };
   }
+}
+
+/** The candidates alone, for callers that only need them. */
+export async function searchEditionCandidates(title: string, author: string | undefined): Promise<EditionCandidate[]> {
+  return (await searchEditionCandidatesChecked(title, author)).candidates;
 }
 
 /** How many items Google lists for an ISBN by `isbn:` — the canary question of 1.13. Uncached: it must see Google as it is now. */

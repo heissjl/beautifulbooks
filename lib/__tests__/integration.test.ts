@@ -197,6 +197,21 @@ describe('getWorkPage', () => {
     expect(p!.editions.every(e => e.source === 'openlibrary')).toBe(true);
   });
 
+  it('marks page 0 as built without Google when Google failed, so the route caches it a minute (2.18e)', async () => {
+    googleBooks = () => ({ status: 503 });
+    const silent = await getWorkPage(GATSBY, { offset: 0 });
+    expect(silent!.googleSilent).toBe(true);
+    expect(silent!.editions.length).toBeGreaterThan(0);
+
+    // The default fixture router answers 429 for "intitle:… inauthor:…"; this one answers the title search.
+    resetGoogleQuota();
+    googleBooks = url => (url.searchParams.get('q')?.startsWith('intitle:') ? { body: fixture('the-great-gatsby', 'googlebooks-search.json') } : { status: 429 });
+    const full = await getWorkPage(GATSBY, { offset: 0 });
+    expect(full!.googleSilent).toBeUndefined();
+    // A later page never asks Google and is never marked.
+    expect((await getWorkPage(GATSBY, { offset: 100 }))!.googleSilent).toBeUndefined();
+  });
+
   it('spends no Google request when the caller does not want one (mosaics)', async () => {
     // A result list of twenty cards would otherwise cost twenty title
     // searches, twenty times the figure §8.7 plans the quota against.
