@@ -40,14 +40,15 @@ PAPER = (244, 240, 232)
 INK = (26, 23, 20)
 ACCENT = (148, 81, 56)
 
-TITLE_S = 1.5
-CHIP_S = 0.7
-END_S = 1.7
+TITLE_S = 1.3
+CHIP_S = 1.1
+END_S = 1.5
 # (from mark, to mark, speed, words over it)
 SEGMENTS = [
-    ('drop', 'editor', 1.15, 'Drop in your Goodreads export'),
+    # Slower than recorded (Julian, 2026-10-09: „der good-reads-teil am anfang muss etwas langsamer passieren“).
+    ('drop', 'editor', 0.9, 'Drop in your Goodreads export'),
     ('wall', 'book-loading', 1.2, 'Your to-read shelf, as covers'),
-    ('book', 'shops', 1.45, 'Find the edition you love'),
+    ('book', 'shops', 1.7, 'Find the edition you love'),
     # Not "order that edition": that needs the publisher's image to be this cover (`verified`),
     # and on 2026-10-09 Google answered no ISBN lookup at all, so no cover could be.
     ('shops', 'end', 1.0, 'See where to buy that edition'),
