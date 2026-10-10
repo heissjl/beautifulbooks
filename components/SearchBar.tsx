@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { preloadMosaic } from './MosaicLoader';
 import { useRecentSearches } from './useRecentSearches';
 import { useT } from './i18n';
+import { useSlashToSearch } from './useSlashToSearch';
 import { shapeOf } from '@/lib/queryshape';
 
 /**
@@ -62,6 +63,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
   const [recentSearches, saveRecentSearch] = useRecentSearches();
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
+  // `/` from anywhere on the page puts the cursor here (6.68).
+  useSlashToSearch(useCallback(() => inputRef.current?.focus(), []));
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

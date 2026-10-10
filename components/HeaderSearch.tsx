@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRecentSearches } from './useRecentSearches';
 import { useT } from './i18n';
+import { useSlashToSearch } from './useSlashToSearch';
 
 /**
  * A search field in the header, on every page that is not the search itself
@@ -46,6 +47,10 @@ export default function HeaderSearch() {
   useEffect(() => {
     if (open) input.current?.focus();
   }, [open]);
+
+  // `/` from anywhere (6.68). On a phone the field opens first and the effect above focuses it;
+  // on a desktop it is already displayed and takes the focus at once.
+  useSlashToSearch(useCallback(() => { setOpen(true); input.current?.focus(); }, []));
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
