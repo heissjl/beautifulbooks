@@ -7,6 +7,7 @@
  */
 import { debug } from '../debug';
 import { googleAvailable, noteGoogleFailure } from '../googlequota';
+import { fieldSearchBroken, fieldSearchKnownBroken } from '../googlefields';
 import { fetchJson } from './http';
 import { parseVolumes, type EditionCandidate, type GbVolume } from './googlebooks-parse';
 
@@ -46,16 +47,27 @@ function apiKeyParam(): string {
  */
 export async function searchEditionCandidates(title: string, author: string | undefined): Promise<EditionCandidate[]> {
   if (!googleAvailable()) return [];
+  // The field search is answering nothing for everyone (ROADMAP 1.13): asking would only spend quota.
+  if (fieldSearchKnownBroken()) return [];
   const q = author ? `intitle:${title} inauthor:${author}` : `intitle:${title}`;
   const url = `${BASE}?q=${encodeURIComponent(q)}&maxResults=40&printType=books&orderBy=relevance${apiKeyParam()}`;
   try {
     const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_REVALIDATE });
+    // Nothing for a title with hundreds of printings is suspect; the canaries decide (1.13).
+    if (!data.items?.length) await fieldSearchBroken(countForIsbn);
     return parseVolumes(data.items);
   } catch (err) {
     noteGoogleFailure(err);
     debug('googlebooks', `editions failed: ${(err as Error).message}`);
     return [];
   }
+}
+
+/** How many items Google lists for an ISBN by `isbn:` — the canary question of 1.13. Uncached: it must see Google as it is now. */
+async function countForIsbn(isbn13: string): Promise<number> {
+  const url = `${BASE}?q=isbn:${encodeURIComponent(isbn13)}&maxResults=1${apiKeyParam()}`;
+  const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: 0 });
+  return data.items?.length ?? data.totalItems ?? 0;
 }
 
 /**
@@ -73,9 +85,19 @@ export async function lookupIsbnOrThrow(isbn13: string): Promise<EditionCandidat
   // The day's quota is gone: "not known" is the honest answer, and it is the
   // one `null` already stands for. Asking anyway would only collect errors.
   if (!googleAvailable()) return null;
+  // Same as not asked (ROADMAP 1.13): the verdict then takes the catalogue path of 1.12.
+  if (fieldSearchKnownBroken()) return null;
   const url = `${BASE}?q=isbn:${encodeURIComponent(isbn13)}&maxResults=3${apiKeyParam()}`;
   try {
     const data = await fetchJson<GbSearchResponse>(url, { timeoutMs: GB_TIMEOUT_MS, revalidate: GB_ISBN_REVALIDATE });
+    /*
+      An empty answer is not believed on its own (1.13): on 2026-10-09 Google
+      answered every `isbn:` query with nothing. Two canary ISBNs decide whether
+      this is "no record" or "no field search"; in the second case the answer
+      is `null`, not `[]`, so the reader is never told "no publisher's image"
+      for a question Google did not really answer.
+    */
+    if (!data.items?.length && await fieldSearchBroken(countForIsbn)) return null;
     // Google pads results; keep only volumes that really carry the ISBN.
     return parseVolumes(data.items).filter(c => c.isbn13 === isbn13);
   } catch (err) {

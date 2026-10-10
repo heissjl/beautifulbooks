@@ -4,6 +4,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetGoogleQuota } from '../googlequota';
+import { CANARY_ISBNS, resetGoogleFields } from '../googlefields';
 import { getIsbnCovers, isIsbn13 } from '../isbn';
 
 const BELOVED = '9780307388629';
@@ -28,6 +29,7 @@ beforeEach(() => {
   // The Google breaker is module state: one test that provokes a 429 would
   // otherwise silence Google for every test after it (lib/googlequota.ts).
   resetGoogleQuota();
+  resetGoogleFields();
   calls.length = 0;
   vi.stubEnv('GOOGLE_BOOKS_API_KEY', 'test-key');
   handler = () => ({ body: { items: [volume('v1', BELOVED)] } });
@@ -54,6 +56,28 @@ describe('isIsbn13', () => {
 });
 
 describe('getIsbnCovers', () => {
+  it('does not believe an empty Google answer when the canaries are empty too: the catalogue answers (1.13)', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    handler = () => ({ body: { totalItems: 0 } });
+    const r = await getIsbnCovers(BELOVED);
+    expect(r?.source).toBe('openlibrary');
+    expect(r?.covers.map(c => c.id)).toEqual(['ol:12547191']);
+    // The ISBN, then both canaries by `isbn:`, then Open Library.
+    expect(calls.filter(u => u.includes('googleapis')).map(u => new URL(u).searchParams.get('q'))).toEqual([`isbn:${BELOVED}`, ...CANARY_ISBNS.map(c => `isbn:${c}`)]);
+    // While held broken, the next ISBN goes straight to the catalogue without a Google request.
+    calls.length = 0;
+    await getIsbnCovers('9780140189834');
+    expect(calls.some(u => u.includes('googleapis'))).toBe(false);
+    warn.mockRestore();
+  });
+
+  it('believes an empty Google answer when a canary is listed', async () => {
+    handler = url => (CANARY_ISBNS.some(c => url.searchParams.get('q') === `isbn:${c}`) ? { body: { items: [volume('c', CANARY_ISBNS[0])] } } : { body: { totalItems: 0 } });
+    const r = await getIsbnCovers(BELOVED);
+    expect(r?.source).toBe('googlebooks');
+    expect(r?.covers).toEqual([]);
+  });
+
   it('asks Google once for the ISBN and returns the cover it shows', async () => {
     const r = await getIsbnCovers(BELOVED);
     expect(calls).toHaveLength(1);
@@ -76,7 +100,8 @@ describe('getIsbnCovers', () => {
   });
 
   it('returns an empty list when Google has no image, which is not an error', async () => {
-    handler = () => ({ body: { items: [] } });
+    // Nothing for this ISBN while the canaries are listed: Google's answer, not Google's fault (1.13).
+    handler = url => (url.searchParams.get('q') === `isbn:${BELOVED}` ? { body: { items: [] } } : { body: { items: [volume('c', CANARY_ISBNS[0])] } });
     await expect(getIsbnCovers(BELOVED)).resolves.toEqual({ isbn13: BELOVED, covers: [], source: 'googlebooks' });
   });
 
