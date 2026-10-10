@@ -44481,6 +44481,31 @@
       "coverCredits": "isfdb",
       "works": [
         {
+          "id": "OL497063W",
+          "title": "Beastchild",
+          "author": "Dean R. Koontz",
+          "coverId": "ol:15263695",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:237449",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "237449"
+        },
+        {
+          "id": "OL34705906W",
+          "title": "Timestop!",
+          "author": "Philip Jose Farmer",
+          "coverId": "ol:15263697",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:236717",
+          "coverIsbn": "0447746162",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "236717"
+        },
+        {
           "id": "OL34005507W",
           "title": "The Stars Around Us",
           "author": "Robert Hoskins",
@@ -44589,6 +44614,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "241013"
+        },
+        {
+          "id": "OL59737W",
+          "title": "Farnham's Freehold",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263702",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:263368",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "263368"
         },
         {
           "id": "OL6552297W",
@@ -44906,6 +44943,18 @@
           "isfdbRecord": "88986"
         },
         {
+          "id": "OL6581090W",
+          "title": "The Organ Bank Farm",
+          "author": "John Boyd",
+          "coverId": "ol:15263700",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:44911",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "44911"
+        },
+        {
           "id": "OL697438W",
           "title": "Heroes & Villains",
           "author": "Angela Carter",
@@ -44929,6 +44978,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "259839"
+        },
+        {
+          "id": "OL41904968W",
+          "title": "New Writings in SF 9",
+          "author": "John Carnell",
+          "coverId": "ol:15263699",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:23857",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "23857"
         },
         {
           "id": "OL2934017W",
@@ -44980,6 +45041,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "371542"
+        },
+        {
+          "id": "OL998851W",
+          "title": "Raga Six",
+          "author": "Frank Lauria",
+          "coverId": "ol:15263696",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:577376",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "577376"
         },
         {
           "id": "OL10587657W",
@@ -45122,6 +45195,18 @@
           "isfdbRecord": "258036"
         },
         {
+          "id": "OL46092724W",
+          "title": "The Mind Masters",
+          "author": "John F. Rossmann",
+          "coverId": "ol:15263703",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:285772",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "285772"
+        },
+        {
           "id": "OL19860319W",
           "title": "Doctor Orient",
           "author": "Frank Lauria",
@@ -45211,6 +45296,18 @@
           "isfdbRecord": "265588"
         },
         {
+          "id": "OL46092725W",
+          "title": "Shamballah",
+          "author": "John F. Rossmann",
+          "coverId": "ol:15263704",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:285774",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "285774"
+        },
+        {
           "id": "OL90543W",
           "title": "A Knight of Ghosts and Shadows",
           "author": "Poul Anderson",
@@ -45222,6 +45319,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "777"
+        },
+        {
+          "id": "OL46092726W",
+          "title": "The Door",
+          "author": "John F. Rossmann",
+          "coverId": "ol:15263705",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:285773",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "285773"
         },
         {
           "id": "OL59736W",
@@ -45236,6 +45345,31 @@
           "isfdbRecord": "589274"
         },
         {
+          "id": "OL59724W",
+          "title": "Beyond This Horizon",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263698",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:588902",
+          "coverIsbn": "0451075994",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "588902"
+        },
+        {
+          "id": "OL4592774W",
+          "title": "Two Planets",
+          "author": "Kurd Lasswitz",
+          "coverId": "ol:15263701",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:251723",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "251723"
+        },
+        {
           "id": "OL1386686W",
           "title": "The Clockwork Testament",
           "author": "Anthony Burgess",
@@ -45246,6 +45380,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "879370"
+        },
+        {
+          "id": "OL46092727W",
+          "title": "Amazons",
+          "author": "Ian Ross",
+          "coverId": "ol:15263706",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:319938",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "319938"
         },
         {
           "id": "OL90555W",

@@ -5992,3 +5992,17 @@ Ergebnis:
 - *Two Planets*, *The Mind Masters*, *The Door*, *Shamballah* und *Amazons*: Die Suche fand bei Open Library kein Werk. Die müsste man mit anderer Suche finden oder samt Werk neu anlegen.
 
 **Die Sammlung hat jetzt 75 Kacheln** in Datei und Entwurf `eLn8gBWQlDhU`, unveröffentlicht.
+
+### Dritte Runde: die letzten Drucke (2026-10-09)
+
+Julian: „versuche diese alle durch weitere recherchen zu lösen“. Zwölf der dreizehn offenen Drucke sind gelöst, die Sammlung hat **87 Kacheln**.
+
+- ***Beastchild*:** Der Scan war nicht abgeschnitten. Das Cover ist so gestaltet, mit dem Titel am linken Rand. Ein Händlerfoto im Internet Archive (`bwb_C0-ARF-592`) zeigt denselben Ausschnitt. Der ISFDB-Scan liegt jetzt auf OL24513401M (Lancer 1970, 189 S. wie in der ISFDB), Cover 15263695.
+- ***Timestop!*:** Scan des Lancer-Drucks 74616 von bookscans.com (`Publishers/lancer/images/Lancer74616.jpg`) auf OL47047470M (ISBN 0447746162), Cover 15263697.
+- ***Raga Six*:** Scan des Bantam-Drucks Q7249 von 1972 von bookscans.com auf OL5289209M (Bantam 1972, 277 S.), Cover 15263696.
+- ***New Writings in SF 9* und *The Organ Bank Farm*:** Bantam hat beide ISBN später für andere Bücher wiederverwendet. 0553072455 gehört bei Open Library zu *Long Quiet Highway* (1993), 0553070495 zu *Noble-Hearted Kate* (1990), beide mit Katalogdaten der Library of Congress. Das sind also keine falsch datierten Datensätze, sondern andere Bücher. Für die beiden Drucke wurden neue Ausgaben ohne ISBN angelegt: OL62673805M (Bantam, Mai 1972) und OL62673806M (Bantam, März 1972), Cover 15263699 und 15263700.
+- ***Beyond This Horizon*:** OL7570386M ist das richtige Buch (Titel, ISBN 0451075994, Amazon-Import). Das Datum 1960 ist ein Importfehler, denn ISBN gab es damals noch nicht. Der ISFDB-Scan des Drucks von 1976 liegt jetzt dort, Cover 15263698. Das Datum lässt sich ohne reCAPTCHA nicht berichtigen.
+- ***Farnham's Freehold*:** Szafrans Bild steht nicht auf der Berkley-Ausgabe, sondern auf dem siebten Signet-Druck T2704. Laut ISFDB ist er undatiert, kostet 75 Cent und trägt die Signatur „Szafran“ rechts unten. Neue Ausgabe OL62673808M (Signet, Datum „[197-?]“, weil keine Quelle ein Jahr nennt), Cover 15263702.
+- ***Two Planets*:** Open Library führt das Buch unter dem Originaltitel *Auf zwei Planeten* (OL4592774W). Neue Ausgabe OL62673807M (Popular Library 1976, Titel „Two Planets“), Cover 15263701.
+- ***The Mind Masters* 1–4:** „Ian Ross“ ist ein Pseudonym von John F. Rossmann. Bei Open Library ist er als OL6599743A eingetragen, mit *Recycled Souls*. Vier neue Werke und Ausgaben unter ihm: *The Mind Masters* (OL62673809M, Signet Juli 1974), *Shamballah* (OL62673810M, April 1975), *The Door* (OL62673811M, Nov. 1975) und *Amazons* (OL62673812M, März 1976). Cover 15263703–15263706.
+- **Offen bleibt *The Four-Gated City*** (Bantam 1970). Szafrans Bild belegt nur die Bibliografie bei glimmergraphicsprints.net, ohne Abbildung. Das Internet Archive hat Bantam-Drucke von 1978 und 1980; ob deren Cover Szafrans ist und schon 1970 so aussah, belegt keine Quelle. Open Library hat fünf Bantam-Ausgaben von 1970, alle ohne Bild.
