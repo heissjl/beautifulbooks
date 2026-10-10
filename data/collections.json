@@ -44493,6 +44493,18 @@
           "isfdbRecord": "47877"
         },
         {
+          "id": "OL59738W",
+          "title": "Orphans of the Sky",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263685",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:439582",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "439582"
+        },
+        {
           "id": "OL59725W",
           "title": "The Menace from Earth",
           "author": "Robert A. Heinlein",
@@ -44503,6 +44515,31 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "801304"
+        },
+        {
+          "id": "OL59717W",
+          "title": "The Man Who Sold the Moon",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263684",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:279579",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "279579"
+        },
+        {
+          "id": "OL15072609W",
+          "title": "Swords Against Tomorrow",
+          "author": "Robert Hoskins",
+          "coverId": "ol:1236494",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:34106",
+          "coverIsbn": "0451043278",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "34106"
         },
         {
           "id": "OL33070162W",
@@ -44540,6 +44577,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "439565"
+        },
+        {
+          "id": "OL10421719W",
+          "title": "The House on the Strand",
+          "author": "Daphne du Maurier",
+          "coverId": "ol:15263675",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:241013",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "241013"
         },
         {
           "id": "OL6552297W",
@@ -44617,6 +44666,18 @@
           "isfdbRecord": "270584"
         },
         {
+          "id": "OL90565W",
+          "title": "The Corridors of Time",
+          "author": "Poul Anderson",
+          "coverId": "ol:15263691",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:199717",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "199717"
+        },
+        {
           "id": "OL20096506W",
           "title": "The Book of Stier",
           "author": "Robin Sanborn",
@@ -44668,6 +44729,19 @@
           "isfdbRecord": "7271"
         },
         {
+          "id": "OL5604995W",
+          "title": "Wasp",
+          "author": "Eric Frank Russell",
+          "coverId": "ol:15263669",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:53938",
+          "coverIsbn": "0553059130",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "53938"
+        },
+        {
           "id": "OL90568W",
           "title": "The Star Fox",
           "author": "Poul Anderson",
@@ -44693,6 +44767,19 @@
           "isfdbRecord": "39623"
         },
         {
+          "id": "OL31352096W",
+          "title": "A Time of Changes",
+          "author": "Robert Silverberg",
+          "coverId": "ol:15263666",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:169101",
+          "coverIsbn": "045104729X",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "169101"
+        },
+        {
           "id": "OL90540W",
           "title": "The Byworlder",
           "author": "Poul Anderson",
@@ -44703,6 +44790,18 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "156471"
+        },
+        {
+          "id": "OL37103160W",
+          "title": "Space for Hire",
+          "author": "William F. Nolan",
+          "coverId": "ol:15263674",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:237961",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "237961"
         },
         {
           "id": "OL16816343W",
@@ -44783,6 +44882,18 @@
           "isfdbRecord": "49699"
         },
         {
+          "id": "OL73869W",
+          "title": "Fun with Your New Head",
+          "author": "Thomas M. Disch",
+          "coverId": "ol:15263689",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:177625",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "177625"
+        },
+        {
           "id": "OL17961233W",
           "title": "The Time Masters",
           "author": "Wilson Tucker",
@@ -44793,6 +44904,56 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "88986"
+        },
+        {
+          "id": "OL697438W",
+          "title": "Heroes & Villains",
+          "author": "Angela Carter",
+          "coverId": "ol:15263665",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:79830",
+          "coverIsbn": "0671774921",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "79830"
+        },
+        {
+          "id": "OL4125775W",
+          "title": "Saxon's Ghost",
+          "author": "Steve Fisher",
+          "coverId": "ol:15263692",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:259839",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "259839"
+        },
+        {
+          "id": "OL2934017W",
+          "title": "Clarion II",
+          "author": "Robin Scott Wilson",
+          "coverId": "ol:15263664",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:7273",
+          "coverIsbn": "0451050568",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "7273"
+        },
+        {
+          "id": "OL1960635W",
+          "title": "The Second Trip",
+          "author": "Robert Silverberg",
+          "coverId": "ol:15263690",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:187673",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "187673"
         },
         {
           "id": "OL2876999W",
@@ -44808,6 +44969,19 @@
           "isfdbRecord": "55260"
         },
         {
+          "id": "OL3468684W",
+          "title": "Gray Matters",
+          "author": "William Hjortsberg",
+          "coverId": "ol:15263676",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:371542",
+          "coverIsbn": "0671782428",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "371542"
+        },
+        {
           "id": "OL10587657W",
           "title": "Syzygy",
           "author": "Michael G. Coney",
@@ -44818,6 +44992,19 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "175961"
+        },
+        {
+          "id": "OL8551775W",
+          "title": "The Ice People",
+          "author": "René Barjavel",
+          "coverId": "ol:15263668",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:209933",
+          "coverIsbn": "0515029130",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "209933"
         },
         {
           "id": "OL20401767W",
@@ -44831,6 +45018,31 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "2170"
+        },
+        {
+          "id": "OL2071506W",
+          "title": "Trullion: Alastor 2262",
+          "author": "Jack Vance",
+          "coverId": "ol:8035176",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:185581",
+          "coverIsbn": "0345033086",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "185581"
+        },
+        {
+          "id": "OL31415208W",
+          "title": "The Alien Way",
+          "author": "Gordon R. Dickson",
+          "coverId": "ol:14866308",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:243061",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "243061"
         },
         {
           "id": "OL8997643W",
@@ -44872,6 +45084,19 @@
           "isfdbRecord": "4304"
         },
         {
+          "id": "OL8133326W",
+          "title": "The Legend of Miaree",
+          "author": "Zach Hughes",
+          "coverId": "ol:12680436",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:43011",
+          "coverIsbn": "0345238885",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "43011"
+        },
+        {
           "id": "OL11334034W",
           "title": "Ice",
           "author": "Anna Kavan",
@@ -44882,6 +45107,19 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "17711"
+        },
+        {
+          "id": "OL7917330W",
+          "title": "Rule Britannia",
+          "author": "Daphne du Maurier",
+          "coverId": "ol:10050913",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:258036",
+          "coverIsbn": "0380000628",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "258036"
         },
         {
           "id": "OL19860319W",
@@ -44897,6 +45135,18 @@
           "isfdbRecord": "269731"
         },
         {
+          "id": "OL31673124W",
+          "title": "Baron Orgaz",
+          "author": "Frank Lauria",
+          "coverId": "ol:15263681",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:269732",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "269732"
+        },
+        {
           "id": "OL1841637W",
           "title": "Saturday, the Twelfth of October",
           "author": "Norma Fox Mazer",
@@ -44910,6 +45160,31 @@
           "isfdbRecord": "943475"
         },
         {
+          "id": "OL493301W",
+          "title": "Change",
+          "author": "Ann Maxwell",
+          "coverId": "ol:15263680",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:263403",
+          "coverIsbn": "0445003162",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "263403"
+        },
+        {
+          "id": "OL59715W",
+          "title": "Double Star",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263686",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:589204",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "589204"
+        },
+        {
           "id": "OL2798253W",
           "title": "A Funeral for the Eyes of Fire",
           "author": "Michael Bishop",
@@ -44921,6 +45196,184 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "603"
+        },
+        {
+          "id": "OL7477968W",
+          "title": "A for Andromeda",
+          "author": "Fred Hoyle",
+          "coverId": "ol:14607755",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:265588",
+          "coverIsbn": "038000299X",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "265588"
+        },
+        {
+          "id": "OL90543W",
+          "title": "A Knight of Ghosts and Shadows",
+          "author": "Poul Anderson",
+          "coverId": "ol:13167000",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:777",
+          "coverIsbn": "0451067258",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "777"
+        },
+        {
+          "id": "OL59736W",
+          "title": "Revolt in 2100",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:15263687",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:589274",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "589274"
+        },
+        {
+          "id": "OL1386686W",
+          "title": "The Clockwork Testament",
+          "author": "Anthony Burgess",
+          "coverId": "ol:12995957",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:879370",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "879370"
+        },
+        {
+          "id": "OL90555W",
+          "title": "The Winter of the World",
+          "author": "Poul Anderson",
+          "coverId": "ol:15263678",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:154371",
+          "coverIsbn": "0451070038",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "154371"
+        },
+        {
+          "id": "OL8366271W",
+          "title": "Star of the Unborn",
+          "author": "Franz Werfel",
+          "coverId": "ol:13238116",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:251735",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "251735"
+        },
+        {
+          "id": "OL13963W",
+          "title": "Bridge of Ashes",
+          "author": "Roger Zelazny",
+          "coverId": "ol:15263677",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:5474",
+          "coverIsbn": "0451070801",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "5474"
+        },
+        {
+          "id": "OL20937636W",
+          "title": "Caution! Inflammable!",
+          "author": "Thomas N. Scortia",
+          "coverId": "ol:10306557",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:236689",
+          "coverIsbn": "0553025805",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "236689"
+        },
+        {
+          "id": "OL1978136W",
+          "title": "A Small Armageddon",
+          "author": "Mordecai Roshwald",
+          "coverId": "ol:15263682",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:276558",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "276558"
+        },
+        {
+          "id": "OL32423328W",
+          "title": "Recycled Souls",
+          "author": "Ian Ross",
+          "coverId": "ol:15263683",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:319939",
+          "coverIsbn": "045107145X",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "319939"
+        },
+        {
+          "id": "OL15157561W",
+          "title": "Spock, Messiah!",
+          "author": "Theodore R. Cogswell",
+          "coverId": "ol:6703604",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:209129",
+          "coverIsbn": "0553101595",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "209129"
+        },
+        {
+          "id": "OL2172454W",
+          "title": "Ubik",
+          "author": "Philip K. Dick",
+          "coverId": "ol:9251897",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:230609",
+          "coverIsbn": "0553104020",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "230609"
+        },
+        {
+          "id": "OL90547W",
+          "title": "Beyond the Beyond",
+          "author": "Poul Anderson",
+          "coverId": "ol:15263679",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:199685",
+          "coverIsbn": "0451077601",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "199685"
+        },
+        {
+          "id": "OL59733W",
+          "title": "The Door Into Summer",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:10099936",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:75938",
+          "coverIsbn": "0451085744",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "75938"
         },
         {
           "id": "OL59734W",
@@ -44947,6 +45400,32 @@
             "Gene Szafran"
           ],
           "isfdbRecord": "307924"
+        },
+        {
+          "id": "OL31963265W",
+          "title": "The Day of the Drones",
+          "author": "A. M. Lightner",
+          "coverId": "ol:15263667",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:270624",
+          "coverIsbn": "0553100572",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "270624"
+        },
+        {
+          "id": "OL59691W",
+          "title": "The Day After Tomorrow",
+          "author": "Robert A. Heinlein",
+          "coverId": "ol:13829007",
+          "addedAt": "2026-10-09",
+          "from": "isfdb:263306",
+          "coverIsbn": "0451077660",
+          "coverArtists": [
+            "Gene Szafran"
+          ],
+          "isfdbRecord": "263306"
         }
       ]
     }

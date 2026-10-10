@@ -5938,3 +5938,57 @@ Nicht hochgeladen:
 - *The House on the Strand*: noch nicht angesehen.
 
 Die Sammlung hat jetzt 37 Kacheln in Datei und Entwurf. Rund 44 Arbeiten haben bei Open Library keine Ausgabe des passenden Drucks. Ein Upload ginge dort nur, wenn man eine neue Ausgabe anlegt; das ist nicht geschehen.
+
+### Zweite Runde: alle Druckdaten, weitere Uploads und neue Ausgaben (2026-10-09)
+
+Julian: „wenn wir alle daten haben, sollten wir das machen“, also neue Ausgaben bei Open Library anlegen. Dazu: „starte doch mit den uploads parallel“.
+
+**Warum Arbeiten fehlten:** Den ersten Entwurf habe ich auf Julians Bitte aus dem damaligen Stand gebaut. Die Schleife über die ISFDB-Titelseiten hatte zu dem Zeitpunkt 269 von etwa 280 Drucken. Dadurch fehlten *Spock, Messiah!* (1976), *Ubik* (1977) und *Beyond the Beyond* (1977); die ISFDB-Liste endet 1977. Die Daten werden jetzt im `localStorage` der ISFDB-Seite mitgeschrieben, weil der erste Tab dabei hängen geblieben war.
+
+**Vollständige Druckdaten** für 51 Drucke aus `pl.cgi`: Titel, Autor, Datum, ISBN, Katalognummer, Verlag, Seiten, Format und Scan. Sie liegen in `in/szafran/details.txt`. `szafran_round2.py` hat sie mit Open Library abgeglichen, zuerst über die ISBN. **Das fand viele Ausgaben, die die erste Runde übersehen hatte**, weil sie an doppelt angelegten Werken hängen. Beispiele: *Swords Against Tomorrow* (OL7570005M unter OL15072609W) und *Ubik* (OL7817292M).
+
+Ergebnis:
+- **14 Ausgaben hatten Szafrans Cover schon** (mit dem ISFDB-Scan verglichen): *Swords Against Tomorrow*, *The Legend of Miaree*, *Trullion*, *The Day After Tomorrow*, *The Alien Way*, *A Knight of Ghosts and Shadows*, *Spock, Messiah!*, *Ubik*, *Caution! Inflammable!*, *Star of the Unborn*, *Rule Britannia*, *A for Andromeda* und *The Clockwork Testament*. Dazu *The Door into Summer*: ISBN und Datum stimmen, die ISFDB hat aber keinen Scan, mit dem man vergleichen könnte.
+- **16 weitere ISFDB-Scans** wurden auf bestehende Ausgaben mit passender ISBN bzw. passendem Verlag und Jahr hochgeladen. Die Nummern stehen in `in/szafran/uploaded.txt`:
+
+| Werk | Ausgabe | neues Cover |
+|---|---|---|
+| Clarion II | OL7570077M | 15263664 |
+| Heroes & Villains | OL7664696M | 15263665 |
+| A Time of Changes | OL43001124M | 15263666 |
+| The Day of the Drones | OL43680367M | 15263667 |
+| The Ice People | OL7655738M | 15263668 |
+| Space for Hire | OL50059230M | 15263674 |
+| The House on the Strand | OL35640090M | 15263675 (vorher ein fremdes Lehrbuchbild) |
+| Gray Matters | OL44935915M | 15263676 |
+| Bridge of Ashes | OL10271141M | 15263677 |
+| The Winter of the World | OL10271118M | 15263678 |
+| Beyond the Beyond | OL7570428M | 15263679 |
+| Change | OL20507853M | 15263680 |
+| Baron Orgaz | OL7817089M | 15263681 |
+| A Small Armageddon | OL17768886M | 15263682 |
+| Recycled Souls | OL10271154M | 15263683 |
+| Wasp | OL62673789M (neu angelegt) | 15263669 |
+
+- **9 neue Ausgaben** wurden unter `wertstoffhof` angelegt, über `/books/add?work=…` mit Verlag, Datum und, wo vorhanden, ISBN. Dann folgte jeweils der Upload des ISFDB-Scans:
+  - OL62673789M *Wasp* (Bantam, Juni 1971, 0553059130)
+  - OL62673796M *The Man Who Sold the Moon* (Signet, Juli 1970)
+  - OL62673797M *Orphans of the Sky* (Signet, April 1970)
+  - OL62673798M *Double Star* (Signet 1975)
+  - OL62673800M *Revolt in 2100* (Signet 1976)
+  - OL62673801M *Fun with Your New Head* (Signet, Feb. 1972; das Foto wurde mit `straighten.py` entzerrt)
+  - OL62673802M *The Second Trip* (Nelson Doubleday/SFBC, Okt. 1972; die Vorderseite wurde aus dem flachen Umschlag-Scan geschnitten)
+  - OL62673803M *The Corridors of Time* (Lancer, März 1971)
+  - OL62673804M *Saxon's Ghost* (Pyramid, Mai 1972)
+
+  **Seitenzahl, Katalognummer und Quellenhinweis fehlen** in den neuen Ausgaben. Das Bearbeitungsformular von Open Library verlangt ein reCAPTCHA, und das löst Claude nicht. Julian kann die Angaben von Hand nachtragen; die Werte stehen in `details.txt`.
+
+**Nicht verwendet:**
+- *Beastchild*: Der Scan ist seitlich abgeschnitten.
+- *Timestop!*: Der Scan ist ein abgegriffenes Foto mit handschriftlichem Namen.
+- *Raga Six*: Der ISFDB-Scan stammt vom Druck 1975, die Ausgabe von 1972.
+- *New Writings in SF 9*, *The Organ Bank Farm* und *Beyond This Horizon*: Open Library datiert die Ausgabe mit derselben ISBN auf 1993, 1990 bzw. 1960.
+- *Farnham's Freehold* und *The Four-Gated City*: kein ISFDB-Scan.
+- *Two Planets*, *The Mind Masters*, *The Door*, *Shamballah* und *Amazons*: Die Suche fand bei Open Library kein Werk. Die müsste man mit anderer Suche finden oder samt Werk neu anlegen.
+
+**Die Sammlung hat jetzt 75 Kacheln** in Datei und Entwurf `eLn8gBWQlDhU`, unveröffentlicht.
