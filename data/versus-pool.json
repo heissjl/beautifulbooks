@@ -1,6 +1,6 @@
 {
  "name": "mix-2000-paperwhite-collections",
- "builtAt": "2026-10-06",
+ "builtAt": "2026-10-10",
  "indexBuiltAt": "2026-09-26",
  "inherits": [
   "mix-200-paperwhite",
@@ -30693,10 +30693,244 @@
    "workId": "OL45341636W",
    "title": "The Buffalo Hunter Hunter",
    "author": "Stephen Jones"
+  },
+  {
+   "id": "ol:15130644",
+   "workId": "OL472145W",
+   "title": "Ordeal by Innocence",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13679047",
+   "workId": "OL472526W",
+   "title": "The Hollow",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15263581",
+   "workId": "OL42970331W",
+   "title": "The Adventure of the Christmas Pudding",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:12855074",
+   "workId": "OL471841W",
+   "title": "Hercule Poirot's Christmas",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:10555802",
+   "workId": "OL472572W",
+   "title": "Murder in Mesopotamia",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:12852588",
+   "workId": "OL471641W",
+   "title": "Cat Among the Pigeons",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13698499",
+   "workId": "OL471883W",
+   "title": "The Hound of Death",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14586372",
+   "workId": "OL471919W",
+   "title": "The Pale Horse",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:10663008",
+   "workId": "OL471983W",
+   "title": "Sparkling Cyanide",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15240679",
+   "workId": "OL471891W",
+   "title": "Crooked House",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14586400",
+   "workId": "OL472043W",
+   "title": "The Mysterious Mr. Quin",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:6539918",
+   "workId": "OL471990W",
+   "title": "The Mirror Crack'd from Side to Side",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15205394",
+   "workId": "OL471670W",
+   "title": "The Clocks",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13670802",
+   "workId": "OL472328W",
+   "title": "Towards Zero",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15207798",
+   "workId": "OL472619W",
+   "title": "A Pocket Full of Rye",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:11477286",
+   "workId": "OL472458W",
+   "title": "A Caribbean Mystery",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14155494",
+   "workId": "OL471738W",
+   "title": "Destination Unknown",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14590069",
+   "workId": "OL471500W",
+   "title": "4.50 from Paddington",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14577273",
+   "workId": "OL265415W",
+   "title": "At Bertram's Hotel",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:12996420",
+   "workId": "OL471784W",
+   "title": "The Seven Dials Mystery",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15217665",
+   "workId": "OL472049W",
+   "title": "Evil Under the Sun",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13267895",
+   "workId": "OL471898W",
+   "title": "Death Comes as the End",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14589311",
+   "workId": "OL472536W",
+   "title": "Third Girl",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14895285",
+   "workId": "OL472324W",
+   "title": "Death in the Clouds",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:12884448",
+   "workId": "OL471702W",
+   "title": "One, Two, Buckle my Shoe",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15217681",
+   "workId": "OL471767W",
+   "title": "Lord Edgware Dies",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14586887",
+   "workId": "OL472884W",
+   "title": "Parker Pyne Investigates",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13670254",
+   "workId": "OL472279W",
+   "title": "Taken at the Flood",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:11434438",
+   "workId": "OL471713W",
+   "title": "Dead Man's Folly",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15130643",
+   "workId": "OL472145W",
+   "title": "Ordeal by Innocence",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15218253",
+   "workId": "OL471664W",
+   "title": "The Sittaford Mystery",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:3287",
+   "workId": "OL471666W",
+   "title": "Five Little Pigs",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:10767288",
+   "workId": "OL472165W",
+   "title": "Peril at End House",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:15217424",
+   "workId": "OL471619W",
+   "title": "By the Pricking of My Thumbs",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:11163918",
+   "workId": "OL471947W",
+   "title": "The Big Four",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13671197",
+   "workId": "OL471832W",
+   "title": "Hallowe'en Party",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:13918610",
+   "workId": "OL472388W",
+   "title": "Why Didn't They Ask Evans?",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14569319",
+   "workId": "OL471841W",
+   "title": "Hercule Poirot's Christmas",
+   "author": "Agatha Christie"
+  },
+  {
+   "id": "ol:14571631",
+   "workId": "OL472159W",
+   "title": "Passenger to Frankfurt",
+   "author": "Agatha Christie"
   }
  ],
  "collections": {
-  "addedAt": "2026-10-06",
+  "addedAt": "2026-10-10",
   "from": [
    "feminist-press",
    "sf-masterworks",
@@ -30742,7 +30976,8 @@
    "insel-taschenbuch",
    "nebula-award-best-novel",
    "ravensburger-covers-by-grieder-and-schindler",
-   "deutscher-buchpreis"
+   "deutscher-buchpreis",
+   "tom-adams-christie"
   ],
   "leftOut": [
    "suhrkamp-taschenbuch-author-portraits",
@@ -33730,7 +33965,46 @@
    "ol:12866714",
    "ol:14369806",
    "ol:15137458",
-   "ol:15234922"
+   "ol:15234922",
+   "ol:15130644",
+   "ol:13679047",
+   "ol:15263581",
+   "ol:12855074",
+   "ol:10555802",
+   "ol:12852588",
+   "ol:13698499",
+   "ol:14586372",
+   "ol:10663008",
+   "ol:15240679",
+   "ol:14586400",
+   "ol:6539918",
+   "ol:15205394",
+   "ol:13670802",
+   "ol:15207798",
+   "ol:11477286",
+   "ol:14155494",
+   "ol:14590069",
+   "ol:14577273",
+   "ol:12996420",
+   "ol:15217665",
+   "ol:13267895",
+   "ol:14589311",
+   "ol:14895285",
+   "ol:12884448",
+   "ol:15217681",
+   "ol:14586887",
+   "ol:13670254",
+   "ol:11434438",
+   "ol:15130643",
+   "ol:15218253",
+   "ol:3287",
+   "ol:10767288",
+   "ol:15217424",
+   "ol:11163918",
+   "ol:13671197",
+   "ol:13918610",
+   "ol:14569319",
+   "ol:14571631"
   ]
  }
 }

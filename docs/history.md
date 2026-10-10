@@ -5922,3 +5922,7 @@ Julian: „wenn bookshop nur neue bücher zeigt, sollten wir es bei den meisten 
 ## 2026-10-09 — Nine-Books-Link von der Startseite entfernt (ROADMAP 5.18c)
 
 Julian, mit einem Bildschirmfoto des Links „Add your nine favourite books to Joe Weisenthal’s open database ↗“ unter dem Suchfeld: „nimm das wieder weg“. Entfernt aus `app/page.tsx`, der deutsche Satz aus `lib/i18n/de.ts`. Der Absatz unter „Share it“ eines vollen Neuner-Boards (`components/InspirationShared.tsx`) bleibt. Analytik: ein externer Link ohne `/go/`, nichts gezählt — nichts betroffen.
+
+## 2026-10-09 — Tom Adams' Christie-Cover im Cover-Spiel (ROADMAP 5.8a)
+
+Julian: „nimm die tom adams bilder in das versus game auf“. Lauf gegen den Live-Stand (`scripts/live-collections.ts`, einmal Produktion: 61 Sammlungen, 54 veröffentlicht; *Tom Adams' Agatha Christie* veröffentlicht, 42 Werke): `COLLECTIONS_FILE=<Live-Stand> npx tsx scripts/add-collection-covers-to-pool.ts --keep-earlier --add=tom-adams-christie`. **42 Kandidaten, 39 aufgenommen**, 3 zu klein oder unscharf (*Murder in the Mews*, *The Moving Finger*, *The Murder at the Vicarage*), keines schon im Spiel, jede Anfrage beantwortet. Der Vorrat `mix-2000-paperwhite-collections` wächst von 4.979 auf **5.018 Cover** aus 46 Sammlungen; Name unverändert, kein Cover ging heraus, alle Stimmen zählen weiter. Auf dem Kontaktbogen angesehen: durchweg die gemalten Fontana-Umschläge; drei sind Fotos des Buchs statt Scans (*Sparkling Cyanide* mit Schatten, *The Hollow* und *Destination Unknown* auf grauem Grund) — drin gelassen, Julian gefragt.

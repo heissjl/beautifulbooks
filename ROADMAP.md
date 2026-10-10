@@ -134,7 +134,7 @@ Die Urteile sind ein festes Vokabular, weil das Brett des Cockpits (`npm run coc
 | 5.6 | tun, nach 0.5 | von Hand | Ohne eigene Domain verschenkt jeder Launch-Link Reichweite an `vercel.app` |
 | 5.7 | zurückstellen | — | Acht Wochen nach der ersten Gattung |
 | 5.8 | zusammenlegen | — | mit 5.8a: Spielart 1 ist gebaut, Spielart 2 ist Prototyp. Offen ist nur, welche live geht |
-| 5.8a | entscheiden | Julian | Live seit 2026-09-22 (`/versus`, von der Startseite verlinkt, indexiert); lokal seit dem 2026-10-06 mit 4.979 Covern aus 2.859 Büchern und 45 Sammlungen, noch nicht deployt. Offen: Julians E21, die Region des Speichers für die Datenschutzerklärung und ob die fünf Entwurfsreihen nach dem Veröffentlichen dazukommen (Stand 2026-10-06) |
+| 5.8a | entscheiden | Julian | Live seit 2026-09-22 (`/versus`, von der Startseite verlinkt, indexiert); seit dem 2026-10-09 mit 5.018 Covern aus 46 Sammlungen (Tom Adams dazu). Offen: Julians E21, die Region des Speichers für die Datenschutzerklärung und ob die fünf Entwurfsreihen nach dem Veröffentlichen dazukommen (Stand 2026-10-06) |
 | 5.9 | zurückstellen | — | Lab-Idee, phasenfrei, Rechtefrage; wenn Julian Lust hat |
 | 5.10 | erledigt? | — | In Produktion seit 2026-09-24; drei Sammlungen veröffentlicht (SF Masterworks, Feminist Press — die frühere `women-writers` —, Tiptree Award), eine Sammlungskachel öffnet ihr eigenes Cover auf der Wand. Der Punkt wartete auf Julians Wand und `published` — sieht fertig aus, abhaken entscheidet Julian |
 | 5.10a | erledigt bis auf Nutzung | — | Live seit 2026-09-24; Datenschutz entschieden (nur Freunde, 0.12 bleibt zurückgestellt) |
