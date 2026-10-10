@@ -40,18 +40,20 @@ PAPER = (244, 240, 232)
 INK = (26, 23, 20)
 ACCENT = (148, 81, 56)
 
-TITLE_S = 1.3
-CHIP_S = 1.1
-END_S = 1.5
-# (from mark, to mark, speed, words over it)
+TITLE_S = 1.4
+CHIP_S = 1.3
+END_S = 1.6
+# (from mark, to mark, speed, headline, line under it)
+# Two things carry the clip (Julian, 2026-10-09): it is *your* Goodreads list,
+# and the edition you love is easy to find. Each caption says one of them.
 SEGMENTS = [
     # Slower than recorded (Julian, 2026-10-09: „der good-reads-teil am anfang muss etwas langsamer passieren“).
-    ('drop', 'editor', 0.9, 'Drop in your Goodreads export'),
-    ('wall', 'book-loading', 1.2, 'Your to-read shelf, as covers'),
-    ('book', 'shops', 1.7, 'Find the edition you love'),
+    ('drop', 'editor', 0.9, 'Your Goodreads list', 'Drop in the export file'),
+    ('wall', 'book-loading', 1.1, 'Your to-read shelf', 'as a wall of covers'),
+    ('book', 'shops', 1.4, 'Pick the edition you love', 'Tap a book, choose its cover'),
     # Not "order that edition": that needs the publisher's image to be this cover (`verified`),
     # and on 2026-10-09 Google answered no ISBN lookup at all, so no cover could be.
-    ('shops', 'end', 1.0, 'See where to buy that edition'),
+    ('shops', 'end', 1.0, 'See where to buy it', 'That edition, that cover'),
 ]
 
 
@@ -106,10 +108,11 @@ timeline = []  # (out_start, out_end, kind, payload)
 t = 0.0
 timeline.append((t, t + TITLE_S, 'title', None))
 t += TITLE_S
-timeline.append((t, t + CHIP_S, 'chip', SEGMENTS[0][3]))
+timeline.append((t, t + CHIP_S, 'chip', SEGMENTS[0][3:5]))
 t += CHIP_S
 spans = []  # (out_start, src_start, speed)
-for a, b, speed, words in SEGMENTS:
+for a, b, speed, head, sub in SEGMENTS:
+    words = (head, sub)
     length = (marks[b] - marks[a]) / speed
     timeline.append((t, t + length, 'take', (marks[a], speed, words)))
     spans.append((t, t + length, marks[a], marks[b], speed))
@@ -149,24 +152,28 @@ def card(lines, sub, foot=None):
     return im
 
 
-TITLE = card(['Your Goodreads', 'to-read list'], '→ the editions you actually want')
+TITLE = card(['Your Goodreads list,', 'the editions you love'], 'Drop it in, pick a cover, see where to buy it')
 END = card(['Buy Its Covers'], 'buyitscovers.com', 'Judge a book, buy its covers')
 
-PILL_FONT = font(JOST, 50, 500)
+HEAD_FONT = font(XANH, 76)
+SUB_FONT = font(JOST, 46, 400)
 
 
 def pill(im, words, alpha):
+    """The caption: a headline and a line under it, in a band low on the screen."""
     if alpha <= 0:
         return im
+    head, sub = words
     d = ImageDraw.Draw(im)
-    w = d.textlength(words, font=PILL_FONT)
-    pad_x, h = 44, 104
+    w = max(d.textlength(head, font=HEAD_FONT), d.textlength(sub, font=SUB_FONT))
+    pad_x, h = 56, 214
     box = Image.new('RGBA', (int(w) + 2 * pad_x, h), (0, 0, 0, 0))
     bd = ImageDraw.Draw(box)
-    bd.rounded_rectangle((0, 0, box.width - 1, h - 1), radius=h // 2, fill=INK + (int(235 * alpha),))
-    bd.text((pad_x, 22), words, font=PILL_FONT, fill=PAPER + (int(255 * alpha),))
+    bd.rounded_rectangle((0, 0, box.width - 1, h - 1), radius=36, fill=INK + (int(238 * alpha),))
+    bd.text(((box.width - bd.textlength(head, font=HEAD_FONT)) / 2, 30), head, font=HEAD_FONT, fill=PAPER + (int(255 * alpha),))
+    bd.text(((box.width - bd.textlength(sub, font=SUB_FONT)) / 2, 130), sub, font=SUB_FONT, fill=(222, 196, 170, int(255 * alpha)))
     # Low on the screen: the top holds what each step is about (the Goodreads switch, the title).
-    im.paste(box, ((W - box.width) // 2, 1500), box)
+    im.paste(box, ((W - box.width) // 2, 1440), box)
     return im
 
 
@@ -176,7 +183,7 @@ def finger(im, x, y, k):
         return im
     grow = ease(k / 0.25) if k < 0.25 else 1.0
     fade = 1.0 if k < 0.7 else 1 - ease((k - 0.7) / 0.3)
-    r = 54 * (0.6 + 0.4 * grow) * (1 + (0.25 if 0.45 < k < 0.6 else 0))
+    r = 54 * (0.6 + 0.4 * grow)
     layer = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     ld = ImageDraw.Draw(layer)
     ld.ellipse((x - r, y - r, x + r, y + r), fill=(30, 26, 22, int(110 * fade)), outline=(255, 255, 255, int(200 * fade)), width=5)
@@ -187,9 +194,9 @@ def finger(im, x, y, k):
 def chip(im, k, target):
     """The export file flying from the top right onto the drop zone."""
     tx, ty = target
-    sx, sy = W + 300, 420
+    sx, sy = W + 300, ty - 120
     e = ease(k)
-    x, y = sx + (tx - sx) * e, sy + (ty - sy) * e - math.sin(e * math.pi) * 160
+    x, y = sx + (tx - sx) * e, sy + (ty - sy) * e  # a straight slide, no arc (less movement)
     label = 'goodreads_library_export.csv'
     f = font(JOST, 38, 500)
     tw = ImageDraw.Draw(im).textlength(label, font=f)
@@ -244,7 +251,7 @@ for i in range(n):
         else:
             words = payload[2]
             a0, a1 = t0, t1
-            if kind == 'take' and words == SEGMENTS[0][3]:
+            if kind == 'take' and words == SEGMENTS[0][3:5]:
                 a0 = t0 - CHIP_S
         im = pill(im, words, fade_alpha(a0, a1, t))
         if kind == 'take':

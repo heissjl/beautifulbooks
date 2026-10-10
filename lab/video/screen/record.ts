@@ -154,17 +154,14 @@ async function main(): Promise<void> {
   await until(page, `document.querySelector('[data-cover-id="${COVER}"]')`, 60_000);
   await until(page, imagesIn, 30_000);
   mark('book');
-  await sleep(900);
-  for (let i = 0; i < 18; i++) {
-    await page.evaluate('window.scrollBy(0, 22)');
-    await sleep(45);
-  }
+  // One calm scroll to the cover, no stepping (Julian, 2026-10-09: „slightly less movement“).
+  await sleep(1400);
   await page.evaluate(`document.querySelector('[data-cover-id="${COVER}"]').scrollIntoView({ block: 'center', behavior: 'smooth' })`);
-  await sleep(900);
+  await sleep(1100);
   await until(page, imagesIn, 20_000);
   mark('pick');
   await tap(page, `document.querySelector('[data-cover-id="${COVER}"]')`);
-  await sleep(1200);
+  await sleep(1500);
 
   if (process.env.DEBUG_SHOT) {
     const shot = (await page.send('Page.captureScreenshot', { format: 'png' })) as { data: string };
