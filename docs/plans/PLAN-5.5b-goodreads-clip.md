@@ -65,3 +65,21 @@ Den Shop selbst zeigt der Film nicht: Eine Aufnahme fremder Seiten ist weder nö
 3. Ton: nur Texteinblendungen, oder auch Musik? Musik bringt eine eigene Rechtefrage.
 4. Welches Buch im Film gekauft wird; ich schlage eines mit `verified` vor.
 5. Die Rechtefrage aus 5.5 vor dem Posten.
+
+## 8. Text zum Posten auf X (Entwurf, 2026-10-09)
+
+Julian: „write a text for a x post“. Zum Clip aus Schnitt 5. Keine Vollständigkeitsworte, kein Versprechen auf das Cover beim Shop (§5); die Datei bleibt im Browser, das darf der Text sagen.
+
+**Entwurf A (kurz, 230 Zeichen):**
+
+> Your Goodreads to-read list, as covers.
+>
+> Export your library, drop the file on buyitscovers.com, and your shelf becomes a wall of covers. Tap a book, pick the edition you love, see where to buy that printing.
+>
+> No login. The file stays in your browser.
+
+**Entwurf B (eine Zeile, 150 Zeichen):**
+
+> Drop your Goodreads export on buyitscovers.com: your to-read shelf as a wall of covers, the edition you love a tap away, and where to buy it.
+
+Posten erst nach der Rechtefrage aus 5.5 (§7, Punkt 5), von Hand.
