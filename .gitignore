@@ -71,6 +71,7 @@ lab/curate/serve.log
 /docs/tests/*.png
 /docs/tests/*.mov
 /docs/tests/*.mp4
+/docs/tests/*.webp
 lab/collections/cache.json
 lab/collections/isbn-cache.json
 lab/collections/for-openlibrary/
@@ -85,3 +86,6 @@ lab/international-covers/lookup-cache.json
 /lab/inspiration/links.json
 /.next-visitcost/
 lab/collections/in/
+
+# 5.5b: raw take, frames, fonts and preview of the Goodreads clip
+lab/video/screen/out/
