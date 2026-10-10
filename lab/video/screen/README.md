@@ -2,13 +2,14 @@
 
 Julian, 2026-10-09: „können wir ein kurzvideo machen, dass zeigt, dass man seine goodreads to-read liste in unsere seite ziehen kann und damit einfach seine lieblingsedition findet und bestellen kann?“, then „eher 15, hochformat, erstmal nur text, schlage ein buch aus der kuratierten liste vor, lass es uns bauen“. ROADMAP 5.5b, plan [docs/plans/PLAN-5.5b-goodreads-clip.md](../../../docs/plans/PLAN-5.5b-goodreads-clip.md). **Generate yes, post by hand**, after the rights question of 5.5.
 
-**Status (2026-10-09): built; a 14.9 s take rendered as 448 frames and an animated preview; no MP4 yet, because ffmpeg is not installed** (`brew install ffmpeg`, then `out/encode.sh`).
+**Status (2026-10-09): built; a 14.9 s clip, 448 frames, an animated preview and an MP4** (H.264, 1080 × 1920, 30 fps, 11.2 MB), encoded with macOS's own AVFoundation (`encode.swift`) rather than ffmpeg: Homebrew has no ffmpeg bottles for macOS 13 and was still compiling its dependencies from source after more than ten minutes, so Julian had it stopped.
 
 ```bash
 WALLS=on npx next dev -p 3107                     # with the main folder's .env.local sourced
 npx tsx lab/video/screen/record.ts --warm         # walk the flow once: caches fill
 npx tsx lab/video/screen/record.ts                # film it: out/raw/, out/take.json
 python3 lab/video/screen/compose.py               # cut it: out/frames/, out/preview.webp, out/encode.sh
+sh lab/video/screen/out/encode.sh                 # out/goodreads-clip.mp4 via encode.swift (AVFoundation)
 npx tsx lab/video/screen/verdicts.ts "Title" …    # which curated covers the publisher's image confirms
 npx tsx lab/video/screen/peek.ts <url> [ms]       # a page's text after it settles
 ```
@@ -31,6 +32,6 @@ Can the site's own flow — Goodreads export onto `/create`, the shelf as a coll
 
 ## Open
 
-- The MP4 (ffmpeg), and Julian's look at the preview (`docs/tests/2026-10-09-goodreads-clip-preview.webp` in the main folder, git-ignored).
+- Julian's look at the edit (`docs/tests/2026-10-09-goodreads-clip.mp4` and `-preview.webp` in the main folder, git-ignored).
 - A confirmed cover for the last scene once Google answers ISBN lookups again — then "Order that edition" and Bookshop.org leading.
 - The title card is plain words; whether it should carry the wordmark or a few covers is Julian's call.

@@ -6,7 +6,7 @@ Cuts the recorded take into the 15-second clip (ROADMAP 5.5b).
 Reads lab/video/screen/out/take.json and out/raw/ (from record.ts), writes
 out/frames/NNNN.jpg (1080 x 1920, 30 fps), out/preview.webp (animated, 360 px
 wide) and out/encode.sh, which turns the frames into out/goodreads-clip.mp4
-once ffmpeg is installed.
+with encode.swift (AVFoundation).
 
 What is cut: the time between the phase marks where the page was still
 loading (the editor between "Make a collection" and the collection, the book
@@ -260,7 +260,8 @@ for i in range(n):
 
 preview[0].save(os.path.join(OUT, 'preview.webp'), save_all=True, append_images=preview[1:], duration=int(2000 / FPS), loop=0, quality=80)
 with open(os.path.join(OUT, 'encode.sh'), 'w') as f:
-    f.write('#!/bin/sh\n# needs ffmpeg (brew install ffmpeg)\ncd "$(dirname "$0")"\n'
-            f'ffmpeg -y -framerate {FPS} -i frames/%04d.jpg -c:v libx264 -pix_fmt yuv420p -crf 20 -movflags +faststart goodreads-clip.mp4\n')
+    # AVFoundation, not ffmpeg (Julian, 2026-10-09): nothing to install on macOS.
+    f.write('#!/bin/sh\ncd "$(dirname "$0")"\n'
+            f'swift ../encode.swift frames goodreads-clip.mp4 {FPS}\n')
 os.chmod(os.path.join(OUT, 'encode.sh'), 0o755)
 print(json.dumps({'seconds': round(TOTAL, 2), 'frames': n, 'timeline': [(round(a, 2), round(b, 2), k) for a, b, k, _ in timeline]}))
