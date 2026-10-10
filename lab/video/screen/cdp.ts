@@ -41,11 +41,17 @@ async function wsUrl(port: number): Promise<string> {
   throw new Error('Chrome did not start');
 }
 
-export async function launch(port = 9333): Promise<Page> {
+/**
+ * `headed: true` opens a real window, placed off screen: a headless Chrome is
+ * turned away by bookshop.org's bot check ("Sorry, you have been blocked",
+ * 2026-10-09), a headed one with a fresh profile is let in.
+ */
+export async function launch(port = 9333, headed = false): Promise<Page> {
   const profile = mkdtempSync(join(tmpdir(), 'bb-clip-'));
   const chrome: ChildProcess = spawn(CHROME, [
-    '--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`,
-    '--no-first-run', '--hide-scrollbars', '--force-color-profile=srgb', 'about:blank',
+    ...(headed ? ['--window-position=-3000,0', '--window-size=400,700'] : ['--headless=new', '--hide-scrollbars']),
+    `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`,
+    '--no-first-run', '--force-color-profile=srgb', 'about:blank',
   ], { stdio: 'ignore' });
   const ws = new WebSocket(await wsUrl(port));
   await new Promise<void>((resolve, reject) => {

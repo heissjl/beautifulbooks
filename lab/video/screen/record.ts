@@ -28,7 +28,7 @@ const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 const now = () => Date.now() / 1000;
 
 interface Mark { name: string; t: number }
-interface Tap { t: number; x: number; y: number }
+interface Tap { t: number; x: number; y: number; w: number; h: number }
 
 const marks: Mark[] = [];
 const taps: Tap[] = [];
@@ -49,11 +49,11 @@ const imagesIn = `[...document.images].filter(i => { const r = i.getBoundingClie
 
 /** Taps the element: logs its centre for the finger, then clicks it — unless `click` is false. */
 async function tap(page: Page, selector: string, hold = 350, click = true): Promise<void> {
-  const box = await page.evaluate<{ x: number; y: number } | null>(`(() => {
+  const box = await page.evaluate<{ x: number; y: number; w: number; h: number } | null>(`(() => {
     const el = ${selector};
     if (!el) return null;
     const r = el.getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
   })()`);
   if (!box) throw new Error(`nothing to tap: ${selector}`);
   taps.push({ t: now(), ...box });
@@ -170,9 +170,12 @@ async function main(): Promise<void> {
   await page.evaluate(`${byText('a', `e.innerText.includes('Bookshop.org')`)}.scrollIntoView({ block: 'center', behavior: 'smooth' })`);
   await sleep(1000);
   mark('shops');
-  await sleep(800);
-  // The finger rests on the shop, but nothing is clicked: no shop is opened and no /go/ click is counted.
-  await tap(page, byText('a', `e.innerText.includes('Bookshop.org')`), 1200, false);
+  await sleep(1500);
+  // The last tap: the finger lands on the shop and the film holds there. Nothing is clicked — a click
+  // would go through /go/ and be counted — and no shop page is filmed (Julian, 2026-10-09: Bookshop
+  // sells only current printings, the 1997 Penguin is not there; „ohne auf die bookshop website zu gehen“).
+  await tap(page, byText('a', `e.innerText.includes('Bookshop.org')`), 900, false);
+  await sleep(1800);
   mark('end');
   filming = false;
   await loop;

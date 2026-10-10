@@ -48,12 +48,12 @@ END_S = 1.6
 # and the edition you love is easy to find. Each caption says one of them.
 SEGMENTS = [
     # Slower than recorded (Julian, 2026-10-09: „der good-reads-teil am anfang muss etwas langsamer passieren“).
-    ('drop', 'editor', 0.9, 'Your Goodreads list', 'Drop in the export file'),
-    ('wall', 'book-loading', 1.1, 'Your to-read shelf', 'as a wall of covers'),
-    ('book', 'shops', 1.2, 'Pick the edition you love', 'Tap the book, open its details'),
+    ('drop', 'editor', 0.95, 'Your Goodreads list', 'Drop in the export file'),
+    ('wall', 'book-loading', 1.3, 'Your to-read shelf', 'as a wall of covers'),
+    ('book', 'shops', 1.3, 'Pick the edition you love', 'Tap the book, open its details'),
     # Not "order that edition": that needs the publisher's image to be this cover (`verified`),
     # and on 2026-10-09 Google answered no ISBN lookup at all, so no cover could be.
-    ('shops', 'end', 1.0, 'See where to buy it', 'That edition, that cover'),
+    ('shops', 'end', 1.0, 'See where to buy it', 'Tap a shop: it opens on this printing'),
 ]
 
 
@@ -90,6 +90,8 @@ take = json.load(open(os.path.join(OUT, 'take.json')))
 scale = take['scale']
 frames = take['frames']
 marks = {m['name']: m['t'] for m in take['marks']}
+# The held tap at the end was recorded longer than it is shown.
+marks['end'] -= 0.8
 
 
 def source_frame(t):
@@ -191,6 +193,16 @@ def finger(im, x, y, k):
     return im
 
 
+def pressed(im, x, y, w, h, alpha):
+    """The button under the finger, lit in the accent colour while the film holds on it."""
+    if alpha <= 0:
+        return im
+    layer = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(layer).rounded_rectangle((x - w / 2, y - h / 2, x + w / 2, y + h / 2), radius=24, outline=ACCENT + (int(255 * alpha),), width=8, fill=ACCENT + (int(60 * alpha),))
+    im.paste(layer, (0, 0), layer)
+    return im
+
+
 def chip(im, k, target):
     """The export file flying from the top right onto the drop zone."""
     tx, ty = target
@@ -223,7 +235,7 @@ def fade_alpha(t0, t1, t, edge=0.2):
 shutil.rmtree(FRAMES, ignore_errors=True)
 os.makedirs(FRAMES)
 zone = (take['zone']['x'] * scale, take['zone']['y'] * scale)
-taps = [(tp['t'], tp['x'] * scale, tp['y'] * scale) for tp in take['taps']]
+taps = [(tp['t'], tp['x'] * scale, tp['y'] * scale, tp.get('w', 0) * scale, tp.get('h', 0) * scale) for tp in take['taps']]
 n = int(round(TOTAL * FPS))
 cache = {}
 preview = []
@@ -255,12 +267,17 @@ for i in range(n):
                 a0 = t0 - CHIP_S
         im = pill(im, words, fade_alpha(a0, a1, t))
         if kind == 'take':
-            for tap_t, x, y in taps:
+            last = taps[-1][0]
+            for tap_t, x, y, bw, bh in taps:
                 s = out_time(tap_t)
                 if s is None:
                     continue
-                life = 0.75
-                im = finger(im, x, y, (t - s + 0.1) / life)
+                if tap_t == last:
+                    # The last tap is held, not released: the button stays lit until the end card.
+                    im = pressed(im, x, y, bw, bh, ease((t - s - 0.1) / 0.25))
+                    im = finger(im, x, y, min(0.69, (t - s + 0.1) / 0.75))
+                else:
+                    im = finger(im, x, y, (t - s + 0.1) / 0.75)
     im.save(os.path.join(FRAMES, f'{i:04d}.jpg'), quality=92)
     if i % 2 == 0:
         preview.append(im.resize((360, 640), Image.LANCZOS))
