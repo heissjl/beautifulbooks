@@ -478,6 +478,7 @@ export const de: Readonly<Record<string, string>> = {
   'Write to {email} — about a cover, a wrong edition, or anything the site gets wrong. The site also posts here:': 'Schreib an {email} — wegen eines Covers, einer falschen Ausgabe oder allem, was die Seite falsch macht. Außerdem postet die Seite hier:',
   'privacy notice': 'Datenschutzerklärung',
   'Legal notice': 'Anbieterkennzeichnung',
+  'Imprint & contact': 'Impressum',
   'Responsible for this site': 'Verantwortlich für diese Seite',
   'This is a private, non-commercial site. Book data comes from {openlibrary} and {googlebooks}; cover images are shown from those catalogues and belong to their publishers. If you hold rights to an image and want it removed from view here, write to the address above.': 'Dies ist eine private, nicht kommerzielle Seite. Die Buchdaten kommen von {openlibrary} und {googlebooks}; die Coverbilder werden aus diesen Katalogen gezeigt und gehören ihren Verlagen. Wenn du Rechte an einem Bild hältst und es hier nicht mehr sehen willst, schreib an die Adresse oben.',
   'What the site does with data is described in the {privacy}.': 'Was die Seite mit Daten macht, steht in der {privacy}.',

@@ -30,7 +30,8 @@ export default function SiteFooterView({ walls }: { walls: boolean }) {
           {commerceEnabled() && <span>{t('Purchase links may earn us a commission.')}</span>}
           {walls && <Link href="/create" className={link}>{t('Your collections')}</Link>}
           <Link href="/about" className={link}>{t('About')}</Link>
-          <Link href="/contact" className={link}>Impressum</Link>
+          {/* "Imprint & contact" (Julian, 2026-10-09, 6.72): a German reader recognises it, everyone else understands it; the page itself stays "Impressum". */}
+          <Link href="/contact" className={link}>{t('Imprint & contact')}</Link>
           <Link href="/privacy" className={link}>{t('Privacy')}</Link>
         </p>
       </div>
