@@ -9,6 +9,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
 | Suche: Tippfehler werden bei leerer oder schwacher Antwort mit einer zweiten Anfrage korrigiert („Showing results for …", Link zum Getippten); „Author only" (`/?author=`) listet die Bücher einer Person, auch über gleichnamige Datensätze; keine Sprach-Pillen mehr, `?lang=` wählt nur den Reiter der Detailseite | 2026-09-27 | F1.2, F1.9, F1.10 | 6.60 | `lib/spelling.ts`, `lib/lexicon.ts`, `lib/authorsearch.ts`, `lib/search.ts`, `components/SearchBar.tsx` |
+| Karten-Mosaik: Bilder, die nach Form (0,5–0,85) oder Leere kein Cover sind, kommen ans Ende der Kandidaten, im Browser gemessen; gelöscht wird nichts | 2026-10-09 | F4 | 6.70 | `lib/mosaic.ts`, `components/coverHash.ts` |
 | Trefferliste in zwei Teilen: oben der Autor der ersten Karte (auch unter anderer Schreibweise) und große Bücher anderer (ab 30 Ausgaben und einem Zehntel der ersten), darunter „By other authors (n)“, ab fünf Karten eingeklappt; bei „the great gatsby“ 3 oben und 12 darunter | 2026-09-29 | F1.11 | 6.81 (Teil 1) | `lib/searchgroups.ts`, `components/BookGrid.tsx` |
 | Freitextsuche, ein Aufruf an Open Library, **nie** an Google | 2026-09-06 / 09-07 | F1.1, E10 | PLAN-B B8 | `lib/search.ts` |
 | Sprachfilter als Pillen (`all`, `en`, `de`, …), wirkt auf Ausgaben, nicht Werke | 2026-09-06 | F1.2 | — | `components/SearchBar.tsx` |
@@ -76,6 +77,8 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Funktion | seit | Spec | Roadmap | Code |
 |---|---|---|---|---|
+| Zurück-Link oben links mit einem Zeichen auf Buch-, Jahrzehnte- und Sammlungsseite; das Ziel bleibt je Seite verschieden | 2026-10-09 | F6 | 6.64 | `components/BackLink.tsx` |
+| `/` setzt den Cursor ins Suchfeld, auf jeder Seite, außer beim Tippen in einem Feld | 2026-10-09 | F6 | 6.68 | `components/useSlashToSearch.ts` |
 | Kopfzeile: „Collections“ und „Game“ als Links auf jeder Seite ab 640 px, davor Wortmarke, danach Suchfeld und Sprachwahl | 2026-10-03 | F6 | 6.88 | `components/SiteHeader.tsx` |
 | Zurück zur Wand: die Buchseite nennt oben links die Sammlung, aus der sie geöffnet wurde, und führt auf die angeklickte Kachel zurück | 2026-10-03 | F2.7 | 6.89 | `components/cameFrom.ts`, `components/BookDetail.tsx`, `components/CoverWall.tsx` |
 | Die Seite auf Deutsch: Knopf „Deutsch“ / „English“ oben rechts auf jeder Seite, Cookie `locale`, Adressen unverändert (`proxy.ts` → `app/de/`); seit dem 2026-10-04 ist die ganze Oberfläche übersetzt (839 Sätze: auch About, Impressum, Datenschutz, Spiel, eigene Sammlung, `/curate`, `/suggest`); Metadaten, Daten und API-Fehlersätze bleiben englisch | 2026-10-02 | §2.6, E23 | 6.85 | `lib/i18n/`, `components/i18n.tsx`, `components/LocaleSwitcher.tsx`, `proxy.ts`, `app/de/`, `lib/__tests__/i18n.test.ts` |

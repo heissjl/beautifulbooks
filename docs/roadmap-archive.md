@@ -1143,3 +1143,21 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
   *Codeseitig erledigt 2026-09-09 (Claude): `lib/googlequota.ts` schreibt jetzt **eine ungeschützte Zeile** `bb.google {"event":"daily-limit"|"rate-limit","pausedForS":…,"until":…,"at":…}`, genau eine je Öffnung des Automaten, nach dem Muster von `lib/clicks.ts`. Vorher stand dort ein `debug()`-Aufruf, und weil `DEBUG` in der Produktion nicht gesetzt ist, hinterließ der Tag, an dem Google zumachte, **keine Spur außer in der Cloud-Konsole**. Das ist die Nachricht „es ist passiert", nicht „es passiert gleich" — die kann nur Google geben. Tests in `lib/__tests__/googlequota.test.ts`; SPEC N9 nachgezogen.*
 
 **Erledigt 2026-10-06.** → [Historie](history.md)
+
+## 6.47
+
+**6.47 Die Suche belastet noch den `google`-Eimer.** (Nebenbefund aus [PLAN-2.4-firewall](docs/plans/PLAN-2.4-firewall.md) §6, eingetragen 2026-09-14.) `app/api/search/route.ts` ruft `rateLimited(request, 'search', 'google')`, obwohl `lib/search.ts` seit dem 2026-09-07 keine Google-Anfrage mehr stellt. Das bremst zu früh, nicht zu spät, ist also harmlos, widerspricht aber der Regel, `google` nur dort zu belasten, wo eine Google-Anfrage möglich ist (CLAUDE.md, SPEC N10). Zu tun: `'google'` dort streichen und die Beschreibung der Rate-Limits in CLAUDE.md nachziehen, die die Suche noch als Google-Aufrufer nennt. Eine halbe Stunde, Claude.
+
+**Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 6.64
+
+**6.64 Ein Zurück-Link.** (Aus der [Durchsicht von außen](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): „‹ Results“, „‹ Home“, „← The wall“.) `BackLink` aus `components/BookDetail.tsx:61` als eigene Komponente, die Jahrzehnte-Seite (`app/book/[id]/decades/page.tsx:123`) und jeder andere `SiteHeader left=` benutzen sie; das Ziel bleibt je Seite verschieden, Zeichen und Trefferfläche werden gleich. Eine halbe Stunde, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+**Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 6.70
+
+**6.70 Keine Nicht-Cover im Mosaik einer Karte.** (Aus der [Durchsicht von außen](docs/tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): Buchrücken, leere Vorsatzblätter, halbe Scans in den Mosaiken der Treffer.) Der Mosaik-Pfad (`?summary=1`) holt keine Signaturen, `looksLikeScannedPage` greift dort nie. Zwei Stufen ohne neue externe Anfrage: für Werke im Index die Signaturen von der Platte (`indexSignatures`) und nach hinten sortieren wie auf der Wand; für alle anderen im Browser das Seitenverhältnis prüfen (0,5–0,85 wie F7.2) und die Kachel mit dem nächsten von sechs Kandidaten füllen. Nichts wird gelöscht. Ein halber Tag, Claude. [Plan](docs/plans/PLAN-6.63-alltag.md)
+
+**Erledigt 2026-10-09.** → [Historie](history.md)
