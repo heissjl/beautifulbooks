@@ -50,7 +50,7 @@ SEGMENTS = [
     # Slower than recorded (Julian, 2026-10-09: „der good-reads-teil am anfang muss etwas langsamer passieren“).
     ('drop', 'editor', 0.9, 'Your Goodreads list', 'Drop in the export file'),
     ('wall', 'book-loading', 1.1, 'Your to-read shelf', 'as a wall of covers'),
-    ('book', 'shops', 1.4, 'Pick the edition you love', 'Tap a book, choose its cover'),
+    ('book', 'shops', 1.2, 'Pick the edition you love', 'Tap the book, open its details'),
     # Not "order that edition": that needs the publisher's image to be this cover (`verified`),
     # and on 2026-10-09 Google answered no ISBN lookup at all, so no cover could be.
     ('shops', 'end', 1.0, 'See where to buy it', 'That edition, that cover'),

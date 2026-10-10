@@ -24,7 +24,6 @@ const OUT = join(__dirname, 'out');
 const RAW = join(OUT, 'raw');
 const WARM = process.argv.includes('--warm');
 const BOOK = 'OL1858668W'; // Wide Sargasso Sea, from the curated list
-const COVER = 'ol:10191445'; // Penguin 1997: the publisher's current image for its ISBN is this cover (checked 2026-10-09)
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 const now = () => Date.now() / 1000;
 
@@ -147,21 +146,15 @@ async function main(): Promise<void> {
   mark('wall');
   await sleep(1800);
 
-  // 4. Into the book: its wall of covers, scrolled slowly.
+  // 4. Into the book. The tile's cover is already the selected one, so nothing is scrolled
+  // or tapped on the wall (Julian, 2026-10-09: „der eine scroll … ist unnötig, da das cover ja schon ausgewählt ist“).
   await tap(page, `document.querySelector('a[href*="/book/${BOOK}"]')`);
   await until(page, `location.pathname === '/book/${BOOK}'`, 30_000);
   mark('book-loading');
-  await until(page, `document.querySelector('[data-cover-id="${COVER}"]')`, 60_000);
+  await until(page, byText('span', `e.innerText.trim() === 'Details'`), 60_000);
   await until(page, imagesIn, 30_000);
   mark('book');
-  // One calm scroll to the cover, no stepping (Julian, 2026-10-09: „slightly less movement“).
-  await sleep(1400);
-  await page.evaluate(`document.querySelector('[data-cover-id="${COVER}"]').scrollIntoView({ block: 'center', behavior: 'smooth' })`);
-  await sleep(1100);
-  await until(page, imagesIn, 20_000);
-  mark('pick');
-  await tap(page, `document.querySelector('[data-cover-id="${COVER}"]')`);
-  await sleep(1500);
+  await sleep(1600);
 
   if (process.env.DEBUG_SHOT) {
     const shot = (await page.send('Page.captureScreenshot', { format: 'png' })) as { data: string };
