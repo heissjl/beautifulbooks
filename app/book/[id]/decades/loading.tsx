@@ -2,7 +2,7 @@ import HeaderSearch from '@/components/HeaderSearch';
 import MosaicLoader from '@/components/MosaicLoader';
 import SiteHeader from '@/components/SiteHeader';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 
 /**
  * What the reader sees while the decade page is being built (Julian,

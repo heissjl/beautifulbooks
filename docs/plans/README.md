@@ -4,6 +4,7 @@ Stand: 2026-10-03 (Zeilen zu 6.63, 2.0 und der Suche nachgezogen). Ein Plan ist 
 
 | Plan | Roadmap | Stand |
 |---|---|---|
+| [PLAN-6.107-seo.md](PLAN-6.107-seo.md) | 6.107: Auffindbarkeit ohne neuen Inhalt — Sammlungen, Jahrzehnte, Autoren, die Buchseite in der Sprache des Suchenden, Verlinkung, Sitemap | **Plan** 2026-10-10, Schritt 0 wartet auf die Search Console |
 | [PLAN-5.16d-ereader-cover.md](PLAN-5.16d-ereader-cover.md) | 5.16d: ein Cover aussuchen und auf den eigenen E-Reader bringen — Browser-Tausch ohne Upload, E-Reader-Ansicht, Messreihe je Gerät | **Plan** 2026-10-09, zurückgestellt (Julian) |
 | [PLAN-5.11a-regalfoto-zuverlaessig.md](PLAN-5.11a-regalfoto-zuverlaessig.md) | 5.11a: das Regalfoto — Messung an zwei echten Fotos, Strom statt Stille, Reihen statt Kästen, Ausgabe aus dem Umschlag | **Schritte 1–3 deployt** 2026-10-01 (Strom, Pins statt Kästen, wachsende Liste, maybe, Grenzen, Server bereitet das Foto auf); echte Umrisse brauchen einen Segmentierer (Lab-Vorschlag MobileSAM, Julian entscheidet); Schritt 4 wartet auf ein Umschlagfoto |
 | [PLAN-A.md](PLAN-A.md) | alte Spec §10 A: aufräumen, ehrliche Sprache, drei Entscheidungen | **erledigt** 2026-09-07 (`3e353b3`, `8fe21e6`); die Entscheidungen leben als 0.1 und 4.1 |

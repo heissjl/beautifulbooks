@@ -9,7 +9,7 @@ import SuggestTool, { type SuggestCollection } from '@/components/SuggestTool';
 import { allCollections } from '@/lib/collections';
 import { SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 import { rich } from '@/components/rich';
 
 /**

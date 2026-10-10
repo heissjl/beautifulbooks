@@ -7,7 +7,7 @@ import { rich } from '@/components/rich';
 import { VERDICT_LEAD, VERDICT_MEANING, VERDICT_ORDER } from '@/lib/verdicts';
 import { commerceEnabled } from '@/lib/sitemode';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 import { readImprint } from '@/lib/imprint';
 
 /**

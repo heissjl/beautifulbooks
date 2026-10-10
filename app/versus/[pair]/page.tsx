@@ -16,7 +16,7 @@ import { wallsEnabled } from '@/lib/walls/switch';
 import { SITE_URL } from '@/lib/seo';
 import { rich } from '@/components/rich';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 import { measure } from '@/app/api/measure';
 
 /**

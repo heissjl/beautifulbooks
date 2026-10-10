@@ -1,5 +1,6 @@
 import HtmlLang from '@/components/HtmlLang';
 import { LocaleProvider } from '@/components/i18n';
+import { catalogueFor } from '@/lib/i18n/server';
 
 /**
  * The German tree (ROADMAP 6.85, SPEC E23). Nothing under `app/de/` is a page
@@ -11,7 +12,8 @@ import { LocaleProvider } from '@/components/i18n';
  */
 export default function GermanLayout({ children }: { children: React.ReactNode }) {
   return (
-    <LocaleProvider locale="de">
+    // The catalogue travels as a prop, once, only here (6.104).
+    <LocaleProvider locale="de" catalogue={catalogueFor('de')}>
       <HtmlLang locale="de" />
       {children}
     </LocaleProvider>

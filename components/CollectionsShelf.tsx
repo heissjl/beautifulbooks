@@ -3,7 +3,7 @@ import CoverImage from './CoverImage';
 import { wallCover } from '@/lib/curated';
 import type { Collection } from '@/lib/collections';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 
 /** At most two rows of two cards on the home page; the rest are one click away. */
 // Six since 2026-09-26 (Julian: „let's show 6 collections on the start page"), three rows of two.

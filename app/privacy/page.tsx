@@ -10,7 +10,7 @@ import { affiliateNetworks, affiliateShops } from '@/lib/buylinks';
 import { versusEnabled } from '@/lib/hotornot/switch';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 
 /**
  * The privacy notice (SPEC F6, ROADMAP 2.3; basis docs/recht-hobbyseite.md).

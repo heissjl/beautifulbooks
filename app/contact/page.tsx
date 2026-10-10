@@ -6,7 +6,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 
 /**
  * The legal notice (SPEC F6, ROADMAP 2.3): name, address and e-mail from

@@ -12,15 +12,25 @@
  * Placeholders are `{name}`, filled from the second argument. A number is written
  * in the locale's own digits grouping (1.234 in German, 1,234 in English).
  */
-import { de } from './de';
 import { DEFAULT_LOCALE, intlTag, type Locale } from './locale';
+
+/*
+  No catalogue is imported here (ROADMAP 6.104, 2026-10-10). Until then this
+  file imported `de` statically, and `useT()` pulled the whole German
+  catalogue — 914 entries, 92.7 KB in each of two client chunks, 31.7 KB
+  gzipped — into every reader's first page, English readers included. Now the
+  catalogue is handed in: the server reads it from `./server`, the German
+  layout passes it to the client once as a prop, and the English client bundle
+  carries no German at all.
+*/
 
 export type Vars = Record<string, string | number>;
 
 /** Translates one English sentence; `vars` fill `{name}` placeholders. */
 export type Translate = (text: string, vars?: Vars) => string;
 
-const CATALOGUES: Partial<Record<Locale, Readonly<Record<string, string>>>> = { de };
+/** English sentence → translated sentence. */
+export type Catalogue = Readonly<Record<string, string>>;
 
 export function formatNumber(n: number, locale: Locale): string {
   return n.toLocaleString(intlTag(locale));
@@ -36,15 +46,16 @@ export function fill(template: string, vars: Vars | undefined, locale: Locale): 
   });
 }
 
-export function translate(locale: Locale, text: string, vars?: Vars): string {
-  const table = locale === DEFAULT_LOCALE ? undefined : CATALOGUES[locale];
-  return fill(table?.[text] ?? text, vars, locale);
+/** Translates with a given catalogue; English (or no catalogue) is the identity plus placeholders. */
+export function translateWith(table: Catalogue | undefined, locale: Locale, text: string, vars?: Vars): string {
+  const found = locale === DEFAULT_LOCALE ? undefined : table?.[text];
+  return fill(found ?? text, vars, locale);
 }
 
-/** A `t` bound to one locale. The English `t` is the identity plus placeholders. */
-export function translator(locale: Locale): Translate {
-  return (text, vars) => translate(locale, text, vars);
+/** A `t` bound to one locale and its catalogue. */
+export function translatorWith(table: Catalogue | undefined, locale: Locale): Translate {
+  return (text, vars) => translateWith(table, locale, text, vars);
 }
 
 /** The English `t`, for code paths that have no locale yet (tests, server logs). */
-export const english: Translate = translator(DEFAULT_LOCALE);
+export const english: Translate = translatorWith(undefined, DEFAULT_LOCALE);

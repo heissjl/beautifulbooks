@@ -11,7 +11,7 @@ import { draftStoreFromEnv, listDrafts, type Draft } from '@/lib/curate/drafts';
 import { SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { adminSignedIn } from '@/lib/suggest/session';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 import { rich } from '@/components/rich';
 
 /**

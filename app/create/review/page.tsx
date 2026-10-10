@@ -5,7 +5,7 @@ import SiteHeader from '@/components/SiteHeader';
 import WallReview from '@/components/WallReview';
 import { wallsEnabled } from '@/lib/walls/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 
 /** Julian's review of walls offered for Walls by readers (ROADMAP 5.13d); the route checks the admin cookie. */
 export const metadata: Metadata = { title: 'Collections by readers — moderation', robots: { index: false, follow: false } };

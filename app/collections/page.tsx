@@ -13,7 +13,7 @@ import SiteHeader from '@/components/SiteHeader';
 import { liveCollections } from '@/lib/collections-live';
 import { SITE_URL } from '@/lib/seo';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
-import { translator } from '@/lib/i18n/translate';
+import { translator } from '@/lib/i18n/server';
 import { introText } from '@/lib/introlinks';
 import { measure } from '@/app/api/measure';
 
