@@ -44,6 +44,21 @@ export function resizeGray(img: GrayImage, w: number, h: number): GrayImage {
   return { width: w, height: h, data: out };
 }
 
+/**
+ * Mean and standard deviation of luminance on a 32 x 32 thumbnail: the wall's
+ * blankness measure. Here, not in imagehash.ts, so the browser can compute it
+ * from a canvas (ROADMAP 6.70); imagehash.ts re-exports it for the server.
+ */
+export function luminance(img: GrayImage): { mean: number; contrast: number } {
+  const t = resizeGray(img, 32, 32);
+  let sum = 0;
+  for (const v of t.data) sum += v;
+  const mean = sum / t.data.length;
+  let varSum = 0;
+  for (const v of t.data) varSum += (v - mean) ** 2;
+  return { mean, contrast: Math.sqrt(varSum / t.data.length) };
+}
+
 /** dHash as 16 hex characters: each bit = left pixel brighter than its right neighbour on a 9x8 thumbnail. */
 export function dhash(img: GrayImage): string {
   const t = resizeGray(img, 9, 8);
