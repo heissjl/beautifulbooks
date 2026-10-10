@@ -1,50 +1,60 @@
-# PLAN 6.107 — Auffindbarkeit ohne neuen Inhalt
+# PLAN 6.107 — Auffindbarkeit für eine junge Seite
 
-Julian, 2026-10-10, zum Red-Team-Befund K4 („die Suche als Einstieg verliert gegen Google“): „ok, mache einen plan zur umsetzung“.
+Julian, 2026-10-10, zum Red-Team-Befund K4: „ok, mache einen plan zur umsetzung“, dann: „ich glaube man kann hier noch nicht viel messen, weil wir kaum traffic haben. eher nochmal eine webrecherche machen, was wichtig für kleine neue seiten ist“. **Neu gefasst nach der [Recherche vom 2026-10-10](../seo-recherche-2026-10-10.md)**, die erste Fassung (Messen zuerst, Autorenseiten, mehr Einstiege) ist überholt.
 
-**Status:** Plan. Schritt 0 wartet auf die Search Console (2.16); Schritte 1–3 können davor beginnen, Schritt 4 danach.
+**Status:** Plan. Schritte 1–3 kann Claude ohne Entscheidung bauen; Schritt 4 entscheidet Julian; Schritt 5 ist Julians Hand.
 
-## 1. Die Lage
+## 1. Was die Recherche verschiebt
 
-Niemand sucht „covers of Mrs Dalloway“; wer das Buch sucht, landet bei Amazon. Was gesucht wird, sind **Reihen, Jahrzehnte, Gestalter, Autoren**: „SF Masterworks covers“, „Penguin Classics covers 1960s“, „Chris Moore cover art“, „Ursula Le Guin book covers“. Für genau das hat die Seite schon Seiten — Sammlungen, Jahrzehnte-Seiten, Autorenseiten, die Buchseite —, aber ihre Titel und Beschreibungen sind aus der Sicht der Seite formuliert, nicht aus der Sicht dessen, der sucht. Und die Buchseite trägt bei manchen Werken einen Titel, den kein Suchender tippt (U1: kyrillisch).
-
-Nichts hier erzeugt Inhalt; alles ordnet, was da ist. Regel wie überall: kein „every“, kein „all“, kein Versprechen, das die Seite nicht hält (SPEC §9.3 Schritt 15).
+- **Google bewertet die ganze Seite.** Viele schwache, datengetriebene Seiten früh im Index können der jungen Domain schaden (Mueller, Sept. 2026: programmatische Seiten „often … spam, borderline spam, or low quality“, Erholung „takes time“). Die Sitemap listet heute **500 Buchseiten und 322 Jahrzehnte-Seiten** neben ~60 Sammlungen — die Gewichte stehen falsch herum.
+- **Das Kapital sind die Sammlungen**: eigener Text, eigene Auswahl, Credits. Sie sind die Hub-Seiten; Buchseiten hängen darunter.
+- **Messen geht noch nicht** (Julian): zu wenig Verkehr für Zahlen über Anfragen. Was trotzdem geht: die **Indexquote je Seitentyp** in der Search Console — ob Google die Seiten überhaupt aufnimmt, braucht keine Besucher.
+- **Die deutsche Fassung ist für Google unsichtbar** (Cookie unter derselben Adresse); das ist eine Entscheidung, kein Fehler, solange sie bewusst ist.
+- `lastmod: now` in der ganzen Sitemap ist wertlos (Google) und falsch (Bing).
 
 ## 2. Die Schritte
 
-**0. Messen, bevor geschnitten wird (2.16, Julian).** Search Console lesen: welche Anfragen bringen Eindrücke, welche Seiten erscheinen, mit welcher Position. Drei Wochen nach dem Umzug auf die Domain sind um. Ohne diese Zahlen ist jeder Schritt unten eine Vermutung; mit ihnen weiß man, ob Sammlungen oder Buchseiten zuerst dran sind.
+**1. Sitemap auf das Starke beschränken, mit echtem `lastmod` (2 h, Claude).**
+- Drin: Start, About, `/collections`, jede veröffentlichte Sammlung, und **nur die Buchseiten der Werke, die in einer veröffentlichten Sammlung stehen** (die Sammlung verleiht ihnen Kontext). Jahrzehnte-Seiten nur für diese Werke.
+- Draußen: die übrigen Index-Werke und ihre Jahrzehnte-Seiten (sie bleiben erreichbar und verlinkt — Google findet sie über Links, wenn es will; wir drängen sie nur nicht auf), das Spiel, Kontakt, Datenschutz.
+- `lastmod`: für eine Sammlung das Datum ihrer letzten Änderung (der Entwurf trägt `updatedAt`; die Datei das Commit-Datum), für eine Buchseite das der Sammlung, für die festen Seiten das Datum der letzten Textänderung (eine Konstante im Code, die beim Ändern mitzieht). Nie „jetzt“.
+- Nicht `noindex` auf die übrigen Buchseiten setzen: sie haben eigene Leistung (Faltung, Urteil) und sollen findbar bleiben, wenn jemand auf sie verlinkt. Die Recherche rät zu weniger *Drängen*, nicht zu Verstecken.
 
-**1. Sammlungsseiten als Antworten auf Suchanfragen (halber Tag, Claude).**
-- `<title>`: „SF Masterworks: the 73 covers of the first run (1999–2007)“ statt „SF Masterworks · Buy Its Covers“ — Reihenname, was man sieht, Zeitraum. Die Zahl ist die gezählte, nicht „all“.
-- `description`: ein Satz, der die Frage beantwortet, die jemand stellt („Which covers did the SF Masterworks have, and who painted them?“), mit den Gestalternamen, die in den Credits stehen.
-- Strukturierte Daten: `ItemList` mit den Büchern (Name, Autor, Bild), damit die Sammlung als Liste erscheinen kann; `CollectionPage` als Typ.
-- Eine Zeile „See also“ am Fuß: die zwei bis drei verwandten Sammlungen (Relaunch ↔ erste Reihe, Feminist Press ↔ Virago), aus einem Feld `related` in `data/collections.json`, von Julian gesetzt — keine Automatik, die Unsinn verlinkt.
+**2. Die Sammlungen als Hub-Seiten (halber Tag, Claude; Texte Julian).**
+- `<title>` und `description` so, wie gesucht wird: Reihe, Zahl, Zeitraum, Gestalter („SF Masterworks: the 73 covers of the first run, 1999–2007“). Die Zahl ist die gezählte.
+- Ein paar Sätze eigener Text oben — die meisten Sammlungen haben ihn schon (`intro`); wo er fehlt, schreibt Julian ihn (Liste der Sammlungen ohne Intro aus `data/collections.json`).
+- Jede Buchseite eines Werks in einer Sammlung verlinkt zurück („In SF Masterworks, No. 12“) — 6.9, nur dieser Teil.
+- Strukturierte Daten `CollectionPage` mit `ItemList`.
+- „See also“ zu zwei, drei verwandten Sammlungen, aus einem Feld `related`, von Julian gesetzt.
 
-**2. Jahrzehnte-Seiten und Autorenseiten als Einstiege (halber Tag, Claude).**
-- Jahrzehnte-Seite: Titel „1984 by George Orwell: its covers by decade, 1949 to today“; `description` nennt die Jahrzehnte mit den meisten Covern. Die Seite existiert nur für Werke über der Schwelle (R6), das bleibt.
-- Autorenseite (`/?author=`): heute eine Suchansicht mit `noindex`? Prüfen. Wenn sie indexierbar werden soll, braucht sie eine eigene Adresse (`/author/<key>`), einen Titel („Books by Ursula K. Le Guin, by their covers“), ISR wie die Buchseite und einen Platz in der Sitemap — das ist 6.9 („Mehr von diesem Autor“) in anderer Form. Erst nach Schritt 0, weil es Seiten vervielfacht; Google straft dünne Seiten (best-practices-2026-09-12.md A2).
+**3. Bild-SEO für die Cover (2 h, Claude).**
+- Alt-Text jedes Covers auf Sammlungs- und Buchseiten: Titel, Verlag, Jahr, Gestalter wo gesichert („The Forever War, Millennium 1999, cover by Chris Moore“). Heute prüfen, was `alt` trägt.
+- Bildunterschrift mit dem Credit, wo er steht (Sammlungen haben `Cover: …` schon).
+- Bild-Sitemap für die Sammlungsseiten (`image:image` mit den Cover-URLs; fremde Domains sind erlaubt).
+- `ImageObject` mit `creditText` nur bei gesichertem Credit; **nie** `license` oder `acquireLicensePage` — die Seite hält keine Rechte.
 
-**3. Die Buchseite spricht die Sprache des Suchenden (6.2, halber Tag, Claude).**
-- `<title>` und `h1` aus der Ausgabe in der Sprache des Lesers, wenn es eine gibt (*The Master and Margarita* statt «Мастер и Маргарита»); der Katalogtitel bleibt als zweite Zeile und in den strukturierten Daten als `alternateName`. Ohne solche Ausgabe: Transkription als Rückfall (eine Stunde, Tabelle in `lib/`).
-- Dasselbe für den Autor und die Beschreibung; „More by“ ebenso.
-- Das ist zugleich U1 aus dem Usability-Durchgang; die Analytik-Regel 4 greift (die Signale lesen den `data-results`-Block, nicht den Titel — prüfen).
+**4. Die Sprachfrage (Julian entscheidet).**
+- (a) **Bewusst nur Englisch im Index** — so wie heute; nichts zu tun außer es in SPEC E23 festzuhalten. Die deutschen Leser kommen über Links und Teilen, nicht über die Suche.
+- (b) **`/de/…` öffentlich mit `hreflang`** — jede Seite hat eine deutsche Adresse, beide tragen `hreflang="en"`/`"de"` und `x-default`, das Cookie wählt nur noch, wohin der Sprachschalter führt; keine automatische Umleitung nach `Accept-Language`. Das ersetzt den Spiegelbaum nicht, sondern macht ihn sichtbar; Aufwand ein Tag, und die Sitemap verdoppelt sich (dann wieder Schritt 1 bedenken). Lohnt nur, wenn deutsche Suchen ein Ziel sind.
+- Empfehlung: (a) jetzt, (b) wenn deutsche Sammlungen (edition suhrkamp, Insel) Leser bringen sollen.
 
-**4. Interne Verlinkung (6.9, ein Tag, Claude, nach Schritt 0).** Von der Buchseite zur Sammlung, in der das Werk steht („In the collection SF Masterworks, No. 12“), zur Jahrzehnte-Seite (gibt es), zu „More by“ (gibt es). Von der Sammlung zur Buchseite (gibt es). Von der Startseite zu den Sammlungen (gibt es) — und die Frage aus K2, ob die Startseite mit Sammlungen führt, entscheidet Julian getrennt (6.108).
+**5. Anmelden und Indexquote ansehen (Julian, 20 min).**
+- Search Console (schon verifiziert?) und **Bing Webmaster Tools** (Import aus der Search Console geht in einem Schritt) — Sitemap einreichen.
+- In drei Wochen: Indexquote je Seitentyp (Sammlungen, Buchseiten, Jahrzehnte). Bleiben Sammlungen draußen, ist das ein Qualitätssignal für die ganze Seite.
 
-**5. Sitemap und Robots prüfen (eine Stunde).** Sammlungen, Jahrzehnte-Seiten, kuratierte Buchseiten mit `lastmod`; `/c/`, `/versus`, `/shelfportrait/<id>` bleiben `noindex`; Bilder: `image:image` in der Sitemap für die Sammlungs-OG-Bilder, damit die Bildersuche sie findet (die Bildersuche ist für „cover art“-Anfragen der Weg).
+**6. Crawler prüfen (1 h, Claude).**
+- `OAI-SearchBot`, `PerplexityBot`, `Claude-SearchBot` stehen heute in `BOUNDED_CRAWLERS` (nur kuratierte Buchseiten, 10 s Abstand) — für die *Such*-Crawler (anders als `GPTBot`, `CCBot`, die trainieren) ist das zu eng, wenn die Seite in KI-Antworten zitiert werden soll: Such-Bots bekommen die allgemeinen Regeln, Trainings-Bots bleiben begrenzt. Julian entscheidet, ob Training ganz gesperrt wird.
+- Prüfen (K14, `/admin/insights`), ob Bingbot oder OAI-SearchBot je eine Vercel-Challenge bekamen.
+
+**7. Erwähnt werden (Julian, laufend).** Je Sammlung eine Gemeinschaft oder ein Blog, wo sie Thema ist; Gestalter und Verlage auf ihre Wand hinweisen. Kein Linktausch, keine Verzeichnisse, kein llms.txt.
 
 ## 3. Was nicht gemacht wird
 
-- Keine Seiten je Schlagwort („red book covers“, 5.4b–e), keine Reihen-Vergleichsseiten ohne Kuratierung: dünne Seiten schaden.
-- Keine Texte, die Vollständigkeit behaupten.
-- Keine Keyword-Wiederholung in Beschreibungen; ein Satz, der die Frage beantwortet.
+Keine Schlagwort-Seiten, keine Autorenseiten mit eigener Adresse (vorerst — sie vervielfachen dünne Seiten), kein llms.txt, keine KI-Schema-Tricks, kein `license` an fremden Covern, kein Feinschliff an Core Web Vitals, keine Vollständigkeitsworte.
 
-## 4. Messen
+## 4. Julian entscheidet
 
-Search Console vor Schritt 1 (Stand), vier Wochen nach Schritt 3 (Eindrücke je Seitentyp, Klickrate der zehn häufigsten Anfragen). Die Zahlen gehen in docs/history.md; eine Änderung, die nach vier Wochen nichts bewegt hat, wird nicht erweitert.
-
-## 5. Julian entscheidet
-
-1. Schritt 0 selbst lesen oder Claude mit Zugang (`docs/prompt-search-console.md`)?
-2. Autorenseiten mit eigener Adresse (Schritt 2) — ja, aber erst nach den Zahlen?
-3. `related` je Sammlung: wer setzt die Verweise?
+1. Sprachfrage: (a) nur Englisch im Index, oder (b) `/de/` öffentlich mit `hreflang`?
+2. Such-Crawler der KI-Dienste auf die allgemeinen Regeln heben, Trainings-Crawler begrenzt lassen oder sperren?
+3. Bing Webmaster Tools anmelden?
+4. `related` je Sammlung und die fehlenden Intros: wann?
