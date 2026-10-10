@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimited } from '@/app/api/rate';
 import type { RateBucketName } from '@/lib/ratelimit';
-import { missingStoreMessage } from '@/lib/hotornot/store';
+import { missingStoreMessage } from '@/lib/redis';
 import { isVisitorId } from '@/lib/walls/model';
 import { VISITOR_COOKIE, VISITOR_MAX_AGE } from '@/lib/walls/owner';
 import { wallStoreFromEnv, type WallStore } from '@/lib/walls/store';

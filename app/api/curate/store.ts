@@ -1,5 +1,5 @@
 import type { NextResponse } from 'next/server';
-import { missingStoreMessage } from '@/lib/hotornot/store';
+import { missingStoreMessage } from '@/lib/redis';
 import { draftStoreFromEnv, isDraftId, type Draft, type DraftStore } from '@/lib/curate/drafts';
 import { json } from '../suggest/guard';
 

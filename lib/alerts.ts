@@ -17,7 +17,7 @@
  * memory of this instance has to do. Without a key nothing is sent and the
  * caller is told so (N12). A mail names numbers and settings, never a reader.
  */
-import { commandsFromEnv, type RedisCommands } from './hotornot/store';
+import { commandsFromEnv, type RedisCommands } from './redis';
 import { SITE_NAME } from './seo';
 
 export type AlertResult = 'sent' | 'already' | 'not-configured' | 'failed';

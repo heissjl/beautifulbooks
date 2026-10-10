@@ -4,7 +4,7 @@
  * days on which the operation stumbled. Server only.
  */
 import { buyLinksFor, isWordsProvider, searchLinksFor, titleSearchLinksFor } from '../buylinks';
-import type { RedisCommands } from '../hotornot/store';
+import type { RedisCommands } from '../redis';
 import { LOCAL_COUNTRIES, localShopLinks } from '../localshops';
 import type { Market } from '../market';
 import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeOps, type ClickSummary, type OpsSummary } from './model';

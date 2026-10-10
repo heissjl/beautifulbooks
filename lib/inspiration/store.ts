@@ -23,7 +23,7 @@
  * answer hands out the long form (`/shelfportrait/board?b=…`) instead of
  * failing.
  */
-import { commandsFromEnv, type RedisCommands } from '../hotornot/store';
+import { commandsFromEnv, type RedisCommands } from '../redis';
 import { type Board, boardQuery, filledCount, parseBoard } from './board';
 import { ID, shortId } from './shortid';
 

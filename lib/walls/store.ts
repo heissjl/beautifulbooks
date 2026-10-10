@@ -8,7 +8,7 @@
  * walls live in memory on `globalThis`, for the reason `lib/hotornot/store.ts`
  * gives: API routes and pages get separate copies of a module there.
  */
-import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
+import { commandsFromEnv, type RedisCommands } from '../redis';
 import { toPublic, UNSAVED_HOURS, type PublicWall, type Wall } from './model';
 import { pageOf, readerOrder } from './order';
 

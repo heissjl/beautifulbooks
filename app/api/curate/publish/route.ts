@@ -4,7 +4,7 @@ import { readBody } from '@/app/api/versus/guard';
 import { collectionRecords, nextOverrides } from '@/lib/collections';
 import { publishStoreFromEnv } from '@/lib/collections-live';
 import { applyContent } from '@/lib/collections';
-import { missingStoreMessage } from '@/lib/hotornot/store';
+import { missingStoreMessage } from '@/lib/redis';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { json } from '../../suggest/guard';
 import { measure } from '@/app/api/measure';

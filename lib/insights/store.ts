@@ -8,7 +8,7 @@
  * same Redis or none, and a test click from a preview would be a reader in
  * the totals (plan §4).
  */
-import { commandsFromEnv, type RedisCommands } from '../hotornot/store';
+import { commandsFromEnv, type RedisCommands } from '../redis';
 import { bookField, landingField, searchField, workField, type Signal } from './signals';
 import {
   clickField,

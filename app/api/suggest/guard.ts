@@ -3,7 +3,7 @@ import { rateLimited } from '@/app/api/rate';
 import type { RateBucketName } from '@/lib/ratelimit';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, SESSION_COOKIE, sessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { suggestStoreFromEnv, type SuggestStore } from '@/lib/suggest/store';
-import { missingStoreMessage } from '@/lib/hotornot/store';
+import { missingStoreMessage } from '@/lib/redis';
 
 /**
  * Who may use a suggestion route (ROADMAP 5.10a), each refusal said as

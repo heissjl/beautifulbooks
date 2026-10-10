@@ -13,7 +13,7 @@
  * name. No IP, no user agent, no session id (N11).
  */
 import { randomBytes } from 'node:crypto';
-import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
+import { commandsFromEnv, type RedisCommands } from '../redis';
 
 export interface Suggestion {
   id: string;

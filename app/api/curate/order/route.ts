@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { rateLimited } from '@/app/api/rate';
 import { readBody } from '@/app/api/versus/guard';
 import { liveRecords, publishStoreFromEnv } from '@/lib/collections-live';
-import { missingStoreMessage } from '@/lib/hotornot/store';
+import { missingStoreMessage } from '@/lib/redis';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { json } from '../../suggest/guard';
 import { measure } from '@/app/api/measure';

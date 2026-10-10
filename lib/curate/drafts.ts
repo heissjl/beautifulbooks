@@ -17,7 +17,7 @@
  * other's work.
  */
 import { randomBytes } from 'node:crypto';
-import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
+import { commandsFromEnv, type RedisCommands } from '../redis';
 import {
   addAuthor,
   removeAuthor,

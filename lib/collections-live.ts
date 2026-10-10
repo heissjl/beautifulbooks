@@ -8,7 +8,7 @@
  * what was last deployed, never an error page, and never a draft (N12).
  */
 import { cache } from 'react';
-import { commandsFromEnv, type RedisCommands } from '@/lib/hotornot/store';
+import { commandsFromEnv, type RedisCommands } from './redis';
 import {
   applyContent,
   applyOrder,
