@@ -142,10 +142,10 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
           </Section>
         )}
 
-        {/* Both sentences approved by Julian on 2026-10-10, as he approved them (ROADMAP 2.19); the cookie's name was taken out at his word. */}
+        {/* Both sentences approved by Julian on 2026-10-10, as he approved them (ROADMAP 2.19); the cookie's name was taken out at his word, and the report hash of 2.20 added with his „ok“. */}
         {wallsEnabled() && (
           <Section title={t('Your collections')}>
-            <p>{t('If you make a collection, your browser gets a cookie with a random ID, set only at that moment and kept for two years. It tells this site which collections this browser may change, nothing else; the site stores a one-way hash of the ID next to each collection, not the ID itself. If you only look, no cookie is set. Delete it and your collections stay online, but can be changed from this browser only after you paste your ID again.')}</p>
+            <p>{t('If you make a collection, your browser gets a cookie with a random ID, set only at that moment and kept for two years. The site uses it for two things only: to know which collections this browser may change, and to count a report from this browser once, however often it is pressed. The ID itself is never stored, only a one-way hash of it — next to each of your collections, and next to a collection you reported. If you only look, no cookie is set. Delete it and your collections stay online, but can be changed from this browser only after you paste your ID again.')}</p>
             {hasApiKey() && <p>{t('Your photo is sent once to Anthropic, a company in the United States, whose model reads the book titles on it. We send the picture and nothing else — no name, no cookie, no address — and we do not keep it: it is not stored on our side and does not appear in our logs. Anthropic processes it to answer and, under its API terms, does not use it to train its models.')}</p>}
           </Section>
         )}
