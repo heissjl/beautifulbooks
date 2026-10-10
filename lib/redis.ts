@@ -62,6 +62,18 @@ export interface RedisCommands {
    * seconds per instance (measured 2.18b). Optional, like hIncrBy.
    */
   hIncrByMany?(key: string, increments: ReadonlyArray<readonly [field: string, by: number]>, ttlSeconds: number): Promise<unknown>;
+  /**
+   * SCAN cursor MATCH pattern COUNT n → [next cursor, keys]; "0" when done. Only for Julian's list of Shelf-Portrait
+   * links (ROADMAP 5.18b, K17), never on a reader's request. Optional, like hIncrBy.
+   */
+  scan?(cursor: string, match: string, count: number): Promise<[string, string[]]>;
+}
+
+/** A SCAN answer as either transport delivers it: `[cursor, keys]` over REST, `{ cursor, keys }` from node-redis. */
+export function scanReply(reply: unknown): [string, string[]] {
+  const pair = Array.isArray(reply) ? reply : reply && typeof reply === 'object' ? [(reply as { cursor?: unknown }).cursor, (reply as { keys?: unknown }).keys] : [];
+  const keys = Array.isArray(pair[1]) ? pair[1].filter((k): k is string => typeof k === 'string') : [];
+  return [String(pair[0] ?? '0'), keys];
 }
 
 /** ARGV[1] is the expiry, then field and amount in turns. Returns how many fields it added to. */
@@ -138,6 +150,7 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     hSetNX: (key, field, value) => command(['HSETNX', key, field, value]),
     setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
     hIncrByMany: (key, increments, ttlSeconds) => command(['EVAL', HINCRBY_MANY_SCRIPT, 1, key, ...hIncrByManyArgs(increments, ttlSeconds)]),
+    scan: async (cursor, match, count) => scanReply(await command(['SCAN', cursor, 'MATCH', match, 'COUNT', count])),
   };
 }
 
@@ -209,6 +222,7 @@ export function redisCommands(url: string): RedisCommands {
     expire: (key, seconds) => run(client => client.expire(key, seconds)),
     hIncrByMany: (key, increments, ttlSeconds) =>
       run(client => client.eval(HINCRBY_MANY_SCRIPT, { keys: [key], arguments: hIncrByManyArgs(increments, ttlSeconds) })),
+    scan: async (cursor, match, count) => scanReply(await run(client => client.scan(cursor, { MATCH: match, COUNT: count }))),
   };
 }
 

@@ -13,6 +13,7 @@
  * and a time, not a person.
  */
 import {
+  scanReply,
   commandsFromEnv, hashEntries, HINCRBY_MANY_SCRIPT, missingStoreMessage, redisCommands, STORE_LOOKED_FOR, STORE_PREFIX,
   STORE_TIMEOUT_MS, storeConfig, StoreUnavailableError, upstashCommands, type RedisCommands, type StoreConfig,
 } from '../redis';
@@ -24,6 +25,7 @@ import {
   game's own tests and older imports keep working; new code imports lib/redis.
 */
 export {
+  scanReply,
   commandsFromEnv, HINCRBY_MANY_SCRIPT, missingStoreMessage, redisCommands, STORE_LOOKED_FOR, STORE_PREFIX,
   STORE_TIMEOUT_MS, storeConfig, StoreUnavailableError, upstashCommands, type RedisCommands, type StoreConfig,
 };

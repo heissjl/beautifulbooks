@@ -120,8 +120,8 @@ describe('summing up', () => {
 
   it('names the days the operation stumbled', () => {
     const ops = summarizeOps(days, [{ 'ol-failed': '2' }, { 'google-stop': 1 }]);
-    expect(ops.totals).toEqual({ 'google-stop': 1, 'ol-failed': 2 });
-    expect(ops.daysWith).toEqual({ 'google-stop': ['2026-10-04'], 'ol-failed': ['2026-10-03'] });
+    expect(ops.totals).toEqual({ 'google-stop': 1, 'ol-failed': 2, 'portrait-made': 0, 'portrait-mine': 0 });
+    expect(ops.daysWith).toEqual({ 'google-stop': ['2026-10-04'], 'ol-failed': ['2026-10-03'], 'portrait-made': [], 'portrait-mine': [] });
   });
 
   it('calls a rise from nothing new, not infinite', () => {

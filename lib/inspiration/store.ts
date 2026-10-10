@@ -41,8 +41,13 @@ export const LINK_CAP = 50_000;
 export class LinkStoreFull extends Error {}
 
 export interface LinkStore {
-  /** Returns the id; a board already stored is not written again. */
-  put(board: Board): Promise<string>;
+  /** Returns the id; a board already stored is not written again. `onNew` runs only when this call wrote it (K17). */
+  put(board: Board, onNew?: () => void): Promise<string>;
+  /**
+   * Julian's list of the links written (ROADMAP 5.18b, K17), newest first, at most `limit`; `count` is the store's
+   * own total. Null where the store cannot list (a store without SCAN). Never called on a reader's request.
+   */
+  list?(limit: number): Promise<LinkList | null>;
   /** Null when the id is not on record. Throws when the store does not answer (N12). */
   get(id: string): Promise<Board | null>;
 }
@@ -50,8 +55,14 @@ export interface LinkStore {
 /** A board as the store keeps it: its query string, which `parseBoard` reads back. */
 interface Stored { q: string; at: string }
 
+export interface LinkRow { id: string; at: string; board: Board }
+export interface LinkList { count: number; links: LinkRow[]; truncated: boolean }
+
 const key = (id: string) => `insp:link:${id}`;
-/** One hash, one field: how many links were written. Counted, never listed — a scan of the store would cost more than it tells. */
+/**
+ * One hash, one field: how many links were written. Listed only for Julian (`list`, a SCAN over the keys), never on a
+ * reader's request — a scan of the store would cost more than it tells a reader.
+ */
 const COUNT = 'insp:links';
 
 function read(raw: unknown): Board | null {
@@ -66,9 +77,9 @@ function read(raw: unknown): Board | null {
   }
 }
 
-export function commandsLinkStore(commands: Pick<RedisCommands, 'get' | 'set' | 'hIncrBy'>, now: () => Date = () => new Date(), cap: number = LINK_CAP): LinkStore {
+export function commandsLinkStore(commands: Pick<RedisCommands, 'get' | 'set' | 'hIncrBy' | 'scan'> & Partial<Pick<RedisCommands, 'hGetAll'>>, now: () => Date = () => new Date(), cap: number = LINK_CAP): LinkStore {
   return {
-    async put(board) {
+    async put(board, onNew) {
       if (filledCount(board) === 0) throw new Error('An empty board gets no link.');
       const id = shortId(board);
       // The id is the hash of the content, so two writers racing here write the same value.
@@ -79,8 +90,35 @@ export function commandsLinkStore(commands: Pick<RedisCommands, 'get' | 'set' | 
           throw new LinkStoreFull(`The link store holds its ${cap} links.`);
         }
         await commands.set(key(id), JSON.stringify({ q: boardQuery(board), at: now().toISOString().slice(0, 10) } satisfies Stored));
+        onNew?.();
       }
       return id;
+    },
+    async list(limit) {
+      if (!commands.scan) return null;
+      const ids: string[] = [];
+      let cursor = '0';
+      // A bound on the walk as well as on the answer: at most ten thousand keys looked at.
+      for (let rounds = 0; rounds < 20; rounds++) {
+        const [next, keys] = await commands.scan(cursor, key('*'), 500);
+        for (const k of keys) {
+          const id = k.slice(key('').length);
+          if (ID.test(id)) ids.push(id);
+        }
+        cursor = next;
+        if (cursor === '0') break;
+      }
+      const rows: LinkRow[] = [];
+      for (const id of ids) {
+        const raw = await commands.get(key(id));
+        const board = read(raw);
+        if (!board) continue;
+        const at = (JSON.parse(String(raw)) as Partial<Stored>).at;
+        rows.push({ id, at: typeof at === 'string' ? at : '', board });
+      }
+      rows.sort((a, b) => (a.at < b.at ? 1 : a.at > b.at ? -1 : a.id.localeCompare(b.id)));
+      const counted = commands.hGetAll ? Number(((await commands.hGetAll(COUNT)) as Record<string, unknown> | null)?.count ?? NaN) : NaN;
+      return { count: Number.isFinite(counted) ? counted : rows.length, links: rows.slice(0, limit), truncated: rows.length > limit || cursor !== '0' };
     },
     async get(id) {
       return ID.test(id) ? read(await commands.get(key(id))) : null;
@@ -95,6 +133,8 @@ export function memoryLinkStore(cap: number = LINK_CAP): LinkStore {
     get: async k => kept.get(k) ?? null,
     set: async (k, v) => { kept.set(k, v); return 'OK'; },
     hIncrBy: async (_k, _f, by) => (count += by),
+    hGetAll: async () => ({ count: String(count) }),
+    scan: async (_cursor, match) => ['0', [...kept.keys()].filter(k => k.startsWith(match.replace(/\*$/, '')))],
   }, undefined, cap);
 }
 
