@@ -120,6 +120,12 @@ export const RATE_RULES = {
    * needs one per format and board.
    */
   inspirationPoster: { capacity: 12, refillPerMinute: 6 },
+  /**
+   * A browser's CSP violation report (ROADMAP 2.12): a page with a broken
+   * rule sends one per blocked resource, so a reader needs a handful; a
+   * script feeding reports fills the log for nothing.
+   */
+  csp: { capacity: 20, refillPerMinute: 10 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

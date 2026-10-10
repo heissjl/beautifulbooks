@@ -78,7 +78,9 @@ export default function PrivacyPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         <Section title={t('Hosting')}>
           <p>
             {t('The site is served by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. When your browser requests a page, Vercel’s servers receive your IP address, the address of the page, the time, and what your browser says about itself. That is how any web server works; without it nothing could be sent back to you. Vercel keeps these request logs for one hour on the plan this site runs on. The server-side functions run in Frankfurt, but Vercel is a US company and data may be processed in the United States; Vercel is certified under the EU-US Data Privacy Framework, which the European Commission recognises as adequate protection. Legal basis: legitimate interest in running and securing the site (Art. 6(1)(f) GDPR).')}{' '}
-            {rich(t('Vercel’s own notice: {link}.'), { link: <a className={ext} href="https://vercel.com/legal/privacy-notice" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-notice</a> })}
+            {rich(t('Vercel’s own notice: {link}.'), { link: <a className={ext} href="https://vercel.com/legal/privacy-notice" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-notice</a> })}{' '}
+            {/* The CSP reports (ROADMAP 2.12): the browser sends them, the log keeps nothing about the reader. */}
+            {t('The pages also carry a security policy that tells your browser where scripts and images may come from. If something on a page breaks that rule, your browser reports it to this site; the report is reduced to the rule, the blocked address and the page’s path, without the search term and without anything about you, and lives in the same one-hour log.')}
           </p>
         </Section>
 

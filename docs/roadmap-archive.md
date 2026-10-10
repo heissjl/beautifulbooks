@@ -1179,3 +1179,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.87 Open Librarys robots.txt sperrt `/search` — auch `search.json`?** — **Julian entscheidet.** (Befund eines Agenten, 2026-09-30, selbst nachgesehen.) `https://openlibrary.org/robots.txt` hat unter `User-agent: *` die Zeile `Disallow: /search`; als Präfix trifft sie auch `/search.json`. Das nutzen die Suche der Website (`lib/sources/openlibrary.ts`) und die Lab-Werkzeuge (`from-openlibrary.ts`, die Listen-Agenten). Dagegen steht, dass Open Library `search.json` als öffentliche API dokumentiert und zur Nutzung einlädt (openlibrary.org/dev/docs/api/search); robots.txt richtet sich an Crawler. Zu klären: bei Open Library nachfragen oder die Nutzung so lassen, und ob die Lab-Agenten künftig ohne `search.json` auskommen sollen (ISBN- und Werk-Abfragen sind nicht betroffen).
 
 **Erledigt 2026-10-09.** → [Historie](history.md)
+
+## 2.12
+
+**2.12 Antwort-Header und `security.txt`.** (Sicherheits-Durchsicht 2026-10-02, §3.) Die Produktion schickt außer `strict-transport-security` keinen Sicherheits-Header. In `next.config.ts`: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `frame-ancestors 'none'`, eine `Permissions-Policy`, und eine `Content-Security-Policy` **zuerst als Report-Only**, weil Next eigene Inline-Skripte schreibt und Vercels Analytics dazukommt. Dazu `/.well-known/security.txt` mit der Adresse aus dem Impressum. Claude, halber Tag.
+
+**Erledigt 2026-10-09.** → [Historie](history.md)

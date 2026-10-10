@@ -129,7 +129,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Rate-Limit je IP und Route, gemeinsamer Eimer `google`, Eimer `img` (800 Stoß, 400 je Minute) | 2026-09-07 / 09-10 | N10 | PLAN-B B2, 1.3, 6.25 | `lib/ratelimit.ts`, `app/api/rate.ts` |
 | Timeouts je Quelle (Suche 12 s, Ausgaben 12 s, Google 5 s); Seite 0 und Folgeseiten mit einem zweiten Versuch | 2026-09-06 / 09-09 | F3.3 | 1.10, 5.4a | `lib/sources/http.ts`, `OL_TIMEOUTS`, `fetchPageWithRetry` |
 | Keine Kennung des Lesers: kein Konto, kein Tracking-Cookie; localStorage nur für Suchen und Markt | 2026-09-06 | N11, E14 | — | — |
-| Gebauter Cover-Index (500 Werke, 35.351 Cover, 2.618 KB seit 2026-09-26; Signaturen, Farbmaße) als Datei im Repo; Obergrenze 10 MB, testgeprüft | 2026-09-08 / 09-26 | §2.5, E18 | 6.10, 5.1 | `scripts/build-cover-index.ts`, `lib/coverindex.ts`, `lib/__tests__/coverindex.test.ts` |
+| Sicherheits-Header auf jeder Antwort (`nosniff`, Referrer nur die Domain, keine Frames, Kamera/Mikro/Ortung aus) und eine Content-Security-Policy im Meldemodus mit `/api/csp`; `/.well-known/security.txt` | 2026-10-09 | — | 2.12 | `lib/securityheaders.ts`, `lib/cspreport.ts`, `app/api/csp/route.ts` || Gebauter Cover-Index (500 Werke, 35.351 Cover, 2.618 KB seit 2026-09-26; Signaturen, Farbmaße) als Datei im Repo; Obergrenze 10 MB, testgeprüft | 2026-09-08 / 09-26 | §2.5, E18 | 6.10, 5.1 | `scripts/build-cover-index.ts`, `lib/coverindex.ts`, `lib/__tests__/coverindex.test.ts` |
 
 ## Werkzeuge neben der Seite
 

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { securityHeaders } from "./lib/securityheaders";
 
 const nextConfig: NextConfig = {
   // lab/visitcost (ROADMAP 2.18b) builds into a directory of its own, so its fake catalogue never mixes with a real build.
@@ -28,6 +29,10 @@ const nextConfig: NextConfig = {
     "/api/inspiration/poster": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
     "/shelfportrait/card.jpg": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
     "/shelfportrait/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
+  },
+  // What the browser may not do with the site (ROADMAP 2.12, lib/securityheaders.ts): on every route.
+  async headers() {
+    return [{ source: "/:path*", headers: securityHeaders({ dev: process.env.NODE_ENV !== "production" }) }];
   },
   async redirects() {
     return [
