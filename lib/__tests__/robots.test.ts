@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import decadePages from '../../data/decade-pages.json';
 import { PUBLISHED_WORKS } from '../published';
-import { BOUNDED_CRAWLERS, CRAWL_DELAY, mayFetch, robotsRules } from '../robots';
+import { BOUNDED_CRAWLERS, CRAWL_DELAY, mayFetch, robotsRules, SEARCH_CRAWLERS, TRAINING_CRAWLERS } from '../robots';
 
 const published = PUBLISHED_WORKS.map(work => work.id);
 const decades = decadePages.pages.map(page => page.id);
@@ -23,7 +23,7 @@ describe('what crawlers may fetch (ROADMAP 2.18n)', () => {
   });
 
   it('gives them no cover page, no address with a query and no image', () => {
-    const bot = 'ClaudeBot';
+    const bot = 'AhrefsBot';
     expect(mayFetch(rules, bot, `/book/${known}/cover/ol:123`)).toBe(false);
     expect(mayFetch(rules, bot, `/book/${known}?cover=ol%3A123`)).toBe(false);
     expect(mayFetch(rules, bot, '/?author=Philip%20K.%20Dick&key=OL1A')).toBe(false);
@@ -35,13 +35,13 @@ describe('what crawlers may fetch (ROADMAP 2.18n)', () => {
 
   it('leaves them the pages that are files or few', () => {
     for (const path of ['/', '/about', '/collections', '/collections/sf-masterworks', '/versus', '/sitemap.xml']) {
-      expect(mayFetch(rules, 'ClaudeBot', path)).toBe(true);
+      expect(mayFetch(rules, 'AhrefsBot', path)).toBe(true);
     }
   });
 
   it('matches a crawler by name whatever its case, and asks it to wait', () => {
-    expect(mayFetch(rules, 'claudebot', `/book/${unlisted}`)).toBe(false);
-    const bounded = rules.find(rule => Array.isArray(rule.userAgent));
+    expect(mayFetch(rules, 'ahrefsbot', `/book/${unlisted}`)).toBe(false);
+    const bounded = rules.find(rule => Array.isArray(rule.userAgent) && rule.userAgent.includes('AhrefsBot'));
     expect(bounded?.crawlDelay).toBe(CRAWL_DELAY);
   });
 
@@ -62,15 +62,41 @@ describe('what crawlers may fetch (ROADMAP 2.18n)', () => {
     for (const agent of ['Twitterbot', 'facebookexternalhit', 'LinkedInBot', 'Slackbot']) {
       expect(mayFetch(rules, agent, card)).toBe(true);
     }
-    expect(mayFetch(rules, 'ClaudeBot', card)).toBe(false);
+    expect(mayFetch(rules, 'AhrefsBot', card)).toBe(false);
     // Where the shared page now points: outside /api/, open under `Allow: /`.
     expect(mayFetch(rules, 'Twitterbot', '/shelfportrait/card.jpg?b=2hxjo.5fq3&n=6&format=card&v=3')).toBe(true);
   });
 
   it('allows exactly the book addresses the sitemap lists', () => {
-    const bounded = rules.find(rule => Array.isArray(rule.userAgent));
+    const bounded = rules.find(rule => Array.isArray(rule.userAgent) && rule.userAgent.includes('AhrefsBot'));
     const allow = Array.isArray(bounded?.allow) ? bounded.allow : [];
     expect(allow.length).toBe(published.length + decades.length);
     expect(new Set(allow).size).toBe(allow.length);
+  });
+
+  it('lets the AI search crawlers in like a search engine, with a pause (Julian, 2026-10-10: „mach c“)', () => {
+    for (const bot of SEARCH_CRAWLERS) {
+      expect(mayFetch(rules, bot, `/book/${unlisted}`)).toBe(true);
+      expect(mayFetch(rules, bot, '/collections/sf-masterworks')).toBe(true);
+      expect(mayFetch(rules, bot, '/api/works/OL1W')).toBe(false);
+      expect(mayFetch(rules, bot, '/admin/insights')).toBe(false);
+    }
+    const group = rules.find(rule => Array.isArray(rule.userAgent) && rule.userAgent.includes('OAI-SearchBot'));
+    expect(group?.crawlDelay).toBe(CRAWL_DELAY);
+  });
+
+  it('shuts the training crawlers out of everything', () => {
+    for (const bot of TRAINING_CRAWLERS) {
+      for (const path of ['/', '/about', '/collections/sf-masterworks', `/book/${known}`, '/sitemap.xml']) {
+        expect(mayFetch(rules, bot, path)).toBe(false);
+      }
+    }
+    // Googlebot is not Google-Extended: search stays open.
+    expect(mayFetch(rules, 'Googlebot', '/collections/sf-masterworks')).toBe(true);
+  });
+
+  it('puts no crawler in two groups', () => {
+    const all = [...SEARCH_CRAWLERS, ...TRAINING_CRAWLERS, ...BOUNDED_CRAWLERS].map(b => b.toLowerCase());
+    expect(new Set(all).size).toBe(all.length);
   });
 });

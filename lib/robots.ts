@@ -9,20 +9,35 @@
  * catalogue requests from the site's address, which Open Library answers by
  * closing the door.
  *
- * So the crawlers named here get the pages the sitemap lists and nothing
- * beyond: each published work and its decade page by exact address, no
- * address with a query (a search is a question, and `?cover=` is the same
- * book again), no image proxy. Search engines' own crawlers and the fetchers
- * that read one page because a person asked (Claude-User, ChatGPT-User) are
- * not on the list and keep the general rules — K14 in /admin/insights shows
+ * **Three groups since 2026-10-10** (Julian: „mach c“, red team / SEO research):
+ *
+ * - **AI search crawlers** (`SEARCH_CRAWLERS`) — what ChatGPT search,
+ *   Perplexity and Claude cite from. They get the general rules, like
+ *   Googlebot and bingbot, so the site can be found in their answers; only a
+ *   crawl delay stays, because their walk through "More by …" reaches the
+ *   same endless book space that ClaudeBot rendered.
+ * - **Training crawlers** (`TRAINING_CRAWLERS`) — collect text to train
+ *   models and bring no reader. Shut out entirely: the curation is Julian's
+ *   work and not training material. `Google-Extended` and `Applebot-Extended`
+ *   are the tokens by which Google and Apple ask about training; naming them
+ *   changes nothing for their search crawlers.
+ * - **Tool crawlers** (`BOUNDED_CRAWLERS`: SEO and link indexes) — keep the
+ *   bounded rules: the published works and their decade pages by exact
+ *   address, no query, no image proxy.
+ *
+ * Search engines' own crawlers and the fetchers that read one page because a
+ * person asked (Claude-User, ChatGPT-User, Perplexity-User) are on none of
+ * the lists and keep the general rules — K14 in /admin/insights shows
  * whether that holds.
  */
-export const BOUNDED_CRAWLERS = [
-  'ClaudeBot', 'Claude-SearchBot', 'anthropic-ai',
-  'GPTBot', 'OAI-SearchBot',
-  'CCBot', 'Bytespider', 'Amazonbot', 'Meta-ExternalAgent', 'PerplexityBot',
-  'MJ12bot', 'AhrefsBot', 'SemrushBot', 'DotBot', 'PetalBot', 'DataForSeoBot',
+export const SEARCH_CRAWLERS = ['OAI-SearchBot', 'PerplexityBot', 'Claude-SearchBot'] as const;
+
+export const TRAINING_CRAWLERS = [
+  'GPTBot', 'ClaudeBot', 'anthropic-ai', 'CCBot', 'Bytespider', 'Amazonbot', 'Meta-ExternalAgent',
+  'Google-Extended', 'Applebot-Extended',
 ] as const;
+
+export const BOUNDED_CRAWLERS = ['MJ12bot', 'AhrefsBot', 'SemrushBot', 'DotBot', 'PetalBot', 'DataForSeoBot'] as const;
 
 /** Seconds between two requests, for the crawlers that honour it. */
 export const CRAWL_DELAY = 10;
@@ -50,6 +65,9 @@ export interface RobotsRule {
 export function robotsRules(publishedWorkIds: readonly string[], decadeWorkIds: readonly string[]): RobotsRule[] {
   return [
     { userAgent: '*', allow: ['/', ...CARD_IMAGES], disallow: CLOSED_TO_ALL },
+    // The general rules, and a pause between requests (see above).
+    { userAgent: [...SEARCH_CRAWLERS], allow: '/', disallow: CLOSED_TO_ALL, crawlDelay: CRAWL_DELAY },
+    { userAgent: [...TRAINING_CRAWLERS], disallow: '/' },
     {
       userAgent: [...BOUNDED_CRAWLERS],
       // `$` ends the address: the book itself, not its covers' pages and not a query.
