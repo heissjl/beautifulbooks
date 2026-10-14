@@ -479,6 +479,16 @@ export const de: Readonly<Record<string, string>> = {
   'privacy notice': 'Datenschutzerklärung',
   'Legal notice': 'Anbieterkennzeichnung',
   'Imprint & contact': 'Impressum',
+  // The mockup of the invitation cards (6.109, dev only).
+  'Ways into the site': 'Wege in die Seite',
+  'Shelf-Portrait': 'Shelf-Portrait',
+  'Which cover is prettier?': 'Welches Cover ist schöner?',
+  'Help us find the prettiest cover of all time — two covers, one tap.': 'Hilf mit, das schönste Cover aller Zeiten zu küren — zwei Cover, ein Tipp.',
+  'Your own collection': 'Deine eigene Sammlung',
+  'Gather the covers you love on one wall, and keep the link.': 'Sammle die Cover, die du liebst, auf einer Wand — und behalte den Link.',
+  'Nine books that shaped you, in the covers you choose — one picture to share.': 'Neun Bücher, die dich geprägt haben, in den Covern deiner Wahl — ein Bild zum Teilen.',
+  'or': 'oder',
+
   'Reports come from browsers that have made a collection here. You can also write to us through Imprint & contact.': 'Melden kann ein Browser, der hier eine Sammlung angelegt hat. Du kannst uns auch über das Impressum schreiben.',
   'The pages also carry a security policy that tells your browser where scripts and images may come from. If something on a page breaks that rule, your browser reports it to this site; the report is reduced to the rule, the blocked address and the page’s path, without the search term and without anything about you, and lives in the same one-hour log.': 'Die Seiten tragen außerdem eine Sicherheitsrichtlinie, die deinem Browser sagt, woher Skripte und Bilder kommen dürfen. Verstößt etwas auf einer Seite dagegen, meldet dein Browser das an diese Seite; die Meldung wird auf die Regel, die blockierte Adresse und den Pfad der Seite gekürzt, ohne den Suchbegriff und ohne etwas über dich, und liegt im selben Protokoll, das eine Stunde hält.',
   'Responsible for this site': 'Verantwortlich für diese Seite',

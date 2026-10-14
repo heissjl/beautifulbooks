@@ -54,6 +54,8 @@ export default function SiteHeader({ left, right, search }: SiteHeaderProps) {
           <nav aria-label={t('Site')} className="hidden items-center gap-5 pr-2 text-sm text-ink-2 sm:flex">
             <Link href="/collections" className="transition-colors hover:text-ink">{t('Collections')}</Link>
             <Link href="/versus" className="transition-colors hover:text-ink">{t('Game')}</Link>
+            {/* The Shelf-Portrait beside them (Julian, 2026-10-14: „in der top-leiste noch einen Link auf das shelfportrait“); on in production since 2026-10-05. */}
+            <Link href="/shelfportrait" className="transition-colors hover:text-ink">{t('Shelf-Portrait')}</Link>
           </nav>
           {search}
           {/* The language switch (6.85), last on the right except for a page's own button. */}

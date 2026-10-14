@@ -6,6 +6,7 @@ import HomeSearchBar from '@/components/HomeSearchBar';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import CollectionsShelf from '@/components/CollectionsShelf';
+import HomeInviteCards from '@/components/HomeInviteCards';
 import WallsInvite from '@/components/WallsInvite';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { wallsEnabled } from '@/lib/walls/switch';
@@ -69,6 +70,8 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
   const authorKey = first(params.key);
   const exact = first(params.exact) === '1';
   const isHero = !searchQuery && !authorName && !authorKey;
+  // The mockup of 6.109: the three invitations as cards with pictures, under `next dev` only, with /?invites=cards.
+  const inviteCards = process.env.NODE_ENV !== 'production' && first(params.invites) === 'cards';
   // Published collections only in production; drafts show under `next dev` (SPEC F8).
   const collections = isHero ? await liveCollections() : [];
   // A collection ring on the hero only for what is published on the site now,
@@ -124,7 +127,10 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                   collection (5.13b, behind its switch). A third since 5.18b,
                   behind its switch too: three lines on a phone.
                 */}
-                {isHero && (
+                {isHero && inviteCards && (
+                  <HomeInviteCards collections={collections} walls={wallsEnabled()} portrait={inspirationEnabled()} locale={locale} />
+                )}
+                {isHero && !inviteCards && (
                   <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
                     <Link
                       href="/versus"
