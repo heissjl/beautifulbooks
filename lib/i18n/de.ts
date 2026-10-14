@@ -481,6 +481,7 @@ export const de: Readonly<Record<string, string>> = {
   'Imprint & contact': 'Impressum',
   // The mockup of the invitation cards (6.109, dev only).
   'Ways into the site': 'Wege in die Seite',
+  'More to do here': 'Was es hier noch gibt',
   'Shelf-Portrait': 'Shelf-Portrait',
   'Which cover is prettier?': 'Welches Cover ist schöner?',
   'Help us find the prettiest cover of all time — two covers, one tap.': 'Hilf mit, das schönste Cover aller Zeiten zu küren — zwei Cover, ein Tipp.',

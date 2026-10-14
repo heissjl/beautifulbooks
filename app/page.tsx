@@ -70,8 +70,11 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
   const authorKey = first(params.key);
   const exact = first(params.exact) === '1';
   const isHero = !searchQuery && !authorName && !authorKey;
-  // The mockup of 6.109: the three invitations as cards with pictures, under `next dev` only, with /?invites=cards.
-  const inviteCards = process.env.NODE_ENV !== 'production' && first(params.invites) === 'cards';
+  // The mockup of 6.109, under `next dev` only: /?invites=cards puts the cards under the field instead of
+  // the three links; /?invites=bottom keeps the links and adds the cards at the end of the page.
+  const invites = process.env.NODE_ENV !== 'production' ? first(params.invites) : undefined;
+  const inviteCards = invites === 'cards';
+  const inviteBottom = invites === 'bottom';
   // Published collections only in production; drafts show under `next dev` (SPEC F8).
   const collections = isHero ? await liveCollections() : [];
   // A collection ring on the hero only for what is published on the site now,
@@ -174,6 +177,12 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
             wanted it at the bottom, with covers.
           */}
           <CollectionsShelf collections={collections} locale={locale} />
+          {isHero && inviteBottom && (
+            <section aria-labelledby="more-heading" className="mt-16 sm:mt-20">
+              <h2 id="more-heading" className="mb-5 text-2xl text-ink">{t('More to do here')}</h2>
+              <HomeInviteCards collections={collections} walls={wallsEnabled()} portrait={inspirationEnabled()} locale={locale} className="mt-0" />
+            </section>
+          )}
         </section>
       </main>
 

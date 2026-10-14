@@ -12,7 +12,8 @@ import { translator } from '@/lib/i18n/server';
  * invitations under the search field as cards with a small picture of what
  * waits behind each: two covers facing off, a fan of a collection, a board of
  * nine. Shown only under `next dev` with `/?invites=cards`; the site keeps the
- * three text links until Julian decides.
+ * three text links until Julian decides. `/?invites=bottom` tries them at the
+ * end of the page instead, under the collections, with the links kept up top.
  *
  * A server component, like CollectionsShelf: the covers come from the
  * collections the home page already loaded, so nothing is fetched for them
@@ -23,6 +24,8 @@ interface Props {
   walls: boolean;
   portrait: boolean;
   locale?: Locale;
+  /** Spacing from outside: under the field it keeps its gap, at the end of the page its section sets it. */
+  className?: string;
 }
 
 function Thumb({ w, className = '' }: { w: WallWork; className?: string }) {
@@ -39,7 +42,7 @@ function firstOfEach(collections: Collection[], n: number, skip = 0): WallWork[]
   return collections.slice(skip).map(c => c.works[0]).filter((w): w is WallWork => !!w && (!!w.image || w.coverId > 0)).slice(0, n);
 }
 
-export default function HomeInviteCards({ collections, walls, portrait, locale = DEFAULT_LOCALE }: Props) {
+export default function HomeInviteCards({ collections, walls, portrait, locale = DEFAULT_LOCALE, className = 'mt-6' }: Props) {
   const t = translator(locale);
   const pictorial = collections.find(c => c.slug === 'sf-masterworks') ?? collections[0];
   // Two covers from collections far apart in the order, so they do not look like one series.
@@ -53,7 +56,7 @@ export default function HomeInviteCards({ collections, walls, portrait, locale =
   const line = 'mt-1 text-sm leading-snug text-ink-2';
 
   return (
-    <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4" aria-label={t('Ways into the site')}>
+    <ul className={`${className} grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4`} aria-label={t('Ways into the site')}>
       <li>
         <Link href="/versus" className={card}>
           <div className={picture} aria-hidden="true">
