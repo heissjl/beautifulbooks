@@ -9,35 +9,45 @@
  * catalogue requests from the site's address, which Open Library answers by
  * closing the door.
  *
- * **Three groups since 2026-10-10** (Julian: „mach c“, red team / SEO research):
+ * **Two named groups since 2026-10-14** (Julian, 2026-10-10: „mach c“; and
+ * 2026-10-14, after a day of SERankingBacklinksBot rendering 2,044 book pages:
+ * „ja, setz um“):
  *
- * - **AI search crawlers** (`SEARCH_CRAWLERS`) — what ChatGPT search,
- *   Perplexity and Claude cite from. They get the general rules, like
+ * - **Search crawlers** (`SEARCH_CRAWLERS`) — what AI search and answer
+ *   services cite from: ChatGPT search, Perplexity, Claude, and Amazon's,
+ *   Meta's and Keenable's indexers. They get the general rules, like
  *   Googlebot and bingbot, so the site can be found in their answers; only a
  *   crawl delay stays, because their walk through "More by …" reaches the
- *   same endless book space that ClaudeBot rendered.
- * - **Training crawlers** (`TRAINING_CRAWLERS`) — collect text to train
- *   models and bring no reader. Shut out entirely: the curation is Julian's
- *   work and not training material. `Google-Extended` and `Applebot-Extended`
- *   are the tokens by which Google and Apple ask about training; naming them
- *   changes nothing for their search crawlers.
- * - **Tool crawlers** (`BOUNDED_CRAWLERS`: SEO and link indexes) — keep the
- *   bounded rules: the published works and their decade pages by exact
- *   address, no query, no image proxy.
+ *   same endless book space ClaudeBot rendered (Amzn-SearchBot: 5,955 book
+ *   pages in the week to 2026-10-14).
+ * - **Shut out** (`TRAINING_CRAWLERS`, `TOOL_CRAWLERS`) — crawlers that train
+ *   models, and SEO and backlink tools that build databases for their paying
+ *   customers. Neither brings a reader. `Google-Extended` and
+ *   `Applebot-Extended` are the tokens by which Google and Apple ask about
+ *   training; naming them changes nothing for their search crawlers.
+ *
+ * Until 2026-10-14 the tools were *bounded* (only the published works' pages)
+ * instead of shut out; that group is gone.
  *
  * Search engines' own crawlers and the fetchers that read one page because a
  * person asked (Claude-User, ChatGPT-User, Perplexity-User) are on none of
  * the lists and keep the general rules — K14 in /admin/insights shows
- * whether that holds.
+ * whether that holds. A crawler that ignores robots.txt is not stopped by it;
+ * that is the firewall's job (ROADMAP 2.4).
  */
-export const SEARCH_CRAWLERS = ['OAI-SearchBot', 'PerplexityBot', 'Claude-SearchBot'] as const;
+export const SEARCH_CRAWLERS = [
+  'OAI-SearchBot', 'PerplexityBot', 'Claude-SearchBot',
+  'Amzn-SearchBot', 'meta-webindexer', 'KeenableBot',
+] as const;
 
 export const TRAINING_CRAWLERS = [
   'GPTBot', 'ClaudeBot', 'anthropic-ai', 'CCBot', 'Bytespider', 'Amazonbot', 'Meta-ExternalAgent',
-  'Google-Extended', 'Applebot-Extended',
+  'Google-Extended', 'Applebot-Extended', 'Reflectionbot',
 ] as const;
 
-export const BOUNDED_CRAWLERS = ['MJ12bot', 'AhrefsBot', 'SemrushBot', 'DotBot', 'PetalBot', 'DataForSeoBot'] as const;
+export const TOOL_CRAWLERS = [
+  'SERankingBacklinksBot', 'AhrefsBot', 'SemrushBot', 'MJ12bot', 'DotBot', 'PetalBot', 'DataForSeoBot',
+] as const;
 
 /** Seconds between two requests, for the crawlers that honour it. */
 export const CRAWL_DELAY = 10;
@@ -62,19 +72,12 @@ export interface RobotsRule {
   crawlDelay?: number;
 }
 
-export function robotsRules(publishedWorkIds: readonly string[], decadeWorkIds: readonly string[]): RobotsRule[] {
+export function robotsRules(): RobotsRule[] {
   return [
     { userAgent: '*', allow: ['/', ...CARD_IMAGES], disallow: CLOSED_TO_ALL },
     // The general rules, and a pause between requests (see above).
     { userAgent: [...SEARCH_CRAWLERS], allow: '/', disallow: CLOSED_TO_ALL, crawlDelay: CRAWL_DELAY },
-    { userAgent: [...TRAINING_CRAWLERS], disallow: '/' },
-    {
-      userAgent: [...BOUNDED_CRAWLERS],
-      // `$` ends the address: the book itself, not its covers' pages and not a query.
-      allow: [...publishedWorkIds.map(id => `/book/${id}$`), ...decadeWorkIds.map(id => `/book/${id}/decades$`)],
-      disallow: [...CLOSED_TO_ALL, '/book/', '/img/', '/c/', '/*?'],
-      crawlDelay: CRAWL_DELAY,
-    },
+    { userAgent: [...TRAINING_CRAWLERS, ...TOOL_CRAWLERS], disallow: '/' },
   ];
 }
 
