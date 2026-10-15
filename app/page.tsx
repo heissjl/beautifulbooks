@@ -70,11 +70,6 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
   const authorKey = first(params.key);
   const exact = first(params.exact) === '1';
   const isHero = !searchQuery && !authorName && !authorKey;
-  // The mockup of 6.109, under `next dev` only: /?invites=cards puts the cards under the field instead of
-  // the three links; /?invites=bottom keeps the links and adds the cards at the end of the page.
-  const invites = process.env.NODE_ENV !== 'production' ? first(params.invites) : undefined;
-  const inviteCards = invites === 'cards';
-  const inviteBottom = invites === 'bottom';
   // Published collections only in production; drafts show under `next dev` (SPEC F8).
   const collections = isHero ? await liveCollections() : [];
   // A collection ring on the hero only for what is published on the site now,
@@ -130,10 +125,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
                   collection (5.13b, behind its switch). A third since 5.18b,
                   behind its switch too: three lines on a phone.
                 */}
-                {isHero && inviteCards && (
-                  <HomeInviteCards collections={collections} walls={wallsEnabled()} portrait={inspirationEnabled()} locale={locale} />
-                )}
-                {isHero && !inviteCards && (
+                {isHero && (
                   <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
                     <Link
                       href="/versus"
@@ -177,10 +169,14 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
             wanted it at the bottom, with covers.
           */}
           <CollectionsShelf collections={collections} locale={locale} />
-          {isHero && inviteBottom && (
+          {/*
+            The three ways in beyond the search, as cards with pictures, at the end of the page
+            (ROADMAP 6.109; Julian, 2026-10-14: „links oben, karten unten“). The links under the field stay.
+          */}
+          {isHero && (
             <section aria-labelledby="more-heading" className="mt-16 sm:mt-20">
-              <h2 id="more-heading" className="mb-5 text-2xl text-ink">{t('More to do here')}</h2>
-              <HomeInviteCards collections={collections} walls={wallsEnabled()} portrait={inspirationEnabled()} locale={locale} className="mt-0" />
+              <h2 id="more-heading" className="mb-5 text-2xl text-ink">{t('Not looking for one book?')}</h2>
+              <HomeInviteCards walls={wallsEnabled()} portrait={inspirationEnabled()} locale={locale} />
             </section>
           )}
         </section>

@@ -81,6 +81,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 |---|---|---|---|---|
 | Zurück-Link oben links mit einem Zeichen auf Buch-, Jahrzehnte- und Sammlungsseite; das Ziel bleibt je Seite verschieden | 2026-10-09 | F6 | 6.64 | `components/BackLink.tsx` |
 | `/` setzt den Cursor ins Suchfeld, auf jeder Seite, außer beim Tippen in einem Feld | 2026-10-09 | F6 | 6.68 | `components/useSlashToSearch.ts` |
+| Startseite: am Ende drei Karten mit Vorschau (Spiel, eigene Sammlung, Shelf-Portrait) unter „Not looking for one book?“ | 2026-10-15 | F6 | 6.109 | `components/HomeInviteCards.tsx` |
 | Kopfzeile: „Collections“, „Game“ und (seit 2026-10-14) „Shelf-Portrait“ als Links auf jeder Seite ab 640 px, davor Wortmarke, danach Suchfeld und Sprachwahl | 2026-10-03 | F6 | 6.88 | `components/SiteHeader.tsx` |
 | Zurück zur Wand: die Buchseite nennt oben links die Sammlung, aus der sie geöffnet wurde, und führt auf die angeklickte Kachel zurück | 2026-10-03 | F2.7 | 6.89 | `components/cameFrom.ts`, `components/BookDetail.tsx`, `components/CoverWall.tsx` |
 | Die Seite auf Deutsch: Knopf „Deutsch“ / „English“ oben rechts auf jeder Seite, Cookie `locale`, Adressen unverändert (`proxy.ts` → `app/de/`); seit dem 2026-10-04 ist die ganze Oberfläche übersetzt (839 Sätze: auch About, Impressum, Datenschutz, Spiel, eigene Sammlung, `/curate`, `/suggest`); Metadaten, Daten und API-Fehlersätze bleiben englisch | 2026-10-02 | §2.6, E23 | 6.85 | `lib/i18n/`, `components/i18n.tsx`, `components/LocaleSwitcher.tsx`, `proxy.ts`, `app/de/`, `lib/__tests__/i18n.test.ts` |

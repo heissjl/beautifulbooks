@@ -479,15 +479,15 @@ export const de: Readonly<Record<string, string>> = {
   'privacy notice': 'Datenschutzerklärung',
   'Legal notice': 'Anbieterkennzeichnung',
   'Imprint & contact': 'Impressum',
-  // The mockup of the invitation cards (6.109, dev only).
+  // The invitation cards at the end of the home page (6.109).
+  'Not looking for one book?': 'Gerade kein bestimmtes Buch im Kopf?',
   'Ways into the site': 'Wege in die Seite',
-  'More to do here': 'Was es hier noch gibt',
   'Shelf-Portrait': 'Shelf-Portrait',
-  'Which cover is prettier?': 'Welches Cover ist schöner?',
-  'Help us find the prettiest cover of all time — two covers, one tap.': 'Hilf mit, das schönste Cover aller Zeiten zu küren — zwei Cover, ein Tipp.',
-  'Your own collection': 'Deine eigene Sammlung',
-  'Gather the covers you love on one wall, and keep the link.': 'Sammle die Cover, die du liebst, auf einer Wand — und behalte den Link.',
-  'Nine books that shaped you, in the covers you choose — one picture to share.': 'Neun Bücher, die dich geprägt haben, in den Covern deiner Wahl — ein Bild zum Teilen.',
+  'This cover or that one?': 'Dieses Cover oder das?',
+  'Two covers, one tap. Your picks add up to a ranking of the prettiest covers.': 'Zwei Cover, ein Tipp. Aus deinen Entscheidungen entsteht die Rangliste der schönsten Cover.',
+  'Build a wall of covers': 'Bau dir eine Wand aus Covern',
+  'Pick the editions you love — from a book, a photo of your shelf or your Goodreads list — and keep the wall under its own link.': 'Wähl die Ausgaben, die du liebst — aus einem Buch, einem Foto deines Regals oder deiner Goodreads-Liste — und behalte die Wand unter ihrem eigenen Link.',
+  'Nine books that made you, each in the cover you love — one picture to post.': 'Neun Bücher, die dich geprägt haben, jedes im Cover deiner Wahl — ein Bild zum Posten.',
   'or': 'oder',
 
   'Reports come from browsers that have made a collection here. You can also write to us through Imprint & contact.': 'Melden kann ein Browser, der hier eine Sammlung angelegt hat. Du kannst uns auch über das Impressum schreiben.',
