@@ -5902,6 +5902,145 @@ Julian: „make a only footer branding high res picture of the badscifi cover co
 
 Julian: „put the draft on the website, so i can look at it and keep researching the other covers“. Der Datensatz `tom-adams-christie` (42 Kacheln, `published: false`) ging mit dem Deploy 314t2obuv in die Datei; daraus der Online-Entwurf **uzGLb7CQw18D** in `/curate` (`push-draft.ts`, unveröffentlicht). Ein Entwurf hält jedes Werk einmal, also zeigt er die zweite Fassung von *Ordeal by Innocence* und *Hercule Poirot's Christmas* nicht; veröffentlicht wird die Sammlung deshalb später über die Datei und ihren Schalter, nicht aus dem Entwurf. Beim Mergen in `main` fiel auf: der Hauptordner stand auf dem Zweig `research/haiku-zone` einer anderen Session — dort nichts gemergt (ein angefangener Merge abgebrochen, Zweig unverändert), stattdessen aus dem Worktree `git push origin HEAD:main`, nachdem der Zweig `origin/main` enthielt.
 
+## 2026-10-09 · Drei schräge Christie-Fotos entzerrt und zu Open Library (5.10r)
+
+Drei Kacheln der Tom-Adams-Sammlung zeigten Händlerfotos, schräg auf dem Tisch. `lab/collections/straighten.py` entzerrt sie per Perspektiv-Transformation aus vier Ecken des Vorderdeckels. Die Ecken werden von Hand auf einem doppelt vergrößerten Bild mit 10-px-Raster abgelesen, zuerst die Kanten, dann ihre Schnittpunkte. Der erste Versuch mit Ecken vom 50-px-Raster blieb sichtbar schräg; bei *Sparkling Cyanide* lag eine Ecke etwa 50 px daneben. Die Ausgabebreite ist die längere Kante im Foto, also 220–303 px bei Vorlagen von 375 × 500; hochgerechnet wird nicht.
+
+Mit Julians Ja unter `wertstoffhof` hochgeladen, jeweils auf die Ausgabe, deren ISBN und Jahr zur Kachel passen. Das neue Bild ist Hauptcover, das alte bleibt dahinter:
+
+| Werk | Ausgabe | ISBN | alt → neu |
+|---|---|---|---|
+| The Hollow | OL14875715M (1968) | 0006118208 | 13679047 → 15263592 |
+| Sparkling Cyanide | OL31991698M (1971) | 0006110096 | 10663008 → 15263593 |
+| Destination Unknown | OL9919200M (1973) | 0006133746 | 14155494 → 15263594 |
+
+Die neuen Bilder stehen in `data/collections.json` und im Online-Entwurf `uzGLb7CQw18D`. Geändert wurden dort nur diese drei Kacheln, über eine `pick`-Operation mit `was`, damit Julians laufende Bearbeitung nicht überschrieben wird. Aus diesem Entwurf ist das Reddit-Bild entstanden, nur mit Fußzeile: 42 Kacheln, 3600 × 6746, `lab/kalender/out/`.
+
+Nachtrag am selben Tag. *Death Comes as the End* war kaum schräg, aber blass. Die Ecken wurden auf einem 5-px-Raster mit vierfacher Vergrößerung abgelesen. Entzerrt mit dem eigenen Seitenverhältnis 1,67, Tonwerte mit dem neuen `--contrast` gestreckt (1 % abgeschnitten). Hochgeladen auf OL20938098M (Fontana 1970, 0006117368), 13267895 → 15263597. `poster_collection.py --no-credit` lässt die Künstlerzeile je Kachel weg, für Sammlungen eines einzigen Künstlers. Das Christie-Bild hat jetzt 9 Spalten: 3600 × 4669.
+
+## 2026-10-09 · X-Thread „Cover, die wie Bier aussehen“ vorbereitet (5.6b)
+
+Julians Idee kam aus einer eigenen Antwort auf X. Die Kandidaten stammen aus einer CLIP-Textsuche über die 21.866 Cover-Vektoren im Lab-Cache (`bb-lab-cache/clip`, Modell `Xenova/clip-vit-base-patch32`). Gesucht wurde mit zwölf Beschreibungen, zum Beispiel „pint of dark stout“, „vintage beer bottle label“ und „craft beer can“. Ausgewählt wurden die Cover von Hand auf Kontaktbögen. Am besten trafen die Etiketten- und Dosen-Abfragen: *Half of a Yellow Sun* (4th Estate) trägt tatsächlich zwei Flaschen, die *Unendliche Geschichte* bei Thienemann ein ovales Etikett. Die Stout-Abfragen fanden dagegen nur dunkle Leineneinbände. Zehn Cover, jedes mit Ausgabe und Werk aus Open Library: `lab/kalender/bier-thread.md`; Bilder in `lab/kalender/out/bier-thread/`. Nicht gepostet.
+
+## 2026-10-09 · Gene Szafran als Sammlungsentwurf (5.10)
+
+Julian: „see if we can find enough sci fi covers with art by Gene Szafran for a collection draft“. Die ISFDB führt rund 100 Cover-Arbeiten von Szafran (Zusammenfassung `ea.cgi?Gene_Szafran`, in Chrome gelesen). Zu jeder Arbeit gehören die Drucke, die dieses Bild tragen; das waren 280, mit deutschen Übersetzungen und Nachdrucken. Je Arbeit zählt der früheste englische Druck, möglichst einer mit ISBN: 85 Zeilen in `lab/collections/lists/szafran-isfdb.tsv`. Die Arbeiten nach 1976 fehlen noch in der Liste.
+
+`lab/collections/szafran_ol.py` fragte Open Library nach Werk und Ausgaben, eine Anfrage nach der anderen und mit Pause. Als Kandidat galt jede Ausgabe mit derselben ISBN oder desselben Verlags innerhalb von acht Jahren. Das ergab Kandidaten für 41 der 85 Zeilen. `szafran_sheets.py` stellt den ISFDB-Scan des Drucks neben die Kandidaten. Entschieden wurde von Hand. **26 Cover stimmen sichtbar mit dem ISFDB-Scan überein.** Abgelehnt wurden *Orphans of the Sky*, *Double Star*, *Revolt in 2100*, *The Star Fox*, *New Writings in SF 9* und *Doctor Orient*: Open Library hat dort nur andere Cover. Ohne Vergleichsbild in der ISFDB, deshalb noch nicht aufgenommen: *The Door into Summer*, *A for Andromeda*, *A Knight of Ghosts and Shadows*, *Bridge of Ashes*, *The Clockwork Testament*.
+
+Der Entwurf `gene-szafran` hat 26 Kacheln, ist unveröffentlicht und liegt in der Datei und online als `eLn8gBWQlDhU`. Jede Kachel trägt `coverArtists: ['Gene Szafran']` und als `isfdbRecord` den verglichenen Druck. Der erste Name „Gene Szafran's Science Fiction“ ergab online eine andere Adresse als in der Datei. Er wurde auf „Gene Szafran“ gekürzt, Entwurf und Datei heißen jetzt beide `gene-szafran`.
+
+Julians nächster Schritt (2026-10-09: „da wo der OL scan fehlt, können wir ja jederzeit den isfdb scan reinnehmen und zu OL hochladen“): Fehlt bei Open Library das Bild, wird der ISFDB-Scan unter `wertstoffhof` hochgeladen. Ziel ist die Ausgabe, deren ISBN und Jahr zum ISFDB-Druck passen.
+
+Nachtrag: elf ISFDB-Scans zu Open Library hochgeladen, mit Julians Ja, unter `wertstoffhof`. Gesucht hat sie `szafran_upload_targets.py`. In Frage kam jede Ausgabe des Werks, deren ISBN der des ISFDB-Drucks entspricht. Bei Drucken ohne ISBN genügten derselbe Verlag und dasselbe Jahr. Zielausgaben, alt → neu:
+
+| Werk | Ausgabe | Datum (OL) | ISFDB-Druck | neues Cover |
+|---|---|---|---|---|
+| Down in the Black Gang | OL10269905M | Okt. 1971 | 181345 | 15263651 |
+| All the Gods of Eisernon | OL43060107M | 1973 | 2170 | 15263652 |
+| Walk to the End of the World | OL10682057M | Jan. 1974 | 237717 | 15263653 |
+| Third from the Sun | OL44935908M | 1970 | 246849 | 15263654 |
+| The Star Fox | OL10269878M | Juli 1971 | 262490 | 15263655 (vorher 13237774, „cover coming soon“) |
+| Doctor Orient | OL27048027M | Juli 1974 | 269731 | 15263656 (vorher 8666901, Textplatzhalter) |
+| Methuselah's Children | OL10269532M | Apr. 1970 | 307924 | 15263657 |
+| The Far-Out People | OL58834170M | 1971 | 39623 | 15263658 |
+| Beyond Control | OL7523476M | Feb. 1974 | 4304 | 15263659 |
+| Clarion | OL22947381M | 1971 | 7271 | 15263660 |
+| Time's Last Gift | OL10681181M | 1972 | 51614 | 15263661 (Vorderseite aus einem Rundum-Scan geschnitten) |
+
+Nicht hochgeladen:
+- *Beastchild*: Der ISFDB-Scan ist seitlich abgeschnitten.
+- *Beyond This Horizon*: Die ISBN 0-451-07599-4 passt, aber Open Library datiert die Ausgabe auf 1960, die ISFDB auf 1976. Nach der Regel müssen ISBN und Datum passen.
+- *The House on the Strand*: noch nicht angesehen.
+
+Die Sammlung hat jetzt 37 Kacheln in Datei und Entwurf. Rund 44 Arbeiten haben bei Open Library keine Ausgabe des passenden Drucks. Ein Upload ginge dort nur, wenn man eine neue Ausgabe anlegt; das ist nicht geschehen.
+
+### Zweite Runde: alle Druckdaten, weitere Uploads und neue Ausgaben (2026-10-09)
+
+Julian: „wenn wir alle daten haben, sollten wir das machen“, also neue Ausgaben bei Open Library anlegen. Dazu: „starte doch mit den uploads parallel“.
+
+**Warum Arbeiten fehlten:** Den ersten Entwurf habe ich auf Julians Bitte aus dem damaligen Stand gebaut. Die Schleife über die ISFDB-Titelseiten hatte zu dem Zeitpunkt 269 von etwa 280 Drucken. Dadurch fehlten *Spock, Messiah!* (1976), *Ubik* (1977) und *Beyond the Beyond* (1977); die ISFDB-Liste endet 1977. Die Daten werden jetzt im `localStorage` der ISFDB-Seite mitgeschrieben, weil der erste Tab dabei hängen geblieben war.
+
+**Vollständige Druckdaten** für 51 Drucke aus `pl.cgi`: Titel, Autor, Datum, ISBN, Katalognummer, Verlag, Seiten, Format und Scan. Sie liegen in `in/szafran/details.txt`. `szafran_round2.py` hat sie mit Open Library abgeglichen, zuerst über die ISBN. **Das fand viele Ausgaben, die die erste Runde übersehen hatte**, weil sie an doppelt angelegten Werken hängen. Beispiele: *Swords Against Tomorrow* (OL7570005M unter OL15072609W) und *Ubik* (OL7817292M).
+
+Ergebnis:
+- **14 Ausgaben hatten Szafrans Cover schon** (mit dem ISFDB-Scan verglichen): *Swords Against Tomorrow*, *The Legend of Miaree*, *Trullion*, *The Day After Tomorrow*, *The Alien Way*, *A Knight of Ghosts and Shadows*, *Spock, Messiah!*, *Ubik*, *Caution! Inflammable!*, *Star of the Unborn*, *Rule Britannia*, *A for Andromeda* und *The Clockwork Testament*. Dazu *The Door into Summer*: ISBN und Datum stimmen, die ISFDB hat aber keinen Scan, mit dem man vergleichen könnte.
+- **16 weitere ISFDB-Scans** wurden auf bestehende Ausgaben mit passender ISBN bzw. passendem Verlag und Jahr hochgeladen. Die Nummern stehen in `in/szafran/uploaded.txt`:
+
+| Werk | Ausgabe | neues Cover |
+|---|---|---|
+| Clarion II | OL7570077M | 15263664 |
+| Heroes & Villains | OL7664696M | 15263665 |
+| A Time of Changes | OL43001124M | 15263666 |
+| The Day of the Drones | OL43680367M | 15263667 |
+| The Ice People | OL7655738M | 15263668 |
+| Space for Hire | OL50059230M | 15263674 |
+| The House on the Strand | OL35640090M | 15263675 (vorher ein fremdes Lehrbuchbild) |
+| Gray Matters | OL44935915M | 15263676 |
+| Bridge of Ashes | OL10271141M | 15263677 |
+| The Winter of the World | OL10271118M | 15263678 |
+| Beyond the Beyond | OL7570428M | 15263679 |
+| Change | OL20507853M | 15263680 |
+| Baron Orgaz | OL7817089M | 15263681 |
+| A Small Armageddon | OL17768886M | 15263682 |
+| Recycled Souls | OL10271154M | 15263683 |
+| Wasp | OL62673789M (neu angelegt) | 15263669 |
+
+- **9 neue Ausgaben** wurden unter `wertstoffhof` angelegt, über `/books/add?work=…` mit Verlag, Datum und, wo vorhanden, ISBN. Dann folgte jeweils der Upload des ISFDB-Scans:
+  - OL62673789M *Wasp* (Bantam, Juni 1971, 0553059130)
+  - OL62673796M *The Man Who Sold the Moon* (Signet, Juli 1970)
+  - OL62673797M *Orphans of the Sky* (Signet, April 1970)
+  - OL62673798M *Double Star* (Signet 1975)
+  - OL62673800M *Revolt in 2100* (Signet 1976)
+  - OL62673801M *Fun with Your New Head* (Signet, Feb. 1972; das Foto wurde mit `straighten.py` entzerrt)
+  - OL62673802M *The Second Trip* (Nelson Doubleday/SFBC, Okt. 1972; die Vorderseite wurde aus dem flachen Umschlag-Scan geschnitten)
+  - OL62673803M *The Corridors of Time* (Lancer, März 1971)
+  - OL62673804M *Saxon's Ghost* (Pyramid, Mai 1972)
+
+  **Seitenzahl, Katalognummer und Quellenhinweis fehlen** in den neuen Ausgaben. Das Bearbeitungsformular von Open Library verlangt ein reCAPTCHA, und das löst Claude nicht. Julian kann die Angaben von Hand nachtragen; die Werte stehen in `details.txt`.
+
+**Nicht verwendet:**
+- *Beastchild*: Der Scan ist seitlich abgeschnitten.
+- *Timestop!*: Der Scan ist ein abgegriffenes Foto mit handschriftlichem Namen.
+- *Raga Six*: Der ISFDB-Scan stammt vom Druck 1975, die Ausgabe von 1972.
+- *New Writings in SF 9*, *The Organ Bank Farm* und *Beyond This Horizon*: Open Library datiert die Ausgabe mit derselben ISBN auf 1993, 1990 bzw. 1960.
+- *Farnham's Freehold* und *The Four-Gated City*: kein ISFDB-Scan.
+- *Two Planets*, *The Mind Masters*, *The Door*, *Shamballah* und *Amazons*: Die Suche fand bei Open Library kein Werk. Die müsste man mit anderer Suche finden oder samt Werk neu anlegen.
+
+**Die Sammlung hat jetzt 75 Kacheln** in Datei und Entwurf `eLn8gBWQlDhU`, unveröffentlicht.
+
+### Dritte Runde: die letzten Drucke (2026-10-09)
+
+Julian: „versuche diese alle durch weitere recherchen zu lösen“. Zwölf der dreizehn offenen Drucke sind gelöst, die Sammlung hat **87 Kacheln**.
+
+- ***Beastchild*:** Der Scan war nicht abgeschnitten. Das Cover ist so gestaltet, mit dem Titel am linken Rand. Ein Händlerfoto im Internet Archive (`bwb_C0-ARF-592`) zeigt denselben Ausschnitt. Der ISFDB-Scan liegt jetzt auf OL24513401M (Lancer 1970, 189 S. wie in der ISFDB), Cover 15263695.
+- ***Timestop!*:** Scan des Lancer-Drucks 74616 von bookscans.com (`Publishers/lancer/images/Lancer74616.jpg`) auf OL47047470M (ISBN 0447746162), Cover 15263697.
+- ***Raga Six*:** Scan des Bantam-Drucks Q7249 von 1972 von bookscans.com auf OL5289209M (Bantam 1972, 277 S.), Cover 15263696.
+- ***New Writings in SF 9* und *The Organ Bank Farm*:** Bantam hat beide ISBN später für andere Bücher wiederverwendet. 0553072455 gehört bei Open Library zu *Long Quiet Highway* (1993), 0553070495 zu *Noble-Hearted Kate* (1990), beide mit Katalogdaten der Library of Congress. Das sind also keine falsch datierten Datensätze, sondern andere Bücher. Für die beiden Drucke wurden neue Ausgaben ohne ISBN angelegt: OL62673805M (Bantam, Mai 1972) und OL62673806M (Bantam, März 1972), Cover 15263699 und 15263700.
+- ***Beyond This Horizon*:** OL7570386M ist das richtige Buch (Titel, ISBN 0451075994, Amazon-Import). Das Datum 1960 ist ein Importfehler, denn ISBN gab es damals noch nicht. Der ISFDB-Scan des Drucks von 1976 liegt jetzt dort, Cover 15263698. Das Datum lässt sich ohne reCAPTCHA nicht berichtigen.
+- ***Farnham's Freehold*:** Szafrans Bild steht nicht auf der Berkley-Ausgabe, sondern auf dem siebten Signet-Druck T2704. Laut ISFDB ist er undatiert, kostet 75 Cent und trägt die Signatur „Szafran“ rechts unten. Neue Ausgabe OL62673808M (Signet, Datum „[197-?]“, weil keine Quelle ein Jahr nennt), Cover 15263702.
+- ***Two Planets*:** Open Library führt das Buch unter dem Originaltitel *Auf zwei Planeten* (OL4592774W). Neue Ausgabe OL62673807M (Popular Library 1976, Titel „Two Planets“), Cover 15263701.
+- ***The Mind Masters* 1–4:** „Ian Ross“ ist ein Pseudonym von John F. Rossmann. Bei Open Library ist er als OL6599743A eingetragen, mit *Recycled Souls*. Vier neue Werke und Ausgaben unter ihm: *The Mind Masters* (OL62673809M, Signet Juli 1974), *Shamballah* (OL62673810M, April 1975), *The Door* (OL62673811M, Nov. 1975) und *Amazons* (OL62673812M, März 1976). Cover 15263703–15263706.
+- **Offen bleibt *The Four-Gated City*** (Bantam 1970). Szafrans Bild belegt nur die Bibliografie bei glimmergraphicsprints.net, ohne Abbildung. Das Internet Archive hat Bantam-Drucke von 1978 und 1980; ob deren Cover Szafrans ist und schon 1970 so aussah, belegt keine Quelle. Open Library hat fünf Bantam-Ausgaben von 1970, alle ohne Bild.
+
+Nachtrag: bookscans.com geprüft (Julian: „check if bookscans.com is a good resource for the future“). Die Bewertung steht in `docs/ausgaben-recherche.md` §2. Kurz: Die Seite ist eine gute Suchhilfe für US-Taschenbücher von 1939 bis 1979, geordnet nach Verlag und Katalognummer. Die Bilder sind absichtlich klein, etwa 250 px. Künstler, Datum und Druck stehen nicht dabei; die kommen weiter aus der ISFDB. Die Scans von *Timestop!* (Lancer 74616) und *Raga Six* (Bantam Q7249) sind „Courtesy of Bob Gaines“, also eingesandt. Für eingesandte Scans verweist der Betreiber Bruce Black Anfragen an den Einsender. Beide Scans waren zu diesem Zeitpunkt schon zu Open Library hochgeladen (Cover 15263697 und 15263696). Ob sie bleiben, entscheidet Julian.
+
+Nachtrag: Wie sich die Einträge verteilen (Julian: „wie verteilen sich die 280 einträge jezt auf die 87 cover?“). Beim Nachzählen fiel eine Lücke auf. *The Golden Olive* (Cristabel, Curtis Books 09146, 1972, ISFDB-Druck 195149) stand in der ISFDB-Liste, war aber beim Abtippen in `szafran-isfdb.tsv` verloren gegangen. Jetzt ist die Zeile nachgetragen. Der ISFDB-Scan mit Szafrans Signatur liegt auf OL47784247M (Curtis 1972, vorher ohne Bild), Cover 15263707. **Die Sammlung hat 88 Kacheln.**
+
+Szafrans Cover-Liste in der ISFDB hat 101 Einträge:
+- **89 eigene Gestaltungen** (Erstauftritt eines Bildes auf einem englischen Buch). 88 sind Kacheln, eine ist offen: *The Four-Gated City*.
+- **12 Einträge, die ein schon gezähltes Bild wiederverwenden:**
+  - 5 Übersetzungen: *Planet der Verbannten* (= *Those Who Watch*), *Die letzten der Unsterblichen* (= *This Perfect Day*), *Sirius #2* (= *Protostars*), *O vampiro* (= *Raga Six*) und *Baron Orgaz* bei Heyne 1984.
+  - 4 Sammel- oder Titelvarianten: *There Will Be Time / The Dancer from Atlantis* (1982), *Eyes of Fire* (1980, der neue Titel von *A Funeral for the Eyes of Fire*), *The Rebel Worlds / A Knight of Ghosts and Shadows* (1982) und *Today We Choose Faces / Bridge of Ashes* (1981).
+  - 3 Einträge für die PM-Press-Anthologie *Dangerous Visions and New Worlds* (2021), die die Cover von *Son of Man* und *Ice* abbildet.
+
+Die rund 280 Druck-Einträge sind alle Drucke, auf denen eines dieser Bilder steht. Je Gestaltung zeigt die Sammlung genau einen Druck, und zwar den frühesten, für den es einen Scan gibt. Die übrigen etwa 190 sind:
+- Nachdrucke derselben Gestaltung, vor allem bei den Signet-Heinleins: *The Puppet Masters* 15 Einträge; *The Day After Tomorrow*, *The Door into Summer* und *I Sing the Body Electric!* je 9; *The Man Who Sold the Moon*, *The Menace from Earth* und *Beyond This Horizon* je 8.
+- die kanadischen Parallelausgaben von New American Library.
+- die Übersetzungen, Sammelbände und die Anthologie von oben.
+
+Die genaue Zahl je Gruppe ist nicht gespeichert, weil die Liste der 280 nur im Browser lag.
+
 ## 2026-10-10 · Machen andere Shelf-Portraits? Nicht messbar, nur Besuche (ROADMAP 5.18b)
 
 Julian fragte, ob inzwischen andere als er Shelf-Portraits gemacht haben. **Die Erstellung zählt niemand lesbar:** jeder Kurzlink steht in Redis unter `insp:link:<id>` mit Datum und Brett, die Summe in `insp:links`, aber ohne Macher, und es gibt keinen Admin-Weg, der sie liest; `STORAGE_REDIS_URL` ist in Vercel „sensitive“ und kommt mit `vercel env pull` leer an; die Logs reichen eine Stunde zurück (keine Treffer für `/api/inspiration/link`). **Was die Analyse sagt** (`/api/insights?days=30`, Julians Besuche über das Admin-Cookie ausgenommen, Landeseite `shelf` seit 2026-10-06): 24 Besuche auf geteilten Boards, davon 15 als erste Seite eines Besuchs (von außen gekommen), einer öffnete danach ein Buch; 4 Buchbesuche kamen von einem Board. Das sind Betrachter, nicht Macher, und Julians Besuche ohne Admin-Cookie (etwa vom Telefon) zählen mit.
