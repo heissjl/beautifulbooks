@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server';
 import { readBody } from '@/app/api/versus/guard';
 import { allCollections } from '@/lib/collections';
-import { parseSuggestion } from '@/lib/suggest/store';
+import { SUGGESTIONS_CAP } from '@/lib/fill';
+import { parseSuggestion, suggestionsFull } from '@/lib/suggest/store';
 import { adminGate, friendGate, json, storeDown } from './guard';
 import { measure } from '@/app/api/measure';
 
@@ -22,6 +23,13 @@ export async function POST(request: NextRequest) {
   const suggestion = parseSuggestion(await readBody(request), known);
   if (typeof suggestion === 'string') return json({ error: suggestion }, 400);
   try {
+    // At most SUGGESTIONS_CAP stored (ROADMAP 2.20): a refusal with a sentence, never a store that stops taking writes.
+    if (await suggestionsFull(gate.store)) {
+      return json(
+        { error: `The suggestions are full: ${SUGGESTIONS_CAP} are waiting for Julian. Nothing of yours was sent or lost — try again once he has taken some into the file.` },
+        503,
+      );
+    }
     await gate.store.add(suggestion);
   } catch {
     return storeDown();

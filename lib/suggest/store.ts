@@ -13,6 +13,7 @@
  * name. No IP, no user agent, no session id (N11).
  */
 import { randomBytes } from 'node:crypto';
+import { SUGGESTIONS_CAP } from '../fill';
 import { commandsFromEnv, type RedisCommands } from '../redis';
 
 export interface Suggestion {
@@ -33,6 +34,8 @@ export type Decision = 'taken' | 'declined';
 export interface SuggestStore {
   readonly kind: 'memory' | 'redis';
   add(s: Suggestion): Promise<void>;
+  /** How many suggestions the list holds, decided ones included — LLEN, for the cap (ROADMAP 2.20). */
+  count(): Promise<number>;
   list(): Promise<Suggestion[]>;
   decisions(): Promise<Record<string, Decision>>;
   /** Keeps the first decision; a second click changes nothing. */
@@ -96,6 +99,7 @@ export function memorySuggestStore(): SuggestStore {
   return {
     kind: 'memory',
     async add(s) { items.push(s); },
+    async count() { return items.length; },
     async list() { return [...items]; },
     async decisions() { return { ...decided }; },
     async decide(id, decision) { decided[id] ??= decision; },
@@ -106,6 +110,10 @@ export function commandsSuggestStore(commands: RedisCommands): SuggestStore {
   return {
     kind: 'redis',
     async add(s) { await commands.rPush(KEYS.list, JSON.stringify(s)); },
+    async count() {
+      const n = await commands.lLen(KEYS.list);
+      return typeof n === 'number' ? n : Number(n) || 0;
+    },
     async list() {
       const raw = await commands.lRange(KEYS.list, 0, -1);
       return Array.isArray(raw) ? raw.map(parseStored).filter((s): s is Suggestion => s !== null) : [];
@@ -119,6 +127,16 @@ export function commandsSuggestStore(commands: RedisCommands): SuggestStore {
     },
     async decide(id, decision) { await commands.hSetNX(KEYS.decisions, id, decision); },
   };
+}
+
+/**
+ * The list holds as many suggestions as it will (ROADMAP 2.20, `SUGGESTIONS_CAP`):
+ * a thousand, decided ones included — the list is never pruned, Julian's tool only
+ * decides. Beyond it `/suggest` refuses with a sentence, so no friend's text is lost
+ * without them seeing it.
+ */
+export async function suggestionsFull(store: SuggestStore): Promise<boolean> {
+  return (await store.count()) >= SUGGESTIONS_CAP;
 }
 
 /** On `globalThis` for the reason given in `lib/hotornot/store.ts`: `next dev` splits modules. */
