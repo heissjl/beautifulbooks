@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { shelvesOf } from '../shelfrows';
+import { cutOffRows, shelvesOf } from '../shelfrows';
 
 /** A picture of `bands`: 'books' rows alternate dark and light every few pixels, 'board' rows are one tone. */
 function picture(width: number, bands: ['books' | 'board', number][]) {
@@ -37,5 +37,13 @@ describe('shelvesOf (5.11a): the boards of a bookcase, found in the picture', ()
 
   it('finds no shelves where no board divides the picture', () => {
     expect(shelvesOf(picture(600, [['books', 800]]))).toEqual([]);
+  });
+
+  it('names the rows the photo cuts off: an edge stretch under half the height of the shelves between', () => {
+    expect(cutOffRows([[0, 0.11], [0.11, 0.42], [0.42, 0.71], [0.71, 1]])).toEqual([[0, 0.11]]);
+    expect(cutOffRows([[0, 0.3], [0.3, 0.6], [0.6, 0.9], [0.9, 1]])).toEqual([[0.9, 1]]);
+    expect(cutOffRows([[0, 0.3], [0.3, 0.6], [0.6, 1]])).toEqual([]);
+    // Two shelves say nothing about what a whole one looks like.
+    expect(cutOffRows([[0, 0.1], [0.1, 1]])).toEqual([]);
   });
 });

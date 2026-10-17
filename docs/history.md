@@ -4475,6 +4475,10 @@ Julian: „miss die drei ideen am testsatz“. Gemessen: die Schärfezahl ohne M
 
 Julian: „setz die schwelle zurück auf 30 und pushe“. Einen Tag stand sie bei 40; der Testsatz zeigte, dass ein erster Blick auf einem dichten Regal 35–55 Bücher liest und der zweite Blick bei 40 vom Zufall abhing (dasselbe Foto 35 von 46 in einem Lauf, 45 im nächsten; die Galeriewand in einem Lauf ohne zweiten Blick). Bei 30 kam er auf allen sechs dichten Fotos. Die Ausgaben begrenzt seit demselben Tag das Tagesbudget. Die Zahl der im Bild gefundenen Regalböden als Signal, das nicht schwankt, bleibt eine Idee — sie gilt nur für Regale (Julian).
 
+## 2026-10-04 · Die restlichen Varianten am Testsatz (ROADMAP 5.11a)
+
+Julian: „guthaben ist aufgeladen, miss die restlichen varianten“. Zehn Läufe, rund 4,90 $. Zwei gleiche Läufe liegen zehn Bücher auseinander (305 und 295 von 322) — das ist die Messlatte. Das Feld für Unsicheres bringt kein fehlendes Buch zurück und nimmt jede sechste richtige Lesung mit; als Fehlermarke taugt es, eingebaut wird es nicht. Angeschnittene Reihen gar nicht zu lesen, kostet ganze Bücher. Was trägt, ist eine Regel nach dem Lesen: in einer angeschnittenen Reihe fallen Ein-Wort-Lesungen ohne Autor weg — die Stümpfe halbieren sich, kein Buch geht verloren. Dazu der Hinweis bei Unschärfe aus dem dritten Durchgang. Beides wartet auf Julians Wort. [Bericht](tests/2026-10-04-regalfoto-testsatz.md).
+
 ## 2026-10-04 · Kanäle messbar (ROADMAP 5.6a)
 
 Julian: „baue 5.6 für das analyse-tool". Vorher fielen Reddit, Pinterest und Instagram unter `social`, Hacker News und Product Hunt unter `other`, In-App-Browser ohne Referrer unter `direct`. Sammlungs- und Wandseiten sendeten kein Signal; ein Launch wäre ungemessen geblieben. Gebaut:
