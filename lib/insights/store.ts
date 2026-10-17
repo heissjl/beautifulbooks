@@ -262,6 +262,10 @@ export async function flushInsights(options: CountOptions & { buffer?: InsightsB
 export type PhotoCount =
   | { outcome: 'capped' }
   | { outcome: 'failed' }
+  /** Turned away because the store was silent and the day's budget could not be checked (ROADMAP 2.18h, J3). */
+  | { outcome: 'store' }
+  /** Turned away because this instance was already reading its share of photos (2.18h, `lib/walls/photogate.ts`). */
+  | { outcome: 'busy' }
   | { outcome: 'read'; model: string; inputTokens: number; outputTokens: number; books: number; found: number; maybe: number };
 
 const MODEL_ID = /^[a-z0-9][a-z0-9.-]{0,47}$/;

@@ -543,7 +543,11 @@ function PhotoSection({ photos }: { photos: Extract<InsightsReport, { ok: true }
   return (
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Tile label="Fotos gelesen" value={photos.read} note={`gescheitert ${nf.format(photos.failed)} · am Tageslimit abgewiesen ${nf.format(photos.capped)}`} />
+        <Tile
+          label="Fotos gelesen"
+          value={photos.read}
+          note={`gescheitert ${nf.format(photos.failed)} · am Tageslimit abgewiesen ${nf.format(photos.capped)} · Speicher stumm ${nf.format(photos.store)} · Instanz ausgelastet ${nf.format(photos.busy)}`}
+        />
         <Tile label="Bücher erkannt" value={photos.books} note={`gefunden ${nf.format(photos.found)} · unsicher ${nf.format(photos.maybe)}`} />
         <div className="rounded-lg border border-line bg-surface p-3 sm:p-4">
           <div className="text-sm text-ink-2">Kosten im Zeitraum</div>
