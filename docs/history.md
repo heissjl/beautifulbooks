@@ -6004,6 +6004,8 @@ Auf Julians „ja, bau beides“ nach dem Befund vom selben Tag. **Zähler:** `P
 
 **Datenschutz, Julians Entscheidung (2026-10-10):** der vorgeschlagene Satz („Finishing one also adds one to a daily count …“) — „nein“, dann „wir brauchen den satz nicht, die funktion bleibt“. Die Tagessumme trägt nichts über den Leser (nur Leser oder Julian über sein eigenes Cookie); die Datenschutzerklärung bleibt unverändert.
 
+**Live seit 2026-10-10** (`e980b31`, Deploy `beautifulbooks-9f2bgseoo`), einmal nachgesehen über `/api/inspiration/links`: **38 Kurzlinks** vom 2026-10-05 bis 2026-10-09 (5, 16, 8, 5, 4 je Tag); 22 Neuner-, 9 Sechser- und 7 Dreier-Boards. Namen auf den Bildern: „Julian“ zweimal, „Cattelan“ zweimal, „Caro“, „Teddy Rook“, „theonethinginlife“; 31 ohne Namen. Wer welches gemacht hat, sagt der Speicher nicht.
+
 ## 2026-10-10 — Datenschutzerklärung: Sammlungen und Regalfoto (ROADMAP 2.19)
 
 Red-Team H1. Julian nahm beide Sätze ab („streich den cookie namen“, „ok“). `app/privacy/page.tsx` hat einen Abschnitt „Your collections“ (deutsch „Deine Sammlungen“), sichtbar nur mit `wallsEnabled()`; der Cookie-Satz ohne Namen, der Foto-Satz nur mit `hasApiKey()` (`lib/recognize.ts`) — die Erklärung nennt so nie eine Funktion, die nicht an ist (N12). Stand „10 October 2026“ (das Datum bleibt auch auf Deutsch englisch, wie vorher). Geprüft unter `next dev`: `/privacy` zeigt beide Sätze und das neue Datum; i18n-Test grün.
