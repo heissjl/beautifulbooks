@@ -21,4 +21,13 @@ describe('healthReport', () => {
     const r = healthReport({ redisConfigured: true, redisMs: null, googlePausedS: 0, googleFieldsBroken: false });
     expect(r.text).not.toMatch(/status: ok/);
   });
+  it('adds the fill level as lines of numbers, and a list over its line as one more — status untouched (2.18g)', () => {
+    const fill = { keys: 12, votes: 2_500_000, walls: 3, drafts: 2, suggestions: 1, contentBytes: 2048 };
+    const r = healthReport({ redisConfigured: true, redisMs: 20, googlePausedS: 0, googleFieldsBroken: false, fill });
+    expect(r.ok).toBe(true);
+    expect(r.text).toContain('store: 12 keys, votes 2500000, walls 3, drafts 2, suggestions 1, published drafts 2 KB');
+    expect(r.text).toContain('fill: votes 2500000 over 2000000');
+    const quiet = healthReport({ redisConfigured: true, redisMs: 20, googlePausedS: 0, googleFieldsBroken: false, fill: null });
+    expect(quiet.text).not.toContain('store:');
+  });
 });

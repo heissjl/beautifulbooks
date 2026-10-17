@@ -10,6 +10,7 @@
  */
 import { SITE_NAME } from './seo';
 import type { AlertMail } from './alerts';
+import { fillLine, fillWarnings, warningLine, type FillFacts } from './fill';
 
 export interface HeartbeatFacts {
   /** Yesterday, `YYYY-MM-DD` (UTC). */
@@ -23,6 +24,8 @@ export interface HeartbeatFacts {
   /** Seconds the Google breaker still stays shut; 0 when open. */
   googlePausedS: number;
   googleFieldsBroken: boolean;
+  /** How full the store is (2.18g), when it could be read. */
+  fill?: FillFacts | null;
 }
 
 export function heartbeatMail(f: HeartbeatFacts): AlertMail {
@@ -30,6 +33,7 @@ export function heartbeatMail(f: HeartbeatFacts): AlertMail {
   const google = f.googlePausedS > 0 ? `paused for ${f.googlePausedS} s` : f.googleFieldsBroken ? 'its field search answers nothing (1.13)' : 'answering';
   const store = f.redisMs === null ? 'did not answer' : `answered in ${f.redisMs} ms`;
   const trouble = f.redisMs === null || f.bookVisits === null;
+  const fill = f.fill ? [`The ${fillLine(f.fill)}.`, ...fillWarnings(f.fill).map(w => `Over its line: ${warningLine(w)}.`), ''] : [];
   return {
     subject: `${SITE_NAME} ${f.day}: ${n(f.bookVisits)} book visits, ${n(f.shopClicks)} shop clicks${trouble ? ' — something is off' : ''}`,
     text: [
@@ -38,7 +42,7 @@ export function heartbeatMail(f: HeartbeatFacts): AlertMail {
       `  shop clicks: ${n(f.shopClicks)}`,
       '',
       `Now: the store ${store}; Google is ${google}.`,
-      '',
+      ...fill,
       'This mail comes every morning. If one does not come, the cron, the store or the mail failed — look at /api/health and the Vercel log within the hour.',
     ].join('\n'),
   };

@@ -69,6 +69,9 @@ export const DRAFT_LIMITS = { title: 120, intro: 1200, by: 60, works: 400, autho
 
 const KEYS = { ids: 'curate:drafts', draft: (id: string) => `curate:draft:${id}` };
 
+/** The list of draft ids — for the fill level of the store (ROADMAP 2.18g). */
+export const DRAFTS_LIST_KEY = KEYS.ids;
+
 export function isDraftId(value: string): boolean {
   return /^[A-Za-z0-9_-]{8,16}$/.test(value);
 }

@@ -76,6 +76,9 @@ const keyFor = {
   token: (token: string) => `versus:token:${token}`,
 };
 
+/** The votes log of a pool — for the fill level of the store (ROADMAP 2.18g). */
+export const votesKey = (pool: string): string => keyFor.votes(pool);
+
 /** Votes in this process's memory. Tests use it, and `next dev` without a configured store. */
 export function memoryStore(now: () => number = Date.now): VoteStore {
   const votes = new Map<string, StoredVote[]>();

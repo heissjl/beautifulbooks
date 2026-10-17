@@ -38,7 +38,8 @@ import {
 } from './collections';
 
 const KEY = 'collections:published';
-const CONTENT_KEY = 'collections:content';
+/** The published drafts, the one value that grows with the collections — read by the fill level too (2.18g). */
+export const CONTENT_KEY = 'collections:content';
 const ORDER_KEY = 'collections:order';
 
 export interface PublishStore {

@@ -10,8 +10,12 @@
  * that gets an address refused.
  *
  * Only the store decides the status: Google out of quota or answering nothing
- * is a weaker verdict, not an outage (the catalogue stands in, 1.12).
+ * is a weaker verdict, not an outage (the catalogue stands in, 1.12). The fill
+ * level of the store (2.18g, `lib/fill.ts`) is a line of numbers below, and a
+ * list over its line one more line — information for whoever reads the text,
+ * never a reason to page anyone.
  */
+import { fillLine, fillWarnings, warningLine, type FillFacts } from './fill';
 export interface HealthFacts {
   /** Milliseconds the store took to answer one GET, or null when it did not answer in time. */
   redisMs: number | null;
@@ -21,11 +25,14 @@ export interface HealthFacts {
   googlePausedS: number;
   /** The field search is held broken (1.13). */
   googleFieldsBroken: boolean;
+  /** How full the store is, read when it answered (2.18g); a list over its line is a warning line, not a degraded status. */
+  fill?: FillFacts | null;
 }
 
 export function healthReport(f: HealthFacts): { ok: boolean; text: string } {
   const redis = !f.redisConfigured ? 'not configured' : f.redisMs === null ? 'no answer' : `ok (${f.redisMs} ms)`;
   const google = f.googlePausedS > 0 ? `paused ${f.googlePausedS} s` : f.googleFieldsBroken ? 'field search answers nothing' : 'ok';
   const ok = f.redisConfigured && f.redisMs !== null;
-  return { ok, text: [`status: ${ok ? 'ok' : 'degraded'}`, `redis: ${redis}`, `google: ${google}`, ''].join('\n') };
+  const fill = f.fill ? [fillLine(f.fill), ...fillWarnings(f.fill).map(warningLine)] : [];
+  return { ok, text: [`status: ${ok ? 'ok' : 'degraded'}`, `redis: ${redis}`, `google: ${google}`, ...fill, ''].join('\n') };
 }

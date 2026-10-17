@@ -3,7 +3,9 @@ import { commandsFromEnv } from '@/lib/redis';
 import { googlePausedFor } from '@/lib/googlequota';
 import { fieldSearchKnownBroken } from '@/lib/googlefields';
 import { sendAlert } from '@/lib/alerts';
+import { HEARTBEAT_LAST_KEY, heartbeatRecord } from '@/lib/fill';
 import { heartbeatMail } from '@/lib/heartbeat';
+import { readFill } from '@/lib/operations';
 import { lastDays, summarizeClicks } from '@/lib/insights/model';
 import { readDays } from '@/lib/insights/store';
 import { summarizeBooks } from '@/lib/insights/visits';
@@ -47,7 +49,11 @@ export async function GET(request: NextRequest) {
     redisMs: probe.ms,
     googlePausedS: googlePausedFor(),
     googleFieldsBroken: fieldSearchKnownBroken(),
+    // The fill level of the store, when it answered (2.18g).
+    fill: commands && probe.ms !== null ? await readFill(commands) : null,
   });
   const result = await sendAlert(`heartbeat:${day}`, mail);
+  // Noted for the operations block on /admin/insights, so a `failed` or `not-configured` is seen by someone (2.18g).
+  if (commands) await commands.set(HEARTBEAT_LAST_KEY, heartbeatRecord(day, result, new Date())).catch(() => undefined);
   return new Response(`heartbeat ${day}: ${result}\n`, { headers: { 'content-type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } });
 }

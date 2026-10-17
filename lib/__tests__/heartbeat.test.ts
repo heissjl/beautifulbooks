@@ -16,4 +16,10 @@ describe('heartbeatMail', () => {
     expect(m.subject).toContain('something is off');
     expect(m.text).not.toMatch(/visits: 0/);
   });
+  it('tells how full the store is, and which list is over its line (2.18g)', () => {
+    const fill = { keys: 12, votes: 581, walls: 1900, drafts: 2, suggestions: 1, contentBytes: 2048 };
+    const m = heartbeatMail({ day: '2026-10-16', bookVisits: 42, shopClicks: 3, redisMs: 30, googlePausedS: 0, googleFieldsBroken: false, fill });
+    expect(m.text).toContain('The store: 12 keys, votes 581, walls 1900');
+    expect(m.text).toContain('Over its line: fill: walls 1900 over 1800.');
+  });
 });

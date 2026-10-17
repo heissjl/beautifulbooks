@@ -68,6 +68,10 @@ export interface RedisCommands {
    * links (ROADMAP 5.18b, K17), never on a reader's request. Optional, like hIncrBy.
    */
   scan?(cursor: string, match: string, count: number): Promise<[string, string[]]>;
+  /** DBSIZE: how many keys the store holds — the fill level for the operations block (ROADMAP 2.18g). Optional, like hIncrBy. */
+  dbSize?(): Promise<unknown>;
+  /** STRLEN: the bytes of one value, a sample of what the store carries (2.18g). Optional, like hIncrBy. */
+  strLen?(key: string): Promise<unknown>;
 }
 
 /** A SCAN answer as either transport delivers it: `[cursor, keys]` over REST, `{ cursor, keys }` from node-redis. */
@@ -152,6 +156,8 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
     hIncrByMany: (key, increments, ttlSeconds) => command(['EVAL', HINCRBY_MANY_SCRIPT, 1, key, ...hIncrByManyArgs(increments, ttlSeconds)]),
     scan: async (cursor, match, count) => scanReply(await command(['SCAN', cursor, 'MATCH', match, 'COUNT', count])),
+    dbSize: () => command(['DBSIZE']),
+    strLen: key => command(['STRLEN', key]),
   };
 }
 
@@ -224,6 +230,8 @@ export function redisCommands(url: string): RedisCommands {
     hIncrByMany: (key, increments, ttlSeconds) =>
       run(client => client.eval(HINCRBY_MANY_SCRIPT, { keys: [key], arguments: hIncrByManyArgs(increments, ttlSeconds) })),
     scan: async (cursor, match, count) => scanReply(await run(client => client.scan(cursor, { MATCH: match, COUNT: count }))),
+    dbSize: () => run(client => client.dbSize()),
+    strLen: key => run(client => client.strLen(key)),
   };
 }
 

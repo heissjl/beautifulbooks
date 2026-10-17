@@ -1,9 +1,14 @@
 import { NextRequest } from 'next/server';
+import { later } from '@/app/api/count';
 import { rateLimited } from '@/app/api/rate';
-import { commandsFromEnv } from '@/lib/redis';
+import { sendAlert } from '@/lib/alerts';
+import { fillMail, fillWarnings } from '@/lib/fill';
+import { commandsFromEnv, type RedisCommands } from '@/lib/redis';
 import { googlePausedFor } from '@/lib/googlequota';
 import { fieldSearchKnownBroken } from '@/lib/googlefields';
 import { healthReport } from '@/lib/health';
+import { dayOf } from '@/lib/insights/model';
+import { readFill } from '@/lib/operations';
 
 /**
  * GET /api/health — for the uptime monitor (ROADMAP 2.18g). `no-store`, plain
@@ -15,8 +20,7 @@ export const dynamic = 'force-dynamic';
 
 const PROBE_MS = 2000;
 
-async function probe(): Promise<{ configured: boolean; ms: number | null }> {
-  const commands = commandsFromEnv();
+async function probe(commands: RedisCommands | null): Promise<{ configured: boolean; ms: number | null }> {
   if (!commands) return { configured: false, ms: null };
   const start = Date.now();
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -36,13 +40,19 @@ async function probe(): Promise<{ configured: boolean; ms: number | null }> {
 export async function GET(request: NextRequest) {
   const limited = rateLimited(request, 'health');
   if (limited) return limited;
-  const redis = await probe();
+  const commands = commandsFromEnv();
+  const redis = await probe(commands);
+  // The fill level only from a store that just answered: seven small commands, every five minutes (2.18g).
+  const fill = commands && redis.ms !== null ? await readFill(commands) : null;
   const { ok, text } = healthReport({
     redisConfigured: redis.configured,
     redisMs: redis.ms,
     googlePausedS: googlePausedFor(),
     googleFieldsBroken: fieldSearchKnownBroken(),
+    fill,
   });
+  // A list over its line: one mail a day, after the answer has left; the status above stays what the store made it.
+  if (fill) for (const w of fillWarnings(fill)) later(() => sendAlert(`fill:${w.list}:${dayOf(new Date())}`, fillMail(w, fill)));
   return new Response(text, {
     status: ok ? 200 : 503,
     headers: { 'content-type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' },

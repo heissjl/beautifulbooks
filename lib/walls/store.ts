@@ -161,6 +161,9 @@ const KEYS = {
   reporters: (id: string) => `walls:reporters:${id}`,
 };
 
+/** The list of saved collections — for the fill level of the store (ROADMAP 2.18g). */
+export const WALLS_ALL_KEY = KEYS.all;
+
 function parseWall(raw: unknown): Wall | null {
   if (typeof raw !== 'string') return null;
   try {

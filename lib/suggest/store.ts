@@ -41,6 +41,9 @@ export interface SuggestStore {
 
 const KEYS = { list: 'suggest:items', decisions: 'suggest:decisions' };
 
+/** The list of suggestions — for the fill level of the store (ROADMAP 2.18g). */
+export const SUGGESTIONS_LIST_KEY = KEYS.list;
+
 export const LIMITS = { note: 500, by: 60, title: 200, newCollection: 120 };
 
 function clip(value: unknown, max: number): string {
