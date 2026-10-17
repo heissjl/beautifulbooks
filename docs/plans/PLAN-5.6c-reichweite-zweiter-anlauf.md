@@ -252,6 +252,17 @@ Die Frage steht seit dem 4.10. (PLAN-5.5-5.6 §6 Frage 1) und hält 30 Einträge
 
 Ohne Antwort gilt: (c), kein persönliches Konto, Zettel nur Bluesky, Zuruf, keine Mail, HN wartet, Kalendertexte bleiben, Englisch.
 
+**Entschieden am 2026-10-17 abends (Julian, im Chat durchgegangen):**
+1. **Rechte: (a)** — Cover auf fremden Plattformen mit Quellenangabe. Damit sind Pinterest, Instagram, TikTok, die Galerien und die 30 Kalendereinträge frei; 5.5a (Pin-Format) und das Pinterest-Konto kommen als Erstes; `rechte` steht im Kalender unter „Erfüllt“.
+2. **Persönliches Konto: ja** — die Baugeschichte (X-Thread, r/ClaudeAI, Show HN) kommt von Julians eigenem Konto, @buyitscovers zitiert.
+3. **Antwortzettel: nur auf Zuruf**, nicht täglich; Bluesky über die API, X über Julians Chrome, wenn er es sagt.
+4. **Posten: Zuruf + Buffer Free** für die geplanten Beiträge auf Bluesky, Mastodon und Threads; kein eigenes Skript.
+5. **Ansprache:** Julian wollte zuerst die Links sehen (geschickt am 2026-10-17: Open Library Entwicklerseite und Community Call, Web Curios Kontakt, Kottke About, Shelf Awareness, MetaFilter Projects); Entscheidung offen.
+6. **Show HN: erst Karma sammeln**, dann mit Daten-Winkel und eigenem Text.
+7. **Stilblatt: Claude schreibt die 87 Kalendertexte neu**, in der Stimme von „don't gatekeep the editions“ (Historie 2026-10-17), in Zehnerpaketen; Julian streicht.
+8. **Deutsch fürs Shelf-Portrait: ja**, Übersetzung vorziehen (5.18b, offen 1).
+
+
 ---
 
 ## 10. Was aus dem Kalender wird
