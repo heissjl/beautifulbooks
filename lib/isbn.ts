@@ -49,6 +49,8 @@ export interface IsbnCovers {
 export interface IsbnCoversOptions {
   /** Hash the images so the client can fold them against the wall. */
   signatures?: boolean;
+  /** False: do not ask Google, answer from Open Library's record (2.18f: a request not from the site's own page). Default true. */
+  askGoogle?: boolean;
   hashDeadlineMs?: number;
 }
 
@@ -70,6 +72,7 @@ export async function getIsbnCovers(raw: string, options: IsbnCoversOptions = {}
   // Google answers a transient 503 often enough that one retry is worth it;
   // without it a reader is told the cover is unknown when it is merely late.
   let candidates: Awaited<ReturnType<typeof lookupIsbnOrThrow>>;
+  if (options.askGoogle === false) return catalogueCovers(isbn13, options);
   try {
     candidates = await lookupIsbnOrThrow(isbn13);
   } catch {

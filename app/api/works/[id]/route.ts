@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CACHE_FULL, worksCacheControl } from '@/lib/cachepolicy';
+import { askedFromOwnPage } from '@/lib/ownpage';
 import { buyLinksFor, earningNow, titleSearchLinksFor, type Earning } from '@/lib/buylinks';
 import { coverImages } from '@/lib/seo';
 import { cookieValue, detectMarket, MARKET_KEY, type Market } from '@/lib/market';
@@ -118,7 +119,12 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
 
   // Only a full page 0 asks Google; a mosaic, a sibling and every later page
   // do not, so they must not be charged against the shared quota bucket.
-  const spendsGoogle = !summary && !sibling && offset === 0;
+  // And only for a request from one of the site's own pages (2.18f, lib/ownpage.ts): a script calling the
+  // API directly gets page 0 from Open Library alone, cached a minute, and spends no Google request.
+  const ownPage = askedFromOwnPage(request.headers);
+  const wouldAskGoogle = !summary && !sibling && offset === 0;
+  const spendsGoogle = wouldAskGoogle && ownPage;
+  const googleWithheld = wouldAskGoogle && !ownPage;
   const limited = spendsGoogle ? rateLimited(request, 'works', 'google') : rateLimited(request, 'works');
   if (limited) return limited;
 
@@ -127,7 +133,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       offset: summary ? 0 : offset,
       signatures: summary ? false : signatures,
       // A mosaic never spends a Google request (SPEC §8.7, measured 2026-09-07).
-      googleBooks: !summary && !sibling,
+      googleBooks: !summary && !sibling && ownPage,
       siblings: !summary && !sibling,
     });
     if (!page) {
@@ -167,7 +173,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
       // Varies by market, so shared caches must key on the cookie and country too.
       headers: {
         // A minute when Google was silent on page 0, a day otherwise (ROADMAP 2.18e, lib/cachepolicy.ts).
-        'Cache-Control': worksCacheControl(page),
+        'Cache-Control': worksCacheControl(googleWithheld ? { googleSilent: true } : page),
         Vary: 'Cookie, X-Vercel-IP-Country, Accept-Language',
       },
     });

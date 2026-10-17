@@ -3,7 +3,8 @@ import { getIsbnCovers, type IsbnCovers } from '@/lib/isbn';
 import { rateLimited } from '@/app/api/rate';
 import { countGoogleStopsAfter } from '@/app/api/count';
 import { measure } from '@/app/api/measure';
-import { isbnCacheControl } from '@/lib/cachepolicy';
+import { CACHE_DEGRADED, isbnCacheControl } from '@/lib/cachepolicy';
+import { askedFromOwnPage } from '@/lib/ownpage';
 
 export type IsbnCoversResponse = IsbnCovers;
 
@@ -26,12 +27,15 @@ export async function GET(request: NextRequest, context: { params: Promise<{ isb
   const { isbn } = await context.params;
   const signatures = request.nextUrl.searchParams.get('signatures') === '1';
 
-  const covers = await getIsbnCovers(isbn, { signatures });
+  // Google only for a request from one of the site's own pages (2.18f, lib/ownpage.ts).
+  const ownPage = askedFromOwnPage(request.headers);
+  const covers = await getIsbnCovers(isbn, { signatures, askGoogle: ownPage });
   if (!covers) {
     return NextResponse.json({ error: 'Malformed ISBN' }, { status: 400 });
   }
   // Never keep "nobody answered", an hour for the catalogue's stand-in, a day for Google (ROADMAP 2.18e).
   return NextResponse.json(covers, {
-    headers: { 'Cache-Control': isbnCacheControl(covers) },
+    // A stand-in given because the request was not from our page is kept a minute, so a reader's next ask gets Google's answer.
+    headers: { 'Cache-Control': ownPage ? isbnCacheControl(covers) : CACHE_DEGRADED },
   });
 }

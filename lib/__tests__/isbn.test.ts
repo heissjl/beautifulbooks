@@ -78,6 +78,12 @@ describe('getIsbnCovers', () => {
     expect(r?.covers).toEqual([]);
   });
 
+  it('asks no Google when told not to, and answers from the catalogue (2.18f)', async () => {
+    const r = await getIsbnCovers(BELOVED, { askGoogle: false });
+    expect(r?.source).toBe('openlibrary');
+    expect(calls.some(u => u.includes('googleapis'))).toBe(false);
+  });
+
   it('asks Google once for the ISBN and returns the cover it shows', async () => {
     const r = await getIsbnCovers(BELOVED);
     expect(calls).toHaveLength(1);
