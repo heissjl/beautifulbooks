@@ -55,7 +55,8 @@ export default async function CuratePage({ searchParams, locale = DEFAULT_LOCALE
       }
     }
   }
-  const fileCollections = await liveCollections({ includeDrafts: true });
+  // Fresh, never the instance's copy (2.18c): whoever is here is about to change what the site shows.
+  const fileCollections = await liveCollections({ includeDrafts: true, fresh: true });
   const admin = signedIn && (await adminSignedIn());
   const startingPoints: StartingPoint[] = fileCollections.map(c => ({ slug: c.slug, title: c.title, works: c.works.length }));
 

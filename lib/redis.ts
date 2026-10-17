@@ -59,7 +59,8 @@ export interface RedisCommands {
   /**
    * Many HINCRBYs on one hash and its EXPIRE as **one** command, a Lua script
    * (ROADMAP 2.18d): the CPU meter's flush was 14–35 commands every thirty
-   * seconds per instance (measured 2.18b). Optional, like hIncrBy.
+   * seconds per instance (measured 2.18b). A `ttlSeconds` of 0 sets no expiry:
+   * the walls' views are kept, not a day's totals (2.18c). Optional, like hIncrBy.
    */
   hIncrByMany?(key: string, increments: ReadonlyArray<readonly [field: string, by: number]>, ttlSeconds: number): Promise<unknown>;
   /**
@@ -76,10 +77,10 @@ export function scanReply(reply: unknown): [string, string[]] {
   return [String(pair[0] ?? '0'), keys];
 }
 
-/** ARGV[1] is the expiry, then field and amount in turns. Returns how many fields it added to. */
+/** ARGV[1] is the expiry (0: none), then field and amount in turns. Returns how many fields it added to. */
 export const HINCRBY_MANY_SCRIPT =
   "for i = 2, #ARGV, 2 do redis.call('HINCRBY', KEYS[1], ARGV[i], ARGV[i + 1]) end " +
-  "redis.call('EXPIRE', KEYS[1], ARGV[1]) return (#ARGV - 1) / 2";
+  "if tonumber(ARGV[1]) > 0 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end return (#ARGV - 1) / 2";
 
 function hIncrByManyArgs(increments: ReadonlyArray<readonly [string, number]>, ttlSeconds: number): string[] {
   return [String(ttlSeconds), ...increments.flatMap(([field, by]) => [field, String(by)])];

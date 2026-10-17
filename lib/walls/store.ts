@@ -9,6 +9,8 @@
  * gives: API routes and pages get separate copies of a module there.
  */
 import { commandsFromEnv, type RedisCommands } from '../redis';
+import { Pause, storePause } from '../storepause';
+import { WallMemory } from './cache';
 import { MAX_WALLS_PER_OWNER, toPublic, UNSAVED_HOURS, WALLS_CAP, type PublicWall, type Wall } from './model';
 import { pageOf, readerOrder } from './order';
 
@@ -27,6 +29,8 @@ export interface WallStore {
   submittedIds(): Promise<string[]>;
   /** One more view of a wall by someone not its owner. Nothing about the viewer. */
   view(id: string): Promise<void>;
+  /** Many views at once — what an instance buffered (ROADMAP 2.18c, `lib/walls/cache.ts`), as one command where the store can. */
+  viewMany(views: ReadonlyArray<readonly [id: string, by: number]>): Promise<void>;
   views(): Promise<Map<string, number>>;
   /**
    * A browser pressed "Report" on a shown wall (ROADMAP 2.20). Counted once per
@@ -124,6 +128,9 @@ export function memoryWallStore(now: () => number = Date.now): WallStore {
     async view(id) {
       counts.set(id, (counts.get(id) ?? 0) + 1);
     },
+    async viewMany(views) {
+      for (const [id, by] of views) counts.set(id, (counts.get(id) ?? 0) + by);
+    },
     async views() {
       return new Map(counts);
     },
@@ -178,6 +185,18 @@ async function guarded<T>(work: Promise<T>): Promise<T> {
   }
 }
 
+/** A buffer of views as one EVAL where the store has the script — 0 leaves the hash without an expiry — else one HINCRBY per wall. */
+async function writeViews(commands: RedisCommands, views: ReadonlyArray<readonly [id: string, by: number]>): Promise<void> {
+  if (views.length === 0) return;
+  if (commands.hIncrByMany) {
+    await commands.hIncrByMany(KEYS.views, views, 0);
+    return;
+  }
+  const hIncrBy = commands.hIncrBy;
+  if (!hIncrBy) return;
+  await Promise.all(views.map(([id, by]) => hIncrBy(KEYS.views, id, by)));
+}
+
 export function commandsWallStore(commands: RedisCommands): WallStore {
   return {
     kind: 'redis',
@@ -199,6 +218,7 @@ export function commandsWallStore(commands: RedisCommands): WallStore {
     submittedIds: () =>
       guarded(commands.lRange(KEYS.showcase, 0, -1).then((r) => [...new Set(Array.isArray(r) ? r.filter((x): x is string => typeof x === 'string') : [])])),
     view: (id) => guarded((commands.hIncrBy ? commands.hIncrBy(KEYS.views, id, 1) : Promise.resolve()).then(() => undefined)),
+    viewMany: (views) => guarded(writeViews(commands, views)),
     views: () => guarded(commands.hGetAll(KEYS.views).then(countsFrom)),
     report: (id, by) =>
       guarded(
@@ -236,9 +256,80 @@ export async function listedWalls(store: WallStore): Promise<ShownWall[]> {
     .map((wall) => ({ wall, views: views.get(wall.id) ?? 0, reports: reports.get(wall.id) ?? 0 }));
 }
 
-/** The shown ones only, for the public page. */
+/** The shown ones only, from the store; the pages take `shownWallsCached`. */
 export async function shownWalls(store: WallStore): Promise<ShownWall[]> {
   return (await listedWalls(store)).filter((s) => s.wall.showcase === 'shown');
+}
+
+export interface MemoryOptions {
+  memory?: WallMemory;
+  pause?: Pause;
+  now?: number;
+}
+
+/**
+ * The shown walls as this instance remembers them (ROADMAP 2.18c): read once
+ * a minute, not once a request — `/collections` and `/collections/readers`
+ * read every listed wall by id. While the store is paused, or when it fails,
+ * the last list stands; with none yet, a failure is the caller's to show.
+ */
+export async function shownWallsCached(
+  store: WallStore,
+  { memory = wallMemory(), pause = storePause(), now = Date.now() }: MemoryOptions = {},
+): Promise<ShownWall[]> {
+  const held = memory.shown(now);
+  if (held) return held;
+  if (pause.active(now)) return memory.staleShown() ?? [];
+  try {
+    const list = await shownWalls(store);
+    memory.keepShown(list, now);
+    return list;
+  } catch (err) {
+    pause.trip(now);
+    const stale = memory.staleShown();
+    if (stale) return stale;
+    throw err;
+  }
+}
+
+/**
+ * A wall as this instance remembers it, or from the store (2.18c); `null`,
+ * "no such wall", is remembered too. A silent store throws, as `get` does —
+ * the page trips the pause.
+ */
+export async function cachedWall(store: WallStore, id: string, { memory = wallMemory(), now = Date.now() }: MemoryOptions = {}): Promise<Wall | null> {
+  const held = memory.wall(id, now);
+  if (held !== undefined) {
+    memory.hits += 1;
+    return held;
+  }
+  memory.misses += 1;
+  const wall = await store.get(id);
+  memory.keepWall(id, wall, now);
+  return wall;
+}
+
+/**
+ * Writes the views this instance buffered (`WallMemory.addView`) once the
+ * first request after `FLUSH_EVERY_MS` has come — called after a response
+ * has left, never on a reader's time. Answers how many walls were written.
+ * A write that fails puts the views back: they go with the instance, not
+ * with the error.
+ */
+export async function flushViews(
+  store: WallStore,
+  { memory = wallMemory(), now = Date.now(), force = false }: MemoryOptions & { force?: boolean } = {},
+): Promise<number> {
+  if (!force && !memory.viewsDue(now)) return 0;
+  const views = memory.takeViews(now);
+  if (views.length === 0) return 0;
+  try {
+    await store.viewMany(views);
+    return views.length;
+  } catch {
+    memory.returnViews(views);
+    return 0;
+  }
 }
 
 /** One page of the public list in a visit's order (5.13d): shared by the page and its route. */
@@ -248,7 +339,7 @@ export async function readersPage(
   offset: number,
   now: number = Date.now(),
 ): Promise<{ walls: PublicWall[]; next: number | null; total: number }> {
-  const shown = await shownWalls(store);
+  const shown = await shownWallsCached(store, { now });
   const ordered = readerOrder(shown.map((s) => ({ ...s, id: s.wall.id, createdOn: s.wall.createdOn })), seed, now);
   const page = pageOf(ordered, offset);
   return { walls: page.items.map((s) => toPublic(s.wall)), next: page.next, total: ordered.length };
@@ -259,16 +350,47 @@ export async function moderationList(store: WallStore): Promise<ShownWall[]> {
   return (await listedWalls(store)).sort((a, b) => b.reports - a.reports || b.wall.updatedAt.localeCompare(a.wall.updatedAt));
 }
 
-const shared = globalThis as typeof globalThis & { __wallsDevMemory?: WallStore };
+const shared = globalThis as typeof globalThis & { __wallsDevMemory?: WallStore; __wallsMemory?: WallMemory };
+
+/** What this instance remembers of the walls (2.18c), shared by pages and routes; replaced when hot reloading left an older shape. */
+export function wallMemory(): WallMemory {
+  if (!(shared.__wallsMemory instanceof WallMemory) || !('viewsDue' in shared.__wallsMemory)) shared.__wallsMemory = new WallMemory();
+  return shared.__wallsMemory;
+}
+
+/**
+ * The store as pages and routes get it: every write forgets what the instance
+ * remembers of that wall and of the shown list (2.18c), so a reader sees
+ * their own change at once; the other instances see it when their copy ages out.
+ */
+export function forgettingWallStore(store: WallStore, memory: WallMemory = wallMemory()): WallStore {
+  return {
+    ...store,
+    async put(wall) {
+      await store.put(wall);
+      memory.forgetWall(wall.id);
+      memory.forgetShown();
+    },
+    async submitted(id) {
+      await store.submitted(id);
+      memory.forgetShown();
+    },
+    async report(id, by) {
+      const result = await store.report(id, by);
+      if (result.fresh) memory.forgetShown();
+      return result;
+    },
+  };
+}
 
 export function wallStoreFromEnv(env: Record<string, string | undefined> = process.env): WallStore | null {
   const commands = commandsFromEnv(env);
-  if (commands) return commandsWallStore(commands);
+  if (commands) return forgettingWallStore(commandsWallStore(commands));
   if (env.NODE_ENV === 'production') return null;
   // Hot reloading keeps the old instance on globalThis; one that lacks a method
   // this code has would answer "did not answer" for a store that is fine
   // (found twice on 2026-09-28). Dev only, and its walls are scratch anyway.
   const fresh = memoryWallStore();
   if (!shared.__wallsDevMemory || Object.keys(fresh).some((k) => !(k in (shared.__wallsDevMemory as object)))) shared.__wallsDevMemory = fresh;
-  return shared.__wallsDevMemory;
+  return forgettingWallStore(shared.__wallsDevMemory);
 }
