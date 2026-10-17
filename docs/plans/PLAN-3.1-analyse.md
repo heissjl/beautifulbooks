@@ -90,6 +90,8 @@ Daraus zwei Wege, je nach Art des Links (Aufwand zusammen etwa zwei Stunden, ohn
 
 **Julians eigene Besuche** zählen nicht, solange sein Admin-Cookie `bb_admin` gilt: `/api/seen` und `/go/` prüfen es auf dem Server. *Gebaut anders als geplant (2026-10-04):* der Plan wollte einen Schalter `bb.self` in `localStorage` — aber dafür hätte die Seite auf **jedem** Gerät `localStorage` auslesen müssen, und genau das ist der Zugriff, den § 25 TDDDG meint. Das Cookie gibt es ohnehin nur auf Julians Geräten.
 
+**Geschrieben wird gebündelt (2.18d, 2026-10-17):** `/api/seen` und `/go/` zählen nicht mehr je Ereignis, sondern in einen Puffer je Funktionsinstanz (`lib/insights/buffer.ts`, `queueSignal` und `queueClick` in `lib/insights/store.ts`); die erste Anfrage nach zehn Sekunden schreibt die Summen als **einen** `EVAL` je Tages-Hash (`HINCRBY` aller Felder und `EXPIRE` in einem Befehl, `hIncrByMany`), nachdem ihre Antwort fort ist (`flushInsights` in `after()`). Vorher kostete ein Signal vier Befehle und ein Klick zwei — bei zehn Seitenaufrufen je Sekunde vierzig Befehle allein für die Analyse, gemessen 2.18b. Die Summen bleiben dieselben: `lib/__tests__/insights-buffer.test.ts` rechnet beide Wege gegeneinander. Was eine Instanz in ihren letzten zehn Sekunden zählte, geht mit ihr verloren, und die Ansicht sagt das; ein Schreibfehler legt die Summen zurück in den Puffer, nichts wird doppelt gezählt. `INSIGHTS=off` stellt jede Zählung ab (auch Ereignisse, Fotos und CPU), die Ansicht zeigt den Schalter unter „Betrieb".
+
 ## 5. Speicher
 
 Die Redis des Spiels (F7.3), über `commandsFromEnv` aus `lib/hotornot/store.ts`; ein neues Modul `lib/insights/` mit reinem Teil (Prüfen der Felder, Schlüssel bauen; getestet) und Serverteil (Schreiben).

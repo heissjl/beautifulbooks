@@ -6,9 +6,17 @@
  * after the response is on its way, and a silent store costs a number, not a
  * redirect. **Only production counts** — previews and `next dev` share the
  * same Redis or none, and a test click from a preview would be a reader in
- * the totals (plan §4).
+ * the totals (plan §4) — and only while `INSIGHTS` is not `off` (2.18d, the
+ * switch for a day the store must be spared).
+ *
+ * The two hot counters, the page signal (`/api/seen`) and the click through
+ * `/go/`, no longer write per event: `queueSignal` and `queueClick` add to a
+ * buffer per instance (`./buffer.ts`), and `flushInsights` writes the sums at
+ * most every ten seconds as one command per day-hash (ROADMAP 2.18d). The
+ * direct counters stay for the rare events (an operation's stumble, a photo).
  */
 import { commandsFromEnv, type RedisCommands } from '../redis';
+import { InsightsBuffer, type PendingHash } from './buffer';
 import { bookField, landingField, searchField, workField, type Signal } from './signals';
 import {
   clickField,
@@ -24,9 +32,18 @@ import {
 
 type Env = Record<string, string | undefined>;
 
+/** `INSIGHTS=off`: nothing is counted or written, whatever else is set (ROADMAP 2.18d, 2.18f). The view says so. */
+export function insightsOff(env: Env = process.env): boolean {
+  return (env.INSIGHTS ?? '').trim().toLowerCase() === 'off';
+}
+
 /** Whether this deployment adds to the totals at all. */
 export function countingEnabled(env: Env = process.env): boolean {
-  return env.VERCEL_ENV === 'production';
+  return env.VERCEL_ENV === 'production' && !insightsOff(env);
+}
+
+function retentionOf(hash: InsightsHash): number {
+  return hash === 'empty' ? EMPTY_RETENTION_SECONDS : RETENTION_SECONDS;
 }
 
 export type CountResult = 'counted' | 'off' | 'no-store' | 'invalid' | 'failed';
@@ -37,7 +54,7 @@ async function add(commands: RedisCommands, hash: InsightsHash, field: string, n
   try {
     await commands.hIncrBy(key, field, by);
     // Every write renews the day's expiry; the last write of a day sets it for good.
-    await commands.expire?.(key, hash === 'empty' ? EMPTY_RETENTION_SECONDS : RETENTION_SECONDS);
+    await commands.expire?.(key, retentionOf(hash));
     return 'counted';
   } catch {
     return 'failed';
@@ -143,14 +160,96 @@ export async function countSignal(signal: Signal, options: CountOptions = {}): P
   if (commands === 'off') return 'off';
   if (!commands) return 'no-store';
   const now = options.now ?? new Date();
-  const writes: Array<[InsightsHash, string]> =
-    signal.t === 'book'
-      ? [['book', bookField(signal)], ['works', workField(signal)]]
-      : signal.t === 'landing'
-        ? [['landing', landingField(signal)]]
-        : [['search', searchField(signal)], ...(signal.q ? [['empty', signal.q] as [InsightsHash, string]] : [])];
-  const results = await Promise.all(writes.map(([hash, field]) => add(commands, hash, field, now)));
+  const results = await Promise.all(signalWrites(signal).map(([hash, field]) => add(commands, hash, field, now)));
   return results.find(r => r !== 'counted') ?? 'counted';
+}
+
+/** The fields a signal adds one to, one per hash — the same for the direct counter and the buffer. */
+function signalWrites(signal: Signal): Array<[InsightsHash, string]> {
+  return signal.t === 'book'
+    ? [['book', bookField(signal)], ['works', workField(signal)]]
+    : signal.t === 'landing'
+      ? [['landing', landingField(signal)]]
+      : [['search', searchField(signal)], ...(signal.q ? [['empty', signal.q] as [InsightsHash, string]] : [])];
+}
+
+const sharedBuffer = globalThis as typeof globalThis & { __bbInsightsBuffer?: InsightsBuffer };
+
+/** This instance's buffer of sums not yet written (2.18d), on `globalThis` like the stores: `next dev` splits modules. */
+export function insightsBuffer(): InsightsBuffer {
+  if (!(sharedBuffer.__bbInsightsBuffer instanceof InsightsBuffer)) sharedBuffer.__bbInsightsBuffer = new InsightsBuffer();
+  return sharedBuffer.__bbInsightsBuffer;
+}
+
+export interface QueueOptions {
+  env?: Env;
+  buffer?: InsightsBuffer;
+  now?: Date;
+}
+
+export type QueueResult = 'queued' | 'off' | 'invalid';
+
+/** One visit's signal into the buffer — written with the next flush, not now (2.18d). */
+export function queueSignal(signal: Signal, options: QueueOptions = {}): QueueResult {
+  if (!countingEnabled(options.env)) return 'off';
+  const buffer = options.buffer ?? insightsBuffer();
+  const day = dayOf(options.now ?? new Date());
+  for (const [hash, field] of signalWrites(signal)) buffer.add(insightsKey(day, hash), field, 1, retentionOf(hash));
+  return 'queued';
+}
+
+/** One click through `/go/` into the buffer — written with the next flush, not now (2.18d). */
+export function queueClick(click: ClickCount, options: QueueOptions = {}): QueueResult {
+  const field = clickField(click);
+  if (!field) return 'invalid';
+  if (!countingEnabled(options.env)) return 'off';
+  (options.buffer ?? insightsBuffer()).add(insightsKey(dayOf(options.now ?? new Date()), 'clicks'), field, 1, RETENTION_SECONDS);
+  return 'queued';
+}
+
+/** One day-hash of sums as one command where the store has the script, else one HINCRBY per field and one EXPIRE. */
+async function writeHash(commands: RedisCommands, pending: PendingHash): Promise<void> {
+  if (commands.hIncrByMany) {
+    await commands.hIncrByMany(pending.key, pending.increments, pending.retention);
+    return;
+  }
+  const hIncrBy = commands.hIncrBy;
+  if (!hIncrBy) return;
+  await Promise.all(pending.increments.map(([field, by]) => hIncrBy(pending.key, field, by)));
+  await commands.expire?.(pending.key, pending.retention);
+}
+
+export type FlushResult = 'written' | 'nothing' | 'not-due' | 'off' | 'no-store' | 'failed';
+
+/**
+ * Writes what the buffer holds once the first call after `FLUSH_EVERY_MS`
+ * has come: one command per day-hash. Called after a response has left
+ * (`later`), never on the reader's time. A hash whose write fails goes back
+ * into the buffer for the next flush — nothing is counted twice, nothing is
+ * lost while the instance lives.
+ */
+export async function flushInsights(options: CountOptions & { buffer?: InsightsBuffer; force?: boolean } = {}): Promise<FlushResult> {
+  const buffer = options.buffer ?? insightsBuffer();
+  const nowMs = (options.now ?? new Date()).getTime();
+  if (!options.force && !buffer.due(nowMs)) return 'not-due';
+  const commands = setup(options);
+  if (commands === 'off') return 'off';
+  if (!commands) return 'no-store';
+  const pending = buffer.take(nowMs);
+  if (pending.length === 0) return 'nothing';
+  const failed: PendingHash[] = [];
+  for (const p of pending) {
+    try {
+      await writeHash(commands, p);
+    } catch {
+      failed.push(p);
+    }
+  }
+  if (failed.length > 0) {
+    buffer.putBack(failed);
+    return 'failed';
+  }
+  return 'written';
 }
 
 /**

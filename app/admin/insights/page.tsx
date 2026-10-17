@@ -5,6 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import type { ProviderRow } from '@/lib/insights/model';
 import { buildReport, parseMarket, parseRange, RANGES, type InsightsReport } from '@/lib/insights/report';
+import { insightsOff } from '@/lib/insights/store';
 import type { Market } from '@/lib/market';
 import { adminCookieValid } from '@/lib/suggest/session';
 import { PRICES_AS_OF } from '@/lib/insights/prices';
@@ -188,6 +189,8 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           <Note>
             Ein Signal je Besuch, beim Verlassen der Seite. Abgleich: {plural(books.bought, 'Besuch', 'Besuche')} mit Klick laut Browser,{' '}
             {plural(clicks.total, 'Klick', 'Klicks')} laut /go/ — ein Besuch kann mehrere Klicks haben, ein verlorenes Signal fehlt nur links.
+            Signale und Klicks sammelt jede Instanz und schreibt sie höchstens alle zehn Sekunden; was eine Instanz in ihren letzten zehn
+            Sekunden zählte, geht mit ihr verloren (2.18d).
           </Note>
         </Card>
         <Card title="Je Tag" sub={`Klicks zum Händler, ${shortDay(report.from)} bis ${shortDay(report.to)} (UTC).`}>
@@ -339,6 +342,12 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
               name="Open Library"
               good="keine Suche ist an Open Library gescheitert"
               bad={`${nf.format(report.ops.totals['ol-failed'])} gescheiterte ${report.ops.totals['ol-failed'] === 1 ? 'Suche' : 'Suchen'} an ${report.ops.daysWith['ol-failed'].length === 1 ? 'einem Tag' : `${report.ops.daysWith['ol-failed'].length} Tagen`}`}
+            />
+            <Status
+              ok={!insightsOff()}
+              name="Zählung"
+              good="an — Signale und Klicks je Instanz gesammelt, höchstens alle zehn Sekunden geschrieben"
+              bad="abgeschaltet (INSIGHTS=off): seit diesem Deploy wird nichts gezählt; die Tage davor stehen hier weiter"
             />
           </ul>
           <Note>

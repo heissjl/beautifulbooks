@@ -7,7 +7,7 @@ import { localLinkFor } from '@/lib/localshops';
 import type { Market } from '@/lib/market';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
 import { later } from '@/app/api/count';
-import { countClick } from '@/lib/insights/store';
+import { flushInsights, queueClick } from '@/lib/insights/store';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 import { measure } from '@/app/api/measure';
 
@@ -71,7 +71,9 @@ function wordsSearch(request: NextRequest, provider: string, home: URL): NextRes
  */
 function countUnlessJulian(request: NextRequest, provider: string, market: Market, kind: 'product' | 'search'): void {
   if (adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value)) return;
-  later(() => countClick({ provider, market, kind }));
+  // Into the instance's buffer now, to the store at most every ten seconds, after the redirect has left (2.18d).
+  queueClick({ provider, market, kind });
+  later(() => flushInsights());
 }
 
 /**

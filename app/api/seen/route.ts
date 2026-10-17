@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { later } from '@/app/api/count';
 import { rateLimited } from '@/app/api/rate';
 import { MAX_SIGNAL_BYTES, parseSignal } from '@/lib/insights/signals';
-import { countSignal } from '@/lib/insights/store';
+import { flushInsights, queueSignal } from '@/lib/insights/store';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 import { measure } from '@/app/api/measure';
 
@@ -39,6 +39,10 @@ export async function POST(request: NextRequest) {
     return NOTHING();
   }
   const signal = parseSignal(body);
-  if (signal) later(() => countSignal(signal));
+  if (signal) {
+    // Into the instance's buffer now, to the store at most every ten seconds, after the answer has left (2.18d).
+    queueSignal(signal);
+    later(() => flushInsights());
+  }
   return NOTHING();
 }

@@ -1209,3 +1209,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **2.18c Die Redis vom heißen Pfad.** Startseite, `/collections` und `/c/<id>` fragen heute bei jedem Aufruf (3 `GET` mit ganzen Sammlungen, bzw. 2 `GET` + 1 `HINCRBY`). `liveRecords` 60 s je Instanz, verworfen beim Veröffentlichen; Sammlungen der Leser aus einem Cache mit Etikett; Aufrufzähler gebündelt; schweigt der Speicher, fragt die Instanz 30 s nicht. Claude, 1 Tag. Thema: Betrieb. **Gemessen 2026-10-05 (2.18b):** `/collections/<slug>` liest `collections:content`, `:published` und `:order` zweimal je Aufruf (`generateMetadata` und die Seite rufen `findCollection` je einmal, ohne `cache()`), also 6 statt 3 `GET`. **Teil erledigt 2026-10-05:** `liveRecords` läuft durch React `cache()`, eine Sammlungsseite fragt Redis 3- statt 6-mal (nachgemessen). Offen bleibt der Kern: Startseite und Sammlungen ganz ohne Redis im Rendern.
 
 **Erledigt 2026-10-17.** → [Historie](history.md#2026-10-17--die-redis-vom-heißen-pfad-roadmap-218c)
+
+## 2.18d
+
+**2.18d Analyse gebündelt.** Ein Seitensignal kostet 4 Redis-Befehle; je Instanz sammeln und höchstens alle 10 s schreiben, Schalter `INSIGHTS=off`. Berührt 3.1 (Plan §4, Summentest). Claude, ½ Tag. Thema: Betrieb. **Gemessen 2026-10-05 (2.18b):** die CPU-Messung (2.18l) schreibt je Instanz und 30 s einen Stoß von 14–35 `HINCRBY`, je ein Befehl je Feld; gebündelt wäre es ein Befehl. **Teil erledigt 2026-10-05:** die CPU-Messung schreibt eine Abgabe als ein `EVAL` (Lua: alle `HINCRBY` und das `EXPIRE`), nachgemessen 1 statt 5–35 Befehle. Offen bleiben das Signal `/api/seen` und der Schalter `INSIGHTS=off`.
+
+**Erledigt 2026-10-17.** → [Historie](history.md#2026-10-17--analyse-gebündelt-roadmap-218d)
