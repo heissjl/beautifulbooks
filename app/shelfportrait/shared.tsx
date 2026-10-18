@@ -9,6 +9,8 @@ import { versusEnabled } from '@/lib/hotornot/switch';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { PICTURE_VERSION, titleOf } from '@/lib/inspiration/share';
 import { wallsEnabled } from '@/lib/walls/switch';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/server';
 
 /**
  * What the two shared addresses have in common (ROADMAP 5.18b): the short
@@ -34,6 +36,7 @@ export async function origin(): Promise<string> {
   return `${/^(localhost|127\.|\[::1\])/.test(host) ? 'http' : 'https'}://${host}`;
 }
 
+/** Metadata stays English in every language (SPEC §2.6): a crawler and a messenger's preview see one page. */
 export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   const title = titleOf(board?.by ?? '');
   const description = `${board?.sub ? `${board.sub}. ` : ''}${board ? SIZE_WORD[sizeOf(board)] : 'Nine'} books, each with a favourite cover. Take your Shelf-Portrait.`;
@@ -49,14 +52,19 @@ export async function sharedMetadata(board: Board | null): Promise<Metadata> {
   };
 }
 
-/** The shared view of a board, or one sentence when there is no board to show. `path` is the address it was reached under. */
-export async function SharedPage({ board, path, missing }: { board: Board | null; path: string; missing?: string }) {
+/**
+ * The shared view of a board, or one sentence when there is no board to show.
+ * `path` is the address it was reached under; `missing` is already in the
+ * reader's language, and `locale` gives the board its words (5.18b).
+ */
+export async function SharedPage({ board, path, missing, locale = DEFAULT_LOCALE }: { board: Board | null; path: string; missing?: string; locale?: Locale }) {
+  const t = translator(locale);
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
         {board ? (
-          <InspirationShared board={await describeBoard(board, { editions: true })} query={boardQuery(board)} link={`${await origin()}${path}`} walls={wallsEnabled()} versus={versusEnabled()} />
+          <InspirationShared board={await describeBoard(board, { editions: true })} query={boardQuery(board)} link={`${await origin()}${path}`} walls={wallsEnabled()} versus={versusEnabled()} t={t} />
         ) : (
           <p className="py-24 text-center text-ink-2">{missing}</p>
         )}

@@ -12,6 +12,7 @@ import { starterPool } from '@/lib/inspiration/starterpool';
 import { describeBoard } from '@/lib/inspiration/describe';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/server';
 import { SITE_URL } from '@/lib/seo';
 import { measure } from '@/app/api/measure';
 
@@ -25,8 +26,10 @@ import { measure } from '@/app/api/measure';
  * request: a reload, or a link pasted before "Done", opens with its covers
  * and their titles already there.
  *
- * `locale` is taken so that the German mirror can render this page, and not
- * used yet: the page is English only until its sentences are settled.
+ * `locale` comes from the German mirror (`app/de/shelfportrait/page.tsx`):
+ * the FAQ is rendered here on the server and takes its `t`, the editor is a
+ * client component and reads the locale from the layout's provider (5.18b,
+ * German since 2026-10-18). Metadata stays English.
  */
 export const metadata: Metadata = {
   title: 'My Shelf-Portrait',
@@ -39,7 +42,6 @@ export const dynamic = 'force-dynamic';
 
 type Props = { searchParams?: Promise<Record<string, string | string[] | undefined>>; locale?: Locale };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- `locale` is the mirror's contract (see above)
 export default async function InspirationPage({ searchParams, locale = DEFAULT_LOCALE }: Props) {
   measure('page-portrait');
   if (!inspirationEnabled()) notFound();
@@ -54,7 +56,7 @@ export default async function InspirationPage({ searchParams, locale = DEFAULT_L
     <div className="flex min-h-screen flex-col pb-14 sm:pb-0">
       <SiteHeader search={<HeaderSearch />} />
       <InspirationEditor initialQuery={boardQuery(board)} initialNames={names} starters={starters}>
-        <InspirationFaq />
+        <InspirationFaq t={translator(locale)} />
       </InspirationEditor>
       <SiteFooter />
     </div>

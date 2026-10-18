@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CoverImage from './CoverImage';
+import { useT } from './i18n';
 import { coverRefFromUrl, coverUrlFor } from '@/lib/coverurl';
 import { keepNames, keptNames, MINE, rememberMade } from './inspirationMemory';
 import {
@@ -31,6 +32,8 @@ import { isStarter, type Starter } from '@/lib/inspiration/starters';
 import type { WorkCovers } from '@/lib/inspiration/covers';
 import type { SearchResult } from '@/lib/search';
 import { SITE_NAME } from '@/lib/seo';
+import { formatNumber, type Translate } from '@/lib/i18n/translate';
+import { useLocale } from './i18n';
 
 /**
  * The editor of "My Shelf-Portrait" (ROADMAP 5.18b; "The books that inspired
@@ -48,10 +51,12 @@ import { SITE_NAME } from '@/lib/seo';
  * (`lib/inspiration/board.ts`), so nothing is stored while a board is made
  * and a reload loses nothing; only "Done" asks for a link.
  *
- * **English only for now.** The sentences here are still being decided
- * (the headline and the hashtag are Julian's to settle), so they do not go
- * through `t()` yet: translating them now would pin wording that is about to
- * change. German is a step before production, listed in ROADMAP 5.18b.
+ * **Every sentence goes through `t()`** (ROADMAP 5.18b, since 2026-10-18;
+ * English only until then, while the wording was still being decided). The
+ * tables below — the line per size, the list labels, the suggested sublines —
+ * hold English keys that `t` looks up at render; `lib/__tests__/i18n.test.ts`
+ * reads them. What a reader types (name, subline) is theirs and is not
+ * translated; the pictures stay English (`lib/inspiration/share.ts`).
  */
 
 export type Named = { title: string; author?: string | null };
@@ -81,24 +86,23 @@ type Covers =
   | { workId: string; state: 'done'; data: WorkCovers; more?: 'loading' | 'failed' }
   | { workId: string; state: 'failed'; message: string };
 
-const LIST_LABELS: Record<BrowseList['id'], string> = {
-  curated: `Picked by ${SITE_NAME}`,
+/** `{name}` is `SITE_NAME`, filled at render. */
+export const LIST_LABELS: Record<BrowseList['id'], string> = {
+  curated: 'Picked by {name}',
   popular: 'Most read on Open Library',
 };
 
-const SIZE_LINE: Record<(typeof SIZES)[number], string> = {
+export const SIZE_LINE: Record<(typeof SIZES)[number], string> = {
   3: 'Your must-reads.',
   6: 'A few books that altered your brain chemistry.',
   9: 'A stack of books that changed your outlook.',
 };
 
 /** Lines to start from, as 9things.me offers „Make it specific"; the first is the phrase the trend is searched by. */
-const SUB_IDEAS = ['The books that define me', 'The books that made me', 'Read before I was twelve', 'Most reread'];
+export const SUB_IDEAS = ['The books that define me', 'The books that made me', 'Read before I was twelve', 'Most reread'];
 
 /** The editor's public address; the code keeps the name it was built under (`inspiration`). */
 const EDITOR = '/shelfportrait';
-
-const SILENT = 'Open Library did not answer. Try again in a moment.';
 
 const CHUNK = 60;
 const pill = (active: boolean) =>
@@ -106,6 +110,7 @@ const pill = (active: boolean) =>
 const plain = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 export default function InspirationEditor({ initialQuery, initialNames, starters = [], children }: { initialQuery: string; initialNames: Record<string, Named>; starters?: Starter[]; children?: React.ReactNode }) {
+  const t = useT();
   const router = useRouter();
   /*
     The board is read from the address the browser shows, not only from what the server was asked:
@@ -146,7 +151,8 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
 
   const filled = filledCount(board);
   const size = sizeOf(board);
-  const nameOf = (workId: string) => names[workId]?.title ?? 'This book';
+  const nameOf = (workId: string) => names[workId]?.title ?? t('This book');
+  const sizeWord = (n: (typeof SIZES)[number]) => t(SIZE_WORD[n]);
 
   /*
     Dragging a cover to its place, as Arrange does it: pointer events, one drag
@@ -244,12 +250,13 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
     fetch(`/api/inspiration/covers/${workId}`)
       .then(async (r) => {
         const body = (await r.json().catch(() => null)) as (WorkCovers & { error?: string }) | null;
-        if (!r.ok || !body) throw new Error(body?.error ?? 'Open Library did not answer. Try again in a moment.');
+        // A server sentence the catalogue knows (Open Library silent) comes out in the reader's language; any other stays as sent.
+        if (!r.ok || !body) throw new Error(t(body?.error ?? 'Open Library did not answer. Try again in a moment.'));
         return body;
       })
       // The reader may have opened another book's covers while Open Library answered.
       .then((data) => setCovers((c) => (c?.workId === workId ? { workId, state: 'done', data } : c)))
-      .catch((err: unknown) => setCovers((c) => (c?.workId === workId ? { workId, state: 'failed', message: err instanceof Error ? err.message : 'Open Library did not answer. Try again in a moment.' } : c)));
+      .catch((err: unknown) => setCovers((c) => (c?.workId === workId ? { workId, state: 'failed', message: err instanceof Error ? err.message : t('Open Library did not answer. Try again in a moment.') } : c)));
   }
 
   /** The next three pages of editions, joined to what the window shows (Julian, 2026-10-05: „make an option to load more covers"). */
@@ -260,7 +267,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
     fetch(`/api/inspiration/covers/${workId}?from=${data.checked}`)
       .then(async (r) => {
         const body = (await r.json().catch(() => null)) as (WorkCovers & { error?: string }) | null;
-        if (!r.ok || !body) throw new Error(body?.error ?? SILENT);
+        if (!r.ok || !body) throw new Error(t(body?.error ?? 'Open Library did not answer. Try again in a moment.'));
         return body;
       })
       .then((next) =>
@@ -279,19 +286,19 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
     // Only a full board is shared (isFull): a tap before then says why instead of making a picture with empty places.
     if (!isFull(board)) {
       const smaller = SIZES.find((n) => n === filled);
-      setLink({ busy: false, note: `Fill all ${size} places first${smaller ? ` — or choose ${SIZE_WORD[smaller].toLowerCase()} books above` : ', or choose a smaller board above'}.` });
+      setLink({ busy: false, note: smaller ? t('Fill all {size} places first — or choose {n} books above.', { size, n: sizeWord(smaller).toLowerCase() }) : t('Fill all {size} places first, or choose a smaller board above.', { size }) });
       return;
     }
     setLink({ busy: true, note: '' });
     try {
       const res = await fetch('/api/inspiration/link', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ q: boardQuery(board) }) });
       const body = (await res.json().catch(() => null)) as { path?: string; error?: string } | null;
-      if (!res.ok || !body?.path) throw new Error(body?.error ?? 'The link could not be made. Try again in a moment.');
+      if (!res.ok || !body?.path) throw new Error(t(body?.error ?? 'The link could not be made. Try again in a moment.'));
       // So the shared page can tell its maker from a visitor without an id (components/inspirationMemory.ts).
       rememberMade(boardQuery(board));
       router.push(`${body.path}${MINE}`);
     } catch (err) {
-      setLink({ busy: false, note: err instanceof Error ? err.message : 'The link could not be made. Try again in a moment.' });
+      setLink({ busy: false, note: err instanceof Error ? err.message : t('The link could not be made. Try again in a moment.') });
     }
   }
 
@@ -310,12 +317,12 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
       {/* The band: where the board stands and the way out, kept in sight — at the top on a wide screen, at the thumb on a phone. */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-accent bg-ink text-bg sm:sticky sm:bottom-auto sm:top-14 sm:z-10 sm:border-t-0">
         <div className="mx-auto flex min-h-12 max-w-5xl flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2 sm:px-6 lg:px-8">
-          <span className="text-[11px] uppercase tracking-[0.14em] text-bg/70">Your board</span>
+          <span className="text-[11px] uppercase tracking-[0.14em] text-bg/70">{t('Your board')}</span>
           <span className="flex-1 font-display text-lg sm:text-xl" role="status">
-            {link.busy ? 'Making the link…' : filled === size ? `${SIZE_WORD[size]}. Done.` : `${filled} of ${size}`}
+            {link.busy ? t('Making the link…') : filled === size ? t('{n}. Done.', { n: sizeWord(size) }) : t('{filled} of {size}', { filled, size })}
           </span>
           <button type="button" onClick={finish} disabled={filled === 0 || link.busy} className="rounded-full bg-bg px-4 py-2 text-sm text-ink hover:bg-surface disabled:opacity-40 sm:py-0.5">
-            Done — share it
+            {t('Done — share it')}
           </button>
           {/* On a phone the page's own note is out of sight above; the band, under the thumb, says it too. */}
           {link.note && <p className="basis-full text-xs text-bg/80 sm:hidden" role="status">{link.note}</p>}
@@ -332,20 +339,20 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
         <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_27rem] lg:items-start lg:gap-x-16">
         <div className="max-w-xl lg:sticky lg:top-32">
           {/* Two lines, the name above and what it is below (Julian, 2026-10-05: „Oben: My Shelf-Portrait, unten: The books that inspire me"). */}
-          <h1 className="text-3xl leading-tight text-ink sm:text-4xl">My Shelf-Portrait</h1>
-          <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">The books that inspire me</p>
+          <h1 className="text-3xl leading-tight text-ink sm:text-4xl">{t('My Shelf-Portrait')}</h1>
+          <p className="mt-1 font-display text-xl italic text-ink-2 sm:text-2xl">{t('The books that inspire me')}</p>
           {/* One line per size, Julian's (2026-10-05). */}
-          <p className="mt-3 text-base text-ink-2">{SIZE_LINE[size]}</p>
+          <p className="mt-3 text-base text-ink-2">{t(SIZE_LINE[size])}</p>
 
           {/*
             Three, six or nine (Julian, 2026-10-05: „gib die möglichkeit sich zwischen 3, 6 und 9 zu
             entscheiden beim erstellen"). Before the steps, because the first step counts the books.
           */}
-          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2" role="group" aria-label="How many books">
-            <span className="text-sm text-ink-2">How many books?</span>
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2" role="group" aria-label={t('How many books')}>
+            <span className="text-sm text-ink-2">{t('How many books?')}</span>
             <span className="flex gap-1.5">
               {SIZES.map((n) => (
-                <button key={n} type="button" aria-pressed={n === size} aria-label={`${SIZE_WORD[n]} books`} onClick={() => chooseSize(n)} className={`${pill(n === size)} min-w-11 tabular-nums`}>
+                <button key={n} type="button" aria-pressed={n === size} aria-label={t('{n} books', { n: sizeWord(n) })} onClick={() => chooseSize(n)} className={`${pill(n === size)} min-w-11 tabular-nums`}>
                   {n}
                 </button>
               ))}
@@ -353,7 +360,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
           </div>
           {spare.length > 0 && (
             <p className="mt-2 text-sm text-ink-3" role="status">
-              {spare.length === 1 ? 'One book is set aside' : `${spare.length} books are set aside`} — a bigger board brings {spare.length === 1 ? 'it' : 'them'} back.
+              {spare.length === 1 ? t('One book is set aside — a bigger board brings it back.') : t('{n} books are set aside — a bigger board brings them back.', { n: spare.length })}
             </p>
           )}
 
@@ -362,22 +369,22 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
             can be changed after the book is placed was said nowhere a reader looked before they clicked.
           */}
           <ol className="mt-5 space-y-1.5 text-sm text-ink-2">
-            <li><span className="mr-2 text-ink-3 tabular-nums">1</span>Add {SIZE_WORD[size].toLowerCase()} books — search for them or browse a list.</li>
-            <li><span className="mr-2 text-ink-3 tabular-nums">2</span><strong className="font-medium text-ink">Then change the covers.</strong> Each book arrives with its best-known one; a tap on it shows the others — pick the one you love.</li>
-            <li><span className="mr-2 text-ink-3 tabular-nums">3</span>Share the picture.</li>
+            <li><span className="mr-2 text-ink-3 tabular-nums">1</span>{t('Add {n} books — search for them or browse a list.', { n: sizeWord(size).toLowerCase() })}</li>
+            <li><span className="mr-2 text-ink-3 tabular-nums">2</span><strong className="font-medium text-ink">{t('Then change the covers.')}</strong> {t('Each book arrives with its best-known one; a tap on it shows the others — pick the one you love.')}</li>
+            <li><span className="mr-2 text-ink-3 tabular-nums">3</span>{t('Share the picture.')}</li>
           </ol>
           {/*
             The words people search for (Julian, 2026-10-06: „ja, schreib das irgendwo in die shelfportrait
             creation seite"), without naming the grids they come from („ich will nicht die andere seite referenzieren").
           */}
-          <p className="mt-4 text-sm text-ink-2">The books that define you — each with the cover you love, and where to find that edition.</p>
+          <p className="mt-4 text-sm text-ink-2">{t('The books that define you — each with the cover you love, and where to find that edition.')}</p>
           {link.note && <p className="mt-3 text-sm text-accent" role="alert">{link.note}</p>}
 
           <input
             value={nameDraft}
             maxLength={NAME_MAX}
-            placeholder="Your name or handle (optional)"
-            aria-label="Your name or handle, shown on the picture"
+            placeholder={t('Your name or handle (optional)')}
+            aria-label={t('Your name or handle, shown on the picture')}
             onChange={(e) => {
               setNameDraft(e.target.value);
               setBoard((b) => ({ ...b, by: cleanName(e.target.value) }));
@@ -391,16 +398,16 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
           <input
             value={subDraft}
             maxLength={SUB_MAX}
-            placeholder="A line under the title (optional)"
-            aria-label="A line of your own under the title, shown on the picture"
+            placeholder={t('A line under the title (optional)')}
+            aria-label={t('A line of your own under the title, shown on the picture')}
             onChange={(e) => {
               setSubDraft(e.target.value);
               setBoard((b) => ({ ...b, sub: cleanName(e.target.value, SUB_MAX) }));
             }}
             className="mt-2 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
           />
-          <div className="mt-2 flex flex-wrap gap-1.5" role="group" aria-label="Suggestions for the line">
-            {SUB_IDEAS.map((idea) => (
+          <div className="mt-2 flex flex-wrap gap-1.5" role="group" aria-label={t('Suggestions for the line')}>
+            {SUB_IDEAS.map((idea) => t(idea)).map((idea) => (
               <button
                 key={idea}
                 type="button"
@@ -417,11 +424,11 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
           </div>
         </div>
 
-        <section className="mt-6 max-w-xl lg:mt-0" aria-label={`Your ${SIZE_WORD[size].toLowerCase()} books`}>
+        <section className="mt-6 max-w-xl lg:mt-0" aria-label={t('Your {n} books', { n: sizeWord(size).toLowerCase() })}>
             {/* Said in words, not only in a tile's `title`: a tooltip never shows on a touch screen (Arrange learnt this on 2026-10-04). */}
             <p className="text-sm text-ink-2">
               {filled === 0 ? (
-                'Tap or click a + to add your first book.'
+                t('Tap or click a + to add your first book.')
               ) : (
                 <>
                   {/*
@@ -429,9 +436,17 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
                     the shelfportrait and have some incentive to interact"): a board that already holds three
                     covers shows the idea, and the sentence says they are not the reader's yet.
                   */}
-                  {examples > 0 && <span className="mb-1 block text-ink">{examples === 1 ? 'One example is still on your board' : `${examples === 3 ? 'Three' : 'Two'} examples to start you off`} — keep {examples === 1 ? 'it' : 'them'}, change the cover, or take {examples === 1 ? 'it' : 'them'} out with ✕.</span>}
-                  <span className="sm:hidden">Tap a cover to change it for your favourite. Drag ⠿ to move it.</span>
-                  <span className="hidden sm:inline">Click a cover to change it for your favourite. Drag a cover to move it.</span>
+                  {examples > 0 && (
+                    <span className="mb-1 block text-ink">
+                      {examples === 1
+                        ? t('One example is still on your board — keep it, change the cover, or take it out with ✕.')
+                        : examples === 2
+                          ? t('Two examples to start you off — keep them, change the cover, or take them out with ✕.')
+                          : t('Three examples to start you off — keep them, change the cover, or take them out with ✕.')}
+                    </span>
+                  )}
+                  <span className="sm:hidden">{t('Tap a cover to change it for your favourite. Drag ⠿ to move it.')}</span>
+                  <span className="hidden sm:inline">{t('Click a cover to change it for your favourite. Drag a cover to move it.')}</span>
                 </>
               )}
             </p>
@@ -442,7 +457,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
                     <li key={i} data-index={i}>
                       <button
                         type="button"
-                        aria-label={`Add a book in place ${i + 1}`}
+                        aria-label={t('Add a book in place {n}', { n: i + 1 })}
                         onClick={() => openAdd(i)}
                         className={`flex aspect-[2/3] w-full items-center justify-center rounded-card border border-dashed text-3xl font-light text-ink-3 transition-colors hover:border-accent hover:text-accent ${drag?.over === i && drag.from !== i ? 'border-accent ring-2 ring-accent ring-offset-2 ring-offset-bg' : 'border-line'}`}
                       >
@@ -460,8 +475,8 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
                   <li key={i} data-index={i} className={lifted ? 'opacity-40' : ''}>
                     <button
                       type="button"
-                      aria-label={`${name} — choose another cover`}
-                      title="Click for another cover of this book, drag to move it"
+                      aria-label={t('{name} — choose another cover', { name })}
+                      title={t('Click for another cover of this book, drag to move it')}
                       className={`cover-shadow relative block aspect-[2/3] w-full cursor-grab select-none overflow-hidden rounded-card border-0 bg-surface-2 p-0 ${over ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}
                       onPointerDown={(e) => {
                         // Every press starts clean: a drag whose click never came must not swallow the next tap.
@@ -475,24 +490,24 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
                     >
                       {src && <CoverImage src={src} alt={names[slot.workId]?.title ?? ''} sizes="(max-width: 640px) 33vw, 190px" />}
                       {isStarter(slot, starterAt(i)) && (
-                        <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-[3px] bg-ink/85 px-1.5 py-0.5 text-[11px] leading-4 text-bg">Example</span>
+                        <span className="pointer-events-none absolute left-1.5 top-1.5 rounded-[3px] bg-ink/85 px-1.5 py-0.5 text-[11px] leading-4 text-bg">{t('Example')}</span>
                       )}
                     </button>
                     {/* On a phone only the grip and ✕: four buttons do not fit under a 109 px cover. The arrows stay for a wide screen and the keyboard. */}
                     <span className="mt-1.5 flex items-center justify-around sm:justify-between">
-                      <ToolButton label={`Move ${name} left`} hidden={i === 0} wide onClick={() => setBoard((b) => swap(b, i, i - 1))}>←</ToolButton>
+                      <ToolButton label={t('Move {name} left', { name })} hidden={i === 0} wide onClick={() => setBoard((b) => swap(b, i, i - 1))}>←</ToolButton>
                       <button
                         type="button"
-                        aria-label={`Drag ${name} to another place`}
-                        title="Drag to another place"
+                        aria-label={t('Drag {name} to another place', { name })}
+                        title={t('Drag to another place')}
                         onPointerDown={(e) => pickUp(e, i)}
                         {...handlers}
                         className="h-9 w-9 cursor-grab touch-none rounded-full text-lg text-ink-3 hover:text-accent sm:h-8 sm:w-8"
                       >
                         ⠿
                       </button>
-                      <ToolButton label={`Take ${name} out`} onClick={() => setBoard((b) => remove(b, i))}>✕</ToolButton>
-                      <ToolButton label={`Move ${name} right`} hidden={i === size - 1} wide onClick={() => setBoard((b) => swap(b, i, i + 1))}>→</ToolButton>
+                      <ToolButton label={t('Take {name} out', { name })} onClick={() => setBoard((b) => remove(b, i))}>✕</ToolButton>
+                      <ToolButton label={t('Move {name} right', { name })} hidden={i === size - 1} wide onClick={() => setBoard((b) => swap(b, i, i + 1))}>→</ToolButton>
                     </span>
                   </li>
                 );
@@ -505,9 +520,10 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
 
       {win?.kind === 'add' && (
         <Sheet
-          kicker={`Book ${Math.min(filled + 1, size)} of ${size}`}
-          title="Add a book"
-          sub="Search for a book or browse a list. A click puts it on your board with its best-known cover — you change the cover afterwards."
+          kicker={t('Book {n} of {size}', { n: Math.min(filled + 1, size), size })}
+          title={t('Add a book')}
+          sub={t('Search for a book or browse a list. A click puts it on your board with its best-known cover — you change the cover afterwards.')}
+          closeLabel={t('Close')}
           onClose={() => setWin(null)}
         >
           {/* The board in small: the window covers the real one. */}
@@ -521,32 +537,34 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
               );
             })}
           </div>
-          <div className="mt-3 flex gap-1.5" role="tablist" aria-label="How to find a book">
-            <button type="button" role="tab" aria-selected={addTab === 'search'} onClick={() => showTab('search')} className={pill(addTab === 'search')}>Search</button>
-            <button type="button" role="tab" aria-selected={addTab === 'browse'} onClick={() => showTab('browse')} className={pill(addTab === 'browse')}>Browse</button>
+          <div className="mt-3 flex gap-1.5" role="tablist" aria-label={t('How to find a book')}>
+            <button type="button" role="tab" aria-selected={addTab === 'search'} onClick={() => showTab('search')} className={pill(addTab === 'search')}>{t('Search')}</button>
+            <button type="button" role="tab" aria-selected={addTab === 'browse'} onClick={() => showTab('browse')} className={pill(addTab === 'browse')}>{t('Browse')}</button>
           </div>
           {/* Both stay mounted: a search typed and a place in a list survive the other tab. */}
           <div hidden={addTab !== 'search'} className="mt-3">
-            <SearchPane active={addTab === 'search'} onPick={toggleBook} />
+            <SearchPane active={addTab === 'search'} onPick={toggleBook} t={t} />
           </div>
           <div hidden={addTab !== 'browse'} className="mt-3">
-            <BrowsePane lists={lists} board={board} onPick={toggleBook} onRetry={loadLists} />
+            <BrowsePane lists={lists} board={board} onPick={toggleBook} onRetry={loadLists} t={t} />
           </div>
         </Sheet>
       )}
 
       {win?.kind === 'covers' && coversSlot && (
         <Sheet
-          kicker="Your favourite cover"
-          title={[names[coversSlot.workId]?.title, names[coversSlot.workId]?.author].filter(Boolean).join(' · ') || 'This book'}
+          kicker={t('Your favourite cover')}
+          title={[names[coversSlot.workId]?.title, names[coversSlot.workId]?.author].filter(Boolean).join(' · ') || t('This book')}
           // Julian's wording, 2026-10-05: the cover one loves counts as much as the printing one held.
-          sub="Pick the cover of the edition you read or the one you love the most: it takes the place of the marked one on your board."
+          sub={t('Pick the cover of the edition you read or the one you love the most: it takes the place of the marked one on your board.')}
+          closeLabel={t('Close')}
           onClose={() => setWin(null)}
         >
           <CoversPane
             covers={covers?.workId === coversSlot.workId ? covers : null}
             current={coversSlot.coverId}
             onMore={moreCovers}
+            t={t}
             onPick={(coverId) => {
               const index = win.index;
               setBoard((b) => setCover(b, index, coverId));
@@ -579,7 +597,7 @@ function ToolButton({ label, hidden, wide, onClick, children }: { label: string;
  * the backdrop close it, the page behind does not scroll, focus goes in and
  * comes back.
  */
-function Sheet({ kicker, title, sub, onClose, children }: { kicker: string; title: string; sub: string; onClose: () => void; children: React.ReactNode }) {
+function Sheet({ kicker, title, sub, closeLabel, onClose, children }: { kicker: string; title: string; sub: string; closeLabel: string; onClose: () => void; children: React.ReactNode }) {
   const closer = useRef<HTMLButtonElement>(null);
   // Where the focus was when the window opened — read before a field inside takes it.
   const [opener] = useState(() => (typeof document === 'undefined' ? null : (document.activeElement as HTMLElement | null)));
@@ -615,7 +633,7 @@ function Sheet({ kicker, title, sub, onClose, children }: { kicker: string; titl
             <p className="mt-1 text-sm text-ink-2">{sub}</p>
           </div>
           <button ref={closer} type="button" onClick={onClose} className="shrink-0 rounded-full border border-line px-3 py-1 text-sm text-ink-2 hover:border-accent hover:text-accent">
-            Close
+            {closeLabel}
           </button>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 pt-4 sm:mt-4 sm:overflow-visible sm:p-0">{children}</div>
@@ -624,7 +642,7 @@ function Sheet({ kicker, title, sub, onClose, children }: { kicker: string; titl
   );
 }
 
-function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: string; title: string; author?: string; coverId: string }) => void }) {
+function SearchPane({ active, onPick, t }: { active: boolean; onPick: (work: { id: string; title: string; author?: string; coverId: string }) => void; t: Translate }) {
   const [q, setQ] = useState('');
   const [found, setFound] = useState<Found>({ state: 'idle' });
   const [placed, setPlaced] = useState('');
@@ -648,7 +666,7 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
       const body = (await res.json().catch(() => null)) as (SearchResult & { error?: string }) | null;
       if (run.current !== mine) return;
       // A source that did not answer is not "no books" (SPEC N12).
-      if (!res.ok || !body) throw new Error(res.status === 503 ? 'Open Library did not answer. Try again in a moment.' : body?.error ?? 'The search did not answer. Try again in a moment.');
+      if (!res.ok || !body) throw new Error(t(res.status === 503 ? 'Open Library did not answer. Try again in a moment.' : body?.error ?? 'The search did not answer. Try again in a moment.'));
       const hits = body.works.slice(0, 12).map((w) => ({
         id: w.id,
         title: w.title,
@@ -659,7 +677,7 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
       }));
       setFound({ state: 'done', hits, seconds: (performance.now() - started) / 1000 });
     } catch (err) {
-      if (run.current === mine) setFound({ state: 'failed', message: err instanceof Error ? err.message : 'The search did not answer. Try again in a moment.' });
+      if (run.current === mine) setFound({ state: 'failed', message: err instanceof Error ? err.message : t('The search did not answer. Try again in a moment.') });
     } finally {
       clearTimeout(slow);
     }
@@ -679,20 +697,20 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search a title or author"
-          aria-label="Search a title or author"
+          placeholder={t('Search a title or author')}
+          aria-label={t('Search a title or author')}
           autoComplete="off"
           className="min-w-0 flex-1 rounded-md border border-line bg-surface px-3 py-2 text-base text-ink placeholder:text-ink-3"
         />
-        <button type="submit" className="btn btn-accent">Search</button>
+        <button type="submit" className="btn btn-accent">{t('Search')}</button>
       </form>
       <p className="mt-2 min-h-5 text-sm text-ink-2" role="status">
         {placed ||
-          (found.state === 'loading' ? 'Looking…'
-            : found.state === 'slow' ? 'Still looking — Open Library can take a while.'
+          (found.state === 'loading' ? t('Looking…')
+            : found.state === 'slow' ? t('Still looking — Open Library can take a while.')
             : found.state === 'failed' ? found.message
-            : found.state === 'done' && found.hits.length === 0 ? 'Open Library knows no book by that.'
-            : found.state === 'done' ? `${found.seconds.toFixed(1)} s`
+            : found.state === 'done' && found.hits.length === 0 ? t('Open Library knows no book by that.')
+            : found.state === 'done' ? t('{s} s', { s: Number(found.seconds.toFixed(1)) })
             : '')}
       </p>
       {found.state === 'done' && (
@@ -708,7 +726,7 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
                   onClick={() => {
                     if (!w.coverId) return;
                     onPick({ id: w.id, title: w.title, author: w.author, coverId: w.coverId });
-                    setPlaced(`${w.title} is on your board. Tap its cover there to change it.`);
+                    setPlaced(t('{title} is on your board. Tap its cover there to change it.', { title: w.title }));
                     setFound({ state: 'idle' });
                     setQ('');
                     field.current?.focus();
@@ -718,7 +736,7 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
                   <span className="relative h-[60px] w-10 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">{src && <CoverImage src={src} alt="" sizes="40px" />}</span>
                   <span className="min-w-0">
                     <span className="block truncate text-base text-ink">{w.title}</span>
-                    <span className="block truncate text-sm text-ink-3">{meta}{w.coverId ? '' : `${meta ? ' — ' : ''}no cover on record`}</span>
+                    <span className="block truncate text-sm text-ink-3">{meta}{w.coverId ? '' : `${meta ? ' — ' : ''}${t('no cover on record')}`}</span>
                   </span>
                 </button>
               </li>
@@ -740,7 +758,7 @@ function SearchPane({ active, onPick }: { active: boolean; onPick: (work: { id: 
 type CollectionIndex = { state: 'loading' } | { state: 'done'; entries: CollectionEntry[] } | { state: 'failed' };
 type CollectionBooks = { slug: string; state: 'loading' } | { slug: string; state: 'done'; title: string; works: BrowseWork[] } | { slug: string; state: 'failed' };
 
-function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Board; onPick: (work: BrowseWork) => void; onRetry: () => void }) {
+function BrowsePane({ lists, board, onPick, onRetry, t }: { lists: Lists; board: Board; onPick: (work: BrowseWork) => void; onRetry: () => void; t: Translate }) {
   const [listId, setListId] = useState<BrowseList['id'] | 'collection'>('curated');
   const [filter, setFilter] = useState('');
   // How many rows are drawn, per list and filter: a new key starts at the first chunk without an effect.
@@ -790,45 +808,44 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
   if (lists.state === 'failed') {
     return (
       <p className="text-sm text-ink-2" role="status">
-        The lists did not load.{' '}
-        <button type="button" onClick={onRetry} className="text-accent underline underline-offset-4">Try again</button>
+        {t('The lists did not load.')}{' '}
+        <button type="button" onClick={onRetry} className="text-accent underline underline-offset-4">{t('Try again')}</button>
       </p>
     );
   }
-  if (lists.state !== 'done') return <p className="text-sm text-ink-2" role="status">Loading the lists…</p>;
+  if (lists.state !== 'done') return <p className="text-sm text-ink-2" role="status">{t('Loading the lists…')}</p>;
 
   const onBoard = new Set(board.slots.flatMap((s) => (s ? [s.workId] : [])));
-  const n = total.toLocaleString('en');
   return (
     <>
-      <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Which list">
+      <div className="flex flex-wrap gap-1.5" role="tablist" aria-label={t('Which list')}>
         {lists.lists.map((l) => (
           <button key={l.id} type="button" role="tab" aria-selected={l.id === listId} onClick={() => setListId(l.id)} className={pill(l.id === listId)}>
-            {LIST_LABELS[l.id]}
+            {t(LIST_LABELS[l.id], { name: SITE_NAME })}
           </button>
         ))}
         {/* The third pill is the dropdown itself: a phone opens its own picker for a native select. */}
         {index?.state === 'done' && index.entries.length > 0 && (
           <span className="relative inline-flex">
             <select
-              aria-label="Browse a collection"
+              aria-label={t('Browse a collection')}
               value={listId === 'collection' && books ? books.slug : ''}
               onChange={(e) => chooseCollection(e.target.value)}
               onClick={() => listId !== 'collection' && books && books.state !== 'failed' && setListId('collection')}
               className={`${pill(listId === 'collection')} max-w-[16rem] appearance-none truncate pr-8`}
             >
-              <option value="" disabled>A collection</option>
+              <option value="" disabled>{t('A collection')}</option>
               {index.entries.map((e) => <option key={e.slug} value={e.slug}>{e.title} ({e.count})</option>)}
             </select>
             <span aria-hidden="true" className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs ${listId === 'collection' ? 'text-bg' : 'text-ink-3'}`}>▾</span>
           </span>
         )}
       </div>
-      {listId === 'collection' && books?.state === 'loading' && <p className="mt-3 text-sm text-ink-2" role="status">Loading the collection…</p>}
+      {listId === 'collection' && books?.state === 'loading' && <p className="mt-3 text-sm text-ink-2" role="status">{t('Loading the collection…')}</p>}
       {listId === 'collection' && books?.state === 'failed' && (
         <p className="mt-3 text-sm text-ink-2" role="status">
-          The collection did not load.{' '}
-          <button type="button" onClick={() => chooseCollection(books.slug)} className="text-accent underline underline-offset-4">Try again</button>
+          {t('The collection did not load.')}{' '}
+          <button type="button" onClick={() => chooseCollection(books.slug)} className="text-accent underline underline-offset-4">{t('Try again')}</button>
         </p>
       )}
       {list && <>
@@ -836,17 +853,22 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
         type="search"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        placeholder="Filter by title or author"
-        aria-label="Filter the list by title or author"
+        placeholder={t('Filter by title or author')}
+        aria-label={t('Filter the list by title or author')}
         autoComplete="off"
         className="mt-3 block w-full rounded-md border border-line bg-surface px-3 py-2 text-base text-ink placeholder:text-ink-3"
       />
       <p className="mt-2 text-sm text-ink-2" role="status">
         {needle
-          ? total > 0 ? `${n} of ${list.works.length.toLocaleString('en')} match.` : 'Nothing in this list matches. The Search tab asks Open Library’s whole catalogue.'
-          : list.id === 'collection' ? `${n} ${total === 1 ? 'book' : 'books'} from the collection “${books?.state === 'done' ? books.title : ''}”, each with the cover chosen for it there.`
-          : list.id === 'curated' ? `${n} books the site picked a cover for by eye.`
-          : `${n} works Open Library’s readers marked as read most often, most read first${list.builtAt ? ` (list of ${list.builtAt})` : ''}.`}
+          ? total > 0 ? t('{n} of {total} match.', { n: total, total: list.works.length }) : t('Nothing in this list matches. The Search tab asks Open Library’s whole catalogue.')
+          : list.id === 'collection'
+            ? total === 1
+              ? t('One book from the collection “{title}”, with the cover chosen for it there.', { title: books?.state === 'done' ? books.title : '' })
+              : t('{n} books from the collection “{title}”, each with the cover chosen for it there.', { n: total, title: books?.state === 'done' ? books.title : '' })
+          : list.id === 'curated' ? t('{n} books the site picked a cover for by eye.', { n: total })
+          : list.builtAt
+            ? t('{n} works Open Library’s readers marked as read most often, most read first (list of {date}).', { n: total, date: list.builtAt })
+            : t('{n} works Open Library’s readers marked as read most often, most read first.', { n: total })}
       </p>
       <ul className="mt-3 grid grid-cols-3 gap-x-2 gap-y-4 sm:grid-cols-6 sm:gap-x-3">
         {rows.slice(0, count).map((w) => {
@@ -854,10 +876,10 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
           const on = onBoard.has(w.id);
           return (
             <li key={w.id}>
-              <button type="button" aria-label={`${w.title} by ${w.author}${on ? ' — on your board, click to take it out' : ''}`} onClick={() => onPick(w)} className="block w-full text-left">
+              <button type="button" aria-label={on ? t('{title} by {author} — on your board, click to take it out', { title: w.title, author: w.author }) : t('{title} by {author}', { title: w.title, author: w.author })} onClick={() => onPick(w)} className="block w-full text-left">
                 <span className={`cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 ${on ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}>
                   {src && <CoverImage src={src} alt="" sizes="(max-width: 640px) 33vw, 140px" />}
-                  {on && <span className="absolute left-1 top-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">on your board</span>}
+                  {on && <span className="absolute left-1 top-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">{t('on your board')}</span>}
                 </span>
                 <span className="mt-1.5 block break-words text-xs leading-snug text-ink-3">{w.title} · {w.author}</span>
               </button>
@@ -867,7 +889,7 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
       </ul>
       {count < total && (
         <div ref={sentinel} className="mt-4 text-center">
-          <button type="button" onClick={() => setMore({ key, count: count + CHUNK })} className="btn">Show more</button>
+          <button type="button" onClick={() => setMore({ key, count: count + CHUNK })} className="btn">{t('Show more')}</button>
         </div>
       )}
       </>}
@@ -875,8 +897,14 @@ function BrowsePane({ lists, board, onPick, onRetry }: { lists: Lists; board: Bo
   );
 }
 
-function CoversPane({ covers, current, onPick, onMore }: { covers: Covers | null; current: string; onPick: (coverId: string) => void; onMore: () => void }) {
-  if (!covers || covers.state === 'loading') return <p className="text-sm text-ink-2" role="status">Looking for the other editions…</p>;
+/** "the first 300 of 1,200" or "300": how far the window has looked, in the locale's digits. */
+function editionSpan(checked: number, total: number, t: Translate, locale: ReturnType<typeof useLocale>): string {
+  return total > checked ? t('the first {checked} of {total}', { checked, total }) : formatNumber(checked, locale);
+}
+
+function CoversPane({ covers, current, onPick, onMore, t }: { covers: Covers | null; current: string; onPick: (coverId: string) => void; onMore: () => void; t: Translate }) {
+  const locale = useLocale();
+  if (!covers || covers.state === 'loading') return <p className="text-sm text-ink-2" role="status">{t('Looking for the other editions…')}</p>;
   if (covers.state === 'failed') return <p className="text-sm text-accent" role="alert">{covers.message}</p>;
   const { covers: list, checked, total } = covers.data;
   const more = covers.more;
@@ -884,9 +912,11 @@ function CoversPane({ covers, current, onPick, onMore }: { covers: Covers | null
     <>
       <p className="text-sm text-ink-2" role="status">
         {list.length === 0 && checked >= total
-          ? 'Open Library has no other cover on record for this book.'
-          : `${list.length} ${list.length === 1 ? 'cover' : 'covers'} from ${total > checked ? `the first ${checked.toLocaleString('en')} of ${total.toLocaleString('en')}` : checked} editions on record at Open Library, newest first.`}
-        {more === 'failed' && ' The next editions did not come — try again.'}
+          ? t('Open Library has no other cover on record for this book.')
+          : list.length === 1
+            ? t('One cover from {span} editions on record at Open Library, newest first.', { span: editionSpan(checked, total, t, locale) })
+            : t('{n} covers from {span} editions on record at Open Library, newest first.', { n: list.length, span: editionSpan(checked, total, t, locale) })}
+        {more === 'failed' && ` ${t('The next editions did not come — try again.')}`}
       </p>
       <ul className="mt-3 grid grid-cols-3 gap-x-2 gap-y-4 sm:grid-cols-6 sm:gap-x-3">
         {list.map((c) => {
@@ -897,12 +927,12 @@ function CoversPane({ covers, current, onPick, onMore }: { covers: Covers | null
           const on = c.coverId === current;
           return (
             <li key={c.coverId}>
-              <button type="button" aria-label={caption ? `The cover of ${caption}` : 'A cover with no year on record'} onClick={() => onPick(c.coverId)} className="block w-full text-left">
+              <button type="button" aria-label={caption ? t('The cover of {caption}', { caption }) : t('A cover with no year on record')} onClick={() => onPick(c.coverId)} className="block w-full text-left">
                 <span className={`cover-shadow relative block aspect-[2/3] overflow-hidden rounded-card bg-surface-2 ${on ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg' : ''}`}>
                   {src && <CoverImage src={src} alt="" sizes="(max-width: 640px) 33vw, 140px" />}
-                  {on && <span className="absolute left-1 top-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">on your board</span>}
+                  {on && <span className="absolute left-1 top-1 rounded-full bg-accent px-1.5 text-[10px] text-on-accent">{t('on your board')}</span>}
                 </span>
-                <span className="mt-1.5 block break-words text-xs leading-snug text-ink-3">{caption || 'no year on record'}</span>
+                <span className="mt-1.5 block break-words text-xs leading-snug text-ink-3">{caption || t('no year on record')}</span>
               </button>
             </li>
           );
@@ -912,7 +942,7 @@ function CoversPane({ covers, current, onPick, onMore }: { covers: Covers | null
       {checked < total && (
         <div className="mt-4 text-center">
           <button type="button" onClick={onMore} disabled={more === 'loading'} className="btn disabled:opacity-50">
-            {more === 'loading' ? 'Looking at the next editions…' : `Show more covers (${Math.min(300, total - checked)} more editions)`}
+            {more === 'loading' ? t('Looking at the next editions…') : t('Show more covers ({n} more editions)', { n: Math.min(300, total - checked) })}
           </button>
         </div>
       )}

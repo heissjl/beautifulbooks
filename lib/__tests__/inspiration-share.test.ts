@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { BLUESKY_LIMIT, HASHTAG, shareTargets, withVia, shareText, THREADS_LIMIT, titleOf, X_LIMIT, X_LINK_LENGTH } from '../inspiration/share';
+import { translator } from '../i18n/server';
 
 const link = 'https://buyitscovers.com/shelfportrait/k3x9q2ab';
 const longName = 'x'.repeat(40);
@@ -26,6 +27,19 @@ describe('share texts', () => {
     // With the longest mark a button adds (2026-10-06).
     expect(`${text} ${link}?via=bluesky`.length).toBeLessThanOrEqual(BLUESKY_LIMIT);
     expect(`${text} ${link}?via=threads`.length).toBeLessThanOrEqual(THREADS_LIMIT);
+  });
+
+  it('do the same job in German, inside the same limits (5.18b, 2026-10-18)', () => {
+    const de = translator('de');
+    expect(titleOf('', de)).toBe('Mein Shelf-Portrait');
+    expect(titleOf('Ada', de)).toBe('Shelf-Portrait von Ada');
+    expect(shareText('Ada', de)).toContain('Ada prägen');
+    expect(shareText('', de)).toContain(HASHTAG);
+    const text = shareText(longName, de);
+    expect(text.length + 1 + X_LINK_LENGTH).toBeLessThanOrEqual(X_LIMIT);
+    expect(`${text} ${link}?via=bluesky`.length).toBeLessThanOrEqual(BLUESKY_LIMIT);
+    // The pictures and the metadata stay English whatever the page speaks: no `t`, no German.
+    expect(titleOf('Ada')).toBe('Ada’s Shelf-Portrait');
   });
 
   it('give every platform the link, encoded', () => {

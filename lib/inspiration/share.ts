@@ -1,3 +1,5 @@
+import { english, type Translate } from '../i18n/translate';
+
 /**
  * What a share button sends, per platform (ROADMAP 5.18, pure).
  *
@@ -24,9 +26,13 @@ export const HASHTAG = '#shelfportrait';
  * Julian struck it („lösche den subheader ganz fürs erste"); the suggestions
  * are kept in the history, „Vorschläge für eine andere Unterzeile". With a
  * name on the board the line speaks of that person.
+ *
+ * `t` is for what the browser shows as text (ROADMAP 5.18b, German since
+ * 2026-10-18); the pictures and the metadata call it without one and stay
+ * English, so a board shared from the German page carries the same picture.
  */
-export function titleOf(by: string): string {
-  return by ? `${by}’s Shelf-Portrait` : 'My Shelf-Portrait';
+export function titleOf(by: string, t: Translate = english): string {
+  return by ? t('{by}’s Shelf-Portrait', { by }) : t('My Shelf-Portrait');
 }
 
 /**
@@ -50,11 +56,12 @@ export interface ShareTarget {
  * The sentence that goes with the link, with or without a name. "Favourite
  * covers", not "the editions they were read in" (Julian, 2026-10-05): what a
  * reader picks is a picture, and the one they love counts as much as the
- * printing they held.
+ * printing they held. In German the sentence does the same job in its own
+ * words; its length is tested against the same limits.
  */
-export function shareText(by: string): string {
-  const what = by ? `the books that inspire ${by}, each with a favourite cover` : 'the books that inspire me, with my favourite covers';
-  return `${titleOf(by)}: ${what}. What’s yours? ${HASHTAG}`;
+export function shareText(by: string, t: Translate = english): string {
+  const what = by ? t('the books that inspire {by}, each with a favourite cover', { by }) : t('the books that inspire me, with my favourite covers');
+  return `${titleOf(by, t)}: ${what}. ${t('What’s yours?')} ${HASHTAG}`;
 }
 
 /**
@@ -73,18 +80,18 @@ export function withVia(link: string, via: 'x' | 'threads' | 'bluesky' | 'whatsa
   }
 }
 
-export function shareTargets(link: string, by: string): ShareTarget[] {
-  const text = shareText(by);
-  const t = encodeURIComponent(text);
+export function shareTargets(link: string, by: string, t: Translate = english): ShareTarget[] {
+  const text = shareText(by, t);
+  const encoded = encodeURIComponent(text);
   const u = (via: Parameters<typeof withVia>[1]) => encodeURIComponent(withVia(link, via));
   const inText = (via: Parameters<typeof withVia>[1]) => encodeURIComponent(`${text} ${withVia(link, via)}`);
   return [
     // `/intent/tweet`, the address X documents and its apps open as a new post; `/intent/post` opened a message on Julian's phone (2026-10-05).
-    { id: 'x', label: 'X', href: `https://x.com/intent/tweet?text=${t}&url=${u('x')}` },
+    { id: 'x', label: 'X', href: `https://x.com/intent/tweet?text=${encoded}&url=${u('x')}` },
     { id: 'threads', label: 'Threads', href: `https://www.threads.net/intent/post?text=${inText('threads')}` },
     { id: 'bluesky', label: 'Bluesky', href: `https://bsky.app/intent/compose?text=${inText('bluesky')}` },
     { id: 'whatsapp', label: 'WhatsApp', href: `https://wa.me/?text=${inText('whatsapp')}` },
-    { id: 'telegram', label: 'Telegram', href: `https://t.me/share/url?url=${u('telegram')}&text=${t}` },
+    { id: 'telegram', label: 'Telegram', href: `https://t.me/share/url?url=${u('telegram')}&text=${encoded}` },
   ];
 }
 

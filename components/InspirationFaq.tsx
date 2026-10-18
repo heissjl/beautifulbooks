@@ -1,4 +1,6 @@
+import { rich } from './rich';
 import { SITE_NAME } from '@/lib/seo';
+import { english, type Translate } from '@/lib/i18n/translate';
 
 /**
  * Questions and answers under the board (ROADMAP 5.18b; Julian, 2026-10-05:
@@ -16,61 +18,71 @@ import { SITE_NAME } from '@/lib/seo';
  * notice before the page goes on in production.
  *
  * No hooks: the editor takes it as `children`, so it is rendered on the
- * server and its words are in the page a crawler reads.
+ * server and its words are in the page a crawler reads. The page hands in
+ * `t` (ROADMAP 5.18b, German since 2026-10-18); the German follows this
+ * English draft, which Julian still means to shorten — a shortened English
+ * sentence drops its German until `lib/i18n/de.ts` follows.
  */
 const LINK = 'text-accent underline decoration-line underline-offset-4 hover:decoration-accent';
 
-const FAQ: { q: string; a: React.ReactNode }[] = [
-  {
-    q: 'What is a Shelf-Portrait?',
-    a: 'A picture of the books that inspire you — three, six or nine of them, each with the cover you love. You put it together here and share it wherever you like.',
-  },
-  {
-    q: 'Do I need an account?',
-    a: 'No. No account, no e-mail address, no app. While you build it, your board lives in the address of this page — reload it, and it is still there.',
-  },
-  {
-    q: 'My book, or my cover, is not there.',
-    a: (
-      <>
-        The search asks <a href="https://openlibrary.org" className={LINK} rel="noopener">Open Library</a>, an open catalogue. Try the original title or the author’s name. A cover nobody has scanned yet cannot be shown here.{' '}
-        {/* Julian, 2026-10-05: say that people can add to Open Library, and link there. */}
-        You can add it yourself: Open Library is free to edit with an account — <a href="https://openlibrary.org/books/add" className={LINK} rel="noopener">add a missing book</a>, or upload a cover on the book’s page there. Once it is there, it can be chosen here too.
-      </>
-    ),
-  },
-  {
-    q: 'What do I get to share?',
-    a: 'A picture for a story (1080 × 1920) or for a post (1080 × 1350), on a ground made from the colours of your covers, on a mosaic of small covers or on paper, with or without titles and authors under the covers. And a link: posted, it shows as a card with your covers.',
-  },
-  {
-    q: 'Is my name on the picture?',
-    a: 'Only if you type one. Without a name the picture says “My Shelf-Portrait”. A line of your own under it is optional too.',
-  },
-  {
-    q: 'Can I change it later?',
-    a: 'Yes. Open your link and choose “Start from this one”. A changed board gets a link of its own; the old link keeps showing the old board.',
-  },
-  {
-    q: 'What is stored?',
-    a: 'When you press “Done”: the books, their covers, and the name and line you typed, so that the link can show them. Nothing about you, and no cookie.',
-  },
-  {
-    q: 'Where can I buy these editions?',
-    a: 'Each cover on a shared board leads to its book’s page: the printings that carried this cover and where to find them, new or used, online or locally.',
-  },
-  {
-    q: 'Whose covers are these?',
-    a: `The scans come from Open Library, the Internet Archive’s open catalogue. The designs belong to their publishers and artists; ${SITE_NAME} shows them so that you can tell one edition from another and find the one you mean.`,
-  },
-];
+function faq(t: Translate): { q: string; a: React.ReactNode }[] {
+  return [
+    {
+      q: t('What is a Shelf-Portrait?'),
+      a: t('A picture of the books that inspire you — three, six or nine of them, each with the cover you love. You put it together here and share it wherever you like.'),
+    },
+    {
+      q: t('Do I need an account?'),
+      a: t('No. No account, no e-mail address, no app. While you build it, your board lives in the address of this page — reload it, and it is still there.'),
+    },
+    {
+      q: t('My book, or my cover, is not there.'),
+      // Julian, 2026-10-05: say that people can add to Open Library, and link there.
+      a: rich(
+        t('The search asks {openLibrary}, an open catalogue. Try the original title or the author’s name. A cover nobody has scanned yet cannot be shown here. You can add it yourself: Open Library is free to edit with an account — {add}, or upload a cover on the book’s page there. Once it is there, it can be chosen here too.'),
+        {
+          openLibrary: <a href="https://openlibrary.org" className={LINK} rel="noopener">Open Library</a>,
+          add: <a href="https://openlibrary.org/books/add" className={LINK} rel="noopener">{t('add a missing book')}</a>,
+        },
+      ),
+    },
+    {
+      q: t('What do I get to share?'),
+      a: t('A picture for a story (1080 × 1920) or for a post (1080 × 1350), on a ground made from the colours of your covers, on a mosaic of small covers or on paper, with or without titles and authors under the covers. And a link: posted, it shows as a card with your covers.'),
+    },
+    {
+      q: t('Is my name on the picture?'),
+      // The picture itself is English in every language, so the quoted line stays as the picture says it.
+      a: t('Only if you type one. Without a name the picture says “My Shelf-Portrait”. A line of your own under it is optional too.'),
+    },
+    {
+      q: t('Can I change it later?'),
+      a: t('Yes. Open your link and choose “Start from this one”. A changed board gets a link of its own; the old link keeps showing the old board.'),
+    },
+    {
+      q: t('What is stored?'),
+      a: t('When you press “Done”: the books, their covers, and the name and line you typed, so that the link can show them. Nothing about you, and no cookie.'),
+    },
+    {
+      q: t('Where can I buy these editions?'),
+      a: t('Each cover on a shared board leads to its book’s page: the printings that carried this cover and where to find them, new or used, online or locally.'),
+    },
+    {
+      q: t('Whose covers are these?'),
+      a: rich(
+        t('The scans come from Open Library, the Internet Archive’s open catalogue. The designs belong to their publishers and artists; {name} shows them so that you can tell one edition from another and find the one you mean.'),
+        { name: <i>{SITE_NAME}</i> },
+      ),
+    },
+  ];
+}
 
-export default function InspirationFaq() {
+export default function InspirationFaq({ t = english }: { t?: Translate }) {
   return (
     <section className="mt-16 border-t border-line pt-8" aria-labelledby="faq">
-      <h2 id="faq" className="font-display text-2xl text-ink">Questions</h2>
+      <h2 id="faq" className="font-display text-2xl text-ink">{t('Questions')}</h2>
       <div className="mt-4 grid gap-x-12 lg:grid-cols-2">
-        {FAQ.map(({ q, a }) => (
+        {faq(t).map(({ q, a }) => (
           <details key={q} className="group border-b border-line py-3">
             <summary className="hit flex cursor-pointer list-none items-baseline gap-2 text-base text-ink transition-colors hover:text-accent">
               <span className="inline-block text-accent transition-transform group-open:rotate-90">▸</span>
