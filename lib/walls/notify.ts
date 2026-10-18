@@ -10,14 +10,18 @@
  * mail went out when none did). The mail names the collection and the count,
  * nothing about who reported it.
  */
-import { SITE_NAME } from '../seo';
+import { SITE_NAME, SITE_URL } from '../seo';
 
+/**
+ * The links in the mail are built from `SITE_URL`, never from the request's
+ * origin (red team 2026-10-09, L2): a request can carry any `Host`, and a
+ * mail to the admin with a link to somewhere else is a phishing mail.
+ */
 export interface ReportMail {
   id: string;
   title: string;
   reports: number;
   hidden: boolean;
-  origin: string;
 }
 
 export type MailResult = 'sent' | 'not-configured' | 'failed';
@@ -33,8 +37,8 @@ export function reportMailText(m: ReportMail): { subject: string; text: string }
       ? `"${m.title}" had ${m.reports} reports and is off Collections by readers until you look at it.`
       : `"${m.title}" was reported for the first time. It is still shown.`,
     '',
-    `The collection: ${m.origin}/c/${m.id}`,
-    `Take it down or put it back: ${m.origin}/create/review`,
+    `The collection: ${SITE_URL}/c/${m.id}`,
+    `Take it down or put it back: ${SITE_URL}/create/review`,
   ].join('\n');
   return { subject, text };
 }

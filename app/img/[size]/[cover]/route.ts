@@ -56,6 +56,13 @@ import { isHiddenCover } from '@/lib/hiddencovers';
  */
 const SIZES = new Set(['S', 'M', 'L']);
 
+/**
+ * The only image types a cover can be (red team 2026-10-09, L1). `image/*`
+ * also admits SVG, which may carry a script; `nosniff` keeps the browser from
+ * guessing but not from rendering an SVG the upstream declared as one.
+ */
+const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif']);
+
 /** Open Library needs a long rope; it is regularly slower than ten seconds. */
 const UPSTREAM_TIMEOUT_MS = 13_000;
 /** The second, smaller ask: 13 + 9 s stays inside `maxDuration`. */
@@ -133,9 +140,9 @@ async function ask(url: string, timeoutMs: number): Promise<Asked> {
       cache: 'no-store',
       redirect: 'follow',
     });
-    const type = res.headers.get('content-type') ?? '';
+    const type = (res.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase();
     if (!res.ok || !res.body) return { ok: false, status: res.status, reason: 'status' };
-    if (!type.startsWith('image/')) return { ok: false, status: res.status, reason: 'not-image' };
+    if (!IMAGE_TYPES.has(type)) return { ok: false, status: res.status, reason: 'not-image' };
     return { ok: true, res };
   } catch (error) {
     const name = error instanceof Error ? error.name : '';

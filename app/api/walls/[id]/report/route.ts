@@ -35,7 +35,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     if (next !== wall) await open.store.put(next);
     const mail =
       reports === 1 || next !== wall
-        ? await sendReportMail({ id, title: wall.title, reports, hidden: next !== wall, origin: request.nextUrl.origin })
+        ? await sendReportMail({ id, title: wall.title, reports, hidden: next !== wall })
         : 'not-due';
     // One unguarded line per report, like bb.google: the collection, the count, whether it went down and
     // whether a mail went out — nothing about who reported it. Without Resend this is the only trace.

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { readBounded } from '@/app/api/body';
 import { later } from '@/app/api/count';
 import { rateLimited } from '@/app/api/rate';
 import { MAX_SIGNAL_BYTES, parseSignal } from '@/lib/insights/signals';
@@ -25,13 +26,9 @@ export async function POST(request: NextRequest) {
   measure('seen', request);
   if (rateLimited(request, 'seen')) return NOTHING();
   if (adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value)) return NOTHING();
-  let text: string;
-  try {
-    text = await request.text();
-  } catch {
-    return NOTHING();
-  }
-  if (text.length > MAX_SIGNAL_BYTES) return NOTHING();
+  // Cut off at the ceiling before it is held in memory (red team L3), not measured after reading.
+  const text = await readBounded(request, MAX_SIGNAL_BYTES);
+  if (text === null) return NOTHING();
   let body: unknown;
   try {
     body = JSON.parse(text);
