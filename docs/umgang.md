@@ -92,7 +92,7 @@ Die Quelle, von der die Seite lebt (SPEC §3 F3). Details zu Werken, Ausgaben un
 - **Der i18n-Test** nennt jeden englischen Satz ohne deutsche Entsprechung; nie stummschalten. **Die Analytik-Checkliste** (CLAUDE.md, sieben Punkte) vor jedem Commit; die Antwort steht in der Commit-Nachricht.
 - **Eine Korrektur von außen** wird in der Quelle geprüft, bevor sie beantwortet wird, und das Ergebnis geht so oder so in die Historie (2026-10-08, SF Masterworks).
 - **Eine Messung an einem Foto ist keine** — Regalfoto-Änderungen nur gegen das Testset (`lab/shelf/evaluate.ts`); drei Fotos trugen zwei Tage eine falsche Erklärung.
-- **`tsc` rot wegen iCloud:** „name 2.ts“-Kopien unter `.next` erzeugen doppelte Bezeichner; `rm -rf .next/dev` hilft (6.42). Nicht den Code verdächtigen.
+- **`tsc` rot in erzeugten Dateien:** „name 2.ts“-Kopien unter `.next` erzeugen doppelte Bezeichner; seit 2026-10-18 schließt `tsconfig.json` `**/* ?.*` aus (6.42), und die Arbeitskopie liegt nicht mehr in iCloud. Bleibt `tsc` in `.next/**/types` rot: zuerst `find . -path ./node_modules -prune -o -name '* [0-9].*' -print`, dann an gelöschte Routen denken (`rm -rf .next/dev/types`, 6.51) — nicht den Code verdächtigen. vitest und eslint kennen den Ausschluss nicht; eine Doppeldatei neben den Quellen zeigt sich dort weiter.
 
 ## 10. Dev-Server und Caches
 
