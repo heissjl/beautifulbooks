@@ -617,10 +617,35 @@ export function publisherTokens(raw: string | undefined): string[] {
 }
 
 /**
+ * Words that two different houses share without being one: "Oxford
+ * University Press" and "Cambridge University Press", "Random House" and
+ * "House of Anansi", "Penguin Paperbacks" and "Holt Paperbacks". A shared
+ * word from this list never makes a family (ROADMAP 6.7 step 2); it is not
+ * taken out of `publisherTokens`, because "Modern Library" is a real house
+ * and would be left with no word at all.
+ */
+const EVERYDAY_PUBLISHER_WORDS = new Set([
+  'paperback', 'paperbacks', 'taschenbuch', 'taschenbücher', 'pocket', 'classics', 'classic', 'library', 'house',
+  'international', 'university', 'modern', 'new', 'american', 'national', 'world', 'collection', 'imprint', 'media',
+  'editorial', 'editora', 'editore', 'editori', 'edition', 'libros', 'livres', 'livros', 'libri', 'bücher', 'buch',
+  // Romanised Chinese and Japanese publishers share the words for "publishing house" and "people's": Lolita's
+  // "San cai wen hua chu ban …" and "Shanghai yi wen chu ban she" are two houses (measured 2026-10-18).
+  'zhong', 'guo', 'ren', 'min', 'chu', 'ban', 'she', 'wen', 'hua', 'shu', 'dian', 'xue', 'gong', 'si', 'you', 'xian', 'shuppan', 'shobo', 'bunko',
+  'and', 'the', 'for', 'und', 'der', 'die', 'das', 'les', 'des', 'von', 'del', 'los', 'las',
+]);
+
+/**
  * Same publishing house? True when one name's words are all contained in the
  * other's, so "Knopf" matches "Alfred A. Knopf" and "Vintage" matches
- * "Vintage International", while "Scribner" and "Lulu.com" stay apart. An
- * unknown or unrecognisable publisher matches nothing.
+ * "Vintage International", while "Scribner" and "Lulu.com" stay apart. Since
+ * ROADMAP 6.7 step 2 (2026-10-18) an **imprint family** matches too: one
+ * shared word of four letters or more that is no everyday word, so "Holt
+ * Paperbacks" matches "Henry Holt" (measured on *Mason & Dixon*: distance 10,
+ * a year apart, held apart by the subset rule) while "Oxford University
+ * Press" and "Cambridge University Press" stay apart. An unknown or
+ * unrecognisable publisher matches nothing. `lab/shelf/edition.ts` has a
+ * function of the same name with a looser rule (spines against records);
+ * the two are not one and must not be unified.
  */
 export function samePublisher(a: string | undefined, b: string | undefined): boolean {
   const x = publisherTokens(a);
@@ -628,7 +653,9 @@ export function samePublisher(a: string | undefined, b: string | undefined): boo
   if (x.length === 0 || y.length === 0) return false;
   const [small, large] = x.length <= y.length ? [x, y] : [y, x];
   const set = new Set(large);
-  return small.every(t => set.has(t));
+  if (small.every(t => set.has(t))) return true;
+  // Four letters: "Holt" passes, pinyin syllables and most acronyms do not.
+  return small.some(t => t.length >= 4 && !EVERYDAY_PUBLISHER_WORDS.has(t) && set.has(t));
 }
 
 function printingOf(cover: Cover, editionsById: ReadonlyMap<string, Edition>): Printing {
