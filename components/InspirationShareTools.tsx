@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useSyncExternalStore } from 'react';
+import { useT } from './i18n';
 import { PICTURE_VERSION } from '@/lib/inspiration/share';
 
 /**
@@ -8,7 +9,8 @@ import { PICTURE_VERSION } from '@/lib/inspiration/share';
  * picture looks, saving it, copying it, handing it to an app where the
  * browser can (phones: Instagram, WhatsApp and Messages take a picture, not
  * a link), and copying the link. The rest of the page is rendered on the
- * server.
+ * server. The words go through `t()` (5.18b, 2026-10-18); the file name
+ * and the poster's parameters stay English because they are addresses.
  */
 
 type Format = 'story' | 'feed';
@@ -54,6 +56,7 @@ async function asPng(src: string): Promise<Blob> {
  * nothing. `query` is the board's own query string.
  */
 export function PictureShare({ query, link, text }: { query: string; link: string; text: string }) {
+  const t = useT();
   const [format, setFormat] = useState<Format>('story');
   const [look, setLook] = useState<Look>('ambient');
   const [titles, setTitles] = useState(false);
@@ -70,11 +73,11 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
   const failed = !drawing && !arrived?.ok;
 
   function copy() {
-    setNote('Copying…');
+    setNote(t('Copying…'));
     // The clipboard item is made inside the click and filled later: Safari refuses a write that starts after a wait.
     navigator.clipboard.write([new ClipboardItem({ 'image/png': asPng(src) })]).then(
-      () => setNote('The picture is copied — paste it into a post or a message.'),
-      () => setNote('The picture could not be copied here. Save it instead.'),
+      () => setNote(t('The picture is copied — paste it into a post or a message.')),
+      () => setNote(t('The picture could not be copied here. Save it instead.')),
     );
   }
 
@@ -104,32 +107,32 @@ export function PictureShare({ query, link, text }: { query: string; link: strin
         */}
         {(drawing || failed) && (
           <span className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-ink-3" role="status">
-            {failed ? 'The picture did not come. Choose again in a moment.' : 'Drawing the picture…'}
+            {failed ? t('The picture did not come. Choose again in a moment.') : t('Drawing the picture…')}
           </span>
         )}
         {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself; next/image would transform it again */}
         <img
           key={src}
           src={src}
-          alt={`The picture as it will be saved: ${format === 'story' ? 'for a story' : 'for a post'}`}
+          alt={format === 'story' ? t('The picture as it will be saved: for a story') : t('The picture as it will be saved: for a post')}
           onLoad={() => setArrived({ src, ok: true })}
           onError={() => setArrived({ src, ok: false })}
           className={`absolute inset-0 h-full w-full object-cover ${failed ? 'hidden' : ''}`}
         />
       </div>
       <div className="min-w-0 space-y-3">
-        <Choice label="Format" value={format} onChange={setFormat} options={[{ id: 'story', label: 'Story' }, { id: 'feed', label: 'Post' }]} />
-        <Choice label="Background" value={look} onChange={setLook} options={[{ id: 'ambient', label: 'Cover colours' }, { id: 'mosaic', label: 'Mosaic' }, { id: 'paper', label: 'Paper' }]} />
-        <Choice label="Titles" value={titles ? 'on' : 'off'} onChange={(v) => setTitles(v === 'on')} options={[{ id: 'off', label: 'Covers only' }, { id: 'on', label: 'With title and author' }]} />
+        <Choice label={t('Format')} value={format} onChange={setFormat} options={[{ id: 'story', label: t('Story') }, { id: 'feed', label: t('Post') }]} />
+        <Choice label={t('Background')} value={look} onChange={setLook} options={[{ id: 'ambient', label: t('Cover colours') }, { id: 'mosaic', label: t('Mosaic') }, { id: 'paper', label: t('Paper') }]} />
+        <Choice label={t('Titles')} value={titles ? 'on' : 'off'} onChange={(v) => setTitles(v === 'on')} options={[{ id: 'off', label: t('Covers only') }, { id: 'on', label: t('With title and author') }]} />
         <div className="flex flex-wrap gap-2 pt-1">
           {/* Only the picture shown can be taken away: while it is drawn, or when it did not come, there is nothing to save. */}
           {drawing || failed ? (
-            <span className="btn btn-accent pointer-events-none opacity-50" aria-disabled="true">Save the picture</span>
+            <span className="btn btn-accent pointer-events-none opacity-50" aria-disabled="true">{t('Save the picture')}</span>
           ) : (
-            <a href={src} download={file} className="btn btn-accent">Save the picture</a>
+            <a href={src} download={file} className="btn btn-accent">{t('Save the picture')}</a>
           )}
-          {canCopy && <button type="button" onClick={copy} disabled={drawing || failed} className="btn disabled:opacity-50">Copy the picture</button>}
-          {canShare && <button type="button" onClick={share} disabled={drawing || failed} className="btn disabled:opacity-50">Share the picture…</button>}
+          {canCopy && <button type="button" onClick={copy} disabled={drawing || failed} className="btn disabled:opacity-50">{t('Copy the picture')}</button>}
+          {canShare && <button type="button" onClick={share} disabled={drawing || failed} className="btn disabled:opacity-50">{t('Share the picture…')}</button>}
         </div>
         <p className="min-h-5 text-sm text-ink-2" role="status">{note}</p>
       </div>
@@ -144,6 +147,7 @@ function shown(link: string): string {
 }
 
 export function CopyLink({ link }: { link: string }) {
+  const t = useT();
   const [note, setNote] = useState('');
   return (
     <>
@@ -153,11 +157,11 @@ export function CopyLink({ link }: { link: string }) {
         onClick={() => navigator.clipboard.writeText(link).then(() => setNote('copied'), () => setNote('refused'))}
         className="rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink hover:border-accent hover:text-accent"
       >
-        Copy link
+        {t('Copy link')}
       </button>
       <span className="min-w-0 text-sm text-ink-3" role="status">
-        {note === 'copied' && <span className="mr-1 text-ink">Copied.</span>}
-        {note === 'refused' ? <span className="break-all"><span className="mr-1 text-ink">Not copied — select it here:</span>{link}</span> : shown(link)}
+        {note === 'copied' && <span className="mr-1 text-ink">{t('Copied.')}</span>}
+        {note === 'refused' ? <span className="break-all"><span className="mr-1 text-ink">{t('Not copied — select it here:')}</span>{link}</span> : shown(link)}
       </span>
     </>
   );

@@ -24,8 +24,8 @@ import type { Translate } from '@/lib/i18n/translate';
  * 404. The caller reads the switches, because this renders inside client
  * components too (`InspirationShared`), where `process.env` is not there.
  *
- * `t` defaults to English: the game's pages go through the translations
- * (6.85), the Shelf-Portrait's do not yet (5.18b), and both show this block.
+ * `t` defaults to English; the game's pages (6.85) and the shared
+ * Shelf-Portrait (5.18b, since 2026-10-18) both hand theirs in.
  */
 const LOOK = {
   aside: {
