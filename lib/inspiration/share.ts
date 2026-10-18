@@ -36,8 +36,9 @@ export function titleOf(by: string): string {
  * covers, the card's words in the middle of their column, the mosaic ground.
  * 5 since 2026-10-06: six in a story three by two, titles on two lines.
  * 6 since 2026-10-07: on the mosaic, the field darker behind the captions.
+ * 7 since 2026-10-18: nine covers on the link card stand as the board, three by three.
  */
-export const PICTURE_VERSION = 6;
+export const PICTURE_VERSION = 7;
 
 export interface ShareTarget {
   id: 'x' | 'threads' | 'bluesky' | 'whatsapp' | 'telegram';

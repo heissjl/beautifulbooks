@@ -1,6 +1,7 @@
 import Link from '@/components/Link';
 import CoverImage from './CoverImage';
 import { coverUrlFor } from '@/lib/coverurl';
+import { PICTURE_VERSION } from '@/lib/inspiration/share';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/server';
 
@@ -30,7 +31,7 @@ const VERSUS_PAIR = ['ol:15154344', 'ol:10215294'] as const;
 const CHRISTIE = ['ol:7267514', 'ol:15130644', 'ol:12855074'] as const;
 /** Julian's board, as its share card — the same address its page names as og:image (read 2026-10-15). */
 const PORTRAIT_CARD =
-  '/shelfportrait/card.jpg?b=s8d7.2apl~1ulq.7tkc1~3kry.8uddl~1btq.90yc7~1r3aq.43fn~fd4i.79qvu~239gj.4y4ll~hvi.5i932~qdjp.8tit6&sub=The%20performative%20reader%27s%20starter%20pack&format=card&v=6';
+  `/shelfportrait/card.jpg?b=s8d7.2apl~1ulq.7tkc1~3kry.8uddl~1btq.90yc7~1r3aq.43fn~fd4i.79qvu~239gj.4y4ll~hvi.5i932~qdjp.8tit6&sub=The%20performative%20reader%27s%20starter%20pack&format=card&v=${PICTURE_VERSION}`;
 
 interface Props {
   walls: boolean;
