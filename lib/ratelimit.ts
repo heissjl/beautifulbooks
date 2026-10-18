@@ -126,6 +126,8 @@ export const RATE_RULES = {
    * script feeding reports fills the log for nothing.
    */
   csp: { capacity: 20, refillPerMinute: 10 },
+  /** The language switch as a link (6.106): a 303 and a cookie, nothing to spend, but no reason to let it be hammered. */
+  locale: { capacity: 30, refillPerMinute: 10 },
   /** The uptime monitor (2.18g): one look every few minutes; a crawler gets little out of it. */
   health: { capacity: 10, refillPerMinute: 10 },
   /** Shared by every request that can spend a Google Books request. */

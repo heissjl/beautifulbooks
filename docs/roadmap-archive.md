@@ -1245,3 +1245,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.42 Das Repository liegt in iCloud Drive, und `tsc` ist deshalb immer rot.** — **Julian entscheidet** den Ort. iCloud synchronisiert `.next/` und `node_modules/` mit und legt „… 2“-Doppeldateien und `.icloud`-Platzhalter an; am 2026-09-12 lagen acht davon in `.next/`, und weil `tsconfig.json` `.next/types/**` einschließt, bricht `npx tsc --noEmit` an `.next/dev/types/routes.d 2.ts` — einer Datei, die kein Mensch geschrieben hat. Ein Typecheck, der immer rot ist, ist keiner. Empfehlung: die Arbeitskopie nach `~/Projects`, Git ist die Sicherung; bis dahin ein `exclude` für `**/* 2.*` in `tsconfig.json` (Claude, 30 Minuten) und ein Lauf, der belegt, dass `tsc` danach grün ist.
 
 **Erledigt 2026-10-18.** → [Historie](history.md#2026-10-18--der-tsc-ausschluss-für-doppeldateien-roadmap-642)
+
+## 6.106
+
+**6.106 Der Sprachschalter als Link, nicht als Handler.** ([Red-Team 2026-10-09](red-team-2026-10-09.md) U6.) In Chrome tat der erste Klick auf „Deutsch“ 3 s nach dem Laden nichts, der zweite nach 10 s schaltete um — vor der Hydration ist der Knopf tot. Ein `<a href>` mit Server-Antwort (Cookie setzen, zurückleiten) wirkt immer. Claude, 1 h. Thema: Sprache
+
+**Erledigt 2026-10-18.** → [Historie](history.md#2026-10-18--der-sprachschalter-als-link-roadmap-6106)
