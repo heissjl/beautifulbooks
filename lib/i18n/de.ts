@@ -438,6 +438,7 @@ export const de: Readonly<Record<string, string>> = {
   '{n} scans': '{n} Scans',
   'one with {n} scans': 'einer mit {n} Scans',
   '{shop} by {question}': '{shop} nach {question}',
+  'Reviews at Goodreads': 'Rezensionen bei Goodreads',
   'title and year': 'Titel und Jahr',
   'A new copy should look like the cover you picked.': 'Ein neues Exemplar sollte so aussehen wie das gewählte Cover.',
   'A new copy probably looks different. The publisher’s image is shown, and searches for your cover move to the front.': 'Ein neues Exemplar sieht wahrscheinlich anders aus. Das Bild des Verlags wird gezeigt, und die Suchen nach deinem Cover rücken nach vorn.',

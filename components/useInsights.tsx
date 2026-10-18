@@ -151,8 +151,8 @@ function useOnLeave(flush: () => void, key: string): void {
   }, [key]);
 }
 
-/** Image searches and catalogues: not shops, counted as "found" (plan §4). */
-const FINDERS = /(^|\.)(lens\.google\.com|tineye\.com|worldcat\.org|openlibrary\.org)$/;
+/** Image searches, catalogues and Goodreads (6.11): not shops, counted as "found" (plan §4). */
+const FINDERS = /(^|\.)(lens\.google\.com|tineye\.com|worldcat\.org|openlibrary\.org|goodreads\.com)$/;
 
 type Verdict = (typeof VERDICTS)[number];
 

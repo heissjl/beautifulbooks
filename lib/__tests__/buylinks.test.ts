@@ -90,7 +90,7 @@ describe('searchLinksFor (no ISBN needed)', () => {
     expect(links.map(l => l.provider)).toEqual([
       'abebooks-search', 'ebay-search',
       'bookshop-search', 'amazon-search', 'thriftbooks-search',
-      'google-lens', 'tineye', 'worldcat', 'openlibrary',
+      'google-lens', 'tineye', 'worldcat', 'goodreads', 'openlibrary',
     ]);
     const url = (provider: string) => links.find(l => l.provider === provider)!.url;
 
@@ -112,7 +112,7 @@ describe('searchLinksFor (no ISBN needed)', () => {
     expect(links.map(l => l.provider)).toEqual([
       'abebooks-search', 'ebay-search', 'abebooks-de-search',
       'thalia-search', 'genialokal-search', 'amazon-search', 'hugendubel-search',
-      'worldcat',
+      'worldcat', 'goodreads',
     ]);
     const url = (provider: string) => links.find(l => l.provider === provider)!.url;
     expect(url('abebooks-search')).toContain('zvab.com');
@@ -125,6 +125,16 @@ describe('searchLinksFor (no ISBN needed)', () => {
       searchLinksFor({ title: 'The Iliad', author: 'Homer', publisher: 'Penguin Classics', year: 1998, isbn13 }, 'us').find(l => l.provider === 'worldcat')!.url;
     expect(worldcat('9780140275360')).toBe('https://search.worldcat.org/search?q=bn:9780140275360');
     expect(worldcat()).toBe('https://search.worldcat.org/search?q=The%20Iliad%20Homer%20Penguin%20Classics%201998');
+  });
+
+  it('asks Goodreads for the ISBN when there is one, title and author when not (6.11)', () => {
+    const goodreads = (isbn13?: string) =>
+      searchLinksFor({ title: 'The Iliad', author: 'Homer', publisher: 'Penguin Classics', year: 1998, isbn13 }, 'us').find(l => l.provider === 'goodreads')!;
+    expect(goodreads('9780140275360').url).toBe('https://www.goodreads.com/search?q=9780140275360');
+    // Publisher and year stay out: Goodreads' search field does not understand them.
+    expect(goodreads().url).toBe('https://www.goodreads.com/search?q=The%20Iliad%20Homer');
+    expect(goodreads().label).toBe('Reviews at Goodreads');
+    expect(goodreads().kind).toBeUndefined();
   });
 });
 

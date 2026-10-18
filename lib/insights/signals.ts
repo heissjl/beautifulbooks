@@ -86,7 +86,7 @@ export interface BookSignal {
   verdict: (typeof VERDICTS)[number];
   /** At least one click to a shop (through `/go/`). */
   bought: boolean;
-  /** At least one click on an image search or catalogue (Lens, TinEye, WorldCat, Open Library). */
+  /** At least one click on an image search, a catalogue or Goodreads (Lens, TinEye, WorldCat, Open Library, Goodreads). */
   found: boolean;
   /** The channel the tab's visit began with (5.6a); `from` is only the page before. */
   entry: Entry;

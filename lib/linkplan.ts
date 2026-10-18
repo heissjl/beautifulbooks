@@ -263,13 +263,16 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
     words, left the reader to guess; so did a bare "Booklooker", which only
     ever takes the number.
 
-    Tools that are not shops — Google Lens, TinEye, WorldCat, Open Library —
+    Tools that are not shops — Google Lens, TinEye, WorldCat, Goodreads, Open Library —
     keep their plain name: they ask by picture or point at a record, and a
     suffix there would explain nothing.
   */
   const t = input.t ?? english;
   const name = (l: BuyLink): BuyLink =>
-    fromIsbn.has(l.provider) || /-search$/.test(l.provider) ? { ...l, label: t('{shop} by {question}', { shop: l.label, question: questionOf(l, t) }) } : l;
+    fromIsbn.has(l.provider) || /-search$/.test(l.provider)
+      ? { ...l, label: t('{shop} by {question}', { shop: l.label, question: questionOf(l, t) }) }
+      // The one tool whose label is a sentence, not a name (6.11): it goes through t like any copy.
+      : l.provider === 'goodreads' ? { ...l, label: t('Reviews at Goodreads') } : l;
   const namedLead = lead.map(name);
 
   /*

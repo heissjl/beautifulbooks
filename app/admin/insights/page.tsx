@@ -209,8 +209,8 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
         <Card title="Händler" sub={`Klicks je Händler und Markt, über /go/ exakt gezählt; ein Klick ist kein Kauf. US ${nf.format(clicks.byMarket.us)} · UK ${nf.format(clicks.byMarket.uk)} · DE ${nf.format(clicks.byMarket.de)}.`}>
           <RetailerTable rows={clicks.rows} total={clicks.total} labels={report.labels} few={report.few} />
           <Note>
-            Gezählt werden Links nach ISBN, Händlersuchen nach Titel und die lokalen Buchhandlungen; Google Lens, TinEye, WorldCat und
-            Open Library sind keine Händler. Deine eigenen Klicks mit Admin-Cookie zählen nicht.
+            Gezählt werden Links nach ISBN, Händlersuchen nach Titel und die lokalen Buchhandlungen; Google Lens, TinEye, WorldCat,
+            Goodreads und Open Library sind keine Händler. Deine eigenen Klicks mit Admin-Cookie zählen nicht.
           </Note>
         </Card>
       </section>

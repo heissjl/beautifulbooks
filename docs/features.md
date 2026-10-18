@@ -74,6 +74,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Teilen: Menü mit Link kopieren, `navigator.share`, Pinterest, WhatsApp, Bluesky, X, E-Mail — nur Links, kein Skript; eigene Adresse `/book/<werk>/cover/<cover>` mit dem gewählten Cover als Vorschaubild | 2026-09-09 | F2.13 | 6.20, 6.21 | `components/ShareButton.tsx`, `app/book/[id]/cover/[cover]/` |
 | Verfügbarkeits-Button — **eigener Schalter** `NEXT_PUBLIC_AVAILABILITY_CHECK=on` **und** Shop-Modus (seit 2026-10-05), nicht freigegeben | 2026-09-06 | F2.10, E12 | 0.1 | `lib/availability.ts`, `app/api/availability/`, `availabilityEnabled()` in `lib/sitemode.ts` |
 | WorldCat fragt nach der ISBN des gewählten Drucks (`bn:`), ohne ISBN nach Titel, Autor, Verlag und Jahr | 2026-10-02 | §8.5 | 6.83 | `lib/buylinks.ts` (`searchLinksFor`) |
+| „Reviews at Goodreads“ / „Rezensionen bei Goodreads“ in der Falte „Other ways to find it“, nach ISBN (Goodreads antwortet direkt mit der Buchseite), ohne ISBN nach Titel und Autor; ein Link, nichts von dort auf der Seite; zählt in der Analyse wie WorldCat als „found“ | 2026-10-18 | §8.5 | 6.11 | `lib/buylinks.ts` (`searchLinksFor`), `lib/linkplan.ts`, `components/useInsights.tsx` (`FINDERS`) |
 | Provisionshinweis unter der ersten Reihe der Läden, nur wenn ein gezeigter Link eine Partner-Kennung trägt (also nie im Hobby-Modus), mit Amazons Pflichtsatz bei getaggtem Amazon-Link | 2026-10-02 (vorbereitet) | 2.4, E20 | 4.11 | `lib/buylinks.ts` (`commissionNote`), `components/BookDetail.tsx` |
 
 ## Weitere Seiten
