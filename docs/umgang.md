@@ -99,6 +99,7 @@ Die Quelle, von der die Seite lebt (SPEC §3 F3). Details zu Werken, Ausgaben un
 - **Turbopack liefert alte CSS** (2026-09-28): nach Änderungen an `app/globals.css` nur `.next/dev/cache/turbopack` löschen, **nie** `.next/dev/cache/fetch-cache` — der hält die Open-Library-Antworten, ohne die ein Dev-Server aus Bash heraus ohne Netz jede Werkseite als „unavailable“ zeigt. Gelieferte Regeln über `document.styleSheets` prüfen, nicht per grep.
 - **Zwei `next dev` im selben Ordner** sperren sich; der Server im Worktree läuft auf seinem eigenen Port (2026-10-09: 3107). Wer auf welchem Port läuft: `lsof -nP -iTCP:<port> -sTCP:LISTEN`, dann `lsof -p <pid> | grep cwd`.
 - `next dev` lädt `next.config.ts` bei Änderung selbst neu (2026-10-09, Header von 2.12 kamen ohne Neustart).
+- **Ein aus der Bash gestarteter Server hat in der Sandbox kein Netz** (2026-10-18): `next start` antwortete auf jede Suche „The catalogue did not answer“, `/img/` lieferte 400, obwohl Open Library erreichbar war. Für Prüfungen gegen den Katalog den Server außerhalb der Sandbox starten (Bash mit abgeschalteter Sandbox); lokale Aufrufe mit `curl` gehen aus der Sandbox heraus. Und erst `curl openlibrary.org` einmal von Hand: exit 7 heißt, Open Library weist diesen Mac ab (§1), nicht der Build ist kaputt.
 
 ## 11. Git, Worktrees, Commits
 
