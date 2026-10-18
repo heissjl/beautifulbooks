@@ -12,6 +12,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import type { CollectionRecord } from '../../lib/collections';
+import { backupDir, readBackupStatus, type BackupStatus } from './backup';
 import { latestFeatureDate, parseFeatures, parseHistory, parseLabTable, parsePlansIndex, readmeGist, type HistoryEntry } from './docs';
 import { envChecks, envNamesInCode, isSecret, type VercelVar } from './env';
 import { fileAtProduction, git, itemsInSubject, lastProductionChange, mainRoot, parseWorktrees, productionHead, readBranches, workByItem, PRODUCTION } from './git';
@@ -82,6 +83,8 @@ export interface CockpitData {
   };
   hints: Hint[];
   identity: IdentityData;
+  /** The backup folder beside the main checkout (2.11): newest complete copy and its age. */
+  backup: BackupStatus;
 }
 
 function read(file: string): string {
@@ -154,6 +157,8 @@ function seriesLists(dir: string, slugs: string[], documented: Array<{ file: str
   return readdirSync(dir).filter(f => f.endsWith('.json')).map(f => {
     let entries: Array<{ isbn?: string; skip?: string }> = [];
     try { entries = JSON.parse(read(path.join(dir, f))); } catch { /* not a list */ }
+    // A list file that holds an object (notes, a map by ISBN) is not a list of entries; it stopped the whole build on 2026-10-18.
+    if (!Array.isArray(entries)) entries = [];
     const skipped = entries.filter(e => e.skip);
     const { slug, source } = listSlug(`lab/collections/lists/${f}`, slugs, documented);
     return { file: `lab/collections/lists/${f}`, slug, slugSource: source, entries: entries.length, skipped: skipped.length, skippedIsbns: skipped.map(e => e.isbn ?? '').filter(Boolean) };
@@ -278,6 +283,7 @@ export function collect(input: CollectInput): CockpitData {
       items: [...new Set(b.commits.flatMap(c => itemsInSubject(c.subject)))],
     }));
 
+  const backup = readBackupStatus(backupDir(main));
   const artefacts = [
     { group: 'Steuerung', rows: ['SPEC.md', 'ROADMAP.md', 'CLAUDE.md', 'docs/features.md', 'docs/history.md', 'docs/roadmap-archive.md', 'lab/README.md'].filter(f => existsSync(path.join(root, f))).map(f => ({ name: f, path: f, note: `${Math.round(statSync(path.join(root, f)).size / 1024)} KB` })) },
     { group: 'Recherchen und Berichte', rows: (existsSync(path.join(root, 'docs')) ? readdirSync(path.join(root, 'docs')) : []).filter(f => f.endsWith('.md') && !['features.md', 'history.md', 'roadmap-archive.md', 'worktrees.md'].includes(f)).map(f => ({ name: f, path: `docs/${f}`, note: (/^# (.+)$/m.exec(read(path.join(root, 'docs', f)))?.[1] ?? '') })) },
@@ -290,6 +296,11 @@ export function collect(input: CollectInput): CockpitData {
       { name: 'docs/cockpit.html', path: 'docs/cockpit.html', note: 'diese Seite', local: true },
       { name: 'docs/worktrees.md', path: 'docs/worktrees.md', note: 'npm run worktrees', local: true },
     ] },
+    // Only names and footers: a backup holds what readers typed, and none of it is written into this page.
+    { group: 'Sicherungen der Redis (außerhalb des Repos)', rows: backup.files.slice(0, 8).map(f => ({
+      name: f.name, path: path.join(backup.dir, f.name), local: true,
+      note: `${f.kb} KB · ${f.complete === true ? `${f.keys ?? '?'} Schlüssel` : f.complete === false ? 'nicht vollständig' : 'ohne Fuß'}`,
+    })) },
   ];
 
   const data: CockpitData = {
@@ -323,6 +334,7 @@ export function collect(input: CollectInput): CockpitData {
     },
     hints: [],
     identity: collectIdentity(root),
+    backup,
   };
   data.hints = deriveHints({
     items: items.map(i => ({ ...i, workBranches: i.work.map(w => w.branch), roadmapOnlyBranches: i.roadmapOnly })),
@@ -334,6 +346,10 @@ export function collect(input: CollectInput): CockpitData {
     envChecks: checks,
     history,
     nextSteps: data.nextSteps,
+    backup: {
+      dir: short(backup.dir, main), exists: backup.exists, latest: backup.latest ? { name: backup.latest.name } : null,
+      ageDays: backup.ageDays, tmp: backup.tmp, newestIncomplete: backup.files.length > 0 && backup.files[0].complete !== true,
+    },
   });
   return data;
 }

@@ -133,6 +133,19 @@ export function buildCatalog(packageJson: string, files: SourceFile[]): Tool[] {
     why: 'Vor jedem Merge nach main: wer ist wie weit von Produktion. Schreibt docs/worktrees.md.',
     display: 'npm run worktrees -- --fetch', argv: ['npm', 'run', 'worktrees', '--', '--fetch'], file: 'scripts/worktrees.ts', items: [],
   });
+  // The copy of the store (2.11): asks production once, writes beside the project. The password comes from the main .env.local into the process, never into the page.
+  if (scripts.backup) tools.push({
+    id: 'backup', group: 'Betrieb', name: 'Sicherung der Redis', kind: 'oneshot',
+    why: 'Fragt die Produktion einmal nach dem ganzen Speicher (GET /api/admin/export) und legt die Datei in ../bb-backups neben dem Projekt ab — nie im Repository, nie in iCloud. Ohne vollständigen Fuß bleibt sie .tmp und zählt nicht.',
+    display: 'SUGGEST_ADMIN_PASSWORD=… npm run backup', argv: ['npm', 'run', 'backup'], env: { SUGGEST_REMOTE: LIVE }, envFromLocal: ['SUGGEST_ADMIN_PASSWORD'],
+    file: 'scripts/backup.ts', items: ['2.11'],
+  });
+  if (scripts.restore) tools.push({
+    id: 'restore', group: 'Betrieb', name: 'Sicherung zurückspielen', kind: 'oneshot',
+    why: 'Liest eine Sicherung in eine leere Redis — das Ziel nur aus --to, nie aus STORAGE_*; ein fremder Host braucht --allow-remote, ein voller Speicher --force.',
+    display: 'npm run restore -- <file.jsonl> --to redis://127.0.0.1:6379', file: 'scripts/restore.ts', items: ['2.11'],
+    copyOnly: 'braucht Datei und Ziel — kopieren und ergänzen',
+  });
   tools.push(
     { id: 'curate-online', group: 'Kuratieren', name: '/curate online (Freunde)', kind: 'online', url: `${LIVE}/curate`,
       why: 'Die Sammlungs-App für Freunde, hinter Passwort; Entwürfe liegen im Redis der Produktion.', display: '', items: ['5.10b', '5.10g'] },

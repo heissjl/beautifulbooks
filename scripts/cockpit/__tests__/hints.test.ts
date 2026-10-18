@@ -9,6 +9,17 @@ function input(over: Partial<HintInput>): HintInput {
 }
 
 describe('deriveHints', () => {
+  it('asks for a backup when there is none, when the newest complete copy is old, and notes aborted files', () => {
+    const none = deriveHints(input({ backup: { dir: '../bb-backups', exists: false, latest: null, ageDays: null, tmp: 0, newestIncomplete: false } }));
+    expect(none.map(h => h.title)).toContain('Keine Sicherung');
+    const fresh = deriveHints(input({ backup: { dir: '../bb-backups', exists: true, latest: { name: 'bb-redis-2026-10-18-06-00.jsonl' }, ageDays: 0.4, tmp: 0, newestIncomplete: false } }));
+    expect(fresh.filter(h => /Sicherung/.test(h.title))).toEqual([]);
+    const old = deriveHints(input({ backup: { dir: '../bb-backups', exists: true, latest: { name: 'bb-redis-2026-10-01-06-00.jsonl' }, ageDays: 17.2, tmp: 2, newestIncomplete: true } }));
+    expect(old.map(h => h.title)).toEqual(expect.arrayContaining(['Sicherung ist alt', 'Letzte Sicherung brach ab', 'Abgebrochene Sicherungen']));
+    expect(old.find(h => h.title === 'Sicherung ist alt')!.text).toContain('17 Tage');
+    expect(old.find(h => h.title === 'Sicherung ist alt')!.level).toBe('act');
+  });
+
   it('flags a number that stands twice and a next step that names only finished items', () => {
     const hints = deriveHints(input({
       items: [item('6.82', { done: true }), item('6.82'), item('2.6', { done: true }), item('2.5')],

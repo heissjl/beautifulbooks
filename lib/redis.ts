@@ -72,6 +72,18 @@ export interface RedisCommands {
   dbSize?(): Promise<unknown>;
   /** STRLEN: the bytes of one value, a sample of what the store carries (2.18g). Optional, like hIncrBy. */
   strLen?(key: string): Promise<unknown>;
+  /** TYPE key → "string" | "list" | "hash" | …: what a key holds, for the export (ROADMAP 2.11). Optional, like hIncrBy. */
+  type?(key: string): Promise<unknown>;
+  /** PTTL key → milliseconds left, -1 without an expiry, -2 for no such key (2.11). Optional. */
+  pTtl?(key: string): Promise<unknown>;
+  /** PEXPIRE key ms — a restored key gets the time it had left (2.11). Optional. */
+  pExpire?(key: string, ms: number): Promise<unknown>;
+  /** DEL key — only the restore with `--force` uses it, before it rewrites a list or hash (2.11). Optional. */
+  del?(key: string): Promise<unknown>;
+  /** RPUSH key v1 v2 … as one command — a restored list of votes, five thousand at a time (2.11). Optional. */
+  rPushMany?(key: string, values: readonly string[]): Promise<unknown>;
+  /** HSET key f1 v1 f2 v2 … as one command — a restored hash (2.11). Optional. */
+  hSet?(key: string, fields: Readonly<Record<string, string>>): Promise<unknown>;
 }
 
 /** A SCAN answer as either transport delivers it: `[cursor, keys]` over REST, `{ cursor, keys }` from node-redis. */
@@ -158,6 +170,12 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     scan: async (cursor, match, count) => scanReply(await command(['SCAN', cursor, 'MATCH', match, 'COUNT', count])),
     dbSize: () => command(['DBSIZE']),
     strLen: key => command(['STRLEN', key]),
+    type: key => command(['TYPE', key]),
+    pTtl: key => command(['PTTL', key]),
+    pExpire: (key, ms) => command(['PEXPIRE', key, ms]),
+    del: key => command(['DEL', key]),
+    rPushMany: (key, values) => command(['RPUSH', key, ...values]),
+    hSet: (key, fields) => command(['HSET', key, ...Object.entries(fields).flat()]),
   };
 }
 
@@ -232,6 +250,12 @@ export function redisCommands(url: string): RedisCommands {
     scan: async (cursor, match, count) => scanReply(await run(client => client.scan(cursor, { MATCH: match, COUNT: count }))),
     dbSize: () => run(client => client.dbSize()),
     strLen: key => run(client => client.strLen(key)),
+    type: key => run(client => client.type(key)),
+    pTtl: key => run(client => client.pTTL(key)),
+    pExpire: (key, ms) => run(client => client.pExpire(key, ms)),
+    del: key => run(client => client.del(key)),
+    rPushMany: (key, values) => run(client => client.rPush(key, [...values])),
+    hSet: (key, fields) => run(client => client.hSet(key, { ...fields })),
   };
 }
 

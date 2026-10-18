@@ -13,6 +13,8 @@
     "worktrees": "npx tsx scripts/worktrees.ts",
     "kanban": "npx tsx scripts/cockpit/main.ts --build --board",
     "cockpit": "npx tsx scripts/cockpit/main.ts",
+    "backup": "npx tsx scripts/backup.ts",
+    "restore": "npx tsx scripts/restore.ts",
     "calibre": "npx tsx lab/calibre/app.ts"
   },
   "dependencies": {
