@@ -18,6 +18,8 @@ import { VERDICT_LEAD, VERDICT_MEANING } from '../verdicts';
 import { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/components/AvailabilityCheck';
 import { MODES } from '@/components/SearchBar';
 import { TAB_LABELS } from '@/components/CollectionEditor';
+import { LIST_LABELS, SIZE_LINE, SUB_IDEAS } from '@/components/InspirationEditor';
+import { SIZE_WORD } from '../inspiration/board';
 import { RATE_LIMITED } from '@/app/api/rate';
 import { localShopCopy, LOCAL_COUNTRIES } from '../localshops';
 import { registrationPlaces } from '../normalize';
@@ -70,6 +72,11 @@ function tableKeys(): string[] {
     ...LOCAL_COUNTRIES.map(c => c.label),
     ...registrationPlaces(),
     ...Object.values(AREA_NAME),
+    // The Shelf-Portrait's tables (5.18b): the count words, the line per size, the list labels, the suggested sublines.
+    ...Object.values(SIZE_WORD),
+    ...Object.values(SIZE_LINE),
+    ...Object.values(LIST_LABELS),
+    ...SUB_IDEAS,
   ];
 }
 

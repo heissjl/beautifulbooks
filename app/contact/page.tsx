@@ -5,6 +5,7 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import { rich } from '@/components/rich';
 import { readImprint } from '@/lib/imprint';
+import { commerceEnabled } from '@/lib/sitemode';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/server';
 
@@ -47,7 +48,15 @@ export default function ContactPage({ locale = DEFAULT_LOCALE }: { locale?: Loca
         </section>
         <section className="mt-10 space-y-4 text-[15px] leading-relaxed text-ink-2">
           <p>
-            {rich(t('This is a private, non-commercial site. Book data comes from {openlibrary} and {googlebooks}; cover images are shown from those catalogues and belong to their publishers. If you hold rights to an image and want it removed from view here, write to the address above.'), {
+            {/*
+              "Non-commercial" is true only in hobby mode (E20). In shop mode the links
+              earn, and genialokal's terms ask that what a partner's site says be
+              correct and current (ROADMAP 4.3, 2026-10-07). Shop wording drafted, not
+              yet approved by Julian.
+            */}
+            {rich(commerceEnabled()
+              ? t('This is a private site; some of its shop links earn it a small commission. Book data comes from {openlibrary} and {googlebooks}; cover images are shown from those catalogues and belong to their publishers. If you hold rights to an image and want it removed from view here, write to the address above.')
+              : t('This is a private, non-commercial site. Book data comes from {openlibrary} and {googlebooks}; cover images are shown from those catalogues and belong to their publishers. If you hold rights to an image and want it removed from view here, write to the address above.'), {
               openlibrary: <a className={ext} href="https://openlibrary.org" target="_blank" rel="noopener noreferrer">Open Library</a>,
               googlebooks: <a className={ext} href="https://books.google.com" target="_blank" rel="noopener noreferrer">Google Books</a>,
             })}

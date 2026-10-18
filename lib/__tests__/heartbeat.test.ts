@@ -4,7 +4,8 @@ import { heartbeatMail } from '../heartbeat';
 
 describe('heartbeatMail', () => {
   it('names yesterday’s two totals and the state of store and Google', () => {
-    const m = heartbeatMail({ day: '2026-10-09', bookVisits: 42, shopClicks: 3, redisMs: 30, googlePausedS: 0, googleFieldsBroken: true });
+    const m = heartbeatMail({ day: '2026-10-09', bookVisits: 42, shopClicks: 3, rejected: 406, redisMs: 30, googlePausedS: 0, googleFieldsBroken: true });
+    expect(m.text).toContain('turned away as not a person (clicks and beacons): 406');
     expect(m.subject).toContain('42 book visits, 3 shop clicks');
     expect(m.subject).not.toContain('off');
     expect(m.text).toContain('the store answered in 30 ms');

@@ -55,6 +55,8 @@ export interface PhotoScore {
   /** Readings beyond the list that are one short word ("GO", "Self", "SETH"): the stumps of books the picture cuts off. */
   stumps: number;
   pieces: number;
+  /** Pieces of the second look the model did not answer: a run with any of these is not a measurement of the variant. */
+  piecesFailed: number;
   ms: number;
   tokensIn: number;
   tokensOut: number;
@@ -118,9 +120,9 @@ async function main() {
   };
   const only = arg('only')?.split(',').map((n) => n.padStart(2, '0'));
   const label = arg('label') ?? '';
-  // Variants being measured: cut (prompt: leave out books the edge cuts off), trim (no second look at the edge strips), unsure (a field for titles read in part).
+  // Variants being measured: cut (prompt: leave out books the edge cuts off), trim (no second look at the cut-off rows), stumps (one-word readings without an author dropped from the cut-off rows), unsure (a field for titles read in part).
   const variants = new Set((arg('variant') ?? '').split(',').filter(Boolean));
-  const variant = { cut: variants.has('cut'), trim: variants.has('trim'), unsure: variants.has('unsure') };
+  const variant = { cut: variants.has('cut'), trim: variants.has('trim'), stumps: variants.has('stumps'), unsure: variants.has('unsure') };
   const truth = JSON.parse(readFileSync(join(here, 'testset', 'truth.json'), 'utf8')) as { photos: TruthPhoto[] };
   const photos = truth.photos.filter((p) => !only || only.some((n) => p.file.includes(`-${n}.`)));
 
@@ -141,8 +143,8 @@ async function main() {
       const s = score(photo, reading.books);
       // List price of the model that read it (lib/insights/prices.ts); 0 for a model the table does not know.
       const cents = Math.round((costUsd(reading.model, reading.tokensIn, reading.tokensOut) ?? 0) * 1000) / 10;
-      scores.push({ file: photo.file, what: photo.what, complete: photo.complete, ...s, pieces: reading.pieces, ms: reading.msModel, tokensIn: reading.tokensIn, tokensOut: reading.tokensOut, cents });
-      console.error(`${photo.file}: ${s.hit}/${s.truth} read, ${s.extra} beyond the list, ${reading.pieces} pieces, ${(reading.msModel / 1000).toFixed(1)} s, ${cents} ct`);
+      scores.push({ file: photo.file, what: photo.what, complete: photo.complete, ...s, pieces: reading.pieces, piecesFailed: reading.piecesFailed, ms: reading.msModel, tokensIn: reading.tokensIn, tokensOut: reading.tokensOut, cents });
+      console.error(`${photo.file}: ${s.hit}/${s.truth} read, ${s.extra} beyond the list, ${reading.pieces} pieces${reading.piecesFailed ? ` (${reading.piecesFailed} FAILED)` : ''}, ${(reading.msModel / 1000).toFixed(1)} s, ${cents} ct`);
     } catch (err) {
       console.error(`${photo.file}: the model did not answer (${err instanceof Error ? err.message.slice(0, 120) : 'unknown'})`);
     }

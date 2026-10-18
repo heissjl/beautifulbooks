@@ -1,4 +1,5 @@
 import Link from './Link';
+import { rich } from './rich';
 import CoverImage from './CoverImage';
 import InspirationMine from './InspirationMine';
 import InspirationToCollection from './InspirationToCollection';
@@ -9,6 +10,7 @@ import { SIZE_WORD } from '@/lib/inspiration/board';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import type { DescribedBoard } from '@/lib/inspiration/describe';
 import { PICTURE_VERSION, shareTargets, shareText, titleOf } from '@/lib/inspiration/share';
+import { english, type Translate } from '@/lib/i18n/translate';
 
 /**
  * A finished board as others see it (ROADMAP 5.18b): the covers, each leading
@@ -22,10 +24,11 @@ import { PICTURE_VERSION, shareTargets, shareText, titleOf } from '@/lib/inspira
  * long address. The page has no owner to ask (N11), so what differs for the
  * one who just made the board goes through `InspirationMine`.
  *
- * English only for now, like the editor (ROADMAP 5.18b).
+ * `t` comes from the page (`translator(locale)`, ROADMAP 5.18b, German since
+ * 2026-10-18); the card and the pictures are drawn without it and stay English.
  */
-export default function InspirationShared({ board, query, link, walls, versus }: { board: DescribedBoard; query: string; link: string; walls: boolean; versus: boolean }) {
-  const title = titleOf(board.by);
+export default function InspirationShared({ board, query, link, walls, versus, t = english }: { board: DescribedBoard; query: string; link: string; walls: boolean; versus: boolean; t?: Translate }) {
+  const title = titleOf(board.by, t);
   const books = board.books.flatMap((b) => (b ? [b] : []));
   const size = board.books.length === 3 ? 3 : board.books.length === 6 ? 6 : 9;
   const fresh = size === 9 ? '/shelfportrait' : `/shelfportrait?n=${size}`;
@@ -44,30 +47,30 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           <div className="flex flex-wrap gap-2">
             <InspirationMine
               query={query}
-              maker={<Link href={`/shelfportrait?${query}`} className={accentPill}>Change it</Link>}
+              maker={<Link href={`/shelfportrait?${query}`} className={accentPill}>{t('Change it')}</Link>}
               visitor={
                 <>
-                  <Link href={`/shelfportrait?${query}`} className={pill}>Start from this one</Link>
+                  <Link href={`/shelfportrait?${query}`} className={pill}>{t('Start from this one')}</Link>
                 </>
               }
             />
           </div>
         </div>
-        <p className="mt-3 text-base text-ink-2">{SIZE_WORD[size]} books, each with a favourite cover.</p>
+        <p className="mt-3 text-base text-ink-2">{t('{n} books, each with a favourite cover.', { n: t(SIZE_WORD[size]) })}</p>
         {/* What only this site can say about a board (Julian, 2026-10-06: „ok"). */}
-        <p className="mt-1 text-base text-ink-2">Each cover is the edition chosen — tap one to see where to get it.</p>
+        <p className="mt-1 text-base text-ink-2">{t('Each cover is the edition chosen — tap one to see where to get it.')}</p>
         {/*
           The invitation, for the maker as for a visitor (Julian, 2026-10-05: not "What's yours?" behind
           the sentence but „Take your Shelf-Portrait" with a link under it to start a new one of one's own).
         */}
-        <p className="mt-4 font-display text-xl text-ink">Take your Shelf-Portrait</p>
-        <p className="mt-0.5 text-sm"><Link href={fresh} className={more}>Start a new one of your own</Link></p>
+        <p className="mt-4 font-display text-xl text-ink">{t('Take your Shelf-Portrait')}</p>
+        <p className="mt-0.5 text-sm"><Link href={fresh} className={more}>{t('Start a new one of your own')}</Link></p>
 
         <ul className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
           {board.books.map((b, i) => {
             // A cover taken off the site on request (2.18k) leaves its place empty; the book stays in the list below.
             const src = b && !isHiddenCover(b.coverId) ? coverUrlFor(b.coverId, 'M') : null;
-            const label = b ? [b.title, b.author].filter(Boolean).join(' by ') : '';
+            const label = b ? (b.title && b.author ? t('{title} by {author}', { title: b.title, author: b.author }) : b.title ?? b.author ?? '') : '';
             return (
               <li key={i}>
                 {b ? (
@@ -97,7 +100,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           visitor={null}
           maker={
     <section className="mt-10 border-t border-line pt-6">
-              <h2 className="font-display text-2xl text-ink">Share it</h2>
+              <h2 className="font-display text-2xl text-ink">{t('Share it')}</h2>
 
               {/*
                 ROADMAP 5.18c (Julian, 2026-10-09: „do this right away", then „a bit higher" and „say that it's an
@@ -108,25 +111,25 @@ export default function InspirationShared({ board, query, link, walls, versus }:
               */}
               {size === 9 && books.length === 9 && (
                 <>
-                  <h3 className="mt-4 text-lg text-ink">To an open database</h3>
+                  <h3 className="mt-4 text-lg text-ink">{t('To an open database')}</h3>
                   <p className="mt-1 text-sm text-ink-2">
-                    <a href="https://thestalwart.com/ninebooks/" target="_blank" rel="noopener" className={more}>Nine Books</a> is
-                    an experiment by Joe Weisenthal: people’s favourite nines, collected as open data anyone may use. Save the
-                    picture below and upload it there — it is his project, and this site sends it nothing.
+                    {rich(t('{nineBooks} is an experiment by Joe Weisenthal: people’s favourite nines, collected as open data anyone may use. Save the picture below and upload it there — it is his project, and this site sends it nothing.'), {
+                      nineBooks: <a href="https://thestalwart.com/ninebooks/" target="_blank" rel="noopener" className={more}>Nine Books</a>,
+                    })}
                   </p>
                 </>
               )}
 
-              <h3 className={`${size === 9 && books.length === 9 ? 'mt-7' : 'mt-4'} text-lg text-ink`}>As a picture</h3>
-              <p className="mt-1 text-sm text-ink-2">For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.</p>
-              <PictureShare query={query} link={link} text={shareText(board.by)} />
+              <h3 className={`${size === 9 && books.length === 9 ? 'mt-7' : 'mt-4'} text-lg text-ink`}>{t('As a picture')}</h3>
+              <p className="mt-1 text-sm text-ink-2">{t('For Instagram, a story, a status — wherever a link does not travel. The picture carries the address.')}</p>
+              <PictureShare query={query} link={link} text={shareText(board.by, t)} />
 
-              <h3 className="mt-7 text-lg text-ink">As a link</h3>
-              <p className="mt-1 text-sm text-ink-2">The post is one sentence and the link. The link shows as this card:</p>
+              <h3 className="mt-7 text-lg text-ink">{t('As a link')}</h3>
+              <p className="mt-1 text-sm text-ink-2">{t('The post is one sentence and the link. The link shows as this card:')}</p>
               {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself, at the size it is shown; next/image would transform it again */}
-              <img src={`/api/inspiration/poster?${query}&format=card&v=${PICTURE_VERSION}`} alt={`The link card: ${title}, with the covers`} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
+              <img src={`/api/inspiration/poster?${query}&format=card&v=${PICTURE_VERSION}`} alt={t('The link card: {title}, with the covers', { title })} width={1200} height={630} loading="lazy" className="mt-3 w-full max-w-sm rounded-card border border-line bg-surface-2" />
               <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                {shareTargets(link, board.by).map((s) => (
+                {shareTargets(link, board.by, t).map((s) => (
                   <a key={s.id} href={s.href} target="_blank" rel="noopener" className={pill}>{s.label}</a>
                 ))}
                 <CopyLink link={link} />
@@ -142,8 +145,8 @@ export default function InspirationShared({ board, query, link, walls, versus }:
         <details open className="group mt-10 border-t border-line pt-5">
           <summary className="cursor-pointer list-none text-base text-ink transition-colors hover:text-accent">
             <span className="mr-1.5 inline-block text-accent transition-transform group-open:rotate-90">▸</span>
-            Are any of these missing from your library?{' '}
-            <span className="text-ink-2"><InspirationMine query={query} maker="Order the editions you chose." visitor="Order these editions." /></span>
+            {t('Are any of these missing from your library?')}{' '}
+            <span className="text-ink-2"><InspirationMine query={query} maker={t('Order the editions you chose.')} visitor={t('Order these editions.')} /></span>
           </summary>
           <ol className="mt-3 divide-y divide-line">
             {books.map((b) => {
@@ -153,7 +156,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
                   <span className="relative block h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-surface-2">{src && <CoverImage src={src} alt="" sizes="32px" />}</span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm text-ink">
-                      {b.title ?? 'A book whose title did not load'}
+                      {b.title ?? t('A book whose title did not load')}
                       {b.author && <span className="text-ink-3"> — {b.author}</span>}
                     </span>
                     {/* Here, not under the covers (Julian, 2026-10-06: „nur unten beim ausgeklappten finder … aber nicht im portrait selbst"). */}
@@ -164,7 +167,7 @@ export default function InspirationShared({ board, query, link, walls, versus }:
                     still be there after each. `noopener` only, not `noreferrer` — the book page reads the referrer to
                     class this visit as coming from a Shelf-Portrait (K9).
                   */}
-                  <Link href={b.href} target="_blank" rel="noopener" className={`shrink-0 whitespace-nowrap text-xs ${more}`}>Find this edition</Link>
+                  <Link href={b.href} target="_blank" rel="noopener" className={`shrink-0 whitespace-nowrap text-xs ${more}`}>{t('Find this edition')}</Link>
                 </li>
               );
             })}
@@ -179,14 +182,14 @@ export default function InspirationShared({ board, query, link, walls, versus }:
           maker={null}
           visitor={
             <div className="mt-10 border-t border-line pt-6">
-              <Link href={fresh} className="btn btn-accent">Take your Shelf-Portrait</Link>
+              <Link href={fresh} className="btn btn-accent">{t('Take your Shelf-Portrait')}</Link>
             </div>
           }
         />
       </div>
 
       {/* For someone who arrived from a picture and has never seen the site: what it is, and what else is here. Shared with /versus (6.96). */}
-      <WhatIsThisSite collection={walls} game={versus} />
+      <WhatIsThisSite t={t} collection={walls} game={versus} />
     </div>
   );
 }

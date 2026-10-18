@@ -1,3 +1,29 @@
+## 2026-10-18 · Das Shelf-Portrait spricht Deutsch (ROADMAP 5.18b)
+
+Julian, 2026-10-17 (PLAN-5.6c §9.8): die Neuner-Welle lief spanisch und englisch, nie deutsch, und er will das Shelf-Portrait in seinem deutschen Umfeld anstoßen — also die Übersetzung vorziehen, die in 5.18b als „offen (1)“ stand.
+
+**Gebaut.** Jeder Satz des Editors (`components/InspirationEditor.tsx`, Client, `useT()`), der geteilten Seite (`components/InspirationShared.tsx`, Server, `t` als Prop von `translator(locale)` in `app/shelfportrait/shared.tsx`), der Teilen-Werkzeuge (`InspirationShareTools.tsx`, `InspirationToCollection.tsx`, Client) und des FAQ (`InspirationFaq.tsx`, Server, `t` von der Seite) geht durch `t()`; die beiden „fehlt“-Sätze der Routen `/shelfportrait/[id]` und `/shelfportrait/board` auch. **166 neue Zeilen in `lib/i18n/de.ts`**; die drei Spiegel unter `app/de/shelfportrait/` standen seit dem 2026-10-05 und reichten `locale` schon durch. Der i18n-Test liest jetzt auch die vier Tabellen des Editors (`SIZE_WORD` aus `lib/inspiration/board.ts`, `SIZE_LINE`, `LIST_LABELS`, `SUB_IDEAS`), deren Werte als Schlüssel erst zur Laufzeit zu `t` kommen. „Three/Six/Nine“ werden als „Drei/Sechs/Neun“ übersetzt und, wo der Satz es braucht, kleingeschrieben („Leg neun Bücher aufs Brett“).
+
+**Was englisch bleibt, mit Absicht:** die Bilder (Story, Post, Link-Karte) und die Metadaten — `titleOf` und `shareText` nehmen ein optionales `t`, und `app/api/inspiration/poster/route.tsx` und `sharedMetadata` rufen sie ohne; so trägt ein Brett in beiden Sprachen dasselbe Bild und dieselbe Karte, und der FAQ-Satz „Ohne Namen steht auf dem Bild ‚My Shelf-Portrait‘“ bleibt wahr. Der Name „Shelf-Portrait“ bleibt (Julian hat kein deutsches Wort genannt); das Board heißt „Brett“ wie in der Roadmap; „Mein Shelf-Portrait“ und „Shelf-Portrait von {by}“ statt eines Genitiv-Apostrophs. Was der Leser tippt (Name, Unterzeile) wird nicht übersetzt, die vier Vorschläge für die Unterzeile schon („Die Bücher, die mich ausmachen“). Der Share-Satz ist deutsch („Mein Shelf-Portrait: die Bücher, die mich prägen, mit meinen Lieblingscovern. Und deins? #shelfportrait“) und wie der englische gegen die Grenzen von X (280, Link als 23) und Bluesky (300) getestet, mit dem längsten Namen (`lib/__tests__/inspiration-share.test.ts`). **Nicht übersetzt sind die Fehlersätze der API-Routen** (`/api/inspiration/covers`, `/link`: „Open Library has no such book.“, „Fill every place on the board first …“); nur der eine, den der Katalog kennt — „Open Library did not answer. Try again in a moment.“ — kommt deutsch heraus, weil der Editor jede Server-Antwort durch `t` reicht. Die anderen bräuchten die Sprache in der Route oder einen Fehlercode statt eines Satzes; offen, klein.
+
+**Der FAQ-Entwurf** (neun Fragen) ist auf Deutsch dem englischen Wortlaut nachgeführt, den Julian noch kürzen will: kürzt er einen englischen Satz, verliert der seine deutsche Zeile, und der i18n-Test nennt ihn. Übersetzt nach der Regel vom 2026-10-02: Einladungen neu geschrieben („Take your Shelf-Portrait“ → „Mach dein Shelf-Portrait“, wie der Verweis auf der Startseite seit 6.96; „Done — share it“ → „Fertig – teilen“; „What’s yours?“ → „Und deins?“), die Grenzen wörtlich (der Satz zum Gespeicherten, „kann hier nicht gezeigt werden“, „kein Cover verzeichnet“). Zwei Sätze mussten die Form wechseln, weil der Katalog-Test „jedes Cover“ als Vollständigkeitsbehauptung liest: „Each cover is the edition chosen“ → „Die Cover zeigen die gewählte Ausgabe“, „Each cover on a shared board leads …“ → „Auf einem geteilten Brett führt ein Cover …“.
+
+**Gemessen unter `next dev` (Port 3002 im Worktree), Cookie `locale=de`, im Browser-Bereich — der Mobil-Vorsatz des Bereichs ist 375 × 812, also schmaler als die 390 der Regel:**
+
+| Seite | 375 × 812 | 1280 × 800 |
+|---|---|---|
+| Editor `/shelfportrait` (drei Beispiele) | Seitenbreite 375, nichts abgeschnitten; Band 54 px hoch, eine Zeile „DEIN BRETT · 3 von 9 · Fertig – teilen“; Platzhalter 210 und 215 px in 317 px breiten Feldern | Band 48 px bei y 57 (sticky unter der Kopfzeile); das Brett „Deine neun Bücher“ 432 px breit, Unterkante 983 px; Platzhalter in 358 px Feldern; nichts abgeschnitten |
+| Geteiltes Neuner-Brett, Ansicht des Erbauers (`#mine`) | kein Querscrollen, nichts abgeschnitten; 17 Pillen und Knöpfe je eine Zeile — „Bild speichern“ 122 px, „Bild kopieren“ 116 px neben der 120 px breiten Bildspalte, „Mit Titel und Autor“ 136 px, „Daraus eine Sammlung machen“ 213 px; H1 „Shelf-Portrait von Julian“ eine Zeile | Seitenleiste „Was ist Buy Its Covers?“ bei x 752, 368 px breit; kein Knopf umgebrochen, nichts abgeschnitten |
+| Dreier-Brett, Besucher, 27-Zeichen-Name | H1 „Shelf-Portrait von Hannelore Elsner-Westermann“ drei Zeilen (umgebrochen, nicht abgeschnitten — der englische Titel mit demselben Namen bräuchte ebenso viele); Knöpfe „Mit diesem anfangen“, „Mach dein Shelf-Portrait“; Kaufliste „Fehlt dir eins davon im Regal? Bestell diese Ausgaben.“ | — |
+| Fenster im Editor (synthetische Klicks, der Bereich war verdeckt) | — | „Ein Buch hinzufügen“, „Buch 4 von 9“, Reiter „Suchen / Stöbern“, Pillen „Von Buy Its Covers ausgesucht“, „Meistgelesen auf Open Library“, „Eine Sammlung“; Status „155 Bücher, für die die Seite ein Cover nach Augenmaß ausgesucht hat.“; Cover-Fenster „Dein Lieblingscover“ mit dem Satz zur Wahl; Hinweis bei „Fertig“ mit drei von neun: „Füll erst die 9 Plätze – oder wähle oben drei Bücher.“; nach Wahl von 3: „Drei. Fertig.“, „Deine Must-reads.“ |
+| Fehlende Bretter | — | `/shelfportrait/board` ohne Bücher: „Diese Adresse enthält keine Bücher. Mach dir ein eigenes Brett unter /shelfportrait.“; `/shelfportrait/zzzzzzzz`: „Das Brett zu diesem Link ist hier nicht verzeichnet.“ |
+
+Das Cover-Fenster zeigte in der Sitzung „Open Library did not answer“ — die Ausgabenabfrage kam nicht durch (umgang.md §1, nicht dieser Änderung zuzuschreiben); der Satz kommt seitdem deutsch heraus, die Cover-Sätze selbst („{n} Cover aus den ersten {checked} von {total} Ausgaben, die Open Library verzeichnet, neueste zuerst.“) sind nur über den Katalog-Test geprüft, nicht im Browser gesehen.
+
+**Grün:** `npx tsc --noEmit`, ESLint auf den geänderten Dateien, `npm run test:run` 166 Dateien / 1.576 Tests (darunter der neue deutsche Längen-Test und der i18n-Test mit 166 neuen Schlüsseln, ohne Waisen), `npm run build` mit der `.env.local` des Hauptordners (alle sechs Shelf-Portrait-Routen samt `/de/`-Spiegeln). Analytik-Checkliste: keine Zahl bewegt sich — keine Shop-Links, keine neue Route, kein neuer Pfad, nichts Gespeichertes; der Share-Satz trägt dieselben `?via=`-Marken.
+
+**Offen daraus:** die englischen Fehlersätze der API-Routen (oben); ob Julian ein deutsches Wort für „Shelf-Portrait“ will (bisher nicht); das FAQ kürzen, dann die deutschen Zeilen nachziehen.
+
 ## 2026-10-07 · Die Kuratier-App zeigt, wie groß ein Cover wirklich ist (ROADMAP 6.18)
 
 Julian: „ändere die app so, dass ich weiß ob die cover L, M oder S größe haben und stelle die L vorne an". Jedes Cover lässt sich bei Open Library als S, M und L abrufen, aber das sagt nichts über den Scan: `-L` eines kleinen Originals ist das Original. **Die Kästen, gemessen an zwei Covern** (743781, Original 326 × 500; 15258721, Original 394 × 599): S 38 × 58, M 180 × 276 bzw. 180 × 273, L 326 × 500 bzw. 328 × 500 — L passt in 500 × 500, M ist 180 breit, S 58 hoch. Die App nennt ein Cover **L**, wenn die längere Seite des Originals 500 px erreicht, **M** ab 180 breit oder 360 hoch, sonst **S**.
@@ -4475,6 +4501,10 @@ Julian: „miss die drei ideen am testsatz“. Gemessen: die Schärfezahl ohne M
 
 Julian: „setz die schwelle zurück auf 30 und pushe“. Einen Tag stand sie bei 40; der Testsatz zeigte, dass ein erster Blick auf einem dichten Regal 35–55 Bücher liest und der zweite Blick bei 40 vom Zufall abhing (dasselbe Foto 35 von 46 in einem Lauf, 45 im nächsten; die Galeriewand in einem Lauf ohne zweiten Blick). Bei 30 kam er auf allen sechs dichten Fotos. Die Ausgaben begrenzt seit demselben Tag das Tagesbudget. Die Zahl der im Bild gefundenen Regalböden als Signal, das nicht schwankt, bleibt eine Idee — sie gilt nur für Regale (Julian).
 
+## 2026-10-04 · Die restlichen Varianten am Testsatz (ROADMAP 5.11a)
+
+Julian: „guthaben ist aufgeladen, miss die restlichen varianten“. Zehn Läufe, rund 4,90 $. Zwei gleiche Läufe liegen zehn Bücher auseinander (305 und 295 von 322) — das ist die Messlatte. Das Feld für Unsicheres bringt kein fehlendes Buch zurück und nimmt jede sechste richtige Lesung mit; als Fehlermarke taugt es, eingebaut wird es nicht. Angeschnittene Reihen gar nicht zu lesen, kostet ganze Bücher. Was trägt, ist eine Regel nach dem Lesen: in einer angeschnittenen Reihe fallen Ein-Wort-Lesungen ohne Autor weg — die Stümpfe halbieren sich, kein Buch geht verloren. Dazu der Hinweis bei Unschärfe aus dem dritten Durchgang. Beides wartet auf Julians Wort. [Bericht](tests/2026-10-04-regalfoto-testsatz.md).
+
 ## 2026-10-04 · Kanäle messbar (ROADMAP 5.6a)
 
 Julian: „baue 5.6 für das analyse-tool". Vorher fielen Reddit, Pinterest und Instagram unter `social`, Hacker News und Product Hunt unter `other`, In-App-Browser ohne Referrer unter `direct`. Sammlungs- und Wandseiten sendeten kein Signal; ein Launch wäre ungemessen geblieben. Gebaut:
@@ -5898,6 +5928,145 @@ Julian: „make a only footer branding high res picture of the badscifi cover co
 
 Julian: „put the draft on the website, so i can look at it and keep researching the other covers“. Der Datensatz `tom-adams-christie` (42 Kacheln, `published: false`) ging mit dem Deploy 314t2obuv in die Datei; daraus der Online-Entwurf **uzGLb7CQw18D** in `/curate` (`push-draft.ts`, unveröffentlicht). Ein Entwurf hält jedes Werk einmal, also zeigt er die zweite Fassung von *Ordeal by Innocence* und *Hercule Poirot's Christmas* nicht; veröffentlicht wird die Sammlung deshalb später über die Datei und ihren Schalter, nicht aus dem Entwurf. Beim Mergen in `main` fiel auf: der Hauptordner stand auf dem Zweig `research/haiku-zone` einer anderen Session — dort nichts gemergt (ein angefangener Merge abgebrochen, Zweig unverändert), stattdessen aus dem Worktree `git push origin HEAD:main`, nachdem der Zweig `origin/main` enthielt.
 
+## 2026-10-09 · Drei schräge Christie-Fotos entzerrt und zu Open Library (5.10r)
+
+Drei Kacheln der Tom-Adams-Sammlung zeigten Händlerfotos, schräg auf dem Tisch. `lab/collections/straighten.py` entzerrt sie per Perspektiv-Transformation aus vier Ecken des Vorderdeckels. Die Ecken werden von Hand auf einem doppelt vergrößerten Bild mit 10-px-Raster abgelesen, zuerst die Kanten, dann ihre Schnittpunkte. Der erste Versuch mit Ecken vom 50-px-Raster blieb sichtbar schräg; bei *Sparkling Cyanide* lag eine Ecke etwa 50 px daneben. Die Ausgabebreite ist die längere Kante im Foto, also 220–303 px bei Vorlagen von 375 × 500; hochgerechnet wird nicht.
+
+Mit Julians Ja unter `wertstoffhof` hochgeladen, jeweils auf die Ausgabe, deren ISBN und Jahr zur Kachel passen. Das neue Bild ist Hauptcover, das alte bleibt dahinter:
+
+| Werk | Ausgabe | ISBN | alt → neu |
+|---|---|---|---|
+| The Hollow | OL14875715M (1968) | 0006118208 | 13679047 → 15263592 |
+| Sparkling Cyanide | OL31991698M (1971) | 0006110096 | 10663008 → 15263593 |
+| Destination Unknown | OL9919200M (1973) | 0006133746 | 14155494 → 15263594 |
+
+Die neuen Bilder stehen in `data/collections.json` und im Online-Entwurf `uzGLb7CQw18D`. Geändert wurden dort nur diese drei Kacheln, über eine `pick`-Operation mit `was`, damit Julians laufende Bearbeitung nicht überschrieben wird. Aus diesem Entwurf ist das Reddit-Bild entstanden, nur mit Fußzeile: 42 Kacheln, 3600 × 6746, `lab/kalender/out/`.
+
+Nachtrag am selben Tag. *Death Comes as the End* war kaum schräg, aber blass. Die Ecken wurden auf einem 5-px-Raster mit vierfacher Vergrößerung abgelesen. Entzerrt mit dem eigenen Seitenverhältnis 1,67, Tonwerte mit dem neuen `--contrast` gestreckt (1 % abgeschnitten). Hochgeladen auf OL20938098M (Fontana 1970, 0006117368), 13267895 → 15263597. `poster_collection.py --no-credit` lässt die Künstlerzeile je Kachel weg, für Sammlungen eines einzigen Künstlers. Das Christie-Bild hat jetzt 9 Spalten: 3600 × 4669.
+
+## 2026-10-09 · X-Thread „Cover, die wie Bier aussehen“ vorbereitet (5.6b)
+
+Julians Idee kam aus einer eigenen Antwort auf X. Die Kandidaten stammen aus einer CLIP-Textsuche über die 21.866 Cover-Vektoren im Lab-Cache (`bb-lab-cache/clip`, Modell `Xenova/clip-vit-base-patch32`). Gesucht wurde mit zwölf Beschreibungen, zum Beispiel „pint of dark stout“, „vintage beer bottle label“ und „craft beer can“. Ausgewählt wurden die Cover von Hand auf Kontaktbögen. Am besten trafen die Etiketten- und Dosen-Abfragen: *Half of a Yellow Sun* (4th Estate) trägt tatsächlich zwei Flaschen, die *Unendliche Geschichte* bei Thienemann ein ovales Etikett. Die Stout-Abfragen fanden dagegen nur dunkle Leineneinbände. Zehn Cover, jedes mit Ausgabe und Werk aus Open Library: `lab/kalender/bier-thread.md`; Bilder in `lab/kalender/out/bier-thread/`. Nicht gepostet.
+
+## 2026-10-09 · Gene Szafran als Sammlungsentwurf (5.10)
+
+Julian: „see if we can find enough sci fi covers with art by Gene Szafran for a collection draft“. Die ISFDB führt rund 100 Cover-Arbeiten von Szafran (Zusammenfassung `ea.cgi?Gene_Szafran`, in Chrome gelesen). Zu jeder Arbeit gehören die Drucke, die dieses Bild tragen; das waren 280, mit deutschen Übersetzungen und Nachdrucken. Je Arbeit zählt der früheste englische Druck, möglichst einer mit ISBN: 85 Zeilen in `lab/collections/lists/szafran-isfdb.tsv`. Die Arbeiten nach 1976 fehlen noch in der Liste.
+
+`lab/collections/szafran_ol.py` fragte Open Library nach Werk und Ausgaben, eine Anfrage nach der anderen und mit Pause. Als Kandidat galt jede Ausgabe mit derselben ISBN oder desselben Verlags innerhalb von acht Jahren. Das ergab Kandidaten für 41 der 85 Zeilen. `szafran_sheets.py` stellt den ISFDB-Scan des Drucks neben die Kandidaten. Entschieden wurde von Hand. **26 Cover stimmen sichtbar mit dem ISFDB-Scan überein.** Abgelehnt wurden *Orphans of the Sky*, *Double Star*, *Revolt in 2100*, *The Star Fox*, *New Writings in SF 9* und *Doctor Orient*: Open Library hat dort nur andere Cover. Ohne Vergleichsbild in der ISFDB, deshalb noch nicht aufgenommen: *The Door into Summer*, *A for Andromeda*, *A Knight of Ghosts and Shadows*, *Bridge of Ashes*, *The Clockwork Testament*.
+
+Der Entwurf `gene-szafran` hat 26 Kacheln, ist unveröffentlicht und liegt in der Datei und online als `eLn8gBWQlDhU`. Jede Kachel trägt `coverArtists: ['Gene Szafran']` und als `isfdbRecord` den verglichenen Druck. Der erste Name „Gene Szafran's Science Fiction“ ergab online eine andere Adresse als in der Datei. Er wurde auf „Gene Szafran“ gekürzt, Entwurf und Datei heißen jetzt beide `gene-szafran`.
+
+Julians nächster Schritt (2026-10-09: „da wo der OL scan fehlt, können wir ja jederzeit den isfdb scan reinnehmen und zu OL hochladen“): Fehlt bei Open Library das Bild, wird der ISFDB-Scan unter `wertstoffhof` hochgeladen. Ziel ist die Ausgabe, deren ISBN und Jahr zum ISFDB-Druck passen.
+
+Nachtrag: elf ISFDB-Scans zu Open Library hochgeladen, mit Julians Ja, unter `wertstoffhof`. Gesucht hat sie `szafran_upload_targets.py`. In Frage kam jede Ausgabe des Werks, deren ISBN der des ISFDB-Drucks entspricht. Bei Drucken ohne ISBN genügten derselbe Verlag und dasselbe Jahr. Zielausgaben, alt → neu:
+
+| Werk | Ausgabe | Datum (OL) | ISFDB-Druck | neues Cover |
+|---|---|---|---|---|
+| Down in the Black Gang | OL10269905M | Okt. 1971 | 181345 | 15263651 |
+| All the Gods of Eisernon | OL43060107M | 1973 | 2170 | 15263652 |
+| Walk to the End of the World | OL10682057M | Jan. 1974 | 237717 | 15263653 |
+| Third from the Sun | OL44935908M | 1970 | 246849 | 15263654 |
+| The Star Fox | OL10269878M | Juli 1971 | 262490 | 15263655 (vorher 13237774, „cover coming soon“) |
+| Doctor Orient | OL27048027M | Juli 1974 | 269731 | 15263656 (vorher 8666901, Textplatzhalter) |
+| Methuselah's Children | OL10269532M | Apr. 1970 | 307924 | 15263657 |
+| The Far-Out People | OL58834170M | 1971 | 39623 | 15263658 |
+| Beyond Control | OL7523476M | Feb. 1974 | 4304 | 15263659 |
+| Clarion | OL22947381M | 1971 | 7271 | 15263660 |
+| Time's Last Gift | OL10681181M | 1972 | 51614 | 15263661 (Vorderseite aus einem Rundum-Scan geschnitten) |
+
+Nicht hochgeladen:
+- *Beastchild*: Der ISFDB-Scan ist seitlich abgeschnitten.
+- *Beyond This Horizon*: Die ISBN 0-451-07599-4 passt, aber Open Library datiert die Ausgabe auf 1960, die ISFDB auf 1976. Nach der Regel müssen ISBN und Datum passen.
+- *The House on the Strand*: noch nicht angesehen.
+
+Die Sammlung hat jetzt 37 Kacheln in Datei und Entwurf. Rund 44 Arbeiten haben bei Open Library keine Ausgabe des passenden Drucks. Ein Upload ginge dort nur, wenn man eine neue Ausgabe anlegt; das ist nicht geschehen.
+
+### Zweite Runde: alle Druckdaten, weitere Uploads und neue Ausgaben (2026-10-09)
+
+Julian: „wenn wir alle daten haben, sollten wir das machen“, also neue Ausgaben bei Open Library anlegen. Dazu: „starte doch mit den uploads parallel“.
+
+**Warum Arbeiten fehlten:** Den ersten Entwurf habe ich auf Julians Bitte aus dem damaligen Stand gebaut. Die Schleife über die ISFDB-Titelseiten hatte zu dem Zeitpunkt 269 von etwa 280 Drucken. Dadurch fehlten *Spock, Messiah!* (1976), *Ubik* (1977) und *Beyond the Beyond* (1977); die ISFDB-Liste endet 1977. Die Daten werden jetzt im `localStorage` der ISFDB-Seite mitgeschrieben, weil der erste Tab dabei hängen geblieben war.
+
+**Vollständige Druckdaten** für 51 Drucke aus `pl.cgi`: Titel, Autor, Datum, ISBN, Katalognummer, Verlag, Seiten, Format und Scan. Sie liegen in `in/szafran/details.txt`. `szafran_round2.py` hat sie mit Open Library abgeglichen, zuerst über die ISBN. **Das fand viele Ausgaben, die die erste Runde übersehen hatte**, weil sie an doppelt angelegten Werken hängen. Beispiele: *Swords Against Tomorrow* (OL7570005M unter OL15072609W) und *Ubik* (OL7817292M).
+
+Ergebnis:
+- **14 Ausgaben hatten Szafrans Cover schon** (mit dem ISFDB-Scan verglichen): *Swords Against Tomorrow*, *The Legend of Miaree*, *Trullion*, *The Day After Tomorrow*, *The Alien Way*, *A Knight of Ghosts and Shadows*, *Spock, Messiah!*, *Ubik*, *Caution! Inflammable!*, *Star of the Unborn*, *Rule Britannia*, *A for Andromeda* und *The Clockwork Testament*. Dazu *The Door into Summer*: ISBN und Datum stimmen, die ISFDB hat aber keinen Scan, mit dem man vergleichen könnte.
+- **16 weitere ISFDB-Scans** wurden auf bestehende Ausgaben mit passender ISBN bzw. passendem Verlag und Jahr hochgeladen. Die Nummern stehen in `in/szafran/uploaded.txt`:
+
+| Werk | Ausgabe | neues Cover |
+|---|---|---|
+| Clarion II | OL7570077M | 15263664 |
+| Heroes & Villains | OL7664696M | 15263665 |
+| A Time of Changes | OL43001124M | 15263666 |
+| The Day of the Drones | OL43680367M | 15263667 |
+| The Ice People | OL7655738M | 15263668 |
+| Space for Hire | OL50059230M | 15263674 |
+| The House on the Strand | OL35640090M | 15263675 (vorher ein fremdes Lehrbuchbild) |
+| Gray Matters | OL44935915M | 15263676 |
+| Bridge of Ashes | OL10271141M | 15263677 |
+| The Winter of the World | OL10271118M | 15263678 |
+| Beyond the Beyond | OL7570428M | 15263679 |
+| Change | OL20507853M | 15263680 |
+| Baron Orgaz | OL7817089M | 15263681 |
+| A Small Armageddon | OL17768886M | 15263682 |
+| Recycled Souls | OL10271154M | 15263683 |
+| Wasp | OL62673789M (neu angelegt) | 15263669 |
+
+- **9 neue Ausgaben** wurden unter `wertstoffhof` angelegt, über `/books/add?work=…` mit Verlag, Datum und, wo vorhanden, ISBN. Dann folgte jeweils der Upload des ISFDB-Scans:
+  - OL62673789M *Wasp* (Bantam, Juni 1971, 0553059130)
+  - OL62673796M *The Man Who Sold the Moon* (Signet, Juli 1970)
+  - OL62673797M *Orphans of the Sky* (Signet, April 1970)
+  - OL62673798M *Double Star* (Signet 1975)
+  - OL62673800M *Revolt in 2100* (Signet 1976)
+  - OL62673801M *Fun with Your New Head* (Signet, Feb. 1972; das Foto wurde mit `straighten.py` entzerrt)
+  - OL62673802M *The Second Trip* (Nelson Doubleday/SFBC, Okt. 1972; die Vorderseite wurde aus dem flachen Umschlag-Scan geschnitten)
+  - OL62673803M *The Corridors of Time* (Lancer, März 1971)
+  - OL62673804M *Saxon's Ghost* (Pyramid, Mai 1972)
+
+  **Seitenzahl, Katalognummer und Quellenhinweis fehlen** in den neuen Ausgaben. Das Bearbeitungsformular von Open Library verlangt ein reCAPTCHA, und das löst Claude nicht. Julian kann die Angaben von Hand nachtragen; die Werte stehen in `details.txt`.
+
+**Nicht verwendet:**
+- *Beastchild*: Der Scan ist seitlich abgeschnitten.
+- *Timestop!*: Der Scan ist ein abgegriffenes Foto mit handschriftlichem Namen.
+- *Raga Six*: Der ISFDB-Scan stammt vom Druck 1975, die Ausgabe von 1972.
+- *New Writings in SF 9*, *The Organ Bank Farm* und *Beyond This Horizon*: Open Library datiert die Ausgabe mit derselben ISBN auf 1993, 1990 bzw. 1960.
+- *Farnham's Freehold* und *The Four-Gated City*: kein ISFDB-Scan.
+- *Two Planets*, *The Mind Masters*, *The Door*, *Shamballah* und *Amazons*: Die Suche fand bei Open Library kein Werk. Die müsste man mit anderer Suche finden oder samt Werk neu anlegen.
+
+**Die Sammlung hat jetzt 75 Kacheln** in Datei und Entwurf `eLn8gBWQlDhU`, unveröffentlicht.
+
+### Dritte Runde: die letzten Drucke (2026-10-09)
+
+Julian: „versuche diese alle durch weitere recherchen zu lösen“. Zwölf der dreizehn offenen Drucke sind gelöst, die Sammlung hat **87 Kacheln**.
+
+- ***Beastchild*:** Der Scan war nicht abgeschnitten. Das Cover ist so gestaltet, mit dem Titel am linken Rand. Ein Händlerfoto im Internet Archive (`bwb_C0-ARF-592`) zeigt denselben Ausschnitt. Der ISFDB-Scan liegt jetzt auf OL24513401M (Lancer 1970, 189 S. wie in der ISFDB), Cover 15263695.
+- ***Timestop!*:** Scan des Lancer-Drucks 74616 von bookscans.com (`Publishers/lancer/images/Lancer74616.jpg`) auf OL47047470M (ISBN 0447746162), Cover 15263697.
+- ***Raga Six*:** Scan des Bantam-Drucks Q7249 von 1972 von bookscans.com auf OL5289209M (Bantam 1972, 277 S.), Cover 15263696.
+- ***New Writings in SF 9* und *The Organ Bank Farm*:** Bantam hat beide ISBN später für andere Bücher wiederverwendet. 0553072455 gehört bei Open Library zu *Long Quiet Highway* (1993), 0553070495 zu *Noble-Hearted Kate* (1990), beide mit Katalogdaten der Library of Congress. Das sind also keine falsch datierten Datensätze, sondern andere Bücher. Für die beiden Drucke wurden neue Ausgaben ohne ISBN angelegt: OL62673805M (Bantam, Mai 1972) und OL62673806M (Bantam, März 1972), Cover 15263699 und 15263700.
+- ***Beyond This Horizon*:** OL7570386M ist das richtige Buch (Titel, ISBN 0451075994, Amazon-Import). Das Datum 1960 ist ein Importfehler, denn ISBN gab es damals noch nicht. Der ISFDB-Scan des Drucks von 1976 liegt jetzt dort, Cover 15263698. Das Datum lässt sich ohne reCAPTCHA nicht berichtigen.
+- ***Farnham's Freehold*:** Szafrans Bild steht nicht auf der Berkley-Ausgabe, sondern auf dem siebten Signet-Druck T2704. Laut ISFDB ist er undatiert, kostet 75 Cent und trägt die Signatur „Szafran“ rechts unten. Neue Ausgabe OL62673808M (Signet, Datum „[197-?]“, weil keine Quelle ein Jahr nennt), Cover 15263702.
+- ***Two Planets*:** Open Library führt das Buch unter dem Originaltitel *Auf zwei Planeten* (OL4592774W). Neue Ausgabe OL62673807M (Popular Library 1976, Titel „Two Planets“), Cover 15263701.
+- ***The Mind Masters* 1–4:** „Ian Ross“ ist ein Pseudonym von John F. Rossmann. Bei Open Library ist er als OL6599743A eingetragen, mit *Recycled Souls*. Vier neue Werke und Ausgaben unter ihm: *The Mind Masters* (OL62673809M, Signet Juli 1974), *Shamballah* (OL62673810M, April 1975), *The Door* (OL62673811M, Nov. 1975) und *Amazons* (OL62673812M, März 1976). Cover 15263703–15263706.
+- **Offen bleibt *The Four-Gated City*** (Bantam 1970). Szafrans Bild belegt nur die Bibliografie bei glimmergraphicsprints.net, ohne Abbildung. Das Internet Archive hat Bantam-Drucke von 1978 und 1980; ob deren Cover Szafrans ist und schon 1970 so aussah, belegt keine Quelle. Open Library hat fünf Bantam-Ausgaben von 1970, alle ohne Bild.
+
+Nachtrag: bookscans.com geprüft (Julian: „check if bookscans.com is a good resource for the future“). Die Bewertung steht in `docs/ausgaben-recherche.md` §2. Kurz: Die Seite ist eine gute Suchhilfe für US-Taschenbücher von 1939 bis 1979, geordnet nach Verlag und Katalognummer. Die Bilder sind absichtlich klein, etwa 250 px. Künstler, Datum und Druck stehen nicht dabei; die kommen weiter aus der ISFDB. Die Scans von *Timestop!* (Lancer 74616) und *Raga Six* (Bantam Q7249) sind „Courtesy of Bob Gaines“, also eingesandt. Für eingesandte Scans verweist der Betreiber Bruce Black Anfragen an den Einsender. Beide Scans waren zu diesem Zeitpunkt schon zu Open Library hochgeladen (Cover 15263697 und 15263696). Ob sie bleiben, entscheidet Julian.
+
+Nachtrag: Wie sich die Einträge verteilen (Julian: „wie verteilen sich die 280 einträge jezt auf die 87 cover?“). Beim Nachzählen fiel eine Lücke auf. *The Golden Olive* (Cristabel, Curtis Books 09146, 1972, ISFDB-Druck 195149) stand in der ISFDB-Liste, war aber beim Abtippen in `szafran-isfdb.tsv` verloren gegangen. Jetzt ist die Zeile nachgetragen. Der ISFDB-Scan mit Szafrans Signatur liegt auf OL47784247M (Curtis 1972, vorher ohne Bild), Cover 15263707. **Die Sammlung hat 88 Kacheln.**
+
+Szafrans Cover-Liste in der ISFDB hat 101 Einträge:
+- **89 eigene Gestaltungen** (Erstauftritt eines Bildes auf einem englischen Buch). 88 sind Kacheln, eine ist offen: *The Four-Gated City*.
+- **12 Einträge, die ein schon gezähltes Bild wiederverwenden:**
+  - 5 Übersetzungen: *Planet der Verbannten* (= *Those Who Watch*), *Die letzten der Unsterblichen* (= *This Perfect Day*), *Sirius #2* (= *Protostars*), *O vampiro* (= *Raga Six*) und *Baron Orgaz* bei Heyne 1984.
+  - 4 Sammel- oder Titelvarianten: *There Will Be Time / The Dancer from Atlantis* (1982), *Eyes of Fire* (1980, der neue Titel von *A Funeral for the Eyes of Fire*), *The Rebel Worlds / A Knight of Ghosts and Shadows* (1982) und *Today We Choose Faces / Bridge of Ashes* (1981).
+  - 3 Einträge für die PM-Press-Anthologie *Dangerous Visions and New Worlds* (2021), die die Cover von *Son of Man* und *Ice* abbildet.
+
+Die rund 280 Druck-Einträge sind alle Drucke, auf denen eines dieser Bilder steht. Je Gestaltung zeigt die Sammlung genau einen Druck, und zwar den frühesten, für den es einen Scan gibt. Die übrigen etwa 190 sind:
+- Nachdrucke derselben Gestaltung, vor allem bei den Signet-Heinleins: *The Puppet Masters* 15 Einträge; *The Day After Tomorrow*, *The Door into Summer* und *I Sing the Body Electric!* je 9; *The Man Who Sold the Moon*, *The Menace from Earth* und *Beyond This Horizon* je 8.
+- die kanadischen Parallelausgaben von New American Library.
+- die Übersetzungen, Sammelbände und die Anthologie von oben.
+
+Die genaue Zahl je Gruppe ist nicht gespeichert, weil die Liste der 280 nur im Browser lag.
+
 ## 2026-10-10 · Machen andere Shelf-Portraits? Nicht messbar, nur Besuche (ROADMAP 5.18b)
 
 Julian fragte, ob inzwischen andere als er Shelf-Portraits gemacht haben. **Die Erstellung zählt niemand lesbar:** jeder Kurzlink steht in Redis unter `insp:link:<id>` mit Datum und Brett, die Summe in `insp:links`, aber ohne Macher, und es gibt keinen Admin-Weg, der sie liest; `STORAGE_REDIS_URL` ist in Vercel „sensitive“ und kommt mit `vercel env pull` leer an; die Logs reichen eine Stunde zurück (keine Treffer für `/api/inspiration/link`). **Was die Analyse sagt** (`/api/insights?days=30`, Julians Besuche über das Admin-Cookie ausgenommen, Landeseite `shelf` seit 2026-10-06): 24 Besuche auf geteilten Boards, davon 15 als erste Seite eines Besuchs (von außen gekommen), einer öffnete danach ein Buch; 4 Buchbesuche kamen von einem Board. Das sind Betrachter, nicht Macher, und Julians Besuche ohne Admin-Cookie (etwa vom Telefon) zählen mit.
@@ -6003,6 +6172,8 @@ Julian: „ja“. `lib/i18n/translate.ts` kennt keinen Katalog mehr: `translateW
 Auf Julians „ja, bau beides“ nach dem Befund vom selben Tag. **Zähler:** `POST /api/inspiration/link` zählt einen zum ersten Mal geschriebenen Kurzlink als Op `portrait-made`, mit Julians Admin-Cookie als `portrait-mine` (`put(board, onNew)`, nach der Antwort über `countOpAfter`); dasselbe Board zweimal ergibt einen. Gezählt wird ab dem Deploy, nur in Produktion. **Liste:** `list` im Link-Speicher läuft per SCAN über `insp:link:*` (höchstens 20 Runden à 500 Schlüssel), neueste zuerst, mit der Summe aus `insp:links`; dafür hat `RedisCommands` ein optionales `scan` (REST und node-redis, `scanReply` gleicht die beiden Antwortformen an). `/admin/insights` zeigt einen Abschnitt „Shelf-Portraits“ (Zähler im Zeitraum, alle Kurzlinks mit Datum, Name, neun Covern); `/api/inspiration/links` gibt dasselbe als JSON, Admin-Cookie oder Passwort als Bearer, sonst 404 über den Login-Topf. Ein stummer Speicher heißt „antwortet nicht“, nie „keine“. Lokal geprüft: ein Board angelegt, Liste ohne Passwort 404, mit Passwort ein Eintrag; die Admin-Seite selbst nicht im Browser (das Admin-Cookie gibt es nur über die Anmeldung mit dem echten Passwort). 156 Testdateien grün, davon eine neue (`inspiration-links-list.test.ts`, 5 Tests).
 
 **Datenschutz, Julians Entscheidung (2026-10-10):** der vorgeschlagene Satz („Finishing one also adds one to a daily count …“) — „nein“, dann „wir brauchen den satz nicht, die funktion bleibt“. Die Tagessumme trägt nichts über den Leser (nur Leser oder Julian über sein eigenes Cookie); die Datenschutzerklärung bleibt unverändert.
+
+**Live seit 2026-10-10** (`e980b31`, Deploy `beautifulbooks-9f2bgseoo`), einmal nachgesehen über `/api/inspiration/links`: **38 Kurzlinks** vom 2026-10-05 bis 2026-10-09 (5, 16, 8, 5, 4 je Tag); 22 Neuner-, 9 Sechser- und 7 Dreier-Boards. Namen auf den Bildern: „Julian“ zweimal, „Cattelan“ zweimal, „Caro“, „Teddy Rook“, „theonethinginlife“; 31 ohne Namen. Wer welches gemacht hat, sagt der Speicher nicht.
 
 ## 2026-10-10 — Datenschutzerklärung: Sammlungen und Regalfoto (ROADMAP 2.19)
 
@@ -6338,3 +6509,80 @@ Julian: „erst lokal gegen next start messen; ein längerer Build für alle 155
 Einzelwerte: der kalte Erstbesuch brauchte bei den ISR-Werken 3,1–6,0 s bis zur ersten Kachel (Wand 3,9–6,0 s), bei den populären 3,2–4,7 s (Wand 4,7–11,7 s), beim vorgerenderten *Mrs Dalloway* kam binnen 5 s **gar kein Bild** (1 Kachel gezählt), bei OL109524W nach 1,3 s. „Wand steht“ ≈ 2,28 s ist der Boden der Methode (2 s Ruhe plus ein Abtasttakt), also „sofort“.
 
 **Was das heißt.** (1) **Warm sind alle gleich:** erste Kachel in ~260 ms, Wand sofort, kuratiert oder nicht, vorgerendert oder nicht — der Index entscheidet hier nichts, was man sieht. (2) **Kalt entscheidet der Katalog und das Bild, nicht die Seite:** der erste Besuch eines Werks wartet auf Open Librarys Ausgabenseiten (3–6 s) und dann auf die Cover von archive.org, die den `/img/`-Weg zum ersten Mal gehen; darum stehen nach 10 s bei den kalten Besuchen 12, 39 und 17 Kacheln leer, und bei OL82563W (46 Kacheln) auch warm noch 16 und 11 — Bilder, die der Cover-Host langsam oder gar nicht liefert. Das ist 6.25s Gebiet (`bb.img`, Rückfall auf die kleinere Größe) und 6.73s (Wasserfall der Bildanfragen), nicht 6.26s. (3) **Das Vorrendern aller 155** erspart genau einem Besuch je Werk und Tag die Serverzeit der ISR-Erzeugung — hier etwa die Differenz zwischen 2,3 s (vorgerendert, kalt) und 4–6 s (ISR, kalt) in „Wand steht“, bei weiter leeren Kacheln. Für 137 zusätzliche Seiten im Build, die bei einem Open-Library-Ausfall mit Ersatz-Metadaten gebaut würden (der Grund in 5.1), ist das ein kleiner Gewinn; **Empfehlung: nicht vorrendern**, stattdessen die Bilder — der Punkt löst sich, wie die Roadmap-Zeile es vorsah, in 6.25 und 6.73 auf. Julian entscheidet, ob er den Build trotzdem will. Analytics: nichts bewegt sich — eine Messung, kein Code auf der Seite.
+**Nachtrag 2.18f (2026-10-17):** deployt (e5b3017), nach einer Minute Ready. Einmal geprüft: Vercel liefert dem Client nur `Cache-Control: public, max-age=0` aus — `s-maxage` gilt der CDN und wird nicht durchgereicht, die zwei Fälle sind von außen also nicht zu unterscheiden. Der Nachweis kommt am 18. aus Googles Kontingentkurve und den Funktionsaufrufen je User-Agent.
+
+## 2026-10-17 — Reichweite, zweiter Anlauf: die Zahlen nach zwölf Tagen Posten, und ein Scraper in der eigenen Analyse (ROADMAP 5.6c, 3.1i)
+
+Julian: „überarbeite die strategie um reichweite und traffic bekommen. bisher hat nur reddit und x ein bisschen was gebracht. die virale 3x3 grid welle ist an uns vorbei gegangen und langsam zu ende. überlege auch ob du automatisch meine accounts benutzen kannst […] bisher haben deine vorschläge aus dem kalender nie ganz meine art des copywritings und des brandings getroffen“. Ergebnis: [PLAN-5.6c](plans/PLAN-5.6c-reichweite-zweiter-anlauf.md) und die Recherche [reichweite-recherche-2026-10-17.md](reichweite-recherche-2026-10-17.md) (zwei Agenten: Kanäle und Partner; Plattformregeln für automatisches Posten).
+
+**Gemessen** (Bluesky über `api.bsky.app` ohne Login, X über das öffentliche Profil im Browser-Bereich, Mastodon-RSS, `lab/kalender/posts.json`, Vercel Web Analytics seit dem 8.9., `/admin/insights` 30 Tage einmal aus der Produktion, `vercel metrics` je User-Agent):
+
+| Kanal | Konto | Reichweite | Besucher (Vercel-Verweise seit 8.9.) |
+|---|---|---|---|
+| X @buyitscovers (seit 4.10.) | 4 Follower, 22 gefolgt | Exposé; Tom Adams 93 Aufrufe; Goodreads-Export 19; drei Antworten in fremden Threads 15, 69, 15 | 16 (t.co); 6 Einstiege in der eigenen Zählung, 1 Händlerklick |
+| Bluesky @buyitscovers.com | 3 Follower, 4 Posts | 2, 1, 0, 0 Likes | `via=bluesky` 0 |
+| Mastodon | 1 Post | — | unter `social` (3) |
+| Reddit u/buyitscovers (seit 7.10.) | r/bookcoverporn, r/coolscificovers (Bild entfernt) | — | 14 (11 Web, 3 App); 10 Einstiege, 2 öffneten ein Buch |
+| Suchmaschinen | Sitemap seit 4.10. | — | 14 (Bing 6, Google 6, DuckDuckGo 1, Yahoo 1) |
+| HN | neues Konto, Show HN seit 7.10. gesperrt | — | 0 |
+
+Kalender: 98 Einträge, 9 gepostet, 2 verworfen, 87 Vorschläge; 30 warten auf die Rechte-Frage. Shelf-Portrait seit der Zählung am 10.10. (K17): **2 Bretter von Besuchern**, 2 von Julian; `/shelfportrait` 26 Einstiege in 30 Tagen. Alle Kanäle zusammen: rund 30 Menschen. Was vergleichsweise ging: Antworten in fremden Threads und ein Bild in einem Forum, das Cover sammelt — ein Bild, ein Satz, fremdes Publikum.
+
+**Der Scraper aus 2.18f läuft mit echtem Browser und steht seit dem 16.10. in der eigenen Analyse.** Vercel: 16.10. 1.033 und 17.10. 1.482 „Besucher“ mit je einem Aufruf aus Brasilien (493), Argentinien, Bangladesch, Indien, Kolumbien, Mexiko, Venezuela, Pakistan, Vietnam, Südafrika … (Wohnungs-Proxys). `vercel metrics` für `/go/[provider]/[isbn]`, drei Tage bis 17.10.: 406 der 410 Klicks von zehn alten Browser-Kennungen im Wechsel (Firefox 121 Mac 78, Edge 120 60, Chrome 118 51, Chrome 120 51, Chrome 119 Mac 47, Chrome 119 47, Firefox 120 46, Chrome 120 Mac 39, Firefox 121 33, Edge 119 27) und `Lightpanda/1.0` 8; ein iPhone 4. `/api/seen` dieselben Kennungen, 974 Signale am 17.10., 14-Tage-Summe 2.280, davon rund 1.900 an diesen zwei Tagen — die übrigen 13 Tage 0 bis rund 40 am Tag. In `/admin/insights` (30 Tage): K1 494 Klicks (406 am 17.10., 81 am 16.10., 488 Markt US, Bookshop.org-Suche 79, lokale Buchhandlung 75, IndieBound 65 …), K16 1.739 Einstiege „direkt“, 1.358 davon „öffneten ein Buch“. Bis zum 15.10. war die Analyse sauber (Googles Renderer vom 13.10. sendet keinen Beacon, Historie 2026-10-14). Daraus **3.1i** (Klicks und Beacons nur von einer echten Navigation mit zeitgemäßem User-Agent; Bot-Tage markieren, nichts löschen).
+
+**Werkzeug-Befunde** nach [umgang.md](umgang.md) §1, §4, §5, §8: Bluesky-Suche ohne Login über `api.bsky.app` (nicht `public.api.bsky.app`), Mastodon-RSS, X-Profile im Browser-Bereich ohne Login lesbar (Aufrufzahlen je Beitrag), `vercel metrics --group-by clientUserAgent` als Bot-Prüfung, Open Library sperrte den Recherche-Agenten erneut.
+
+**Die Strategie** (Plan §3): Antworten statt Senden (ein täglicher Antwortzettel von Claude), eine Person statt einer Marke als Absender der Baugeschichte, zwei Geschichten für zwei Publikümer, Pinterest als der Kanal ohne Follower-Problem nach der Rechte-Entscheidung (Plan §6 macht sie in einer Zeile entscheidbar: a, a′, b, c), Sammlungen als Geschichte in Julians Stimme (Plan §4, Stilblatt aus seinen eigenen Zeilen, zwölf Beispiele zum Streichen), das Shelf-Portrait als Haken statt als Wette, Messen ohne Bots. **Automatisierung:** kein Posten ohne Julians Wort je Beitrag (eigene Regel, Plattformregeln, und es brächte ohne Publikum nichts); möglich sind Zettel, Posten auf Zuruf wie am 5./6.10. und ein Skript, das nur im Kalender Freigegebenes über die offiziellen Schnittstellen schickt. Acht Entscheidungen bei Julian (Plan §9).
+
+**Nachtrag, erster Antwortzettel (2026-10-17 abends; Julian: „ja, bau den ersten antwortzettel mit bluesky und x. ich logge mich in chrome bei x ein“).** Bluesky: 33 Suchbegriffe über `api.bsky.app/xrpc/app.bsky.feed.searchPosts` (ohne Login; fünf Anfragen liefen in den Timeout), 248 Treffer der letzten 72 h, acht brauchbar — darunter Maris Kreizman (51.405 Follower), die fragt, wer die 9-Bücher-Seite betreibt und Amazon nichts füttern will. X in Julians Chrome (zwei verbundene Instanzen, `switch_browser`, Julian klickte „Connect“): die Welle „9 books I'll never forget“ ist dort durch (frische Raster 17–85 Aufrufe), aber Boze Herringtons „Nine books to get you started if you're only just getting into classics“ (16.10.) hat 30.575 Aufrufe, 1.006 Likes, 44 Antworten und wurde am 17.10. dreimal mit je 300–1.100 Aufrufen zitiert. Der Zettel (`docs/antwortzettel/2026-10-17.md`, git-ignoriert): acht Bluesky- und vier X-Antworten in der Stimme aus Plan §4, je mit Bild (Link-Karten der Seite, Julians Brett `tvujl2pk` im Feed-Format) und `?via=`-Link; ein eigener Post. Werk-IDs über die Suche der Seite (drei Anfragen, sechs Sekunden Abstand): *Decline and Fall* OL5721413W (97 Ausgaben), *Candide* OL100672W (1.079), Woodwards Ladybird-*Lives of the Great Composers* OL4884592W (3). Werkzeug-Befunde in umgang.md §5 (X-Suche: `read_page` vollständig, `javascript_tool` nach ~600 Zeichen abgeschnitten). **Open Librarys Usage Guidelines** im Wortlaut gelesen (Julian: „verstoßen wir gegen ihre regel?“): die Seite erfüllt die drei Bitten; die Lücke ist die offene Route `/api/works`, durch die der Scraper Katalogdaten holte — Nachtrag an 2.18f.
+
+**B1 gepostet (2026-10-17, 18:43 UTC).** Julian: „Poste B1 (Maris Kreizman, Bluesky) so wie im Zettel. X1 mache ich selbst, sobald das Brett steht“, dann „the x1 post we need to workshop before you post“. Bluesky war im verbundenen Chrome nicht angemeldet (Claude tippt keine Zugangsdaten); Julian meldete sich an, Claude öffnete den Thread, tippte den Text unverändert in den Composer, prüfte ihn im Bild (Link erkannt, 134 Zeichen frei) und sendete: https://bsky.app/profile/buyitscovers.com/post/3my3qop37zc2o — über die öffentliche API bestätigt (Antwort auf `3mxz3byet4k2x`, ein Link-Facet, keine Karte). Erster Beitrag des Kontos seit dem 8.10.; ob er trägt, zeigt `via=bluesky` in K16 nach 3.1i.
+
+**X1 vorbereitet (2026-10-17 abends; Julian: „X1 in Richtung 1, trocken … bau den Rest darum, ich poste selbst“, dann „mention the cross they made with the penguin classics“).** Bozes Bild in Julians Chrome angesehen: die vier Penguin Classics (schwarze Bände) sitzen in den Ecken und rahmen ein Kreuz aus den fünf anderen Covern — der Satz nennt das so, nicht umgekehrt. Das Brett ist als Editor-Link vorbelegt (`?b=…`, Kodierung aus `lib/inspiration/board.ts`: Werk- und Cover-Nummer in Basis 36): neun Werk-IDs über die Suche der Seite (neun Anfragen, sechs Sekunden Abstand), je Werk die erste Seite der Wand und daraus eine englische Ausgabe eines bekannten Verlags, ohne Urteil; *The Man Who Was Thursday* (OL76487W, 1.105 Ausgaben) hat auf den ersten drei Seiten nur fremdsprachige und Selbstverlags-Cover, der Platz bleibt für den Editor leer. Texte, Alt-Text, zweite Antwort und Zitat-Post im Zettel; nichts gepostet.
+
+**X1, die Zeile (2026-10-17, spät).** Fünf Fassungen von Claude in Richtung „trocken“ verwarf Julian als „none of these two sound organic, natural human voice“ (zuerst die zwei mit dem Penguin-Kreuz, dann fünf lockere); seine eigene: **„don't gatekeep the editions“**, allein, mit dem Bild des Bretts, der Link erst in der zweiten Antwort. Lehre fürs Stilblatt (PLAN-5.6c §4): eine Antwort auf X ist ein Einwurf aus dem Gespräch, kein Satz über das Bild — Kleinschreibung, eine Wendung, die Buch-X selbst benutzt, und das Bild sagt den Rest. Julian postet selbst, sobald das Brett getauscht ist.
+
+## 2026-10-17 — Sieben Entscheidungen zur Reichweite, und das Brett für X1 (ROADMAP 5.6c)
+
+Julian: „führe mich hier durch“ — die acht Fragen aus PLAN-5.6c §9 im Chat, vier auf einmal. **Entschieden:** Rechte **(a)**, Cover auf fremden Plattformen mit Quellenangabe (damit sind 30 Kalendereinträge, Pinterest, Instagram, TikTok und die Galerien frei; `rechte` steht im Kalender unter „Erfüllt“, 5.5a kann gebaut werden); die Baugeschichte kommt vom **persönlichen Konto**; der Antwortzettel **nur auf Zuruf**; Posten **auf Zuruf plus Buffer Free**; Show HN **erst Karma sammeln**; die **87 Kalendertexte schreibt Claude neu** in der Stimme von „don't gatekeep the editions“, Julian streicht; **Shelf-Portrait auf Deutsch** vorziehen. **Offen:** die Ansprache (Open Library, Web Curios, Kottke, Shelf Awareness, MetaFilter) — Julian: „sende mir links zu denen“, geschickt; er entscheidet.
+
+**Das Brett für X1** (Julian: „sind die cover falsch? passe du sie an“): die Vorbelegung von der ersten Wandseite (Brimax-Alice, Signet-Tolstoi, Popular-Classics-Jane-Eyre, Thursday leer) ersetzt durch Ausgaben, mit denen man anfangen kann, gefunden über die ISBN-Suche der Seite — je ISBN zwei Anfragen (`/api/search?q=<isbn>` nennt das Werk, `/api/isbn/<isbn>` das Cover), sechs Sekunden Abstand: Monte Cristo Penguin Classics 9780140449266 (ol:14564134), War and Peace Vintage/Pevear-Volokhonsky 9781400079988 (ol:12018409), Alice Clothbound 9780141192468 (Doppelband OL151411W, ol:12667812), Thursday Penguin Modern Classics 9780141191461 (ol:6997088), Cat's Cradle Penguin Modern Classics 9780141189345 (ol:10287302), Jane Eyre Clothbound 9780141040387 (ol:7256243); Les Misérables, Passing und Beowulf von der Wand behalten. **Eine ISBN aus dem Gedächtnis war falsch** (9780141393605 ist Mulk Raj Anands *Untouchable*, nicht Les Misérables; 9780141441191 kennt der Katalog nicht) — der Titel aus der Suche fängt das ab, deshalb nie nur `/api/isbn` fragen. Karte und Post-Bild gerendert (`docs/antwortzettel/2026-10-17/x1-board-*.jpg`), angesehen: neun Cover, alle da. Editor-Link im Zettel.
+
+## 2026-10-18 · Shelf-Portrait: die Link-Karte zeigt das Raster des Bretts (ROADMAP 5.18b)
+
+Julian: „baue die vorschaukarte für das shelfportrait so um, dass es auch das grid zeigt“. Die Karte eines Bretts aus neun (1200 × 630, `og:image` von `/shelfportrait/<id>` und `/shelfportrait/board?b=…`, auch die Einladungskarte der Startseite) setzte die Cover seit dem 2026-10-05 in zwei Reihen zu fünf, die Worte im ersten Feld — größere Cover, aber die Anordnung des Bretts war weg: beim X1-Brett standen die vier Penguin Classics nicht mehr in den Ecken.
+
+**Gebaut:** `cardLayout(count)` in `lib/inspiration/layout.ts` (rein, getestet) ersetzt `cardPlan` in der Poster-Route. Neun stehen drei mal drei, 124 × 186 mit 14 px Abstand, rechts (x 728–1128, y 22–608) — genau die Plätze der allgemeinen Karte von `/shelfportrait`, die sie jetzt aus derselben Funktion nimmt: die Karte eines Bretts ist das leere Brett, gefüllt. Links Titel (bis 88 px), die eigene Zeile des Lesers (0,4 des Titels) und „Judge a book, BuyItsCovers.com“ (0,42 des Titels, wie auf der allgemeinen Karte) in x 72–664, y 72–452, also bis 72 % der Höhe, außerhalb des Schilds, das X links unten über die Karte legt. Ein Titel über 30 Zeichen wird kleiner, bevor er eine dritte Zeile nimmt (die Regel der Poster, `titleSize`; gilt auch für sechs und drei, die sonst unverändert sind). `PICTURE_VERSION` 6 → 7, die Einladungskarte der Startseite liest die Zahl jetzt von dort statt `v=6` zu tragen.
+
+**Was es kostet:** die Fläche der Cover sinkt von 62 % auf 27 % der Karte (je Cover 124 × 186 statt 186 × 279). Mehr gibt eine Karte von 630 px Höhe für drei Reihen nicht her; mit 15 px Rand wären es 128 × 192, kaum mehr und nicht mehr deckungsgleich mit der allgemeinen Karte.
+
+**Angesehen unter `next dev`** mit dem X1-Brett: neun als Raster (81 KB statt 118 KB, warm 1,5–2,5 s), sechs und drei byte-gleich wie vorher (98.873 und 83.254 Bytes), die allgemeine Karte byte-gleich (200.803). Randfälle als Kontaktbogen: ein Name aus 40 Zeichen mit einer Zeile aus 60 (Titel in vier Zeilen, alles in der Spalte), ohne Namen, Mosaik, Papier, ein Brett mit Lücken (leere Plätze bleiben im Raster). Startseite bei 1280 px: der Rahmen 393 × 206 zeigt die ganze Karte; bei 390 px zeigt das Quadrat (112 px, `object-right`) jetzt das ganze Raster. Geteilte Seite: `og:image` und die Karte unter „As a link“ mit `v=7`. 1.582 Tests, `tsc`, `next build` grün (`○ /shelfportrait/opengraph-image` weiter statisch). **Analyse:** nichts betroffen — kein Shop-Link, keine Route, kein Signal, nichts gespeichert; die Bildroute cacht wie vorher.
+
+**Deploy, derselbe Tag.** Julian: „ok, pushe“. Nur dieser Commit ging in die Produktion, nicht das lokale `main`: das lag 45 Commits vor `origin/main`, darunter vom 2026-10-17 zusammengeführte, nie deployte Arbeit anderer Branches (Regalfoto-Lesen in `lib/shelfrows.ts` und `lib/walls/readphoto.ts`, 1.126 Zeilen in `data/collections.json`, ein Satz auf `/contact`). Der Commit wurde in einem eigenen Worktree auf `origin/main` gesetzt (`d77072e`; Konflikt nur am Ende von `history.md`), dort 1.578 Tests, `tsc` und `next build` grün, dann direkt nach `main` geschoben: `e5b3017` → `d77072e`. Ein symbolisch verlinktes `node_modules` lässt `next build` mit „Symlink node_modules is invalid“ abbrechen; der Worktree brauchte ein eigenes `npm ci`. Produktion einmal angesehen: die Karte der Startseite (`/shelfportrait/card.jpg?…&v=7`) antwortet 200, `image/jpeg`, 83.992 Bytes, mit dem Raster. Das lokale `main` ist danach mit `origin/main` zusammengeführt und liegt weiter 46 Commits vorn; was davon in die Produktion soll, entscheidet Julian.
+
+## 2026-10-18 — Nur zählen, was ein Mensch sein kann: die Wächter-Regel für /go/ und /api/seen, Bot-Tage markiert (ROADMAP 3.1i)
+
+**Was gebaut wurde.** `lib/insights/human.ts`, eine reine Regel `humanRequest(headers, route, now)`: ein Klick über `/go/` zählt nur als echte Navigation (`Sec-Fetch-Mode: navigate` **und** `Sec-Fetch-User: ?1` — setzt ein Klick, kein Skript), ein Beacon an `/api/seen` nur mit `Sec-Fetch-Site: same-origin`; beide nur mit einem User-Agent, dessen Browser-Hauptversion aus diesem oder dem letzten Jahr stammt, und nie `HeadlessChrome` oder `Lightpanda`. **Die Schwelle kommt aus dem Datum, nicht aus einer Liste:** je Familie ein Anker (Chrome 120 am 2023-12-05, Firefox 121 am 2023-12-19), vorsichtig zwölf Hauptversionen je Jahr angenommen (es sind etwa dreizehn), und erlaubt ist alles ab der ersten Hauptversion des Vorjahres — am 2026-10-18 also Chrome/Edge ≥ 132, Firefox ≥ 133; ein Jahr später von selbst ≥ 144 und ≥ 145. Safari bekommt ein Jahr mehr (Version 18 von 2024 gilt 2026 noch), weil seine Hauptversion das OS-Jahr ist und ein Telefon sie behält, bis der Besitzer das System aktualisiert; ab Safari 26 ist die Nummer das Jahr. **Nur ein reiner Chrome-, Edge-, Firefox- oder Safari-String wird beurteilt** — einer, der so endet, wie diese Browser ihren beenden und zwischen `(KHTML, like Gecko)` und `Chrome/` nichts einschiebt. Samsung Internet, Opera, Yandex tragen eine Chrome-Nummer, die ihrem eigenen Alter hinterherhinkt, und gehen als „unbekannt" durch; `curl` und ein leerer User-Agent ebenso — die Regel wirft keinen unbekannten echten Browser hinaus, sie lässt Chrome 118 Ende 2026 fallen. Die Umleitung von `/go/` bleibt für alle gleich, `/api/seen` antwortet allen 204; abgewiesen wird nur der Zähler. **Je abgewiesener Anfrage ein +1 im Hash `ins:<Tag>:guard`, Feld `<route>|<Grund>`** (`go|old-browser`, `seen|not-own-page`, `headless`, `not-a-click`) — eine Klasse, kein User-Agent, keine Adresse; dazu eine Logzeile `bb.bot {route, reason}` neben `bb.click`, damit ein Scraper binnen der Stunde im Vercel-Log als das steht, was er ist. Elf Tests mit den Strings vom 16./17.10. (`lib/__tests__/insights-human.test.ts`), fünf für Zähler, Summe und Bericht in `insights.test.ts`.
+
+**Bot-Tage.** `summarizeGuard` (lib/insights/model.ts) stellt je Tag Abgewiesenes gegen Gezähltes — Klicks aus dem `clicks`-Hash über alle Märkte, Signale als Summe der Hashes `book`, `search`, `landing` — und nennt einen Tag Bot-Tag, wenn auf einer der zwei Routen mehr abgewiesen als gezählt wurde. Die drei Tage vor der Regel, 16.–18.10., kann der Speicher nicht kennen; sie stehen als `BOT_DAYS_BEFORE_GUARD` im Code, aus der User-Agent-Messung (unten), und fallen mit der 400-Tage-Aufbewahrung weg. `/admin/insights` zeigt unter den Kacheln eine Zeile „Bot-Tage: 16. Okt., 17. Okt., 18. Okt." mit dem Abgewiesenen je Route und Grund, und zeichnet diese Tage in „Je Tag" (K3) und „Einstiege von außen je Tag" (K16) grau mit „— Bot-Tag" im Tooltip; **gelöscht wird nichts**, die Summen tragen die Tage weiter, der Leser weiß es. Die Morgenmail (2.18g) bekommt eine Zeile „turned away as not a person (clicks and beacons): N". Die Ansicht wurde **nicht im Browser angesehen**: unter `next dev` gibt es keinen Store, die Seite zeigt dann nur „Store nicht erreichbar"; `tsc`, Lint und Build sind grün, geändert sind ein Absatz und eine Füllfarbe.
+
+**Gemessen unter `npm run dev` (Port 3001, Worktree) mit curl, 2026-10-18 11:03 UTC:**
+
+| Fall | Antwort | Logzeile |
+|---|---|---|
+| `/go/bookshop/9780141036144`, Chrome 152, `Sec-Fetch-Mode: navigate` + `Sec-Fetch-User: ?1` | 302 → bookshop.org, 1,06 s (kalt) | `bb.click` |
+| dasselbe ohne Sec-Fetch-Header | 302 → bookshop.org, 9 ms | `bb.bot go not-a-click` |
+| dasselbe mit Chrome 118 **und** den Klick-Headern | 302 → bookshop.org, 5 ms | `bb.bot go old-browser` |
+| dasselbe mit `Lightpanda/1.0` und den Klick-Headern | 302 → bookshop.org, 5 ms | `bb.bot go headless` |
+| `/go/bookshop-search/title?t=…`, Chrome 152, Klick-Header | 302 → bookshop.org/search, 5 ms | `bb.click` |
+| `POST /api/seen`, Chrome 152, `Sec-Fetch-Site: same-origin` | 204, 172 ms (kalt) | keine (gezählt; Store unter dev aus) |
+| dasselbe ohne `Sec-Fetch-Site` | 204, 4 ms | `bb.bot seen not-own-page` |
+| dasselbe mit Firefox 121 und `same-origin` | 204, 4 ms | `bb.bot seen old-browser` |
+
+Jede Antwort ist die gleiche wie vorher; nur die Logzeile sagt, ob gezählt wurde. Die Zeiten sind Dev-Server-Zeiten (erste Anfrage kompiliert die Route).
+
+**Die Produktion am 18.10., einmal gelesen** (`vercel metrics … --group-by clientUserAgent`, `-s 2d -g 1d`, 11:00 UTC): `/go/` noch 25 Klicks von den alten Kennungen (Lightpanda 19, Chrome 118 4, Chrome 119 Mac 2) — der Scraper klickt am 18. weniger; **`/api/seen` dagegen 1.784 Beacons** an diesem halben Tag von denselben zehn Strings (Chrome 118 195, Edge 120 194, Chrome 119 Mac 189, Chrome 120 Mac 184, Firefox 121 179, Chrome 120 179, Chrome 119 172, Firefox 121 Mac 166, Edge 119 166, Firefox 120 160), der dichteste Tag bisher. Darum steht der 18. mit in `BOT_DAYS_BEFORE_GUARD`. Was die Regel nach dem Deploy abweist, steht ab dann im `guard`-Hash und in der Zeile unter den Kacheln.
+
+**Ein Risiko, das erst die Produktion zeigt:** Safari sendet `Sec-Fetch-Mode`, `-Site`, `-Dest` seit 16.4; ob jedes WebKit-WebView (In-App-Browser) auch `Sec-Fetch-User: ?1` beim Tippen setzt, konnte hier nicht gemessen werden (der Browser-Bereich ist Chromium). **Fehlen nach dem Deploy iPhone-Klicks in K3**, die in `vercel metrics` als Safari-Klicks auf `/go/` auftauchen, ist `Sec-Fetch-User` der Verdächtige und die Klick-Bedingung auf `navigate` allein zu lockern — dann steht es hier.
+
+**Analytik-Checkliste:** Punkt 5 — beide Routen bleiben `no-store`, kein neuer Zähler in einer gecachten Route; Punkt 7 — die Definition von K1–K3 und K16 lautet jetzt „… von Anfragen, die ein Mensch sein können" (PLAN-3.1 §3), die Summe ist in `insights.test.ts` getestet; Punkt 6 — **nichts Neues über einen Leser**: ein Tageszähler je Route und Grund ist eine Klasse, kein Wert, die Datenschutzerklärung bleibt. Punkte 1–4 unberührt.

@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { boardFromSearch, sharedMetadata, SharedPage } from '@/app/shelfportrait/shared';
 import { boardQuery, filledCount } from '@/lib/inspiration/board';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
-import type { Locale } from '@/lib/i18n/locale';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/server';
 import { measure } from '@/app/api/measure';
 
 /**
@@ -21,10 +22,11 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   return sharedMetadata(filledCount(board) > 0 ? board : null);
 }
 
-export default async function InspirationBoardPage({ searchParams }: Props) {
+export default async function InspirationBoardPage({ searchParams, locale = DEFAULT_LOCALE }: Props) {
   measure('page-portrait');
+  const t = translator(locale);
   if (!inspirationEnabled()) notFound();
   const board = await boardFromSearch(searchParams);
   const filled = filledCount(board) > 0;
-  return <SharedPage board={filled ? board : null} path={`/shelfportrait/board?${boardQuery(board)}`} missing="This address holds no books. Make a board of your own at /shelfportrait." />;
+  return <SharedPage board={filled ? board : null} path={`/shelfportrait/board?${boardQuery(board)}`} missing={t('This address holds no books. Make a board of your own at /shelfportrait.')} locale={locale} />;
 }

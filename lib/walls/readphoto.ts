@@ -10,8 +10,8 @@
  */
 import { crop, shrink, toJpeg, type PreparedPhoto } from '@/lib/photoprep';
 import { recognize, type ReadVariant, type RecognizedBook } from '@/lib/recognize';
-import { shelvesOf } from '@/lib/shelfrows';
-import { DENSE_AT, inWhole, mergeReads, piecesOf } from './dense';
+import { cutOffRows, shelvesOf } from '@/lib/shelfrows';
+import { DENSE_AT, inWhole, mergeReads, piecesOf, wordsOf } from './dense';
 
 export interface PhotoReading {
   /** Every book read, each once, uncapped. */
@@ -50,7 +50,7 @@ export interface ReadHooks {
 }
 
 /** Throws when the model does not answer the first look; a piece that fails is counted and left out. `variant` is for measuring (lab/shelf/evaluate.ts); the site passes none. */
-export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}, variant: ReadVariant & { trim?: boolean } = {}): Promise<PhotoReading> {
+export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}, variant: ReadVariant & { trim?: boolean; stumps?: boolean } = {}): Promise<PhotoReading> {
   const started = Date.now();
   const first = await recognize(prepared.bytes, 'image/jpeg', hooks.onBook, hooks.secondLook === false ? undefined : denseAt(), variant);
   const reading: PhotoReading = {
@@ -65,7 +65,12 @@ export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}, 
   };
   if (!first.stopped) return reading;
 
-  const cut = piecesOf(prepared.full.width, prepared.full.height, shelvesOf(prepared.full, { dropEdgeStrips: variant.trim }));
+  const shelves = shelvesOf(prepared.full, { dropEdgeStrips: variant.trim });
+  const cut = piecesOf(prepared.full.width, prepared.full.height, shelves);
+  // A variant being measured (--variant stumps): in a row the photo cuts off, a reading of one word without an
+  // author is half a spine and is left out; a whole title or a named author there is a book and stays.
+  const cutOff = variant.stumps ? cutOffRows(shelves) : [];
+  const inCutOff = (piece: readonly number[]) => cutOff.some(([top, bottom]) => (piece[1] + piece[3]) / 2 >= top && (piece[1] + piece[3]) / 2 <= bottom);
   reading.pieces = cut.length;
   hooks.onAgain?.(cut.length, 0);
   let done = 0;
@@ -73,7 +78,8 @@ export async function readPhoto(prepared: PreparedPhoto, hooks: ReadHooks = {}, 
     cut.map(async (piece) => {
       const r = await recognize(toJpeg(shrink(crop(prepared.full, ...piece))), 'image/jpeg', undefined, undefined, variant);
       hooks.onAgain?.(cut.length, ++done);
-      return { ...r, books: r.books.map((b) => inWhole(b, piece)) };
+      const kept = inCutOff(piece) ? r.books.filter((b) => !!b.author || wordsOf(b.title).length >= 2) : r.books;
+      return { ...r, books: kept.map((b) => inWhole(b, piece)) };
     }),
   );
   const read = runs.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));

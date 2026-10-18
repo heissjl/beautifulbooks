@@ -12,7 +12,11 @@ The collection is read from a live snapshot (scripts/live-collections.ts),
 because the site lays online drafts over data/collections.json; the covers are
 Open Library's large images, fetched one at a time and cached in out/cache.
 
-    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain | --footer-only] [--first] [--cols=N]
+    python3 lab/kalender/poster_collection.py <live.json> sf-masterworks [--plain | --footer-only] [--first] [--cols=N] [--no-credit]
+
+--no-credit drops the per-tile artist line, for a collection that is one
+artist's work (Tom Adams' Christie; Julian, 2026-10-09: "mach den cover credit
+pro kachel weg, weil die sammlung nur von adams ist").
 """
 import json
 import os
@@ -145,7 +149,9 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
     intro_lines = wrap(probe, intro, intro_f, 2200)
     header_h = MARGIN + 150 + 40 + len(intro_lines) * 62 + 110
     footer_h = 120 if plain else 260
-    H = header_h + rows * (th + TEXT_H + GAP_Y) - GAP_Y + footer_h
+    credit = '--no-credit' not in sys.argv[3:]
+    text_h = TEXT_H if credit else TEXT_H - 40
+    H = header_h + rows * (th + text_h + GAP_Y) - GAP_Y + footer_h
 
     img = Image.new('RGB', (W, H), BG)
     d = ImageDraw.Draw(img)
@@ -170,7 +176,7 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
         in_row = min(cols, len(works) - r * cols)
         x0 = (W - (in_row * tw + (in_row - 1) * GAP_X)) // 2
         x = x0 + c * (tw + GAP_X)
-        y = header_h + r * (th + TEXT_H + GAP_Y)
+        y = header_h + r * (th + text_h + GAP_Y)
         r = tile.height / tile.width
         if abs(r - ratio) / ratio < 0.03:
             img.paste(fill(tile, tw, th), (x, y))
@@ -196,7 +202,7 @@ def main(live: str, slug: str, plain: bool = False, first: bool = False, footer_
         ay = ty + 36 * len(lines) + 6
         d.text((x, ay), fit_text(d, 'later printing' if repeat else w.get('author', ''), a_f, tw), font=a_f, fill=MUTED)
         artists = w.get('coverArtists') or []
-        if artists:
+        if artists and credit:
             d.text((x, ay + 36), fit_text(d, 'Cover: ' + ', '.join(artists), c_f, tw), font=c_f, fill=ACCENT)
 
     # Footer: the site and the address of this collection.

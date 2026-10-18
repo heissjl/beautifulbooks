@@ -94,13 +94,29 @@ export function shelvesOf(img: RgbaImage, options: { dropEdgeStrips?: boolean } 
     shelves[1][0] = shelves[0][0];
     shelves.shift();
   }
-  // A variant being measured (lab/shelf/evaluate.ts --variant trim): the low strips at the top and bottom
-  // edge — where the photo cuts a shelf off — are not read again at all, rather than given to a neighbour.
+  // A variant being measured (lab/shelf/evaluate.ts --variant trim): the cut-off rows are not read again at all.
   if (options.dropEdgeStrips) {
-    const first = edges[1] - edges[0];
-    const last = edges[edges.length - 1] - edges[edges.length - 2];
-    if (first < MIN_SHELF && shelves.length > 1) shelves[0][0] = edges[1];
-    if (last < MIN_SHELF && shelves.length > 1) shelves[shelves.length - 1][1] = edges[edges.length - 2];
+    const cut = cutOffRows(shelves);
+    return shelves.filter((s) => !cut.includes(s)).length > 1 ? shelves.filter((s) => !cut.includes(s)) : [];
   }
   return shelves.length > 1 ? shelves : [];
 }
+
+/**
+ * The rows the photo cuts off: a stretch at the top or bottom edge that is
+ * much lower than the shelves between. "Much lower" is under half the median
+ * of the others — the cut-off row of the test set's fiction shelf is 11 % of
+ * the height beside shelves of 29–31 %. What stands there is half a spine
+ * ("GO", "Self", "SETH") beside the occasional whole cover.
+ */
+export function cutOffRows(shelves: readonly [number, number][]): [number, number][] {
+  if (shelves.length < 3) return [];
+  const heights = shelves.map(([a, b]) => b - a);
+  const inner = heights.slice(1, -1).sort((a, b) => a - b);
+  const median = inner[Math.floor(inner.length / 2)];
+  const out: [number, number][] = [];
+  if (heights[0] < median / 2) out.push(shelves[0]);
+  if (heights[heights.length - 1] < median / 2) out.push(shelves[shelves.length - 1]);
+  return out;
+}
+

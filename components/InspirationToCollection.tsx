@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useT } from './i18n';
 import { createWall } from './useMyWalls';
 import { editHref } from '@/lib/walls/edit';
 import { MAX_TITLE, storedCoverId, type Tile } from '@/lib/walls/model';
@@ -20,6 +21,7 @@ import { MAX_TITLE, storedCoverId, type Tile } from '@/lib/walls/model';
  * A Google cover has no place in a collection and is left out.
  */
 export default function InspirationToCollection({ title, books }: { title: string; books: { workId: string; coverId: string; title: string; author: string | null }[] }) {
+  const t = useT();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -36,17 +38,17 @@ export default function InspirationToCollection({ title, books }: { title: strin
       const wall = await createWall(title.slice(0, MAX_TITLE), tiles);
       router.push(editHref(wall.id));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That did not work. Try again in a moment.');
+      setError(err instanceof Error ? err.message : t('That did not work. Try again in a moment.'));
       setBusy(false);
     }
   }
   return (
     <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink-2">
-      <span>More books than fit here?</span>
+      <span>{t('More books than fit here?')}</span>
       <button type="button" onClick={start} disabled={busy} className="rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2 transition-colors hover:border-accent hover:text-accent disabled:opacity-50">
-        {busy ? 'Starting…' : 'Make it a collection'}
+        {busy ? t('Starting…') : t('Make it a collection')}
       </button>
-      <span className="text-ink-3">Keep these covers, add more, arrange them.</span>
+      <span className="text-ink-3">{t('Keep these covers, add more, arrange them.')}</span>
       {error && <span className="w-full text-accent" role="alert">{error}</span>}
     </p>
   );

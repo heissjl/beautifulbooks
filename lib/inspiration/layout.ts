@@ -132,3 +132,63 @@ export function posterLayout(format: PosterFormat, count: 3 | 6 | 9 = 9, caption
     caption: captions ? CAPTION[format] : null,
   };
 }
+
+/**
+ * The link card a messenger shows for a board, 1200 × 630 (ROADMAP 5.18b;
+ * the route and `/shelfportrait`'s own card both paint from it).
+ *
+ * **The covers stand as they stand on the board**: three across, as in the
+ * editor and on the shared page — nine three by three, six three by two,
+ * three in a row. Nine stood in two rows of five from 2026-10-05, the words in
+ * the first place, which made the covers larger but broke up the board
+ * (Julian, 2026-10-18: „baue die vorschaukarte für das shelfportrait so um,
+ * dass es auch das grid zeigt") — a nine-books grid is read by where things
+ * stand: corners, a middle, a cross.
+ *
+ * Nine take the very places of the card for `/shelfportrait` itself, the
+ * empty board (124 × 186, three by three on the right): a shared board's card
+ * is that board filled in. The words stand in the upper three quarters of the
+ * column on the left, because X lays the page's title over the card's bottom
+ * left corner. Six and three are larger, beside a column whose words are set
+ * in its middle (2026-10-05).
+ */
+export const CARD_SIZE = { width: 1200, height: 630 } as const;
+
+export interface CardLayout {
+  width: number;
+  height: number;
+  /** Row by row, in the board's order. */
+  covers: Rect[];
+  /** Where the title, the reader's line and the site's line stand. */
+  words: Rect;
+  /** The largest the title may be, in px. */
+  title: number;
+  /** `start`: the title at the top of the column and the site's line at its foot; `centre`: both together in the middle. */
+  align: 'start' | 'centre';
+}
+
+const CARD_GAP = 12;
+
+function placeRow(x0: number, y0: number, w: number, h: number, gap: number, n: number): Rect[] {
+  return Array.from({ length: n }, (_, i) => ({ x: x0 + (i % 3) * (w + gap), y: y0 + Math.floor(i / 3) * (h + gap), width: w, height: h }));
+}
+
+export function cardLayout(count: 3 | 6 | 9 = 9): CardLayout {
+  const { width, height } = CARD_SIZE;
+  if (count === 9) {
+    const w = 124, h = 186, gap = 14;
+    const x0 = width - 72 - (3 * w + 2 * gap);
+    const y0 = Math.round((height - (3 * h + 2 * gap)) / 2);
+    return { width, height, covers: placeRow(x0, y0, w, h, gap, 9), words: { x: 72, y: 72, width: x0 - 72 - 64, height: 380 }, title: 88, align: 'start' };
+  }
+  if (count === 6) {
+    const w = 186, h = 279;
+    const x0 = width - 40 - (3 * w + 2 * CARD_GAP);
+    const y0 = Math.round((height - (2 * h + CARD_GAP)) / 2);
+    return { width, height, covers: placeRow(x0, y0, w, h, CARD_GAP, 6), words: { x: 56, y: y0, width: x0 - 56 - 44, height: 2 * h + CARD_GAP }, title: 72, align: 'centre' };
+  }
+  const w = 264, h = 396;
+  const x0 = width - 40 - (3 * w + 2 * CARD_GAP);
+  const y0 = Math.round((height - h) / 2);
+  return { width, height, covers: placeRow(x0, y0, w, h, CARD_GAP, 3), words: { x: 48, y: y0, width: x0 - 48 - 36, height: h }, title: 50, align: 'centre' };
+}

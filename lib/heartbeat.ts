@@ -19,6 +19,8 @@ export interface HeartbeatFacts {
   bookVisits: number | null;
   /** Shop clicks yesterday, or null when the store could not be read. */
   shopClicks: number | null;
+  /** Requests the guard turned away yesterday (3.1i), clicks and beacons together; null when unread. */
+  rejected?: number | null;
   /** The store's answer time for one GET now, or null when silent. */
   redisMs: number | null;
   /** Seconds the Google breaker still stays shut; 0 when open. */
@@ -40,6 +42,7 @@ export function heartbeatMail(f: HeartbeatFacts): AlertMail {
       `Yesterday (${f.day}, UTC):`,
       `  book-page visits: ${n(f.bookVisits)}`,
       `  shop clicks: ${n(f.shopClicks)}`,
+      ...(f.rejected === undefined ? [] : [`  turned away as not a person (clicks and beacons): ${n(f.rejected)}`]),
       '',
       `Now: the store ${store}; Google is ${google}.`,
       ...fill,

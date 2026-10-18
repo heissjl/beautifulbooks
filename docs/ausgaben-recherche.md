@@ -40,6 +40,18 @@ Wie man herausfindet, welches Cover zu welcher Ausgabe und welchem Druck gehört
 
 - Spalten mit zwei ISBN bei den SF Masterworks: die erste ist die der ursprünglichen nummerierten Reihe, die zweite die der Neuauflage ab 2010. **Keine** sagt etwas über Drucke innerhalb einer ISBN. Gut, um eine Reihe vollständig und in Nummernfolge zu haben; das Cover kommt aus der ISFDB.
 
+### bookscans.com: Scans amerikanischer Taschenbücher 1939–1979
+
+Geprüft 2026-10-09 (Julian: „check if bookscans.com is a good resource for the future“). Bei der Szafran-Sammlung lieferte die Seite zwei Scans, die nirgends sonst zu finden waren: *Timestop!* (Lancer 74616) und *Raga Six* (Bantam Q7249).
+
+- **Was es ist:** eine private Referenzseite von Bruce Black. Sie hat Zehntausende Cover-Scans, geordnet nach **Verlag und Katalognummer**, mit Schwerpunkt auf den großen US-Taschenbuchverlagen: Ace, Avon, Ballantine, Bantam, Berkley, Dell, Lancer, Popular Library, Pyramid, Signet und weitere. Dazu kommt Grant Thiessens Taschenbuch-Datenbank als Excel-Datei.
+- **Adressen:** `bookscans.com/Publishers/<verlag>/<verlag>.htm` ist die Übersicht, darunter liegen Unterseiten nach Nummernbereich. Die Bilder heißen meist `<Verlag><Katalognummer>.jpg`, aber das Verzeichnis wechselt je Verlag und Bereich. Gefunden: `lancer/images/Lancer74616.jpg`, `bantam/images-3000/BantamQ7249.jpg`, `signet/images2000/SignetY7145.jpg`, `pop/images-later/pop00405.jpg`. Eine geratene Adresse antwortet 404. Sicherer ist es, auf der Unterseite des Nummernbereichs nach der Katalognummer zu suchen.
+- **Zugang:** `curl` geht ohne Weiteres. Die `robots.txt` ist leer, verbietet also nichts. Trotzdem eine Anfrage nach der anderen.
+- **Bildgröße:** absichtlich klein, etwa 250 px breit. Black verkleinert eingesandte Scans, damit niemand sie gewerblich nutzt. Fürs Erkennen reicht das, für eine Kachel gerade so. Die ISFDB und das Internet Archive haben oft größere Scans, also dort zuerst suchen.
+- **Was die Seite nicht sagt:** keinen Künstler, kein Datum und keinen Druck. Eine Katalognummer gilt über alle Drucke hinweg (Signet T2704 lief 1965 bis in die 1970er mit verschiedenen Covern). Ein bookscans-Bild zeigt also *einen* Druck dieser Nummer, man weiß nicht welchen. **Druck und Künstler kommen immer aus der ISFDB.** bookscans liefert nur das Bild, und das wird mit dem ISFDB-Scan oder der ISFDB-Beschreibung verglichen.
+- **Rechte:** Black sieht seine Scans als gemeinfrei an. Scans, die andere eingesandt haben, nennt er mit Namen („Courtesy of …“). Wer einen solchen Scan weiterverwenden will, den verweist er an den Einsender. **Beide Szafran-Scans stammen von einem Einsender**, „Courtesy of Bob Gaines“. Sie wurden zu Open Library hochgeladen, bevor diese Regel bekannt war. Künftig gilt: Ein Scan mit „Courtesy of“ wird nicht hochgeladen, ohne den Einsender zu fragen. Ein Scan aus Blacks eigener Sammlung ist frei.
+- **Fazit:** eine gute **Suchhilfe** für Cover von US-Taschenbüchern bis 1979, die anderswo fehlen. Sie taugt aber nicht als Beleg, und hochladen ist nur mit geklärter Herkunft erlaubt. Reihenfolge der Quellen: ISFDB-Scan, Internet Archive, bookscans.
+
 ### Reddit und imgur
 
 - reddit.com und i.redd.it sind für Claude gesperrt (Browser und Abruf); über Spiegelseiten auszuweichen umginge die Sperre. Julian speichert eine Liste (`…/top.json?t=all&limit=100`), ein Skript, das er selbst startet, lädt die Bilder (`lab/collections/badscificovers_download.py`). imgur-Bilder lädt `curl`.

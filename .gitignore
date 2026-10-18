@@ -91,3 +91,6 @@ lab/collections/in/
 
 # 5.5b: raw take, frames, fonts and preview of the Goodreads clip
 lab/video/screen/out/
+
+# daily reply lists (5.6c): other people's posts and handles, kept local
+/docs/antwortzettel/

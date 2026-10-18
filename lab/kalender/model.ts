@@ -74,6 +74,12 @@ export const NEEDS: Record<string, string> = {
   'konto:pinterest': 'Pinterest-Unternehmenskonto angelegt, Website bestätigt',
   'konto:tiktok': 'TikTok-Konto angelegt',
   'konto:reddit': 'Reddit-Konto mit eigener Geschichte (90/10-Regel)',
+  // The r/books post (5.6b, 2026-10-09) waits on more than an account: its
+  // promotion rules count the comment history in r/books itself, nine real
+  // contributions to one promotional, and a young account whose history is
+  // only posts about the site fails that. Julian comments by hand for about
+  // two weeks first, or asks via modmail whether the post is fine as it is.
+  'historie:rbooks-9zu1': 'Kommentar-Historie in r/books nach der 9:1-Regel: rund zwei Wochen echte Kommentare von Julian, von Hand — oder per Modmail gefragt, ob der Post so in Ordnung ist',
   spiel: 'Das Cover-Spiel (/versus) ist in Produktion eingeschaltet',
   walls: 'Eigene Sammlungen (/create) sind in Produktion eingeschaltet',
 };

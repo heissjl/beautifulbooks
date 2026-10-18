@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { posterLayout, type PosterFormat, type Rect } from '../inspiration/layout';
+import { cardLayout, posterLayout, type PosterFormat, type Rect } from '../inspiration/layout';
 
 const overlaps = (a: Rect, b: Rect) =>
   a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
@@ -99,4 +99,45 @@ it('three covers stand one above and two below, in a story and in a post', () =>
     }
   }
   expect(posterLayout('feed', 3).tiles[0].width).toBeGreaterThan(posterLayout('feed', 6).tiles[0].width);
+});
+
+// The link card shows the board as it stands (Julian, 2026-10-18: „dass es auch das grid zeigt").
+describe.each([9, 6, 3] as const)('the link card of %i', count => {
+  const C = cardLayout(count);
+  const rows = count / 3;
+
+  it('stands its covers three across in the board\'s order, 2:3, inside the card, apart from the words', () => {
+    expect(C).toMatchObject({ width: 1200, height: 630 });
+    expect(C.covers).toHaveLength(count);
+    C.covers.forEach((t, i) => {
+      expect(t.width * 3).toBe(t.height * 2);
+      expect(t.x).toBe(C.covers[i % 3].x);
+      expect(t.y).toBe(C.covers[Math.floor(i / 3) * 3].y);
+      expect(t.x).toBeGreaterThanOrEqual(0);
+      expect(t.y).toBeGreaterThanOrEqual(0);
+      expect(t.x + t.width).toBeLessThanOrEqual(C.width);
+      expect(t.y + t.height).toBeLessThanOrEqual(C.height);
+      expect(overlaps(t, C.words)).toBe(false);
+    });
+    expect(new Set(C.covers.map(t => t.x)).size).toBe(3);
+    expect(new Set(C.covers.map(t => t.y)).size).toBe(rows);
+    for (let i = 0; i < count; i++) for (let j = i + 1; j < count; j++) expect(overlaps(C.covers[i], C.covers[j])).toBe(false);
+  });
+
+  it('keeps the words left of the covers and out of the bottom left corner X lays the page title over', () => {
+    expect(C.words.x + C.words.width).toBeLessThan(Math.min(...C.covers.map(t => t.x)));
+    expect(C.words.x).toBeGreaterThanOrEqual(40);
+    // A column set in its middle ends well above its foot; one set from the top ends at three quarters.
+    if (C.align === 'start') expect(C.words.y + C.words.height).toBeLessThanOrEqual(0.75 * C.height);
+  });
+});
+
+it('nine on a board\'s card take the places of the empty board on /shelfportrait\'s card', () => {
+  const nine = cardLayout(9);
+  expect(nine.covers[0]).toEqual({ x: 728, y: 22, width: 124, height: 186 });
+  expect(nine.covers[8]).toEqual({ x: 1004, y: 422, width: 124, height: 186 });
+  expect(nine.words).toEqual({ x: 72, y: 72, width: 592, height: 380 });
+  // Six and three are larger, as before.
+  expect(cardLayout(6).covers[0]).toMatchObject({ width: 186, height: 279 });
+  expect(cardLayout(3).covers[0]).toMatchObject({ width: 264, height: 396 });
 });

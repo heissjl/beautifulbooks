@@ -5,7 +5,8 @@ import type { Board } from '@/lib/inspiration/board';
 import { ID } from '@/lib/inspiration/shortid';
 import { linkStoreFromEnv } from '@/lib/inspiration/store';
 import { inspirationEnabled } from '@/lib/inspiration/switch';
-import type { Locale } from '@/lib/i18n/locale';
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
+import { translator } from '@/lib/i18n/server';
 import { measure } from '@/app/api/measure';
 
 /**
@@ -37,8 +38,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return sharedMetadata(typeof found === 'string' ? null : found);
 }
 
-export default async function InspirationLinkPage({ params }: Props) {
+export default async function InspirationLinkPage({ params, locale = DEFAULT_LOCALE }: Props) {
   measure('page-portrait');
+  const t = translator(locale);
   const { id } = await params;
   if (!inspirationEnabled() || !ID.test(id)) notFound();
   const found = await load(id);
@@ -46,7 +48,8 @@ export default async function InspirationLinkPage({ params }: Props) {
     <SharedPage
       board={typeof found === 'string' ? null : found}
       path={`/shelfportrait/${id}`}
-      missing={found === 'down' ? 'The store of the links did not answer. Try again in a moment.' : 'This link’s board is not on record here.'}
+      missing={found === 'down' ? t('The store of the links did not answer. Try again in a moment.') : t('This link’s board is not on record here.')}
+      locale={locale}
     />
   );
 }
