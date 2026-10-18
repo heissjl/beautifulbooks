@@ -6315,3 +6315,26 @@ Julian: „die 155 kuratierten Werke; Satz ‚First published in {year}.‘ / �
 Die meisten sind Open Librarys Fehler (Camus 1922, Kafka 2006, Asimov 1915, Adichie 1969, Chaucer 1970); bei Ender's Game steht Wikidata auf der Kurzgeschichte von 1977, bei Murakami und Capote liegt es um ein Jahr neben der Tradition — darum liest Julian, nicht das Skript.
 
 **Der Bau.** `data/first-years.json` hält 85 Zeilen `{ year, source }` — die 81 einigen („Open Library and Wikidata Q… agree, 2026-10-18“) und die vier aus der Historie; `lib/firstyears.ts` (`withCheckedYear`) legt das Jahr **nach** dem Merge über das Werk (`mergeWorks` nimmt das kleinere zweier Jahre und behielte ein falsches früheres), in `getWorkPage` (`lib/work.ts`) und in `finish` der Suche (`lib/search.ts`), und markiert jedes Jahr mit seiner Quelle: `firstPublishYearSource: 'checked' | 'openlibrary'` im `Work` (`lib/model.ts`). Die Buchseite sagt bei `checked` „First published in {year}.“ / „Erstausgabe {year}.“ und sonst weiter „Open Library dates the book to {year}.“ — ein zitiertes Jahr ist kein geprüftes (N12); Karte und JSON-LD (`datePublished`) tragen dasselbe Jahr. Tests: die vier Fälle, ein Werk ohne Zeile bleibt mit `openlibrary` markiert, jede Zeile der Datei hat Quelle und plausibles Jahr. SPEC §1.5, features.md und lab/README.md nachgezogen. Analytics: kein Signal liest das Jahr — nichts bewegt sich.
+
+## 2026-10-18 — Kuratiert gegen beliebig: die Buchseite gemessen (ROADMAP 6.26)
+
+Julian: „erst lokal gegen next start messen; ein längerer Build für alle 155 ist denkbar, aber erst nach der Messung.“ Das Instrument: `lab/curated-ux/measure.ts`, headless Chrome über `lab/video/screen/cdp.ts`, je Werk vier Besuche in der Reihenfolge 390 kalt, 390 warm, 1280 kalt, 1280 warm, alle 250 ms gelesen: Kacheln, Kacheln mit geladenem Bild, erste Kachel (ms seit Navigation), „Wand steht“ (Kachelzahl 2 s unverändert und alle Bilder da oder keine `/api/works`-Anfrage mehr offen; Deckel 20 s), leere Kacheln nach 10 s. Jeder Besuch tritt mit eigener `x-forwarded-for` auf, weil der Rate-Limiter sonst nach zwanzig Seite-0-Aufrufen (Eimer `google`, 20/5) die Messung mit 429 beendet hätte — wie am Vormittag die 6.5-Probe. Drei Werke je Gruppe: vorgerendert (OL39349W *Mrs Dalloway*, OL472971W, OL109524W), kuratiert ohne Vorrender (OL872932W, OL27258W *Neuromancer*, OL59800W), populär und nicht kuratiert (OL17930368W *Atomic Habits*, OL82563W, OL18020194W). Nur der **erste** Besuch eines Werks (390 kalt) ist auf dem Server kalt — die drei danach finden Seite und Katalogantworten im Cache; „1280 kalt“ ist also nur für den Browser kalt.
+
+| Gruppe | Breite | Besuch | erste Kachel (Median ms) | Wand steht (Median ms) | Kacheln (Median) | leer nach 10 s (Summe) |
+|---|---|---|---|---|---|---|
+| vorgerendert | 390 | kalt | — (bei 2 von 3 kam binnen Deckel kein Bild) | 2.296 | 3 | 12 |
+| vorgerendert | 390 | warm | 262 | 2.333 | 11 | 5 |
+| vorgerendert | 1280 | kalt | 267 | 2.287 | 11 | 0 |
+| vorgerendert | 1280 | warm | 260 | 2.283 | 11 | 0 |
+| kuratiert, ISR | 390 | kalt | 5.974 | 5.151 | 16 | 39 |
+| kuratiert, ISR | 390 | warm | 398 | 2.421 | 18 | 9 |
+| kuratiert, ISR | 1280 | kalt | 260 | 2.279 | 18 | 0 |
+| kuratiert, ISR | 1280 | warm | 263 | 2.283 | 18 | 0 |
+| populär | 390 | kalt | 3.827 | 8.765 | 9 | 17 |
+| populär | 390 | warm | 263 | 2.540 | 9 | 16 |
+| populär | 1280 | kalt | 265 | 2.290 | 9 | 11 |
+| populär | 1280 | warm | 263 | 2.287 | 9 | 11 |
+
+Einzelwerte: der kalte Erstbesuch brauchte bei den ISR-Werken 3,1–6,0 s bis zur ersten Kachel (Wand 3,9–6,0 s), bei den populären 3,2–4,7 s (Wand 4,7–11,7 s), beim vorgerenderten *Mrs Dalloway* kam binnen 5 s **gar kein Bild** (1 Kachel gezählt), bei OL109524W nach 1,3 s. „Wand steht“ ≈ 2,28 s ist der Boden der Methode (2 s Ruhe plus ein Abtasttakt), also „sofort“.
+
+**Was das heißt.** (1) **Warm sind alle gleich:** erste Kachel in ~260 ms, Wand sofort, kuratiert oder nicht, vorgerendert oder nicht — der Index entscheidet hier nichts, was man sieht. (2) **Kalt entscheidet der Katalog und das Bild, nicht die Seite:** der erste Besuch eines Werks wartet auf Open Librarys Ausgabenseiten (3–6 s) und dann auf die Cover von archive.org, die den `/img/`-Weg zum ersten Mal gehen; darum stehen nach 10 s bei den kalten Besuchen 12, 39 und 17 Kacheln leer, und bei OL82563W (46 Kacheln) auch warm noch 16 und 11 — Bilder, die der Cover-Host langsam oder gar nicht liefert. Das ist 6.25s Gebiet (`bb.img`, Rückfall auf die kleinere Größe) und 6.73s (Wasserfall der Bildanfragen), nicht 6.26s. (3) **Das Vorrendern aller 155** erspart genau einem Besuch je Werk und Tag die Serverzeit der ISR-Erzeugung — hier etwa die Differenz zwischen 2,3 s (vorgerendert, kalt) und 4–6 s (ISR, kalt) in „Wand steht“, bei weiter leeren Kacheln. Für 137 zusätzliche Seiten im Build, die bei einem Open-Library-Ausfall mit Ersatz-Metadaten gebaut würden (der Grund in 5.1), ist das ein kleiner Gewinn; **Empfehlung: nicht vorrendern**, stattdessen die Bilder — der Punkt löst sich, wie die Roadmap-Zeile es vorsah, in 6.25 und 6.73 auf. Julian entscheidet, ob er den Build trotzdem will. Analytics: nichts bewegt sich — eine Messung, kein Code auf der Seite.

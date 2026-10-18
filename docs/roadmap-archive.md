@@ -1305,3 +1305,15 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.94 Zwei Bücher, die die Suche nicht findet: *The Letter Killers Club* (Krzhizhanovsky) und *The Memory Chalet* (Judt).** **Wer:** Claude. (Beim Vorbereiten eines Shelf-Portraits aus Julians my9books-Liste, 2026-10-05.) Gefragt über `buyitscovers.com/api/search`, weil Open Library diesen Mac wieder abwies (`ECONNREFUSED`): „the letter killers club krzhizhanovsky“ und „Клуб убийц букв“ gaben null Werke, „krzhizhanovsky“ nur *Seven Stories* und Fremdes, „the memory chalet“ *A Christmas Carol* und Ähnliches, „judt“ *Jude the Obscure* und Jude Deveraux. Offen: ob Open Library die beiden Werke führt (dann ist es unsere Suche oder ihr Ranking) oder nicht (dann ein Hinweis statt Fremdtreffern, SPEC F1.7). Ein Fremdtreffer für einen Autorennamen ist schlimmer als „nichts gefunden“. Thema: Suche
 
 **Erledigt 2026-10-18** (es war die eigene Tippfehler-Korrektur; Regel: nur anbieten, wenn das getippte Wort in der Antwort steht). → [Historie](history.md#2026-10-18--die-korrektur-die-einen-autor-überschrieb-roadmap-694)
+
+## 6.26
+
+**6.26 Die kuratierte Liste muss sich perfekt anfühlen.** (Julian, 2026-09-09: „die UX für alles was mit der kuratierten liste passiert muss perfekt sein. ich weiß nicht warum da manchmal noch lange ladezeiten sind oder einzelne kacheln leer bleiben.")
+
+**Warum dieser Punkt eigener ist als 6.25:** die kuratierten Werke sind die, die in der Sitemap stehen, die die Startseite zeigt und die eine Suchmaschine zuerst findet. Bei ihnen darf nichts hakeln, und bei ihnen **muss es auch nicht**: für sie liegt alles vorgerechnet bereit — Cover-IDs und Signaturen im gebauten Index (E18, seit `5385ddd` liest `getWorkPage` sie von dort, ohne ein Bild zu holen), das gewählte Cover in `data/curated.json`.
+
+**Zu messen, bevor gebaut wird, und zwar getrennt nach kuratiert und nicht kuratiert:** Zeit bis zur ersten Kachel, Zeit bis die Wand steht, Zahl der Kacheln ohne Bild. Wenn ein kuratiertes Werk sich messbar besser verhält als ein beliebiges, ist der Weg klar — mehr vorrechnen. Verhält es sich gleich, liegt es nicht am Index, sondern an 6.25, und dieser Punkt löst sich dort auf.
+
+**Ein bekannter Kandidat steckt schon in der Liste:** von den kuratierten Werken werden nur die achtzehn der Startseite vorgerendert (5.1); alle übrigen entstehen beim ersten Abruf. Für eine Liste, die klein und bekannt ist, ist das die falsche Sparsamkeit — hier wäre `generateStaticParams` über alle hundert zu messen, gegen die Bauzeit, die 5.1 als Grund dagegen nennt.
+
+**Erledigt 2026-10-18** (gemessen: warm gleich, kalt entscheiden Katalog und Cover-Host; aufgelöst in 6.25 und 6.73). → [Historie](history.md#2026-10-18--kuratiert-gegen-beliebig-die-buchseite-gemessen-roadmap-626)
