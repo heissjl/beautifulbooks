@@ -2,6 +2,8 @@
 
 **Anlass:** Julian (2026-10-17) zur Liste „Bis eine Stunde“ aus der Durchsicht aller offenen Kästchen: „mach einen plan hierfür und führ mich durch“. Die Punkte: **6.106, 6.11, 6.42, 6.63, 6.7 Schritt 2, 6.5, 6.72 (2)–(4), 6.39, 6.40, 6.44, 6.16 Schritt 2, 6.26, 6.94.** Jeder wurde am 2026-10-17/18 am Code und im git log nachgesehen (zwei Lese-Durchgänge, nichts gebaut); was hier steht, ist der Stand an `54d3244`, Branch `worktree-2.18-betrieb`.
 
+**Stand 2026-10-18 abends: durchgeführt.** Alle dreizehn Punkte sind gebaut oder gemessen und committet (d6e2960 bis 5ac38fe, Branch `worktree-2.18-betrieb`); die Entscheidungen aus §1 hat Julian am Tag getroffen, die Ergebnisse stehen je Punkt in docs/history.md. Was bei Julian liegt: CLAUDE.md gegenlesen und `/doctor` (6.44), die 22 Jahres-Abweichungen (6.16), ob alle 155 vorgerendert werden sollen (6.26, Empfehlung nein), das Wort für den Reiter „Unknown“ (6.72 (5)).
+
 **Wie der Plan benutzt wird:** Claude führt Julian Punkt für Punkt durch; vor jedem Punkt stellt er die Entscheidungen aus §1, die noch offen sind, dann baut er, dann der nächste. Ein Punkt gilt als abgehakt nach den fünf Schritten aus CLAUDE.md (Roadmap kürzen, Archiv, features, Historie, Spec). Reihenfolge in §2, die Punkte selbst in §3.
 
 **Was sich seit der Liste geändert hat:** 6.39 und 6.40 sind keine UI-Punkte, sondern Claude-Code-Hooks und -Skills; 6.44 war gegen 3.571 Wörter geschrieben, CLAUDE.md hat heute 6.999; 6.72 (2) widerspricht, wörtlich genommen, einer Entscheidung Julians vom 2026-09-09; 6.5 besteht nur noch aus einem lebenden Teil; 6.63 ist eine Messung, kein Bau.
