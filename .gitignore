@@ -43,6 +43,8 @@ next-env.d.ts
 
 # claude code local settings
 .claude/settings.local.json
+# what the hooks of ROADMAP 6.39 remember per session (start commit, passed checks)
+.claude/hooks/state/
 
 # scratch files belong in lab/<name>/ or the session scratchpad (lab/README.md rule 7)
 /scratch-*
