@@ -102,6 +102,7 @@ Die Quelle, von der die Seite lebt (SPEC §3 F3). Details zu Werken, Ausgaben un
 
 ## 11. Git, Worktrees, Commits
 
+- **Nur einen Commit deployen, wenn das lokale `main` weiter vorn liegt** (2026-10-18): Worktree auf `origin/main` (`git worktree add -b push/<item> ../bb-push-<item> origin/main`), `git cherry-pick`, dort eigenes `npm ci` — ein symbolisch verlinktes `node_modules` lässt `next build` mit „Symlink node_modules is invalid, it points out of the filesystem root“ abbrechen —, `.env.local` des Hauptordners nur für den Build laden, Tests, `tsc`, Build, dann `git push origin HEAD:main`. Danach `origin/main` ins lokale `main` mergen; bei `history.md` gewinnt die Fassung des lokalen `main`, wenn sie alle Überschriften der Produktion enthält.
 - **Mehrere Sitzungen, eigene Worktrees, manche pushen direkt nach `origin/main`:** `npm run worktrees -- --fetch` am Anfang und vor jedem Merge; `origin/main` ist die Produktion, das lokale `main` nicht. Vor dem Entfernen eines Worktrees die git-ignorierten Dateien retten (Screenshots in `docs/tests/`, Lab-Caches nach `../bb-lab-cache/`).
 - **Nie `git stash` ohne Namen** — der Stapel ist geteilt; WIP-Commit statt Stash. Ein Push, der an „sideband packet“ stirbt, ist Transport: `git -c http.postBuffer=524288000 push`.
 - **Push nur, wenn Julian es sagt** („merge und push“); Doku-Commits fahren mit dem nächsten Push mit. Jede Commit-Nachricht nennt ihr Roadmap-Item, trägt die Antwort auf die Analytik-Checkliste und die `Co-Authored-By`-Zeile.
