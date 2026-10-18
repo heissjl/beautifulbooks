@@ -20,9 +20,10 @@
  *    a few lines apart, once as an ISBN link and once as a title search, with
  *    nothing to tell them apart.
  * 3. **A link to *this* printing wins.** Julian, 2026-09-09: where a shop that
- *    could pay commission has a link to exactly this edition, that link leads
- *    and the "another edition" row is not offered at all. It appears only when
- *    no such link is possible — a foreign ISBN, or none.
+ *    could pay commission has a link to exactly this edition, that link leads.
+ *    Until 2026-10-18 the "another edition" row was then not offered at all;
+ *    since ROADMAP 6.72 (2) (Julian: "immer zeigen") it stands in every case,
+ *    under its own heading below the printing's links, which keep the lead.
  */
 import { english, type Translate } from './i18n/translate';
 import type { BuyLink, Edition } from './model';
@@ -40,7 +41,7 @@ export interface LinkPlan {
   lead: BuyLink[];
   /** Everything else, behind a fold. Never repeats a label from `lead`. */
   rest: BuyLink[];
-  /** "Or read it in another edition": empty whenever a link to *this* printing could earn. */
+  /** "Or read it in another edition": the market's catalogue shops searched by the work's title, in every case since 6.72 (2). */
   anyEdition: BuyLink[];
   /** One sentence that justifies the order. Empty in the `home` case, where there is nothing to explain. */
   note: string;
@@ -159,7 +160,16 @@ export function linkPlan(input: LinkPlanInput): LinkPlan {
         : 'foreign';
 
   const withdrawn = linkCase === 'foreign' || linkCase === 'no-isbn' ? new Set(CATALOGUE_SHOPS[market]) : new Set<string>();
-  const anyEdition = withdrawn.size > 0 ? [...(input.anyEditionLinks ?? [])].filter(l => withdrawn.has(l.provider.replace(/-title$/, ''))) : [];
+  /*
+    The "another edition" row in every case (ROADMAP 6.72 (2), Julian
+    2026-10-18): the market's catalogue shops searched by the work's title.
+    Until then it appeared only where the ISBN link was withdrawn (rule 3 as
+    it stood from 2026-09-09); a reader of a home printing had the title
+    searches only behind the fold, and asked about *this* printing, not any.
+    The ISBN link still leads — the row sits under its own heading further down.
+  */
+  const catalogue = new Set(CATALOGUE_SHOPS[market]);
+  const anyEdition = [...(input.anyEditionLinks ?? [])].filter(l => catalogue.has(l.provider.replace(/-title$/, '')));
 
   /*
     Lever 3 of ROADMAP 1.11. `kind: 'product'` says only "this URL has the

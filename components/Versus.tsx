@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import AddToWall from '@/components/AddToWall';
 import Link from '@/components/Link';
 import ShareMenu from '@/components/ShareMenu';
 import { useT } from '@/components/i18n';
@@ -193,9 +194,16 @@ function usePreloadSeeded(pairs: readonly Pair[]) {
   }, [pairs]);
 }
 
-export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] }) {
+export default function Versus({ initialPairs = [], walls = false }: { initialPairs?: Pair[]; walls?: boolean }) {
   const t = useT();
   const [request, setRequest] = useState(0);
+  /*
+    The pair the reader just judged, kept until the next vote (ROADMAP 6.72 (3),
+    Julian 2026-10-18: a strip "last pair" rather than a button on the pair
+    sliding out). "Add to collection" sits here and nowhere near the two cards
+    on screen: a way to keep a cover must not weigh on the choice between them.
+  */
+  const [lastPair, setLastPair] = useState<Pair | null>(null);
   const [seen, setSeen] = useState<readonly string[]>([]);
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [sending, setSending] = useState(false);
@@ -273,6 +281,7 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
       if (res.ok && winner) {
         const { chosen } = (await res.json()) as { chosen?: Chosen | null };
         if (chosen) setLastPick({ ...chosen, src: winner.src });
+        setLastPair(pair);
       }
       next(pair);
     } catch {
@@ -462,6 +471,33 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
                     </>
                   ) : null}
                 </p>
+              </div>
+            )}
+            {/* Only with collections on (WALLS), and only once a vote has been counted: the covers on screen stay free of it. */}
+            {walls && lastPair && (
+              <div className="w-full max-w-md rounded-card border border-line px-3 py-2">
+                <p className="text-xs text-ink-3">{t('Your last pair — keep one in a collection:')}</p>
+                <div className="mt-2 grid grid-cols-2 gap-3">
+                  {[lastPair.a, lastPair.b].map(side => (
+                    <div key={side.id} className="flex min-w-0 items-center gap-2">
+                      <Image src={side.src} alt="" width={28} height={42} unoptimized className="h-[42px] w-[28px] shrink-0 object-contain" />
+                      <div className="min-w-0">
+                        <p className="truncate text-[13px] leading-snug text-ink" title={side.title}>{side.title}</p>
+                        {side.workId && (
+                          // A pool cover is an Open Library scan; one with a picture of its own has no stored id and AddToWall renders nothing.
+                          <AddToWall
+                            workId={side.workId}
+                            title={side.title}
+                            author={side.author || undefined}
+                            cover={{ id: side.id, url: side.src, source: 'openlibrary', editionIds: [] }}
+                            editions={[]}
+                            compact
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             <p className="hidden text-center text-xs text-ink-3 [@media(hover:hover)]:block">{t('← and → choose, ↓ skips.')}</p>

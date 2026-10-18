@@ -1119,9 +1119,10 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
 
       {/*
         Julian, 2026-09-09: where a shop that could pay commission has a link
-        to exactly this printing, that link wins and this row does not appear
-        at all. It shows up only when no such link is possible — a foreign
-        ISBN, or none — and it says plainly that it leads somewhere else.
+        to exactly this printing, that link wins — it leads, above. From
+        2026-09-09 to 2026-10-18 this row then did not appear at all; since
+        ROADMAP 6.72 (2) (Julian: "immer zeigen") it stands in every case, last
+        in the column, and says plainly that it leads to any edition.
       */}
       {plan.anyEdition.length > 0 && (
         <div className="mt-5 border-t border-line pt-4">
@@ -1141,7 +1142,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
             ))}
           </div>
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            {t('These search for “{title}” by title. Whatever they carry is a different printing from the one above, with a cover of its own.', { title: displayTitle(workTitle) })}
+            {/* Any printing the shop lists, each with its own cover — said without a claim about stock (E12) or about this cover (§9.2). */}
+            {t('These search the shop for “{title}” by title: any edition it lists, each with a cover of its own — no promise about this one.', { title: displayTitle(workTitle) })}
           </p>
         </div>
       )}

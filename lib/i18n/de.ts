@@ -256,7 +256,7 @@ export const de: Readonly<Record<string, string>> = {
   'The shop did not answer in time.': 'Der Shop hat nicht rechtzeitig geantwortet.',
   'Preview on Google Books': 'Vorschau bei Google Books',
   'Or read it in another edition': 'Oder in einer anderen Ausgabe lesen',
-  'These search for “{title}” by title. Whatever they carry is a different printing from the one above, with a cover of its own.': 'Diese suchen „{title}“ nach dem Titel. Was sie führen, ist ein anderer Druck als der oben, mit eigenem Cover.',
+  'These search the shop for “{title}” by title: any edition it lists, each with a cover of its own — no promise about this one.': 'Sie suchen beim Laden nach „{title}“ als Titel: die Ausgaben, die er führt, mit je eigenem Cover — kein Versprechen über diese hier.',
   '{shop}: this book’s page': '{shop}: die Seite dieses Buchs',
   '{shop}: search results': '{shop}: Suchergebnisse',
 
@@ -484,12 +484,12 @@ export const de: Readonly<Record<string, string>> = {
   'Legal notice': 'Anbieterkennzeichnung',
   'Imprint & contact': 'Impressum',
   // The invitation cards at the end of the home page (6.109).
-  'Not looking for one book?': 'Gerade kein bestimmtes Buch im Kopf?',
+  'Looking for more?': 'Lust auf mehr?',
   'Ways into the site': 'Wege in die Seite',
   'Shelf-Portrait': 'Shelf-Portrait',
-  'This cover or that one?': 'Dieses Cover oder das?',
-  'Two covers, one tap. Your picks add up to a ranking of the prettiest covers.': 'Zwei Cover, ein Tipp. Aus deinen Entscheidungen entsteht die Rangliste der schönsten Cover.',
-  'Build a wall of covers': 'Bau dir eine Wand aus Covern',
+  'Which cover is prettier?': 'Welches Cover ist schöner?',
+  'Play the game. Your picks add up to a ranking of the prettiest covers.': 'Spiel mit. Aus deinen Entscheidungen entsteht die Rangliste der schönsten Cover.',
+  // „Create your collection“ is the /create heading's sentence, further down.
   'Pick the editions you love — from a book, a photo of your shelf or your Goodreads list — and keep the wall under its own link.': 'Wähl die Ausgaben, die du liebst — aus einem Buch, einem Foto deines Regals oder deiner Goodreads-Liste — und behalte die Wand unter ihrem eigenen Link.',
   'Nine books that made you, each in the cover you love — one picture to post.': 'Neun Bücher, die dich geprägt haben, jedes im Cover deiner Wahl — ein Bild zum Posten.',
   'or': 'oder',
@@ -588,6 +588,7 @@ export const de: Readonly<Record<string, string>> = {
   'Report the left one': 'Das linke melden',
   'the right one': 'das rechte',
   'Your last pick:': 'Deine letzte Wahl:',
+  'Your last pair — keep one in a collection:': 'Dein letztes Paar — eins davon in eine Sammlung:',
   'by {author}': 'von {author}',
   'See this edition': 'Diese Ausgabe ansehen',
   'all its covers': 'seine Cover-Wand',
