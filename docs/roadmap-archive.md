@@ -1287,3 +1287,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.40 Ein Skill `/abhaken <Nr>`, und einer für die N14-Messung.** Das Abhaken hat fünf Schritte (Kurzfassung in der Roadmap, Langtext ins Archiv, Zeile in `docs/features.md`, Messung in die Historie, `npm run kanban`), und drei Sitzungen haben Teile ausgelassen: 1.9 behielt zwei offene Kästchen im abgehakten Punkt, 5.8a kam nie in die Roadmap, 6.16 Schritt 1 wurde beim Umbau übersehen. Eine `SKILL.md` unter `.claude/skills/abhaken/` mit den fünf Schritten, der Prüfung „kein `- [ ]` mehr im Block“ und `disable-model-invocation: true`, damit sie bewusst ausgelöst wird. Zweiter Skill `/messen`: die Messung aus 6.30 (abgeschnittene Zeilen, Platzhalter gegen Feld, Seitenbreite) bei 390 und 1280 px als Befehl. Eine Stunde, Claude.
 
 **Erledigt 2026-10-18** (`/messen` mit einem Skript in `lab/n14/`, deutsche Namen — Julian). → [Historie](history.md#2026-10-18--zwei-skills-abhaken-und-messen-roadmap-640)
+
+## 6.44
+
+**6.44 CLAUDE.md auf ein Drittel kürzen, ohne eine Regel zu verlieren.** 3.571 Wörter am 2026-09-12; die offizielle Anleitung: „Bloated CLAUDE.md files cause Claude to ignore your actual instructions“ — für jede Zeile fragen, ob ihr Fehlen einen Fehler verursachen würde. Der Abschnitt „Current state“ ändert sich täglich und hat in `docs/features.md` ein besseres Zuhause; „Facts about the APIs“ wird eine Doku-Seite; die Regeln (Google an zwei Stellen, keine Vollständigkeit, kein Ausfall als Befund, erzeugte Dateien nie von Hand, N14) bleiben. Claude kürzt, Julian liest gegen; Messlatte: `/doctor` schlägt nichts mehr vor, und jede Regel steht noch. Eine Stunde. Hängt mit 6.39 zusammen — was ein Hook wird, verschwindet aus dem Text.
+
+**Erledigt 2026-10-18** (7.015 → 2.691 Wörter; Julians Gegenlesen und `/doctor` stehen aus). → [Historie](history.md#2026-10-18--claudemd-von-7015-auf-2691-wörter-roadmap-644)

@@ -6204,3 +6204,47 @@ Alles von Hand mit der Eingabe ausgelöst, die Claude Code den Hooks gibt (JSON 
 ## 2026-10-18 — Zwei Skills: abhaken und messen (ROADMAP 6.40)
 
 Julian (2026-10-18): „/messen als committetes Skript in lab/n14/, Skill-Namen deutsch (abhaken, messen)“. **`/abhaken <Nr>`** (`.claude/skills/abhaken/SKILL.md`, `disable-model-invocation: true`) schreibt die fünf Schritte aus CLAUDE.md so auf, dass eine Sitzung ohne Kontext sie ausführen kann: Roadmap-Zeile auf `- [x]` und kürzen (mit Bewertungszeile und „Nächste Schritte“), voller Text ins Archiv unter `## <Nr>`, Zeile in features.md (oder im Commit, warum nicht), Abschnitt in der Historie mit Anker-Regel, Spec bei geändertem Verhalten; dann `grep` auf ein verbliebenes `- [ ]` im Block und das Cockpit (das der Hook aus 6.39 ohnehin baut). **`/messen <url>`** ruft `lab/n14/measure.ts`: headless Chrome über `lab/video/screen/cdp.ts`, je Breite (390 × 844 als Telefon mit `deviceScaleFactor` 2, 1280 × 800) die abgeschnittenen Textzeilen (`scrollWidth > clientWidth` oder `scrollHeight > clientHeight` bei `overflow ≠ visible`, mit den ersten Wörtern), jeder Platzhalter per Canvas in der Schrift seines Felds gegen den Platz im Feld, `scrollWidth` gegen `innerWidth`, Bilder und leere Bilder; eine Adresse mit `buyitscovers.com` wird abgewiesen, `--production-once` ist die eine Ausnahme nach einem Deploy. **Gelaufen auf der Startseite des lokalen Builds:** 390 × 844 — Seitenbreite 390 von 390, 0 abgeschnittene Zeilen, Platzhalter „A title, or a title and author“ 181 px in 212 px, 77 Bilder, keins leer; 1280 × 800 — 1280 von 1280, 0 abgeschnittene Zeilen, 203 px in 606 px, 84 Bilder, keins leer. Das ist der Prüfstein aus 6.30 (2026-09-11: 0 abgeschnittene Titel, Platzhalter 194 von 212 px — der Platzhalter ist seither kürzer geworden). Die Produktionsadresse wurde einmal probiert und abgewiesen. **Das Abhaken selbst:** 6.40 wurde nach den Schritten der eigenen SKILL.md abgehakt (dieser Eintrag ist Schritt 4); der erste Aufruf des Befehls `/abhaken` in Claude Code ist Julians, weil der Skill nur von Hand auslösbar ist. Analytics: nichts berührt.
+
+## 2026-10-18 — CLAUDE.md von 7.015 auf 2.691 Wörter (ROADMAP 6.44)
+
+Julian: „Ziel etwa 2.300 Wörter, die API-Fakten nach docs/api-fakten.md, Layout auf fünf Zeilen, /doctor führe ich aus. Kürze, ich lese gegen.“ Die Zeile in der Roadmap war gegen 3.571 Wörter (2026-09-12) geschrieben; am Morgen des 2026-10-18 hatte CLAUDE.md **7.015** („Current state“ allein 3.434, „Working rules“ 1.857, „Facts about the APIs“ 432). Jetzt **2.691** — über dem Ziel, weil jede Nie-Regel aus „Current state“ als Zeile geblieben ist statt als Absatz; wo noch gekürzt werden kann, entscheidet Julians Gegenlesen. Der Grundsatz: eine Regel bleibt als eine Zeile mit dem Punkt, unter dem Historie und Spec die Begründung tragen; das Beschreibende (was die Seite kann, wie ein Modul heißt) steht in features.md und im Code; Werkzeugregeln stehen in umgang.md und werden nur verwiesen.
+
+**Wohin jede Zeile ging** (alte Überschrift → neuer Ort):
+
+| Alt in CLAUDE.md | Neu |
+|---|---|
+| „Read this first“ (SPEC, ROADMAP, fünf Schritte, nichts im Chat, umgang lesen, E7) | CLAUDE.md „Read this first“, gekürzt; die fünf Schritte in `/abhaken` (6.40) |
+| „Current state“: Name, Domain, Redirects, Mail, Bluesky, Cookie-Name, `SITE_NAME`, Kursiv | CLAUDE.md „The site“; Domain-Details docs/domain-recherche.md |
+| Verfügbarkeitsprüfung (vier Zustände, nicht freigegeben) | „Rules that hold › Covers“; umgang §3 |
+| Verdikt an den Kauf-Links (`lib/verdicts.ts`, kein Händler, Google 503, Katalog-Zustände 1.12/1.13) | „Rules that hold › Catalogues“ und „› Covers“ |
+| Google-Kontingent, zwei Aufrufer, Mosaik nie Google, 1.000 am Tag, Schalter, Rate-Limits | „Rules that hold › Catalogues“; umgang §2 |
+| Seitenweise Cover, Faltung in vier Stufen, `imagesig`/`imagehash`, nie blank löschen | „Rules that hold › Covers“ (Stufen: SPEC §2.3) |
+| Cover-Modell E8, Ranking relational, `firstyear` | „Rules that hold › Covers“ |
+| Spiel, Redis, Vorschläge, `/curate`, Wände E22, Foto 5.11a, Shelf-Portrait, `/go/`, Analyse 3.1 | „Rules that hold › Copy and the reader“ und „› Stores and operation“ |
+| Sprache E23, `t()`, Spiegelbaum | „Rules that hold › Copy and the reader“ |
+| Thematische Sammlungen: Datei ≠ Seite, Snapshot, Autorenliste, Credits, `push-draft`, `clearDraft` | Regel in „Rules that hold › Stores“; Werkzeuge umgang **§13 (neu)** |
+| „Facts about the APIs“ (acht Absätze) | **docs/api-fakten.md** (englischer Wortlaut); umgang §1 und §2 zeigen dorthin |
+| „Editions, printings and covers“ (acht Regeln) | „Rules that hold › Covers“ als eine Zeile; die Reihenfolge Ausgabe → Druck → Bild, Etiketten, ganze Sammlung prüfen: umgang §8; die Fakten: docs/ausgaben-recherche.md |
+| „Layout“ (42 Zeilen) | fünf Zeilen |
+| „Commands“ | unverändert |
+| Working rules: umgang lesen | „Read this first“ |
+| Cover-Index server only, nie im Handler bauen | „Rules that hold › Covers“ |
+| Ähnlichkeits-Schwellen nach Augenmaß | „Rules that hold › Covers“ |
+| Ausfall ≠ Befund (N12) | „Rules that hold › Copy“; umgang §9 |
+| Name einmal, kursiv | „The site“ |
+| Keine Vollständigkeit | „Rules that hold › Copy“ |
+| Ein Commit je Punkt; `lib/` ohne `any`/`console.log`; Tests neben die Logik, Fixtures | „Code rules“ und „Working rules“; umgang §11 und §2 |
+| Dev statt Produktion, einmal prüfen, 403 challenge | „Rules that hold › Catalogues“ und „Working rules“; umgang §4 |
+| Fünf Abnahme-Suchen | „Working rules“; umgang §9 |
+| Screenshots lokal | „Working rules“; umgang §11 |
+| `vercel logs` (Stunde, Flags, 400, `--json`, `--limit`, `--until`) | umgang §4 (ergänzt) |
+| N14 390 × 844 und 1280 × 800, messen | „Working rules“; umgang §9, `/messen` |
+| Phasenreihenfolge | „Read this first“ |
+| Worktrees: `--fetch`, `origin/main`, `docs/worktrees.md`, git-ignorierte Dateien retten, Lab-Cache, `worktree remove`, `origin/main` vorher hereinholen | „Working rules“ (Hooks 6.39); umgang §11 (ergänzt) |
+| Cockpit (127.0.0.1, Katalogeinträge, kein Geheimnis, einmal je Erzeugung, `Thema:`, Synchronisations-Ansicht) | umgang **§12 (neu)** |
+| Analyse-Checkliste (sieben Punkte) | CLAUDE.md, gekürzt, alle sieben |
+| `lab/`-Regeln (0.11) | „Code rules“ |
+| URL als Quelle der Wahrheit, Lint-Regeln, Callback-Refs; Sidebar/Blatt exklusiv; Metadaten in `page.tsx` | „Code rules“ |
+| Erzeugte Dateien nie von Hand (stand nirgends als Satz) | „Code rules“, mit dem Hook aus 6.39 |
+
+Nichts davon gehört zur Analyse. Julians Teil: gegenlesen (hält jede Regel, die er vermisst?) und `/doctor`.
