@@ -15,7 +15,7 @@
 import type { WorkSummary } from './model';
 import { authorNameFrom, authorResultWorks, pickAuthor, WEAK_AUTHOR_READERS, type AuthorQuery, type ResolvedAuthor } from './authorsearch';
 import { searchVocabulary } from './lexicon';
-import { BETTER_FACTOR, correctionIsBetter, correctQuery, isWeakResult, type Vocabulary } from './spelling';
+import { BETTER_FACTOR, correctionIsBetter, correctQuery, isWeakResult, typedWordsFound, type Vocabulary } from './spelling';
 import { OL_TIMEOUTS, searchAuthorsByName, searchAuthorWorks, searchWorks } from './sources/openlibrary';
 import { debug } from './debug';
 import { filterWorksByLanguage, mergeWorks, mosaicCovers, rankWorks } from './works';
@@ -101,6 +101,21 @@ export async function search(rawQuery: string, options: SearchOptions = {}): Pro
   const correction = correctQuery(query, options.vocabulary ?? searchVocabulary());
   if (!correction || correction.to.length < MIN_QUERY_LENGTH) {
     return { query, language, works: finish(merged, query, language) };
+  }
+  /*
+    The typed word stands in the weak answer's titles or authors: the reader
+    found what they typed, even if few editions carry it (ROADMAP 6.94 —
+    "judt" is Tony Judt's sixteen books, not *Jude the Obscure*). The
+    correction is offered above the results, never applied, and the catalogue
+    is not asked a second time (Julian, 2026-10-18: „nur angeboten, nie
+    angewandt“). The price, measured on the fixtures: the catalogue itself
+    misspells — twenty records say "Ernest Hemmingway", thirteen "Tolkein" —
+    and those typos now get the misspelled records with an offer instead of
+    the corrected answer. The two cannot be told apart by the data (edition
+    counts overlap, the works never coincide); it is Julian's trade.
+  */
+  if (typedWordsFound(correction, merged)) {
+    return { query, language, works: finish(merged, query, language), correction: { ...correction, applied: false } };
   }
 
   let corrected: WorkSummary[];

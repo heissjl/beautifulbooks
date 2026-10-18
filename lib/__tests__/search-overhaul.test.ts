@@ -59,14 +59,15 @@ describe('typo correction (F1.9)', () => {
     expect(r.works[0].authors[0]).toBe('Jane Austen');
   });
 
-  it('replaces a weak answer when the corrected one is far stronger', async () => {
-    // The original answer is books about Tolkien and namesakes, none above 26 editions.
+  it('replaces a weak answer when the corrected one is far stronger and the typed word is nowhere in it', async () => {
+    // Until 2026-10-18 "Tolkein" was replaced by "Tolkien" (The Hobbit first). The catalogue carries the
+    // misspelling on thirteen of twenty records, so since 6.94 the typed answer stays and Tolkien is offered;
+    // a phrase whose wrong word is in no record ("pride and prejudise") is still replaced.
     const r = await search('Tolkein');
-    expect(r.correction).toEqual({ from: 'Tolkein', to: 'Tolkien', applied: true });
-    expect(r.works[0].title).toBe('The Hobbit');
-    const h = await search('Hemmingway');
-    expect(h.correction?.to).toBe('Hemingway');
-    expect(h.works[0].authors[0]).toBe('Ernest Hemingway');
+    expect(r.correction).toEqual({ from: 'Tolkein', to: 'Tolkien', applied: false });
+    expect(r.works.length).toBeGreaterThan(0);
+    const p = await search('pride and prejudise');
+    expect(p.correction).toEqual({ from: 'pride and prejudise', to: 'pride and prejudice', applied: true });
   });
 
   it('never asks a second time when the first answer is strong', async () => {
@@ -98,10 +99,36 @@ describe('typo correction (F1.9)', () => {
   });
 
   it('keeps a weak answer as it was when the corrected search is silent', async () => {
+    // "Tolkein" no longer asks a second time (its word is in the answer); "piranesi" has no correction at all,
+    // so the silent-correction path is exercised with gatsbee above. Here: a typed word in the answer, no second call.
     silent.add(searchUrl('Tolkien'));
     const r = await search('Tolkein');
-    expect(r.correction).toBeUndefined();
+    expect(r.correction).toEqual({ from: 'Tolkein', to: 'Tolkien', applied: false });
     expect(r.works.length).toBeGreaterThan(0);
+    expect(calls.filter(u => u.includes('search.json')).length).toBe(1);
+  });
+
+  it('keeps a rare author whose name stands in the weak answer, and only offers the correction (6.94)', async () => {
+    // Live, 2026-10-18: "judt" was rewritten to "jude" and Jude the Obscure replaced Tony Judt's books.
+    const r = await search('judt');
+    expect(r.works.map(w => w.authors[0])).toContain('Tony Judt');
+    expect(r.works.some(w => /Jude the Obscure/i.test(w.title))).toBe(false);
+    expect(r.correction).toEqual({ from: 'judt', to: 'jude', applied: false });
+    // One call: the catalogue is not asked a second time for a word the reader did not type.
+    expect(calls.filter(u => u.includes('search.json')).length).toBe(1);
+  });
+
+  it('pays for that with the misspellings the catalogue itself carries (6.94: Hemmingway is now an offer)', async () => {
+    // Twenty records say "Ernest Hemmingway", one with eight editions — the data cannot tell them from Judt.
+    const r = await search('Hemmingway');
+    expect(r.correction).toEqual({ from: 'Hemmingway', to: 'Hemingway', applied: false });
+    expect(r.works.length).toBeGreaterThan(0);
+  });
+
+  it('does not rewrite a title whose word stands in the answer (6.94: the memory chalet)', async () => {
+    const r = await search('the memory chalet');
+    expect(r.works.some(w => /Memory Chalet/i.test(w.title))).toBe(true);
+    expect(r.correction).toEqual({ from: 'the memory chalet', to: 'the memory charles', applied: false });
   });
 
   it('never asks Google', async () => {

@@ -107,6 +107,12 @@ describe('the lexicon (data/)', () => {
     expect(correctQuery('lord of the rigns', vocabulary)?.to).toBe('lord of the rings');
   });
 
+  it('would rewrite a rare author into a famous title — which is why the typed word is checked against the answer first (6.94)', () => {
+    // Measured on the live site 2026-10-18: "judt" → "jude" (Jude the Obscure), "the memory chalet" → "the memory charles" (Dickens).
+    expect(correctQuery('judt', vocabulary)?.to).toBe('jude');
+    expect(correctQuery('the memory chalet', vocabulary)?.to).toBe('the memory charles');
+  });
+
   it('leaves the five acceptance queries alone', () => {
     for (const q of ['mumbo jumbo', '1984', "gravity's rainbow", 'the great gatsby', 'pride and prejudice']) {
       expect(correctQuery(q, vocabulary), q).toBeNull();

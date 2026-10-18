@@ -11,6 +11,7 @@
  * site's own pick (`pickAuthor`), so the fixture is what a request would have
  * sent. Requests are spaced 1.2 s apart. No Google Books.
  */
+import { readFileSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pickAuthor } from '../lib/authorsearch';
@@ -30,7 +31,13 @@ const TEXT_QUERIES = [
 const AUTHOR_NAMES = ['Harper Lee', 'George Orwell', 'Margaret Mitchell', 'Dostojewski', 'Tolkein', 'Tolkien'];
 
 const OUT_FILE = path.join(process.cwd(), 'lib', '__fixtures__', 'search', 'responses.json');
-const responses: Record<string, unknown> = {};
+/**
+ * With queries as arguments (`npx tsx scripts/record-search-fixtures.ts judt "the memory chalet"`)
+ * only those are recorded and merged into the existing file — one request each, nothing
+ * re-recorded (ROADMAP 6.94, 2026-10-18; Open Library blocks an address that asks too much).
+ */
+const ONLY = process.argv.slice(2);
+const responses: Record<string, unknown> = ONLY.length ? (JSON.parse(readFileSync(OUT_FILE, 'utf8')) as Record<string, unknown>) : {};
 
 async function get(url: string): Promise<unknown> {
   if (url in responses) return responses[url];
@@ -48,8 +55,8 @@ async function get(url: string): Promise<unknown> {
 }
 
 async function main() {
-  for (const q of TEXT_QUERIES) await get(searchUrl(q));
-  for (const name of AUTHOR_NAMES) {
+  for (const q of ONLY.length ? ONLY : TEXT_QUERIES) await get(searchUrl(q));
+  for (const name of ONLY.length ? [] : AUTHOR_NAMES) {
     const body = (await get(authorLookupUrl(name))) as { docs: OlAuthorDoc[] };
     const author = pickAuthor(body.docs);
     if (author) await get(authorWorksUrl(author.keys));
