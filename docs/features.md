@@ -52,6 +52,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 | Auswahl in der URL (`?cover=`), Suche und Sprache bleiben erhalten; gefaltete Duplikate lösen auf ihren Vertreter auf; `?cover=` hat Vorrang vor der Teilen-Adresse `/cover/<id>`, die nur der Anfang ist | 2026-09-06 / 09-23 | F2.7 | 6.48 | `components/BookDetail.tsx` |
 | Gewählt und fokussiert sind unterscheidbar: die gewählte Kachel trägt den Akzent-Ring, der Tastatur-Fokus einen dunklen Umriss 5 px weiter außen; eine gewählte, fokussierte Kachel zeigt beides | 2026-09-26 | F2.7 | 6.55 | `components/CoverGallery.tsx` |
 | Telefon: Peek-Leiste und Schublade, exklusiv gerendert; Wand bleibt vertikal | 2026-09-07 | F2.11, E13 | PLAN-B B5 | `components/CoverSheet.tsx`, `useIsDesktop.ts` |
+| Telefon: in der Schublade blättern — eine schmale Zeile unter dem Kopf mit ← „{n} of {total}“ → durch die Sprachgruppe des gewählten Covers (Wand-Reihenfolge), jeder Schritt wählt das Cover wie ein Tipp auf die Kachel; „Close“, Hintergrund und Escape bringen die gewählte Kachel ins Bild, wenn sie es nicht ist | 2026-10-18 | F2.11 | 6.5 | `components/CoverSheet.tsx`, `components/BookDetail.tsx` (`sheetStep`) |
 | Echter 404 für eine unbekannte Work-ID, Soft-Antwort nur bei schweigendem Katalog; `?offset=` jenseits der Kappung ist leer | 2026-09-08 | F2.1a, F2.2 | 1.7 | `app/book/[id]/page.tsx`, `app/not-found.tsx` |
 
 ## Detailseite: die gewählte Ausgabe

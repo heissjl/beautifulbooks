@@ -345,6 +345,31 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
+  /*
+    Leafing in the phone sheet (ROADMAP 6.5): the neighbours of the selected
+    cover in its language group, in the wall's order — the whole wall as a
+    fallback when it sits in none. The gallery's active tab is its own state
+    and may differ ("All languages"); noted in the history, raised as a prop
+    only if it ever shows. Each step selects a cover like a tap on the tile
+    does, so it asks for that ISBN once (CDN-cached a day).
+  */
+  const sheetStep = (() => {
+    if (!view || !selected) return undefined;
+    const order = view.groups.find(g => g.covers.some(c => c.id === selected.id))?.covers ?? view.all;
+    const at = order.findIndex(c => c.id === selected.id);
+    if (at < 0) return undefined;
+    const prev = order[at - 1]?.id;
+    const next = order[at + 1]?.id;
+    return {
+      prev,
+      next,
+      prevCaption: prev ? view.captions.get(prev) : undefined,
+      nextCaption: next ? view.captions.get(next) : undefined,
+      n: at + 1,
+      total: order.length,
+      onStep: selectCover,
+    };
+  })();
   // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
   const reportVerdict = useBookSignal({ workId: params.id, market: market ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
@@ -530,6 +555,8 @@ function BookDetail() {
         <CoverSheet
           coverUrl={selected.url}
           caption={view.captions.get(selected.id) ?? ''}
+          selectedId={selected.id}
+          step={sheetStep}
           share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
           /*
             On a phone "Add to collection" sits in the sheet's header beside
