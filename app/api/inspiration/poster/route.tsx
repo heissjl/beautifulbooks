@@ -8,7 +8,7 @@ import { isHiddenCover } from '@/lib/hiddencovers';
 import { coverUrlFor } from '@/lib/coverurl';
 import { type BoardSize, coverSegment, filledCount, isFull, parseBoard, sizeOf } from '@/lib/inspiration/board';
 import { describeBoard } from '@/lib/inspiration/describe';
-import { posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
+import { CARD_SIZE, cardLayout, posterLayout, type PosterFormat, type Rect } from '@/lib/inspiration/layout';
 import { captionLines } from '@/lib/inspiration/captionlines';
 import { mosaicGround, type WordArea } from '@/lib/inspiration/mosaicground';
 import { titleOf } from '@/lib/inspiration/share';
@@ -275,65 +275,39 @@ function poster(format: PosterFormat, count: BoardSize, by: string, sub: string,
 }
 
 /**
- * The link card, 1200 × 630 (Julian, 2026-10-05: „the space usage in der
- * vorschaukachel muss noch besser sein … es sollte BuyItsCovers.com heißen").
- * The first card set nine covers at 120 × 180 into the right third and left
- * the rest to a title. Now the covers take the height they can get:
- * - nine: two rows of five places, the words in the first place and a cover in
- *   each of the other nine — 186 × 279, two and a half times the area;
- * - six: three by two at the same size on the right, the words beside them;
- * - three: side by side at 264 × 396, the words beside them.
+ * The link card, 1200 × 630. Where things stand is `cardLayout` in
+ * `lib/inspiration/layout.ts`: the covers as they stand on the board, nine of
+ * them in the places of `/shelfportrait`'s own card (Julian, 2026-10-18: „dass
+ * es auch das grid zeigt"). Until then nine stood in two rows of five with the
+ * words in the first place (2026-10-05: „the space usage in der vorschaukachel
+ * muss noch besser sein … es sollte BuyItsCovers.com heißen").
  */
-const CARD = { width: 1200, height: 630, gap: 12 };
-
-function cardPlan(count: BoardSize): { covers: Rect[]; words: Rect; title: number } {
-  const place = (x0: number, y0: number, w: number, h: number, cols: number, n: number, skip = 0): Rect[] =>
-    Array.from({ length: n }, (_, k) => {
-      const i = k + skip;
-      return { x: x0 + (i % cols) * (w + CARD.gap), y: y0 + Math.floor(i / cols) * (h + CARD.gap), width: w, height: h };
-    });
-  if (count === 9) {
-    const w = 186, h = 279;
-    const x0 = Math.round((CARD.width - (5 * w + 4 * CARD.gap)) / 2);
-    const y0 = Math.round((CARD.height - (2 * h + CARD.gap)) / 2);
-    return { covers: place(x0, y0, w, h, 5, 9, 1), words: { x: x0, y: y0, width: w - 14, height: h }, title: 38 };
-  }
-  if (count === 6) {
-    const w = 186, h = 279;
-    const x0 = CARD.width - 40 - (3 * w + 2 * CARD.gap);
-    const y0 = Math.round((CARD.height - (2 * h + CARD.gap)) / 2);
-    return { covers: place(x0, y0, w, h, 3, 6), words: { x: 56, y: y0, width: x0 - 56 - 44, height: 2 * h + CARD.gap }, title: 72 };
-  }
-  const w = 264, h = 396;
-  const x0 = CARD.width - 40 - (3 * w + 2 * CARD.gap);
-  const y0 = Math.round((CARD.height - h) / 2);
-  return { covers: place(x0, y0, w, h, 3, 3), words: { x: 48, y: y0, width: x0 - 48 - 36, height: h }, title: 50 };
-}
-
 function card(count: BoardSize, by: string, sub: string, images: (string | null)[], look: Look, under: string | null) {
-  const plan = cardPlan(count);
+  const plan = cardLayout(count);
   const L = LOOKS[look];
   const title = titleOf(by);
   const { words } = plan;
-  const beside = count !== 9;
-  const size = wordFit(title, words.width, plan.title);
+  const beside = plan.align === 'centre';
+  // A long name makes the title smaller before it takes a third line (the poster's rule), and no word may run out of the column.
+  const size = wordFit(title, words.width, titleSize(title, plan.title));
   // The address must fit its column with the spacing: sixteen letters, measured at 0.41 em each in Xanh italic.
   // "A little larger" (Julian, 2026-10-05): it was half the title's size and capped at 21 px on the card of nine.
-  const sign = Math.min(Math.max(22, Math.round(size * 0.6)), Math.floor(words.width / (16 * 0.44)));
+  // Beside nine it stands as on `/shelfportrait`'s own card, under a larger title: 0.6 of 88 would crowd the reader's line.
+  const sign = Math.min(Math.max(22, Math.round(size * (beside ? 0.6 : 0.42))), Math.floor(words.width / (16 * 0.44)));
   return (
-    <div style={{ position: 'relative', width: CARD.width, height: CARD.height, display: 'flex', background: L.bg }}>
-      <Ground src={under} width={CARD.width} height={CARD.height} />
+    <div style={{ position: 'relative', width: plan.width, height: plan.height, display: 'flex', background: L.bg }}>
+      <Ground src={under} width={plan.width} height={plan.height} />
       {/*
         Beside six or three covers the title and the line stand together in the middle of their
         column (Julian, 2026-10-05: „der schriftzug in der vorschaukarte muss etwas zentraler,
         höher, bei x wird es nicht angezeigt"): X lays the page's title over the card's bottom
-        left corner, where the line stood. With nine they keep the first place, top left, which
-        nothing covers.
+        left corner, where the line stood. Beside nine the title stands at the top of the column and
+        the site's line in its upper three quarters, as on `/shelfportrait`'s own card.
       */}
       <div style={{ position: 'absolute', left: words.x, top: words.y, width: words.width, height: words.height, display: 'flex', flexDirection: 'column', ...(beside ? { justifyContent: 'center', alignItems: 'center', textAlign: 'center' } : { justifyContent: 'space-between' }) }}>
         <div style={{ display: 'flex', flexDirection: 'column', ...(beside ? { alignItems: 'center', marginBottom: Math.round(size * 0.55) } : {}) }}>
           <div style={{ ...DISPLAY, display: 'flex', fontSize: size, lineHeight: 1.06, color: L.ink, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{title}</div>
-          {sub && <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: Math.max(18, Math.round(size * 0.5)), lineHeight: 1.2, marginTop: Math.round(size * 0.25), color: L.ink2, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{sub}</div>}
+          {sub && <div style={{ ...DISPLAY, display: 'flex', fontStyle: 'italic', fontSize: Math.max(18, Math.round(size * (beside ? 0.5 : 0.4))), lineHeight: 1.2, marginTop: Math.round(size * 0.25), color: L.ink2, ...(beside ? { justifyContent: 'center', textAlign: 'center' } : {}) }}>{sub}</div>}
         </div>
         {/*
           The site's line, "Judge a book, buy its covers", with its second half as the address — one
@@ -371,8 +345,8 @@ export async function GET(request: NextRequest) {
 
   const count = sizeOf(board);
   const layout = format === 'card' ? null : posterLayout(format, count, withTitles);
-  const rects = layout ? layout.tiles : cardPlan(count).covers;
-  const size = layout ? { width: layout.width, height: layout.height } : { width: CARD.width, height: CARD.height };
+  const rects = layout ? layout.tiles : cardLayout(count).covers;
+  const size = layout ? { width: layout.width, height: layout.height } : CARD_SIZE;
   const [tiles, described] = await Promise.all([
     Promise.all(board.slots.map((s, i) => (s ? tile(s.coverId, rects[i].width, rects[i].height, request.nextUrl.origin) : null))),
     withTitles ? describeBoard(board) : null,
@@ -391,7 +365,7 @@ export async function GET(request: NextRequest) {
   const captionBands = layout?.caption && captions
     ? layout.tiles.flatMap((r, i) => (captions[i] ? [{ x: r.x, y: r.y + r.height, width: r.width, height: (layout.caption?.height ?? 0) + 10, dark: 0.72 }] : []))
     : [];
-  const words = layout ? [layout.head, layout.foot, ...captionBands] : [cardPlan(count).words];
+  const words = layout ? [layout.head, layout.foot, ...captionBands] : [cardLayout(count).words];
   const seed = board.slots.map((s) => s?.coverId ?? '').join();
   const under = await ground(look, size.width, size.height, rects, tiles, seed, words);
   const images = tiles.map((t) => (t ? dataUrl(t) : null));
