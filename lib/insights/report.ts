@@ -7,7 +7,7 @@ import { buyLinksFor, isWordsProvider, searchLinksFor, titleSearchLinksFor } fro
 import type { RedisCommands } from '../redis';
 import { LOCAL_COUNTRIES, localShopLinks } from '../localshops';
 import type { Market } from '../market';
-import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeOps, type ClickSummary, type OpsSummary } from './model';
+import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeGuard, summarizeOps, type ClickSummary, type DayHash, type GuardSummary, type OpsSummary } from './model';
 import { readDays } from './store';
 import { emptySearches, summarizeChannels, summarizePhotos, summarizeBooks, summarizeSearches, topWorks, type BookSummary, type ChannelSummary, type PhotoSummary, type SearchSummary, type WorkRow } from './visits';
 import { costUsd } from './prices';
@@ -56,6 +56,8 @@ export type InsightsReport =
       costs: CostSummary;
       /** K16 (5.6a): channels, their entries and what their readers did. */
       channels: ChannelSummary;
+      /** 3.1i: what the guard turned away per day, and which days are bot days. */
+      guard: GuardSummary;
     }
   | { ok: false; reason: 'no-store' | 'failed' };
 
@@ -100,11 +102,13 @@ export async function buildReport(
     readDays(current, 'photos', commands),
     readDays(current, 'cpu', commands),
     readDays(current, 'landing', commands),
+    readDays(current, 'guard', commands),
   ]);
   const failed = reads.find(r => !r.ok);
   if (failed && !failed.ok) return { ok: false, reason: failed.reason };
-  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead, cpuRead, landingRead] = reads.map(r => (r.ok ? r.hashes : []));
+  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead, cpuRead, landingRead, guardRead] = reads.map(r => (r.ok ? r.hashes : []));
   const clicks = summarizeClicks(current, clickRead, market);
+  const allClicks = market ? summarizeClicks(current, clickRead) : clicks;
   const previousTotal = summarizeClicks(previous, previousRead, market).total;
   const photos = summarizePhotos(current, photoRead, costUsd);
   const cpu = summarizeCpu(current, cpuRead);
@@ -130,5 +134,21 @@ export async function buildReport(
     cpu,
     costs: summarizeCosts(current, cpu, photos.costUsd),
     channels: summarizeChannels(current, bookRead, landingRead),
+    guard: summarizeGuard(
+      current,
+      guardRead,
+      // Against every market's clicks: a bot day is one whatever the view is narrowed to.
+      current.map((_, i) => ({ go: allClicks.perDay[i]?.clicks ?? 0, seen: signalsOn(bookRead[i]) + signalsOn(searchRead[i]) + signalsOn(landingRead[i]) })),
+    ),
   };
+}
+
+/** How many signals a day's hash holds: every field is one class of visit, every value its count. */
+function signalsOn(hash: DayHash | undefined): number {
+  let total = 0;
+  for (const value of Object.values(hash ?? {})) {
+    const n = typeof value === 'number' ? value : Number(value);
+    if (Number.isFinite(n) && n > 0) total += Math.floor(n);
+  }
+  return total;
 }

@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { later } from '@/app/api/count';
 import { rateLimited } from '@/app/api/rate';
 import { MAX_SIGNAL_BYTES, parseSignal } from '@/lib/insights/signals';
-import { countSignal } from '@/lib/insights/store';
+import { countRejected, countSignal } from '@/lib/insights/store';
+import { humanRequest } from '@/lib/insights/human';
+import { recordRejected } from '@/lib/clicks';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 import { measure } from '@/app/api/measure';
 
@@ -14,8 +16,13 @@ import { measure } from '@/app/api/measure';
  * never be able to tell from the answer whether anything was counted. A body
  * that is too long, not JSON, or has a field outside its list is dropped
  * whole (`parseSignal`). Julian's own visits, with the admin cookie, are not
- * counted. The name is deliberately not "track", "event" or "analytics",
- * which ad blockers' lists catch.
+ * counted. Nor is a beacon that cannot be a person's (ROADMAP 3.1i,
+ * `lib/insights/human.ts`): one not sent from a page of this site, or from a
+ * browser of two years ago — the scraper of 2.18f sent 974 of those on
+ * 2026-10-17 and K16 called them readers. Such a request adds one to the
+ * day's rejected count, a class, and gets the same 204. The name is
+ * deliberately not "track", "event" or "analytics", which ad blockers' lists
+ * catch.
  */
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +32,12 @@ export async function POST(request: NextRequest) {
   measure('seen', request);
   if (rateLimited(request, 'seen')) return NOTHING();
   if (adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value)) return NOTHING();
+  const verdict = humanRequest(request.headers, 'seen');
+  if (!verdict.human) {
+    recordRejected('seen', verdict.reason);
+    later(() => countRejected('seen', verdict.reason));
+    return NOTHING();
+  }
   let text: string;
   try {
     text = await request.text();

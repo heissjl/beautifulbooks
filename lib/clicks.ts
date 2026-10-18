@@ -15,6 +15,7 @@
  * the plan for that is in docs/plans/PLAN-B.md under the analytics page.
  */
 import type { Market } from './market';
+import type { GuardRoute, Rejection } from './insights/human';
 
 export interface ClickEvent {
   provider: string;
@@ -31,5 +32,19 @@ export function recordClick(event: ClickEvent): void {
     console.info(`bb.click ${JSON.stringify({ ...event, at: new Date().toISOString() })}`);
   } catch {
     // A log line is not worth breaking a redirect over.
+  }
+}
+
+/**
+ * A request the guard did not count (ROADMAP 3.1i): the route and the
+ * reason, a class — so a scraper shows in the platform log within the hour
+ * as what it is, and `next dev` shows the rule deciding. No user agent, no
+ * address: the reason says enough.
+ */
+export function recordRejected(route: GuardRoute, reason: Rejection): void {
+  try {
+    console.info(`bb.bot ${JSON.stringify({ route, reason, at: new Date().toISOString() })}`);
+  } catch {
+    // As above.
   }
 }

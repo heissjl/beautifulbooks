@@ -1,9 +1,9 @@
 /** The analytics' server counters and report (ROADMAP 3.1a, docs/plans/PLAN-3.1-analyse.md). */
 import { describe, expect, it } from 'vitest';
 import type { RedisCommands } from '../hotornot/store';
-import { change, clickField, dayOf, insightsKey, lastDays, parseClickField, RETENTION_SECONDS, summarizeClicks, summarizeOps } from '../insights/model';
+import { BOT_DAYS_BEFORE_GUARD, change, clickField, dayOf, guardField, insightsKey, lastDays, parseClickField, parseGuardField, RETENTION_SECONDS, summarizeClicks, summarizeGuard, summarizeOps } from '../insights/model';
 import { buildReport, parseMarket, parseRange } from '../insights/report';
-import { countClick, countOp, readDays } from '../insights/store';
+import { countClick, countOp, countRejected, countSignal, readDays } from '../insights/store';
 import { adminSessionToken, adminSessionValid, adminTokenValid } from '../suggest/auth';
 import { noteGoogleFailure, resetGoogleQuota, takeDailyStops } from '../googlequota';
 import { HttpError } from '../sources/http';
@@ -190,5 +190,61 @@ describe('Google daily stops', () => {
     expect(takeDailyStops()).toBe(1);
     expect(takeDailyStops()).toBe(0);
     resetGoogleQuota();
+  });
+});
+
+describe('the guard (ROADMAP 3.1i)', () => {
+  it('keeps route and reason of a turned-away request, a class, and nothing else', () => {
+    expect(guardField('go', 'old-browser')).toBe('go|old-browser');
+    expect(parseGuardField('seen|not-own-page')).toEqual({ route: 'seen', reason: 'not-own-page' });
+    expect(parseGuardField('go|curl/8.4.0')).toBeNull();
+    expect(parseGuardField('works|old-browser')).toBeNull();
+    expect(parseGuardField('go|old-browser|x')).toBeNull();
+  });
+
+  it('adds one per rejected request to the day, in production only', async () => {
+    const redis = fakeRedis();
+    expect(await countRejected('go', 'old-browser', { env: PROD, commands: redis.commands, now: NOW })).toBe('counted');
+    expect(await countRejected('seen', 'headless', { env: PROD, commands: redis.commands, now: NOW })).toBe('counted');
+    expect(await countRejected('seen', 'headless', { env: { VERCEL_ENV: 'preview' }, commands: redis.commands, now: NOW })).toBe('off');
+    expect(redis.hashes.get('ins:2026-10-04:guard')).toEqual(new Map([['go|old-browser', 1], ['seen|headless', 1]]));
+    expect(redis.expires.get('ins:2026-10-04:guard')).toBe(RETENTION_SECONDS);
+  });
+
+  it('marks a day as a bot day when more was turned away than counted, on either route', () => {
+    const days = ['2026-10-20', '2026-10-21', '2026-10-22', '2026-10-23'];
+    const s = summarizeGuard(
+      days,
+      [{ 'go|old-browser': '300', 'seen|old-browser': 900, 'seen|headless': 20 }, { 'go|not-a-click': 2 }, {}, { 'seen|not-own-page': '5', junk: 9 }],
+      [{ go: 4, seen: 30 }, { go: 10, seen: 40 }, { go: 0, seen: 0 }, { go: 0, seen: 5 }],
+    );
+    expect(s.perDay.map(d => d.bot)).toEqual([true, false, false, false]);
+    expect(s.botDays).toEqual(['2026-10-20']);
+    expect(s.rejected).toEqual({ go: 302, seen: 925 });
+    expect(s.byReason).toEqual({ headless: 20, 'old-browser': 1200, 'not-a-click': 2, 'not-own-page': 5 });
+    // A day with nothing counted and nothing rejected is not a bot day; equal numbers are not either.
+    expect(s.perDay[2]).toEqual({ day: '2026-10-22', rejected: { go: 0, seen: 0 }, counted: { go: 0, seen: 0 }, bot: false });
+    expect(s.perDay[3]?.bot).toBe(false);
+  });
+
+  it('marks the scraper days from before the guard from the record, since the store cannot say', () => {
+    expect(BOT_DAYS_BEFORE_GUARD).toEqual(['2026-10-16', '2026-10-17', '2026-10-18']);
+    const s = summarizeGuard(['2026-10-15', '2026-10-17'], [{}, {}], [{ go: 3, seen: 40 }, { go: 406, seen: 974 }]);
+    expect(s.botDays).toEqual(['2026-10-17']);
+  });
+
+  it('puts the guard into the report, against every market’s clicks', async () => {
+    const redis = fakeRedis();
+    const opts = { env: PROD, commands: redis.commands, now: NOW };
+    await countClick({ provider: 'bookshop', market: 'us', kind: 'product' }, opts);
+    await countSignal({ t: 'landing', page: 'home', entry: 'reddit', first: true, opened: false }, opts);
+    for (let i = 0; i < 3; i++) await countRejected('go', 'old-browser', opts);
+    await countRejected('seen', 'not-own-page', opts);
+    const report = await buildReport(7, 'de', redis.commands, NOW);
+    if (!report.ok) throw new Error('expected a report');
+    expect(report.clicks.total).toBe(0);
+    expect(report.guard.botDays).toEqual(['2026-10-04']);
+    expect(report.guard.perDay[6]).toEqual({ day: '2026-10-04', rejected: { go: 3, seen: 1 }, counted: { go: 1, seen: 1 }, bot: true });
+    expect(report.guard.rejected).toEqual({ go: 3, seen: 1 });
   });
 });

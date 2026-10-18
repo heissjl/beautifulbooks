@@ -4,7 +4,7 @@ import { googlePausedFor } from '@/lib/googlequota';
 import { fieldSearchKnownBroken } from '@/lib/googlefields';
 import { sendAlert } from '@/lib/alerts';
 import { heartbeatMail } from '@/lib/heartbeat';
-import { lastDays, summarizeClicks } from '@/lib/insights/model';
+import { lastDays, summarizeClicks, summarizeGuard } from '@/lib/insights/model';
 import { readDays } from '@/lib/insights/store';
 import { summarizeBooks } from '@/lib/insights/visits';
 
@@ -39,11 +39,12 @@ export async function GET(request: NextRequest) {
   const commands = commandsFromEnv();
   const [day] = lastDays(new Date(Date.now() - 86_400_000), 1);
   const probe = commands ? await timed(commands.get('health:probe')) : { value: null, ms: null };
-  const [books, clicks] = await Promise.all([readDays([day], 'book', commands), readDays([day], 'clicks', commands)]);
+  const [books, clicks, guard] = await Promise.all([readDays([day], 'book', commands), readDays([day], 'clicks', commands), readDays([day], 'guard', commands)]);
   const mail = heartbeatMail({
     day,
     bookVisits: books.ok ? summarizeBooks(books.hashes).visits : null,
     shopClicks: clicks.ok ? summarizeClicks([day], clicks.hashes).total : null,
+    rejected: guard.ok ? (r => r.go + r.seen)(summarizeGuard([day], guard.hashes, [{ go: 0, seen: 0 }]).rejected) : null,
     redisMs: probe.ms,
     googlePausedS: googlePausedFor(),
     googleFieldsBroken: fieldSearchKnownBroken(),

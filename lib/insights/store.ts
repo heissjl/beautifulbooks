@@ -10,10 +10,12 @@
  */
 import { commandsFromEnv, type RedisCommands } from '../redis';
 import { bookField, landingField, searchField, workField, type Signal } from './signals';
+import type { GuardRoute, Rejection } from './human';
 import {
   clickField,
   EMPTY_RETENTION_SECONDS,
   dayOf,
+  guardField,
   insightsKey,
   RETENTION_SECONDS,
   type ClickCount,
@@ -63,6 +65,17 @@ export async function countClick(click: ClickCount, options: CountOptions = {}):
   if (commands === 'off') return 'off';
   if (!commands) return 'no-store';
   return add(commands, 'clicks', field, options.now ?? new Date());
+}
+
+/**
+ * +1 for a request the guard turned away (ROADMAP 3.1i): which route and
+ * why, as one number per day. Nothing else about the request is kept.
+ */
+export async function countRejected(route: GuardRoute, reason: Rejection, options: CountOptions = {}): Promise<CountResult> {
+  const commands = setup(options);
+  if (commands === 'off') return 'off';
+  if (!commands) return 'no-store';
+  return add(commands, 'guard', guardField(route, reason), options.now ?? new Date());
 }
 
 /** +1 for an event of the operation (K11). */
