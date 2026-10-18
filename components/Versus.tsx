@@ -320,7 +320,8 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h1 className="text-3xl leading-tight text-ink [text-wrap:balance] sm:text-4xl">{t('Which cover would you rather look at?')}</h1>
-        <Link href="/versus/board" className="text-sm text-accent underline underline-offset-4">{t('Standings')}</Link>
+        {/* `hit` (6.92): measured 2026-10-18 the link was 20 px tall and a tap 2 px beside it pressed nothing (ROADMAP 6.63 a). */}
+        <Link href="/versus/board" className="hit text-sm text-accent underline underline-offset-4">{t('Standings')}</Link>
       </div>
       <p className="mt-2 text-[15px] text-ink-2">{t('Judge the cover, not the book!')}</p>
       <p className="mt-1 text-sm tabular-nums text-ink-3" aria-live="polite">

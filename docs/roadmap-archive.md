@@ -1293,3 +1293,9 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 **6.44 CLAUDE.md auf ein Drittel kürzen, ohne eine Regel zu verlieren.** 3.571 Wörter am 2026-09-12; die offizielle Anleitung: „Bloated CLAUDE.md files cause Claude to ignore your actual instructions“ — für jede Zeile fragen, ob ihr Fehlen einen Fehler verursachen würde. Der Abschnitt „Current state“ ändert sich täglich und hat in `docs/features.md` ein besseres Zuhause; „Facts about the APIs“ wird eine Doku-Seite; die Regeln (Google an zwei Stellen, keine Vollständigkeit, kein Ausfall als Befund, erzeugte Dateien nie von Hand, N14) bleiben. Claude kürzt, Julian liest gegen; Messlatte: `/doctor` schlägt nichts mehr vor, und jede Regel steht noch. Eine Stunde. Hängt mit 6.39 zusammen — was ein Hook wird, verschwindet aus dem Text.
 
 **Erledigt 2026-10-18** (7.015 → 2.691 Wörter; Julians Gegenlesen und `/doctor` stehen aus). → [Historie](history.md#2026-10-18--claudemd-von-7015-auf-2691-wörter-roadmap-644)
+
+## 6.63
+
+**6.63 Zwei Klickfehler aus der Durchsicht von außen: erst nachstellen.** (Aus der [Durchsicht von außen](tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen), 2026-09-28.) (a) Ein Klick auf den Text von „Help us find the prettiest cover…“ und „Standings“ tat nichts; (b) „Details“ in der Telefon-Leiste traf direkt nach dem Wählen das Cover dahinter. Im Code nicht bestätigt (schlichte `Link`s; Leiste `fixed z-40` ohne Animation, `components/CoverSheet.tsx:117`) — der Bericht klickte mit einem Werkzeug nach Koordinaten. Erst im echten Chrome bei 455 und 390 px mit `elementFromPoint` nachstellen; lässt sich nichts nachstellen, mit der Messung schließen. Eine Stunde, Claude. [Plan](plans/PLAN-6.63-alltag.md)
+
+**Erledigt 2026-10-18** (a: „Standings“ bekam `hit`; b: nichts nachzustellen). → [Historie](history.md#2026-10-18--zwei-klickfehler-nachgestellt-roadmap-663)
