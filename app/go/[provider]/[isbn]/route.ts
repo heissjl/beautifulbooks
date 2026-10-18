@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buyLinksFor, parseWordsQuery, wordsLinkFor } from '@/lib/buylinks';
-import { recordClick } from '@/lib/clicks';
+import { recordClick, recordRejected, type ClickEvent } from '@/lib/clicks';
 import { isIsbn13 } from '@/lib/isbn';
 import { cleanIsbn } from '@/lib/normalize';
 import { localLinkFor } from '@/lib/localshops';
-import type { Market } from '@/lib/market';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
 import { later } from '@/app/api/count';
-import { countClick } from '@/lib/insights/store';
+import { countClick, countRejected } from '@/lib/insights/store';
+import { humanRequest } from '@/lib/insights/human';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 import { measure } from '@/app/api/measure';
 
@@ -37,8 +37,7 @@ export async function GET(request: NextRequest, context: { params: Promise<{ pro
   const link = buyLinksFor({ isbn13 }, market).find(l => l.provider === provider);
   if (!link) return NextResponse.redirect(home, 302);
 
-  recordClick({ provider: link.provider, market, isbn13, kind: link.kind ?? 'search' });
-  countUnlessJulian(request, link.provider, market, link.kind ?? 'search');
+  countIfReader(request, { provider: link.provider, market, isbn13, kind: link.kind ?? 'search' });
   return NextResponse.redirect(link.url, {
     status: 302,
     // A redirect that is cached is a click that is never counted.
@@ -59,18 +58,30 @@ function wordsSearch(request: NextRequest, provider: string, home: URL): NextRes
   const market = marketFromRequest(request);
   const link = query ? wordsLinkFor(provider, query, market) : undefined;
   if (!link) return NextResponse.redirect(home, 302);
-  recordClick({ provider: link.provider, market, kind: 'search' });
-  countUnlessJulian(request, link.provider, market, 'search');
+  countIfReader(request, { provider: link.provider, market, kind: 'search' });
   return NextResponse.redirect(link.url, { status: 302, headers: { 'Cache-Control': 'no-store' } });
 }
 
 /**
- * The daily total for the analytics (ROADMAP 3.1a): shop, market and link
- * kind, after the redirect has left, and not for Julian's own clicks — his
- * admin cookie travels with a top-level navigation like any other.
+ * The log line and the daily total for the analytics (ROADMAP 3.1a): shop,
+ * market and link kind, after the redirect has left — and only for a request
+ * that can be a person's (3.1i, `lib/insights/human.ts`): a navigation the
+ * reader set off, from a browser of this or last year. Everyone is
+ * redirected the same; a request the rule turns away adds to the day's
+ * rejected count instead, so a bot day reads as one. Not for Julian's own
+ * clicks — his admin cookie travels with a top-level navigation like any
+ * other.
  */
-function countUnlessJulian(request: NextRequest, provider: string, market: Market, kind: 'product' | 'search'): void {
+function countIfReader(request: NextRequest, click: ClickEvent): void {
   if (adminTokenValid(request.cookies.get(ADMIN_COOKIE)?.value)) return;
+  const verdict = humanRequest(request.headers, 'go');
+  if (!verdict.human) {
+    recordRejected('go', verdict.reason);
+    later(() => countRejected('go', verdict.reason));
+    return;
+  }
+  recordClick(click);
+  const { provider, market, kind } = click;
   later(() => countClick({ provider, market, kind }));
 }
 
@@ -85,8 +96,7 @@ function localShop(request: NextRequest, target: string, home: URL): NextRespons
   if (!link) return NextResponse.redirect(home, 302);
   const market = marketFromRequest(request);
   const provider = `local-${link.id.replace(/-finder$/, '')}`;
-  recordClick({ provider, market, kind: 'search' });
-  countUnlessJulian(request, provider, market, 'search');
+  countIfReader(request, { provider, market, kind: 'search' });
   return NextResponse.redirect(link.url, { status: 302, headers: { 'Cache-Control': 'no-store' } });
 }
 

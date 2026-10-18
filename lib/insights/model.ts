@@ -14,6 +14,7 @@
  * (plan §2).
  */
 import type { Market } from '../market';
+import { REJECTIONS, type GuardRoute, type Rejection } from './human';
 
 export const INSIGHTS_PREFIX = 'ins';
 
@@ -24,7 +25,7 @@ export const RETENTION_SECONDS = RETENTION_DAYS * 24 * 60 * 60;
 /** The longest range the view asks for; more would read hundreds of hashes per page view. */
 export const MAX_RANGE_DAYS = 90;
 
-export type InsightsHash = 'clicks' | 'ops' | 'book' | 'works' | 'search' | 'empty' | 'photos' | 'cpu' | 'landing';
+export type InsightsHash = 'clicks' | 'ops' | 'book' | 'works' | 'search' | 'empty' | 'photos' | 'cpu' | 'landing' | 'guard';
 
 /** Searches that found nothing are kept as words, so for a shorter time (Julian, 2026-10-04). */
 export const EMPTY_RETENTION_SECONDS = 90 * 24 * 60 * 60;
@@ -174,3 +175,77 @@ export function change(current: number, previous: number): number | null {
 
 /** Below this many clicks in a range, shares are noise and the view greys them (plan §7). */
 export const FEW_CLICKS = 30;
+
+/**
+ * What the guard turned away (ROADMAP 3.1i): per day, per route, per reason —
+ * `go|old-browser`, `seen|not-own-page`. A class and a count, nothing else.
+ * Days on which more was turned away than counted are "bot days"; their
+ * numbers stay in the store and the view says what they are.
+ */
+export function guardField(route: GuardRoute, reason: Rejection): string {
+  return `${route}|${reason}`;
+}
+
+const GUARD_ROUTES: ReadonlySet<string> = new Set(['go', 'seen']);
+const REJECTION_SET: ReadonlySet<string> = new Set(REJECTIONS);
+
+export function parseGuardField(field: string): { route: GuardRoute; reason: Rejection } | null {
+  const [route, reason, ...rest] = field.split('|');
+  if (rest.length > 0 || !GUARD_ROUTES.has(route ?? '') || !REJECTION_SET.has(reason ?? '')) return null;
+  return { route: route as GuardRoute, reason: reason as Rejection };
+}
+
+/**
+ * Days the scraper of 2.18f filled before the guard existed (2026-10-16 to
+ * the deploy of 3.1i; measured by user agent with `vercel metrics`, history
+ * 2026-10-17 and 2026-10-18). The guard could not count what it had not seen,
+ * so these days are marked from the record, not from the store. The list can
+ * go when the days have left the 400-day retention.
+ */
+export const BOT_DAYS_BEFORE_GUARD: ReadonlyArray<string> = ['2026-10-16', '2026-10-17', '2026-10-18'];
+
+export interface GuardDay {
+  day: string;
+  /** Requests the guard turned away, per route. */
+  rejected: Record<GuardRoute, number>;
+  /** What was counted that day: clicks through `/go/`, signals through `/api/seen`. */
+  counted: Record<GuardRoute, number>;
+  /** More turned away than counted on either route — or a day from before the guard that is known to be one. */
+  bot: boolean;
+}
+
+export interface GuardSummary {
+  perDay: GuardDay[];
+  rejected: Record<GuardRoute, number>;
+  byReason: Record<Rejection, number>;
+  /** The bot days of the range, in order. */
+  botDays: string[];
+}
+
+/**
+ * Adds up the guard hashes of the given days against what was counted on
+ * them. `counted` is per day, in the order of `days` — the clicks' and the
+ * signals' totals the report has already summed.
+ */
+export function summarizeGuard(days: string[], hashes: ReadonlyArray<DayHash | null>, counted: ReadonlyArray<Record<GuardRoute, number>>): GuardSummary {
+  const rejected: Record<GuardRoute, number> = { go: 0, seen: 0 };
+  const byReason = Object.fromEntries(REJECTIONS.map(r => [r, 0])) as Record<Rejection, number>;
+  const perDay = days.map((day, i) => {
+    const dayRejected: Record<GuardRoute, number> = { go: 0, seen: 0 };
+    for (const [field, value] of Object.entries(hashes[i] ?? {})) {
+      const f = parseGuardField(field);
+      const k = count(value);
+      if (!f || k === 0) continue;
+      dayRejected[f.route] += k;
+      rejected[f.route] += k;
+      byReason[f.reason] += k;
+    }
+    const dayCounted = counted[i] ?? { go: 0, seen: 0 };
+    const bot =
+      BOT_DAYS_BEFORE_GUARD.includes(day) ||
+      (dayRejected.go > 0 && dayRejected.go > dayCounted.go) ||
+      (dayRejected.seen > 0 && dayRejected.seen > dayCounted.seen);
+    return { day, rejected: dayRejected, counted: dayCounted, bot };
+  });
+  return { perDay, rejected, byReason, botDays: perDay.filter(d => d.bot).map(d => d.day) };
+}
