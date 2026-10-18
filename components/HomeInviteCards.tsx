@@ -1,6 +1,7 @@
 import Link from '@/components/Link';
 import CoverImage from './CoverImage';
 import { coverUrlFor } from '@/lib/coverurl';
+import { decodeBoard } from '@/lib/inspiration/board';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/server';
 
@@ -19,18 +20,24 @@ import { translator } from '@/lib/i18n/server';
  *   *Le visage dans l'abîme* (`app/versus/opengraph-image.tsx`);
  * - a collection: three of Tom Adams' Fontana Christies — not *The Hollow*,
  *   whose scan is a photo of the book;
- * - the Shelf-Portrait: Julian's own board `tvujl2pk`, as its link card with
- *   the mosaic ground — the picture the site already draws and keeps a month
- *   (`/shelfportrait/card.jpg`), so the home page adds no drawing of its own.
+ * - the Shelf-Portrait: the nine covers of Julian's own board `tvujl2pk`
+ *   (until 2026-10-18 its share card, see `PORTRAIT_BOARD`).
  *
  * A server component; the covers come through the site's image route like
  * every other cover.
  */
 const VERSUS_PAIR = ['ol:15154344', 'ol:10215294'] as const;
 const CHRISTIE = ['ol:7267514', 'ol:15130644', 'ol:12855074'] as const;
-/** Julian's board, as its share card — the same address its page names as og:image (read 2026-10-15). */
-const PORTRAIT_CARD =
-  '/shelfportrait/card.jpg?b=s8d7.2apl~1ulq.7tkc1~3kry.8uddl~1btq.90yc7~1r3aq.43fn~fd4i.79qvu~239gj.4y4ll~hvi.5i932~qdjp.8tit6&sub=The%20performative%20reader%27s%20starter%20pack&format=card&v=6';
+/**
+ * Julian's board `tvujl2pk`, as the address of its page encodes it (read
+ * 2026-10-15). Until 2026-10-18 the card showed the board's share card
+ * (`/shelfportrait/card.jpg`, with title, line and the site's name); Julian:
+ * „ganz rechts nicht die normale vorschaukarte, sondern eine ohne unser
+ * branding. man ist ja eh auf der seite“ — so the nine covers themselves,
+ * drawn here like the other two cards, nothing written on them.
+ */
+const PORTRAIT_BOARD = 's8d7.2apl~1ulq.7tkc1~3kry.8uddl~1btq.90yc7~1r3aq.43fn~fd4i.79qvu~239gj.4y4ll~hvi.5i932~qdjp.8tit6';
+const PORTRAIT_COVERS: readonly string[] = decodeBoard(PORTRAIT_BOARD).flatMap(s => (s ? [s.coverId] : []));
 
 interface Props {
   walls: boolean;
@@ -49,11 +56,32 @@ function Cover({ id, className = '' }: { id: string; className?: string }) {
   );
 }
 
+/**
+ * The ground behind a card's covers (Julian, 2026-10-18: „gib allen drei
+ * karten den hintergrund wie bei der rechten“): the Shelf-Portrait card
+ * brings its own mosaic ground, drawn by the site; the other two get the
+ * same look from their own covers — enlarged, blurred and dimmed behind the
+ * fan, so each card is lit by what it shows. CSS only, no second picture.
+ */
+function Ground({ ids }: { ids: readonly string[] }) {
+  return (
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div className="absolute -inset-1/4 flex items-center justify-center gap-2 opacity-70 blur-2xl saturate-150">
+        {ids.map(id => {
+          const src = coverUrlFor(id, 'M');
+          return src ? <div key={id} className="relative aspect-[2/3] w-1/2"><CoverImage src={src} alt="" sizes="200px" /></div> : null;
+        })}
+      </div>
+      <div className="absolute inset-0 bg-black/35" />
+    </div>
+  );
+}
+
 export default function HomeInviteCards({ walls, portrait, locale = DEFAULT_LOCALE }: Props) {
   const t = translator(locale);
   const card =
     'group flex h-full items-center gap-4 rounded-card border border-line bg-surface/40 p-4 transition-colors hover:border-accent sm:flex-col sm:items-stretch sm:gap-0 sm:overflow-hidden sm:p-0';
-  // From `sm` up every picture has the share card's proportions (1200 × 630), so the Shelf-Portrait card shows whole.
+  // From `sm` up every picture has the share card's proportions (1200 × 630), kept from the days the third card was one.
   const picture = 'relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-[6px] sm:aspect-[40/21] sm:h-auto sm:w-auto sm:rounded-none sm:bg-surface-2/60';
   const title = 'font-display text-lg leading-tight text-ink transition-colors group-hover:text-accent sm:text-xl';
   const line = 'mt-1.5 text-sm leading-snug text-ink-2';
@@ -63,15 +91,17 @@ export default function HomeInviteCards({ walls, portrait, locale = DEFAULT_LOCA
       <li>
         <Link href="/versus" className={card}>
           <div className={picture} aria-hidden="true">
-            <div className="flex items-center gap-1.5 sm:gap-3">
+            <Ground ids={VERSUS_PAIR} />
+            <div className="relative flex items-center gap-1.5 sm:gap-3">
               <Cover id={VERSUS_PAIR[0]} className="w-10 -rotate-6 sm:w-[4.5rem]" />
               <span className="font-display text-xs italic text-accent sm:text-base">{t('or')}</span>
               <Cover id={VERSUS_PAIR[1]} className="w-10 rotate-6 sm:w-[4.5rem]" />
             </div>
           </div>
           <div className="min-w-0 sm:p-5">
-            <p className={title}>{t('This cover or that one?')}</p>
-            <p className={line}>{t('Two covers, one tap. Your picks add up to a ranking of the prettiest covers.')}</p>
+            {/* Julian, 2026-10-18: „Which cover is prettier?“ and „Play the game.“ in front of the ranking line. */}
+            <p className={title}>{t('Which cover is prettier?')}</p>
+            <p className={line}>{t('Play the game. Your picks add up to a ranking of the prettiest covers.')}</p>
           </div>
         </Link>
       </li>
@@ -79,6 +109,7 @@ export default function HomeInviteCards({ walls, portrait, locale = DEFAULT_LOCA
         <li>
           <Link href="/create" className={card}>
             <div className={picture} aria-hidden="true">
+              <Ground ids={CHRISTIE} />
               <div className="relative h-[4.5rem] w-24 sm:h-32 sm:w-44">
                 {CHRISTIE.map((id, i) => (
                   <Cover
@@ -90,7 +121,8 @@ export default function HomeInviteCards({ walls, portrait, locale = DEFAULT_LOCA
               </div>
             </div>
             <div className="min-w-0 sm:p-5">
-              <p className={title}>{t('Build a wall of covers')}</p>
+              {/* Julian, 2026-10-18: „Create your collection“. */}
+              <p className={title}>{t('Create your collection')}</p>
               <p className={line}>{t('Pick the editions you love — from a book, a photo of your shelf or your Goodreads list — and keep the wall under its own link.')}</p>
             </div>
           </Link>
@@ -99,9 +131,14 @@ export default function HomeInviteCards({ walls, portrait, locale = DEFAULT_LOCA
       {portrait && (
         <li>
           <Link href="/shelfportrait" className={card}>
-            <div className={`${picture} sm:bg-transparent`} aria-hidden="true">
-              {/* eslint-disable-next-line @next/next/no-img-element -- a picture this site draws itself; next/image would transform it again */}
-              <img src={PORTRAIT_CARD} alt="" width={1200} height={630} loading="lazy" decoding="async" className="h-full w-full object-cover object-right sm:object-center" />
+            <div className={picture} aria-hidden="true">
+              <Ground ids={PORTRAIT_COVERS.slice(0, 4)} />
+              <div className="relative grid grid-cols-3 gap-1 sm:gap-1.5">
+                {PORTRAIT_COVERS.map(id => (
+                  // 20 px covers on a phone (3 × 30 px + gaps = 98 in a 112 px box), 40 px from `sm` (192 in 206); 28 and 44 overflowed both frames (measured 2026-10-18).
+                  <Cover key={id} id={id} className="w-5 sm:w-10" />
+                ))}
+              </div>
             </div>
             <div className="min-w-0 sm:p-5">
               <p className={title}>{t('Your Shelf-Portrait')}</p>
