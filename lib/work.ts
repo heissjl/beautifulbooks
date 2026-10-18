@@ -14,6 +14,7 @@
  * SPEC §9.3 step 13a).
  */
 import { workDescriptionPolicy, type WorkDescriptionPolicy } from './blurb';
+import { withCheckedYear } from './firstyears';
 import type { Cover, Edition, LanguageGroup, Work } from './model';
 import type { ImageSignature } from './imagesig';
 import type { PageInfo } from './pages';
@@ -144,8 +145,10 @@ function nextOffsetFor(offset: number, entries: number, total: number, cap: numb
 export async function getWorkPage(workId: string, options: WorkPageOptions = {}): Promise<WorkPage | null> {
   if (!isWorkId(workId)) return null;
   const offset = Math.max(0, Math.floor(options.offset ?? 0));
-  const work = await getWork(workId);
-  if (!work) return null;
+  const fetched = await getWork(workId);
+  if (!fetched) return null;
+  // A checked first-publication year beats the catalogue's (ROADMAP 6.16 Schritt 2).
+  const work = withCheckedYear(fetched);
 
   // Past the scan cap the answer is an empty page that says where it is,
   // not the last page under the cap wearing the wrong offset (ROADMAP 1.7).

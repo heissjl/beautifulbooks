@@ -465,7 +465,12 @@ function BookDetail() {
   const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
   const meta = [
     `${progressLabel(view.covers.length, merged, t)}.`,
-    work.firstPublishYear ? t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) }) : undefined,
+    // A year two sources agree on, or Julian confirmed, is stated; the catalogue's alone is quoted (6.16).
+    work.firstPublishYear
+      ? work.firstPublishYearSource === 'checked'
+        ? t('First published in {year}.', { year: String(work.firstPublishYear) })
+        : t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) })
+      : undefined,
   ].filter(Boolean).join(' ');
 
   return (

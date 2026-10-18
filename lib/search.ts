@@ -15,6 +15,7 @@
 import type { WorkSummary } from './model';
 import { authorNameFrom, authorResultWorks, pickAuthor, WEAK_AUTHOR_READERS, type AuthorQuery, type ResolvedAuthor } from './authorsearch';
 import { searchVocabulary } from './lexicon';
+import { withCheckedYear } from './firstyears';
 import { BETTER_FACTOR, correctionIsBetter, correctQuery, isWeakResult, typedWordsFound, type Vocabulary } from './spelling';
 import { OL_TIMEOUTS, searchAuthorsByName, searchAuthorWorks, searchWorks } from './sources/openlibrary';
 import { debug } from './debug';
@@ -76,7 +77,8 @@ export function normalizeLanguageOption(raw: string | null | undefined): string 
 }
 
 function finish(works: WorkSummary[], query: string, language: string): WorkSummary[] {
-  return rankWorks(filterWorksByLanguage(works, language), query).map(w => ({ ...w, coverUrls: mosaicCovers(w) }));
+  // The checked year last, after merging (which keeps the smaller of two years), ROADMAP 6.16 Schritt 2.
+  return rankWorks(filterWorksByLanguage(works, language), query).map(w => withCheckedYear({ ...w, coverUrls: mosaicCovers(w) }));
 }
 
 /**

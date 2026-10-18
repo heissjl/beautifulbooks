@@ -6282,3 +6282,36 @@ Am 2026-10-05 fand die Suche *The Memory Chalet* nicht und gab für „judt“ *
 **Die Regel** (Julian: „Kommt ein getipptes Wort in Titel oder Autor der schwachen Antwort vor, wird die Korrektur nur angeboten, nie angewandt“): `typedWordsFound` (`lib/spelling.ts`) nimmt die Wörter, die die Korrektur ändern würde, normalisiert, und sucht sie in Titeln und Autoren der ersten Antwort; stehen alle da, gibt `search` (`lib/search.ts`) die Treffer unverändert zurück mit `correction.applied: false` und fragt Open Library **nicht ein zweites Mal** — ein Aufruf weniger als vorher in diesem Fall. Die Ergebnisliste zeigt darüber „Did you mean „X“?“ als Link (`components/BookGrid.tsx`, derselbe Satz wie bei leerem Ergebnis, bisher nur dort). Fixtures für „judt“ (20 Dokumente), „the memory chalet“ (2), „jude“ und „the memory charles“ mit `scripts/record-search-fixtures.ts`, das jetzt einzelne Anfragen in die Datei mergt statt alle neu aufzunehmen.
 
 **Der Preis, an den Fixtures gemessen — Julian sollte ihn kennen.** Der Katalog schreibt selbst falsch: „Hemmingway“ steht in **20 von 20** Datensätzen der Antwort (einer davon mit acht Ausgaben), „Tolkein“ in 13 von 20. Mit der Regel bleiben für diese beiden gemessenen Tippfehler aus 6.60 jetzt die falsch geschriebenen Datensätze stehen (*The Old Man and the Sea — Ernest Hemmingway*, eine Ausgabe), und „Hemingway“ wird nur angeboten; bis heute ersetzte die Korrektur sie durch *The Hobbit* und Hemingways Bücher. Ich habe versucht, die Fälle zu trennen: über die Ausgabenzahl der Treffer mit dem getippten Wort (Judt 22, *Memory Chalet* 6, Hemmingway 8, Tolkein 2 — keine Grenze trennt 6 von 8), über gemeinsame Werke zwischen getippter und korrigierter Antwort (null bei allen vier: die falsch geschriebenen Datensätze sind eigene Werke), über die Art des korrigierten Worts (Autor oder Titel: „charles“ ist ein Autor). Die Daten geben es nicht her. „gatsbee“ und „pride and prejudise“ werden weiter ersetzt (das falsche Wort steht in keinem Datensatz). Tests: die Hypothese (`correctQuery('judt')` → „jude“, „the memory chalet“ → „the memory charles“), „judt“ behält Tony Judt und nennt *Jude the Obscure* nicht, eine einzige `search.json`-Anfrage, *Memory Chalet* bleibt, „pride and prejudise“ wird ersetzt, „Tolkein“ und „Hemmingway“ sind Angebote; die fünf Abnahme-Suchen unverändert. SPEC F1.9 und features.md nachgezogen. Analytics: Suchsignale zählen Ergebnis, Anzahl und Position wie bisher; für „judt“ zählt jetzt die Antwort auf das Getippte, kein neues Feld.
+
+## 2026-10-18 — Ein geprüftes Erstausgabejahr (ROADMAP 6.16 Schritt 2)
+
+Julian: „die 155 kuratierten Werke; Satz ‚First published in {year}.‘ / ‚Erstausgabe {year}.‘; ich lese nur die Abweichungen; Wikidata einmalig ist in Ordnung.“ **Die Abfrage** (`lab/first-years/propose.ts`, vier Anfragen an `query.wikidata.org` mit 2 s Pause, eigener User-Agent): je Werk der Wikidata-Eintrag über P648 (Open-Library-ID) und das früheste P577-Datum, daneben Open Librarys Jahr, wie die Kuratier-App es beim Auswählen festhielt (`firstPublished` in `data/curated.json`, Open Librarys `first_publish_year`). **Ergebnis für 155 Werke:** 114 haben einen Wikidata-Eintrag, 41 keinen (P648 fehlt dort); 7 Einträge ohne Datum; **81 stimmen überein, 26 weichen ab.** Vier der Abweichungen hatte die Tabelle vom 2026-09-08 schon geklärt — Lolita 1955 (OL 1954 nach der Lücken-Regel), Ulysses 1922 (1914), Vom Kriege 1832 (1835), Gatsby 1925 (1920) —, Wikidata sagt dasselbe. **22 bleiben für Julian** ([lab/first-years/proposal.json](../lab/first-years/proposal.json)):
+
+| Werk | Open Library | Wikidata |
+|---|---|---|
+| Madame Bovary — Flaubert | 1876 | 1857 |
+| L’étranger — Camus | 1922 | 1942 |
+| Der Proceß — Kafka | 2006 | 1925 |
+| Foundation — Asimov | 1915 | 1951 |
+| Buddenbrooks — Mann | 1909 | 1901 |
+| 海辺のカフカ — 村上春樹 | 2001 | 2002 |
+| Cry, the Beloved Country — Paton | 1940 | 1948 |
+| Tender is the Night — Fitzgerald | 1933 | 1934 |
+| In Cold Blood — Capote | 1965 | 1966 |
+| Breakfast at Tiffany's — Capote | 1956 | 1958 |
+| The Crying of Lot 49 — Pynchon | 1965 | 1966 |
+| White Noise — DeLillo | 1984 | 1985 |
+| Americanah — Adichie | 1969 | 2013 |
+| Pale Fire — Nabokov | 1945 | 1962 |
+| As I Lay Dying — Faulkner | 1915 | 1930 |
+| Oryx and Crake — Atwood | 2002 | 2003 |
+| The Hound of the Baskervilles — Doyle | 1900 | 1902 |
+| Murder on the Orient Express — Christie | 1933 | 1934 |
+| Ender's Game — Card | 1985 | 1977 |
+| The Canterbury Tales — Chaucer | 1970 | 1387 |
+| Dom Casmurro — Machado de Assis | 1982 | 1899 |
+| The Tenant of Wildfell Hall — Brontë | 1847 | 1848 |
+
+Die meisten sind Open Librarys Fehler (Camus 1922, Kafka 2006, Asimov 1915, Adichie 1969, Chaucer 1970); bei Ender's Game steht Wikidata auf der Kurzgeschichte von 1977, bei Murakami und Capote liegt es um ein Jahr neben der Tradition — darum liest Julian, nicht das Skript.
+
+**Der Bau.** `data/first-years.json` hält 85 Zeilen `{ year, source }` — die 81 einigen („Open Library and Wikidata Q… agree, 2026-10-18“) und die vier aus der Historie; `lib/firstyears.ts` (`withCheckedYear`) legt das Jahr **nach** dem Merge über das Werk (`mergeWorks` nimmt das kleinere zweier Jahre und behielte ein falsches früheres), in `getWorkPage` (`lib/work.ts`) und in `finish` der Suche (`lib/search.ts`), und markiert jedes Jahr mit seiner Quelle: `firstPublishYearSource: 'checked' | 'openlibrary'` im `Work` (`lib/model.ts`). Die Buchseite sagt bei `checked` „First published in {year}.“ / „Erstausgabe {year}.“ und sonst weiter „Open Library dates the book to {year}.“ — ein zitiertes Jahr ist kein geprüftes (N12); Karte und JSON-LD (`datePublished`) tragen dasselbe Jahr. Tests: die vier Fälle, ein Werk ohne Zeile bleibt mit `openlibrary` markiert, jede Zeile der Datei hat Quelle und plausibles Jahr. SPEC §1.5, features.md und lab/README.md nachgezogen. Analytics: kein Signal liest das Jahr — nichts bewegt sich.
