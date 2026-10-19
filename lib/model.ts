@@ -100,6 +100,10 @@ export interface WorkSummary extends Work {
   popularity?: Popularity;
   /** Position in the source's own ranking, 0-based. Absent for merged works. */
   sourceRank?: number;
+  /** The title of the edition the search matched — the search's language; `lib/titleshown.ts` decides whether it is shown (6.2). */
+  matchedTitle?: string;
+  /** That edition's language, ISO 639-1. */
+  matchedLanguage?: string;
 }
 
 /** Covers of one work grouped for the detail page (SPEC §3 F2.3). */

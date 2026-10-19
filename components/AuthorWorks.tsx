@@ -7,6 +7,7 @@ import { useAuthorWorks } from './useAuthorWorks';
 import { useIsDesktop } from './useIsDesktop';
 import { useT } from './i18n';
 import { authorRowHeading, authorSearchHref, excludeCurrent, ROW_DESKTOP, ROW_PHONE } from '@/lib/authorworks';
+import { readableAuthor } from '@/lib/titleshown';
 
 interface AuthorWorksProps {
   /** The work's first author, as the page shows her (Julian, 2026-09-26: only the first). */
@@ -68,10 +69,11 @@ export default function AuthorWorks({ author, authorKey, workId, workTitle, sibl
   const loading = state.status === 'loading';
 
   return (
-    <section className={`mt-16 ${className}`} aria-label={authorRowHeading(author, t)}>
+    <section className={`mt-16 ${className}`} aria-label={authorRowHeading(readableAuthor(author), t)}>
       <h2 className="text-xl leading-tight text-ink sm:text-2xl">
         <Link href={authorSearchHref(author, authorKey)} className="transition-colors hover:text-accent">
-          {authorRowHeading(author, t)}
+          {/* Read in Latin letters (6.2); the search behind the link keeps the catalogue's spelling. */}
+          {authorRowHeading(readableAuthor(author), t)}
         </Link>
       </h2>
       {loading && (
@@ -87,7 +89,7 @@ export default function AuthorWorks({ author, authorKey, workId, workTitle, sibl
       {works.length > 0 && (
         <div className="mt-5">
           <CoverWall
-            works={works.map(w => ({ id: w.id, title: w.title, author, coverId: w.coverId }))}
+            works={works.map(w => ({ id: w.id, title: w.title, author: readableAuthor(author), coverId: w.coverId }))}
             hideAuthor
             gridClassName={GRID}
           />
