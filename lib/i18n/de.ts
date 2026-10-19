@@ -75,6 +75,8 @@ export const de: Readonly<Record<string, string>> = {
   'That is not an ISBN — check the digits. It has 10 or 13 of them.': 'Das ist keine ISBN — prüf die Ziffern. Es sind 10 oder 13.',
   'Search': 'Suchen',
   'Popular': 'Beliebt',
+  'Books': 'Bücher',
+  'Right away': 'Schon da',
   'Search in': 'Suchen in',
   'Titles & authors': 'Titel & Autoren',
   'Author only': 'Nur Autor',
