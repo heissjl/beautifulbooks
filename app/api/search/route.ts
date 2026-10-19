@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { MIN_QUERY_LENGTH, normalizeQuery, search, searchByAuthor } from '@/lib/search';
 import { parseAuthorQuery } from '@/lib/authorsearch';
 import { SourceUnavailableError } from '@/lib/sources/http';
+import { catalogueBusyFor, isCatalogueBusy } from '@/lib/sources/olgate';
 import { rateLimited } from '@/app/api/rate';
 import { countOpAfter } from '@/app/api/count';
 import { measure } from '@/app/api/measure';
@@ -76,6 +77,13 @@ async function answer(run: () => Promise<unknown>, tooShort: boolean): Promise<N
   } catch (err) {
     if (err instanceof SourceUnavailableError) {
       countOpAfter('ol-failed');
+      // Open Library turned this instance away a moment ago; the gate is waiting it out (ROADMAP 2.18e).
+      if (isCatalogueBusy(err)) {
+        return NextResponse.json(
+          { error: 'The catalogue is busy', busy: true },
+          { status: 503, headers: { 'Cache-Control': 'no-store', 'Retry-After': String(Math.ceil(catalogueBusyFor() / 1000) || 1) } },
+        );
+      }
       return NextResponse.json(
         { error: 'Open Library did not answer' },
         { status: 503, headers: { 'Cache-Control': 'no-store' } },

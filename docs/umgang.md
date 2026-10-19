@@ -25,6 +25,7 @@ Die Quelle, von der die Seite lebt (SPEC §3 F3). Details zu Werken, Ausgaben un
 - **Autoren an Ausgaben sind Schlüssel, keine Namen**; `author_name` der Suche enthält Übersetzer; `covers` ist ein Array, alle Ids nehmen ([api-fakten.md](api-fakten.md)).
 - Zeiten aus Deutschland: Suche 2–7 s, Ausgabenseite 3–10 s, gelegentlich viel länger. Jeder Aufruf mit Timeout und Cache (`OL_TIMEOUTS`).
 - **Die Sperre kam wieder (2026-10-17):** ein Recherche-Agent bekam bei zwei Abrufen von `openlibrary.org` `ECONNREFUSED`, während `docs.openlibrary.org`, GitHub und Bluesky antworteten. Ein Agent, der Open Library nur beiläufig braucht, bekommt in den Auftrag: bei der ersten verweigerten Verbindung aufhören und es melden, nicht wiederholen.
+- **Die Seite tut dasselbe seit 2026-10-19** (2.18e, `lib/sources/olgate.ts`): höchstens vier Anfragen zugleich je Instanz, nach 403, 429 oder verweigerter Verbindung 90 s Pause und „The catalogue is busy“. Ein Test, der für `openlibrary.org` einen 403/429 vortäuscht, öffnet die Pause — `vitest.setup.ts` setzt sie vor jedem Test zurück; innerhalb eines Tests `resetCatalogueGate()` rufen. Ein Lab-Skript, das `lib/sources/http.ts` nutzt, läuft durch dasselbe Tor. In den Logs: `bb.ol`.
 ## 2. Google Books
 
 - **Genau zwei Aufrufer, und die Suche ist keiner:** die Titelsuche auf Seite 0 einer Buchseite und die ISBN-Abfrage beim Wählen eines Covers (CLAUDE.md). Kein dritter ohne Messung gegen die 1.000 Anfragen am Tag; kein Lab-Experiment fragt Google ohne Messung (E10). Eine kalte Buchseite kostet 2, ein Mosaik 0.

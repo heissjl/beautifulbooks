@@ -52,10 +52,16 @@ type Outcome = { key: string; result?: AnyResult; failure?: Failure };
  */
 async function failureFor(res: Response, t: Translate): Promise<Failure> {
   // The route's own sentence is translated where the catalogue knows it, and shown as it came otherwise.
-  const detail = await res
-    .json()
-    .then((body: { error?: string }) => (body.error ? t(body.error) : undefined))
-    .catch(() => undefined);
+  const body = await res.json().catch(() => undefined) as { error?: string; busy?: boolean } | undefined;
+  const detail = body?.error ? t(body.error) : undefined;
+  if (res.status === 503 && body?.busy) {
+    // Open Library turned the site away a moment ago; the server waits it out instead of asking again (ROADMAP 2.18e).
+    return {
+      title: t('The catalogue is busy'),
+      detail: t('Open Library is turning requests away just now. Try again in a minute or two. This says nothing about the book you looked for.'),
+      retryable: true,
+    };
+  }
   if (res.status === 503) {
     return {
       title: t('The catalogue did not answer'),
