@@ -151,6 +151,7 @@ Was hier fehlt, gibt es nicht — auch wenn ein Plan es beschreibt.
 
 | Werkzeug | Wozu | Roadmap | Ort |
 |---|---|---|---|
+| Die Wand am Telefon messen | 390 × 844, Fast 4G oder ohne, kalt und warm: erster Bildschirm voll, leere Bilder im Bild, Anfragen vor dem Scrollen, Wasserfall der ersten 20 Bilder mit Warteschlange und Serverzeit | 6.73 | `lab/wall-phone/measure.ts` |
 | Kuratier-App: Cover je Werk wählen, Reihenfolge per Drag & Drop, Vorschläge, streichen | 6.18 | `lab/curate/` |
 | Sammlungs-App: Sammlungen anlegen (Autorinnen oder Verlagsreihe), Grenze pflegen, Kandidaten je Autorin, Cover wählen, Reihenfolge ziehen; Entwürfe und Vorschläge von Freunden übernehmen oder ablehnen | 5.10, 5.10a, 5.10b | `lab/collections/` |
 | Kuratier-App online für Freunde (`/curate`, hinter Passwort): Sammlungen als Entwürfe bauen, die Julian übernimmt; dazu `/suggest` für ein einzelnes Buch. Als Admin: Sammlungen und Entwürfe veröffentlichen und zurücknehmen ohne Deploy, die Reihenfolge auf der Startseite ordnen; das Cover-Fenster sucht bis zum Ende und zeigt den Fortschritt; „Edit“ je Sammlung öffnet ihren Stand auf der Seite als Entwurf | 5.10a, 5.10b, 5.10g, 5.10h, 5.10m | `app/curate/`, `components/CurateTool.tsx`, `lib/curate/` |

@@ -6622,3 +6622,31 @@ Die gruppierte PR #3 nicht auf GitHub gemergt (ein Merge nach `main` wäre ein D
 **Geprüft:** 1.676 Tests, tsc, Lint, Build (18 von 18 Buchseiten mit Daten). **Gemessen** mit `lab/n14/measure.ts` gegen `next start`, bei 390 und 1280: Startseite, die fünf Abnahme-Suchen und die Gatsby-Seite — und dieselben vier Seiten einmal mit den alten Paketen gebaut als Vergleich: **Seitenbreite, abgeschnittene Zeilen, Platzhalter und Bilder sind gleich**, kein leeres Bild. Was beide Fassungen zeigen und nicht vom Update kommt: bei `1984` am Telefon zwei abgekürzte Zeilen (Autorenliste, ein transkribierter russischer Titel — 6.2), bei `pride and prejudice` eine, auf der Buchseite am Telefon meldet das Werkzeug den Platzhalter „Search a book“ in −44 px (das zugeklappte Feld der Kopfzeile, 6.68), am Desktop die abgekürzte Beschreibung. Das Regalfoto (`@anthropic-ai/sdk`) ist nur über Typen und Tests geprüft, nicht mit einem Foto — kein Aufruf ohne Grund.
 
 **Analytik-Checkliste:** nichts bewegt sich — Paketversionen, kein neuer Aufruf, kein neues Modell (Preise in `lib/insights/prices.ts` unberührt).
+
+## 2026-10-19 — Die Wand am Telefon gemessen (ROADMAP 6.73)
+
+Werkzeug: [lab/wall-phone/measure.ts](../lab/wall-phone/measure.ts), headless Chrome bei 390 × 844 (mobil, DPR 2), einmal gedrosselt auf DevTools' „Fast 4G“ (165 ms, 9 Mbit/s), einmal ohne; je Seite ein kalter Besuch (erster seit `next start`, Nexts Daten-Cache beiseitegelegt, Open Library frisch gefragt) und ein warmer (Browser-Cache geleert). 15 s ohne Scrollen. Gemessen gegen `next start` mit dem Stand nach 2.18e und den neuen Paketen.
+
+| Seite | Besuch | Netz | erster Bildschirm voll | erste Bildanfrage | Median Warteschlange / Server (erste 20) | leer im Bild nach 5 s / 10 s | Bildanfragen vor dem Scrollen / Bilder auf der Seite |
+|---|---|---|---|---|---|---|---|
+| Gatsby (vorgerendert) | kalt | Fast 4G | 8,1 s | 3,2 s | 0,3 / 1,1 s | 2 / 0 | 38 / 81 |
+| Gatsby | warm | Fast 4G | 4,9 s | 1,1 s | 0,5 / 0,8 s | 0 / 0 | 38 / 129 |
+| Neuromancer (ISR) | kalt | Fast 4G | 6,5 s | 2,7 s | 1,9 / 1,2 s | 6 / 0 | 25 / 19 |
+| Neuromancer | warm | Fast 4G | 4,9 s | 1,2 s | 2,1 / 1,1 s | 0 / 0 | 25 / 19 |
+| OL82563W (nicht kuratiert) | kalt | Fast 4G | 4,6 s | 3,3 s | 0,4 / 0,2 s | 0 / 0 | 38 / 49 |
+| OL82563W | warm | Fast 4G | 3,2 s | 1,2 s | 0,8 / 0,2 s | 0 / 0 | 38 / 49 |
+| Suche „the great gatsby“ | kalt | Fast 4G | 5,3 s | 1,7 s | 0 / 1,2 s | 1 / 0 | 11 / 10 |
+| Suche | warm | Fast 4G | 3,4 s | 1,1 s | 0,4 / 1,7 s | 0 / 0 | 10 / 10 |
+| Gatsby | kalt | ohne | 4,7 s | 0,8 s | 1,4 / 1,2 s | 0 / 0 | 35 / 137 |
+| Gatsby | warm | ohne | 4,1 s | 0,1 s | 1,1 / 1,2 s | 0 / 0 | 38 / 138 |
+| Suche | warm | ohne | 2,9 s | 0,1 s | 0 / 2,3 s | 0 / 0 | 10 / 10 |
+
+**Was das heißt.**
+1. **Die Zeit liegt beim Cover-Host, nicht im Browser und nicht in unserer Route.** „Server“ ist hier die Zeit, bis `/img` die ersten Bytes schickt — und `/img` fragt jedes Mal Open Library/archive.org (`cache: 'no-store'`, die Bytes gehören in die CDN davor, 30 Tage). Lokal gibt es diese CDN nicht, darum ist auch „warm“ hier für die Bilder kalt: 0,2–2,3 s je Bild, einzelne über 4 s. In der Produktion ist ein Bild, das schon jemand sah, ein CDN-Treffer in Millisekunden; ein Bild, das noch niemand sah, kostet dasselbe wie hier. Die „Warteschlange“ ist zum Teil ein Artefakt: lokal spricht Chrome HTTP/1.1 mit sechs Verbindungen, die Produktion HTTP/2.
+2. **`loading="lazy"` greift, aber großzügig:** vor dem ersten Scrollen gehen 38 Bildanfragen hinaus, 9 Kacheln sind im Bild — Chromes Vorlauf lädt vier, fünf Bildschirme voraus. Bei Fast 4G teilen sich die neun sichtbaren die Leitung mit 29 unsichtbaren (rund 600 KB, gut eine halbe Sekunde). Die sichtbaren stehen im Wasserfall trotzdem vorn (Anfragen 1–9).
+3. **Vor dem ersten Bild steht eine Runde:** die Kacheln entstehen im Browser nach `/api/works` — die erste Bildanfrage geht warm nach 1,1 s hinaus (Fast 4G), kalt nach 2,7–3,3 s, weil Seite 0 erst den Katalog fragt. Auch die vorgerenderte Gatsby-Seite hat keine Kachel im HTML.
+4. **Graue Kacheln nach 10 s gab es in keinem Lauf** (0 von 9 bzw. 10 im Bild); nach 5 s höchstens 6, nur kalt. Der Bericht vom 2026-09-28 (11–13 s grau bei warmem Cache) ist hier nicht nachgestellt — damals im verborgenen Browser-Panel und gegen Bilder, die die CDN noch nicht hatte.
+
+**Entscheidungen daraus.** `priority` für die erste Kachel (6.5): **nein** — die Bilder im Bild sind schon die ersten Anfragen, eines vorzuziehen ändert nichts an der Runde vor ihnen und nichts am Cover-Host. Seiten zu 36: weiter nein (§1). **Was es bringen würde**, als Vorschläge für Julian ([6.73a–c](../ROADMAP.md)): (a) die ersten neun Kacheln schon im HTML der vorgerenderten und ISR-Seiten — spart die Runde vor dem ersten Bild, warm rund 1 s, kalt 2–3 s auf Fast 4G; (b) ein atmender Platzhalter auf der Kachel wie auf der Startwand (6.33) — heute ist sie ein stilles `bg-surface-2`, Warten sieht aus wie „fehlt“; (c) der Vorlauf auf die ersten zwei Bildschirme begrenzen (die Kacheln ab Reihe 7 erst beim Scrollen) — spart auf Fast 4G eine halbe Sekunde Leitung. Was fehlt: dieselbe Messung einmal gegen die Produktion (HTTP/2, CDN), die nur nach einem Deploy und nur einmal laufen darf.
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung im Lab, kein Code auf der Seite.
