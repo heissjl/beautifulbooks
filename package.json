@@ -18,14 +18,14 @@
     "calibre": "npx tsx lab/calibre/app.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.128.0",
-    "isbn3": "^2.0.11",
+    "@anthropic-ai/sdk": "^0.135.0",
+    "isbn3": "^2.0.12",
     "jpeg-js": "^0.4.4",
     "next": "16.4.2",
     "pngjs": "^7.0.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "redis": "^6.2.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "redis": "^6.3.0",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitest/ui": "^4.0.18",
-    "esbuild": "^0.27.2",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "heic-decode": "^2.1.0",
