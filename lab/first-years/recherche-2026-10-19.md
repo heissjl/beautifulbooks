@@ -29,7 +29,4 @@ Julian: „kannst du eine webrecherche zu denen machen?“ Gesucht war je Werk d
 
 **Muster.** Open Library hat bei keinem der 22 recht, außer bei *Ender's Game*. Viermal ist es das Jahr des Zeitschriftenabdrucks (*In Cold Blood*, *Lot 49*, *Orient Express*, halb *Tender Is the Night*), sonst ein verirrtes Ausgabedatum (*Foundation* 1915, *As I Lay Dying* 1915, *L'étranger* 1922, *Americanah* 1969, *Der Proceß* 2006). Bei *Ender's Game* ist es umgekehrt: der Wikidata-Eintrag Q5376051, an dem die Open-Library-ID hängt, ist die Novelle von 1977, nicht der Roman.
 
-**Offen für Julian.**
-- *Canterbury Tales*: kein Jahr passt zu „Erstausgabe“. Vorschlag: kein Eintrag, die Seite bleibt beim Katalogsatz — oder ein eigener Satz „Written c. 1387–1400.“, der neue Übersetzung bräuchte.
-- *Dom Casmurro*: zählt das Jahr auf dem Titelblatt (1899) oder die Auslieferung (1900)? Die Regel gilt dann für alle Bücher; Bibliotheken zitieren das Impressum, Vorschlag 1899.
-- Übernehmen: die 18 Wikidata-Jahre und *Ender's Game* 1985 nach `data/first-years.json`, Quelle je Zeile „Wikidata Qxxx, checked against Wikipedia 2026-10-19“.
+**Entschieden 2026-10-19** (Julian: „Trag die 18 Wikidata-Jahre und Ender's Game 1985 ein. Canterbury Tales ohne Jahr, Dom Casmurro 1899 nach Titelblatt.“ — es sind 19 Wikidata-Zeilen, die Zählung oben in der ersten Fassung hatte *Wildfell Hall* übersehen): alle in `data/first-years.json`, Quelle je Zeile. **Regel: das Jahr auf dem Titelblatt zählt**, nicht die Auslieferung. *Canterbury Tales* steht mit `year: null` drin — die Seite zeigt dann gar kein Jahr statt Open Librarys 1970.
