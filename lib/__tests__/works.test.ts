@@ -577,6 +577,17 @@ describe('groupCoversByLanguage sorting', () => {
     ]);
     expect(groupCoversByLanguage(covers, editions, undefined, sigs)[0].coverIds).toEqual(['ol:cover', 'ol:page']);
   });
+
+  it('sends an image of no cover’s shape to the end too, and lets an unmeasured one stand (6.70b)', () => {
+    const covers = [cover('ol:card', ['e1']), cover('ol:old', ['e2']), cover('ol:cover', ['e3'])];
+    const editions = [ed({ id: 'e1', year: 2020, language: 'en' }), ed({ id: 'e2', year: 2000, language: 'en' }), ed({ id: 'e3', year: 1990, language: 'en' })];
+    const sigs = new Map([
+      ['ol:card', { hash: '11d457b5e85d7934', contrast: 30, mean: 120, aspect: 1.42 }],
+      ['ol:old', { hash: '21d457b5e85d7934', contrast: 30, mean: 120 }],
+      ['ol:cover', { hash: '31d457b5e85d7934', contrast: 30, mean: 120, aspect: 0.66 }],
+    ]);
+    expect(groupCoversByLanguage(covers, editions, undefined, sigs)[0].coverIds).toEqual(['ol:old', 'ol:cover', 'ol:card']);
+  });
 });
 
 describe('samePublisher', () => {

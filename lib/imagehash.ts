@@ -132,6 +132,7 @@ export function signature(bytes: Uint8Array, options: SignatureOptions = {}): Im
   if (!decoded) return null;
   const gray = toGray(decoded);
   const { mean, contrast } = luminance(gray);
-  const base: ImageSignature = { hash: dhash(gray), contrast, mean };
+  // The shape rides along for 6.70b: the decoded size is at hand, and it costs some 13 bytes a signature.
+  const base: ImageSignature = { hash: dhash(gray), contrast, mean, aspect: Math.round((decoded.width / decoded.height) * 100) / 100 };
   return options.colour ? { ...base, ...colour(decoded) } : base;
 }
