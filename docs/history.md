@@ -6684,3 +6684,31 @@ Red-Team U4 (2026-10-09): auf *Der Meister und Margarita* standen ein blaues Rec
 **Geprüft:** 1.688 Tests (neu: Form und Maß in `imagehash.test.ts`, die Sortierung in `works.test.ts`), tsc, Lint, Build.
 
 **Analytik-Checkliste:** (4) was die Wand rendert, ändert nur die Reihenfolge; `data-cover-id` und die Signale bleiben; nichts gespeichert oder gesendet, kein neuer Aufruf.
+
+## 2026-10-20 — Die Form-Prüfung auf den Index-Werken (ROADMAP 6.70b, Teil 2)
+
+Die 500 Werke des Index bekommen ihre Signaturen aus `data/cover-index.json` (`indexSignatures`, `lib/coverindex.ts`), nicht live gehasht. Dort fehlten der Wand zwei Maße.
+
+**`mean` (Commit 1).** Die Indexzeile trägt die mittlere Helligkeit seit dem ersten Bau, `load()` las sie aber nicht ein, und `looksLikeScannedPage` urteilt nie ohne sie. Jetzt geht sie mit. Gemessen über die ganze Datei: **203 Cover in 112 Werken** gelten als gescannte Seite und stehen nun hinten in ihrer Sprachgruppe statt irgendwo; gelöscht wird nichts (E16). Test in `coverindex.test.ts` an einer echten Zeile der Datei.
+
+**`aspect` (Commit 2).** Eine achte, **optionale** Spalte am Ende jeder Zeile (`lib/coverindexrow.ts`: Typ `CoverRow`, `aspectOf`, `fillAspects`). Wer sieben Felder liest — `lib/heroring.ts`, `build-versus-pool.ts`, `add-collection-covers-to-pool.ts`, `build-suggest-works.ts` — merkt nichts; eine Zeile von vor der Spalte hat schlicht keine achte. `load()` hält sie als `Uint16Array` (×100, 0 = ungemessen), `indexSignatures` gibt `aspect` nur heraus, wo gemessen — ein ungemessenes Bild besteht `looksMisshapen`. `build-cover-index.ts` schreibt die Spalte bei jedem Bau mit (das Bild wird ohnehin dekodiert), und `--fill-aspect` füllt sie für alte Zeilen **ohne Neubau**: zuerst aus den Maßen des Spiels (`data/cover-measures.json`, keine Anfrage), dann aus Open Librarys Cover-Datensatz `covers.openlibrary.org/b/id/<n>.json`, eine Anfrage nach der anderen, Pause (Standard 500 ms), alle 250 Zeilen geschrieben, Halt beim ersten verweigerten Verbindungsaufbau, 403 oder 429; `--offline`, `--limit=N`, `--pause-ms=N`. `builtAt` bleibt dabei stehen — eine Spalte nachzutragen macht den Schnappschuss nicht neuer. Tests: `coverindexrow.test.ts` (sechs) und ein Lesetest in `coverindex.test.ts`.
+
+**Offline gefüllt und committet:** `--fill-aspect --offline` nahm die **6.264** Maße des Spiels; **297** davon außerhalb 0,5–0,85, in **149** Werken. Datei 2.680.785 → 2.711.270 Byte (+30 KB). *Der Meister und Margarita* (Index-Werk 37): 16 von 168 Covern gemessen, eines quer (`ol:10506986`, 1,78). **29.087** Cover bleiben ohne Maß.
+
+**Was das Nachmessen kostet, gemessen** (15 zufällige Index-Cover ohne Spielmaß, einzeln, 1,5 s Pause, von Julians Mac): der Cover-Datensatz antwortete in **173–772 ms, Median ≈ 180 ms**, alle 15 mit Größe; das S-Bild, das der Bau lädt, brauchte **206–2.139 ms, Median ≈ 1,7 s** (elf von fünfzehn über archive.org). Das Seitenverhältnis aus dem Datensatz (Originalgröße) und aus dem S-Bild wich um höchstens **0,02** ab — gleiche Skala wie die live gehashten Werke. Hochgerechnet:
+
+| Weg | Anfragen | Dauer | Wirt |
+| --- | --- | --- | --- |
+| `--fill-aspect`, 500 ms Pause | 29.087 Datensätze | ≈ 5,5 h | nur `covers.openlibrary.org` |
+| `--fill-aspect`, 1,5 s Pause (Lab-Regel umgang §1) | 29.087 | ≈ 13,5 h | dito |
+| Neubau `--force` | ≈ 35.000 S-Bilder + ≥ 500 Ausgabenseiten | ≈ 1,5 h (37 min für 14.843 Cover am 2026-09-26, hochgerechnet) | `openlibrary.org` (der Wirt, der sperrt) und archive.org |
+
+Der Neubau ändert außerdem, *welche* Cover im Index stehen (der Katalog wandert, seit 6.77 fehlen Hörbücher), und damit Ringe, Spielvorrat und Jahrzehnte-Seiten — er ist eine größere Entscheidung als eine Spalte. Gesperrt hat bisher nur `openlibrary.org`, nie der Cover-Wirt (umgang §1), der am 2026-09-26 sechs Bilder zugleich ausgehalten hat.
+
+**Zur Entscheidung für Julian:** Empfehlung `--fill-aspect` mit 500 ms Pause, über Nacht, nicht neben einem anderen Bulk-Lauf; vorher `--limit=500` (≈ 6 min) als Probe. Ohne Lauf bleibt es beim heutigen Stand: Form-Prüfung auf 6.264 Index-Covern und allen live gehashten Werken; neue Werke bekommen die Spalte beim nächsten `promote` von selbst.
+
+**Nicht im Browser angesehen:** der Dev-Server aus der Bash-Sitzung hat kein Netz, die Wand ist ohne Open Library nicht zu laden; geprüft ist der Datenweg (Datei → `indexSignatures` → `looksLikeScannedPage`/`looksMisshapen`), die Sortierung selbst seit Teil 1 in `works.test.ts`.
+
+**Geprüft:** 1.695 Tests, tsc, Lint, Build.
+
+**Analytik-Checkliste:** (4) die Wand zeigt dieselben Cover in anderer Reihenfolge, `data-cover-id` und die Signale bleiben; (1)–(3), (5)–(7) nicht berührt — kein Shop-Link, kein bezahlter Aufruf, keine Route, nichts gespeichert oder gesendet; die Antwort von `/api/works` wächst auf Index-Werken um `mean` und, wo gemessen, `aspect` (je einige Byte je Signatur).

@@ -166,6 +166,18 @@ describe('signatures handed out for folding (ROADMAP 5.4a)', () => {
     expect(indexSignatures([known]).get(known)!.mean).toBe(file.covers[0][4]);
   });
 
+  it('carries the aspect where the row has the column, and leaves it absent where not (6.70b)', () => {
+    const file = JSON.parse(readFileSync(path.join(process.cwd(), 'data', 'cover-index.json'), 'utf8')) as {
+      covers: Array<[number, string, string, number, number, number, string, number?]>;
+    };
+    const measured = file.covers.find(r => r[7] !== undefined);
+    if (measured) expect(indexSignatures([measured[1]]).get(measured[1])!.aspect).toBe(measured[7]);
+    const unmeasured = file.covers.find(r => r[7] === undefined);
+    // Absent, not 0: an unmeasured image must pass the shape check.
+    if (unmeasured) expect(indexSignatures([unmeasured[1]]).get(unmeasured[1])!).not.toHaveProperty('aspect');
+    expect(measured ?? unmeasured).toBeDefined();
+  });
+
   it('agrees with the packed halves the index searches on', () => {
     const sig = indexSignatures([known]).get(known)!;
     const hi = parseInt(sig.hash.slice(0, 8), 16);
