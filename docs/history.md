@@ -6715,3 +6715,27 @@ Der Neubau ändert außerdem, *welche* Cover im Index stehen (der Katalog wander
 **Geprüft:** 1.695 Tests, tsc, Lint, Build.
 
 **Analytik-Checkliste:** (4) die Wand zeigt dieselben Cover in anderer Reihenfolge, `data-cover-id` und die Signale bleiben; (1)–(3), (5)–(7) nicht berührt — kein Shop-Link, kein bezahlter Aufruf, keine Route, nichts gespeichert oder gesendet; die Antwort von `/api/works` wächst auf Index-Werken um `mean` und, wo gemessen, `aspect` (je einige Byte je Signatur).
+
+## 2026-10-22 — N14 über Suche, Werkseite und Jahrzehnte-Seite gemessen, Jahrzehnte-Seite offen (ROADMAP 6.30a)
+
+`npm run build` mit den Werten aus dem Hauptordner (`IMPRINT_*` Platzhalter), `next start -p 3118` außerhalb der Sandbox, dann `npx tsx lab/n14/measure.ts <url> --wait 12000 --json`, je eine Adresse, 8 s Pause dazwischen. Bei 390 × 844 / 1280 × 800.
+
+| Seite | Breite 390 / Seitenbreite | abgeschnitten bei 390 | Platzhalter 390 | Breite 1280 / Seitenbreite | abgeschnitten bei 1280 | Platzhalter 1280 | Bilder (leer) 390 / 1280 |
+|---|---|---|---|---|---|---|---|
+| `/?q=mumbo jumbo` | 390 / 390 | 0 | 181 px in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/?q=1984` | 390 / 390 | **2** | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 3 (0) / 9 (0) |
+| `/?q=gravity's rainbow` | 390 / 390 | 0 | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/?q=the great gatsby` | 390 / 390 | 0 | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/?q=pride and prejudice` | 390 / 390 | 0 | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/book/OL468431W` | 390 / 390 | 0 | (Feld versteckt) | 1280 / 1280 | **1** | 85 in 178 | 2 (0) / 2 (0) |
+| `/book/OL1168083W/decades` | **nicht gemessen** | | | | | | |
+
+**Die beiden Fälle bei 390 auf „1984“** sind die Autorenzeile der Karte „Animal Farm / Nineteen Eighty-Four“ („George Orwell, George Orwel…“) und der Titel „'1984' i esse raznykh let …“ — beides gewollt gekürzte Zeilen (Titel zweizeilig begrenzt, Autorenzeile eine Zeile). Das „George Orwel“ ist kein Fehler der Seite: Open Library führt an dem Datensatz einen zweiten Autor mit dem Tippfehler (`OL10737793A`). Die eine Zeile bei 1280 auf der Werkseite ist der Klappentext, auf drei Zeilen begrenzt.
+
+**Neu oder bekannt.** Bekannt: die zweizeilig begrenzten Titel (6.68, gemessen 2026-09-11), die Kopfzeile bei 320 px (Vorbefund von 6.30a, hier nicht berührt: 320 gehörte nicht zu dieser Messung). **Neu: keiner, der behoben werden müsste** — keine seitliche Überbreite, kein Platzhalter, der nicht passt, kein leeres Bild auf den sechs gemessenen Seiten.
+
+**Zwei Fehler des Messwerkzeugs, einer behoben.** (1) Das Suchfeld der Kopfzeile ist auf dem Telefon `display: none`, bis das Lupen-Symbol es öffnet; die Sonde rechnete es mit Breite 0 und meldete „Platzhalter 85 px in −44 px“, ein falscher Alarm. `lab/n14/measure.ts` überspringt jetzt Felder ohne Layout (`offsetParent === null`). (2) Offen: das geöffnete Telefonfeld wird gar nicht gemessen — die Messung sieht nur den Zustand beim Laden.
+
+**Was nicht gemessen werden konnte.** Seit der ersten Werkseite antwortete `openlibrary.org` auf diesen Mac nur noch mit einem TLS-Abbruch (`curl` Exit 35 auf `/works/OL468431W.json`, während `covers.openlibrary.org` 200 gab): die Sperre aus docs/umgang.md §1, nach sieben Suchen, einer Werkseite und fünf Ausgabenseiten des Jahrzehnte-Laufs binnen einer halben Stunde. Folgen: (a) `/book/OL1168083W/decades` und die von Gatsby antworteten mit 500 („Open Library stopped answering“, 6.43/6.71: ein Fehler, nie eine halbe Seite) — die Jahrzehnte-Seite ist **nicht** gemessen; der Wert 980 px Breite bei 390, den die Sonde bei der 1984-Seite las, ist die Fehlerseite ohne Viewport-Angabe und kein Befund. (b) Die Werkseite wurde **ohne geladene Wand** gemessen (die Wand holt ihre Seiten über `/api/works`, auch das ging nicht): Kopf, Titel, Klappentext, Seitenleiste ja, die Kachelwand nein. Wiederholen, sobald `curl https://openlibrary.org/works/OL468431W.json` wieder 200 gibt; die Jahrzehnte-Seite braucht danach einmal ihre kalte Runde (≈ 15 Ausgabenseiten).
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung; im Werkzeug nur die Sonde angepasst.
