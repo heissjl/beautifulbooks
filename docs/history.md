@@ -6716,3 +6716,14 @@ Der Neubau ändert außerdem, *welche* Cover im Index stehen (der Katalog wander
 **Geprüft:** 1.695 Tests, tsc, Lint, Build.
 
 **Analytik-Checkliste:** (4) die Wand zeigt dieselben Cover in anderer Reihenfolge, `data-cover-id` und die Signale bleiben; (1)–(3), (5)–(7) nicht berührt — kein Shop-Link, kein bezahlter Aufruf, keine Route, nichts gespeichert oder gesendet; die Antwort von `/api/works` wächst auf Index-Werken um `mean` und, wo gemessen, `aspect` (je einige Byte je Signatur).
+
+## 2026-10-22 — Platzhalter für „Author only“ und das Spiel antwortet (ROADMAP 6.72 (5) und 6.66 Teile 1 und 3)
+
+**6.72 (5), Claudes Hälfte:** im Modus „Author only“ steht im Feld „Author only: type a name“ (vorher „An author’s name“, das den Modus nicht nannte). Gemessen gegen `next start`, 390 px: Platzhalter 170 px, Platz im Feld 212 px; deutsch „Nur Autor:in: Name eingeben“ (rund 191 px geschätzt). Das Wort für den Reiter „Unknown“ ist weiter Julians.
+
+**6.66 Teil 1:** nach einer gezählten Stimme steht oben im Kasten „Your last pick“ die Zeile „Counted: one vote for this cover in the standings.“ (`aria-live`). Bewusst ohne Zahl: keine Prozentzahl für ein Paar, das kaum je gespielt wurde. **Teil 3:** der Satz „Two covers of two books“ (auf `/versus` und `/versus/[pair]`) sagt jetzt „usually from two books and now and then from two editions of the same one“, passend zu F7.9; „← and → choose, ↓ skips.“ steht direkt unter dem Paar, vor „Can’t decide“ (1280 px). Bei 390 px kein seitliches Scrollen. **Teil 2 nicht gebaut** (localStorage-Zähler erweitert N11, Julian).
+
+**Geprüft:** 1.695 Tests, tsc, Lint. `npm run build` übersetzt, der Prerender-Check (2.18e) schlug an, weil Open Library beim Bauen schwieg („10 of 18 book pages“) — er ist der Schutz, nicht der Fehler.
+
+**Analytik-Checkliste:** die Stimme wird wie zuvor gezählt, `/api/versus/vote` und die Antwort unverändert, nichts über den Spieler gespeichert oder gesendet; (1)–(7) nicht berührt.
+

@@ -567,7 +567,7 @@ export const de: Readonly<Record<string, string>> = {
   '{n} covers were reported as not a cover and taken out.': '{n} Cover wurden als „kein Cover“ gemeldet und herausgenommen.',
   'The standings are counted once a minute.': 'Die Rangliste wird einmal pro Minute gezählt.',
   'Back to the game': 'Zurück zum Spiel',
-  'Two covers of two books, side by side, and one question: which one would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.': 'Zwei Cover von zwei Büchern, nebeneinander, und eine Frage: Welches würdest du lieber ansehen? Im Topf sind {covers} Cover aus {books} Büchern, jedes eine gedruckte Ausgabe, die bei Open Library oder Google Books verzeichnet ist. Hier urteilt niemand über den Text – nur über das Bild vorn.',
+  'Two covers side by side, usually from two books and now and then from two editions of the same one, and one question: which would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.': 'Zwei Cover nebeneinander, meist von zwei Büchern und manchmal von zwei Ausgaben desselben, und eine Frage: Welches würdest du lieber ansehen? Im Topf sind {covers} Cover aus {books} Büchern, jedes eine gedruckte Ausgabe, die bei Open Library oder Google Books verzeichnet ist. Hier urteilt niemand über den Text – nur über das Bild vorn.',
   'The {standings} show which covers readers keep choosing and how sure that is: a cover is called the best-looking or the ugliest only once it has held the lead for several rounds. Every cover there leads to its book, where the other editions of the same title stand side by side.': 'Die {standings} zeigt, welche Cover Leser immer wieder wählen und wie sicher das ist: Das schönste oder das hässlichste heißt ein Cover erst, wenn es mehrere Runden vorn geblieben ist. Von dort führt der Weg zu jedem Buch, wo die anderen Ausgaben desselben Titels nebeneinanderstehen.',
   'standings': 'Rangliste',
   'Some of the books in the game': 'Einige der Bücher im Spiel',
@@ -598,6 +598,7 @@ export const de: Readonly<Record<string, string>> = {
   'by {author}': 'von {author}',
   'See this edition': 'Diese Ausgabe ansehen',
   'all its covers': 'seine Cover-Wand',
+  'Counted: one vote for this cover in the standings.': 'Gezählt: eine Stimme für dieses Cover in der Rangliste.',
   '← and → choose, ↓ skips.': '← und → wählen, ↓ überspringt.',
   // app/api/rate.ts answers this to every route; the game shows the server's sentence through t.
   'Too many requests, try again shortly': 'Zu viele Anfragen, versuch es gleich noch einmal',
