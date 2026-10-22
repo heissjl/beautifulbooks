@@ -25,6 +25,7 @@ import { colourDistance, hamming, HASH_BITS, looksLikeScannedPage, type ImageSig
 import { COLOUR_MAX, SAME_DESIGN_BITS, STRUCTURE_MAX } from './coverindex';
 import { SAME_COVER_MAX_DISTANCE, SAME_ISBN_MAX_DISTANCE, SAME_PRINTING_MAX_DISTANCE } from './works';
 import type { Collection } from './collections';
+import type { CoverRow } from './coverindexrow';
 
 export const RING_SIZE = 7;
 
@@ -111,7 +112,7 @@ export function pickRing(covers: readonly RingCandidate[]): string[] | null {
 /** The cover index as committed: rows, not objects (see scripts/build-cover-index.ts). */
 export interface CoverIndexFile {
   works: [id: string, title: string, author: string][];
-  covers: [work: number, cover: string, hash: string, contrast: number, mean: number, saturation: number, hues: string][];
+  covers: CoverRow[];
 }
 
 /** A ring for every listed work the index can fill, in the order of the list. */

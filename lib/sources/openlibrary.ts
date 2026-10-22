@@ -97,6 +97,9 @@ export const SEARCH_FIELDS = [
   'edition_count', 'cover_i', 'cover_edition_key', 'language',
   // Popularity: Open Library ranks by these and we use them too (SPEC §9.3 step 10).
   'readinglog_count', 'want_to_read_count', 'ratings_count',
+  // The edition Open Library matched to the query, so a card can carry the title in the search's
+  // language (6.2); measured 2026-10-19 at no extra time (1.0–2.2 s against 1.9–2.1 s).
+  'editions', 'editions.title', 'editions.language',
 ].join(',');
 
 interface OlSearchResponse {
@@ -344,6 +347,8 @@ const AUTHOR_WORKS_FIELDS = [
   'key', 'title', 'author_name', 'author_key', 'edition_count', 'cover_i',
   'first_publish_year', 'publish_year', 'language',
   'readinglog_count', 'want_to_read_count', 'ratings_count',
+  // With `lang=en` below: an English edition's title, shown for a title not in Latin script (6.2).
+  'editions', 'editions.title', 'editions.language',
 ].join(',');
 
 /** How many records the author search asks for; the measurement in PLAN-6.53 §4.1 read the first 50. */
@@ -359,7 +364,8 @@ export function authorWorksUrl(authorKeys: string | readonly string[]): string {
   const keys = typeof authorKeys === 'string' ? [authorKeys] : authorKeys;
   // One key keeps the row's URL exactly, so the row and the author search share a cache entry.
   const q = keys.length === 1 ? `author_key:${keys[0]}` : `author_key:(${keys.join(' OR ')})`;
-  return `${BASE}/search.json?q=${encodeURIComponent(q)}&sort=editions&limit=${AUTHOR_WORKS_LIMIT}&fields=${AUTHOR_WORKS_FIELDS}`;
+  // `lang=en` makes the edition field an English one (Bulgakov: «Собачье сердце» → "The Heart of a Dog", 2026-10-19).
+  return `${BASE}/search.json?q=${encodeURIComponent(q)}&sort=editions&limit=${AUTHOR_WORKS_LIMIT}&lang=en&fields=${AUTHOR_WORKS_FIELDS}`;
 }
 
 /**

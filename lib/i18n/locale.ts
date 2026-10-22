@@ -30,6 +30,44 @@ export function normalizeLocale(raw: string | null | undefined): Locale | undefi
   return isLocale(v) ? v : undefined;
 }
 
+/** A year: the choice is remembered, nothing else about the reader is. */
+export const LOCALE_COOKIE_MAX_AGE = 31_536_000;
+
+/**
+ * The cookie's attributes, written once for both writers (ROADMAP 6.106): the
+ * browser in the hydrated switch and the server in `/api/locale/<locale>`.
+ * Two writers with two attribute lists drifted apart elsewhere before.
+ */
+export function localeCookieOptions(): { path: '/'; maxAge: number; sameSite: 'lax' } {
+  return { path: '/', maxAge: LOCALE_COOKIE_MAX_AGE, sameSite: 'lax' };
+}
+
+/** The same attributes as a `document.cookie` string. */
+export function localeCookieString(locale: Locale): string {
+  const o = localeCookieOptions();
+  return `${LOCALE_COOKIE}=${locale}; path=${o.path}; max-age=${o.maxAge}; samesite=${o.sameSite}`;
+}
+
+/**
+ * Where `/api/locale/<locale>` sends the reader back (ROADMAP 6.106). The
+ * same-origin referer wins, with its query, so a search keeps its words;
+ * otherwise a `back` that is one plain path — exactly one leading slash, no
+ * `//`, no backslash, no scheme — else the home page. Like `/go/`, the route
+ * never redirects to an address the request made up: that is an open redirect.
+ */
+export function backTarget(referer: string | null | undefined, back: string | null | undefined, origin: string): string {
+  if (referer) {
+    try {
+      const u = new URL(referer);
+      if (u.origin === origin && !u.pathname.startsWith('/api/')) return `${u.pathname}${u.search}`;
+    } catch {
+      // not a URL
+    }
+  }
+  if (back && /^\/(?![/\\])/.test(back) && !back.includes('\\') && !/[\r\n]/.test(back)) return back;
+  return '/';
+}
+
 /** The BCP 47 tag `toLocaleString` and `Intl` take for a locale. */
 export function intlTag(locale: Locale): string {
   return locale === 'de' ? 'de-DE' : 'en-GB';

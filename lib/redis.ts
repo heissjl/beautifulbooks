@@ -59,7 +59,8 @@ export interface RedisCommands {
   /**
    * Many HINCRBYs on one hash and its EXPIRE as **one** command, a Lua script
    * (ROADMAP 2.18d): the CPU meter's flush was 14–35 commands every thirty
-   * seconds per instance (measured 2.18b). Optional, like hIncrBy.
+   * seconds per instance (measured 2.18b). A `ttlSeconds` of 0 sets no expiry:
+   * the walls' views are kept, not a day's totals (2.18c). Optional, like hIncrBy.
    */
   hIncrByMany?(key: string, increments: ReadonlyArray<readonly [field: string, by: number]>, ttlSeconds: number): Promise<unknown>;
   /**
@@ -67,6 +68,22 @@ export interface RedisCommands {
    * links (ROADMAP 5.18b, K17), never on a reader's request. Optional, like hIncrBy.
    */
   scan?(cursor: string, match: string, count: number): Promise<[string, string[]]>;
+  /** DBSIZE: how many keys the store holds — the fill level for the operations block (ROADMAP 2.18g). Optional, like hIncrBy. */
+  dbSize?(): Promise<unknown>;
+  /** STRLEN: the bytes of one value, a sample of what the store carries (2.18g). Optional, like hIncrBy. */
+  strLen?(key: string): Promise<unknown>;
+  /** TYPE key → "string" | "list" | "hash" | …: what a key holds, for the export (ROADMAP 2.11). Optional, like hIncrBy. */
+  type?(key: string): Promise<unknown>;
+  /** PTTL key → milliseconds left, -1 without an expiry, -2 for no such key (2.11). Optional. */
+  pTtl?(key: string): Promise<unknown>;
+  /** PEXPIRE key ms — a restored key gets the time it had left (2.11). Optional. */
+  pExpire?(key: string, ms: number): Promise<unknown>;
+  /** DEL key — only the restore with `--force` uses it, before it rewrites a list or hash (2.11). Optional. */
+  del?(key: string): Promise<unknown>;
+  /** RPUSH key v1 v2 … as one command — a restored list of votes, five thousand at a time (2.11). Optional. */
+  rPushMany?(key: string, values: readonly string[]): Promise<unknown>;
+  /** HSET key f1 v1 f2 v2 … as one command — a restored hash (2.11). Optional. */
+  hSet?(key: string, fields: Readonly<Record<string, string>>): Promise<unknown>;
 }
 
 /** A SCAN answer as either transport delivers it: `[cursor, keys]` over REST, `{ cursor, keys }` from node-redis. */
@@ -76,10 +93,10 @@ export function scanReply(reply: unknown): [string, string[]] {
   return [String(pair[0] ?? '0'), keys];
 }
 
-/** ARGV[1] is the expiry, then field and amount in turns. Returns how many fields it added to. */
+/** ARGV[1] is the expiry (0: none), then field and amount in turns. Returns how many fields it added to. */
 export const HINCRBY_MANY_SCRIPT =
   "for i = 2, #ARGV, 2 do redis.call('HINCRBY', KEYS[1], ARGV[i], ARGV[i + 1]) end " +
-  "redis.call('EXPIRE', KEYS[1], ARGV[1]) return (#ARGV - 1) / 2";
+  "if tonumber(ARGV[1]) > 0 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end return (#ARGV - 1) / 2";
 
 function hIncrByManyArgs(increments: ReadonlyArray<readonly [string, number]>, ttlSeconds: number): string[] {
   return [String(ttlSeconds), ...increments.flatMap(([field, by]) => [field, String(by)])];
@@ -151,6 +168,14 @@ export function upstashCommands(url: string, token: string, fetchImpl: typeof fe
     setNx: (key, value, ttlSeconds) => command(['SET', key, value, 'NX', 'EX', ttlSeconds]),
     hIncrByMany: (key, increments, ttlSeconds) => command(['EVAL', HINCRBY_MANY_SCRIPT, 1, key, ...hIncrByManyArgs(increments, ttlSeconds)]),
     scan: async (cursor, match, count) => scanReply(await command(['SCAN', cursor, 'MATCH', match, 'COUNT', count])),
+    dbSize: () => command(['DBSIZE']),
+    strLen: key => command(['STRLEN', key]),
+    type: key => command(['TYPE', key]),
+    pTtl: key => command(['PTTL', key]),
+    pExpire: (key, ms) => command(['PEXPIRE', key, ms]),
+    del: key => command(['DEL', key]),
+    rPushMany: (key, values) => command(['RPUSH', key, ...values]),
+    hSet: (key, fields) => command(['HSET', key, ...Object.entries(fields).flat()]),
   };
 }
 
@@ -223,6 +248,14 @@ export function redisCommands(url: string): RedisCommands {
     hIncrByMany: (key, increments, ttlSeconds) =>
       run(client => client.eval(HINCRBY_MANY_SCRIPT, { keys: [key], arguments: hIncrByManyArgs(increments, ttlSeconds) })),
     scan: async (cursor, match, count) => scanReply(await run(client => client.scan(cursor, { MATCH: match, COUNT: count }))),
+    dbSize: () => run(client => client.dbSize()),
+    strLen: key => run(client => client.strLen(key)),
+    type: key => run(client => client.type(key)),
+    pTtl: key => run(client => client.pTTL(key)),
+    pExpire: (key, ms) => run(client => client.pExpire(key, ms)),
+    del: key => run(client => client.del(key)),
+    rPushMany: (key, values) => run(client => client.rPush(key, [...values])),
+    hSet: (key, fields) => run(client => client.hSet(key, { ...fields })),
   };
 }
 

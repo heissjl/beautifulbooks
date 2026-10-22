@@ -56,7 +56,7 @@ describe('which links are shop searches', () => {
     expect(words).toContain('abebooks-search');
     expect(words).toContain('ebay-search');
     expect(words).toContain('amazon-search');
-    for (const other of ['google-lens', 'tineye', 'worldcat', 'openlibrary']) expect(isWordsProvider(other)).toBe(false);
+    for (const other of ['google-lens', 'tineye', 'worldcat', 'goodreads', 'openlibrary']) expect(isWordsProvider(other)).toBe(false);
   });
 });
 
@@ -110,6 +110,7 @@ describe('no input sends a reader anywhere but the shop', () => {
     expect(wordsLinkFor('evil-search', q, 'us')).toBeUndefined();
     expect(wordsLinkFor('google-lens', q, 'us')).toBeUndefined();
     expect(wordsLinkFor('worldcat', q, 'us')).toBeUndefined();
+    expect(wordsLinkFor('goodreads', q, 'us')).toBeUndefined();
     expect(parseWordsQuery(new URLSearchParams('a=Herbert'))).toBeNull();
     expect(parseWordsQuery(new URLSearchParams('t=%20%20'))).toBeNull();
   });

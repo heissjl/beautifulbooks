@@ -18,14 +18,18 @@
  *   for the page and anything in it. The shelf photo takes a file through
  *   the file dialog (a phone offers its camera there itself), never the
  *   camera API, so nothing of ours needs them.
- * - `Content-Security-Policy-Report-Only` — where scripts, styles, images and
- *   connections may come from. **Report-only on purpose:** Next writes
- *   inline scripts of its own and Vercel's analytics loads beside them, so a
- *   rule that is one host short breaks the site silently. The browser sends
- *   each violation to `/api/csp` (one log line, nothing about the reader);
- *   after a week of reading, the policy can be enforced (follow-up in the
- *   roadmap). `'unsafe-inline'` for scripts is what Next needs without
- *   nonces; it weakens the policy and is noted, not hidden.
+ * - `Content-Security-Policy` — where scripts, styles, images and
+ *   connections may come from. **Report-only from 2026-10-09 to 2026-10-17**
+ *   (ROADMAP 2.12): Next writes inline scripts of its own and Vercel's
+ *   analytics loads beside them, so a rule one host short would have broken
+ *   the site silently. The hour of logs Vercel keeps held no `bb.csp` line on
+ *   2026-10-17, a visit of eight page types in production reported none, and
+ *   a read of every source the client code loads found none outside the
+ *   policy — so it is enforced since (2.12a). The browser still sends each
+ *   violation to `/api/csp` (one log line, nothing about the reader).
+ *   `'unsafe-inline'` for scripts is what Next needs without nonces; it
+ *   weakens the policy and is noted, not hidden — nonces through `proxy.ts`
+ *   with `'strict-dynamic'` are the step after this one (red team M4).
  *
  * The image hosts are the ones `lib/coverurl.ts` and the cover route may
  * hand to the browser directly: Open Library's cover host, which redirects
@@ -73,6 +77,6 @@ export function securityHeaders({ dev = false }: { dev?: boolean } = {}): Header
     { key: 'X-Frame-Options', value: 'DENY' },
     { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
     { key: 'Reporting-Endpoints', value: `csp="${CSP_REPORT_PATH}"` },
-    { key: 'Content-Security-Policy-Report-Only', value: contentSecurityPolicy({ dev }) },
+    { key: 'Content-Security-Policy', value: contentSecurityPolicy({ dev }) },
   ];
 }

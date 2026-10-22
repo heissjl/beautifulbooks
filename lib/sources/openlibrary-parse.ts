@@ -29,6 +29,8 @@ export interface OlSearchDoc {
   readinglog_count?: number;
   want_to_read_count?: number;
   ratings_count?: number;
+  /** Open Library's best edition for this query (or for `lang=`): the title in the search's language (6.2). */
+  editions?: { docs?: Array<{ title?: string; language?: string[] }> };
 }
 
 /** Subset of a `/works/{id}/editions.json` entry. */
@@ -91,6 +93,10 @@ export function parseSearchDocs(docs: readonly OlSearchDoc[]): WorkSummary[] {
       },
       // Open Library's own ranking is a strong signal; keep the position.
       sourceRank: out.length,
+      ...(doc.editions?.docs?.[0]?.title ? {
+        matchedTitle: doc.editions.docs[0].title,
+        matchedLanguage: toIsoLanguage(doc.editions.docs[0].language?.[0]),
+      } : {}),
     });
   }
   return out;

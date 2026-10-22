@@ -1,0 +1,42 @@
+# Dependabot (ROADMAP 2.13, security review of 2026-10-02): one pull request a week
+# with the npm updates, so a Next.js or sharp release with a fix does not sit
+# unnoticed for weeks, as 16.1.4 did. Minor and patch updates arrive as one grouped
+# PR; a major one comes on its own and is read before it is merged.
+#
+# Learned from the first run (2026-10-18): vitest and @vitest/ui pin each other's
+# exact version, so they rise together or `npm install` fails (PR #4); TypeScript
+# 7 is the native compiler without the JavaScript API that lab/inspiration/serve.ts
+# calls, and typescript-eslint allows <6.1 (PR #6) — its majors wait until the
+# tooling carries them; @types/node follows the Node the site runs on (24), not
+# the newest release.
+#
+# This file only schedules updates. The alerts and the automatic security updates
+# are switched on in the repository's settings (Settings → Code security), which
+# only Julian can do.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # First, so vitest and its UI never arrive apart (a dependency joins the first group it matches).
+      vitest:
+        patterns:
+          - vitest
+          - "@vitest/*"
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: "deps"

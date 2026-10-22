@@ -145,14 +145,16 @@ describe('linkPlan order', () => {
   });
 });
 
-describe('linkPlan: a link to this printing wins (Julian, 2026-09-09)', () => {
-  it('offers no other-edition row while a shop that could pay has this number', () => {
-    expect(plan(EN, 'us').anyEdition).toEqual([]);
-    expect(plan(DE, 'de').anyEdition).toEqual([]);
-    expect(plan(KDP, 'us').anyEdition).toEqual([]);
+describe('linkPlan: a link to this printing wins (Julian, 2026-09-09), and the other-edition row stands in every case (6.72 (2), 2026-10-18)', () => {
+  it('offers the other-edition row for a home printing too, after the ISBN links', () => {
+    expect(plan(EN, 'us').anyEdition.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
+    expect(plan(DE, 'de').anyEdition.map(l => l.label)).toEqual(['Thalia', 'Amazon']);
+    expect(plan(KDP, 'us').anyEdition.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
+    // The ISBN link still leads; the row never takes its place.
+    expect(plan(EN, 'us').lead.map(l => l.label)).toEqual(['Bookshop.org by ISBN', 'Amazon by ISBN']);
   });
 
-  it('offers it exactly when no such link is possible', () => {
+  it('offers it where no link to this printing is possible', () => {
     expect(plan(TR, 'us').anyEdition.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);
     expect(plan(TR, 'de').anyEdition.map(l => l.label)).toEqual(['Thalia', 'Amazon']);
     expect(plan(undefined, 'us').anyEdition.map(l => l.label)).toEqual(['Bookshop.org', 'Amazon']);

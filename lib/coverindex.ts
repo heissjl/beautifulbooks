@@ -24,11 +24,12 @@
  */
 import indexFile from '@/data/cover-index.json';
 import { HASH_BITS, colourDistance, type ImageSignature } from './imagesig';
+import { rowAspect, type CoverRow } from './coverindexrow';
 
 interface RawIndex {
   builtAt: string;
   works: Array<[id: string, title: string, author: string]>;
-  covers: Array<[work: number, cover: string, hash: string, contrast: number, mean: number, saturation: number, hues: string]>;
+  covers: CoverRow[];
 }
 
 export interface SimilarCover {
@@ -63,6 +64,10 @@ interface Unpacked {
   saturation: Uint8Array;
   /** Luminance standard deviation, needed to hand out a full ImageSignature. */
   contrast: Uint8Array;
+  /** Mean luminance; without it the wall cannot tell a scanned page (6.70b). */
+  mean: Uint8Array;
+  /** Width over height times a hundred; 0 where the row predates the column (6.70b). */
+  aspect: Uint16Array;
   hues: string[];
   positionOf: Map<string, number>;
 }
@@ -82,17 +87,21 @@ function load(): Unpacked {
     hashLo: new Uint32Array(n),
     saturation: new Uint8Array(n),
     contrast: new Uint8Array(n),
+    mean: new Uint8Array(n),
+    aspect: new Uint16Array(n),
     hues: new Array<string>(n),
     positionOf: new Map(),
   };
   for (let i = 0; i < n; i++) {
-    const [work, coverId, hash, contrast, , saturation, hues] = raw.covers[i];
+    const [work, coverId, hash, contrast, mean, saturation, hues] = raw.covers[i];
     out.coverIds[i] = coverId;
     out.workOf[i] = work;
     out.hashHi[i] = parseInt(hash.slice(0, 8), 16);
     out.hashLo[i] = parseInt(hash.slice(8, 16), 16);
     out.saturation[i] = saturation;
     out.contrast[i] = contrast;
+    out.mean[i] = mean;
+    out.aspect[i] = Math.round((rowAspect(raw.covers[i]) ?? 0) * 100);
     out.hues[i] = hues;
     out.positionOf.set(coverId, i);
   }
@@ -120,6 +129,11 @@ export function indexSize(): { works: number; covers: number } {
  * Only covers the index knows come back. A caller must treat a missing
  * signature as "not folded", never as "no duplicate": the index is a snapshot
  * of the curated works and is silent about everything else.
+ *
+ * `mean` travels with the rest (6.70b, 2026-10-20): until then it was dropped
+ * here, and `looksLikeScannedPage` never judges without it, so on the indexed
+ * works the wall left 203 scanned pages in 112 works where they fell.
+ * `aspect` likewise, where the row has the column (6.70b, `lib/coverindexrow.ts`).
  */
 export function indexSignatures(coverIds: readonly string[]): Map<string, ImageSignature> {
   const idx = load();
@@ -129,7 +143,13 @@ export function indexSignatures(coverIds: readonly string[]): Map<string, ImageS
     if (at === undefined) continue;
     const hi = idx.hashHi[at].toString(16).padStart(8, '0');
     const lo = idx.hashLo[at].toString(16).padStart(8, '0');
-    out.set(id, { hash: hi + lo, contrast: idx.contrast[at], saturation: idx.saturation[at], hues: idx.hues[at] });
+    const sig: ImageSignature = {
+      hash: hi + lo, contrast: idx.contrast[at], mean: idx.mean[at],
+      saturation: idx.saturation[at], hues: idx.hues[at],
+    };
+    // Unmeasured stays absent, so `looksMisshapen` lets it pass.
+    if (idx.aspect[at] > 0) sig.aspect = idx.aspect[at] / 100;
+    out.set(id, sig);
   }
   return out;
 }

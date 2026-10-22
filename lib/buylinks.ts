@@ -466,6 +466,14 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
   }
 
   out.push({ provider: 'worldcat', label: 'WorldCat', url: `https://search.worldcat.org/search?q=${input.isbn13 ? `bn:${input.isbn13}` : q(terms)}` });
+  /*
+    Goodreads (ROADMAP 6.11, Julian 2026-10-18: "Reviews at Goodreads"): a plain
+    link, nothing from there on our page — no API since 2020, the terms forbid
+    copying, and it belongs to Amazon. An ISBN search answers 302 straight to
+    the book's page (checked once by hand, 2026-10-18); without one, title and
+    author only — its search field does not understand publisher or year.
+  */
+  out.push({ provider: 'goodreads', label: 'Reviews at Goodreads', url: `https://www.goodreads.com/search?q=${q(input.isbn13 ?? [input.title, input.author].filter(Boolean).join(' '))}` });
   if (input.editionId?.startsWith('ol:')) {
     out.push({ provider: 'openlibrary', label: 'Open Library', url: `https://openlibrary.org/books/${input.editionId.slice(3)}` });
   }
@@ -476,8 +484,8 @@ export function searchLinksFor(input: SearchLinkInput, market: Market = DEFAULT_
  * Shop searches by words rather than by number (ROADMAP 3.1, plan §4):
  * `-search` asks a shop about *this printing* by title, author, publisher and
  * year; `-title` asks about the work, any edition. Recognised by the suffix
- * the two builders above give them. Google Lens, TinEye, WorldCat and Open
- * Library are not shops and never go through the counting redirect.
+ * the two builders above give them. Google Lens, TinEye, WorldCat, Goodreads
+ * and Open Library are not shops and never go through the counting redirect.
  */
 export function isWordsProvider(provider: string): boolean {
   return /^[a-z0-9-]+-(search|title)$/.test(provider);

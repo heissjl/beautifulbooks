@@ -206,6 +206,37 @@ export function isWeakResult(works: readonly WorkSummary[]): boolean {
   return bestEditions(works) <= WEAK_BEST_EDITIONS;
 }
 
+/**
+ * The typed words the correction would replace, normalised.
+ */
+export function correctedWords(correction: Correction): string[] {
+  const from = correction.from.trim().split(/\s+/);
+  const to = correction.to.trim().split(/\s+/);
+  return from.filter((piece, i) => normalizeWord(piece) !== normalizeWord(to[i] ?? '')).map(normalizeWord).filter(Boolean);
+}
+
+/**
+ * Was the typed word a hit after all? True when every word the correction
+ * would change stands, normalised, in a title or an author of the answer
+ * (ROADMAP 6.94, measured 2026-10-18 on the live site): "judt" was corrected
+ * to "jude" and *Jude the Obscure* replaced Tony Judt's sixteen books, "the
+ * memory chalet" became "the memory charles" and *A Christmas Carol* replaced
+ * *The Memory Chalet* — a weak answer is still an answer when it is about the
+ * word that was typed. Then the correction is offered, never applied.
+ */
+export function typedWordsFound(correction: Correction, works: readonly WorkSummary[]): boolean {
+  const words = correctedWords(correction);
+  if (words.length === 0) return false;
+  const seen = new Set<string>();
+  for (const w of works) {
+    for (const piece of `${w.title} ${w.authors.join(' ')}`.split(/\s+/)) {
+      const n = normalizeWord(piece);
+      if (n) seen.add(n);
+    }
+  }
+  return words.every(word => seen.has(word));
+}
+
 /** Whether the corrected answer should be shown instead of the original. */
 export function correctionIsBetter(original: readonly WorkSummary[], corrected: readonly WorkSummary[]): boolean {
   const before = bestEditions(original);
