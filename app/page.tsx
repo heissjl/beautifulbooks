@@ -175,7 +175,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
           */}
           {isHero && (
             <section aria-labelledby="more-heading" className="mt-16 sm:mt-20">
-              <h2 id="more-heading" className="mb-5 text-2xl text-ink">{t('Not looking for one book?')}</h2>
+              <h2 id="more-heading" className="mb-5 text-2xl text-ink">{t('Looking for more?')}</h2>
               <HomeInviteCards walls={wallsEnabled()} portrait={inspirationEnabled()} locale={locale} />
             </section>
           )}

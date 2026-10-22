@@ -211,7 +211,28 @@ export default function CoverGallery({ groups, allCovers, selectedCover, onSelec
       {belowTabs && <div className="mt-[5px]">{belowTabs}</div>}
       </div>
 
-      <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5" role="tabpanel">
+      <div
+        className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 xl:grid-cols-5"
+        role="tabpanel"
+        /*
+          ←/→ walk the tiles once one has the focus (ROADMAP 6.72 (4)): the
+          wall is a list in reading order, and Tab alone means one press per
+          cover. Enter and Space already select a focused tile — they are
+          buttons. ↑/↓ are left to the page, which scrolls; the column count
+          changes with the width, so a row jump would land somewhere else at
+          each size. Other keys are not touched, so Tab leaves the wall as before.
+        */
+        onKeyDown={event => {
+          if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+          const tiles = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('button[data-cover-id]'));
+          const at = tiles.indexOf(document.activeElement as HTMLButtonElement);
+          if (at < 0) return;
+          const next = tiles[at + (event.key === 'ArrowRight' ? 1 : -1)];
+          if (!next) return;
+          event.preventDefault();
+          next.focus();
+        }}
+      >
         {shown.map((cover, index) => {
           const onWall = !!marked?.has(cover.id);
           const selected = selectedCover?.id === cover.id || onWall;

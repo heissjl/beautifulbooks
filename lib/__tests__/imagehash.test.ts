@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { PNG } from 'pngjs';
 import jpeg from 'jpeg-js';
 import { decodeToGray, dhash, hamming, looksLikeScannedPage, signature } from '../imagehash';
-import { colourDistance, decodeHues } from '../imagesig';
+import { colourDistance, decodeHues, looksMisshapen } from '../imagesig';
 
 /**
  * Synthetic "covers" with horizontal structure (dHash compares left/right
@@ -69,6 +69,14 @@ describe('imagehash', () => {
     const cover = signature(pngBytes(60, 90, 'a'))!;
     expect(cover.contrast).toBeGreaterThan(20);
     expect(looksLikeScannedPage(cover)).toBe(false);
+  });
+
+  it('records the shape, and calls a landscape image misshapen (6.70b)', () => {
+    const portrait = signature(pngBytes(60, 90, 'a'))!;
+    expect(portrait.aspect).toBe(0.67);
+    expect(looksMisshapen(portrait)).toBe(false);
+    expect(looksMisshapen(signature(pngBytes(90, 60, 'a'))!)).toBe(true);
+    expect(looksMisshapen({ hash: '0000000000000000', contrast: 30 })).toBe(false);
   });
 
   it('never flags a signature recorded before mean luminance existed', () => {

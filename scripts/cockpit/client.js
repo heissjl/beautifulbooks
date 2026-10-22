@@ -47,6 +47,17 @@
     const link = h.item ? ` <a href="#item/${esc(h.item)}">${esc(h.item)} öffnen</a>` : h.view ? ` <a href="#${esc(h.view)}">ansehen</a>` : '';
     return `<div class="hint"><span class="ico ${h.level === 'act' ? '' : 'info'}">${h.level === 'act' ? '!' : 'i'}</span><div><b>${esc(h.title)}.</b> ${esc(h.text)}${link}</div></div>`;
   }
+  // The last copy of the store (2.11): age, keys and size of the newest complete file; a tool link where there is none or it is old.
+  function backupLine() {
+    const b = D.backup;
+    const start = `<a href="#tools">npm run backup</a>`;
+    if (!b || !b.exists) return `<p class="small"><span class="lvl-act">Keine Kopie.</span> Der Ordner fehlt noch — ${start} legt ihn an.</p>`;
+    if (!b.latest) return `<p class="small"><span class="lvl-act">Keine vollständige Kopie</span> unter ${b.files.length} Datei${b.files.length === 1 ? '' : 'en'}${b.tmp ? ` und ${b.tmp} .tmp` : ''}. ${start}.</p>`;
+    const days = b.ageDays === null ? '' : b.ageDays < 1 ? 'heute' : `${Math.floor(b.ageDays)} Tag${Math.floor(b.ageDays) === 1 ? '' : 'e'} alt`;
+    const old = b.ageDays !== null && b.ageDays > 7;
+    return `<p class="small"><span class="${old ? 'lvl-act' : ''}">${esc(days)}</span> · ${esc(String(b.latest.keys ?? '?'))} Schlüssel · ${esc(String(b.latest.kb))} KB · <span class="mono">${esc(b.latest.name)}</span>${b.files.length > 1 ? ` · ${b.files.length} Dateien` : ''}${b.tmp ? ` · <span class="lvl-act">${b.tmp} abgebrochen (.tmp)</span>` : ''}${old ? ` · ${start}` : ''}</p>`;
+  }
+
   function vHome() {
     const cnt = s => D.items.filter(x => x.status === s).length;
     const tiles = D.statuses.map(s => `<a class="tile" href="#board/${s.id}" style="text-decoration:none;color:inherit"><div class="n">${cnt(s.id)}</div><div class="l">${esc(s.name)}</div></a>`).join('');
@@ -80,6 +91,7 @@
       </div><div>
         <div class="box"><h2>Hinweise ${src('Widersprüche zwischen den Quellen')}</h2>${hints}${D.hints.length > 9 ? `<div class="small" style="margin-top:.4rem"><a href="#hints">alle ${D.hints.length} Hinweise</a></div>` : ''}</div>
         <div class="box scroll" style="margin-top:1rem"><h2>Läuft gerade ${src('git: Branches und Worktrees')}</h2><table>${br || '<tr><td class="muted">kein Branch vor Produktion</td></tr>'}</table></div>
+        <div class="box" style="margin-top:1rem"><h2>Sicherung der Redis ${src('Fußzeilen der Dateien in ' + (D.backup ? D.backup.dir : '../bb-backups'))}</h2>${backupLine()}</div>
       </div></div>
       <h2>Themen ${src('Regeln im Skript, korrigierbar mit „Thema:“ im Punkt')}</h2><div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${themes}</div>
       <h2>Zuletzt ${src('docs/history.md')}</h2><div class="box scroll"><table>${hist}</table></div>`;

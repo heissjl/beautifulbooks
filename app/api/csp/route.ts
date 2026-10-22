@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { readBounded } from '@/app/api/body';
 import { rateLimited } from '@/app/api/rate';
 import { cspReportLine, MAX_REPORT_BYTES } from '@/lib/cspreport';
 
@@ -17,13 +18,9 @@ const NOTHING = () => new NextResponse(null, { status: 204, headers: { 'Cache-Co
 
 export async function POST(request: NextRequest) {
   if (rateLimited(request, 'csp')) return NOTHING();
-  let text: string;
-  try {
-    text = await request.text();
-  } catch {
-    return NOTHING();
-  }
-  if (text.length > MAX_REPORT_BYTES) return NOTHING();
+  // Cut off at the ceiling before it is held in memory (red team L3), not measured after reading.
+  const text = await readBounded(request, MAX_REPORT_BYTES);
+  if (text === null) return NOTHING();
   const line = cspReportLine(text);
   // Ungated like the quota breaker's line: operation's telemetry, not debugging.
   if (line) console.warn(`bb.csp ${line}`);

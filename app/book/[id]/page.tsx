@@ -7,6 +7,7 @@ import { WALL_WORKS } from '@/lib/curated';
 import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, jsonLdHtml, workDescription, workPageTitle, workUrl } from '@/lib/seo';
 import { getWorkPage, isWorkId } from '@/lib/work';
+import { readableAuthor, shownTitle } from '@/lib/titleshown';
 import { getWork } from '@/lib/sources/openlibrary';
 import { measure } from '@/app/api/measure';
 
@@ -45,7 +46,10 @@ async function loadWork(id: string): Promise<{ work: Work; covers: Cover[]; edit
   if (!isWorkId(id)) return null;
   try {
     const page = await getWorkPage(id, { offset: 0, googleBooks: false });
-    return page ? { work: page.work, covers: page.covers, editions: page.editions } : null;
+    if (!page) return null;
+    // Metadata stay English: a title not in Latin script is named after the English editions (6.2, PLAN-6.107 step 3).
+    const title = shownTitle(page.work.title, { editions: page.editions, languages: ['en'] }).title;
+    return { work: { ...page.work, title, authors: page.work.authors.map(readableAuthor) }, covers: page.covers, editions: page.editions };
   } catch {
     // Open Library is having a moment. The page still works, it just goes out
     // with the site's default metadata rather than none at all.

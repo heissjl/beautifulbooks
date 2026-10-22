@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { readBounded } from '@/app/api/body';
 import { later } from '@/app/api/count';
 import { rateLimited } from '@/app/api/rate';
 import { MAX_SIGNAL_BYTES, parseSignal } from '@/lib/insights/signals';
-import { countRejected, countSignal } from '@/lib/insights/store';
+import { countRejected, flushInsights, queueSignal } from '@/lib/insights/store';
 import { humanRequest } from '@/lib/insights/human';
 import { recordRejected } from '@/lib/clicks';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
@@ -38,13 +39,9 @@ export async function POST(request: NextRequest) {
     later(() => countRejected('seen', verdict.reason));
     return NOTHING();
   }
-  let text: string;
-  try {
-    text = await request.text();
-  } catch {
-    return NOTHING();
-  }
-  if (text.length > MAX_SIGNAL_BYTES) return NOTHING();
+  // Cut off at the ceiling before it is held in memory (red team L3), not measured after reading.
+  const text = await readBounded(request, MAX_SIGNAL_BYTES);
+  if (text === null) return NOTHING();
   let body: unknown;
   try {
     body = JSON.parse(text);
@@ -52,6 +49,10 @@ export async function POST(request: NextRequest) {
     return NOTHING();
   }
   const signal = parseSignal(body);
-  if (signal) later(() => countSignal(signal));
+  if (signal) {
+    // Into the instance's buffer now, to the store at most every ten seconds, after the answer has left (2.18d).
+    queueSignal(signal);
+    later(() => flushInsights());
+  }
   return NOTHING();
 }

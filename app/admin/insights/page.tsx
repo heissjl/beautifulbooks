@@ -5,6 +5,10 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import type { ProviderRow } from '@/lib/insights/model';
 import { buildReport, parseMarket, parseRange, RANGES, type InsightsReport } from '@/lib/insights/report';
+import { insightsOff } from '@/lib/insights/store';
+import { DRAFTS_CAP, FILL_LINES, SUGGESTIONS_CAP, type FillList } from '@/lib/fill';
+import { gatherOperations, type OperationsFacts } from '@/lib/operations';
+import { WALLS_CAP } from '@/lib/walls/model';
 import type { Market } from '@/lib/market';
 import { adminCookieValid } from '@/lib/suggest/session';
 import { PRICES_AS_OF } from '@/lib/insights/prices';
@@ -53,6 +57,8 @@ export default async function InsightsPage({ searchParams }: Props) {
   // K17: every Shelf-Portrait that got a short link, read from the links' store (not from the daily totals, so it
   // also shows the boards made before the counter existed). A silent store is said as such, never as "none".
   const links: LinkList | null | 'down' = await (linkStoreFromEnv()?.list?.(300) ?? Promise.resolve(null)).catch(() => 'down' as const);
+  // The operations block (2.18g): the store's fill level, Google, the last morning mail, this instance's memory — read now, not collected.
+  const operations = await gatherOperations();
   const href = (next: { days?: number; market?: Market | null }) => {
     const q = new URLSearchParams();
     q.set('days', String(next.days ?? days));
@@ -84,6 +90,8 @@ export default async function InsightsPage({ searchParams }: Props) {
         {report.ok ? <Report report={report} /> : <StoreDown reason={report.reason} />}
 
         <Portraits links={links} ops={report.ok ? report.ops : null} days={days} />
+
+        <OperationsSection facts={operations} />
 
       </main>
       <SiteFooter />
@@ -189,6 +197,8 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           <Note>
             Ein Signal je Besuch, beim Verlassen der Seite. Abgleich: {plural(books.bought, 'Besuch', 'Besuche')} mit Klick laut Browser,{' '}
             {plural(clicks.total, 'Klick', 'Klicks')} laut /go/ — ein Besuch kann mehrere Klicks haben, ein verlorenes Signal fehlt nur links.
+            Signale und Klicks sammelt jede Instanz und schreibt sie höchstens alle zehn Sekunden; was eine Instanz in ihren letzten zehn
+            Sekunden zählte, geht mit ihr verloren (2.18d).
           </Note>
         </Card>
         <Card title="Je Tag" sub={`Klicks zum Händler, ${shortDay(report.from)} bis ${shortDay(report.to)} (UTC).`}>
@@ -200,8 +210,8 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
         <Card title="Händler" sub={`Klicks je Händler und Markt, über /go/ exakt gezählt; ein Klick ist kein Kauf. US ${nf.format(clicks.byMarket.us)} · UK ${nf.format(clicks.byMarket.uk)} · DE ${nf.format(clicks.byMarket.de)}.`}>
           <RetailerTable rows={clicks.rows} total={clicks.total} labels={report.labels} few={report.few} />
           <Note>
-            Gezählt werden Links nach ISBN, Händlersuchen nach Titel und die lokalen Buchhandlungen; Google Lens, TinEye, WorldCat und
-            Open Library sind keine Händler. Deine eigenen Klicks mit Admin-Cookie zählen nicht.
+            Gezählt werden Links nach ISBN, Händlersuchen nach Titel und die lokalen Buchhandlungen; Google Lens, TinEye, WorldCat,
+            Goodreads und Open Library sind keine Händler. Deine eigenen Klicks mit Admin-Cookie zählen nicht.
           </Note>
         </Card>
       </section>
@@ -340,6 +350,12 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
               name="Open Library"
               good="keine Suche ist an Open Library gescheitert"
               bad={`${nf.format(report.ops.totals['ol-failed'])} gescheiterte ${report.ops.totals['ol-failed'] === 1 ? 'Suche' : 'Suchen'} an ${report.ops.daysWith['ol-failed'].length === 1 ? 'einem Tag' : `${report.ops.daysWith['ol-failed'].length} Tagen`}`}
+            />
+            <Status
+              ok={!insightsOff()}
+              name="Zählung"
+              good="an — Signale und Klicks je Instanz gesammelt, höchstens alle zehn Sekunden geschrieben"
+              bad="abgeschaltet (INSIGHTS=off): seit diesem Deploy wird nichts gezählt; die Tage davor stehen hier weiter"
             />
           </ul>
           <Note>
@@ -531,7 +547,11 @@ function PhotoSection({ photos }: { photos: Extract<InsightsReport, { ok: true }
   return (
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Tile label="Fotos gelesen" value={photos.read} note={`gescheitert ${nf.format(photos.failed)} · am Tageslimit abgewiesen ${nf.format(photos.capped)}`} />
+        <Tile
+          label="Fotos gelesen"
+          value={photos.read}
+          note={`gescheitert ${nf.format(photos.failed)} · am Tageslimit abgewiesen ${nf.format(photos.capped)} · Speicher stumm ${nf.format(photos.store)} · Instanz ausgelastet ${nf.format(photos.busy)}`}
+        />
         <Tile label="Bücher erkannt" value={photos.books} note={`gefunden ${nf.format(photos.found)} · unsicher ${nf.format(photos.maybe)}`} />
         <div className="rounded-lg border border-line bg-surface p-3 sm:p-4">
           <div className="text-sm text-ink-2">Kosten im Zeitraum</div>
@@ -629,6 +649,78 @@ function Portraits({ links, ops, days }: { links: LinkList | null | 'down'; ops:
   );
 }
 
+const LIST_NAMES: Record<FillList, string> = { votes: 'Stimmen', walls: 'Leser-Sammlungen', drafts: 'Entwürfe', suggestions: 'Vorschläge' };
+const RESULT_NAMES: Record<string, string> = { sent: 'gesendet', already: 'schon gesendet', 'not-configured': 'kein Mailschlüssel', failed: 'fehlgeschlagen' };
+
+/**
+ * The operations block (ROADMAP 2.18g): what the store holds and how full
+ * its lists are, Google's state, the last morning mail, what this instance
+ * holds in memory. Read when this page loads, by Julian — nothing here is
+ * collected over time, and nothing is about a reader.
+ */
+function OperationsSection({ facts }: { facts: OperationsFacts }) {
+  const f = facts.fill;
+  const count = (v: number | null) => (v === null ? '?' : nf.format(v));
+  const hb = facts.heartbeat;
+  const hbTime = (at: string) => new Date(at).toLocaleString('de-DE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+  return (
+    <section className="mt-6">
+      <Card title="Speicher und Instanz" sub="Füllstand der Redis, Google, die letzte Morgenmail — gelesen beim Laden dieser Seite, nicht gesammelt.">
+        {facts.configured && f ? (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <Tile label="Schlüssel" value={count(f.keys)} note="DBSIZE" />
+            <Tile label="Stimmen" value={count(f.votes)} note={`Linie ${nf.format(FILL_LINES.votes)}, alle Pools`} />
+            <Tile label="Leser-Sammlungen" value={count(f.walls)} note={`gespeichert, von ${nf.format(WALLS_CAP)}`} />
+            <Tile label="Entwürfe" value={count(f.drafts)} note={`von ${nf.format(DRAFTS_CAP)}`} />
+            <Tile label="Vorschläge" value={count(f.suggestions)} note={`von ${nf.format(SUGGESTIONS_CAP)}`} />
+            <Tile label="Veröffentlichte Entwürfe" value={f.contentBytes === null ? '?' : `${nf.format(Math.round(f.contentBytes / 1024))} KB`} note="collections:content" />
+          </div>
+        ) : (
+          <p className="text-sm text-ink-2">Hier ist kein Speicher verbunden, also gibt es keinen Füllstand zu lesen.</p>
+        )}
+        <ul className="mt-4 space-y-2 text-sm">
+          <Status
+            ok={facts.warnings.length === 0}
+            name="Füllstand"
+            good="keine Liste über ihrer Linie"
+            bad={facts.warnings.map(w => `${LIST_NAMES[w.list]} ${nf.format(w.n)} über ${nf.format(w.line)}`).join('; ') + ' — eine Mail je Tag und Liste'}
+          />
+          <Status
+            ok={facts.googlePausedS === 0 && !facts.googleFieldsBroken}
+            name="Google"
+            good="antwortet"
+            bad={facts.googlePausedS > 0 ? `pausiert noch ${nf.format(facts.googlePausedS)} s (Kontingent oder Rate-Limit)` : 'die Feldsuche antwortet nichts (1.13); der Katalog steht ein'}
+          />
+          <Status
+            ok={!facts.pause.active}
+            name="Seiten-Lesungen"
+            good={`fragen den Speicher; ${nf.format(facts.pause.trips)}× pausiert seit Start dieser Instanz`}
+            bad={`pausiert, noch ${nf.format(facts.pause.remainingS)} s; ${nf.format(facts.pause.trips)}× seit Start dieser Instanz`}
+          />
+          <Status
+            ok={hb !== null && hb !== 'unreadable' && hb.result === 'sent'}
+            name="Morgenmail"
+            good={hb && hb !== 'unreadable' ? `${hb.day} ${RESULT_NAMES[hb.result] ?? hb.result}, ${hbTime(hb.at)} UTC` : ''}
+            bad={
+              hb === 'unreadable'
+                ? 'der Speicher hat nicht geantwortet'
+                : hb === null
+                  ? 'noch keine aufgezeichnet — die Aufzeichnung gibt es seit 2.18g'
+                  : `${hb.day}: ${RESULT_NAMES[hb.result] ?? hb.result}, ${hbTime(hb.at)} UTC`
+            }
+          />
+        </ul>
+        <Note>
+          Stimmen, Sammlungen, Entwürfe und Vorschläge sind Listenlängen (LLEN), die Schlüssel DBSIZE; INFO gibt es über die REST-Schnittstelle nicht.
+          Diese Instanz hält {nf.format(facts.instance.insightsPending)} Analyse-Felder und {nf.format(facts.instance.viewsPending)} Aufrufe ungeschrieben,
+          hat Wände {nf.format(facts.instance.wallHits)}× aus dem Speicher und {nf.format(facts.instance.wallMisses)}× vom Store beantwortet und die
+          Sammlungen {facts.instance.liveHeldAgeS === null ? 'noch nicht' : `vor ${nf.format(facts.instance.liveHeldAgeS)} s`} gelesen — die Seite sieht nur die Instanz, die sie gerendert hat.
+        </Note>
+      </Card>
+    </section>
+  );
+}
+
 const REJECTION_NAMES: Record<string, string> = {
   'old-browser': 'Browser von vorletztem Jahr oder älter',
   headless: 'headless',
@@ -698,11 +790,11 @@ function Bars({ rows, total, few }: { rows: Array<{ label: string; value: number
   );
 }
 
-function Tile({ label, value, note }: { label: string; value: number; note?: string }) {
+function Tile({ label, value, note }: { label: string; value: number | string; note?: string }) {
   return (
     <div className="rounded-lg border border-line bg-surface p-3 sm:p-4">
       <div className="text-sm text-ink-2">{label}</div>
-      <div className="mt-1 text-2xl font-medium text-ink">{nf.format(value)}</div>
+      <div className="mt-1 text-2xl font-medium text-ink">{typeof value === 'number' ? nf.format(value) : value}</div>
       {note && <div className="mt-1 text-xs text-ink-3">{note}</div>}
     </div>
   );

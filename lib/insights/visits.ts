@@ -235,6 +235,10 @@ export interface PhotoSummary {
   failed: number;
   /** Photos turned away by the day's limit, before the model was asked. */
   capped: number;
+  /** Photos turned away because the store was silent and the budget could not be checked (2.18h). */
+  store: number;
+  /** Photos turned away because the instance was reading its share already (2.18h). */
+  busy: number;
   books: number;
   found: number;
   maybe: number;
@@ -257,7 +261,7 @@ export function summarizePhotos(
   hashes: ReadonlyArray<DayHash | null>,
   price: (model: string, input: number, output: number) => number | null,
 ): PhotoSummary {
-  const s: PhotoSummary = { read: 0, failed: 0, capped: 0, books: 0, found: 0, maybe: 0, tokens: {}, costUsd: 0, unpricedTokens: 0, perDay: [] };
+  const s: PhotoSummary = { read: 0, failed: 0, capped: 0, store: 0, busy: 0, books: 0, found: 0, maybe: 0, tokens: {}, costUsd: 0, unpricedTokens: 0, perDay: [] };
   days.forEach((day, i) => {
     const hash = hashes[i] ?? {};
     const dayTokens: Record<string, { input: number; output: number }> = {};
@@ -269,7 +273,7 @@ export function summarizePhotos(
         const t = (dayTokens[model] ??= { input: 0, output: 0 });
         if (kind === 'in') t.input += k;
         else t.output += k;
-      } else if (kind === 'read' || kind === 'failed' || kind === 'capped' || kind === 'books' || kind === 'found' || kind === 'maybe') {
+      } else if (kind === 'read' || kind === 'failed' || kind === 'capped' || kind === 'store' || kind === 'busy' || kind === 'books' || kind === 'found' || kind === 'maybe') {
         s[kind] += k;
       }
     }

@@ -47,6 +47,7 @@ import type { Market } from '@/lib/market';
 import type { Translate } from '@/lib/i18n/translate';
 import type { BuyLink, Cover, EditionView } from '@/lib/model';
 import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
+import { readableAuthor, shownTitle } from '@/lib/titleshown';
 import { coverForId, leadLanguagesSettled } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
@@ -129,7 +130,7 @@ function LoadFailed({ httpStatus, onRetry, backHref, toResults }: {
   );
 }
 
-function TitleBlock({ title, authors, meta }: { title?: string; authors?: string[]; meta?: string }) {
+function TitleBlock({ title, catalogueTitle, authors, meta }: { title?: string; catalogueTitle?: string; authors?: string[]; meta?: string }) {
   if (!title) {
     return (
       <div className="mb-8 max-w-3xl animate-pulse" aria-hidden="true">
@@ -141,6 +142,8 @@ function TitleBlock({ title, authors, meta }: { title?: string; authors?: string
   return (
     <div className="mb-8 max-w-3xl">
       <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl">{title}</h1>
+      {/* The catalogue's own title, when the page shows an edition's instead (6.2). */}
+      {catalogueTitle && <p className="mt-2 text-sm text-ink-3">{catalogueTitle}</p>}
       {authors && authors.length > 0 && <p className="mt-3 text-lg text-ink-2">{authors.join(', ')}</p>}
       <p className="mt-1 min-h-5 text-sm text-ink-3">{meta ?? ''}</p>
     </div>
@@ -172,6 +175,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
 
 function BookDetail() {
   const t = useT();
+  const locale = useLocale();
   const wallsOn = useContext(WallsOn);
   const params = useParams<{ id: string; coverId?: string }>();
   const router = useRouter();
@@ -345,6 +349,31 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
+  /*
+    Leafing in the phone sheet (ROADMAP 6.5): the neighbours of the selected
+    cover in its language group, in the wall's order — the whole wall as a
+    fallback when it sits in none. The gallery's active tab is its own state
+    and may differ ("All languages"); noted in the history, raised as a prop
+    only if it ever shows. Each step selects a cover like a tap on the tile
+    does, so it asks for that ISBN once (CDN-cached a day).
+  */
+  const sheetStep = (() => {
+    if (!view || !selected) return undefined;
+    const order = view.groups.find(g => g.covers.some(c => c.id === selected.id))?.covers ?? view.all;
+    const at = order.findIndex(c => c.id === selected.id);
+    if (at < 0) return undefined;
+    const prev = order[at - 1]?.id;
+    const next = order[at + 1]?.id;
+    return {
+      prev,
+      next,
+      prevCaption: prev ? view.captions.get(prev) : undefined,
+      nextCaption: next ? view.captions.get(next) : undefined,
+      n: at + 1,
+      total: order.length,
+      onStep: selectCover,
+    };
+  })();
   // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
   const reportVerdict = useBookSignal({ workId: params.id, market: market ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
@@ -369,8 +398,9 @@ function BookDetail() {
     return (
       <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
-          title={work?.title ?? preview?.title}
-          authors={work?.authors ?? preview?.authors}
+          // The card's choice first (6.2): the title the reader clicked, until the editions are in.
+          title={preview?.title ?? work?.title}
+          authors={(work?.authors ?? preview?.authors)?.map(readableAuthor)}
           meta={work?.editionCount ? t('{n} editions', { n: work.editionCount }) : undefined}
         />
         <LoadingStage
@@ -438,9 +468,16 @@ function BookDetail() {
   */
   const decadesPossible = merged.done && worthAPage(groupByDecade(view.covers, merged.editions));
   const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
+  // The title in the search's language, else the reader's for a title not in Latin script (6.2).
+  const shown = shownTitle(work.title, { query: searchParams.get('q') ?? undefined, editions: merged.editions, languages: [locale] });
   const meta = [
     `${progressLabel(view.covers.length, merged, t)}.`,
-    work.firstPublishYear ? t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) }) : undefined,
+    // A year two sources agree on, or Julian confirmed, is stated; the catalogue's alone is quoted (6.16).
+    work.firstPublishYear
+      ? work.firstPublishYearSource === 'checked'
+        ? t('First published in {year}.', { year: String(work.firstPublishYear) })
+        : t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) })
+      : undefined,
   ].filter(Boolean).join(' ');
 
   return (
@@ -456,7 +493,7 @@ function BookDetail() {
       */
       right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} />}
     >
-      <TitleBlock title={work.title} authors={work.authors} meta={meta} />
+      <TitleBlock title={shown.title} catalogueTitle={shown.catalogueTitle} authors={work.authors.map(readableAuthor)} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
@@ -530,6 +567,8 @@ function BookDetail() {
         <CoverSheet
           coverUrl={selected.url}
           caption={view.captions.get(selected.id) ?? ''}
+          selectedId={selected.id}
+          step={sheetStep}
           share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
           /*
             On a phone "Add to collection" sits in the sheet's header beside
@@ -1092,9 +1131,10 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
 
       {/*
         Julian, 2026-09-09: where a shop that could pay commission has a link
-        to exactly this printing, that link wins and this row does not appear
-        at all. It shows up only when no such link is possible — a foreign
-        ISBN, or none — and it says plainly that it leads somewhere else.
+        to exactly this printing, that link wins — it leads, above. From
+        2026-09-09 to 2026-10-18 this row then did not appear at all; since
+        ROADMAP 6.72 (2) (Julian: "immer zeigen") it stands in every case, last
+        in the column, and says plainly that it leads to any edition.
       */}
       {plan.anyEdition.length > 0 && (
         <div className="mt-5 border-t border-line pt-4">
@@ -1114,7 +1154,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
             ))}
           </div>
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            {t('These search for “{title}” by title. Whatever they carry is a different printing from the one above, with a cover of its own.', { title: displayTitle(workTitle) })}
+            {/* Any printing the shop lists, each with its own cover — said without a claim about stock (E12) or about this cover (§9.2). */}
+            {t('These search the shop for “{title}” by title: any edition it lists, each with a cover of its own — no promise about this one.', { title: displayTitle(workTitle) })}
           </p>
         </div>
       )}

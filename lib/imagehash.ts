@@ -19,6 +19,7 @@ export type { ImageSignature };
 // The hash itself lives in `dhash.ts`, which the browser may import too
 // (ROADMAP 6.34); re-exported so nothing that used it from here changes.
 import { dhash, luminance, resizeGray, toGray, type GrayImage } from './dhash';
+import { aspectOf } from './coverindexrow';
 export { dhash, luminance, resizeGray, toGray, type GrayImage };
 
 export interface RgbaImage {
@@ -132,6 +133,7 @@ export function signature(bytes: Uint8Array, options: SignatureOptions = {}): Im
   if (!decoded) return null;
   const gray = toGray(decoded);
   const { mean, contrast } = luminance(gray);
-  const base: ImageSignature = { hash: dhash(gray), contrast, mean };
+  // The shape rides along for 6.70b: the decoded size is at hand, and it costs some 13 bytes a signature.
+  const base: ImageSignature = { hash: dhash(gray), contrast, mean, aspect: aspectOf(decoded.width, decoded.height) ?? undefined };
   return options.colour ? { ...base, ...colour(decoded) } : base;
 }
