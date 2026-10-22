@@ -166,7 +166,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
             loadSuggestList();
           }}
           onFocus={() => { setShowSuggestions(true); loadSuggestList(); }}
-          placeholder={isbnMode ? t('The ISBN of your copy') : authorMode ? t('An author’s name') : t('A title, or a title and author')}
+          placeholder={isbnMode ? t('The ISBN of your copy') : authorMode ? t('Author only: type a name') : t('A title, or a title and author')}
           aria-label={isbnMode ? t('Search an ISBN') : authorMode ? t('Search an author') : t('Search a book title')}
           inputMode={isbnMode ? 'numeric' : undefined}
           aria-invalid={badIsbn || undefined}
