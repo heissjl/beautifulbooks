@@ -17,6 +17,7 @@
  * other's work.
  */
 import { randomBytes } from 'node:crypto';
+import { DRAFTS_CAP } from '../fill';
 import { commandsFromEnv, type RedisCommands } from '../redis';
 import {
   addAuthor,
@@ -68,6 +69,9 @@ export interface DraftStore {
 export const DRAFT_LIMITS = { title: 120, intro: 1200, by: 60, works: 400, authors: 200, publishers: 10 };
 
 const KEYS = { ids: 'curate:drafts', draft: (id: string) => `curate:draft:${id}` };
+
+/** The list of draft ids — for the fill level of the store (ROADMAP 2.18g). */
+export const DRAFTS_LIST_KEY = KEYS.ids;
 
 export function isDraftId(value: string): boolean {
   return /^[A-Za-z0-9_-]{8,16}$/.test(value);
@@ -275,6 +279,16 @@ export async function listDrafts(store: DraftStore): Promise<Draft[]> {
   return all
     .filter((d): d is Draft => d !== null && !d.deleted)
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+}
+
+/**
+ * There are as many live drafts as there may be (ROADMAP 2.20, `DRAFTS_CAP`):
+ * a new one is refused with a sentence. Live, not registered: deleting or
+ * publishing-and-taking-over frees a place, as the sentence promises. No cap
+ * per friend — the password is shared.
+ */
+export async function draftsFull(store: DraftStore): Promise<boolean> {
+  return (await listDrafts(store)).length >= DRAFTS_CAP;
 }
 
 const shared = globalThis as typeof globalThis & { __curateDevMemory?: DraftStore };

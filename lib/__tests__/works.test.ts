@@ -413,6 +413,19 @@ describe('foldDuplicateCovers (E8 phase 2, three tiers in SPEC 9.3 step 12)', ()
     expect(foldDuplicateCovers(covers, sigs)).toHaveLength(2);
   });
 
+  it('folds an imprint family a year apart (tier 3, 6.7 step 2): Holt Paperbacks 1998 under Henry Holt 1997', () => {
+    // Mason & Dixon, measured 2026-09-07: distance 10, held apart because {holt, paperbacks} is no subset of {henry, holt}.
+    const covers = [cover('ol:holt97', ['e1']), cover('ol:holt98', ['e2']), cover('ol:penguin', ['e3'])];
+    const sigs = new Map([['ol:holt97', sig(NEAR_A)], ['ol:holt98', sig(NEAR_B)], ['ol:penguin', sig(NEAR_B)]]);
+    const editions = [
+      ed({ id: 'e1', isbn13: '9780805037586', publisher: 'Henry Holt', year: 1997, language: 'en' }),
+      ed({ id: 'e2', isbn13: '9780805059694', publisher: 'Holt Paperbacks', year: 1998, language: 'en' }),
+      // Same distance, same year, but another house: only an everyday word in common, stays apart.
+      ed({ id: 'e3', isbn13: '9780140000000', publisher: 'Penguin Paperbacks', year: 1998, language: 'en' }),
+    ];
+    expect(foldDuplicateCovers(covers, sigs, editions).map(c => c.id)).toEqual(['ol:holt97', 'ol:penguin']);
+  });
+
   it('folds scans of one printing by publisher and year (tier 3)', () => {
     // Three Knopf 1987 scans of Beloved, measured 5, 9 and 12 bits apart.
     const covers = [cover('ol:1', ['e1']), cover('ol:2', ['e2']), cover('ol:3', ['e3'])];
@@ -564,6 +577,17 @@ describe('groupCoversByLanguage sorting', () => {
     ]);
     expect(groupCoversByLanguage(covers, editions, undefined, sigs)[0].coverIds).toEqual(['ol:cover', 'ol:page']);
   });
+
+  it('sends an image of no cover’s shape to the end too, and lets an unmeasured one stand (6.70b)', () => {
+    const covers = [cover('ol:card', ['e1']), cover('ol:old', ['e2']), cover('ol:cover', ['e3'])];
+    const editions = [ed({ id: 'e1', year: 2020, language: 'en' }), ed({ id: 'e2', year: 2000, language: 'en' }), ed({ id: 'e3', year: 1990, language: 'en' })];
+    const sigs = new Map([
+      ['ol:card', { hash: '11d457b5e85d7934', contrast: 30, mean: 120, aspect: 1.42 }],
+      ['ol:old', { hash: '21d457b5e85d7934', contrast: 30, mean: 120 }],
+      ['ol:cover', { hash: '31d457b5e85d7934', contrast: 30, mean: 120, aspect: 0.66 }],
+    ]);
+    expect(groupCoversByLanguage(covers, editions, undefined, sigs)[0].coverIds).toEqual(['ol:old', 'ol:cover', 'ol:card']);
+  });
 });
 
 describe('samePublisher', () => {
@@ -578,6 +602,15 @@ describe('samePublisher', () => {
     expect(samePublisher('Scribner', 'Lulu.com')).toBe(false);
     expect(samePublisher('Diogenes', 'Reclam')).toBe(false);
     expect(samePublisher('Debolsillo', 'Alfaguara')).toBe(false);
+  });
+  it('knows an imprint family by one shared house name, never by an everyday word (6.7 step 2)', () => {
+    expect(samePublisher('Holt Paperbacks', 'Henry Holt')).toBe(true);
+    expect(samePublisher('Holt Paperbacks', 'Henry Holt and Company')).toBe(true);
+    expect(samePublisher('Oxford University Press', 'Cambridge University Press')).toBe(false);
+    expect(samePublisher('Random House', 'House of Anansi')).toBe(false);
+    expect(samePublisher('Penguin Paperbacks', 'Holt Paperbacks')).toBe(false);
+    expect(samePublisher('Modern Library', 'Modern Classics')).toBe(false);
+    expect(samePublisher('Modern Library', 'The Modern Library')).toBe(true);
   });
   it('matches nothing when the publisher is unknown or only noise words', () => {
     expect(samePublisher(undefined, 'Knopf')).toBe(false);

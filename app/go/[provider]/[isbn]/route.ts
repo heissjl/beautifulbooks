@@ -6,7 +6,7 @@ import { cleanIsbn } from '@/lib/normalize';
 import { localLinkFor } from '@/lib/localshops';
 import { marketFromRequest } from '@/app/api/works/[id]/route';
 import { later } from '@/app/api/count';
-import { countClick, countRejected } from '@/lib/insights/store';
+import { countRejected, flushInsights, queueClick } from '@/lib/insights/store';
 import { humanRequest } from '@/lib/insights/human';
 import { ADMIN_COOKIE, adminTokenValid } from '@/lib/suggest/auth';
 import { measure } from '@/app/api/measure';
@@ -77,12 +77,15 @@ function countIfReader(request: NextRequest, click: ClickEvent): void {
   const verdict = humanRequest(request.headers, 'go');
   if (!verdict.human) {
     recordRejected('go', verdict.reason);
+    // Rejections are rare per instance and go straight to the store (3.1i); the clicks below are buffered (2.18d).
     later(() => countRejected('go', verdict.reason));
     return;
   }
   recordClick(click);
   const { provider, market, kind } = click;
-  later(() => countClick({ provider, market, kind }));
+  // Into the instance's buffer now, to the store at most every ten seconds, after the redirect has left (2.18d).
+  queueClick({ provider, market, kind });
+  later(() => flushInsights());
 }
 
 /**

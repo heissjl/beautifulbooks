@@ -42,7 +42,8 @@ export default function IdLinkNotice({ me, onChange }: { me: MyWalls; onChange: 
   const same = !!linked && linked === own;
   const quiet = !!linked && me.loaded && !own;
   useEffect(() => {
-    if (quiet && linked) adopt(linked);
+    // Both branches set state; a microtask keeps that out of the effect itself (react-hooks 7.1 reads through `adopt`).
+    if (quiet && linked) Promise.resolve().then(() => adopt(linked));
     else if (same) Promise.resolve().then(() => {
       setLinked(null);
       setNote(t('This link carries the ID this browser already uses.'));

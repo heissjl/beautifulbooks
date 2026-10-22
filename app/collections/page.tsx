@@ -5,7 +5,7 @@ import CollectionGrid from '@/components/CollectionGrid';
 import WallsInvite from '@/components/WallsInvite';
 import ReaderWallCard from '@/components/ReaderWallCard';
 import { POPULAR_VIEWS, toPublic } from '@/lib/walls/model';
-import { shownWalls, wallStoreFromEnv } from '@/lib/walls/store';
+import { shownWallsCached, wallStoreFromEnv } from '@/lib/walls/store';
 import { wallsEnabled } from '@/lib/walls/switch';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
@@ -28,7 +28,8 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/collections` },
 };
 
-// Per request: a collection can be published from /curate without a deploy (5.10g).
+// Per request: a collection can be published from /curate without a deploy (5.10g) — read from the
+// instance's memory, a minute at most behind the store (2.18c).
 export const dynamic = 'force-dynamic';
 
 export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { locale?: Locale } = {}) {
@@ -36,10 +37,11 @@ export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { loc
   const t = translator(locale);
   const collections = await liveCollections();
   if (collections.length === 0) notFound();
-  // Popular walls by readers stand among the collections (5.13d); a silent store just leaves them out.
+  // Popular walls by readers stand among the collections (5.13d), from the instance's memory (2.18c);
+  // a silent store just leaves them out.
   const store = wallsEnabled() ? wallStoreFromEnv() : null;
   const popular = store
-    ? (await shownWalls(store).catch(() => []))
+    ? (await shownWallsCached(store).catch(() => []))
         .filter((s) => s.views >= POPULAR_VIEWS)
         .sort((a, b) => b.views - a.views)
         .slice(0, 3)

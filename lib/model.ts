@@ -16,6 +16,12 @@ export interface Work {
   /** Open Library author keys aligned with `authors`, when known. */
   authorKeys?: string[];
   firstPublishYear?: number;
+  /**
+   * Where the year comes from (ROADMAP 6.16): `checked` from `data/first-years.json`
+   * (two sources agree, or Julian read the difference), else Open Library's own
+   * number, which is wrong for a third of the curated books. The page words the two apart.
+   */
+  firstPublishYearSource?: 'openlibrary' | 'checked';
   /** Total edition count reported by the source, not just what was loaded. */
   editionCount?: number;
   /**
@@ -94,6 +100,10 @@ export interface WorkSummary extends Work {
   popularity?: Popularity;
   /** Position in the source's own ranking, 0-based. Absent for merged works. */
   sourceRank?: number;
+  /** The title of the edition the search matched — the search's language; `lib/titleshown.ts` decides whether it is shown (6.2). */
+  matchedTitle?: string;
+  /** That edition's language, ISO 639-1. */
+  matchedLanguage?: string;
 }
 
 /** Covers of one work grouped for the detail page (SPEC §3 F2.3). */

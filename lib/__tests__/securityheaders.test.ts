@@ -9,14 +9,15 @@ import { cspReportLine, hostOf, pathOf } from '../cspreport';
 describe('securityHeaders', () => {
   const byKey = Object.fromEntries(securityHeaders().map(h => [h.key, h.value]));
 
-  it('sends the five headers and the report-only policy', () => {
+  it('sends the five headers and the enforced policy (2.12a), still reporting to /api/csp', () => {
     expect(byKey['X-Content-Type-Options']).toBe('nosniff');
     expect(byKey['Referrer-Policy']).toBe('strict-origin-when-cross-origin');
     expect(byKey['X-Frame-Options']).toBe('DENY');
     expect(byKey['Permissions-Policy']).toContain('camera=()');
-    expect(byKey['Content-Security-Policy-Report-Only']).toContain("frame-ancestors 'none'");
-    // Report-only until a week of reports has been read: never the enforcing header yet.
-    expect(byKey['Content-Security-Policy']).toBeUndefined();
+    expect(byKey['Content-Security-Policy']).toContain("frame-ancestors 'none'");
+    expect(byKey['Content-Security-Policy']).toContain('report-uri /api/csp');
+    // Enforced since 2026-10-17 (ROADMAP 2.12a): the report-only header is gone, not sent twice.
+    expect(byKey['Content-Security-Policy-Report-Only']).toBeUndefined();
   });
 
   it('lets the browser load covers from the two catalogues and nothing else foreign', () => {

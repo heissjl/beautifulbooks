@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server';
 import { readBody } from '@/app/api/versus/guard';
-import { liveRecords } from '@/lib/collections-live';
-import { draftToContinue, listDrafts, newDraft } from '@/lib/curate/drafts';
+import { liveRecordsFresh } from '@/lib/collections-live';
+import { draftsFull, draftToContinue, listDrafts, newDraft } from '@/lib/curate/drafts';
+import { DRAFTS_CAP } from '@/lib/fill';
 import { json, memberGate } from '../../suggest/guard';
 import { draftStore, storeDown } from '../store';
 import { measure } from '@/app/api/measure';
@@ -38,7 +39,8 @@ export async function POST(request: NextRequest) {
   const s = draftStore();
   if ('response' in s) return s.response;
   const body = await readBody(request);
-  const from = typeof body.from === 'string' && body.from ? (await liveRecords()).find(r => r.slug === body.from) : undefined;
+  // Fresh (2.18c): the copy must be the collection as the site shows it now, not the instance's minute-old copy.
+  const from = typeof body.from === 'string' && body.from ? (await liveRecordsFresh()).find(r => r.slug === body.from) : undefined;
   if (body.from && !from) return json({ error: 'That collection does not exist.' }, 400);
   if (from && body.reuse === true) {
     try {
@@ -47,6 +49,12 @@ export async function POST(request: NextRequest) {
     } catch {
       return storeDown();
     }
+  }
+  // At most DRAFTS_CAP live drafts (ROADMAP 2.20): a refusal with a sentence, never a store that stops taking writes.
+  try {
+    if (await draftsFull(s.store)) return json({ error: `The drafts are full: ${DRAFTS_CAP} of them are waiting. Publish or delete one, then try again.` }, 503);
+  } catch {
+    return storeDown();
   }
   let draft;
   try {
