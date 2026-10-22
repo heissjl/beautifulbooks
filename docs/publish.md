@@ -56,12 +56,13 @@
 
 - [ ] **`npm run worktrees -- --fetch`** — am Anfang der Sitzung und vor jedem Merge nach `main`; `origin/main` ist die Produktion, das lokale `main` nicht [CLAUDE.md Working rules; umgang §11; Hook `session-start`, `guard-push`].
 - [ ] **`origin/main` in den eigenen Branch holen**, bevor nach `main` gemerged wird; im Worktree dafür das Host-Werkzeug `sync_with_base_branch` benutzen, wo es verfügbar ist [umgang §11]. Konflikte in `docs/history.md`: beide Seiten haben ans Ende angehängt — beide behalten [umgang §11, Umzug].
-- [ ] **Vor dem Merge nach `main` ein `/code-review` in frischem Kontext** (Regel ohne Hook) [umgang §11, Punkt „Fünf Hooks“].
+- [ ] **Vor dem Merge nach `main` ein `/code-review` in frischem Kontext** (Regel ohne Hook) [umgang §11, Punkt „Fünf Hooks“] — **nicht bei reinen Doku-Commits** (Julian, 2026-10-22: „erstes nein“).
 - [ ] **Ein Commit je Roadmap-Punkt**, der Betreff nennt den Punkt, die Nachricht beantwortet die Analytik-Liste [CLAUDE.md Working rules; umgang §11].
 - [ ] Nie `git stash` ohne Namen — WIP-Commit statt Stash [umgang §11].
 
 ## 6. Push
 
+- [ ] **Vor einem großen Change** (Julian, 2026-10-22: „vor großen changes“) zuerst `npm run backup`, damit es eine Kopie des Stands vor dem Deploy gibt; wann ein Change „groß“ ist, hat Julian nicht festgelegt — im Zweifel fragen [umgang §4, 2.11].
 - [ ] **Nur auf Julians Wort.** Der Hook fragt bei jedem Push nach `main` nach [guard-push].
 - [ ] **Reihenfolge: zuerst `main`, danach der Branch.** Derselbe SHA zuerst als Branch und dann nach `main` gepusht baute am 2026-10-08 nur eine Preview (Produktion blieb alt) [Gedächtnis `same-sha-push-skips-production`; umgang §4].
 - [ ] Ein Push, der an „sideband packet“ stirbt oder hängt, ist Transport, nicht Zugang: `git -c http.postBuffer=524288000 push` [umgang §11; Gedächtnis `push-large-packs-postbuffer`].
@@ -77,13 +78,26 @@
 
 - [ ] **Genau einmal**: die eine Seite, die eine Suche, die geänderte Sache gegen `https://buyitscovers.com` — nie in einer Schleife, nie als Messreihe; das löst Vercels Bot-Abwehr aus (403, `x-vercel-mitigated: challenge`, sieht aus wie ein Ausfall) und kann Google-Kontingent kosten [CLAUDE.md Working rules/Rules that hold; umgang §4; Gedächtnis `test-on-localhost-not-production`]. Produktionsversuche mit Schreiben nur als `BB_TEST_VISITOR`, nie unter Julians Kennung [Gedächtnis `production-tests-use-test-visitor`].
 - [ ] **Fehler lesen, solange er geschieht:** `vercel logs --project beautifulbooks --follow` oder binnen der Stunde (Hobby); `--json` wiederholt Zeilen (nach `id` entdoppeln) [umgang §4].
-- [ ] **`npm run backup`** (fragt die Produktion einmal, Admin-Passwort aus dem `.env.local` des Hauptordners, schreibt nach `../bb-backups/`; Datei nie ins Repo, nie in einen Chat) nach einem Deploy, der Speicher oder die Export-Route berührt [umgang §4, 2.11]. *Siehe „Offen“: ob nach jedem Deploy.*
+- [ ] **`npm run backup`** (fragt die Produktion einmal, Admin-Passwort aus dem `.env.local` des Hauptordners, schreibt nach `../bb-backups/`; Datei nie ins Repo, nie in einen Chat) **nach einem Deploy, der Speicher oder die Export-Route berührt** (Julian, 2026-10-22: „vor großen changes und bei denen die speicher und export route berühren“) [umgang §4, 2.11]. Das Gegenstück davor: Schritt 6.
 
 ## 9. Festhalten — nichts ist im Chat fertig
 
 - [ ] **Historie** (Messung, was geprüft werden konnte und was nicht), **Roadmap** (Haken, kurz), **docs/roadmap-archive.md**, **docs/features.md**, **SPEC.md** wenn sich Verhalten ändert — `/abhaken <Nr>` führt die fünf Schritte [CLAUDE.md „Read this first“; `.claude/skills/abhaken`].
 - [ ] Was Julian nebenbei gesagt hat und aufbewahrenswert ist, in eine Datei, mit Hinweis wohin [CLAUDE.md „Nothing is finished in the chat“].
 - [ ] **Vor dem Entfernen eines Worktrees** die git-ignorierten Dateien retten (Screenshots → `docs/tests/` des Hauptordners, teure Lab-Ausgaben → `../bb-lab-cache/<lab>/`, Redis-Kopien → `../bb-backups/`) [umgang §11].
+
+## 10. Sammlungen veröffentlichen (ohne Deploy)
+
+Ein eigener Weg, denn `data/collections.json` ist nicht, was die Seite zeigt (Julian, 2026-10-22: „zweites ja“) [umgang §13; CLAUDE.md Rules that hold, „Thematic collections“].
+
+- [ ] **Live-Stand zuerst holen**, nicht aus der Datei lesen: `npx tsx scripts/live-collections.ts <out.json>` (Produktion einmal, Admin-Passwort), `COLLECTIONS_FILE` darauf zeigen lassen; `published` nie aus der Datei lesen und live nennen (2026-10-06: 7 von 56 in der Datei, 48 auf der Seite). Oder die Cockpit-Ansicht „Sammlungen & Synchronisation“ [umgang §13, §12].
+- [ ] **Die Datei schreibt nur `lab/collections/`** (Port 4322); nie von Hand, nie ein `/curate`-Schritt in die Datei [umgang §13; CLAUDE.md].
+- [ ] **Autoren-Sammlung:** kein Name kommt dazu außer von Julian (2026-09-24: „füge keine weiteren dazu ohne mein ok“); Werkzeug, Server und ein Test auf der Datei erzwingen es [umgang §13; CLAUDE.md].
+- [ ] **Credits** bleiben in der Datei; ein `/curate`-Schritt trägt keine, die Seite füllt sie für dasselbe Werk und Cover nach (`withFileFacts`, `lib/collections.ts`) [umgang §13].
+- [ ] **Veröffentlichen:** `npx tsx lab/collections/push-draft.ts <slug> --publish` — kein Deploy, kein Push nötig; Wirkung einmal auf der Seite ansehen (Schritt 8: nur einmal) [umgang §13].
+- [ ] **Hält die Sammlung ein Werk zweimal** (zwei Gestaltungen einer Nummer), geht kein Entwurf: Datei ändern, deployen (dann Schritte 0–8), den veröffentlichten Entwurf verwerfen mit `POST /api/curate/publish {slug, clearDraft: true}` [umgang §13].
+- [ ] **Datei deployen** (`data/collections.json` geändert): vorher die Cockpit-Ansicht ansehen, damit nichts Online-Gemachtes überschrieben wirkt [umgang §12; CLAUDE.md].
+- [ ] **Fremdbefunde und neue Reihen:** Reihen und Ausgaben nach den Regeln „Ausgabe, Druck, Bild“ prüfen (Schritt 3, letzter Punkt) [CLAUDE.md Rules that hold].
 
 ## Fallen, die schon getroffen haben
 
@@ -101,9 +115,7 @@
 
 ## Offen (Quellen, die sich nicht einig sind, und was ich nicht belegen konnte)
 
-1. **Derselbe SHA zweimal:** umgang §4 nennt zwei Beobachtungen — 2026-10-08 nur Preview, 2026-10-18 (cea48d8) Preview und Production zugleich. Die Checkliste folgt der vorsichtigen Reihenfolge (erst `main`) und verlangt den Blick auf `vercel ls --prod`.
-2. **Commit-Nachricht und Mitautor-Zeile:** umgang §11 verlangt eine `Co-Authored-By`-Zeile; die aktuelle Sitzungsvorgabe des Harness untersagt Zusatzzeilen. Hier nicht als Schritt aufgenommen — Julian entscheidet, welche Regel gilt.
-3. **`npm run backup`:** umgang §4 beschreibt es als einmalig fragende Kopie; dass es **nach jedem** Deploy zu laufen hat, steht in keiner Quelle, die ich gefunden habe (Auftrag nennt es so). Als „nach einem Deploy, der Speicher/Export berührt“ eingetragen; ob nach jedem, entscheidet Julian. Außerdem: der Mac erreicht die Produktions-Redis nicht direkt, die Kopie geht über die Export-Route (umgang §4).
+1. **Datei oder Skill (Julian entscheidet):** Julian hat gefragt, wie viel Kontext ein Skill kostet — nicht beantwortet, nicht von mir zu entscheiden.
+2. **Derselbe SHA zweimal:** umgang §4 nennt zwei Beobachtungen — 2026-10-08 nur Preview, 2026-10-18 (cea48d8) Preview und Production zugleich. Die Checkliste folgt der vorsichtigen Reihenfolge (erst `main`) und verlangt den Blick auf `vercel ls --prod`.
+3. **Commit-Nachricht und Mitautor-Zeile (Julian liest beide Regeln):** umgang §11 verlangt eine `Co-Authored-By`-Zeile; die aktuelle Sitzungsvorgabe des Harness untersagt Zusatzzeilen. Hier nicht als Schritt aufgenommen — Julian entscheidet, welche Regel gilt.
 4. **Build-Variablen:** ROADMAP 6.51 nennt `IMPRINT_*`, umgang §4 und CLAUDE.md sagen „`.env.local` des Hauptordners“. `.env.example` führt `IMPRINT_NAME`, `IMPRINT_STREET`, `IMPRINT_CITY` … — kein echter Widerspruch.
-5. **`/code-review` vor dem Merge** steht nur als „Regel ohne Hook“ in umgang; ob sie auch bei reinen Doku-Commits gilt, sagt keine Quelle.
-6. **Reine Datenänderungen an Sammlungen** (`lab/collections/push-draft.ts … --publish`) deployen nicht; welche Schritte dafür vor dem Veröffentlichen gelten, steht in umgang §13 und gehört vermutlich in einen eigenen Abschnitt, falls Julian die Checkliste darauf ausdehnen will.
