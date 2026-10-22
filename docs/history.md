@@ -6739,3 +6739,24 @@ Der Neubau ändert außerdem, *welche* Cover im Index stehen (der Katalog wander
 **Was nicht gemessen werden konnte.** Seit der ersten Werkseite antwortete `openlibrary.org` auf diesen Mac nur noch mit einem TLS-Abbruch (`curl` Exit 35 auf `/works/OL468431W.json`, während `covers.openlibrary.org` 200 gab): die Sperre aus docs/umgang.md §1, nach sieben Suchen, einer Werkseite und fünf Ausgabenseiten des Jahrzehnte-Laufs binnen einer halben Stunde. Folgen: (a) `/book/OL1168083W/decades` und die von Gatsby antworteten mit 500 („Open Library stopped answering“, 6.43/6.71: ein Fehler, nie eine halbe Seite) — die Jahrzehnte-Seite ist **nicht** gemessen; der Wert 980 px Breite bei 390, den die Sonde bei der 1984-Seite las, ist die Fehlerseite ohne Viewport-Angabe und kein Befund. (b) Die Werkseite wurde **ohne geladene Wand** gemessen (die Wand holt ihre Seiten über `/api/works`, auch das ging nicht): Kopf, Titel, Klappentext, Seitenleiste ja, die Kachelwand nein. Wiederholen, sobald `curl https://openlibrary.org/works/OL468431W.json` wieder 200 gibt; die Jahrzehnte-Seite braucht danach einmal ihre kalte Runde (≈ 15 Ausgabenseiten).
 
 **Analytik-Checkliste:** nichts bewegt sich — eine Messung; im Werkzeug nur die Sonde angepasst.
+
+## 2026-10-22 — Übersetzungen als eigene Karten: Stichprobe über 18 Suchen (ROADMAP 6.15 Schritt 3)
+
+Werkzeug und Methode: `lab/translations/` (README). 18 feste Suchen, je einmal gegen die Live-Suche (7 s Pause; die Suche der Seite fragt Open Library von Vercel aus, weil `openlibrary.org` Julians Mac an diesem Tag abwies, umgang §1), 169 Karten, jede von Hand als `same` / `about` / `other` gelesen (`lab/translations/labels.json`; das Urteil ist meines und nicht gegengeprüft — die Grenzfälle sind Bearbeitungen, Sammlungen und zweisprachige Ausgaben).
+
+| | Karten |
+|---|---|
+| alle Karten | 169 |
+| das gesuchte Buch selbst (`same`) | 41 |
+| Sekundärliteratur, Lektürehilfen (`about`) | 94 |
+| ein anderes Buch (`other`) | 34 |
+
+**Das Buch steht in 12 von 18 Suchen auf mehr als einer Karte** (67 %); überzählige Karten (alle außer der mit den meisten Ausgaben): **23** — mehr als die Hälfte der 41 Karten, die das Buch zeigen. Davon **16 in einer anderen Sprache als dem Original** (die Übersetzung als eigenes Werk, in 11 von 18 Suchen), **3 in der Sprache des Originals** (zwei spanische und eine deutsche Dublette, z. B. die RAE-Ausgabe von *Cien años de soledad*, „Der Prozess“ neben „Der Proceß“), **4 ohne Sprachangabe** (zweisprachige Ausgaben, „The Transformation“). Sauber (eine Karte) sind sechs Suchen: Steppenwolf, Siddhartha, Anna Karenina, Madame Bovary, Der Fremde, Die Pest — dort trägt der Hauptdatensatz alle Sprachen. Am schlechtesten: „ansichten böll“ (vier Karten für ein Buch, drei überzählig) und *Crime and Punishment* (fünf, vier überzählig: vier englische Datensätze neben dem russischen).
+
+Die Zahl wird nicht vom Ranking verursacht: die überzähligen Karten stehen meist auf den ersten fünf Plätzen. Beim Lesen fiel nebenbei auf, dass „the trial kafka“ den *Proceß* an Platz 2 hinter *Metamorphosis* führt (derselbe Autor, zählt in `other`).
+
+**Was daraus folgt.** Die Spec-Zeile „Übersetzungen sind Ausgaben desselben Werks“ stimmt für die Suche in der Mehrheit der Fälle nicht, und das nicht als Randfall. Eine **dritte Identitätsregel ist damit weder gerechtfertigt noch ausgeschlossen**: ob LCC-Cutter oder `id_librarything` Original und Übersetzung verbinden, ließ sich nicht prüfen (kein Zugriff auf die Werk-Datensätze, s. o.); Namens- und Autorenkey-Regeln taugen nicht (der Autorenkey ist nur notwendig, Bölls ganzes Werk teilt ihn, §6.15). Die 23 überzähligen Karten sind ein fertiger Prüfsatz für diese Frage (23 Paare, 46 Werk-Datensätze, bei 6 s Pause ≈ 5 Minuten, wenn die Sperre aufgehoben ist). Bis dahin ist der **ehrliche Ausgang §2.1 umschreiben** (Werk = Datensatz bei Open Library; Übersetzungen können eigene Werke sein; die Karte sagt es nicht, die Werkseite zeigt „Auch erschienen als“) — das habe ich **nicht** getan, weil es von 3b abhängt und Julians Entscheidung ist.
+
+**Grenzen:** 18 Suchen, 11 Autoren, fast nur Kanon-Titel mit hohen Ausgabenzahlen; die Labels sind eine Lesung; die Antworten kommen aus dem CDN-Cache der Live-Seite (Stand der Datenschicht von `main`, nicht dieses Zweigs — die Zweige unterscheiden sich in der Suche nicht).
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung, kein Code der Seite.
