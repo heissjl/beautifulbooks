@@ -424,6 +424,7 @@ function BookDetail() {
       market={shopped?.market ?? pages.market ?? 'us'}
       onMarketChange={setMarket}
       share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
+      mock={process.env.NODE_ENV === 'production' ? null : searchParams.get('side')}
       verdictFor={isbn13 => verifyIsbnCover(
         selected,
         isbnCovers.byIsbn.get(isbn13) ?? [],
@@ -607,6 +608,8 @@ function ScanProgress({ checked, total, done }: { checked: number; total: number
 }
 
 interface CoverDetailsProps {
+  /** Dev-only mockup switch for the sidebar's order and cover size (ROADMAP 6.110f): 'a' or 'b', else null. */
+  mock?: string | null;
   workId: string;
   cover: Cover;
   editions: EditionView[];
@@ -683,7 +686,7 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share, mock }: CoverDetailsProps) {
   const t = useT();
   const wallsOn = useContext(WallsOn);
   const isDesktop = useIsDesktop();
@@ -885,7 +888,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         picture stays the largest thing in the column, and the shops arrive
         with it (ROADMAP 1.2, candidate b).
       */}
-      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-[min(100%,31vh)]">
+      {/* `?side=b` under next dev: the cover at 24vh instead of 31vh (ROADMAP 6.110f, mockup only). */}
+      <div className={`cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 ${mock === 'b' ? 'lg:max-w-[min(100%,24vh)]' : 'lg:max-w-[min(100%,31vh)]'}`}>
         <CoverImage src={shownUrl} alt={t('Selected cover')} sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
@@ -895,7 +899,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       </p>
       {shown && (
         <>
-          {scanStrip}
+          {/* `?side=a` under next dev: the printings row after the shops (ROADMAP 6.110f, mockup only). */}
+          {mock !== 'a' && scanStrip}
           <EditionBlock
             key={shown.id}
             gap="mt-2 lg:mt-6"
@@ -911,6 +916,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
             afterLead={<SimilarCovers coverId={cover.id} query={query} />}
           />
+          {mock === 'a' && scanStrip}
         </>
       )}
     </div>
