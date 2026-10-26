@@ -15,6 +15,10 @@ const eslintConfig = defineConfig([
     // A worktree holds a second copy of this repository; linting it reports
     // problems that are not in the working tree (2026-09-09).
     ".claude/worktrees/**",
+    // Scratch files in the root are git-ignored (CLAUDE.md, /scratch-*) and
+    // belong to whichever session left them; the Stop hook's lint must not
+    // fail on them (2026-10-26: a file from 2026-10-06 blocked a session).
+    "scratch-*",
   ]),
   // lab/ may import from lib/; the website must never import from lab/
   // (lab/README.md rule 2, ROADMAP 0.11).
