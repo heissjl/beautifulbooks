@@ -6722,3 +6722,11 @@ Der Neubau ändert außerdem, *welche* Cover im Index stehen (der Katalog wander
 **Geprüft:** 1.695 Tests, tsc, Lint, Build.
 
 **Analytik-Checkliste:** (4) die Wand zeigt dieselben Cover in anderer Reihenfolge, `data-cover-id` und die Signale bleiben; (1)–(3), (5)–(7) nicht berührt — kein Shop-Link, kein bezahlter Aufruf, keine Route, nichts gespeichert oder gesendet; die Antwort von `/api/works` wächst auf Index-Werken um `mean` und, wo gemessen, `aspect` (je einige Byte je Signatur).
+
+## 2026-10-26 — Die Checkliste vor dem Veröffentlichen (ROADMAP 6.51)
+
+Gebaut aus den verstreuten Regeln: [docs/publish.md](publish.md) mit den Schritten 0–10 (Doku-Commits, abgeleitete Dateien, Tests/`tsc`/Lint/Build samt `scripts/check-prerender.mjs`, Ansehen und Messen, Analytik-Frage, Git, Push, Deploy abwarten, einmal in Produktion prüfen, Festhalten, Sammlungen veröffentlichen) und einer Fallen-Tabelle; jeder Schritt nennt seine Quelle (CLAUDE.md, umgang §4/§9/§11/§12/§13, die Hooks `guard-push`, `stop-check`, `block-generated`, das Client-Gedächtnis). Entwurf 2026-10-22, Julians Entscheidungen: „erstes nein“ (kein `/code-review` bei reinen Doku-Commits), „zweites ja“ (eigener Abschnitt für Sammlungen), „vor großen changes und bei denen die speicher und export route berühren“ (`npm run backup`), am 2026-10-26 „skill und nein“: Form ist der Skill `/publish` (nur von Hand, wie `/abhaken` und `/messen`), und Commits tragen keine `Co-Authored-By`-Zeile — umgang §11 entsprechend geändert (`docs/plans/PLAN-11.md` nennt sie noch, ein erledigter Plan, unverändert).
+
+**Nicht geprüft:** `/publish` wurde nicht ausgelöst, die Datei nicht an einem echten Push erprobt. Zwei Stellen stehen in der Datei unter „Offen“: der doppelte SHA-Push (zwei widersprüchliche Beobachtungen in umgang §4) und der Name der Build-Variablen (`IMPRINT_*` in `.env.example`, kein echter Widerspruch).
+
+**Analytik-Checkliste:** nichts bewegt sich (Doku und ein Skill).

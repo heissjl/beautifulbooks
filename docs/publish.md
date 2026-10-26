@@ -1,10 +1,6 @@
 # Vor dem Veröffentlichen — Checkliste in der Reihenfolge
 
-> **Entwurf zu ROADMAP 6.51 (2026-10-22), Julian entscheidet noch die Form.** Der Inhalt ist einmal geschrieben; die Form ist offen:
->
-> - **Datei (`docs/publish.md`, hier).** Von CLAUDE.md oben verlinkt; eine Sitzung liest sie, weil CLAUDE.md es sagt — und vergisst es, wenn sie CLAUDE.md überfliegt. Kostet nichts, ist für Menschen lesbar, wird nie „ausgelöst“.
-> - **Projekt-Skill (`.claude/skills/publish/SKILL.md`).** Claude lädt ihn von selbst, sobald die Beschreibung („Veröffentlichen, Push nach main, Deploy“) zum Auftrag passt; mit `disable-model-invocation: true` wie `/abhaken` und `/messen` (`.claude/skills/`) nur auf `/publish`. Der Skill würde diesen Inhalt tragen (Kopf mit Front­matter statt dieser Notiz), die Datei entfiele oder bliebe als Verweis. Preis: einmal anlegen, und ein von selbst geladener Skill kostet bei jedem Treffer Kontext.
-> - **Beides** (Skill als dünner Einstieg, der auf diese Datei zeigt) ist möglich. CLAUDE.md wird erst nach Julians Wahl angepasst.
+> **ROADMAP 6.51, entschieden 2026-10-26 (Julian: „skill und nein“).** `/publish` (`.claude/skills/publish/SKILL.md`, nur von Hand auszulösen wie `/abhaken` und `/messen`) geht diese Datei von oben nach unten durch; der Inhalt steht nur hier. Ein Push nach `main` geht durch `/publish`.
 >
 > Jeder Schritt nennt seine Quelle in eckigen Klammern. Wo zwei Quellen sich widersprechen, steht beides, und am Ende sammelt „Offen“ die Stellen.
 
@@ -57,7 +53,7 @@
 - [ ] **`npm run worktrees -- --fetch`** — am Anfang der Sitzung und vor jedem Merge nach `main`; `origin/main` ist die Produktion, das lokale `main` nicht [CLAUDE.md Working rules; umgang §11; Hook `session-start`, `guard-push`].
 - [ ] **`origin/main` in den eigenen Branch holen**, bevor nach `main` gemerged wird; im Worktree dafür das Host-Werkzeug `sync_with_base_branch` benutzen, wo es verfügbar ist [umgang §11]. Konflikte in `docs/history.md`: beide Seiten haben ans Ende angehängt — beide behalten [umgang §11, Umzug].
 - [ ] **Vor dem Merge nach `main` ein `/code-review` in frischem Kontext** (Regel ohne Hook) [umgang §11, Punkt „Fünf Hooks“] — **nicht bei reinen Doku-Commits** (Julian, 2026-10-22: „erstes nein“).
-- [ ] **Ein Commit je Roadmap-Punkt**, der Betreff nennt den Punkt, die Nachricht beantwortet die Analytik-Liste [CLAUDE.md Working rules; umgang §11].
+- [ ] **Ein Commit je Roadmap-Punkt**, der Betreff nennt den Punkt, die Nachricht beantwortet die Analytik-Liste und trägt **keine Attribution-Zeile** (Julian, 2026-10-26: „nein“) [CLAUDE.md Working rules; umgang §11].
 - [ ] Nie `git stash` ohne Namen — WIP-Commit statt Stash [umgang §11].
 
 ## 6. Push
@@ -115,7 +111,5 @@ Ein eigener Weg, denn `data/collections.json` ist nicht, was die Seite zeigt (Ju
 
 ## Offen (Quellen, die sich nicht einig sind, und was ich nicht belegen konnte)
 
-1. **Datei oder Skill (Julian entscheidet):** Julian hat gefragt, wie viel Kontext ein Skill kostet — nicht beantwortet, nicht von mir zu entscheiden.
-2. **Derselbe SHA zweimal:** umgang §4 nennt zwei Beobachtungen — 2026-10-08 nur Preview, 2026-10-18 (cea48d8) Preview und Production zugleich. Die Checkliste folgt der vorsichtigen Reihenfolge (erst `main`) und verlangt den Blick auf `vercel ls --prod`.
-3. **Commit-Nachricht und Mitautor-Zeile (Julian liest beide Regeln):** umgang §11 verlangt eine `Co-Authored-By`-Zeile; die aktuelle Sitzungsvorgabe des Harness untersagt Zusatzzeilen. Hier nicht als Schritt aufgenommen — Julian entscheidet, welche Regel gilt.
-4. **Build-Variablen:** ROADMAP 6.51 nennt `IMPRINT_*`, umgang §4 und CLAUDE.md sagen „`.env.local` des Hauptordners“. `.env.example` führt `IMPRINT_NAME`, `IMPRINT_STREET`, `IMPRINT_CITY` … — kein echter Widerspruch.
+1. **Derselbe SHA zweimal:** umgang §4 nennt zwei Beobachtungen — 2026-10-08 nur Preview, 2026-10-18 (cea48d8) Preview und Production zugleich. Die Checkliste folgt der vorsichtigen Reihenfolge (erst `main`) und verlangt den Blick auf `vercel ls --prod`.
+2. **Build-Variablen:** ROADMAP 6.51 nennt `IMPRINT_*`, umgang §4 und CLAUDE.md sagen „`.env.local` des Hauptordners“. `.env.example` führt `IMPRINT_NAME`, `IMPRINT_STREET`, `IMPRINT_CITY` … — kein echter Widerspruch.

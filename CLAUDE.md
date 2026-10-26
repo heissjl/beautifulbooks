@@ -69,6 +69,7 @@ Each line is a rule that was broken once or would cost the site something. The r
 
 ## Working rules
 
+- **A push to `main` goes through `/publish`** ([docs/publish.md](docs/publish.md)): the checklist in the order it is worked; Julian still says when. Commits carry no attribution line (Julian, 2026-10-26).
 - Verify against `npm run dev`, not production; look at every UI change at **390 × 844 and 1280 × 800** and **measure** (`/messen <url>`), run the five acceptance queries of SPEC §3 F1, and `npm run build` must pass before a step is done (N14; umgang §9).
 - Julian's screenshots and recordings stay local in `docs/tests/` (git-ignored); the report carries everything in text.
 - One commit per roadmap item, the subject names it, the message answers the analytics checklist. Push only when Julian says so — `origin/main` is production, the local `main` is not; sessions work in parallel in their own worktrees, hooks refresh the overview and make a push to `main` ask (6.39; umgang §11). Production logs keep an hour (umgang §4); the Cockpit is a view, never a second list (umgang §12).
