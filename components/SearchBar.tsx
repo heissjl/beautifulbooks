@@ -6,6 +6,10 @@ import { useRecentSearches } from './useRecentSearches';
 import { useT } from './i18n';
 import { useSlashToSearch } from './useSlashToSearch';
 import { shapeOf } from '@/lib/queryshape';
+import { coverProxyPath } from '@/lib/coverurl';
+import { suggestWorks } from '@/lib/suggest';
+import Link from '@/components/Link';
+import { useSuggestWorks } from './useSuggestWorks';
 
 /**
  * What the field searches (ROADMAP 6.60): titles and authors together, or one
@@ -61,6 +65,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
   // A typo in an ISBN, told before asking: the catalogue would answer "no book", which is the wrong fact (N12).
   const [badIsbn, setBadIsbn] = useState(false);
   const [recentSearches, saveRecentSearch] = useRecentSearches();
+  const [suggestList, loadSuggestList] = useSuggestWorks();
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   // `/` from anywhere on the page puts the cursor here (6.68).
@@ -113,7 +118,12 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
   ).slice(0, 4);
   const authorMode = currentMode === 'author';
 
-  const showDropdown = showSuggestions && (recentSearches.length > 0 || filteredSuggestions.length > 0);
+  // Works from the site's own list that match what is typed, at once and without a request (6.69).
+  const bookSuggestions = currentMode === 'any' && suggestList ? suggestWorks(inputValue, suggestList) : [];
+  // The popular titles are a start for an empty field; once books match, they would only repeat them.
+  const popularShown = bookSuggestions.length > 0 ? [] : filteredSuggestions;
+
+  const showDropdown = showSuggestions && (recentSearches.length > 0 || popularShown.length > 0 || bookSuggestions.length > 0);
 
   return (
     <form onSubmit={e => { e.preventDefault(); submit(inputValue); }} className="w-full" role="search">
@@ -153,8 +163,9 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
               second keystroke costs nothing — the promise is shared.
             */
             preloadMosaic();
+            loadSuggestList();
           }}
-          onFocus={() => setShowSuggestions(true)}
+          onFocus={() => { setShowSuggestions(true); loadSuggestList(); }}
           placeholder={isbnMode ? t('The ISBN of your copy') : authorMode ? t('An author’s name') : t('A title, or a title and author')}
           aria-label={isbnMode ? t('Search an ISBN') : authorMode ? t('Search an author') : t('Search a book title')}
           inputMode={isbnMode ? 'numeric' : undefined}
@@ -180,6 +191,26 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
             ref={suggestionsRef}
             className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-lg border border-line bg-surface shadow-[0_12px_32px_-12px_rgb(0_0_0/0.35)]"
           >
+            {bookSuggestions.length > 0 && (
+              <div className="border-b border-line py-1">
+                <p className="kicker px-4 py-2">{t('Books')}</p>
+                {bookSuggestions.map(s => (
+                  <Link
+                    key={s.id}
+                    href={`/book/${s.id}?q=${encodeURIComponent(inputValue.trim())}`}
+                    onClick={() => setShowSuggestions(false)}
+                    className="flex items-center gap-3 px-4 py-1.5 text-left transition-colors hover:bg-surface-2 focus-visible:bg-surface-2 focus-visible:outline-none"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- a 32 px thumbnail through our own /img route */}
+                    <img src={coverProxyPath(s.coverId, 'S')} alt="" width={32} height={48} className="h-12 w-8 shrink-0 rounded-sm bg-surface-2 object-cover" />
+                    <span className="min-w-0">
+                      <span className="block truncate text-ink">{s.title}</span>
+                      <span className="block truncate text-sm text-ink-3">{s.author}</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
             {recentSearches.length > 0 && (
               <div className="border-b border-line py-1">
                 <p className="kicker px-4 py-2">{t('Recent searches')}</p>
@@ -193,10 +224,10 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
                 ))}
               </div>
             )}
-            {filteredSuggestions.length > 0 && (
+            {popularShown.length > 0 && (
               <div className="py-1">
                 <p className="kicker px-4 py-2">{t('Popular')}</p>
-                {filteredSuggestions.map(s => (
+                {popularShown.map(s => (
                   // In the author mode a suggestion is the author, and the title says why she is here.
                   <button key={s.query} type="button" onClick={() => submit(authorMode ? s.author : s.query)} className="flex w-full items-baseline justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2">
                     <span className="text-ink">{authorMode ? s.author : s.query}</span>

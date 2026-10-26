@@ -26,6 +26,23 @@ export interface ImageSignature {
    */
   saturation?: number;
   hues?: string;
+  /**
+   * Width over height, two decimals (ROADMAP 6.70b). The wall sorts an image
+   * that is no cover's shape to the end, as it does a scanned page — a photo
+   * of a playing card, a landscape scan. Absent in signatures from before
+   * 2026-10-19 and in the built index; an unmeasured image passes.
+   */
+  aspect?: number;
+}
+
+/** A cover's proportions (SPEC F7.2, measured on a hundred covers): 0.5–0.85, width over height. */
+export const COVER_ASPECT_MIN = 0.5;
+export const COVER_ASPECT_MAX = 0.85;
+
+/** True when the signature says the image is not shaped like a cover; unmeasured passes. */
+export function looksMisshapen(signature: ImageSignature | undefined): boolean {
+  const aspect = signature?.aspect;
+  return aspect !== undefined && (aspect < COVER_ASPECT_MIN || aspect > COVER_ASPECT_MAX);
 }
 
 /** Hue buckets in a colour signature; 16 is enough to tell red from teal. */

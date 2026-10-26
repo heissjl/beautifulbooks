@@ -15,6 +15,7 @@ const GENERATED = [
   ['data/hero-rings.json', 'npx tsx scripts/build-hero-rings.ts'],
   ['data/hero-ring-signatures.json', 'npx tsx scripts/build-hero-rings.ts'],
   ['data/popular-works.json', 'npx tsx scripts/build-popular-works.ts'],
+  ['data/suggest-works.json', 'npx tsx scripts/build-suggest-works.ts'],
   ['data/decade-pages.json', 'npx tsx scripts/find-decade-pages.ts'],
   ['public/loading/', 'npx tsx scripts/build-loading-assets.ts'],
 ];

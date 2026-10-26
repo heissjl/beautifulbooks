@@ -15,7 +15,7 @@ import {
   MAX_DISTANCE, SAME_DESIGN_BITS, STRUCTURE_WEIGHT,
   bitsApart, coverUrlFor, indexBuiltAt, indexSignatures, indexSize, lookDistance, similarTo,
 } from '../coverindex';
-import type { ImageSignature } from '../imagesig';
+import { looksLikeScannedPage, type ImageSignature } from '../imagesig';
 
 const sig = (saturation: number, hues: number[]): ImageSignature => ({
   hash: '', contrast: 0, saturation,
@@ -151,6 +151,31 @@ describe('signatures handed out for folding (ROADMAP 5.4a)', () => {
     expect(sigs.has(known)).toBe(true);
     expect(sigs.has('ol:999999999')).toBe(false);
     expect(sigs.size).toBe(1);
+  });
+
+  it('carries the mean luminance, so the wall can sort scanned pages (6.70b)', () => {
+    const file = JSON.parse(readFileSync(path.join(process.cwd(), 'data', 'cover-index.json'), 'utf8')) as {
+      covers: Array<[number, string, string, number, number]>;
+    };
+    // A near-white, flat, structureless image from the index: a scanned page.
+    const page = file.covers.find(r => looksLikeScannedPage({ hash: r[2], contrast: r[3], mean: r[4] }));
+    expect(page).toBeDefined();
+    const sig = indexSignatures([page![1]]).get(page![1])!;
+    expect(sig.mean).toBe(page![4]);
+    expect(looksLikeScannedPage(sig)).toBe(true);
+    expect(indexSignatures([known]).get(known)!.mean).toBe(file.covers[0][4]);
+  });
+
+  it('carries the aspect where the row has the column, and leaves it absent where not (6.70b)', () => {
+    const file = JSON.parse(readFileSync(path.join(process.cwd(), 'data', 'cover-index.json'), 'utf8')) as {
+      covers: Array<[number, string, string, number, number, number, string, number?]>;
+    };
+    const measured = file.covers.find(r => r[7] !== undefined);
+    if (measured) expect(indexSignatures([measured[1]]).get(measured[1])!.aspect).toBe(measured[7]);
+    const unmeasured = file.covers.find(r => r[7] === undefined);
+    // Absent, not 0: an unmeasured image must pass the shape check.
+    if (unmeasured) expect(indexSignatures([unmeasured[1]]).get(unmeasured[1])!).not.toHaveProperty('aspect');
+    expect(measured ?? unmeasured).toBeDefined();
   });
 
   it('agrees with the packed halves the index searches on', () => {

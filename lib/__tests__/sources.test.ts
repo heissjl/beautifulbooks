@@ -8,6 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { resetGoogleQuota } from '../googlequota';
 import { GB_ISBN_REVALIDATE, GB_REVALIDATE, searchEditionCandidates } from '../sources/googlebooks';
 import { HttpError, SourceUnavailableError, fetchJson } from '../sources/http';
+import { resetCatalogueGate } from '../sources/olgate';
 import { getEditionsPage, getWork, searchWorks } from '../sources/openlibrary';
 
 const FIXTURES = path.join(__dirname, '..', '__fixtures__');
@@ -118,6 +119,8 @@ describe('searchWorks retry', () => {
     // rate limit. Both are answers; asking again repeats the fault and adds load.
     for (const status of [422, 429, 404]) {
       calls.length = 0;
+      // A 429 also opens the catalogue's pause (2.18e, olgate.test.ts); each status here is its own case.
+      resetCatalogueGate();
       handler = () => ({ status });
       await expect(searchWorks('it')).rejects.toBeInstanceOf(SourceUnavailableError);
       expect(calls).toHaveLength(1);

@@ -18,7 +18,12 @@ import firstYears from '@/data/first-years.json';
 import type { Work } from './model';
 
 interface CheckedYear {
-  year: number;
+  /**
+   * `null` where no year fits "first published" — The Canterbury Tales were
+   * written c. 1387–1400 and first printed c. 1476 — so the page withholds
+   * the catalogue's year rather than quote a wrong one (Julian, 2026-10-19).
+   */
+  year: number | null;
   /** Where the year was checked: both sources agreeing, or Julian's reading of a difference. */
   source: string;
 }
@@ -29,9 +34,15 @@ export function checkedFirstYear(workId: string): CheckedYear | undefined {
   return CHECKED[workId];
 }
 
-/** The work with its checked year where there is one, else as it came, marked `openlibrary` when it has a year. */
+/** The work with its checked year where there is one (none at all for a `null` row), else as it came, marked `openlibrary` when it has a year. */
 export function withCheckedYear<T extends Work>(work: T): T {
   const checked = checkedFirstYear(work.id);
+  if (checked?.year === null) {
+    const withheld = { ...work };
+    delete withheld.firstPublishYear;
+    delete withheld.firstPublishYearSource;
+    return withheld;
+  }
   if (checked) return { ...work, firstPublishYear: checked.year, firstPublishYearSource: 'checked' };
   if (work.firstPublishYear !== undefined && !work.firstPublishYearSource) return { ...work, firstPublishYearSource: 'openlibrary' };
   return work;
