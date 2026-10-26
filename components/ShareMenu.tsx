@@ -32,6 +32,13 @@ interface ShareMenuProps {
   text?: string;
   /** The button's words where "Share" alone is unclear (the cover game: „Share this cover"). */
   label?: string;
+  /**
+   * In the book page's header the button shows the share symbol below `sm`
+   * and the word from `sm` up (ROADMAP 6.110a): at 375 px the word "Share"
+   * took 69 px of a row that had 36 to give, and the back link paid for it.
+   * The word stays as the button's name; "Link copied" is still shown as words.
+   */
+  iconBelowSm?: boolean;
 }
 
 function shareUrlFor(workId: string, coverId: string | null | undefined): string {
@@ -42,7 +49,7 @@ function shareUrlFor(workId: string, coverId: string | null | undefined): string
 }
 
 export default function ShareMenu({
-  workId, coverId, title, author, placement = 'down', compact = false, align = 'right', text: ownText, label,
+  workId, coverId, title, author, placement = 'down', compact = false, align = 'right', text: ownText, label, iconBelowSm = false,
 }: ShareMenuProps) {
   const t = useT();
   const [open, setOpen] = useState(false);
@@ -105,12 +112,18 @@ export default function ShareMenu({
     <div className="relative" ref={box}>
       <button
         type="button"
-        className={`btn whitespace-nowrap ${compact ? 'py-1.5 text-xs' : 'py-1.5'}`}
+        className={`btn whitespace-nowrap ${compact ? 'py-1.5 text-xs' : 'py-1.5'} ${iconBelowSm && !copied ? 'px-2 sm:px-4' : ''}`}
         aria-expanded={open}
         aria-haspopup="menu"
+        aria-label={iconBelowSm ? (label ?? t('Share')) : undefined}
         onClick={() => setOpen(o => !o)}
       >
-        {copied ? t('Link copied') : (label ?? t('Share'))}
+        {iconBelowSm && !copied && (
+          <svg className="h-5 w-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 3v12m0-12L8 7m4-4l4 4M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" />
+          </svg>
+        )}
+        <span className={iconBelowSm && !copied ? 'hidden sm:inline' : undefined}>{copied ? t('Link copied') : (label ?? t('Share'))}</span>
       </button>
 
       {open && (

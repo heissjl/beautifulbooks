@@ -64,10 +64,10 @@ import { useLocale, useT } from '@/components/i18n';
   makes an address other than `/`, and it leads to the home page with a filter
   rather than to results (caught on the dev server, 2026-09-10).
 */
-function BackLink({ href, toResults, wall }: { href: string; toResults: boolean; wall?: string }) {
+function BackLink({ href, toResults, wall, wordBelowSm }: { href: string; toResults: boolean; wall?: string; wordBelowSm: boolean }) {
   const t = useT();
   // The wall one came from, by name (Julian, 2026-10-03).
-  return <SharedBackLink href={href} label={wall ?? (toResults ? t('Results') : t('Home'))} title={wall ? t('Back to {wall}', { wall }) : undefined} truncate={!!wall} />;
+  return <SharedBackLink href={href} label={wall ?? (toResults ? t('Results') : t('Home'))} title={wall ? t('Back to {wall}', { wall }) : undefined} truncate={!!wall} wordBelowSm={wordBelowSm} />;
 }
 
 /**
@@ -84,7 +84,8 @@ function Shell({ children, backHref, toResults, right, workId }: { children: Rea
   const wall = !toResults && from ? from : null;
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} />} right={right} search={<HeaderSearch />} />
+      {/* With a page button on the right the back link keeps only its chevron below `sm` (6.110a): the row is 416 px wide at 375 otherwise. */}
+      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} wordBelowSm={!right} />} right={right} search={<HeaderSearch />} />
       {walls && <EditingBand />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooterView walls={walls} />
@@ -484,7 +485,7 @@ function BookDetail() {
         screen, in the phone bar next to "Details". Without one there is
         nothing beside, so the header keeps the button for the book itself.
       */
-      right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} />}
+      right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} iconBelowSm />}
     >
       <TitleBlock title={work.title} authors={work.authors} meta={meta} />
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
