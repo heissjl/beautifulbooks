@@ -67,17 +67,19 @@ describe('decadeLine', () => {
       languages: ['en', 'de'],
       editionCount: 4,
     });
-    expect(text).toBe('2 covers · 3 of 4 printings say paperback · 2 publishers, Signet and Penguin among them · 2 languages');
+    expect(text).toBe('2 covers from 2 publishers such as Signet and Penguin in 2 languages. 3 of 4 printings say paperback.');
+    expect(text).not.toContain('·');
     expect(text).not.toMatch(/iconic|timeless|classic|beloved/i);
   });
 
   it('says only what it can count when a decade holds little', () => {
-    expect(line({ covers: [cov('a', [])], editionCount: 1 })).toBe('1 cover');
+    expect(line({ covers: [cov('a', [])], editionCount: 1 })).toBe('1 cover.');
+    expect(line({ covers: [cov('a', []), cov('b', [])], languages: ['en', 'fr'], editionCount: 2 })).toBe('2 covers in 2 languages.');
   });
 
   it('never claims completeness (R7)', () => {
     const text = line({ covers: [cov('a', [])], publishers: ['Signet'], editionCount: 1 });
-    expect(text).toContain('1 publisher, Signet');
+    expect(text).toBe('1 cover from 1 publisher, Signet.');
     expect(text).not.toMatch(/\ball\b/i);
     expect(text).not.toMatch(/\bevery\b|\bcomplete\b/i);
   });
