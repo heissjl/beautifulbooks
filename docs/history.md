@@ -6775,3 +6775,18 @@ Einzelheiten: LCC steht an nur zwei der 31 Datensätze (*Master and Margarita* O
 **Ausgang:** keine dritte Identitätsregel. SPEC §2.1 ist umgeschrieben (Sprache steht nicht in der Regel, Übersetzungen sind aber nicht immer Ausgaben desselben Works; die Seite behauptet das nicht), und die Zeile „Auch erschienen als“ ist als 6.110 neu aufgenommen. Grenze: LCC und LibraryThing sind nur auf **Werk**-Datensätzen geprüft; die Ausgabensätze tragen LCC öfter (so sah es die Böll-Messung), aber über sie zu verbinden hieße, jede Werkseite um Ausgabenabrufe zu erweitern, die nichts Neues kosten dürfen (E10, N3).
 
 **Analytik-Checkliste:** nichts bewegt sich — eine Messung und ein Spec-Absatz; kein Code der Seite.
+
+## 2026-10-26 — N14 vollständig gemessen: Suche, Werkseite mit Wand, Jahrzehnte-Seite (ROADMAP 6.30a)
+
+Fortsetzung der Messung vom 2026-10-22 (dort die Tabelle der Suchen und der Werkseite ohne Wand). Open Library antwortete wieder; lokal derselbe Build, `next start -p 3118` außerhalb der Sandbox, Anfragen einzeln mit Pause (Jahrzehnte-Seite, dann 30 s, dann die Werkseite mit Wand).
+
+| Seite | 390 × 844 | 1280 × 800 |
+|---|---|---|
+| `/book/OL2897798W/decades` (*Watchmen*, das Werk mit den wenigsten Ausgaben unter denen mit mehreren Jahrzehnten, um Open Library zu schonen; Rendern 17,5 s kalt) | Breite 390 / 390, 0 abgeschnitten, 20 Bilder, 0 leer | 1280 / 1280, 0 abgeschnitten, Platzhalter 85 px in 178, 20 Bilder, 0 leer |
+| `/book/OL468431W` (*Gatsby*) mit geladener Wand, 40 s Wartezeit | 390 / 390, 0 abgeschnitten, **91 Bilder, 0 leer** | 1280 / 1280, **1** abgeschnitten (Klappentext, auf drei Zeilen begrenzt, gewollt), Platzhalter 85 in 178, **180 Bilder, 0 leer** |
+
+**Neu oder bekannt:** nichts Neues zu beheben. Die einzige abgeschnittene Zeile ist der gewollte Klappentext; die zweizeiligen Titel der Suchkarten sind bekannt (6.68). Zusammen mit der Tabelle vom 2026-10-22 ist N14 für Startseite (6.30), fünf Suchen, Werkseite und Jahrzehnte-Seite erfüllt.
+
+**Nicht gemessen:** das geöffnete Suchfeld am Telefon (die Sonde sieht den Zustand beim Laden; das Feld öffnet erst ein Tipp auf die Lupe) und andere Breiten als 390 und 1280 (die 320 px aus dem Vorbefund von 6.30a gehören zu 6.68). Die andere Jahrzehnte-Seite mit vielen Ausgaben (*Gatsby*, 15 Seiten) wurde nicht kalt gerendert, um den Katalog nicht erneut zu belasten.
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung.

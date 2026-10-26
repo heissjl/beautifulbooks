@@ -1400,3 +1400,10 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
   **Zusammenhang mit 6.13:** dort geht es um Datensätze mit **demselben** Titel, die die Karte bereits zusammenfasst und die Wand nicht lädt. Hier geht es um Datensätze mit **anderem** Titel, die niemand zusammenfasst. Schritt 1 und 2 gehören zu beiden.
 
 **Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--übersetzungen-eigene-werke-geprüft-weder-lcc-noch-librarything-verbindet-sie-roadmap-615-schritt-3b)
+
+## 6.30a
+
+- [ ] **6.30a Dieselbe Messung über Suche, Werkseite und Jahrzehnte-Seite (N14).** *Vorbefund 2026-09-11: auf der Werkseite bei 320 px bricht der Seitentitel „Beautiful Books“ in der Kopfzeile auf zwei Zeilen um, sobald „Share“ daneben steht. Die Überbreite der Werkseite (806 px auf 390) ist behoben, gemessen von 320 bis 768 px ([Historie](history.md#2026-09-11--die-messleiste-der-sprach-pillen-machte-die-seite-am-telefon-806-px-breit-roadmap-68-n14)); beim Messen im Browser-Panel vorher einen Frame erzwingen.* Die Startseite ist nur die, die Julian fotografiert hat. Messen bei 390 und 1280 px: abgeschnittene Zeilen, Platzhalter gegen Feld, leere Flächen, Zustände, die nur ein Gerät hat. Die Messung aus 6.30 (ein Stück JavaScript im Browser, im [Historie-Eintrag](history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) festgehalten) als wiederverwendbares Werkzeug. Zwei Stunden, Claude. **Stand 2026-10-22:** gemessen sind die fünf Abnahme-Suchen und die Werkseite von Gatsby ohne Wand ([Historie](history.md#2026-10-22--n14-über-suche-werkseite-und-jahrzehnte-seite-gemessen-jahrzehnte-seite-offen-roadmap-630a)) — keine Überbreite, kein Platzhalter, kein leeres Bild; die Kürzungen sind die gewollten (Titel, Autorenzeile, Klappentext). **Offen: Jahrzehnte-Seite und die geladene Wand der Werkseite** (Open Library sperrte den Mac mitten in der Messung), und die geöffnete Suche am Telefon, die die Sonde nicht auslöst. Das Häkchen folgt nach diesen drei.
+
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--n14-vollständig-gemessen-suche-werkseite-mit-wand-jahrzehnte-seite-roadmap-630a)
