@@ -31,8 +31,9 @@ async function fetchAll() {
 }
 
 const rec = (id: string) => JSON.parse(readFileSync(join(DIR, 'out', 'works', id + '.json'), 'utf8'));
-const lcc = (r: any): string[] => (r.lc_classifications ?? []) as string[];
-const lt = (r: any): string[] => [...(r.identifiers?.librarything ?? [])].map(String);
+interface WorkRecord { lc_classifications?: string[]; identifiers?: { librarything?: (string | number)[] } }
+const lcc = (r: WorkRecord): string[] => (r.lc_classifications ?? []) as string[];
+const lt = (r: WorkRecord): string[] => [...(r.identifiers?.librarything ?? [])].map(String);
 const cutter = (s: string) => (s.match(/\.([A-Z]\d*)\s/)?.[1] ?? '').replace(/\d.*/, '');
 
 function compare() {
