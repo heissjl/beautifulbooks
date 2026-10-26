@@ -167,7 +167,7 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
             auth" (ROADMAP 6.30, SPEC N14). 16 px is also the smallest size
             iOS does not zoom into on focus.
           */
-          className={`w-full rounded-lg border border-line bg-surface pl-12 pr-24 text-ink placeholder:text-ink-3 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-colors focus:border-ink-3 focus:outline-none sm:pr-28 ${
+          className={`w-full rounded-lg border border-line bg-surface pl-12 pr-24 text-ink shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-colors focus:border-ink-3 focus:outline-none sm:pr-28 ${
             hero ? 'py-4 text-base sm:text-lg' : 'py-3 text-base'
           }`}
         />
