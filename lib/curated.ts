@@ -67,11 +67,7 @@ export const WALL_SIZE = 18;
  * day of curating rather than the last. Works picked in both places appear
  * once, with the chosen cover winning.
  *
- * **Deterministic on purpose.** Rotating the eighteen per page load is
- * ROADMAP 6.17 and needs a decision this file cannot make: the home page is
- * prerendered, so a rotation computed here would differ between the HTML and
- * the browser and React would tear it down. Order is therefore fixed until
- * the rotation has a server to come from.
+ * The rotation over this list is `wallForHour` below.
  */
 /**
  * One row of `data/curated.json`, as the tool writes it. The JSON is typed
@@ -113,9 +109,56 @@ function pickedWorks(): CuratedWork[] {
  */
 export const CURATED_LIST: CuratedWork[] = pickedWorks();
 
-export const WALL_WORKS: CuratedWork[] = (() => {
+/**
+ * Every work the wall may show: Julian's picks, then the hand-written list for
+ * whatever he has not picked yet. The rotation turns through this list.
+ */
+export const WALL_POOL: CuratedWork[] = (() => {
   const picked = CURATED_LIST;
   const seen = new Set(picked.map(w => w.id));
-  const filler = CURATED_WORKS.filter(w => !seen.has(w.id));
-  return [...picked, ...filler].slice(0, WALL_SIZE);
+  return [...picked, ...CURATED_WORKS.filter(w => !seen.has(w.id))];
 })();
+
+/**
+ * The first window of the pool, and **the fixed set of prerendered book pages**
+ * (`generateStaticParams`, ROADMAP 6.17). It does not follow the rotation: a
+ * build is one moment, the rotation moves every hour, and a build-time set
+ * would be stale within the hour. The other works are rendered on first
+ * request and cached (`revalidate` on the book page), which is the same speed
+ * from the second reader on. Keep it small — every page is an Open Library
+ * request inside the build (`scripts/check-prerender.mjs`).
+ */
+export const WALL_WORKS: CuratedWork[] = WALL_POOL.slice(0, WALL_SIZE);
+
+const HOUR_MS = 3_600_000;
+
+/** The wall's clock: whole hours since the epoch, UTC. Every reader in the same hour gets the same number. */
+export function wallHour(now: number = Date.now()): number {
+  return Math.floor(now / HOUR_MS);
+}
+
+/**
+ * The eighteen tiles of one hour (ROADMAP 6.17): a window of `size`
+ * consecutive works of the pool, moved on by one window per hour and wrapping
+ * round, so Julian's order — light next to dark — holds inside a window and
+ * every work appears once in `ceil(pool / size)` hours.
+ *
+ * **A pure function of the hour** — no randomness, nothing from the reader —
+ * so the server and the browser agree and a page cached for the hour is right.
+ * `hidden` takes covers off the site (2.18k) from the pool before windowing,
+ * so a hidden cover does not leave a hole of seventeen.
+ */
+export function wallForHour(
+  hour: number,
+  pool: readonly CuratedWork[] = WALL_POOL,
+  size: number = WALL_SIZE,
+  hidden: (w: CuratedWork) => boolean = () => false,
+): CuratedWork[] {
+  const live = pool.filter(w => !hidden(w));
+  if (live.length <= size) return live;
+  const windows = Math.ceil(live.length / size);
+  const start = ((hour % windows) + windows) % windows * size;
+  const out: CuratedWork[] = [];
+  for (let i = 0; i < size; i++) out.push(live[(start + i) % live.length]);
+  return out;
+}

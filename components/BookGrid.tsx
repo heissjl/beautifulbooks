@@ -7,6 +7,7 @@ import BookWorkCard, { type ResultOrigin } from './BookWorkCard';
 import { shapeOf } from '@/lib/queryshape';
 import { groupByAuthor } from '@/lib/searchgroups';
 import CuratedWall from './CuratedWall';
+import type { CuratedWork } from '@/lib/curated';
 import MosaicLoader from './MosaicLoader';
 import { useSuggestWorks } from './useSuggestWorks';
 import { suggestWorks } from '@/lib/suggest';
@@ -23,6 +24,8 @@ interface BookGridProps {
   exact?: boolean;
   /** The author mode, `?author=<name>[&key=OL…A]` (ROADMAP 6.60, SPEC F1.10). */
   author?: { name: string; key?: string };
+  /** The hour's wall for the empty state, picked on the server (ROADMAP 6.17). */
+  wall?: CuratedWork[];
 }
 
 type AnyResult = SearchResult | AuthorSearchResult;
@@ -177,7 +180,7 @@ function CorrectionLine({ correction, language, authorName }: { correction: Sear
   );
 }
 
-export default function BookGrid({ searchQuery, language, exact = false, author }: BookGridProps) {
+export default function BookGrid({ searchQuery, language, exact = false, author, wall = [] }: BookGridProps) {
   const t = useT();
   // A retry has to change the request key, or the effect would not run again
   // and the reader would press a button that does nothing.
@@ -258,7 +261,7 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     hrefs: () => [...document.querySelectorAll('[data-results] a[href^="/book/"]')].map(a => a.getAttribute('href') ?? ''),
   });
 
-  if (!key) return <CuratedWall />;
+  if (!key) return <CuratedWall works={wall} />;
 
   // Loading = the latest outcome does not answer the current request.
   const current = outcome?.key === key ? outcome : null;
