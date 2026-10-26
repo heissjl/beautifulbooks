@@ -6760,3 +6760,18 @@ Die Zahl wird nicht vom Ranking verursacht: die überzähligen Karten stehen mei
 **Grenzen:** 18 Suchen, 11 Autoren, fast nur Kanon-Titel mit hohen Ausgabenzahlen; die Labels sind eine Lesung; die Antworten kommen aus dem CDN-Cache der Live-Seite (Stand der Datenschicht von `main`, nicht dieses Zweigs — die Zweige unterscheiden sich in der Suche nicht).
 
 **Analytik-Checkliste:** nichts bewegt sich — eine Messung, kein Code der Seite.
+
+## 2026-10-26 — Übersetzungen, eigene Werke geprüft: weder LCC noch LibraryThing verbindet sie (ROADMAP 6.15 Schritt 3b)
+
+Die 23 überzähligen Karten der Stichprobe vom 2026-10-22 sind 23 Paare (Hauptkarte des Buchs, überzählige Karte), zusammen 31 verschiedene Werk-Datensätze (`lab/translations/pairs.json`). `lab/translations/probe.ts` holte jeden Datensatz einmal von `openlibrary.org/works/<id>.json`, mit 6 s Pause und Abbruch bei der ersten Weigerung; die Sperre vom 2026-10-22 war aufgehoben (ein Probeabruf am 2026-10-26: 200 in 3,4 s), alle 31 Abrufe gingen durch, keine Weigerung.
+
+| Signal | auf **beiden** Seiten eines Paars | wenn ja: gleich |
+|---|---|---|
+| `lc_classifications` (LCC-Klasse und Cutter-Basis) | **0 von 23** | — |
+| `identifiers.librarything` | **0 von 23** | — |
+
+Einzelheiten: LCC steht an nur zwei der 31 Datensätze (*Master and Margarita* OL676009W und *Il nome della rosa* OL8996439W, beide jeweils nur auf der Hauptkarte); `id_librarything` an vier Hauptkarten (*Crime and Punishment* 10072, *Le petit prince* 11883, *War and Peace* 995, dazu je eine) und an **keinem** der 23 überzähligen Datensätze. Die Hypothese aus 6.15 („die Cutter-Basis `A7`/`A513` verbindet Original und Übersetzung“) ließ sich nicht bestätigen, weil die Übersetzungs-Datensätze die Felder gar nicht tragen; an den Böll-Datensätzen aus dem Anlass (OL279833W, OL24817943W, OL27970558W, OL15394877W) steht heute weder LCC noch LibraryThing, die Angabe vom 2026-09-08 ist also nicht mehr belegbar oder wurde nie im Werk-, sondern im Ausgabensatz gesehen.
+
+**Ausgang:** keine dritte Identitätsregel. SPEC §2.1 ist umgeschrieben (Sprache steht nicht in der Regel, Übersetzungen sind aber nicht immer Ausgaben desselben Works; die Seite behauptet das nicht), und die Zeile „Auch erschienen als“ ist als 6.110 neu aufgenommen. Grenze: LCC und LibraryThing sind nur auf **Werk**-Datensätzen geprüft; die Ausgabensätze tragen LCC öfter (so sah es die Böll-Messung), aber über sie zu verbinden hieße, jede Werkseite um Ausgabenabrufe zu erweitern, die nichts Neues kosten dürfen (E10, N3).
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung und ein Spec-Absatz; kein Code der Seite.
