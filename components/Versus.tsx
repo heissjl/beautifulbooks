@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import AddToWall from '@/components/AddToWall';
 import Link from '@/components/Link';
 import ShareMenu from '@/components/ShareMenu';
 import { useT } from '@/components/i18n';
@@ -193,9 +194,16 @@ function usePreloadSeeded(pairs: readonly Pair[]) {
   }, [pairs]);
 }
 
-export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] }) {
+export default function Versus({ initialPairs = [], walls = false }: { initialPairs?: Pair[]; walls?: boolean }) {
   const t = useT();
   const [request, setRequest] = useState(0);
+  /*
+    The pair the reader just judged, kept until the next vote (ROADMAP 6.72 (3),
+    Julian 2026-10-18: a strip "last pair" rather than a button on the pair
+    sliding out). "Add to collection" sits here and nowhere near the two cards
+    on screen: a way to keep a cover must not weigh on the choice between them.
+  */
+  const [lastPair, setLastPair] = useState<Pair | null>(null);
   const [seen, setSeen] = useState<readonly string[]>([]);
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [sending, setSending] = useState(false);
@@ -273,6 +281,7 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
       if (res.ok && winner) {
         const { chosen } = (await res.json()) as { chosen?: Chosen | null };
         if (chosen) setLastPick({ ...chosen, src: winner.src });
+        setLastPair(pair);
       }
       next(pair);
     } catch {
@@ -311,7 +320,8 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h1 className="text-3xl leading-tight text-ink [text-wrap:balance] sm:text-4xl">{t('Which cover would you rather look at?')}</h1>
-        <Link href="/versus/board" className="text-sm text-accent underline underline-offset-4">{t('Standings')}</Link>
+        {/* `hit` (6.92): measured 2026-10-18 the link was 20 px tall and a tap 2 px beside it pressed nothing (ROADMAP 6.63 a). */}
+        <Link href="/versus/board" className="hit text-sm text-accent underline underline-offset-4">{t('Standings')}</Link>
       </div>
       <p className="mt-2 text-[15px] text-ink-2">{t('Judge the cover, not the book!')}</p>
       <p className="mt-1 text-sm tabular-nums text-ink-3" aria-live="polite">
@@ -462,6 +472,33 @@ export default function Versus({ initialPairs = [] }: { initialPairs?: Pair[] })
                     </>
                   ) : null}
                 </p>
+              </div>
+            )}
+            {/* Only with collections on (WALLS), and only once a vote has been counted: the covers on screen stay free of it. */}
+            {walls && lastPair && (
+              <div className="w-full max-w-md rounded-card border border-line px-3 py-2">
+                <p className="text-xs text-ink-3">{t('Your last pair — keep one in a collection:')}</p>
+                <div className="mt-2 grid grid-cols-2 gap-3">
+                  {[lastPair.a, lastPair.b].map(side => (
+                    <div key={side.id} className="flex min-w-0 items-center gap-2">
+                      <Image src={side.src} alt="" width={28} height={42} unoptimized className="h-[42px] w-[28px] shrink-0 object-contain" />
+                      <div className="min-w-0">
+                        <p className="truncate text-[13px] leading-snug text-ink" title={side.title}>{side.title}</p>
+                        {side.workId && (
+                          // A pool cover is an Open Library scan; one with a picture of its own has no stored id and AddToWall renders nothing.
+                          <AddToWall
+                            workId={side.workId}
+                            title={side.title}
+                            author={side.author || undefined}
+                            cover={{ id: side.id, url: side.src, source: 'openlibrary', editionIds: [] }}
+                            editions={[]}
+                            compact
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             <p className="hidden text-center text-xs text-ink-3 [@media(hover:hover)]:block">{t('← and → choose, ↓ skips.')}</p>

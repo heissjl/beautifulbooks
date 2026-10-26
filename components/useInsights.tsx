@@ -10,7 +10,7 @@
  * previous address within the site is kept in this module's memory, which a
  * reload forgets.
  */
-import { createContext, useContext, useEffect, useRef } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { Market } from '@/lib/market';
 import {
@@ -151,8 +151,8 @@ function useOnLeave(flush: () => void, key: string): void {
   }, [key]);
 }
 
-/** Image searches and catalogues: not shops, counted as "found" (plan §4). */
-const FINDERS = /(^|\.)(lens\.google\.com|tineye\.com|worldcat\.org|openlibrary\.org)$/;
+/** Image searches, catalogues and Goodreads (6.11): not shops, counted as "found" (plan §4). */
+const FINDERS = /(^|\.)(lens\.google\.com|tineye\.com|worldcat\.org|openlibrary\.org|goodreads\.com)$/;
 
 type Verdict = (typeof VERDICTS)[number];
 
@@ -255,10 +255,10 @@ export function useBookSignal({ workId, market, pagesLoaded, picked }: BookVisit
     });
   }, workId);
 
-  const reportRef = useRef((status: Verdict) => {
+  // A stable function (not a ref read in render, which react-hooks 7.1 forbids): it only writes into the visit.
+  return useCallback((status: Verdict) => {
     visit.current.verdict = status;
-  });
-  return reportRef.current;
+  }, []);
 }
 
 export interface SearchVisit {

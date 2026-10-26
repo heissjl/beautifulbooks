@@ -1,0 +1,1400 @@
+{
+ "at": "2026-10-18",
+ "works": [
+  {
+   "id": "OL39349W",
+   "title": "Mrs Dalloway",
+   "author": "Virginia Woolf",
+   "openLibrary": 1925,
+   "wikidata": 1925,
+   "qid": "Q752584",
+   "differs": false
+  },
+  {
+   "id": "OL472971W",
+   "title": "Malina",
+   "author": "Ingeborg Bachmann",
+   "openLibrary": 1971,
+   "wikidata": 1971,
+   "qid": "Q1887393",
+   "differs": false
+  },
+  {
+   "id": "OL109524W",
+   "title": "Solaris",
+   "author": "Stanisław Lem",
+   "openLibrary": 1961,
+   "wikidata": 1961,
+   "qid": "Q261281",
+   "differs": false
+  },
+  {
+   "id": "OL450063W",
+   "title": "Frankenstein; or, The Modern Prometheus",
+   "author": "Mary Shelley",
+   "openLibrary": 1818,
+   "wikidata": 1818,
+   "qid": "Q150827",
+   "differs": false
+  },
+  {
+   "id": "OL893707W",
+   "title": "Madame Bovary",
+   "author": "Gustave Flaubert",
+   "openLibrary": 1876,
+   "wikidata": 1857,
+   "qid": "Q193417",
+   "differs": true
+  },
+  {
+   "id": "OL1230613W",
+   "title": "L’étranger",
+   "author": "Albert Camus",
+   "openLibrary": 1922,
+   "wikidata": 1942,
+   "qid": "Q163297",
+   "differs": true
+  },
+  {
+   "id": "OL498463W",
+   "title": "Der Proceß",
+   "author": "Franz Kafka",
+   "openLibrary": 2006,
+   "wikidata": 1925,
+   "qid": "Q36097",
+   "differs": true
+  },
+  {
+   "id": "OL1434640W",
+   "title": "Berlin Alexanderplatz",
+   "author": "Alfred Döblin",
+   "openLibrary": 1929,
+   "wikidata": 1929,
+   "qid": "Q694245",
+   "differs": false
+  },
+  {
+   "id": "OL891786W",
+   "title": "Things Fall Apart",
+   "author": "Chinua Achebe",
+   "openLibrary": 1958,
+   "wikidata": 1958,
+   "qid": "Q622400",
+   "differs": false
+  },
+  {
+   "id": "OL872773W",
+   "title": "Der Steppenwolf",
+   "author": "Hermann Hesse",
+   "openLibrary": 1927,
+   "wikidata": 1927,
+   "qid": "Q217073",
+   "differs": false
+  },
+  {
+   "id": "OL64365W",
+   "title": "Brave New World",
+   "author": "Aldous Huxley",
+   "openLibrary": 1932,
+   "wikidata": 1932,
+   "qid": "Q191949",
+   "differs": false
+  },
+  {
+   "id": "OL495470W",
+   "title": "Invisible Man",
+   "author": "Ralph Ellison",
+   "openLibrary": 1952,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL98459W",
+   "title": "Slaughterhouse-Five",
+   "author": "Kurt Vonnegut",
+   "openLibrary": null,
+   "wikidata": 1969,
+   "qid": "Q265954",
+   "differs": false
+  },
+  {
+   "id": "OL26437W",
+   "title": "The Prime of Miss Jean Brodie",
+   "author": "Muriel Spark",
+   "openLibrary": 1961,
+   "wikidata": 1961,
+   "qid": "Q2074335",
+   "differs": false
+  },
+  {
+   "id": "OL103123W",
+   "title": "Fahrenheit 451",
+   "author": "Ray Bradbury",
+   "openLibrary": 1953,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL59048W",
+   "title": "The Remains of the Day",
+   "author": "Kazuo Ishiguro",
+   "openLibrary": 1989,
+   "wikidata": 1989,
+   "qid": "Q829934",
+   "differs": false
+  },
+  {
+   "id": "OL258134W",
+   "title": "Naked Lunch",
+   "author": "William S. Burroughs",
+   "openLibrary": 1959,
+   "wikidata": 1959,
+   "qid": "Q379286",
+   "differs": false
+  },
+  {
+   "id": "OL468431W",
+   "title": "The Great Gatsby",
+   "author": "F. Scott Fitzgerald",
+   "openLibrary": 1920,
+   "wikidata": 1925,
+   "qid": "Q214371",
+   "differs": true
+  },
+  {
+   "id": "OL872932W",
+   "title": "Siddhartha",
+   "author": "Hermann Hesse",
+   "openLibrary": null,
+   "wikidata": 1922,
+   "qid": "Q457289",
+   "differs": false
+  },
+  {
+   "id": "OL27258W",
+   "title": "Neuromancer",
+   "author": "William Gibson",
+   "openLibrary": 1984,
+   "wikidata": 1984,
+   "qid": "Q662029",
+   "differs": false
+  },
+  {
+   "id": "OL59800W",
+   "title": "The Left Hand of Darkness",
+   "author": "Ursula K. Le Guin",
+   "openLibrary": null,
+   "wikidata": 1969,
+   "qid": "Q2008211",
+   "differs": false
+  },
+  {
+   "id": "OL2636675W",
+   "title": "Gravity's Rainbow",
+   "author": "Thomas Pynchon",
+   "openLibrary": 1973,
+   "wikidata": 1973,
+   "qid": "Q1212160",
+   "differs": false
+  },
+  {
+   "id": "OL2172356W",
+   "title": "Do Androids Dream of Electric Sheep?",
+   "author": "Philip K. Dick",
+   "openLibrary": 1968,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL38663W",
+   "title": "Heart of Darkness",
+   "author": "Joseph Conrad",
+   "openLibrary": 1899,
+   "wikidata": 1899,
+   "qid": "Q129778",
+   "differs": false
+  },
+  {
+   "id": "OL63073W",
+   "title": "The Old Man and the Sea",
+   "author": "Ernest Hemingway",
+   "openLibrary": 1952,
+   "wikidata": 1952,
+   "qid": "Q26505",
+   "differs": false
+  },
+  {
+   "id": "OL276798W",
+   "title": "Catch-22",
+   "author": "Joseph Heller",
+   "openLibrary": 1961,
+   "wikidata": 1961,
+   "qid": "Q278208",
+   "differs": false
+  },
+  {
+   "id": "OL98130W",
+   "title": "Also sprach Zarathustra",
+   "author": "Friedrich Nietzsche",
+   "openLibrary": 1883,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL67334W",
+   "title": "Die Blechtrommel",
+   "author": "Günter Grass",
+   "openLibrary": 1959,
+   "wikidata": 1959,
+   "qid": "Q899334",
+   "differs": false
+  },
+  {
+   "id": "OL8972751W",
+   "title": "Nesnesitelná lehkost bytí",
+   "author": "Milan Kundera",
+   "openLibrary": 1984,
+   "wikidata": 1984,
+   "qid": "Q917055",
+   "differs": false
+  },
+  {
+   "id": "OL2625457W",
+   "title": "Norwegian Wood",
+   "author": "村上春樹",
+   "openLibrary": 1987,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL274505W",
+   "title": "Cien años de soledad",
+   "author": "Gabriel García Márquez",
+   "openLibrary": 1967,
+   "wikidata": 1967,
+   "qid": "Q178869",
+   "differs": false
+  },
+  {
+   "id": "OL893414W",
+   "title": "Dune",
+   "author": "Frank Herbert",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL27513W",
+   "title": "The Fellowship of the Ring",
+   "author": "J.R.R. Tolkien",
+   "openLibrary": 1954,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL86318W",
+   "title": "Ulysses",
+   "author": "James Joyce",
+   "openLibrary": 1914,
+   "wikidata": 1922,
+   "qid": "Q6511",
+   "differs": true
+  },
+  {
+   "id": "OL3140822W",
+   "title": "To Kill a Mockingbird",
+   "author": "Harper Lee",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": "Q55635945",
+   "differs": true
+  },
+  {
+   "id": "OL62744W",
+   "title": "Vom Kriege",
+   "author": "Carl von Clausewitz",
+   "openLibrary": 1835,
+   "wikidata": 1832,
+   "qid": "Q1981770",
+   "differs": true
+  },
+  {
+   "id": "OL50548W",
+   "title": "Beloved",
+   "author": "Toni Morrison",
+   "openLibrary": 1987,
+   "wikidata": 1987,
+   "qid": "Q971767",
+   "differs": false
+  },
+  {
+   "id": "OL498556W",
+   "title": "Metamorphosis",
+   "author": "Franz Kafka",
+   "openLibrary": null,
+   "wikidata": 1915,
+   "qid": "Q184222",
+   "differs": false
+  },
+  {
+   "id": "OL46125W",
+   "title": "Foundation",
+   "author": "Isaac Asimov",
+   "openLibrary": 1915,
+   "wikidata": 1951,
+   "qid": "Q753894",
+   "differs": true
+  },
+  {
+   "id": "OL14866824W",
+   "title": "Der Zauberberg",
+   "author": "Thomas Mann",
+   "openLibrary": 1924,
+   "wikidata": 1924,
+   "qid": "Q212898",
+   "differs": false
+  },
+  {
+   "id": "OL65906W",
+   "title": "On The Road",
+   "author": "Jack Kerouac",
+   "openLibrary": 1957,
+   "wikidata": 1957,
+   "qid": "Q743180",
+   "differs": false
+  },
+  {
+   "id": "OL675783W",
+   "title": "The Handmaid's Tale",
+   "author": "Margaret Atwood",
+   "openLibrary": 1985,
+   "wikidata": 1985,
+   "qid": "Q1541914",
+   "differs": false
+  },
+  {
+   "id": "OL3501723W",
+   "title": "A Confederacy of Dunces",
+   "author": "John Kennedy Toole",
+   "openLibrary": 1980,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL627084W",
+   "title": "Lolita",
+   "author": "Vladimir Nabokov",
+   "openLibrary": 1954,
+   "wikidata": 1955,
+   "qid": "Q127149",
+   "differs": true
+  },
+  {
+   "id": "OL455327W",
+   "title": "Lord of the Flies",
+   "author": "William Golding",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL61982W",
+   "title": "Ὀδύσσεια",
+   "author": "Όμηρος",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": "Q35160",
+   "differs": true
+  },
+  {
+   "id": "OL93082W",
+   "title": "La Divina Commedia",
+   "author": "Dante Alighieri",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": "Q40185",
+   "differs": true
+  },
+  {
+   "id": "OL52556W",
+   "title": "Die Leiden des jungen Werthers",
+   "author": "Johann Wolfgang von Goethe",
+   "openLibrary": null,
+   "wikidata": 1774,
+   "qid": "Q151883",
+   "differs": false
+  },
+  {
+   "id": "OL857189W",
+   "title": "Effi Briest",
+   "author": "Theodor Fontane",
+   "openLibrary": null,
+   "wikidata": 1894,
+   "qid": "Q1296168",
+   "differs": false
+  },
+  {
+   "id": "OL14867081W",
+   "title": "Buddenbrooks",
+   "author": "Thomas Mann",
+   "openLibrary": 1909,
+   "wikidata": 1901,
+   "qid": "Q326909",
+   "differs": true
+  },
+  {
+   "id": "OL1209288W",
+   "title": "Im Westen nichts Neues",
+   "author": "Erich Maria Remarque",
+   "openLibrary": 1928,
+   "wikidata": 1928,
+   "qid": "Q207332",
+   "differs": false
+  },
+  {
+   "id": "OL584333W",
+   "title": "Bonjour tristesse",
+   "author": "Françoise Sagan",
+   "openLibrary": null,
+   "wikidata": 1954,
+   "qid": "Q892658",
+   "differs": false
+  },
+  {
+   "id": "OL10432709W",
+   "title": "Братья Карамазовы",
+   "author": "Fiódor Dostoievski",
+   "openLibrary": 1880,
+   "wikidata": 1880,
+   "qid": "Q183157",
+   "differs": false
+  },
+  {
+   "id": "OL258301W",
+   "title": "Доктор Живаго",
+   "author": "Boris Leonidovich Pasternak",
+   "openLibrary": 1957,
+   "wikidata": 1957,
+   "qid": "Q206870",
+   "differs": false
+  },
+  {
+   "id": "OL272388W",
+   "title": "Архипелаг ГУЛАГ",
+   "author": "Александр Солженицын",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL2564006W",
+   "title": "Genji monogatari",
+   "author": "Murasaki Shikibu",
+   "openLibrary": 1900,
+   "wikidata": null,
+   "qid": "Q8269",
+   "differs": true
+  },
+  {
+   "id": "OL2625431W",
+   "title": "海辺のカフカ",
+   "author": "村上春樹",
+   "openLibrary": 2001,
+   "wikidata": 2002,
+   "qid": "Q579744",
+   "differs": true
+  },
+  {
+   "id": "OL2045111W",
+   "title": "雪国",
+   "author": "川端康成",
+   "openLibrary": 1937,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL2384132W",
+   "title": "Cry, the Beloved Country",
+   "author": "Alan Paton",
+   "openLibrary": 1940,
+   "wikidata": 1948,
+   "qid": "Q2916551",
+   "differs": true
+  },
+  {
+   "id": "OL2980902W",
+   "title": "A Fine Balance",
+   "author": "Rohinton Mistry",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL481143W",
+   "title": "White Teeth",
+   "author": "Zadie Smith",
+   "openLibrary": 2000,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL40873W",
+   "title": "The Road",
+   "author": "Cormac McCarthy",
+   "openLibrary": 2006,
+   "wikidata": 2006,
+   "qid": "Q1140295",
+   "differs": false
+  },
+  {
+   "id": "OL40879W",
+   "title": "Blood Meridian",
+   "author": "Cormac McCarthy",
+   "openLibrary": 1985,
+   "wikidata": 1985,
+   "qid": "Q581426",
+   "differs": false
+  },
+  {
+   "id": "OL102749W",
+   "title": "Moby Dick",
+   "author": "Herman Melville",
+   "openLibrary": 1851,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL1812933W",
+   "title": "American Psycho",
+   "author": "Bret Easton Ellis",
+   "openLibrary": 1991,
+   "wikidata": 1991,
+   "qid": "Q466504",
+   "differs": false
+  },
+  {
+   "id": "OL18941W",
+   "title": "Fight Club",
+   "author": "Chuck Palahniuk",
+   "openLibrary": 1996,
+   "wikidata": 1996,
+   "qid": "Q837283",
+   "differs": false
+  },
+  {
+   "id": "OL261794W",
+   "title": "A Clockwork Orange",
+   "author": "Anthony Burgess",
+   "openLibrary": null,
+   "wikidata": 1962,
+   "qid": "Q692557",
+   "differs": false
+  },
+  {
+   "id": "OL23166W",
+   "title": "East of Eden",
+   "author": "John Steinbeck",
+   "openLibrary": null,
+   "wikidata": 1952,
+   "qid": "Q849701",
+   "differs": false
+  },
+  {
+   "id": "OL3511459W",
+   "title": "Stoner",
+   "author": "John Williams",
+   "openLibrary": 1965,
+   "wikidata": 1965,
+   "qid": "Q7619282",
+   "differs": false
+  },
+  {
+   "id": "OL275128W",
+   "title": "Native Son",
+   "author": "Richard Wright",
+   "openLibrary": 1940,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL228705W",
+   "title": "Go Tell It on the Mountain",
+   "author": "James Baldwin",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL50564W",
+   "title": "Song of Solomon",
+   "author": "Toni Morrison",
+   "openLibrary": 1977,
+   "wikidata": 1977,
+   "qid": "Q3480330",
+   "differs": false
+  },
+  {
+   "id": "OL5721394W",
+   "title": "Brideshead Revisited",
+   "author": "Evelyn Waugh",
+   "openLibrary": 1945,
+   "wikidata": 1945,
+   "qid": "Q6992413",
+   "differs": false
+  },
+  {
+   "id": "OL23205W",
+   "title": "The Grapes of Wrath",
+   "author": "John Steinbeck",
+   "openLibrary": null,
+   "wikidata": 1939,
+   "qid": "Q215983",
+   "differs": false
+  },
+  {
+   "id": "OL468485W",
+   "title": "Tender is the Night",
+   "author": "F. Scott Fitzgerald",
+   "openLibrary": 1933,
+   "wikidata": 1934,
+   "qid": "Q247372",
+   "differs": true
+  },
+  {
+   "id": "OL36633W",
+   "title": "Rebecca",
+   "author": "Daphne du Maurier",
+   "openLibrary": 1938,
+   "wikidata": 1938,
+   "qid": "Q1334940",
+   "differs": false
+  },
+  {
+   "id": "OL59434W",
+   "title": "The Talented Mr. Ripley",
+   "author": "Patricia Highsmith",
+   "openLibrary": 1955,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL1992198W",
+   "title": "In Cold Blood",
+   "author": "Truman Capote",
+   "openLibrary": 1965,
+   "wikidata": 1966,
+   "qid": "Q1142887",
+   "differs": true
+  },
+  {
+   "id": "OL1992167W",
+   "title": "Breakfast at Tiffany's",
+   "author": "Truman Capote",
+   "openLibrary": 1956,
+   "wikidata": 1958,
+   "qid": "Q849930",
+   "differs": true
+  },
+  {
+   "id": "OL65935W",
+   "title": "The town and the city",
+   "author": "Jack Kerouac",
+   "openLibrary": 1950,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL2944469W",
+   "title": "One Flew Over the Cuckoo's Nest",
+   "author": "Ken Kesey",
+   "openLibrary": 1962,
+   "wikidata": 1962,
+   "qid": "Q857313",
+   "differs": false
+  },
+  {
+   "id": "OL2636665W",
+   "title": "The Crying of Lot 49",
+   "author": "Thomas Pynchon",
+   "openLibrary": 1965,
+   "wikidata": 1966,
+   "qid": "Q2344707",
+   "differs": true
+  },
+  {
+   "id": "OL1921196W",
+   "title": "White Noise",
+   "author": "Don DeLillo",
+   "openLibrary": 1984,
+   "wikidata": 1985,
+   "qid": "Q2623505",
+   "differs": true
+  },
+  {
+   "id": "OL1921185W",
+   "title": "Underworld",
+   "author": "Don DeLillo",
+   "openLibrary": 1997,
+   "wikidata": 1997,
+   "qid": "Q2249650",
+   "differs": false
+  },
+  {
+   "id": "OL463709W",
+   "title": "Rabbit, Run",
+   "author": "John Updike",
+   "openLibrary": 1960,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL74676W",
+   "title": "Portnoy's Complaint",
+   "author": "Philip Roth",
+   "openLibrary": 1969,
+   "wikidata": 1969,
+   "qid": "Q2707531",
+   "differs": false
+  },
+  {
+   "id": "OL3951517W",
+   "title": "The Virgin Suicides (Bloomsbury Classic)",
+   "author": "Jeffrey Eugenides",
+   "openLibrary": 1993,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL457126W",
+   "title": "Imaginary Homelands",
+   "author": "Salman Rushdie",
+   "openLibrary": 1991,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL457175W",
+   "title": "The Satanic Verses",
+   "author": "Salman Rushdie",
+   "openLibrary": 1988,
+   "wikidata": 1988,
+   "qid": "Q191288",
+   "differs": false
+  },
+  {
+   "id": "OL16805415W",
+   "title": "Americanah",
+   "author": "Chimamanda Ngozi Adichie",
+   "openLibrary": 1969,
+   "wikidata": 2013,
+   "qid": "Q16154159",
+   "differs": true
+  },
+  {
+   "id": "OL1599742W",
+   "title": "بين القصرين",
+   "author": "نجيب محفوظ",
+   "openLibrary": 1960,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL16064734W",
+   "title": "Snow",
+   "author": "Orhan Pamuk",
+   "openLibrary": 2002,
+   "wikidata": 2002,
+   "qid": "Q1478870",
+   "differs": false
+  },
+  {
+   "id": "OL1019598W",
+   "title": "Benim Adım Kırmızı",
+   "author": "Orhan Pamuk",
+   "openLibrary": 1998,
+   "wikidata": 1998,
+   "qid": "Q470464",
+   "differs": false
+  },
+  {
+   "id": "OL258329W",
+   "title": "Один день Ивана Денисовича",
+   "author": "Александр Солженицын",
+   "openLibrary": 1960,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL627081W",
+   "title": "Pale Fire",
+   "author": "Vladimir Nabokov",
+   "openLibrary": 1945,
+   "wikidata": 1962,
+   "qid": "Q1229792",
+   "differs": true
+  },
+  {
+   "id": "OL865560W",
+   "title": "Homo Faber",
+   "author": "Max Frisch",
+   "openLibrary": 1957,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL865476W",
+   "title": "Stiller",
+   "author": "Max Frisch",
+   "openLibrary": 1954,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL15681224W",
+   "title": "Der Besuch der alten Dame",
+   "author": "Friedrich Dürrenmatt",
+   "openLibrary": 1956,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL2163649W",
+   "title": "The Hitchhiker's Guide to the Galaxy",
+   "author": "Douglas Adams",
+   "openLibrary": 1979,
+   "wikidata": 1979,
+   "qid": "Q3107329",
+   "differs": false
+  },
+  {
+   "id": "OL46241W",
+   "title": "I, Robot",
+   "author": "Isaac Asimov",
+   "openLibrary": 1950,
+   "wikidata": 1950,
+   "qid": "Q393018",
+   "differs": false
+  },
+  {
+   "id": "OL38501W",
+   "title": "Snow Crash",
+   "author": "Neal Stephenson",
+   "openLibrary": 1992,
+   "wikidata": 1992,
+   "qid": "Q768389",
+   "differs": false
+  },
+  {
+   "id": "OL52114W",
+   "title": "The War of the Worlds",
+   "author": "H. G. Wells",
+   "openLibrary": null,
+   "wikidata": 1897,
+   "qid": "Q213019",
+   "differs": false
+  },
+  {
+   "id": "OL1855944W",
+   "title": "Atonement",
+   "author": "Ian McEwan",
+   "openLibrary": null,
+   "wikidata": 2001,
+   "qid": "Q306619",
+   "differs": false
+  },
+  {
+   "id": "OL82929W",
+   "title": "As I Lay Dying",
+   "author": "William Faulkner",
+   "openLibrary": 1915,
+   "wikidata": 1930,
+   "qid": "Q1544119",
+   "differs": true
+  },
+  {
+   "id": "OL1287903W",
+   "title": "Voyage au bout de la nuit",
+   "author": "Louis-Ferdinand Céline",
+   "openLibrary": 1932,
+   "wikidata": 1932,
+   "qid": "Q774233",
+   "differs": false
+  },
+  {
+   "id": "OL1858668W",
+   "title": "Wide Sargasso Sea",
+   "author": "Jean Rhys",
+   "openLibrary": 1966,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL31259W",
+   "title": "The Golden Notebook",
+   "author": "Doris Lessing",
+   "openLibrary": null,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL675722W",
+   "title": "Oryx and Crake",
+   "author": "Margaret Atwood",
+   "openLibrary": 2002,
+   "wikidata": 2003,
+   "qid": "Q2032398",
+   "differs": true
+  },
+  {
+   "id": "OL80021W",
+   "title": "I Know Why the Caged Bird Sings",
+   "author": "Maya Angelou",
+   "openLibrary": 1969,
+   "wikidata": 1969,
+   "qid": "Q3163506",
+   "differs": false
+  },
+  {
+   "id": "OL8769634W",
+   "title": "Das siebte Kreuz",
+   "author": "Anna Seghers",
+   "openLibrary": 1942,
+   "wikidata": 1942,
+   "qid": "Q336786",
+   "differs": false
+  },
+  {
+   "id": "OL50565W",
+   "title": "The Bluest Eye",
+   "author": "Toni Morrison",
+   "openLibrary": 1970,
+   "wikidata": 1970,
+   "qid": "Q1069956",
+   "differs": false
+  },
+  {
+   "id": "OL39396W",
+   "title": "To the Lighthouse",
+   "author": "Virginia Woolf",
+   "openLibrary": 1927,
+   "wikidata": 1927,
+   "qid": "Q478016",
+   "differs": false
+  },
+  {
+   "id": "OL1095427W",
+   "title": "Jane Eyre",
+   "author": "Charlotte Brontë",
+   "openLibrary": 1847,
+   "wikidata": 1847,
+   "qid": "Q182961",
+   "differs": false
+  },
+  {
+   "id": "OL267096W",
+   "title": "Анна Каренина",
+   "author": "Лев Толстой",
+   "openLibrary": null,
+   "wikidata": 1877,
+   "qid": "Q147787",
+   "differs": false
+  },
+  {
+   "id": "OL767941W",
+   "title": "Le Deuxième Sexe",
+   "author": "Simone de Beauvoir",
+   "openLibrary": 1949,
+   "wikidata": 1949,
+   "qid": "Q470098",
+   "differs": false
+  },
+  {
+   "id": "OL505439W",
+   "title": "Under the Volcano",
+   "author": "Malcolm Lowry",
+   "openLibrary": 1947,
+   "wikidata": 1947,
+   "qid": "Q1570020",
+   "differs": false
+  },
+  {
+   "id": "OL38684W",
+   "title": "Lord Jim",
+   "author": "Joseph Conrad",
+   "openLibrary": null,
+   "wikidata": 1900,
+   "qid": "Q727408",
+   "differs": false
+  },
+  {
+   "id": "OL88881W",
+   "title": "Howards End",
+   "author": "E. M. Forster",
+   "openLibrary": 1910,
+   "wikidata": 1910,
+   "qid": "Q1146642",
+   "differs": false
+  },
+  {
+   "id": "OL98491W",
+   "title": "The Age of Innocence",
+   "author": "Edith Wharton",
+   "openLibrary": null,
+   "wikidata": 1920,
+   "qid": "Q1045464",
+   "differs": false
+  },
+  {
+   "id": "OL114967W",
+   "title": "The Jungle",
+   "author": "Upton Sinclair",
+   "openLibrary": null,
+   "wikidata": 1905,
+   "qid": "Q260205",
+   "differs": false
+  },
+  {
+   "id": "OL4321141W",
+   "title": "The Secret History",
+   "author": "Donna Tartt",
+   "openLibrary": null,
+   "wikidata": 1992,
+   "qid": "Q1218321",
+   "differs": false
+  },
+  {
+   "id": "OL1673205W",
+   "title": "The Godfather",
+   "author": "Mario Puzo",
+   "openLibrary": 1969,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL262454W",
+   "title": "The Hound of the Baskervilles",
+   "author": "Arthur Conan Doyle",
+   "openLibrary": 1900,
+   "wikidata": 1902,
+   "qid": "Q45192",
+   "differs": true
+  },
+  {
+   "id": "OL471576W",
+   "title": "Murder on the Orient Express",
+   "author": "Agatha Christie",
+   "openLibrary": 1933,
+   "wikidata": 1934,
+   "qid": "Q845889",
+   "differs": true
+  },
+  {
+   "id": "OL471565W",
+   "title": "And Then There Were None",
+   "author": "Agatha Christie",
+   "openLibrary": 1939,
+   "wikidata": 1939,
+   "qid": "Q214132",
+   "differs": false
+  },
+  {
+   "id": "OL15400582W",
+   "title": "The Big Sleep",
+   "author": "Raymond Chandler",
+   "openLibrary": 1939,
+   "wikidata": 1939,
+   "qid": "Q1649862",
+   "differs": false
+  },
+  {
+   "id": "OL47266W",
+   "title": "The Maltese Falcon",
+   "author": "Dashiell Hammett",
+   "openLibrary": 1929,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL103134W",
+   "title": "The Martian Chronicles",
+   "author": "Ray Bradbury",
+   "openLibrary": 1950,
+   "wikidata": 1950,
+   "qid": "Q918052",
+   "differs": false
+  },
+  {
+   "id": "OL59688W",
+   "title": "Stranger in a Strange Land",
+   "author": "Robert A. Heinlein",
+   "openLibrary": 1961,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL49488W",
+   "title": "Ender's Game",
+   "author": "Orson Scott Card",
+   "openLibrary": 1985,
+   "wikidata": 1977,
+   "qid": "Q5376051",
+   "differs": true
+  },
+  {
+   "id": "OL2096536W",
+   "title": "Watership Down",
+   "author": "Richard Adams",
+   "openLibrary": 1972,
+   "wikidata": 1972,
+   "qid": "Q936801",
+   "differs": false
+  },
+  {
+   "id": "OL44995W",
+   "title": "Far from the Madding Crowd",
+   "author": "Thomas Hardy",
+   "openLibrary": 1874,
+   "wikidata": 1874,
+   "qid": "Q5642996",
+   "differs": false
+  },
+  {
+   "id": "OL531767W",
+   "title": "The Canterbury Tales",
+   "author": "Geoffrey Chaucer",
+   "openLibrary": 1970,
+   "wikidata": 1387,
+   "qid": "Q191663",
+   "differs": true
+  },
+  {
+   "id": "OL810991W",
+   "title": "Paradise Lost",
+   "author": "John Milton",
+   "openLibrary": 1667,
+   "wikidata": 1667,
+   "qid": "Q28754",
+   "differs": false
+  },
+  {
+   "id": "OL15366912W",
+   "title": "Utopia",
+   "author": "Thomas More",
+   "openLibrary": 1518,
+   "wikidata": null,
+   "qid": "Q404158",
+   "differs": true
+  },
+  {
+   "id": "OL7180368W",
+   "title": "Decamerone",
+   "author": "Giovanni Boccaccio",
+   "openLibrary": 1516,
+   "wikidata": null,
+   "qid": "Q16438",
+   "differs": true
+  },
+  {
+   "id": "OL733640W",
+   "title": "Le rouge et le noir",
+   "author": "Stendhal",
+   "openLibrary": 1830,
+   "wikidata": 1830,
+   "qid": "Q192649",
+   "differs": false
+  },
+  {
+   "id": "OL5738260W",
+   "title": "Everything Is Illuminated",
+   "author": "Jonathan Safran Foer",
+   "openLibrary": 2002,
+   "wikidata": 2002,
+   "qid": "Q923551",
+   "differs": false
+  },
+  {
+   "id": "OL53071W",
+   "title": "The English Patient",
+   "author": "Michael Ondaatje",
+   "openLibrary": 1992,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL1326310W",
+   "title": "The Sea, the Sea",
+   "author": "Iris Murdoch",
+   "openLibrary": 1978,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL771125W",
+   "title": "Woyzeck",
+   "author": "Georg Büchner",
+   "openLibrary": 1900,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL995265W",
+   "title": "Der Schimmelreiter",
+   "author": "Theodor Storm",
+   "openLibrary": 1908,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL28429W",
+   "title": "Schachnovelle",
+   "author": "Stefan Zweig",
+   "openLibrary": 1943,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL712032W",
+   "title": "Los detectives salvajes",
+   "author": "Roberto Bolaño",
+   "openLibrary": 1998,
+   "wikidata": 1998,
+   "qid": "Q898056",
+   "differs": false
+  },
+  {
+   "id": "OL712025W",
+   "title": "2666",
+   "author": "Roberto Bolaño",
+   "openLibrary": 2004,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL944359W",
+   "title": "La familia de Pascual Duarte",
+   "author": "Camilo José Cela",
+   "openLibrary": 1942,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL274518W",
+   "title": "El amor en los tiempos del cólera",
+   "author": "Gabriel García Márquez",
+   "openLibrary": 1985,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL1905255W",
+   "title": "La casa de los espíritus",
+   "author": "Isabel Allende",
+   "openLibrary": 1982,
+   "wikidata": 1982,
+   "qid": "Q1168267",
+   "differs": false
+  },
+  {
+   "id": "OL857544W",
+   "title": "La ciudad y los perros",
+   "author": "Mario Vargas Llosa",
+   "openLibrary": 1963,
+   "wikidata": 1963,
+   "qid": "Q763199",
+   "differs": false
+  },
+  {
+   "id": "OL979517W",
+   "title": "Veinte poemas de amor y una canción desesperada",
+   "author": "Pablo Neruda",
+   "openLibrary": 1924,
+   "wikidata": 1924,
+   "qid": "Q5219975",
+   "differs": false
+  },
+  {
+   "id": "OL617847W",
+   "title": "El túnel",
+   "author": "Ernesto Sabato",
+   "openLibrary": 1948,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL1003040W",
+   "title": "Dom Casmurro",
+   "author": "Machado de Assis",
+   "openLibrary": 1982,
+   "wikidata": 1899,
+   "qid": "Q1236531",
+   "differs": true
+  },
+  {
+   "id": "OL260101W",
+   "title": "The Tenant of Wildfell Hall",
+   "author": "Anne Brontë",
+   "openLibrary": 1847,
+   "wikidata": 1848,
+   "qid": "Q44701",
+   "differs": true
+  },
+  {
+   "id": "OL505781W",
+   "title": "Of Human Bondage",
+   "author": "William Somerset Maugham",
+   "openLibrary": 1913,
+   "wikidata": null,
+   "qid": null,
+   "differs": true
+  },
+  {
+   "id": "OL27776452W",
+   "title": "The Importance of Being Earnest",
+   "author": "Oscar Wilde",
+   "openLibrary": 1893,
+   "wikidata": null,
+   "qid": "Q830501",
+   "differs": true
+  }
+ ]
+}

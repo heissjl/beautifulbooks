@@ -55,4 +55,15 @@ describe('the cover image route', () => {
     expect(res.status).toBe(502);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
+
+  it('serves raster images only: an SVG from upstream is a failure, not a cover (red team L1)', async () => {
+    const svg = () => new Response('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>', { status: 200, headers: { 'content-type': 'image/svg+xml' } });
+    vi.stubGlobal('fetch', vi.fn(async () => svg()));
+    const res = await get('L', 'ol-420313', '10.1.0.5');
+    expect(res.status).toBe(502);
+    expect(res.headers.get('x-cover-upstream') ?? '').toContain('not-image');
+    const webp = () => new Response(new Uint8Array(512), { status: 200, headers: { 'content-type': 'image/webp; charset=binary' } });
+    vi.stubGlobal('fetch', vi.fn(async () => webp()));
+    expect((await get('M', 'ol-420313', '10.1.0.6')).status).toBe(200);
+  });
 });

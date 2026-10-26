@@ -16,6 +16,12 @@ export interface Work {
   /** Open Library author keys aligned with `authors`, when known. */
   authorKeys?: string[];
   firstPublishYear?: number;
+  /**
+   * Where the year comes from (ROADMAP 6.16): `checked` from `data/first-years.json`
+   * (two sources agree, or Julian read the difference), else Open Library's own
+   * number, which is wrong for a third of the curated books. The page words the two apart.
+   */
+  firstPublishYearSource?: 'openlibrary' | 'checked';
   /** Total edition count reported by the source, not just what was loaded. */
   editionCount?: number;
   /**

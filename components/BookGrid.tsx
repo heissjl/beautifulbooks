@@ -306,6 +306,18 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
         </Notice>
       )}
       {correction?.applied && <CorrectionLine correction={correction} language={language} />}
+      {/*
+        The typed word stood in the answer, so the results are what was typed
+        and the correction is only offered (ROADMAP 6.94): "judt" shows Tony
+        Judt's books with a way to "jude", never the other way round.
+      */}
+      {correction && !correction.applied && (
+        <p className="mb-4 text-sm text-ink-2" role="status">
+          <Link href={textSearchHref(correction.to, language)} className="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">
+            {t('Did you mean “{to}”?', { to: correction.to })}
+          </Link>
+        </p>
+      )}
       <p className="kicker mb-5">
         {works.length === 1 ? t('{n} book', { n: 1 }) : t('{n} books', { n: works.length })}, {t('{n} editions', { n: totalEditions })}
       </p>

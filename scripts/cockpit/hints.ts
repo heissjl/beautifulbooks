@@ -28,7 +28,12 @@ export interface HintInput {
   history: HistoryEntry[];
   /** The „Nächste Schritte“ table; a step that names only finished items is stale. */
   nextSteps?: Array<{ what: string }>;
+  /** The backup folder (2.11): the newest complete copy and how old it is. */
+  backup?: { dir: string; exists: boolean; latest: { name: string } | null; ageDays: number | null; tmp: number; newestIncomplete: boolean };
 }
+
+/** A copy older than this many days is a hint to act: the store changes every day readers come. */
+export const BACKUP_MAX_AGE_DAYS = 7;
 
 export function deriveHints(input: HintInput): Hint[] {
   const hints: Hint[] = [];
@@ -111,6 +116,22 @@ export function deriveHints(input: HintInput): Hint[] {
   }
 
   for (const c of input.envChecks) if (c.level === 'act') hints.push({ level: 'act', title: 'Einstellung', text: c.text, view: 'services' });
+
+  // The copy of the store outside the provider (2.11): none, too old, or the last one broke off.
+  const b = input.backup;
+  if (b) {
+    if (!b.latest) {
+      hints.push({ level: 'act', title: 'Keine Sicherung', text: `In ${b.dir} liegt keine vollständige Kopie der Redis. npm run backup (mit dem Admin-Passwort aus .env.local) schreibt eine.`, view: 'tools' });
+    } else if (b.ageDays !== null && b.ageDays > BACKUP_MAX_AGE_DAYS) {
+      hints.push({ level: 'act', title: 'Sicherung ist alt', text: `Die jüngste vollständige Kopie der Redis (${b.latest.name}) ist ${Math.floor(b.ageDays)} Tage alt. npm run backup.`, view: 'tools' });
+    }
+    if (b.newestIncomplete && b.latest) {
+      hints.push({ level: 'info', title: 'Letzte Sicherung brach ab', text: `Die neueste Datei in ${b.dir} hat keinen vollständigen Fuß; gezählt wird die davor (${b.latest.name}).`, view: 'tools' });
+    }
+    if (b.tmp) {
+      hints.push({ level: 'info', title: 'Abgebrochene Sicherungen', text: `${b.tmp} .tmp-Datei${b.tmp === 1 ? '' : 'en'} in ${b.dir}: Exporte, die nicht zu Ende kamen. Ansehen, dann löschen — zurückspielen darf man sie nicht.`, view: 'tools' });
+    }
+  }
 
   const cited = new Set(input.history.flatMap(h => h.items));
   const doneWithout = input.items.filter(i => i.done && /^[56]\./.test(i.num) && !cited.has(i.num)).map(i => i.num);

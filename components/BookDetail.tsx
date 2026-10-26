@@ -345,6 +345,31 @@ function BookDetail() {
   }, [inScene, view, scene.staged, requestKey]);
 
   const selected = useMemo<Cover | null>(() => (view ? coverForId(view, selectedId) : null), [view, selectedId]);
+  /*
+    Leafing in the phone sheet (ROADMAP 6.5): the neighbours of the selected
+    cover in its language group, in the wall's order — the whole wall as a
+    fallback when it sits in none. The gallery's active tab is its own state
+    and may differ ("All languages"); noted in the history, raised as a prop
+    only if it ever shows. Each step selects a cover like a tap on the tile
+    does, so it asks for that ISBN once (CDN-cached a day).
+  */
+  const sheetStep = (() => {
+    if (!view || !selected) return undefined;
+    const order = view.groups.find(g => g.covers.some(c => c.id === selected.id))?.covers ?? view.all;
+    const at = order.findIndex(c => c.id === selected.id);
+    if (at < 0) return undefined;
+    const prev = order[at - 1]?.id;
+    const next = order[at + 1]?.id;
+    return {
+      prev,
+      next,
+      prevCaption: prev ? view.captions.get(prev) : undefined,
+      nextCaption: next ? view.captions.get(next) : undefined,
+      n: at + 1,
+      total: order.length,
+      onStep: selectCover,
+    };
+  })();
   // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
   const reportVerdict = useBookSignal({ workId: params.id, market: market ?? 'us', pagesLoaded: pages.pagesLoaded, picked: !!selected });
 
@@ -440,7 +465,12 @@ function BookDetail() {
   const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
   const meta = [
     `${progressLabel(view.covers.length, merged, t)}.`,
-    work.firstPublishYear ? t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) }) : undefined,
+    // A year two sources agree on, or Julian confirmed, is stated; the catalogue's alone is quoted (6.16).
+    work.firstPublishYear
+      ? work.firstPublishYearSource === 'checked'
+        ? t('First published in {year}.', { year: String(work.firstPublishYear) })
+        : t('Open Library dates the book to {year}.', { year: String(work.firstPublishYear) })
+      : undefined,
   ].filter(Boolean).join(' ');
 
   return (
@@ -530,6 +560,8 @@ function BookDetail() {
         <CoverSheet
           coverUrl={selected.url}
           caption={view.captions.get(selected.id) ?? ''}
+          selectedId={selected.id}
+          step={sheetStep}
           share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
           /*
             On a phone "Add to collection" sits in the sheet's header beside
@@ -1092,9 +1124,10 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
 
       {/*
         Julian, 2026-09-09: where a shop that could pay commission has a link
-        to exactly this printing, that link wins and this row does not appear
-        at all. It shows up only when no such link is possible — a foreign
-        ISBN, or none — and it says plainly that it leads somewhere else.
+        to exactly this printing, that link wins — it leads, above. From
+        2026-09-09 to 2026-10-18 this row then did not appear at all; since
+        ROADMAP 6.72 (2) (Julian: "immer zeigen") it stands in every case, last
+        in the column, and says plainly that it leads to any edition.
       */}
       {plan.anyEdition.length > 0 && (
         <div className="mt-5 border-t border-line pt-4">
@@ -1114,7 +1147,8 @@ function EditionBlock({ edition, workTitle, author, otherCovers, searchLinks, se
             ))}
           </div>
           <p className="mt-2 text-xs leading-relaxed text-ink-3">
-            {t('These search for “{title}” by title. Whatever they carry is a different printing from the one above, with a cover of its own.', { title: displayTitle(workTitle) })}
+            {/* Any printing the shop lists, each with its own cover — said without a claim about stock (E12) or about this cover (§9.2). */}
+            {t('These search the shop for “{title}” by title: any edition it lists, each with a cover of its own — no promise about this one.', { title: displayTitle(workTitle) })}
           </p>
         </div>
       )}

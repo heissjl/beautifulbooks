@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { rateLimited } from '@/app/api/rate';
 import { readBody } from '@/app/api/versus/guard';
-import { liveRecords, publishStoreFromEnv } from '@/lib/collections-live';
+import { liveRecordsFresh, publishStoreFromEnv } from '@/lib/collections-live';
 import { missingStoreMessage } from '@/lib/redis';
 import { ADMIN_COOKIE, adminMatches, adminSessionValid, suggestEnabled } from '@/lib/suggest/auth';
 import { json } from '../../suggest/guard';
@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
   if (!admin) return json({ error: 'Only Julian can arrange the collections.' }, 403);
   const body = await readBody(request);
   if (!Array.isArray(body.slugs)) return json({ error: 'slugs needed' }, 400);
-  const known = new Set((await liveRecords()).map(r => r.slug));
+  // Fresh (2.18c): a draft Julian published a moment ago on another instance must already count as known.
+  const known = new Set((await liveRecordsFresh()).map(r => r.slug));
   const order = [...new Set(body.slugs.filter((s): s is string => typeof s === 'string' && known.has(s)))];
   const store = publishStoreFromEnv();
   if (!store) return json({ error: missingStoreMessage() }, 503);

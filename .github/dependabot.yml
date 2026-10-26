@@ -1,0 +1,25 @@
+# Dependabot (ROADMAP 2.13, security review of 2026-10-02): one pull request a week
+# with the npm updates, so a Next.js or sharp release with a fix does not sit
+# unnoticed for weeks, as 16.1.4 did. Minor and patch updates arrive as one grouped
+# PR; a major one comes on its own and is read before it is merged.
+#
+# This file only schedules updates. The alerts and the automatic security updates
+# are switched on in the repository's settings (Settings → Code security), which
+# only Julian can do.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: "deps"

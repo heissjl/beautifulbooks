@@ -74,7 +74,7 @@ export default async function VersusPage({ locale = DEFAULT_LOCALE }: { locale?:
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-24 pt-8 sm:px-6">
-        <Versus initialPairs={initialPairs} />
+        <Versus initialPairs={initialPairs} walls={wallsEnabled()} />
 
         <section className="mt-16 border-t border-line pt-8">
           <h2 className="text-2xl text-ink">{t('What is this game')}</h2>

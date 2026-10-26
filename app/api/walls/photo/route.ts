@@ -6,6 +6,7 @@ import { sendAlert } from '@/lib/alerts';
 import { SITE_NAME } from '@/lib/seo';
 import { budgetCents, budgetMail, budgetState, crossed, spendUnits, UNITS_PER_CENT } from '@/lib/walls/photobudget';
 import { readPhoto } from '@/lib/walls/readphoto';
+import { photoGate } from '@/lib/walls/photogate';
 import { json, openWalls } from '../guard';
 import { later } from '@/app/api/count';
 import { countPhoto } from '@/lib/insights/store';
@@ -34,6 +35,9 @@ const MAX_BYTES = 12 * 1024 * 1024;
 /** Photos read per day, all readers together — a spending cap, not a rate limit (5.11a; about 1–3 ct a photo). */
 export const PHOTOS_PER_DAY = 300;
 
+/** What a reader is told when the store is silent (2.18h): the reason, and that it is not their photo. */
+const STORE_SILENT = 'The store did not answer, so today’s budget could not be checked and the photo was not read. Try again in a moment.';
+
 /** The product's own telemetry, like `bb.click`: counts and timings, nothing about the photo or the reader. */
 function recordPhoto(event: Record<string, unknown>): void {
   try {
@@ -59,11 +63,15 @@ export async function POST(request: NextRequest) {
   if (!prepared) return json({ error: 'The photo could not be opened. Send a JPEG or PNG.' }, 415);
 
   // The day's cap is counted before the model is asked, so an attempt that fails still counts; that errs on the cheap side.
+  // A silent store closes the photos (ROADMAP 2.18h, J3): the cap and the budget bind exactly when many come, and that is
+  // when a Redis out of connections is silent — a photo read unchecked then is the one that costs.
   let today = 0;
   try {
     today = await open.store.countPhoto(new Date().toISOString().slice(0, 10));
   } catch {
-    // A silent store does not stop a reader; the cap is a budget, not a right.
+    recordPhoto({ refused: 'store', bytes: bytes.length });
+    later(() => countPhoto({ outcome: 'store' }));
+    return json({ error: STORE_SILENT }, 503);
   }
   if (today > PHOTOS_PER_DAY) {
     recordPhoto({ capped: true, today });
@@ -78,7 +86,9 @@ export async function POST(request: NextRequest) {
   try {
     spentBefore = await open.store.spendPhoto(day, 0);
   } catch {
-    // A silent store does not stop a reader; the budget is a guard, not a right.
+    recordPhoto({ refused: 'store', bytes: bytes.length, today });
+    later(() => countPhoto({ outcome: 'store' }));
+    return json({ error: STORE_SILENT }, 503);
   }
   const state = budgetState(spentBefore, budget);
   if (state === 'full') {
@@ -89,9 +99,27 @@ export async function POST(request: NextRequest) {
     return json({ error: 'Today’s photos are used up — the site reads a limited number a day. Tomorrow again.' }, 429);
   }
 
+  // At most a few photos at once per instance (2.18h, `lib/walls/photogate.ts`): a photo holds the function for up to two
+  // minutes and asks the catalogue up to two hundred times; the next reader is told so and may try again in a moment.
+  const gate = photoGate();
+  if (!gate.enter()) {
+    recordPhoto({ refused: 'busy', inFlight: gate.inFlight, today });
+    later(() => countPhoto({ outcome: 'busy' }));
+    return json({ error: 'This server is reading other photos right now. Try again in a moment.' }, 503);
+  }
+  let left = false;
+  const leave = () => {
+    if (left) return;
+    left = true;
+    gate.leave();
+  };
+
   const encoder = new TextEncoder();
   const started = Date.now();
   const stream = new ReadableStream<Uint8Array>({
+    cancel() {
+      // The reader went away; the place at the gate is free again as soon as the read ends (see `leave` below).
+    },
     async start(controller) {
       const line = (value: unknown) => controller.enqueue(encoder.encode(`${JSON.stringify(value)}\n`));
       let books: RecognizedBook[] = [];
@@ -135,6 +163,7 @@ export async function POST(request: NextRequest) {
         await countPhoto({ outcome: 'failed' });
         line({ error: 'The photo could not be read just now. Try again in a moment.' });
         controller.close();
+        leave();
         return;
       }
       const searchStarted = Date.now();
@@ -144,6 +173,7 @@ export async function POST(request: NextRequest) {
       } catch {
         line({ error: 'The catalogue could not be asked just now. Try again in a moment.' });
         controller.close();
+        leave();
         return;
       }
       // What the photo cost, for the analytics (ROADMAP 3.1, K13): tokens per model, books read and found.
@@ -181,6 +211,7 @@ export async function POST(request: NextRequest) {
       });
       line({ done: true });
       controller.close();
+      leave();
     },
   });
   return new Response(stream, {
