@@ -4,6 +4,8 @@ Angelegt 2026-09-28 (ROADMAP 6.61). Julian: „lass uns über ein visuelles Logo
 
 Ausgangslage am 2026-09-28: Fraunces für Titel und Wortmarke, Geist Sans für die Oberfläche, Geist Mono für ISBNs; keine Bildmarke, im Browser-Tab das Icon der Next.js-Vorlage.
 
+**Das Design-System als Artefakt (seit 2026-10-22):** https://claude.ai/artifact/NPsPWyaFeTuRowdNuoao4Y (privat) — Markenbuch, Tokens, sieben Komponenten, Logos und Social-Bilder, aus `app/globals.css`, SPEC §5 und dieser Datei gebaut. Es beschreibt die Seite, es entscheidet nichts; Entscheidungen stehen hier und in SPEC §5. Wie es in Schritt bleibt und was ihm fehlt: ROADMAP 6.111, [Durchsicht 2026-10-22](tests/2026-10-22-design-durchsicht.md).
+
 ## 0. Entscheidungen
 
 Jede Entscheidung dieser Datei in einer Zeile, neueste unten. Das Cockpit liest diese Tabelle (Ansicht „Identität"); eine neue Entscheidung kommt hier hinzu und in den Abschnitt, der sie begründet.
