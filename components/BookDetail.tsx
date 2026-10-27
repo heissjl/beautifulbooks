@@ -178,6 +178,8 @@ function BookDetail() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  // Dev-only mockup switch for the sidebar (ROADMAP 6.110f): letters a (row under the shops), b (cover 24vh), c (= ab), d (title in the wall's column), combinable; null in production.
+  const sideMock = process.env.NODE_ENV === 'production' ? null : searchParams.get('side');
   const lang = searchParams.get('lang') ?? '';
   const backHref = backHrefFrom(searchParams);
   // A query means there is a result list behind the back link; a bare `?lang=`
@@ -424,7 +426,7 @@ function BookDetail() {
       market={shopped?.market ?? pages.market ?? 'us'}
       onMarketChange={setMarket}
       share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
-      mock={process.env.NODE_ENV === 'production' ? null : searchParams.get('side')}
+      mock={sideMock}
       verdictFor={isbn13 => verifyIsbnCover(
         selected,
         isbnCovers.byIsbn.get(isbn13) ?? [],
@@ -488,7 +490,8 @@ function BookDetail() {
       */
       right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} iconBelowSm />}
     >
-      <TitleBlock title={work.title} authors={work.authors} meta={meta} />
+      {/* `?side=d` under next dev: the title block moves into the wall's column, so the sidebar starts at the top (ROADMAP 6.110f, Julian's idea, mockup only). */}
+      {!sideMock?.includes('d') && <TitleBlock title={work.title} authors={work.authors} meta={meta} />}
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
@@ -496,6 +499,7 @@ function BookDetail() {
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div className="min-w-0 lg:col-span-2">
+            {sideMock?.includes('d') && <TitleBlock title={work.title} authors={work.authors} meta={meta} />}
             <CoverGallery
               groups={view.groups}
               allCovers={view.all}
@@ -889,7 +893,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         with it (ROADMAP 1.2, candidate b).
       */}
       {/* `?side=b` or `c` under next dev: the cover at 24vh instead of 31vh (ROADMAP 6.110f, mockup only). */}
-      <div className={`cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 ${mock === 'b' || mock === 'c' ? 'lg:max-w-[min(100%,24vh)]' : 'lg:max-w-[min(100%,31vh)]'}`}>
+      <div className={`cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 ${mock && /[bc]/.test(mock) ? 'lg:max-w-[min(100%,24vh)]' : 'lg:max-w-[min(100%,31vh)]'}`}>
         <CoverImage src={shownUrl} alt={t('Selected cover')} sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
@@ -900,7 +904,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       {shown && (
         <>
           {/* `?side=a` or `c` under next dev: the printings row after the shops (ROADMAP 6.110f, mockup only). */}
-          {mock !== 'a' && mock !== 'c' && scanStrip}
+          {!(mock && /[ac]/.test(mock)) && scanStrip}
           <EditionBlock
             key={shown.id}
             gap="mt-2 lg:mt-6"
@@ -916,7 +920,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
             afterLead={<SimilarCovers coverId={cover.id} query={query} />}
           />
-          {(mock === 'a' || mock === 'c') && scanStrip}
+          {mock && /[ac]/.test(mock) && scanStrip}
         </>
       )}
     </div>
