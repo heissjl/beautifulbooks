@@ -888,8 +888,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         picture stays the largest thing in the column, and the shops arrive
         with it (ROADMAP 1.2, candidate b).
       */}
-      {/* `?side=b` under next dev: the cover at 24vh instead of 31vh (ROADMAP 6.110f, mockup only). */}
-      <div className={`cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 ${mock === 'b' ? 'lg:max-w-[min(100%,24vh)]' : 'lg:max-w-[min(100%,31vh)]'}`}>
+      {/* `?side=b` or `c` under next dev: the cover at 24vh instead of 31vh (ROADMAP 6.110f, mockup only). */}
+      <div className={`cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 ${mock === 'b' || mock === 'c' ? 'lg:max-w-[min(100%,24vh)]' : 'lg:max-w-[min(100%,31vh)]'}`}>
         <CoverImage src={shownUrl} alt={t('Selected cover')} sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
@@ -899,8 +899,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       </p>
       {shown && (
         <>
-          {/* `?side=a` under next dev: the printings row after the shops (ROADMAP 6.110f, mockup only). */}
-          {mock !== 'a' && scanStrip}
+          {/* `?side=a` or `c` under next dev: the printings row after the shops (ROADMAP 6.110f, mockup only). */}
+          {mock !== 'a' && mock !== 'c' && scanStrip}
           <EditionBlock
             key={shown.id}
             gap="mt-2 lg:mt-6"
@@ -916,7 +916,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
             afterLead={<SimilarCovers coverId={cover.id} query={query} />}
           />
-          {mock === 'a' && scanStrip}
+          {(mock === 'a' || mock === 'c') && scanStrip}
         </>
       )}
     </div>

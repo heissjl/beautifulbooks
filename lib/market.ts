@@ -5,10 +5,11 @@
  */
 export type Market = 'us' | 'uk' | 'de';
 
-export const MARKETS: ReadonlyArray<{ id: Market; label: string; flag: string }> = [
-  { id: 'us', label: 'United States', flag: '🇺🇸' },
-  { id: 'uk', label: 'United Kingdom', flag: '🇬🇧' },
-  { id: 'de', label: 'Germany', flag: '🇩🇪' },
+// The flag of each market is drawn in components/MarketFlag.tsx (6.110c), not an emoji here.
+export const MARKETS: ReadonlyArray<{ id: Market; label: string }> = [
+  { id: 'us', label: 'United States' },
+  { id: 'uk', label: 'United Kingdom' },
+  { id: 'de', label: 'Germany' },
 ];
 
 export const DEFAULT_MARKET: Market = 'us';

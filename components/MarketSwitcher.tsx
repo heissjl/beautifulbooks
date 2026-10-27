@@ -1,6 +1,7 @@
 'use client';
 
 import { MARKETS, type Market } from '@/lib/market';
+import MarketFlag from './MarketFlag';
 import { useT } from './i18n';
 
 interface MarketSwitcherProps {
@@ -25,7 +26,7 @@ export default function MarketSwitcher({ market, onChange, compact }: MarketSwit
           onClick={() => onChange(m.id)}
           title={t(m.label)}
         >
-          <span aria-hidden="true">{m.flag}</span>
+          <MarketFlag market={m.id} />
           {m.id.toUpperCase()}
         </button>
       ))}
