@@ -45591,7 +45591,7 @@
       "slug": "best-of-the-masterworks",
       "title": "The Best of the Masterworks",
       "kind": "series",
-      "intro": "In 2022 Gollancz put a short list of its SF Masterworks back into yellow, the colour of its jackets since 1929: author and title in black capitals, a black-framed drawing by Autun Purser, the SF roundel at the foot — and two hardbacks, Dune and The Hitchhiker’s Guide, in the same layout in red. The frame never changes; the picture does: the red eye of a white mouse, a black hole with ships circling it, a bulldog in a cathedral close, a whale with a flowerpot. This wall holds 8 of the 21 volumes, the ones Open Library has an image of; where ISFDB names the artist, the name is under the tile.",
+      "intro": "In 2022 Gollancz put a short list of its SF Masterworks back into yellow, the colour of its jackets since 1929: author and title in black capitals, a black-framed drawing by Autun Purser, the SF roundel at the foot — and two hardbacks, Dune and The Hitchhiker’s Guide, in the same layout in red. The frame never changes; the picture does: the red eye of a white mouse, a black hole with ships circling it, a bulldog in a cathedral close, a whale with a flowerpot. This wall holds the 21 books of 2022 and 2023 in the order they came out; where ISFDB names the artist, the name is under the tile.",
       "published": false,
       "publishers": [
         "Gollancz",
@@ -45612,6 +45612,32 @@
           "isfdbRecord": "916990"
         },
         {
+          "id": "OL2172356W",
+          "title": "Do Androids Dream of Electric Sheep?",
+          "author": "Philip K. Dick",
+          "coverId": "ol:15270051",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607742",
+          "coverIsbn": "9781399607742",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "917004"
+        },
+        {
+          "id": "OL3332541W",
+          "title": "The Female Man",
+          "author": "Joanna Russ",
+          "coverId": "ol:15270052",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607759",
+          "coverIsbn": "9781399607759",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "916995"
+        },
+        {
           "id": "OL515754W",
           "title": "Flowers for Algernon",
           "author": "Daniel Keyes",
@@ -45623,6 +45649,45 @@
             "Autun Purser"
           ],
           "isfdbRecord": "916994"
+        },
+        {
+          "id": "OL893414W",
+          "title": "Dune",
+          "author": "Frank Herbert",
+          "coverId": "ol:15270053",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399611176",
+          "coverIsbn": "9781399611176",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "917256"
+        },
+        {
+          "id": "OL27258W",
+          "title": "Neuromancer",
+          "author": "William Gibson",
+          "coverId": "ol:15270054",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607773",
+          "coverIsbn": "9781399607773",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "920225"
+        },
+        {
+          "id": "OL271163W",
+          "title": "The Forever War",
+          "author": "Joe Haldeman",
+          "coverId": "ol:15270055",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607780",
+          "coverIsbn": "9781399607780",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "920421"
         },
         {
           "id": "OL59797W",
@@ -45652,6 +45717,72 @@
           "isfdbRecord": "920708"
         },
         {
+          "id": "OL5724837W",
+          "title": "Revelation Space",
+          "author": "Alastair Reynolds",
+          "coverId": "ol:15270056",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607810",
+          "coverIsbn": "9781399607810",
+          "coverWork": "OL28018885W",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "921800"
+        },
+        {
+          "id": "OL104514W",
+          "title": "Grass",
+          "author": "Sheri S. Tepper",
+          "coverId": "ol:15270057",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607827",
+          "coverIsbn": "9781399607827",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "921775"
+        },
+        {
+          "id": "OL83886W",
+          "title": "The Man Who Fell to Earth",
+          "author": "Walter S. Tevis",
+          "coverId": "ol:15270058",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607834",
+          "coverIsbn": "9781399607834",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "921945"
+        },
+        {
+          "id": "OL17417W",
+          "title": "Rendezvous with Rama",
+          "author": "Arthur C. Clarke",
+          "coverId": "ol:15270059",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617178",
+          "coverIsbn": "9781399617178",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "956958"
+        },
+        {
+          "id": "OL2657126W",
+          "title": "Sarah Canary",
+          "author": "Karen Joy Fowler",
+          "coverId": "ol:15270060",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617185",
+          "coverIsbn": "9781399617185",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "956962"
+        },
+        {
           "id": "OL7967812W",
           "title": "Roadside Picnic",
           "author": "Аркадий Стругацкий",
@@ -45672,6 +45803,39 @@
           "addedAt": "2026-10-31",
           "from": "isbn:9781399617192",
           "coverIsbn": "9781399617192"
+        },
+        {
+          "id": "OL19332770W",
+          "title": "The Body Snatchers",
+          "author": "George Finney",
+          "coverId": "ol:15270061",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617215",
+          "coverIsbn": "9781399617215",
+          "coverWork": "OL34339886W"
+        },
+        {
+          "id": "OL98485W",
+          "title": "The Sirens of Titan",
+          "author": "Kurt Vonnegut",
+          "coverId": "ol:15270062",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617222",
+          "coverIsbn": "9781399617222",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "1046583"
+        },
+        {
+          "id": "OL381550W",
+          "title": "The Island of Doctor Moreau",
+          "author": "H. G. Wells",
+          "coverId": "ol:15270063",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617239",
+          "coverIsbn": "9781399617239",
+          "coverWork": "OL34273360W"
         },
         {
           "id": "OL2163649W",

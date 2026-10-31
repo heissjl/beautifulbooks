@@ -251,3 +251,5 @@ Anlass: Antwortzettel B4 vom 2026-10-31 — zwei gelbe „SF Masterworks“ auf 
 | 2023-08-24 | Synners | Pat Cadigan | 9781399617253 | tp | Autun Purser | 963417 |
 
 Reihenfolge: Erscheinungsdatum, innerhalb eines Tages die ISBN — die Reihe zählt nicht. Die Liste als Datei: `lab/collections/lists/best-of-the-masterworks.json`; der Abgleich mit Open Library und die Zahl der Bände mit dem gelben Cover im Katalog in der [Historie](history.md) (2026-10-31, 5.10t).
+
+**Nachtrag 2026-10-31 abends:** die roten gebundenen gehören nach jeder Quelle zur Reihe (Belege in der [Historie](history.md), 5.10t); die 13 fehlenden Cover sind als ISFDB-Scans bei Open Library, die Wand hält 21 Kacheln.
