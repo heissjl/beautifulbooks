@@ -43,5 +43,5 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   const folded = foldDuplicateCovers(page.covers, indexSignatures(page.covers.map(c => c.id)), page.editions);
   const urls = coverImages(folded, 18, page.editions);
-  return pinPicture({ title: page.work.title, line: authorLine(page.work.authors), covers: urls.map(url => ({ url })) });
+  return pinPicture({ title: page.work.title, line: authorLine(page.work.authors), covers: urls.map(url => ({ url })), seed: page.work.id });
 }

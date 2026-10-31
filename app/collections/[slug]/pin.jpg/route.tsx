@@ -42,5 +42,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     line: `${count}${byline ? ` by ${byline}` : ''}`,
     covers,
     creditSource: c.coverCredits === 'isfdb' ? 'ISFDB' : undefined,
+    seed: slug,
   });
 }

@@ -6727,3 +6727,13 @@ Julian, nach dem Deploy von 5.5a („Zettel und Pinterest"): die Kontoeinrichtun
 | 6.11. 12:00 | 11 | Covers through the decades | Fahrenheit 451 |
 
   **Nicht geplant:** #12 *The Fellowship of the Ring* steht ausgefüllt, ohne Termin, unter „Pin drafts" (verfällt nach 30 Tagen von selbst); #13 *It* nicht angelegt. Die Uhrzeiten sind die, die Pinterests Formular anbietet; welche Zeitzone es meint, ist nicht geprüft (das Konto steht auf Deutschland). **Rich-Pin-Check:** nicht gemacht — erst am 1.11. nach 12:00 am ersten veröffentlichten Pin sehen, ob Pinterest Titel und Beschreibung aus den Open-Graph-Angaben der Seite zieht; ein Pin aus einem Upload mit eigenem Text sagt darüber wenig, eindeutiger ist Pinterests URL-Debugger an einer Buch- und einer Sammlungsseite.
+
+## 2026-10-31 · Die Pins auf dem Mosaik-Grund (ROADMAP 5.5a)
+
+Julian, nach dem Entwurf der nächsten zehn Pins: „außerdem sollten die nächsten entwürfe den mosaik hintergrund haben.“ Gemeint ist der Grund, auf dem die Shelf-Portrait-Bilder stehen (5.18b, Option A vom 2026-10-05): ein dichtes Feld winziger Cover, geschnitten aus den Zellen der zwanzig Ladebilder in `public/loading`, ohne eine einzige Cover-Anfrage.
+
+**Gebaut.** `app/pin.tsx` legt `mosaicGround(1000, 1500, "pin:<id oder slug>", …)` unter das Bild: je Pin fest gesät (ein Pin hat immer dasselbe Feld), überall auf 55 % abgedunkelt, hinter Kopf und Fuß auf 86 %, damit Titel, Autor, Credits und Adresse lesen; die Cover tragen einen Schatten (`0 10px 28px`, 62 %), wie auf dem Poster. Das Feld geht als JPEG (Qualität 82) in den Generator, nicht als PNG. Fehlen die Ladebilder auf einer Instanz, bleibt der alte dunkle Grund. Beide Pin-Routen rufen mit `seed` (Werk-Id, Sammlungs-Slug) auf; `next.config.ts` nimmt `public/loading/*-640.jpg` in die Dateiliste beider Routen — der Build-Trace zählt je Route 20 Ladebilder.
+
+**Angesehen** im Dev-Server dieses Worktrees: `/book/OL49488W/pin.jpg` (*Ender’s Game*, neun Cover, eine Titelzeile) und `/collections/sf-masterworks/pin.jpg` (neun Cover, Credits-Zeile) — das Mosaik steht am Rand und in den Fugen, Kopf und Fuß bleiben lesbar. tsc, Lint, 1.709 Tests (ein Cockpit-Test lief zuerst rot, s. unten), Build grün. **Nicht deployt**: die elf geplanten Pins tragen die alten Bilder (Pinterest hat sie beim Hochladen kopiert); die nächsten bekommen das neue erst nach dem Deploy, und weil ein Pin-Bild einen Tag am Rand gehalten wird, kann die alte Fassung bis zu einen Tag nachlaufen.
+
+Analytik: nichts bewegt sich — dieselben Routen, kein neuer Aufruf, nichts gezählt oder gespeichert.
