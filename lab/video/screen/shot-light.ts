@@ -5,7 +5,7 @@
  * the first run made the hero picture Julian posts with replies (ROADMAP 5.6c).
  */
 import { writeFileSync } from 'node:fs';
-import { launch } from './cdp.ts';
+import { launch } from './cdp';
 const [url, out, w, h, scale] = process.argv.slice(2);
 async function main() {
 const page = await launch(9353, false);
