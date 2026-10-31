@@ -215,3 +215,39 @@ Was sich gegenüber der Rangliste ändert:
 - **Semiotext(e):** 22 von 30 im Reihendesign, Nr. 25–28 ohne Cover.
 - **Little Black Classics:** penguin.co.uk listet ohne JavaScript nur 44 Bände (Nr. 81–124).
 - **Great Ideas** und **Art of the Novella:** Viele ISBNs der Verlagsseiten sind E-Books, die Open Library nicht kennt.
+
+## 9. Nachtrag 2026-10-31: Gollancz „The Best of the Masterworks“ (2022–23)
+
+Anlass: Antwortzettel B4 vom 2026-10-31 — zwei gelbe „SF Masterworks“ auf einem Bluesky-Foto waren diese Reihe, und keine der vier Masterworks-Sammlungen der Seite hält das Design ([Historie](history.md), 2026-10-31; umgang.md §8). Diese Liste steht hier, **bevor** ein Skript den Katalog fragt (CLAUDE.md, „Covers, editions, verdicts“). Gelesen am 2026-10-31, drei Quellen, die sich decken:
+
+1. **Wikipedia „SF Masterworks“**, Abschnitt „Best of the Masterworks (2022–23)“, als Wikitext (`index.php?title=SF_Masterworks&action=raw`): zwei Tabellen, „Softcover volumes“ (19 Bände, 27.10.2022 bis 24.08.2023) und „Hardcover volumes“ (2: *Dune* 27.10.2022, *The Hitchhiker's Guide to the Galaxy* 24.08.2023), je mit Datum und ISBN. **21 Bände.**
+2. **ISFDB, Publikationsreihe 11123 „The Best of the Masterworks“** (`pubseries.cgi?11123`, im Browser-Bereich gelesen; `curl` bekommt 403): dieselben 21 Bände als Erstdrucke mit denselben Daten und ISBNs, dazu ein E-Book-Datensatz zu *The Sirens of Titan* (978-1-3996-1227-2, kein Buch) und Nachdrucke 2024, 2025 und „date unknown“ unter unveränderten ISBNs. Keine Reihennummern. Hinweis der ISFDB: „As of 2022-09-28, this publication series has not been formally announced, but product descriptions on the SF Gateway site and some vendors use this publication series title.“ **Cover-Künstler: Autun Purser** an 16 der 21 Erstdruck-Datensätze; die fünf vom 24.08.2023 ohne Künstler im Datensatz (*The Island of Doctor Moreau*, *The Sirens of Titan*, *To Say Nothing of the Dog*, *The Body Snatchers*, *Hitchhiker* gebunden) — der Nachdruck-Datensatz der *Sirens* (1046583) nennt Purser, die anderen vier sind dort schlicht nicht ausgefüllt. Beleg am Datensatz 917004 (*Do Androids Dream of Electric Sheep?*, drei Primärverifikationen 2023–25): Rückseite „Cover illustration: © Autun Purser“, Impressum „This edition first published in Great Britain in 2022 by Gollancz“, Zahlenreihe des Erstdrucks, Einleitung Graham Sleight 2009 (also der Text des Relaunchs von 2010, neu eingekleidet).
+3. **Gollancz' eigener Laden** (`store.gollancz.co.uk`, Shopify-Feed `collections/all/products.json?limit=250&page=1…6`, 1.405 Produkte): alle 21 ISBNs als Varianten, je mit Datum und Preis — Taschenbücher £10.99 (*To Say Nothing of the Dog* £12.99), *Dune* als Variante „Best of Masterworks Hardback £16.99“, *Hitchhiker* „Hardback“ £14.99; *Revelation Space* heißt dort „Paperback (2022 SF Masterworks)“. Je Variante ein Bild `<ISBN>-original.jpg` — das Vergleichsbild für den Kontaktbogen. Dazu Hachette UK zur ersten ISBN (9781399607742): Paperback, 27.10.2022, Gollancz, im Klappentext „Welcome to The Best Of The Masterworks: a selection of the finest in science fiction“ — der einzige Ort, an dem der Verlag den Reihennamen selbst schreibt.
+
+**Format:** 19 B-Format-Taschenbücher (ISFDB „tp“) und zwei gebundene Bände — nicht „gelb eingebundene Hardcover“, wie es im Auftrag hieß. **Gestaltung, angesehen auf dem Kontaktbogen der 21 Verlagsbilder (2026-10-31):** gelber Grund, oben Autor und Titel in schwarzen Versalien mit Linien, darunter eine schwarz gerahmte Bildtafel, am Fuß das SF-Rondell und gesperrtes MASTERWORKS — ein Echo der gelben Gollancz-Umschläge seit 1929. Was wechselt, ist allein die Tafel: Pursers Zeichnungen in einem kratzigen Holzschnitt-Strich, je Band ein Motiv aus dem Buch (der Sturz am roten Treppengeländer unter dem Mond bei Dick, das rote Auge der weißen Maus bei Keyes, die Mohnfelder und die Bulldogge bei Willis, der Wal mit dem Blumentopf bei Adams), fast immer mit einer Scheibe — Mond, Sonne, schwarzes Loch — über dem Bild. **Die beiden gebundenen Bände sind rot statt gelb** (gleiche Aufteilung, rotes Feld, Autor in Gelb): eine zweite Farbe in derselben Reihe, Entscheidung für die Sammlung bei Julian.
+
+| Datum | Titel | Autor | ISBN | Format | Cover (ISFDB) | ISFDB-Datensatz |
+|---|---|---|---|---|---|---|
+| 2022-10-27 | I Am Legend | Richard Matheson | 9781399607735 | tp | Autun Purser | 916990 |
+| 2022-10-27 | Do Androids Dream of Electric Sheep? | Philip K. Dick | 9781399607742 | tp | Autun Purser | 917004 |
+| 2022-10-27 | The Female Man | Joanna Russ | 9781399607759 | tp | Autun Purser | 916995 |
+| 2022-10-27 | Flowers for Algernon | Daniel Keyes | 9781399607766 | tp | Autun Purser | 916994 |
+| 2022-10-27 | Dune | Frank Herbert | 9781399611176 | hc (rot) | Autun Purser | 917256 |
+| 2022-11-24 | Neuromancer | William Gibson | 9781399607773 | tp | Autun Purser | 920225 |
+| 2022-11-24 | The Forever War | Joe Haldeman | 9781399607780 | tp | Autun Purser | 920421 |
+| 2022-11-24 | The Word for World Is Forest | Ursula K. Le Guin | 9781399607797 | tp | Autun Purser | 920859 |
+| 2022-11-24 | Gateway | Frederik Pohl | 9781399607803 | tp | Autun Purser | 920708 |
+| 2022-12-08 | Revelation Space | Alastair Reynolds | 9781399607810 | tp | Autun Purser | 921800 |
+| 2022-12-08 | Grass | Sheri S. Tepper | 9781399607827 | tp | Autun Purser | 921775 |
+| 2022-12-08 | The Man Who Fell to Earth | Walter Tevis | 9781399607834 | tp | Autun Purser | 921945 |
+| 2023-07-20 | Rendezvous with Rama | Arthur C. Clarke | 9781399617178 | tp | Autun Purser | 956958 |
+| 2023-07-20 | Sarah Canary | Karen Joy Fowler | 9781399617185 | tp | Autun Purser | 956962 |
+| 2023-07-20 | Roadside Picnic | Arkady & Boris Strugatsky | 9781399617208 | tp | Autun Purser | 956941 |
+| 2023-08-24 | To Say Nothing of the Dog | Connie Willis | 9781399617192 | tp | — (Datensatz leer) | 962955 |
+| 2023-08-24 | The Body Snatchers | Jack Finney | 9781399617215 | tp | — (Datensatz leer) | 962950 |
+| 2023-08-24 | The Sirens of Titan | Kurt Vonnegut | 9781399617222 | tp | — (Erstdruck leer; Nachdruck 1046583: Autun Purser) | 962960 |
+| 2023-08-24 | The Island of Doctor Moreau | H. G. Wells | 9781399617239 | tp | — (Datensatz leer) | 962939 |
+| 2023-08-24 | The Hitchhiker's Guide to the Galaxy | Douglas Adams | 9781399617246 | hc (rot) | — (Datensatz leer) | 962184 |
+| 2023-08-24 | Synners | Pat Cadigan | 9781399617253 | tp | Autun Purser | 963417 |
+
+Reihenfolge: Erscheinungsdatum, innerhalb eines Tages die ISBN — die Reihe zählt nicht. Die Liste als Datei: `lab/collections/lists/best-of-the-masterworks.json`; der Abgleich mit Open Library und die Zahl der Bände mit dem gelben Cover im Katalog in der [Historie](history.md) (2026-10-31, 5.10t).

@@ -1,5 +1,5 @@
 {
-  "curatedAt": "2026-09-28",
+  "curatedAt": "2026-10-31",
   "collections": [
     {
       "slug": "feminist-press",
@@ -45586,6 +45586,117 @@
           "isfdbRecord": "263306"
         }
       ]
+    },
+    {
+      "slug": "best-of-the-masterworks",
+      "title": "The Best of the Masterworks",
+      "kind": "series",
+      "intro": "In 2022 Gollancz put a short list of its SF Masterworks back into yellow, the colour of its jackets since 1929: author and title in black capitals, a black-framed drawing by Autun Purser, the SF roundel at the foot — and two hardbacks, Dune and The Hitchhiker’s Guide, in the same layout in red. The frame never changes; the picture does: the red eye of a white mouse, a black hole with ships circling it, a bulldog in a cathedral close, a whale with a flowerpot. This wall holds 8 of the 21 volumes, the ones Open Library has an image of; where ISFDB names the artist, the name is under the tile.",
+      "published": false,
+      "publishers": [
+        "Gollancz",
+        "Orion"
+      ],
+      "works": [
+        {
+          "id": "OL11374287W",
+          "title": "I Am Legend",
+          "author": "Richard Matheson",
+          "coverId": "ol:14805160",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607735",
+          "coverIsbn": "9781399607735",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "916990"
+        },
+        {
+          "id": "OL515754W",
+          "title": "Flowers for Algernon",
+          "author": "Daniel Keyes",
+          "coverId": "ol:14805253",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607766",
+          "coverIsbn": "9781399607766",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "916994"
+        },
+        {
+          "id": "OL59797W",
+          "title": "The Word for World is Forest",
+          "author": "Ursula K. Le Guin",
+          "coverId": "ol:14798626",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607797",
+          "coverIsbn": "9781399607797",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "920859"
+        },
+        {
+          "id": "OL60924W",
+          "title": "Gateway",
+          "author": "Frederik Pohl",
+          "coverId": "ol:14789355",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399607803",
+          "coverIsbn": "9781399607803",
+          "coverWork": "OL28018882W",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "920708"
+        },
+        {
+          "id": "OL7967812W",
+          "title": "Roadside Picnic",
+          "author": "Аркадий Стругацкий",
+          "coverId": "ol:15234798",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617208",
+          "coverIsbn": "9781399617208",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "956941"
+        },
+        {
+          "id": "OL14858392W",
+          "title": "To Say Nothing of the Dog",
+          "author": "Connie Willis",
+          "coverId": "ol:14799142",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617192",
+          "coverIsbn": "9781399617192"
+        },
+        {
+          "id": "OL2163649W",
+          "title": "The Hitchhiker's Guide to the Galaxy",
+          "author": "Douglas Adams",
+          "coverId": "ol:14672370",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617246",
+          "coverIsbn": "9781399617246"
+        },
+        {
+          "id": "OL12098201W",
+          "title": "Synners",
+          "author": "Pat Cadigan",
+          "coverId": "ol:14750071",
+          "addedAt": "2026-10-31",
+          "from": "isbn:9781399617253",
+          "coverIsbn": "9781399617253",
+          "coverArtists": [
+            "Autun Purser"
+          ],
+          "isfdbRecord": "963417"
+        }
+      ],
+      "coverCredits": "isfdb"
     }
   ]
 }
