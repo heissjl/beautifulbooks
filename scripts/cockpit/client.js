@@ -393,7 +393,79 @@
   }
 
   /* ------------------------------------------------------------------ Wiring */
-  const VIEWS = { home: vHome, board: vBoard, sync: vSync, tools: vTools, services: vServices, features: vFeatures, site: vSite, lab: vLab, identity: vIdentity, artefacts: vArtefacts, hints: vHints };
+
+  /* ---------------------------------------------------------------- Pins (docs/pins/queue.json, pins.ts) */
+  // The one list of pins: Julian edits title and description, says ja or nein; pictures come from a local cache the server fills on a click.
+  const PIN_LIMITS = { title: 100, description: 500 };
+  const COMPLETE = /\b(every|all|complete)\b/i;
+  const PIN_FILTERS = [['offen', 'Zu entscheiden'], ['ja', 'Ja'], ['nein', 'Nein'], ['geplant', 'Geplant'], ['alle', 'Alle']];
+  let pinData = S ? null : { queue: D.pins.queue, pictures: {}, file: D.pins.file };
+  let pinFilter = 'offen', pinLoading = false;
+  const pinEdits = {}; // id -> {title, description, remark}, unsaved
+  const pinShow = {};  // id -> 'prod' | 'dev'
+  async function loadPins() {
+    if (!S || pinLoading) return;
+    pinLoading = true;
+    try { pinData = await api('/api/pins'); } catch (err) { pinData = { error: err.message }; }
+    pinLoading = false;
+    if (view === 'pins') render();
+  }
+  function pinValue(p, k) { return pinEdits[p.id] && pinEdits[p.id][k] !== undefined ? pinEdits[p.id][k] : (p[k] || ''); }
+  function pinProblems(p) {
+    const out = [];
+    const t = pinValue(p, 'title').trim(), d = pinValue(p, 'description').trim();
+    if (!t) out.push('Titel fehlt');
+    if (t.length > PIN_LIMITS.title) out.push(`Titel ${t.length} von ${PIN_LIMITS.title}`);
+    if (!d) out.push('Beschreibung fehlt');
+    if (d.length > PIN_LIMITS.description) out.push(`Beschreibung ${d.length} von ${PIN_LIMITS.description}`);
+    for (const x of [t, d]) { const m = x.match(COMPLETE); if (m) out.push(`„${m[0]}“ behauptet Vollständigkeit`); }
+    return out;
+  }
+  const pinStatusName = { entwurf: 'zu entscheiden', ja: 'ja', nein: 'nein', geplant: 'geplant', 'veröffentlicht': 'veröffentlicht' };
+  function pinCard(p) {
+    const editable = ['entwurf', 'ja', 'nein'].includes(p.status);
+    const pics = (pinData.pictures || {})[p.id] || {};
+    const shown = pinShow[p.id] || (pics.dev ? 'dev' : pics.prod ? 'prod' : null);
+    const img = shown && pics[shown] ? `<img src="/pin-pictures/${esc(p.id)}-${shown}.jpg?t=${S ? S.token : ''}&v=${encodeURIComponent(pics[shown])}" alt="Pin-Bild ${esc(p.title)}" loading="lazy">` : `<div class="pin-noimg">noch kein Bild geholt</div>`;
+    const srcSeg = ['prod', 'dev'].map(k => pics[k] ? `<button class="${shown === k ? 'on' : ''}" data-pin-act="show-${k}" data-pin="${esc(p.id)}">${k === 'prod' ? 'Produktion' : 'Dev-Server'}</button>` : '').join('');
+    const fetchBtns = S ? `<button class="btn ghost" data-pin-act="pic-prod" data-pin="${esc(p.id)}" title="einmal von buyitscovers.com, höchstens alle 5 s">Bild von Produktion</button><button class="btn ghost" data-pin-act="pic-dev" data-pin="${esc(p.id)}" title="vom laufenden npm run dev auf :3000">vom Dev-Server</button>` : '';
+    const probs = editable ? pinProblems(p) : [];
+    const t = pinValue(p, 'title'), d = pinValue(p, 'description');
+    const counter = (n, max) => `<span class="pin-count ${n > max ? 'over' : ''}">${n}/${max}</span>`;
+    const dirty = !!pinEdits[p.id];
+    const fields = editable
+      ? `<label class="pin-field">Titel ${counter(t.trim().length, PIN_LIMITS.title)}<input data-pin-field="title" data-pin="${esc(p.id)}" value="${esc(t)}"></label>
+         <label class="pin-field">Beschreibung ${counter(d.trim().length, PIN_LIMITS.description)}<textarea rows="6" data-pin-field="description" data-pin="${esc(p.id)}">${esc(d)}</textarea></label>
+         <label class="pin-field">Deine Anmerkung<input data-pin-field="remark" data-pin="${esc(p.id)}" value="${esc(pinValue(p, 'remark'))}" placeholder="optional"></label>`
+      : `<div class="pin-title">${esc(p.title)}</div><p class="small">${esc(p.description)}</p>${p.remark ? `<p class="small"><b>Anmerkung:</b> ${esc(p.remark)}</p>` : ''}`;
+    const acts = editable && S
+      ? `<div class="pin-acts"><button class="btn yes ${p.status === 'ja' ? 'on' : ''}" data-pin-act="ja" data-pin="${esc(p.id)}" ${probs.length ? 'disabled title="erst die Hinweise oben lösen"' : ''}>Ja</button><button class="btn no ${p.status === 'nein' ? 'on' : ''}" data-pin-act="nein" data-pin="${esc(p.id)}">Nein</button><button class="btn ghost ${p.status === 'entwurf' ? 'on' : ''}" data-pin-act="entwurf" data-pin="${esc(p.id)}">Offen</button><button class="btn ghost" data-pin-act="save" data-pin="${esc(p.id)}" ${dirty ? '' : 'disabled'}>Text speichern</button></div>`
+      : editable ? '<p class="small muted">Entscheiden geht nur über <code>npm run cockpit</code> (mit Server).</p>' : '';
+    return `<article class="pin-card st-${esc(p.status)}" id="pin-${esc(p.id)}">
+      <div class="pin-pic">${img}<div class="pin-src">${srcSeg}</div><div class="pin-fetch">${fetchBtns}</div></div>
+      <div class="pin-body">
+        <div class="pin-head"><span class="pill pin-st-${esc(p.status)}">${esc(pinStatusName[p.status] || p.status)}</span> <span class="small muted">${esc(p.slot || 'ohne Termin')} · ${esc(p.board)}${p.decided ? ' · entschieden ' + esc(p.decided) : ''}</span></div>
+        ${p.note ? `<div class="pin-note small"><b>Hinweis:</b> ${esc(p.note)}</div>` : ''}
+        ${fields}
+        ${probs.length ? `<ul class="pin-probs small">${probs.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        <div class="small"><a href="${esc(p.link)}" target="_blank" rel="noopener">Ziel öffnen</a> · <a href="${esc(p.picture)}" target="_blank" rel="noopener">Bild auf der Seite</a> · <code>${esc(p.id)}</code>${dirty ? ' · <span class="lvl-act">ungespeichert</span>' : ''}</div>
+        ${acts}
+      </div></article>`;
+  }
+  function vPins() {
+    if (S && !pinData) { loadPins(); return topbar('Pins', 'lädt …', false); }
+    if (!pinData || pinData.error || !pinData.queue) return topbar('Pins', '', false) + `<div class="box"><p>${esc((pinData && pinData.error) || D.pins.error || D.pins.file + ' fehlt')}</p></div>`;
+    const all = pinData.queue.pins.slice().sort((a, b) => (a.slot || '9999').localeCompare(b.slot || '9999'));
+    const inFilter = p => pinFilter === 'alle' || (pinFilter === 'offen' ? p.status === 'entwurf' : pinFilter === 'geplant' ? ['geplant', 'veröffentlicht'].includes(p.status) : p.status === pinFilter);
+    const n = k => all.filter(p => k === 'alle' || (k === 'offen' ? p.status === 'entwurf' : k === 'geplant' ? ['geplant', 'veröffentlicht'].includes(p.status) : p.status === k)).length;
+    const seg = `<div class="seg" data-pinfilter>${PIN_FILTERS.map(([k, label]) => `<button data-val="${k}" class="${pinFilter === k ? 'on' : ''}">${label} <span class="count">${n(k)}</span></button>`).join('')}</div>`;
+    const shown = all.filter(inFilter);
+    return topbar('Pins', `${esc(pinData.file)} · zuletzt geändert ${esc(pinData.queue.updated)} · Ja heißt: Claude plant ihn in Pinterest ein`, false) +
+      `<div class="pin-bar">${seg}${S ? `<button class="btn ghost" data-pin-act="reload">neu laden</button>` : ''}</div>` +
+      (shown.length ? shown.map(pinCard).join('') : '<p class="muted">Nichts in dieser Auswahl.</p>');
+  }
+
+  const VIEWS = { home: vHome, board: vBoard, sync: vSync, tools: vTools, services: vServices, features: vFeatures, site: vSite, lab: vLab, identity: vIdentity, artefacts: vArtefacts, hints: vHints, pins: vPins };
   function render() {
     $('#main').innerHTML = VIEWS[view]();
     document.querySelectorAll('nav.side button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === view));
@@ -418,6 +490,56 @@
     if (!res.ok) throw new Error(data.error || String(res.status));
     return data;
   }
+
+
+  document.addEventListener('input', e => {
+    const f = e.target.closest('[data-pin-field]');
+    if (!f) return;
+    const id = f.dataset.pin, k = f.dataset.pinField;
+    pinEdits[id] = Object.assign(pinEdits[id] || {}, { [k]: f.value });
+    // Counters and hints without a re-render, so the caret stays.
+    const card = document.getElementById('pin-' + id);
+    const p = pinData.queue.pins.find(x => x.id === id);
+    if (!card || !p) return;
+    const lab = f.closest('.pin-field'), cnt = lab && lab.querySelector('.pin-count');
+    if (cnt && PIN_LIMITS[k]) { const len = f.value.trim().length; cnt.textContent = `${len}/${PIN_LIMITS[k]}`; cnt.classList.toggle('over', len > PIN_LIMITS[k]); }
+    const probs = pinProblems(p);
+    let ul = card.querySelector('.pin-probs');
+    if (probs.length) { if (!ul) { ul = document.createElement('ul'); ul.className = 'pin-probs small'; card.querySelector('.pin-body .small:not(.pin-note)').before(ul); } ul.innerHTML = probs.map(x => `<li>${esc(x)}</li>`).join(''); } else if (ul) ul.remove();
+    const yes = card.querySelector('[data-pin-act="ja"]'); if (yes) yes.disabled = probs.length > 0;
+    const save = card.querySelector('[data-pin-act="save"]'); if (save) save.disabled = false;
+  });
+  document.addEventListener('click', async e => {
+    const seg = e.target.closest('[data-pinfilter] button');
+    if (seg) { e.preventDefault(); pinFilter = seg.dataset.val; render(); return; }
+    const b = e.target.closest('[data-pin-act]');
+    if (!b) return;
+    e.preventDefault();
+    const act = b.dataset.pinAct, id = b.dataset.pin;
+    try {
+      if (act === 'reload') { pinData = null; render(); return; }
+      if (act === 'show-prod' || act === 'show-dev') { pinShow[id] = act.slice(5); render(); return; }
+      if (act === 'pic-prod' || act === 'pic-dev') {
+        const source = act.slice(4);
+        b.disabled = true; toast(source === 'prod' ? 'Hole das Bild von der Produktion …' : 'Lasse den Dev-Server das Bild rechnen …');
+        const r = await api('/api/pins/picture', { id, source });
+        pinData.pictures[id] = Object.assign(pinData.pictures[id] || {}, { [source]: new Date().toISOString() });
+        pinShow[id] = source;
+        toast(r.covers ? `Bild da, ${r.covers} Cover` : 'Bild da');
+        render(); return;
+      }
+      const body = { id };
+      if (pinEdits[id]) Object.assign(body, pinEdits[id]);
+      if (act !== 'save') body.status = act;
+      const r = await api('/api/pins/save', body);
+      const i = pinData.queue.pins.findIndex(x => x.id === id);
+      pinData.queue.pins[i] = r.pin;
+      delete pinEdits[id];
+      toast(act === 'ja' ? 'Ja — gespeichert' : act === 'nein' ? 'Nein — gespeichert' : act === 'entwurf' ? 'Wieder offen' : 'Text gespeichert');
+      const keep = window.scrollY;
+      render(); window.scrollTo(0, keep);
+    } catch (err) { b.disabled = false; toast('Nicht gegangen: ' + err.message); }
+  });
 
   document.addEventListener('click', async e => {
     const c = e.target.closest('[data-copy],[data-start],[data-stop],[data-reveal],[data-refresh-remote],[data-shot]');

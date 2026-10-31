@@ -182,3 +182,38 @@ pre.out{background:var(--panel-2);border-radius:8px;padding:.5rem;font-size:.75r
   dl.facts dt{margin-top:.4rem}
 }
 @media (prefers-reduced-motion: reduce){.drawer,.scrim,.toast{transition:none}}
+
+/* Pins (docs/pins/queue.json) */
+.pin-bar{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin:0 0 1rem}
+.pin-card{display:grid;grid-template-columns:220px minmax(0,1fr);gap:1.2rem;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem;margin:0 0 1rem;box-shadow:var(--shadow)}
+.pin-card.st-ja{border-color:var(--s-done)}
+.pin-card.st-nein{opacity:.72}
+.pin-pic img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;display:block;background:var(--panel-2)}
+.pin-noimg{aspect-ratio:2/3;border-radius:8px;background:var(--panel-2);display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:.85rem;text-align:center;padding:1rem}
+.pin-src{display:flex;gap:.3rem;margin:.4rem 0 0}
+.pin-src button{font:inherit;font-size:.75rem;border:1px solid var(--line);background:none;color:var(--ink-2);border-radius:999px;padding:.1rem .55rem;cursor:pointer}
+.pin-src button.on{background:var(--accent-soft);color:var(--ink)}
+.pin-fetch{display:flex;flex-direction:column;gap:.3rem;margin:.4rem 0 0}
+.pin-head{margin:0 0 .5rem}
+.pin-note{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:.45rem .6rem;margin:0 0 .6rem}
+.pin-field{display:block;font-size:.8rem;color:var(--ink-3);margin:0 0 .6rem}
+.pin-field input,.pin-field textarea{display:block;width:100%;margin-top:.2rem;font:15px/1.45 ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;resize:vertical}
+.pin-field input:focus,.pin-field textarea:focus{outline:2px solid var(--accent);outline-offset:0}
+.pin-count{float:right;font-variant-numeric:tabular-nums}
+.pin-count.over{color:var(--warn);font-weight:600}
+.pin-probs{color:var(--warn);margin:.2rem 0 .6rem;padding-left:1.1rem}
+.pin-title{font-weight:600;margin:.2rem 0}
+.pin-acts{display:flex;gap:.5rem;flex-wrap:wrap;margin:.8rem 0 0}
+.pin-card .btn,.pin-bar .btn{font:inherit;font-size:.9rem;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);border-radius:8px;padding:.4rem .9rem;cursor:pointer}
+.pin-card .btn:disabled{opacity:.45;cursor:not-allowed}
+.pin-card .btn.ghost{background:none}
+.pin-card .btn.yes{border-color:var(--s-done);color:var(--s-done)}
+.pin-card .btn.yes.on{background:var(--s-done);color:var(--panel)}
+.pin-card .btn.no{border-color:var(--warn);color:var(--warn)}
+.pin-card .btn.no.on{background:var(--warn);color:var(--panel)}
+.pin-card .btn.ghost.on{background:var(--panel-2)}
+.pill.pin-st-entwurf{background:var(--s-julian-bg);color:var(--s-julian)}
+.pill.pin-st-ja{background:var(--s-done-bg);color:var(--s-done)}
+.pill.pin-st-nein{background:var(--warn-bg);color:var(--warn)}
+.pill.pin-st-geplant,.pill.pin-st-veröffentlicht{background:var(--s-open-bg);color:var(--s-open)}
+@media (max-width:700px){.pin-card{grid-template-columns:1fr}.pin-pic{max-width:260px}}
