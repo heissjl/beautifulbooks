@@ -159,6 +159,7 @@ Jeden Morgen eine Liste: fünf bis acht Threads der letzten 24 Stunden, in die e
 - **Reddit:** für mich tabu, also kein Lesen. Du nennst mir den Thread (Thema, Buch), ich baue Bild und Satz; den Rest machst du.
 - **Als Routine:** Bluesky-Suche und Zettel kann ein geplanter Agent ohne dein Konto jeden Morgen schreiben (`/schedule`, Cloud); X nur lokal mit deinem Chrome. Der Zettel landet als Datei unter `docs/antwortzettel/<datum>.md` (git-ignoriert) oder als Einträge `kind: answer` im Kalender.
 - **Grenzen:** keine Antwort an Rechteinhaber (Gestalter, Verlage — deine Regel vom 7.10.), höchstens fünf bis zehn Antworten am Tag, nie derselbe Satz zweimal, kein Link in der ersten Antwort auf X.
+- **Jede Antwort, die eine Ausgabe oder Reihe nennt, wird vorher gegen die Seite geprüft** (seit 2026-10-31): Am 31.10. hätte der Zettel zwei gelbe Gollancz-„Best of the Masterworks“ von 2022 mit „the numbered run, 1 to 73, in order“ beantwortet — ein Design, das keine der vier Sammlungen hält (Julian: „they are not the run we have on the website“; Prüfung in der Historie). Regel: Bild ansehen, Ausgabe bestimmen (Reihe und Druck lesen, docs/ausgaben-recherche.md), dann prüfen, ob genau dieses Cover auf der Wand oder in der Sammlung steht; sonst die Zeile ohne Behauptung über unseren Bestand, oder keine Antwort.
 
 ### 5.3 Posten auf Zuruf, und die freigegebene Warteschlange
 
