@@ -83,6 +83,8 @@ Julian, nach der Lesung in § 0: „mach einen genauen plan hierfür“. Drei Te
 
 ### Teil A — die Sammlungen in den Crawl bringen (Schritt 2, ein Tag Claude, zehn Minuten am Tag Julian)
 
+**Gebaut 2026-10-31, A 1–4** (Historie; Julian: „bau Teil A“). Abweichungen vom Plan: A 2 war durch 6.110g schon da; die Gruppe ist ein eigenes Feld `group` (`series | designers | lists | publishers`) statt `kind`/Tags, weil `kind` die Grenze der Sammlung (Autoren oder Verlage) beschreibt, nicht ihren Platz auf dem Hub; der Block steht auch im Lade- und Fehlerzweig der Buchseite, damit der Server die Links liefert. A 5 und A 6 stehen aus.
+
 Der Befund: Google kennt 59 Sammlungen aus der Sitemap und hat 56 nie abgerufen; abgerufen wird, was verlinkt ist. Heute führen zu einer Sammlung nur die Startseite (`SHELF_MAX` Kacheln) und `/collections`.
 
 1. **„In these collections“ unter der Wand jeder Buchseite** — der Hebel, weil 136 Buchseiten im Index sind und jede davon Google zu ihren Sammlungen führt. Server: `collectionsOfWork(workId)` in `lib/collections-live.ts` (nur veröffentlichte, über `liveCollections()`, damit Entwürfe nicht verlinkt werden); die Buchseite reicht die Liste als Prop an `BookDetail` (wie `walls`; `lib/collections.ts` darf nicht in eine Client-Komponente, CLAUDE.md). Darstellung wie „More by …“ (6.53): Serifenüberschrift, je Sammlung Name und Zahl der Bücher, Link ohne Parameter. Bei null Sammlungen nichts. Jahrzehnte-Seite und Cover-Seite bekommen denselben Block.

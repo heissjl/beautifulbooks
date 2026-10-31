@@ -1,7 +1,7 @@
 /** Thematic collections (ROADMAP 5.10, SPEC F8, lib/collections.ts). */
 import { describe, expect, it } from 'vitest';
 import collectionsFile from '@/data/collections.json';
-import { applyContent, applyOrder, applyOverrides, authorsShown, coverLine, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
+import { applyContent, applyOrder, applyOverrides, authorsShown, collectionsHolding, coverLine, groupCollections, HUB_GROUPS, hubGroupOf, isCollectionGroup, isCollectionSlug, nextOverrides, parseCollections, type CollectionRecord } from '../collections';
 
 const record = (over: Partial<CollectionRecord> = {}): CollectionRecord => ({
   slug: 'women-writers',
@@ -117,6 +117,11 @@ describe('isCollectionSlug', () => {
 describe('data/collections.json', () => {
   const records = (collectionsFile as { collections: CollectionRecord[] }).collections;
 
+  it('names a hub group on every record (6.107 Teil A): the group is data, set with lab/collections/set-group.ts', () => {
+    const without = records.filter(r => !isCollectionGroup(r.group)).map(r => r.slug);
+    expect(without).toEqual([]);
+  });
+
   it('parses every record, drafts included', () => {
     expect(parseCollections(records, { includeDrafts: true })).toHaveLength(records.length);
   });
@@ -140,6 +145,55 @@ describe('data/collections.json', () => {
         for (const a of w.coverArtists ?? []) expect(a, `${r.slug}: ${w.title}`).not.toMatch(/\uFFFD|ï¿½|Ã./);
       }
     }
+  });
+});
+
+describe('the hub groups (6.107 Teil A)', () => {
+  it('carries a known group through parsing and drops anything else', () => {
+    expect(parseCollections([record({ group: 'publishers' })], { includeDrafts: false })[0].group).toBe('publishers');
+    expect(parseCollections([record({ group: 'shelves' as 'series' })], { includeDrafts: false })[0].group).toBeUndefined();
+  });
+
+  it('keeps the file\'s group under a /curate draft that has none', () => {
+    const [merged] = applyContent([record({ group: 'publishers' })], { 'women-writers': record({ title: 'Edited' }) });
+    expect(merged).toMatchObject({ title: 'Edited', group: 'publishers' });
+    const [own] = applyContent([record({ group: 'publishers' })], { 'women-writers': record({ group: 'lists' }) });
+    expect(own.group).toBe('lists');
+  });
+
+  it('falls back by kind only where the field is missing: a series is a series, a list of authors a list', () => {
+    expect(hubGroupOf({ kind: 'series' })).toBe('series');
+    expect(hubGroupOf({ kind: 'authors' })).toBe('lists');
+    expect(hubGroupOf({ kind: 'authors', group: 'publishers' })).toBe('publishers');
+  });
+
+  it('orders the groups as the hub does and leaves an empty group out', () => {
+    const groups = groupCollections([
+      { kind: 'authors' as const, group: 'publishers' as const, slug: 'p' },
+      { kind: 'series' as const, slug: 's1' },
+      { kind: 'series' as const, group: 'designers' as const, slug: 'd' },
+      { kind: 'series' as const, group: 'series' as const, slug: 's2' },
+    ]);
+    expect(groups.map(g => g.group)).toEqual(['series', 'designers', 'publishers']);
+    expect(groups[0].collections.map(c => c.slug)).toEqual(['s1', 's2']);
+    expect(HUB_GROUPS).toEqual(['series', 'designers', 'lists', 'publishers']);
+    expect(isCollectionGroup('lists')).toBe(true);
+    expect(isCollectionGroup('')).toBe(false);
+  });
+});
+
+describe('collectionsHolding (6.107 Teil A)', () => {
+  it('names the published collections a work stands in, by its own id or by the wall its cover opens, in site order', () => {
+    const a = record({ slug: 'a', title: 'A' });
+    const b = record({ slug: 'b', title: 'B', works: [{ id: 'OL9W', title: 'Übersetzung', author: 'Mary Shelley', coverId: 'ol:7', coverWork: 'OL450063W' }] });
+    const draft = record({ slug: 'd', title: 'D', published: false });
+    const none = record({ slug: 'n', title: 'N', works: [{ id: 'OL1W', title: 'X', author: 'Mary Shelley', coverId: 'ol:8' }] });
+    const collections = parseCollections([none, b, draft, a], { includeDrafts: true });
+    expect(collectionsHolding(collections, 'OL450063W')).toEqual([
+      { slug: 'b', title: 'B', count: 1 },
+      { slug: 'a', title: 'A', count: 2 },
+    ]);
+    expect(collectionsHolding(collections, 'OL404W')).toEqual([]);
   });
 });
 

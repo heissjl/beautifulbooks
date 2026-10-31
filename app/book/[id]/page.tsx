@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
 import { wallsEnabled } from '@/lib/walls/switch';
+import { collectionsOfWork } from '@/lib/collections-live';
 import { WALL_WORKS } from '@/lib/curated';
 import type { Cover, Edition, Work } from '@/lib/model';
 import { bookJsonLd, jsonLdHtml, workDescription, workPageTitle, workUrl } from '@/lib/seo';
@@ -106,13 +107,16 @@ export default async function Page({ params }: PageProps) {
     known = true;
   }
   if (!known) notFound();
+  // The published collections this work stands in (ROADMAP 6.107 Teil A): from the instance's memory
+  // of the live records (2.18c), so the page links what the site shows and never a draft.
+  const collections = await collectionsOfWork(id);
 
   return (
     <>
       <Suspense fallback={null}>
         <WorkJsonLd id={id} />
       </Suspense>
-      <BookDetailPage walls={wallsEnabled()} />
+      <BookDetailPage walls={wallsEnabled()} collections={collections} />
     </>
   );
 }

@@ -9,6 +9,7 @@ import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/compo
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
 import AuthorWorks from '@/components/AuthorWorks';
+import InCollections from '@/components/InCollections';
 import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
@@ -39,6 +40,7 @@ import { useBookSignal, useReportVerdict, VerdictReport } from './useInsights';
 import { buyLinksIn, commissionNote, isWordsProvider, searchFacts, searchLinksFor, titleSearchLinksIn, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
+import type { WorkCollectionLink } from '@/lib/collections';
 import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
 import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
@@ -171,7 +173,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
   return qs ? `/?${qs}` : '/';
 }
 
-function BookDetail() {
+function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
   const t = useT();
   const wallsOn = useContext(WallsOn);
   const params = useParams<{ id: string; coverId?: string }>();
@@ -386,7 +388,11 @@ function BookDetail() {
             <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">{t('Back to search')}</Link>
           </div>
         ) : (
-          <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
+          <>
+            <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
+            {/* The collections do not depend on the catalogue (6.107): a silent catalogue still leaves a way on. */}
+            <InCollections collections={collections} />
+          </>
         )}
       </Shell>
     );
@@ -406,6 +412,12 @@ function BookDetail() {
           hero={preview?.coverUrls[0]}
           expected={view?.covers.length}
         />
+        {/*
+          Already here, under the loading scene (6.107 Teil A): this is the branch
+          the server renders, so the HTML a crawler reads carries the links to
+          the collections before the catalogue has answered anything.
+        */}
+        <InCollections collections={collections} />
       </Shell>
     );
   }
@@ -550,6 +562,16 @@ function BookDetail() {
         bar — only while a cover is picked, or a phone shows a dead strip from
         the moment the page opens.
       */}
+      {/*
+        "In these collections" first (ROADMAP 6.107 Teil A): it is about this
+        book, "More by …" leads away from it. Under the wall, never in the
+        sidebar, so the first shop link keeps its place on a desktop. The
+        peek-bar room moves here only when there is no author row to carry it.
+      */}
+      <InCollections
+        collections={collections}
+        className={!isDesktop && selected && !(work.authors[0] && work.authors[0] !== 'Unknown') ? 'pb-20' : ''}
+      />
       {work.authors[0] && work.authors[0] !== 'Unknown' && (
         <AuthorWorks
           key={work.id}
@@ -1308,11 +1330,11 @@ function shopLinkTitle(link: BuyLink, t: Translate): string {
  * description, Open Graph image and structured data (SPEC §10 D10). Nothing
  * about the behaviour changed in the move.
  */
-export default function BookDetailPage({ walls = false }: { walls?: boolean }) {
+export default function BookDetailPage({ walls = false, collections = [] }: { walls?: boolean; collections?: WorkCollectionLink[] }) {
   return (
     <WallsOn.Provider value={walls}>
       <Suspense>
-        <BookDetail />
+        <BookDetail collections={collections} />
       </Suspense>
     </WallsOn.Provider>
   );

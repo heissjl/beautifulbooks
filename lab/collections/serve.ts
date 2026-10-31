@@ -23,7 +23,7 @@
 import { createServer } from 'node:http';
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { CollectionRecord } from '../../lib/collections';
+import { isCollectionGroup, type CollectionGroup, type CollectionRecord } from '../../lib/collections';
 import { toRecord, type Draft } from '../../lib/curate/drafts';
 import {
   addAuthor,
@@ -327,7 +327,7 @@ const server = createServer(async (req, res) => {
     const body = await readBody<Record<string, unknown>>(req);
 
     if (url.pathname === '/api/create') {
-      const c = newCollection(body as { title: string; slug?: string; kind: 'authors' | 'series'; intro?: string }, collections);
+      const c = newCollection(body as { title: string; slug?: string; kind: 'authors' | 'series'; group?: CollectionGroup; intro?: string }, collections);
       collections = [...collections, c];
       save();
       return send(200, { collection: c });
@@ -342,6 +342,8 @@ const server = createServer(async (req, res) => {
         if (typeof body.title === 'string' && body.title.trim()) next.title = body.title.trim();
         if (typeof body.intro === 'string') next.intro = body.intro.trim();
         if (typeof body.published === 'boolean') next.published = body.published;
+        // The hub group (6.107 Teil A): one of HUB_GROUPS, nothing else is written.
+        if (isCollectionGroup(body.group)) next.group = body.group;
         replace(next);
         return send(200, { collection: next });
       }

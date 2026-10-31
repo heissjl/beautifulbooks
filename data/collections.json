@@ -5,6 +5,7 @@
       "slug": "feminist-press",
       "title": "Feminist Press",
       "kind": "authors",
+      "group": "publishers",
       "intro": "The Feminist Press was founded in New York in 1970 by Florence Howe to bring writing by women back into print — Charlotte Perkins Gilman's The Yellow Wallpaper, Agnes Smedley's Daughter of Earth — and went on to publish new writers and women writing in translation. These are books from its list, gathered from a reader's list on Open Library; the cover shown is not always the Feminist Press printing. The press: https://feministpress.org/",
       "published": true,
       "authors": [
@@ -1094,6 +1095,7 @@
       "slug": "sf-masterworks",
       "title": "SF Masterworks",
       "kind": "series",
+      "group": "series",
       "intro": "The first, numbered run of the SF Masterworks (1999–2007): seventy-three science fiction novels that Millennium and Gollancz reprinted as classics of the genre, in the order of their numbers. Two of them changed covers in later printings and appear twice, the first printing first. Behind each cover is the wall of the other faces we found for the book.",
       "published": true,
       "publishers": [
@@ -2084,6 +2086,7 @@
       "slug": "sf-masterworks-relaunch",
       "title": "SF Masterworks — the relaunch",
       "kind": "series",
+      "group": "series",
       "intro": "In 2010 Gollancz gave the SF Masterworks a new face: the numbers went, the series name turned sideways and climbed the left edge of the cover, and the list kept growing — past the classics of the first run to newer books that had earned the name. This wall holds 182 of them in the order of the list, each in its relaunch design. Where ISFDB names the cover artist, the name is under the tile.",
       "published": true,
       "publishers": [
@@ -4300,6 +4303,7 @@
       "slug": "edition-suhrkamp",
       "title": "edition suhrkamp",
       "kind": "series",
+      "group": "series",
       "intro": "Suhrkamp's edition suhrkamp, begun in 1963 in Willy Fleckhaus's design: a plain cover set only in type, in forty-eight colours that run through the spectrum from volume to volume, so that forty-eight books side by side make a rainbow. The wall shows volumes from the 1970s and 1980s in number order, where Open Library has the cover.",
       "published": true,
       "publishers": [
@@ -6091,6 +6095,7 @@
       "slug": "penguin-clothbound-classics",
       "title": "Penguin Clothbound Classics",
       "kind": "series",
+      "group": "series",
       "intro": "From 2008 Coralie Bickford-Smith dressed Penguin's classics in cloth: a pattern taken from a motif of the book, stamped in foil and repeated across coloured cloth.",
       "published": true,
       "publishers": [
@@ -6611,6 +6616,7 @@
       "slug": "tiptree-award",
       "title": "The Otherwise Award",
       "kind": "authors",
+      "group": "lists",
       "intro": "The Otherwise Award, founded in 1991 by Pat Murphy and Karen Joy Fowler as the James Tiptree, Jr. Award and renamed in 2019, goes each year to science fiction and fantasy that explores and expands our understanding of gender. One cover per winning book, from China Mountain Zhang to Rakesfall. The award: https://otherwiseaward.org/",
       "published": true,
       "authors": [
@@ -7317,6 +7323,7 @@
       "slug": "hugo-award-novel",
       "title": "Hugo Award — best novel",
       "kind": "authors",
+      "group": "lists",
       "intro": "The Hugo Award for best novel, voted each year since 1953 by the members of the World Science Fiction Convention. One cover per winning novel in year order, from The Demolished Man, the first winner, to Dune, The Left Hand of Darkness, Neuromancer and the three books of N. K. Jemisin's Broken Earth, which won three years running.",
       "published": true,
       "authors": [
@@ -8221,6 +8228,7 @@
       "slug": "sf-masterworks-rounded",
       "title": "SF Masterworks — the rounded-corner editions (2006)",
       "kind": "series",
+      "group": "series",
       "intro": "In 2006 Gollancz reissued ten of the SF Masterworks with rounded corners and new covers, all ten by Marc Adams as ISFDB credits them.",
       "published": true,
       "publishers": [
@@ -8364,6 +8372,7 @@
       "slug": "sf-masterworks-relaunch-international",
       "title": "SF Masterworks — international relaunch covers",
       "kind": "series",
+      "group": "series",
       "intro": "The books of the SF Masterworks relaunch, in other languages: each tile is the cover of a translation, as a French, German, Spanish, Russian, Italian, Polish or Japanese publisher dressed the same novel. In the order of the relaunch list, where Open Library holds a translated edition with a cover. Where ISFDB names the cover artist, the name is under the tile.",
       "published": true,
       "coverCredits": "isfdb",
@@ -10175,6 +10184,7 @@
       "slug": "bibliothek-der-erinnerung",
       "title": "Bibliothek der Erinnerung",
       "kind": "series",
+      "group": "series",
       "intro": "Memoirs and testimonies by people persecuted under National Socialism, edited by the Centre for Research on Antisemitism at the Technical University of Berlin and published by Metropol in Berlin since 1997, in the order of their volume numbers.",
       "published": false,
       "publishers": [
@@ -10412,6 +10422,7 @@
       "slug": "tolkien-covers-by-heinz-edelmann",
       "title": "Tolkien — covers by Heinz Edelmann",
       "kind": "series",
+      "group": "designers",
       "intro": "Heinz Edelmann designed the first German edition of The Lord of the Rings for Klett in 1969–70 and the covers that followed: the green paperbacks, the Hobbit Presse edition of 1980, Baum und Blatt.",
       "published": false,
       "publishers": [
@@ -10493,6 +10504,7 @@
       "slug": "reihe-hanser-covers-by-heinz-edelmann",
       "title": "Reihe Hanser — covers by Heinz Edelmann",
       "kind": "series",
+      "group": "designers",
       "intro": "Carl Hanser's paperback series of essays, poems and politics, begun in 1967. Heinz Edelmann designed its yellow covers until the mid-1970s. Shown in the order of the volume numbers.",
       "published": true,
       "publishers": [
@@ -11398,6 +11410,7 @@
       "slug": "jules-verne-covers-by-heinz-edelmann",
       "title": "Jules Verne — covers by Heinz Edelmann",
       "kind": "series",
+      "group": "designers",
       "intro": "Fischer published Jules Verne in twenty paperback volumes from 1968, in new translations by Lothar Maier, and Heinz Edelmann designed the covers of the whole edition. Shown in the order of the volume numbers. The scans of nineteen volumes come from the Sammlung Keller (sammlungkeller.ch).",
       "published": false,
       "publishers": [
@@ -11593,6 +11606,7 @@
       "slug": "heinz-edelmann-various-publishers",
       "title": "Heinz Edelmann — various publishers",
       "kind": "series",
+      "group": "designers",
       "intro": "Book jackets Heinz Edelmann drew for publishers from Luchterhand and Scherz to Hanser, Middelhauve and Klett-Cotta, between 1962 and 1985, in the order a collector of his work shows them.",
       "published": false,
       "publishers": [
@@ -11818,6 +11832,7 @@
       "slug": "suhrkamp-basisbibliothek",
       "title": "Suhrkamp BasisBibliothek",
       "kind": "series",
+      "group": "series",
       "intro": "Suhrkamp's BasisBibliothek, begun in 1998: literary works printed with a commentary for school and university, shown here in the order of their numbers.",
       "published": false,
       "publishers": [
@@ -12375,6 +12390,7 @@
       "slug": "suhrkamp-taschenbuch-author-portraits",
       "title": "suhrkamp taschenbuch — author portraits",
       "kind": "series",
+      "group": "series",
       "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window. Here the window holds a portrait: of the author, or of the writer the book is about. One book per author, in series order, from the covers Open Library has.",
       "published": false,
       "publishers": [
@@ -13017,6 +13033,7 @@
       "slug": "penguin-english-library",
       "title": "Penguin English Library",
       "kind": "series",
+      "group": "series",
       "intro": "In 2012 Coralie Bickford-Smith gave a hundred English classics a pattern each, drawn from a motif of the novel and repeated across the cover — chairs for Emma, whales for Moby-Dick.",
       "published": false,
       "publishers": [
@@ -13536,6 +13553,7 @@
       "slug": "library-of-america",
       "title": "Library of America",
       "kind": "series",
+      "group": "publishers",
       "intro": "Volumes of the Library of America in the jacket Robert Scudellari designed in the early 1980s: black, with a small portrait of the author, the name lettered by hand by Gun Larson, and a red, white and blue band.",
       "published": true,
       "publishers": [
@@ -14196,6 +14214,7 @@
       "slug": "verso-radical-thinkers",
       "title": "Verso Radical Thinkers",
       "kind": "series",
+      "group": "series",
       "intro": "The first three sets of Verso's Radical Thinkers (2006–2008) share one design: the author's name in large capitals, the title beside a coloured brace and Verso's V, on kraft paper for set 1, grey for set 2 and black for set 3.",
       "published": false,
       "publishers": [
@@ -14514,6 +14533,7 @@
       "slug": "verso-radical-thinkers-later",
       "title": "Verso Radical Thinkers — later",
       "kind": "series",
+      "group": "series",
       "intro": "From set 4 in 2009, Verso's Radical Thinkers turned white, with author and title in one small line of serif type and a single thin line drawing across each cover.",
       "published": false,
       "publishers": [
@@ -14787,6 +14807,7 @@
       "slug": "ballantine-adult-fantasy",
       "title": "Ballantine Adult Fantasy",
       "kind": "series",
+      "group": "series",
       "intro": "Ballantine's Adult Fantasy series, edited by Lin Carter from 1969 to 1974, brought older fantasy back into print as paperbacks with a unicorn's head on the cover, many of them painted by Gervasio Gallardo.",
       "published": false,
       "publishers": [
@@ -15364,6 +15385,7 @@
       "slug": "poesie-gallimard",
       "title": "Poésie/Gallimard",
       "kind": "series",
+      "group": "series",
       "intro": "Gallimard's poetry paperbacks in Robert Massin's design from 1966, a white cover with a band that repeats the poet's portrait in changing colours, in number order where Open Library has the series cover.",
       "published": false,
       "publishers": [
@@ -16726,6 +16748,7 @@
       "slug": "suhrkamp-taschenbuch-images",
       "title": "suhrkamp taschenbuch — images",
       "kind": "series",
+      "group": "series",
       "intro": "Suhrkamp’s paperback series in Willy Fleckhaus’s design of 1971: a coloured cover, author and title set large, and below them a small window. Here the window holds another picture: a drawing, a photograph, a painting, an emblem. One book per author, in series order, from the covers Open Library has.",
       "published": false,
       "publishers": [
@@ -17512,6 +17535,7 @@
       "slug": "harry-potter-cover-sets",
       "title": "Harry Potter — cover sets",
       "kind": "series",
+      "group": "series",
       "intro": "Seven books, one design: each row is one Harry Potter edition as its publisher dressed it, from Bloomsbury's first children's covers and Mary GrandPré's American jackets to Jean-Claude Götting in France, Serena Riglietti in Italy, Sabine Wilharm in Germany, the photographic adult editions and Jonny Duddle's 2014 redesign. A set appears only when Open Library holds a front cover for each of its seven volumes.",
       "published": false,
       "publishers": [
@@ -19287,6 +19311,7 @@
       "slug": "lord-of-the-rings-cover-sets",
       "title": "The Lord of the Rings — cover sets",
       "kind": "series",
+      "group": "series",
       "intro": "Most readers met The Lord of the Rings in three volumes, and each edition dressed the three books in one design. Each set here is one edition: from the Allen & Unwin jackets Tolkien designed in 1954 and Barbara Remington's Ballantine paperbacks of 1965 to Pauline Baynes, Darrell K. Sweet, John Howe and Alan Lee, the film and television tie-ins, and editions in French, German, Spanish, Dutch, Chinese and Indonesian. A set appears only where Open Library holds a front cover of the same design for each volume; editions that reuse another edition's artwork are left out.",
       "published": false,
       "publishers": [
@@ -20493,6 +20518,7 @@
       "slug": "great-american-novel",
       "title": "The Great American Novel",
       "kind": "authors",
+      "group": "lists",
       "intro": "The Great American Novel is the old idea of one book that would catch the whole of the United States — its promise, its violence, its many voices. The phrase is from John William De Forest in 1868, and critics have argued ever since about which book, if any, comes closest. These are novels the Wikipedia article on the idea discusses as candidates, from The Last of the Mohicans to Underworld, each with one cover chosen by hand — the first edition's where Open Library holds a clean one.",
       "published": false,
       "authors": [
@@ -20840,6 +20866,7 @@
       "slug": "rowohlts-monographien",
       "title": "Rowohlts Monographien",
       "kind": "series",
+      "group": "series",
       "intro": "From 1958 Rowohlt published small paperback lives, each of one person told in their own words and in pictures — writers, composers, painters, philosophers, politicians. The classic cover is a portrait photograph tinted in one colour across the whole front, the name in a bar at the top and the little rororo box at the bottom. One book per person, in series order, from the covers Open Library has in that design.",
       "published": false,
       "publishers": [
@@ -22238,6 +22265,7 @@
       "slug": "heyne-bibliothek-sf",
       "title": "Heyne Bibliothek der Science Fiction Literatur",
       "kind": "series",
+      "group": "series",
       "intro": "Heyne's „Bibliothek der Science Fiction Literatur“, edited by Wolfgang Jeschke from 1981 to 2001: about a hundred classics of the genre in the „white series“ — a white cover, the series header at the top and one square colour picture. Shown in series order, from the covers Open Library has in that design.",
       "published": false,
       "publishers": [
@@ -22583,6 +22611,7 @@
       "slug": "folio-gallimard",
       "title": "Folio — Gallimard",
       "kind": "series",
+      "group": "series",
       "intro": "Folio is Gallimard's numbered paperback series, launched in 1972; number 1 was Malraux's La Condition humaine, number 2 Camus's L'Étranger. Robert Massin gave it a white cover with author and title in black Baskerville above a single picture, a design that stayed in use until the end of 2010. Volumes from the first few hundred numbers in that design, one per author, in number order, from the covers Open Library has.",
       "published": false,
       "publishers": [
@@ -23460,6 +23489,7 @@
       "slug": "jai-lu-sf",
       "title": "J'ai Lu — science-fiction",
       "kind": "series",
+      "group": "series",
       "intro": "J'ai Lu launched its science-fiction line in 1970, with Jacques Sadoul as its editor; the volumes carry the house's running numbers, and their painted covers sit under the round J'ai Lu logo — in the 1970s with the big lowercase title, from the 1980s with a grey band marked S-F. Shown in number order, one book per work, each in a printing whose cover Open Library holds.",
       "published": false,
       "publishers": [
@@ -24451,6 +24481,7 @@
       "slug": "presence-du-futur",
       "title": "Présence du futur — Denoël",
       "kind": "series",
+      "group": "series",
       "intro": "Présence du futur was the science-fiction series of the Paris publisher Denoël, founded in 1954 by Robert Kanters and published until 2000. From 1975 its covers were illustrated, at first with the picture inside a central circle on a colour gradient, until the art spread over the whole page towards the end of the 1980s. This wall shows the circle design only — first printings of the late 1970s and early 1980s and reprints of older numbers — one per work, in number order, from the covers Open Library has.",
       "published": false,
       "publishers": [
@@ -25217,6 +25248,7 @@
       "slug": "spektrum-volk-und-welt",
       "title": "Spektrum — Volk und Welt",
       "kind": "series",
+      "group": "series",
       "intro": "Spektrum was a paperback series from Verlag Volk und Welt in East Berlin, begun in 1968, mostly stories and short novels by foreign authors. Its black jacket — author and title in white at the top, the word „Spektrum“ at the right and one black-grey-white image below, nearly all by Lothar Reher — gave it its nickname, the „black series“. Only the volumes Open Library holds pictures of.",
       "published": true,
       "publishers": [
@@ -25357,6 +25389,7 @@
       "slug": "virago-modern-classics",
       "title": "Virago Modern Classics",
       "kind": "series",
+      "group": "series",
       "intro": "Virago launched its Modern Classics in 1978 with Antonia White's Frost in May, reissuing out-of-print books by women writers. For years the paperbacks shared one design: a dark green band carrying the author and title, above a painting chosen for the book, often a detail. The back covers name the picture. This wall gathers the green-band printings Open Library holds covers for, and gives the painting where a scan of the same printing, or a collector quoting her own copy, names it.",
       "published": false,
       "publishers": [
@@ -26831,6 +26864,7 @@
       "slug": "fischer-bucherei-covers-by-heinz-edelmann",
       "title": "Fischer Bücherei — covers by Heinz Edelmann",
       "kind": "series",
+      "group": "designers",
       "intro": "In 1966–68 Heinz Edelmann drew a run of covers for the Fischer Bücherei that Sammlung Keller calls style-defining for the series layout: a coloured band with the fish logo, the author and title set in black, and below them a full picture in his flat, bright colours of those years, a year or two before Yellow Submarine. These are the ten Sammlung Keller shows.",
       "published": false,
       "publishers": [
@@ -26924,6 +26958,7 @@
       "slug": "fischer-bucherei-covers-by-kurt-wirth",
       "title": "Fischer Bücherei — covers by Kurt Wirth",
       "kind": "series",
+      "group": "designers",
       "intro": "From the early 1950s to the late 1960s the Swiss graphic artist Kurt Wirth drew dozens of covers for the Fischer Bücherei, the paperback series with the coloured band and the three fish at the top. Cut paper, collage, brush and ink: a different picture for every book. These are the covers Sammlung Keller shows, in the order of their numbers.",
       "published": false,
       "publishers": [
@@ -27617,6 +27652,7 @@
       "slug": "penguin-classics-the-black-band-years",
       "title": "Penguin Classics — the black-band years",
       "kind": "series",
+      "group": "series",
       "intro": "From the mid-1980s into the early 2000s, Penguin Classics wore a cream frame, a black panel for author and title, and a period picture chosen for each book. The back cover named the picture, often down to the gallery that lent it: Caspar David Friedrich's Moonrise on the Seashore for The Moonstone, Caillebotte for The Ambassadors, a Greek vase for Pindar. Where a scan of the same printing on the Internet Archive names the picture, the credit is shown as printed; the rest are left blank rather than guessed.",
       "published": false,
       "publishers": [
@@ -28612,6 +28648,7 @@
       "slug": "fischer-bucherei",
       "title": "Fischer Bücherei",
       "kind": "series",
+      "group": "series",
       "intro": "The Fischer Bücherei was S. Fischer's paperback series from 1952 to about 1970: over a thousand numbered volumes, a different picture on every cover. The first covers ran a picture over the whole front with the series name at the foot; from about 1962 a coloured band with the three fish sits at the top above a white title field. This wall shows the volumes whose series cover Open Library holds: first every cover in the early layout, then every cover with the band, each in the order of their numbers. Five volumes appear twice, once in each layout. The designer is named where it is known for that printing.",
       "published": false,
       "publishers": [
@@ -30304,6 +30341,7 @@
       "slug": "steinbeck-at-dtv-covers-by-celestino-piatti",
       "title": "Steinbeck at dtv — covers by Celestino Piatti",
       "kind": "series",
+      "group": "designers",
       "intro": "From the mid-1980s dtv reissued John Steinbeck's books in German with covers by the Swiss artist Celestino Piatti: one bold black line drawing on a single colour for each book, signed in the corner. These are the covers Sammlung Keller shows, in the order of their dtv numbers.",
       "published": false,
       "publishers": [
@@ -30515,6 +30553,7 @@
       "slug": "herder-bucherei-covers-by-walter-grieder",
       "title": "Herder Bücherei — covers by Walter Grieder",
       "kind": "series",
+      "group": "designers",
       "intro": "The Swiss illustrator Walter Grieder drew covers for the Herder Bücherei, Herder's paperback series, from the late 1950s into the early 1970s: first bright, crowded pictures across the whole front, later a single bold motif in a white frame. These are the covers Sammlung Keller shows, in the order of their numbers.",
       "published": false,
       "publishers": [
@@ -30879,6 +30918,7 @@
       "slug": "dtv-phantastica-covers-by-celestino-piatti",
       "title": "dtv phantastica — covers by Celestino Piatti",
       "kind": "series",
+      "group": "designers",
       "intro": "dtv published a series of fantastic fiction, dtv phantastica, and Celestino Piatti gave every volume the same black ground and a different picture on it: vampires, snails, a werewolf, a spaceship. These are the covers Sammlung Keller shows, in the order of their dtv numbers.",
       "published": true,
       "publishers": [
@@ -31216,6 +31256,7 @@
       "slug": "haffmans-covers-by-nikolaus-heidelbach",
       "title": "Haffmans — covers by Nikolaus Heidelbach",
       "kind": "series",
+      "group": "designers",
       "intro": "From the late 1980s the Zurich publisher Haffmans dressed its crime novels and much of its fiction in covers by Nikolaus Heidelbach: one strange, exactly painted object on black — a lipstick with a nail through it, a cigar, a swan with a red hood in its beak. These are the covers Sammlung Keller shows; Keller gives no titles, so they were read from the covers themselves.",
       "published": false,
       "publishers": [
@@ -31814,6 +31855,7 @@
       "slug": "kipling-at-haffmans-covers-by-nikolaus-heidelbach",
       "title": "Kipling at Haffmans — covers by Nikolaus Heidelbach",
       "kind": "series",
+      "group": "designers",
       "intro": "Haffmans published a German Kipling edition in the late 1980s and 1990s, and Nikolaus Heidelbach drew a black-and-white picture for the panel on each volume: a tiger, a panther, an elephant, three schoolboys. Kim is shown in the Büchergilde Gutenberg edition, which kept the design. These are the volumes Sammlung Keller shows.",
       "published": false,
       "publishers": [
@@ -31917,6 +31959,7 @@
       "slug": "ex-libris-covers-by-hanspeter-wyss",
       "title": "Ex Libris — covers by Hanspeter Wyss",
       "kind": "series",
+      "group": "designers",
       "intro": "From 1961 into the early 1980s the Swiss illustrator Hanspeter Wyss drew dust jackets for Ex Libris, the Zurich book club, and for Benziger: flat bright shapes, a crowd of houses, a skyline of crystals, a harlequin under an umbrella. Ex Libris kept no numbered series, so these follow Sammlung Keller's dates roughly, with the undated ones last. Some carry only type and an abstract figure, such as a target, a colour wheel or a grid.",
       "published": false,
       "publishers": [
@@ -32401,6 +32444,7 @@
       "slug": "penguin-drop-caps",
       "title": "Penguin Drop Caps",
       "kind": "series",
+      "group": "series",
       "intro": "Penguin's hardcover classics of 2012 to 2014, one for each letter of the alphabet. Jessica Hische drew an initial for each cover, and the colours run through the spectrum from A to Z. Open Library holds the series cover for 22 of the 26 letters.",
       "published": false,
       "publishers": [
@@ -32612,6 +32656,7 @@
       "slug": "virago-designer-collection",
       "title": "Virago Designer Collection",
       "kind": "series",
+      "group": "series",
       "intro": "From 2008 Virago dressed some of its Modern Classics in patterns by textile and fashion designers, among them Orla Kiely and Cath Kidston, with a small title label on the print. These are the ones whose designer cover Open Library holds, in order of publication.",
       "published": false,
       "publishers": [
@@ -32777,6 +32822,7 @@
       "slug": "penguin-great-ideas",
       "title": "Penguin Great Ideas",
       "kind": "series",
+      "group": "series",
       "intro": "Penguin's Great Ideas, from 2004: short works of thought in cream covers set only in type, each in the manner of the time the text was written, by David Pearson, Phil Baines, Catherine Dixon and Alistair Hall. The wall follows the six sets; where Open Library lacks the British cover, a US or later Penguin printing in the same design stands in.",
       "published": false,
       "publishers": [
@@ -33591,6 +33637,7 @@
       "slug": "nyrb-children-s-collection",
       "title": "NYRB Children's Collection",
       "kind": "series",
+      "group": "series",
       "intro": "The New York Review Children's Collection brings back children's books with their original pictures, on coloured boards with a red spine band. The wall shows the hardcovers in this classic design; the later paperbacks look different and are left out.",
       "published": false,
       "publishers": [
@@ -33793,6 +33840,7 @@
       "slug": "l-imaginaire",
       "title": "L'Imaginaire",
       "kind": "series",
+      "group": "series",
       "intro": "Gallimard's L'Imaginaire, from 1977: white covers on which each title is lettered in its own way. The wall shows numbers 200 to 400, the stretch Open Library covers best, in number order.",
       "published": false,
       "publishers": [
@@ -35083,6 +35131,7 @@
       "slug": "decouvertes-gallimard",
       "title": "Découvertes Gallimard",
       "kind": "series",
+      "group": "series",
       "intro": "Découvertes Gallimard, from 1986: small illustrated books with a picture running to the edges and a fixed title block, designed by Pierre Marchand. The wall shows numbers 1 to 200 where Open Library holds the series cover, in number order.",
       "published": false,
       "publishers": [
@@ -36436,6 +36485,7 @@
       "slug": "rivages-noir",
       "title": "Rivages/Noir",
       "kind": "series",
+      "group": "series",
       "intro": "Rivages/Noir, the crime paperbacks of Éditions Rivages from 1986: a photograph or film still on black, with the title in white boxes. The wall shows numbers 1 to 200 where Open Library holds the series cover, in number order.",
       "published": false,
       "publishers": [
@@ -37690,6 +37740,7 @@
       "slug": "zytglogge-covers-by-werner-maurer",
       "title": "Zytglogge — covers by Werner Maurer",
       "kind": "series",
+      "group": "designers",
       "intro": "Werner Maurer's covers for Zytglogge in Bern in the 1970s, a house for Swiss writers, many of them writing in dialect: a fixed layout with a small picture in a field of colour. Three typographic covers of the Schwarze Reihe open the wall. These are the covers Sammlung Keller shows.",
       "published": false,
       "publishers": [
@@ -37919,6 +37970,7 @@
       "slug": "ravensburger-covers-by-grieder-and-schindler",
       "title": "Ravensburger — covers by Grieder and Schindler",
       "kind": "series",
+      "group": "designers",
       "intro": "Ravensburger Taschenbücher for young readers, with covers by two Swiss illustrators: Edith Schindler from the 1960s on and Walter Grieder in the 1970s. These are the covers Sammlung Keller shows.",
       "published": false,
       "publishers": [
@@ -38228,6 +38280,7 @@
       "slug": "insel-taschenbuch",
       "title": "insel taschenbuch",
       "kind": "series",
+      "group": "series",
       "intro": "Willy Fleckhaus designed the insel taschenbuch in 1972: pale card in ten colours, classical type, and a picture taken from an old book illustration, painting or portrait in a window on the front. The wall shows numbers 1 to 1500, the years of that design, where Open Library holds the cover; later numbers mix other designs.",
       "published": false,
       "publishers": [
@@ -41202,6 +41255,7 @@
       "slug": "deutscher-buchpreis",
       "title": "Deutscher Buchpreis",
       "kind": "series",
+      "group": "lists",
       "intro": "The German Book Prize, awarded each autumn since 2005 to the novel of the year in German. One cover per winner in year order, the first German edition wherever Open Library has its cover.",
       "published": false,
       "publishers": [],
@@ -41401,6 +41455,7 @@
       "slug": "nebula-award-best-novel",
       "title": "Nebula Award — best novel",
       "kind": "series",
+      "group": "lists",
       "intro": "The Nebula Award for best novel, voted by the Science Fiction and Fantasy Writers of America since 1966. One cover per winner in year order, mostly the first edition's.",
       "published": false,
       "publishers": [],
@@ -41959,6 +42014,7 @@
       "slug": "national-book-award-fiction",
       "title": "National Book Award — fiction",
       "kind": "series",
+      "group": "lists",
       "intro": "The National Book Award for Fiction, since 1950. One cover per winner in year order, mostly the first edition's; where Open Library has no usable image of it, a later printing stands in.",
       "published": false,
       "publishers": [],
@@ -42702,6 +42758,7 @@
       "slug": "knopf-and-random-house-jackets-by-r-d-scudellari",
       "title": "Knopf and Random House — jackets by R. D. Scudellari",
       "kind": "series",
+      "group": "designers",
       "intro": "Robert D. Scudellari was corporate art director at Random House in the 1970s and ’80s, over Knopf, Pantheon and Vintage, and designed many of their jackets himself: title and author set large, in a different hand for every book. These are first-edition jackets that a dealer’s listing or Fonts In Use credits to him, in year order, from Toni Morrison’s Sula to Robert Caro’s volumes on Lyndon Johnson. On Sula he was art director for Wendell Minor’s painting, and the last Caro volume adapts his design.",
       "published": false,
       "publishers": [
@@ -42922,6 +42979,7 @@
       "slug": "bad-sf-covers",
       "title": "Bad SF Covers",
       "kind": "series",
+      "group": "lists",
       "intro": "The covers readers of r/badscificovers voted to the top of the subreddit: from its two hundred most-upvoted posts of all time, the books whose very cover from the post Open Library holds, in the order of their votes. Behind each cover is the wall of the book's other faces, most of them kinder.",
       "published": false,
       "publishers": [],
@@ -43507,6 +43565,7 @@
       "slug": "hemingways-reading-list",
       "title": "Hemingway’s reading list",
       "kind": "series",
+      "group": "lists",
       "intro": "In 1934 a young man named Arnold Samuelson hitchhiked to Key West to ask Ernest Hemingway about writing, and Hemingway wrote him a list of two stories and fourteen books, among them War and Peace, Madame Bovary, Dubliners and The Brothers Karamazov; Samuelson told the story in With Hemingway (1984). A longer version of the list goes round online, adding books Hemingway named on other occasions — Marryat, Fielding, Turgenev, Proust. This wall follows the longer list, one cover each.",
       "published": false,
       "publishers": [],
@@ -43805,6 +43864,7 @@
       "slug": "shelves-from-a-house-tour",
       "title": "Shelves from a house tour",
       "kind": "series",
+      "group": "lists",
       "intro": "Books whose spines can be read on three stills from a video house tour, posted on X in October 2026 as Dakota Johnson’s bookshelves — Saramago, Sorokin in the NYRB edition, DeLillo, Anne Boyer, a run of Isaac Bashevis Singer — in the order they stand on the shelves. After them the books the post names but the stills do not show: the rest of Pynchon, Gaddis, Bolaño, Carlos Fuentes’s Terra Nostra in the Dalkey Archive edition and Sebald’s The Rings of Saturn in its first New Directions edition.",
       "published": false,
       "publishers": [],
@@ -44104,6 +44164,7 @@
       "slug": "tom-adams-christie",
       "title": "Tom Adams' Agatha Christie",
       "kind": "series",
+      "group": "designers",
       "published": false,
       "publishers": [
         "Fontana"
@@ -44475,6 +44536,7 @@
       "slug": "gene-szafran",
       "title": "Gene Szafran",
       "kind": "series",
+      "group": "designers",
       "intro": "In the early 1970s Gene Szafran painted the covers of Signet's Heinlein paperbacks and dozens of other science fiction books for Signet, Ballantine, Bantam and Lancer: airbrushed figures in rainbow halos, mandalas and melting colour. These are the covers the ISFDB credits to him, each matched by eye to a cover Open Library holds, in the order they were first printed.",
       "published": false,
       "publishers": [],

@@ -2,11 +2,13 @@ import type { Metadata } from 'next';
 import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import AuthorWorks from '@/components/AuthorWorks';
+import InCollections from '@/components/InCollections';
 import CoverImage from '@/components/CoverImage';
 import SiteFooter from '@/components/SiteFooter';
 import HeaderSearch from '@/components/HeaderSearch';
 import SiteHeader from '@/components/SiteHeader';
 import BackLink from '@/components/BackLink';
+import { collectionsOfWork } from '@/lib/collections-live';
 import { indexSignatures } from '@/lib/coverindex';
 import { decadeLine, groupByDecade, worthAPage } from '@/lib/decades';
 import { authorLine, SITE_URL } from '@/lib/seo';
@@ -141,6 +143,8 @@ export default async function Page({ params, locale = DEFAULT_LOCALE }: PageProp
   if (!loaded || !worthAPage(loaded.decades)) notFound();
   const { work, editions, decades } = loaded;
   const author = authorLine(work.authors);
+  // The published collections the work stands in (6.107 Teil A), as on the work page.
+  const collections = await collectionsOfWork(id);
   /*
     The first screenful loads eagerly, the rest stays lazy (Julian,
     2026-09-09). Counted across the decades rather than within one, because
@@ -220,6 +224,7 @@ export default async function Page({ params, locale = DEFAULT_LOCALE }: PageProp
           from the browser when the row comes near, so the page render itself
           makes no extra request and ISR caches nothing about the author.
         */}
+        <InCollections collections={collections} />
         {work.authors[0] && work.authors[0] !== 'Unknown' && (
           <AuthorWorks author={work.authors[0]} authorKey={work.authorKeys?.[0]} workId={work.id} workTitle={work.title} />
         )}

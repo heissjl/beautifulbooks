@@ -24,6 +24,7 @@ import { RATE_LIMITED } from '@/app/api/rate';
 import { localShopCopy, LOCAL_COUNTRIES } from '../localshops';
 import { registrationPlaces } from '../normalize';
 import { AREA_NAME } from '../linkplan';
+import { GROUP_HEADING, GROUP_TEXT } from '../hubcopy';
 import { MARKETS } from '../market';
 
 const ROOT = join(__dirname, '..', '..');
@@ -77,6 +78,9 @@ function tableKeys(): string[] {
     ...Object.values(SIZE_LINE),
     ...Object.values(LIST_LABELS),
     ...SUB_IDEAS,
+    // The hub's group headings and sentences (6.107 Teil A, lib/hubcopy.ts).
+    ...Object.values(GROUP_HEADING),
+    ...Object.values(GROUP_TEXT).flat(),
   ];
 }
 
