@@ -76,3 +76,48 @@ Keine Schlagwort-Seiten, keine Autorenseiten mit eigener Adresse (vorerst — si
 3. Bing Webmaster Tools anmelden?
 4. `related` je Sammlung und die fehlenden Intros: wann?
 5. Schritt 8: `?cover=`-Adressen bündeln (b) oder zu echten Seiten machen (a)? Empfehlung (b) jetzt. (2026-10-31)
+
+## 5. Bauplan für Schritte 2, 3 und 8 (2026-10-31)
+
+Julian, nach der Lesung in § 0: „mach einen genauen plan hierfür“. Drei Teile, in dieser Reihenfolge; jeder Teil ein eigener Commit und ein eigener Blick in die Search Console Ende November. **Was gemessen wurde, steht in § 0; was hier steht, ist der Bau.** Gegen den Code geprüft am 2026-10-31: die Buchseite setzt Canonical, Titel und Beschreibung ohne Blick auf `?cover=` (`app/book/[id]/page.tsx`, `generateMetadata`); die Sammlungskacheln verlinken trotzdem `?cover=` (`components/CoverWall.tsx` Zeile 62: `/book/<id>?cover=ol:<n>`), und die Cover-Seite `/book/<id>/cover/<coverId>` zeigt mit ihrer Canonical auf die Werkseite; eine Buchseite nennt heute **keine** Sammlung, in der ihr Werk steht; die Fußzeile verlinkt `/collections` nicht; `/collections` hat einen Satz Einleitung und je Sammlung zwei Zeilen Intro.
+
+### Teil A — die Sammlungen in den Crawl bringen (Schritt 2, ein Tag Claude, zehn Minuten am Tag Julian)
+
+Der Befund: Google kennt 59 Sammlungen aus der Sitemap und hat 56 nie abgerufen; abgerufen wird, was verlinkt ist. Heute führen zu einer Sammlung nur die Startseite (`SHELF_MAX` Kacheln) und `/collections`.
+
+1. **„In these collections“ unter der Wand jeder Buchseite** — der Hebel, weil 136 Buchseiten im Index sind und jede davon Google zu ihren Sammlungen führt. Server: `collectionsOfWork(workId)` in `lib/collections-live.ts` (nur veröffentlichte, über `liveCollections()`, damit Entwürfe nicht verlinkt werden); die Buchseite reicht die Liste als Prop an `BookDetail` (wie `walls`; `lib/collections.ts` darf nicht in eine Client-Komponente, CLAUDE.md). Darstellung wie „More by …“ (6.53): Serifenüberschrift, je Sammlung Name und Zahl der Bücher, Link ohne Parameter. Bei null Sammlungen nichts. Jahrzehnte-Seite und Cover-Seite bekommen denselben Block.
+2. **Die Fußzeile verlinkt `/collections`** (und `/about`, falls noch nicht) — heute keine Sammlung unter den meistverlinkten internen Seiten (§ 0).
+3. **`/collections` wird eine Hub-Seite:** je Gruppe (Reihen, Gestalter, Preise und Listen, Verlage) eine Überschrift und drei Sätze eigener Text in der Stimme der Seite (keine Vollständigkeitsworte), darunter die Sammlungen der Gruppe; am Fuß ein Register aller veröffentlichten Sammlungen als schlichte Textliste (59 Links, für Google der sicherste Weg). Die Gruppen stehen im Datenfeld `kind`/Tags der Sammlungen — fehlt ein Feld, kommt es in `lab/collections/` dazu, nicht in den Code.
+4. **Die Startseite** behält ihre Kacheln; die Überschrift „Collections“ bleibt der Link, dazu unter den Kacheln eine Zeile „59 collections“ als Link auf den Hub.
+5. **Julian, Search Console:** URL-Prüfung → „Indexierung beantragen“ für `/collections` und die zehn Sammlungen mit den meisten Büchern (zehn Anträge am Tag sind das Limit), eine Woche lang. Das ist die einzige Hand, die Google direkt bewegt.
+6. **Messen:** Ende November die Liste „Discovered – currently not indexed“: Ziel ist, dass die Sammlungen dort verschwinden und unter „Indexed“ auftauchen; dazu Impressionen je Sammlungsseite. Vorher keine Zahl deuten.
+
+### Teil B — die `?cover=`-Adressen bündeln (Schritt 8, zwei Stunden, Richtung (b), Julians Ja)
+
+Der Befund: 106 `?cover=`-Adressen im Index als eigene Seiten, obwohl die Canonical auf die Werkseite zeigt — Google folgt ihr nicht, weil die Seiten anders aussehen (ein anderes Cover groß) und weil die Sammlungskacheln genau diese Adressen verlinken.
+
+1. **Interne Links tragen kein `?cover=` mehr.** `CoverWall.tsx`: eine Sammlungskachel verlinkt `/book/<id>/cover/<coverId>` (die Seite gibt es, mit eigener Vorschaukarte) statt `/book/<id>?cover=…`. Die Teilen-Links und die Shelf-Portrait-Kaufliste ebenso. `?cover=` bleibt als Zustand der Oberfläche (6.5, die URL als Quelle der Wahrheit) und in geteilten Links von Lesern — nur die Seite selbst setzt ihn nicht mehr in Links.
+2. **Die Cover-Seite bekommt eine eigene Canonical nur, wo sie etwas Eigenes sagt:** steht das Cover in einer veröffentlichten Sammlung mit Credit (`withFileFacts`), ist `/book/<id>/cover/<coverId>` eine echte Seite — Canonical auf sich selbst, Titel „<Titel> — the <Jahr> <Verlag> cover by <Gestalter>“, Beschreibung mit dem Credit; sonst bleibt die Canonical auf der Werkseite (wie heute). Das ist (a) im kleinen, nur für Cover mit Beleg, und erfüllt § 1 (keine dünnen Seiten).
+3. **Nichts an `?cover=` selbst**: kein `noindex` (widerspräche der Canonical), keine Weiterleitung (bräche jeden geteilten Link). Google konsolidiert, sobald die Links weg sind; das dauert Wochen.
+4. **Test:** `lib/__tests__/seo.test.ts` prüft die Canonical der Cover-Seite in beiden Fällen; `go-words` unberührt. Analytik-Checkliste Punkt 4: die Signale lesen `/book/`-Links der Ergebniskarten — die ändern sich nicht; `originOf` kennt die Cover-Seite als Buchseite (prüfen, sonst `book`).
+
+### Teil C — die Worte, nach denen gesucht wird (Schritt 3, ein halber Tag, Julian wählt den Titel)
+
+Der Befund: 29 von 34 Anfragen heißen „<Titel> (book) cover(s)“; die Buchseiten stehen dafür auf Position 40–55, die Jahrzehnte-Seiten bei 22.
+
+1. **Titel der Buchseite** (`workPageTitle` in `lib/seo.ts`, heute „The covers of <Titel> by <Autor>“): Vorschlag „<Titel> by <Autor> — book covers by language and year“; Titel voran, weil die Anfrage mit dem Titel beginnt, und „book covers“ wörtlich. Jahrzehnte-Seite: „<Titel> book covers by decade, <erstes> to <letztes>“ (die Pin-Liste 5.5a schreibt den Satz schon so). Sammlung: „<Name> — <n> book covers“. Ein Test in `seo.test.ts` hält die Form; die Vollständigkeitsworte bleiben verboten.
+2. **Alt-Text je Kachel** (`CoverWall.tsx` Zeile 71 sagt heute „<Titel> by <Autor>“): „<Titel>, <Verlag> <Jahr> cover“ und, wo belegt, „by <Gestalter>“ — Verlag und Jahr hat jede Kachel aus ihrer Ausgabe. Bildunterschrift bleibt die Zeile unter der Kachel.
+3. **Bild-Sitemap für die Sammlungen** (`app/sitemap.ts`, `images` je Sammlungsadresse mit den Cover-Adressen auf `covers.openlibrary.org`, Google erlaubt fremde Hosts): nur Sammlungen, nicht die Wände (Dünne-Seiten-Regel).
+4. **Messen:** Position der Anfragen „<Titel> cover“ Ende November gegen § 0 (40–55); Googlebot-Image-Anteil in K14.
+
+### Reihenfolge und Aufwand
+
+| Teil | Wer | Aufwand | Blockiert durch |
+|---|---|---|---|
+| A 1–4 Verlinkung und Hub | Claude | 1 Tag | nichts |
+| A 5 Indexierung beantragen | Julian | 10 min/Tag, eine Woche | A 1–4 deployt |
+| B `?cover=` bündeln | Claude | 2 h | Julians Ja zu (b) mit (a)-klein |
+| C Titel, Alt-Texte, Bild-Sitemap | Claude | ½ Tag | Julians Wort zum Titel |
+| Lesen | Claude in Julians Chrome | 30 min | Ende November |
+
+**Julian entscheidet:** (1) Teil B so, (b) mit der kleinen (a) für belegte Cover? (2) Der Titelsatz aus C 1 — oder seine Fassung. (3) Ob die Hub-Texte in § A 3 von ihm kommen (seine Stimme) oder von Claude mit seinem Strich.
