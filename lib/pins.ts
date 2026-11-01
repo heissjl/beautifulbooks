@@ -107,3 +107,47 @@ export function collectionPin(f: CollectionPinFacts, origin: string = SITE_URL):
 
 /** The words a pin must not carry: completeness (CLAUDE.md) and ranking (PLAN-5 §2). */
 export const FORBIDDEN_PIN_WORDS = /\b(all|every|complete|best|greatest|ugliest|most beautiful|top \d+)\b/i;
+
+export interface ComparePinFacts {
+  id: string;
+  /** The board, named by the list (Julian's boards; the old name of the site may not stand in lib/, `sitename.test.ts`). */
+  board: string;
+  title: string;
+  author: string;
+  /** The three editions shown, left to right, with what the record knows of each. */
+  editions: ReadonlyArray<{ coverId: string; year?: number; publisher?: string }>;
+  /** How many covers the site showed for the book that day. */
+  covers: number;
+}
+
+/** "Chilton (1965)", "1965", "Chilton", or the fact that the record has neither. */
+function editionLabel(e: { year?: number; publisher?: string }): string {
+  if (e.publisher && e.year) return `${e.publisher} (${e.year})`;
+  if (e.year) return String(e.year);
+  return e.publisher ?? 'an undated printing';
+}
+
+/**
+ * A pin that compares three editions (ROADMAP 5.5a, second format): the
+ * picture names its covers in its address, the link opens the first of them
+ * on the book page with the pin's mark.
+ */
+export function comparePin(f: ComparePinFacts, origin: string = SITE_URL): Pin {
+  const base = origin.replace(/\/$/, '');
+  const by = f.author ? ` by ${f.author}` : '';
+  const years = f.editions.map(e => e.year).filter((y): y is number => !!y);
+  const span = years.length > 0 ? `, ${years.join(', ')}` : '';
+  let title = `${f.title}${by} – three editions${span}`;
+  if (title.length > PIN_TITLE_MAX) title = `${f.title}${by} – three editions`;
+  if (title.length > PIN_TITLE_MAX) title = `${f.title} – three editions`;
+  const first = `Three editions of ${f.title}${by} next to each other: ${listOf(f.editions.map(editionLabel))}, out of ${f.covers} covers on record for this book.`;
+  const second = 'Each cover opens its edition with publisher, year and ISBN, beside the other editions on record.';
+  const ids = f.editions.map(e => e.coverId);
+  return {
+    picture: `${base}/book/${f.id}/compare.jpg?covers=${ids.join(',')}`,
+    board: f.board,
+    title,
+    description: `${first} ${second}`,
+    link: `${pinLink(`/book/${f.id}`, origin)}${ids[0] ? `&cover=${ids[0]}` : ''}`,
+  };
+}

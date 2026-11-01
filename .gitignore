@@ -74,6 +74,8 @@ lab/curate/serve.log
 /docs/tests/*.mov
 /docs/tests/*.mp4
 /docs/tests/*.webp
+# pin pictures saved by scripts/measure-pins.ts (ROADMAP 5.5a)
+/docs/tests/pins/
 lab/collections/cache.json
 lab/collections/isbn-cache.json
 lab/collections/for-openlibrary/

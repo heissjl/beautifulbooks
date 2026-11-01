@@ -16,12 +16,18 @@
  * - the tiles: how many hold a picture (not the empty tile colour);
  * - the foot: where its ink ends, above the bottom margin.
  *
+ * A comparison pin (`compare.jpg`, header `X-Pin-Format: compare`) is
+ * probed against `lib/comparelayout.ts`: three tiles, and the labels under
+ * them — ink in each label (year or publisher), and no ink in the gaps
+ * between the labels (a publisher that ran into the next column).
+ *
  * Ink is any pixel far from the ground colour (#131110) outside the tiles.
  * The numbers go to docs/history.md; a measurement in the chat is none.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
+import { compareLayoutSized } from '../lib/comparelayout';
 import { PIN_SIZE, pinLayout, type PinCount, type Rect } from '../lib/pinlayout';
 
 const OUT_DIR = path.join(process.cwd(), 'docs', 'tests', 'pins');
@@ -43,6 +49,8 @@ interface Probe {
   head: { from: number; to: number; limit: number; clear: boolean; overflowRight: boolean };
   tiles: { filled: number; of: number };
   foot: { from: number; to: number; limit: number; clear: boolean };
+  /** Comparison pins only: labels with ink, and whether ink stands between them. */
+  labels?: { inked: number; of: number; between: boolean; to: number };
 }
 
 function far(px: Uint8Array, at: number, colour: number[]): boolean {
@@ -65,14 +73,22 @@ function inkRows(px: Uint8Array, width: number, x0: number, x1: number, y0: numb
 
 function tileFilled(px: Uint8Array, width: number, r: Rect): boolean {
   // The middle of the tile: a cover is never the empty colour there.
+  // A dark jacket (Gollancz's black *Dune*, 1974) sits near the empty colour, so a tile also counts
+  // as filled when its samples spread: an empty tile is one flat colour.
   let different = 0;
+  let lo = 255 * 3;
+  let hi = 0;
   const samples = 64;
   for (let i = 0; i < samples; i++) {
     const x = r.x + Math.round(((i % 8) + 0.5) * (r.width / 8));
     const y = r.y + Math.round((Math.floor(i / 8) + 0.5) * (r.height / 8));
-    if (far(px, (y * width + x) * 3, EMPTY_TILE)) different++;
+    const at = (y * width + x) * 3;
+    if (far(px, at, EMPTY_TILE)) different++;
+    const sum = px[at] + px[at + 1] + px[at + 2];
+    lo = Math.min(lo, sum);
+    hi = Math.max(hi, sum);
   }
-  return different > samples / 4;
+  return different > samples / 4 || hi - lo > 3 * INK_DISTANCE;
 }
 
 async function probe(url: string): Promise<Probe> {
@@ -89,7 +105,9 @@ async function probe(url: string): Promise<Probe> {
   const covers = Number(res.headers.get('x-pin-covers') ?? 0);
   const credits = res.headers.get('x-pin-credits') === '1';
   const titleLines = res.headers.get('x-pin-title-lines') ?? '?';
-  const L = pinLayout((covers >= 9 ? 9 : 6) as PinCount, { credits, titleLines: titleLines === '1' ? 1 : 2 });
+  const compare = res.headers.get('x-pin-format') === 'compare';
+  const C = compare ? compareLayoutSized(Number(res.headers.get('x-pin-title-size') ?? 60), titleLines === '1' ? 1 : 2) : null;
+  const L = C ?? pinLayout((covers >= 9 ? 9 : 6) as PinCount, { credits, titleLines: titleLines === '1' ? 1 : 2 });
   const { data, info } = await sharp(bytes).removeAlpha().raw().toBuffer({ resolveWithObject: true });
   const px = new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
   const w = info.width;
@@ -100,6 +118,17 @@ async function probe(url: string): Promise<Probe> {
   const right = inkRows(px, w, L.head.x + L.head.width + 2, w, L.head.y, tilesTop);
   const foot = inkRows(px, w, L.foot.x, L.foot.x + L.foot.width, tilesBottom, info.height);
   const filled = L.tiles.filter(r => tileFilled(px, w, r)).length;
+  let labels: Probe['labels'];
+  if (C) {
+    const inks = C.labels.map(r => inkRows(px, w, r.x, r.x + r.width, r.y, r.y + r.height));
+    let between = false;
+    for (let i = 0; i + 1 < C.labels.length; i++) {
+      const a = C.labels[i];
+      const b = C.labels[i + 1];
+      if (inkRows(px, w, a.x + a.width + 1, b.x - 1, a.y, a.y + a.height).from >= 0) between = true;
+    }
+    labels = { inked: inks.filter(k => k.from >= 0).length, of: C.labels.length, between, to: Math.max(...inks.map(k => k.to)) };
+  }
 
   return {
     url,
@@ -115,6 +144,7 @@ async function probe(url: string): Promise<Probe> {
     head: { ...head, limit: tilesTop, clear: head.to >= 0 && head.to < tilesTop - 4, overflowRight: right.from >= 0 },
     tiles: { filled, of: L.tiles.length },
     foot: { ...foot, limit: info.height - L.head.y, clear: foot.to >= 0 && foot.to <= info.height - L.head.y + 4 },
+    labels,
   };
 }
 
@@ -125,12 +155,14 @@ async function main(): Promise<void> {
   let bad = 0;
   for (const url of urls) {
     const p = await probe(url);
-    const ok = p.width === PIN_SIZE.width && p.height === PIN_SIZE.height && p.head.clear && !p.head.overflowRight && p.foot.clear && p.tiles.filled === p.tiles.of;
+    const labelsOk = !p.labels || (p.labels.inked === p.labels.of && !p.labels.between);
+    const ok = p.width === PIN_SIZE.width && p.height === PIN_SIZE.height && p.head.clear && !p.head.overflowRight && p.foot.clear && p.tiles.filled === p.tiles.of && labelsOk;
     if (!ok) bad++;
     console.log(
       `${ok ? 'ok  ' : 'FAIL'} ${new URL(url).pathname}: ${p.width}×${p.height} ${p.type} ${(p.bytes / 1024).toFixed(0)} KB in ${(p.ms / 1000).toFixed(1)} s; ` +
       `covers ${p.covers} drawn, ${p.tiles.filled}/${p.tiles.of} tiles filled; title lines reserved ${p.titleLines}; ` +
       `head ink y ${p.head.from}–${p.head.to} (covers begin ${p.head.limit})${p.head.clear ? '' : ' RUNS INTO COVERS'}${p.head.overflowRight ? ' OVERFLOWS RIGHT' : ''}; ` +
+      (p.labels ? `labels ${p.labels.inked}/${p.labels.of} inked, end y ${p.labels.to}${p.labels.between ? ' INK BETWEEN COLUMNS' : ''}; ` : '') +
       `foot ink y ${p.foot.from}–${p.foot.to} (margin ${p.foot.limit})${p.foot.clear ? '' : ' PAST MARGIN'}; cache ${p.cache}`,
     );
   }

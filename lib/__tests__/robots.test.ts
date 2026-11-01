@@ -30,6 +30,7 @@ describe('what crawlers may fetch (ROADMAP 2.18n, 6.107)', () => {
     for (const agent of ['Pinterestbot', 'Pinterest/0.2 (+https://www.pinterest.com/bot.html)', 'Twitterbot']) {
       expect(mayFetch(rules, agent, '/book/OL893414W/pin.jpg')).toBe(true);
       expect(mayFetch(rules, agent, '/collections/sf-masterworks/pin.jpg')).toBe(true);
+      expect(mayFetch(rules, agent, '/book/OL893414W/compare.jpg?covers=ol:1,ol:2,ol:3')).toBe(true);
     }
     for (const bot of [...TRAINING_CRAWLERS, ...TOOL_CRAWLERS]) expect(mayFetch(rules, bot, '/book/OL893414W/pin.jpg')).toBe(false);
   });
