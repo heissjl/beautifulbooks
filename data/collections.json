@@ -45653,6 +45653,7 @@
       "slug": "sf-masterworks-2022-yellows",
       "title": "SF Masterworks — the 2022 yellows",
       "kind": "series",
+      "group": "series",
       "intro": "In 2022 Gollancz picked 21 of its SF Masterworks for a series it called the Best of the Masterworks and dressed them in yellow, the colour of its jackets since 1929: author and title in black capitals, a black-framed drawing by Autun Purser, the SF roundel at the foot. Two of them, Dune and The Hitchhiker’s Guide to the Galaxy, came out in the series as hardbacks, and the hardbacks are red; where ISFDB names the artist, the name is under the tile.",
       "published": false,
       "publishers": [
