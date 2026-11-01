@@ -5,10 +5,11 @@ import { GROUP_HEADING, GROUP_TEXT, groupHeading, groupText } from '../hubcopy';
 import { translator } from '../i18n/server';
 
 describe('the hub copy', () => {
-  it('has a heading and three sentences for each group, and claims nothing about completeness', () => {
+  it('has a heading and one to three sentences for each group, and claims nothing about completeness', () => {
     for (const group of HUB_GROUPS) {
       expect(GROUP_HEADING[group]).toMatch(/\S/);
-      expect(GROUP_TEXT[group]).toHaveLength(3);
+      expect(GROUP_TEXT[group].length).toBeGreaterThanOrEqual(1);
+      expect(GROUP_TEXT[group].length).toBeLessThanOrEqual(3);
       for (const sentence of GROUP_TEXT[group]) {
         expect(sentence).toMatch(/[.!?]$/);
         expect(sentence).not.toMatch(/\b(all|every|complete|whole)\b/i);

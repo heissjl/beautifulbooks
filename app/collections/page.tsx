@@ -58,6 +58,7 @@ export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { loc
         .slice(0, 3)
     : [];
 
+  const groups = groupCollections(collections);
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader search={<HeaderSearch />} />
@@ -67,7 +68,21 @@ export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { loc
           {t('Books gathered around a theme or a series, one cover each. Every cover leads to the wall of the others we found.')}
         </p>
         {wallsEnabled() && <WallsInvite className="mt-3">{t('Create your own collection')}</WallsInvite>}
-        {groupCollections(collections).map(({ group, collections: inGroup }) => (
+        {/*
+          Julian, 2026-11-01: „im hub sollte es oben aber links zu den
+          kategorien geben". A line of words under the intro, like the
+          language tabs of a book page (6.84: words, no pills, no arrows),
+          each jumping to its section; the count small and grey after it.
+        */}
+        <nav aria-label={t('Groups of collections')} className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-base">
+          {groups.map(({ group, collections: inGroup }) => (
+            <a key={group} href={`#${group}`} className="text-ink underline decoration-line underline-offset-4 hover:text-accent hover:decoration-accent">
+              {groupHeading(group, t)} <span className="text-sm text-ink-3">{inGroup.length}</span>
+            </a>
+          ))}
+          <a href="#register-heading" className="text-ink underline decoration-line underline-offset-4 hover:text-accent hover:decoration-accent">{t('As a list')}</a>
+        </nav>
+        {groups.map(({ group, collections: inGroup }) => (
           <section key={group} id={group} className="mt-14 scroll-mt-24 sm:mt-16" aria-labelledby={`group-${group}`}>
             <h2 id={`group-${group}`} className="text-2xl text-ink sm:text-3xl">{groupHeading(group, t)}</h2>
             <p className="mt-3 max-w-2xl text-base text-ink-2">{groupText(group, t).join(' ')}</p>
