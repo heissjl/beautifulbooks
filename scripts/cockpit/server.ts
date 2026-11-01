@@ -15,15 +15,21 @@
  *   - production is asked once at start and then only on the button, at
  *     most once a minute (Vercel's bot mitigation, CLAUDE.md);
  *   - screenshots only of pages the site map allows (never /book/…, whose
- *     cold render spends the Google quota) and only from a running dev server.
+ *     cold render spends the Google quota) and only from a running dev server;
+ *   - the pin queue (pins.ts) is the one file the page may write, and only
+ *     through `applyEdit`: text, remark and Julian's three states; a pin
+ *     picture is fetched on a click only — from production at most one every
+ *     five seconds, or from the local dev server — and kept in the git-ignored
+ *     `docs/cockpit/pins/`, so looking at the view asks nobody.
  */
 import { spawn, type ChildProcess } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, watch } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync, watch, writeFileSync } from 'node:fs';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { connect } from 'node:net';
 import path from 'node:path';
 import type { CockpitData } from './collect';
 import { hostAllowed, makeToken, originAllowed, shotFileName, tokenMatches } from './guard';
+import { applyEdit, pictureFile, pictureUrl, QUEUE_FILE, readQueue, writeQueue, type Edit, type PinStatus } from './pins';
 import { SERVER_SLOT } from './render';
 import type { Tool } from './tools';
 
@@ -75,6 +81,18 @@ export async function startServer(deps: ServerDeps, first: { data: CockpitData; 
   let lastRemote = Date.now();
   const procs = new Map<string, Proc>();
   const shotsDir = path.join(deps.root, 'docs', 'cockpit', 'shots');
+  const pinsDir = path.join(deps.root, 'docs', 'cockpit', 'pins');
+  let lastProdPicture = 0;
+  const today = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Berlin' }).format(new Date());
+  const pictures = () => {
+    const out: Record<string, { prod?: string; dev?: string }> = {};
+    for (const p of readQueue(deps.root)?.pins ?? []) for (const source of ['prod', 'dev'] as const) {
+      const name = pictureFile(p.id, source);
+      const file = name && path.join(pinsDir, name);
+      if (file && existsSync(file)) (out[p.id] ??= {})[source] = statSync(file).mtime.toISOString();
+    }
+    return out;
+  };
 
   const send = (res: ServerResponse, status: number, value: unknown) => {
     res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
@@ -107,6 +125,14 @@ export async function startServer(deps: ServerDeps, first: { data: CockpitData; 
       res.end(readFileSync(file));
       return;
     }
+    if (url.pathname.startsWith('/pin-pictures/') && req.method === 'GET') {
+      const name = path.basename(url.pathname);
+      const file = path.join(pinsDir, name);
+      if (!tokenMatches(url.searchParams.get('t'), token) || !/^[\w-]+-(prod|dev)\.jpg$/.test(name) || !existsSync(file)) { res.writeHead(404); res.end(); return; }
+      res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'no-store' });
+      res.end(readFileSync(file));
+      return;
+    }
     if (!url.pathname.startsWith('/api/')) { res.writeHead(404); res.end(); return; }
     if (!tokenMatches(req.headers['x-cockpit-token'] as string | undefined, token)) return send(res, 403, { error: 'Token fehlt' });
 
@@ -119,6 +145,12 @@ export async function startServer(deps: ServerDeps, first: { data: CockpitData; 
       const name = url.searchParams.get('name') ?? '';
       const value = deps.readLocalEnv()?.get(name);
       return value === undefined ? send(res, 404, { error: `${name} steht nicht in der .env.local des Hauptordners` }) : send(res, 200, { value });
+    }
+    if (url.pathname === '/api/pins' && req.method === 'GET') {
+      try {
+        const queue = readQueue(deps.root);
+        return queue ? send(res, 200, { queue, pictures: pictures(), file: QUEUE_FILE }) : send(res, 404, { error: `${QUEUE_FILE} fehlt` });
+      } catch (err) { return send(res, 500, { error: (err as Error).message }); }
     }
     if (req.method !== 'POST') return send(res, 405, { error: 'POST' });
     const input = await body(req);
@@ -142,6 +174,35 @@ export async function startServer(deps: ServerDeps, first: { data: CockpitData; 
       child.on('error', err => { p.running = false; p.output += `\n${err.message}`; });
       procs.set(t.id, p);
       return send(res, 200, { ok: true });
+    }
+    if (url.pathname === '/api/pins/save') {
+      const queue = readQueue(deps.root);
+      if (!queue) return send(res, 404, { error: `${QUEUE_FILE} fehlt` });
+      const str = (v: unknown) => (typeof v === 'string' ? v : undefined);
+      const edit: Edit = { id: String(input.id ?? ''), title: str(input.title), description: str(input.description), remark: str(input.remark), status: str(input.status) as PinStatus | undefined };
+      const r = applyEdit(queue, edit, today());
+      if ('error' in r) return send(res, 400, { error: r.error });
+      writeQueue(deps.root, r.queue);
+      return send(res, 200, { pin: r.queue.pins.find(p => p.id === edit.id) });
+    }
+    if (url.pathname === '/api/pins/picture') {
+      const source = input.source === 'dev' ? 'dev' : 'prod';
+      const pin = readQueue(deps.root)?.pins.find(p => p.id === input.id);
+      const name = pin && pictureFile(pin.id, source);
+      const from = pin && pictureUrl(pin, source);
+      if (!pin || !name || !from) return send(res, 400, { error: 'kein Pin mit einer Bild-Adresse der Seite' });
+      if (source === 'prod') {
+        if (Date.now() - lastProdPicture < 5000) return send(res, 429, { error: 'Produktion höchstens ein Bild alle fünf Sekunden' });
+        lastProdPicture = Date.now();
+      } else if (!(await probePorts([3000]))[3000]) return send(res, 503, { error: 'Der Dev-Server läuft nicht auf :3000' });
+      try {
+        const r = await fetch(from, { signal: AbortSignal.timeout(60_000), headers: { 'user-agent': 'bb-cockpit' } });
+        const type = r.headers.get('content-type') ?? '';
+        if (!r.ok || !type.startsWith('image/')) return send(res, 502, { error: `${r.status} ${type}` });
+        mkdirSync(pinsDir, { recursive: true });
+        writeFileSync(path.join(pinsDir, name), Buffer.from(await r.arrayBuffer()));
+        return send(res, 200, { url: `/pin-pictures/${name}`, covers: r.headers.get('x-pin-covers') });
+      } catch (err) { return send(res, 504, { error: (err as Error).message }); }
     }
     if (url.pathname === '/api/stop') {
       const p = procs.get(String(input.id));
@@ -181,7 +242,7 @@ export async function startServer(deps: ServerDeps, first: { data: CockpitData; 
   let timer: ReturnType<typeof setTimeout> | undefined;
   const ignored = (full: string) => {
     const rel = path.relative(deps.root, full);
-    return rel.startsWith(path.join('docs', 'cockpit')) || rel === path.join('docs', 'worktrees.md') || /\.tmp$|node_modules|\.next|cache\.json$/.test(rel);
+    return rel.startsWith(path.join('docs', 'cockpit')) || rel === path.join('docs', 'worktrees.md') || rel.startsWith(path.join('docs', 'pins')) || /\.tmp$|node_modules|\.next|cache\.json$/.test(rel);
   };
   const onChange = (base: string) => (_e: string, file: string | Buffer | null) => {
     if (ignored(path.join(base, String(file ?? '')))) return;

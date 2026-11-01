@@ -18,6 +18,7 @@ import { envChecks, envNamesInCode, isSecret, type VercelVar } from './env';
 import { fileAtProduction, git, itemsInSubject, lastProductionChange, mainRoot, parseWorktrees, productionHead, readBranches, workByItem, PRODUCTION } from './git';
 import { deriveHints, type Hint } from './hints';
 import { collectIdentity, type IdentityData } from './identity';
+import { problems, readQueue, QUEUE_FILE, type PinQueue } from './pins';
 import { renderBody } from './markdown';
 import type { ProductionSnapshot } from './production';
 import { openWaits, parseRoadmap, statusOf, STATUSES, THEMES, type Assessment, type NextStep, type Status } from './roadmap';
@@ -83,6 +84,8 @@ export interface CockpitData {
   };
   hints: Hint[];
   identity: IdentityData;
+  /** The pin queue as it stood at generation (pins.ts); the server hands the live file to the view. */
+  pins: { file: string; queue: PinQueue | null; error: string | null; open: number };
   /** The backup folder beside the main checkout (2.11): newest complete copy and its age. */
   backup: BackupStatus;
 }
@@ -334,6 +337,7 @@ export function collect(input: CollectInput): CockpitData {
     },
     hints: [],
     identity: collectIdentity(root),
+    pins: collectPins(root),
     backup,
   };
   data.hints = deriveHints({
@@ -352,4 +356,14 @@ export function collect(input: CollectInput): CockpitData {
     },
   });
   return data;
+}
+
+function collectPins(root: string): CockpitData['pins'] {
+  try {
+    const queue = readQueue(root);
+    const open = queue ? queue.pins.filter(p => p.status === 'entwurf' || (p.status === 'ja' && problems(p).length > 0)).length : 0;
+    return { file: QUEUE_FILE, queue, error: null, open };
+  } catch (err) {
+    return { file: QUEUE_FILE, queue: null, error: (err as Error).message, open: 0 };
+  }
 }

@@ -38,6 +38,7 @@ export function renderPage(data: CockpitData, assets = { css: readFileSync(path.
     <div class="brand">${SITE_NAME}<small>Cockpit · erzeugt, nie von Hand</small></div>
     <button data-v="home">Übersicht</button>
     <button data-v="board">Brett <span class="count" id="c-board"></span></button>
+    <button data-v="pins">Pins <span class="count" id="c-pins">${data.pins?.open || ""}</span></button>
     <button data-v="sync">Sammlungen &amp; Sync <span class="count" id="c-sync"></span></button>
     <button data-v="tools">Werkzeuge <span class="count" id="c-tools"></span></button>
     <button data-v="services">Dienste &amp; Einstellungen</button>

@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
 import { asJpeg, DISPLAY, loadCovers, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
+import { mosaicGround } from '@/lib/inspiration/mosaicground';
 import { PIN_SIZE, pinCount, pinLayout, pinTitleLines, pinTitleSize, type PinCount, type Rect } from '@/lib/pinlayout';
 import { SITE_URL } from '@/lib/seo';
 
@@ -18,6 +19,13 @@ import { SITE_URL } from '@/lib/seo';
  *
  * The address at the bottom is the way back from a picture that is saved
  * without its link. Never localhost or a preview host: the picture travels.
+ *
+ * The ground is the share pictures' mosaic (Julian, 2026-10-31: „die
+ * nächsten entwürfe sollten den mosaik hintergrund haben"): the field of tiny
+ * covers cut from the loading pictures (`lib/inspiration/mosaicground.ts`),
+ * no cover requested for it, seeded by the pin so one pin always gets the
+ * same field, dimmed and darker still behind the title and the foot so the
+ * type reads; the covers stand on it with a shadow, as on the poster.
  */
 
 /** The address as the pin shows it (Julian's spelling for pictures). */
@@ -55,6 +63,25 @@ export interface PinInput {
   covers: readonly PinCover[];
   /** Named beside the credits, e.g. "ISFDB"; absent when no cover carries one. */
   creditSource?: string;
+  /** What seeds the mosaic ground: the work's id or the collection's slug. */
+  seed: string;
+}
+
+/** How dark the mosaic is where no word stands (the poster's board picture uses half). */
+const GROUND_BASE = 0.55;
+/** How dark right behind the title and the foot. */
+const GROUND_WORDS = 0.86;
+
+/** The mosaic ground as a JPEG data URL for the generator: smaller to draw than the PNG it comes as. */
+async function ground(seed: string, L: { width: number; height: number; head: Rect; foot: Rect }): Promise<string | null> {
+  try {
+    const png = await mosaicGround(L.width, L.height, `pin:${seed}`, [{ ...L.head, dark: GROUND_WORDS }, { ...L.foot, dark: GROUND_WORDS }], [], GROUND_BASE);
+    const jpeg = await sharp(png).jpeg({ quality: 82 }).toBuffer();
+    return `data:image/jpeg;base64,${jpeg.toString('base64')}`;
+  } catch {
+    // No loading pictures on this instance: the plain ground, as before.
+    return null;
+  }
 }
 
 /** The covers in the wall's order, each cut to its tile: every candidate asked at once (see `BUDGET_MS`), a credit staying with its cover. */
@@ -108,16 +135,21 @@ export async function pinPicture(input: PinInput): Promise<Response> {
   // Every tile filled — or the wall itself has fewer than nine and six came.
   const whole = loaded.length >= 9 || (loaded.length >= 6 && input.covers.length < 9);
   const tiles = loaded.slice(0, count || 6);
+  const field = await ground(input.seed, L);
 
   const picture = await asJpeg(new ImageResponse(
     (
       <div style={{ position: 'relative', width: L.width, height: L.height, display: 'flex', background: OG.bg }}>
+        {field && (
+          // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
+          <img src={field} alt="" width={L.width} height={L.height} style={{ position: 'absolute', left: 0, top: 0 }} />
+        )}
         <div style={{ position: 'absolute', left: L.head.x, top: L.head.y, width: L.head.width, display: 'flex', flexDirection: 'column' }}>
           <div style={{ ...DISPLAY, display: 'flex', fontSize: titleSize, lineHeight: 1.1, color: OG.ink }}>{input.title}</div>
           {input.line && <div style={{ ...TEXT, display: 'flex', fontSize: L.type.line, lineHeight: 1.3, marginTop: 12, color: OG.ink2 }}>{input.line}</div>}
         </div>
         {L.tiles.map((r, i) => (
-          <div key={i} style={{ position: 'absolute', left: r.x, top: r.y, width: r.width, height: r.height, display: 'flex', background: '#26221f', borderRadius: 6, overflow: 'hidden' }}>
+          <div key={i} style={{ position: 'absolute', left: r.x, top: r.y, width: r.width, height: r.height, display: 'flex', background: '#26221f', borderRadius: 6, overflow: 'hidden', boxShadow: field ? '0 10px 28px rgba(0, 0, 0, 0.62)' : undefined }}>
             {tiles[i] && (
               // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
               <img src={tiles[i].src} alt="" width={r.width} height={r.height} />
