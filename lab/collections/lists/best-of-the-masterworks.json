@@ -1,0 +1,250 @@
+[
+ {
+  "no": null,
+  "title": "I Am Legend",
+  "isbn": "9781399607735",
+  "author": "Richard Matheson",
+  "published": "2022-10-27",
+  "format": "tp",
+  "isfdbRecord": "916990",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Do Androids Dream of Electric Sheep?",
+  "isbn": "9781399607742",
+  "author": "Philip K. Dick",
+  "published": "2022-10-27",
+  "format": "tp",
+  "isfdbRecord": "917004",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "The Female Man",
+  "isbn": "9781399607759",
+  "author": "Joanna Russ",
+  "published": "2022-10-27",
+  "format": "tp",
+  "isfdbRecord": "916995",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Flowers for Algernon",
+  "isbn": "9781399607766",
+  "author": "Daniel Keyes",
+  "published": "2022-10-27",
+  "format": "tp",
+  "isfdbRecord": "916994",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Dune",
+  "isbn": "9781399611176",
+  "author": "Frank Herbert",
+  "published": "2022-10-27",
+  "format": "hc",
+  "isfdbRecord": "917256",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Neuromancer",
+  "isbn": "9781399607773",
+  "author": "William Gibson",
+  "published": "2022-11-24",
+  "format": "tp",
+  "isfdbRecord": "920225",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "The Forever War",
+  "isbn": "9781399607780",
+  "author": "Joe Haldeman",
+  "published": "2022-11-24",
+  "format": "tp",
+  "isfdbRecord": "920421",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "The Word for World Is Forest",
+  "isbn": "9781399607797",
+  "author": "Ursula K. Le Guin",
+  "published": "2022-11-24",
+  "format": "tp",
+  "isfdbRecord": "920859",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Gateway",
+  "isbn": "9781399607803",
+  "author": "Frederik Pohl",
+  "published": "2022-11-24",
+  "format": "tp",
+  "isfdbRecord": "920708",
+  "coverArtists": [
+   "Autun Purser"
+  ],
+  "work": "OL60924W"
+ },
+ {
+  "no": null,
+  "title": "Revelation Space",
+  "isbn": "9781399607810",
+  "author": "Alastair Reynolds",
+  "published": "2022-12-08",
+  "format": "tp",
+  "isfdbRecord": "921800",
+  "coverArtists": [
+   "Autun Purser"
+  ],
+  "work": "OL5724837W"
+ },
+ {
+  "no": null,
+  "title": "Grass",
+  "isbn": "9781399607827",
+  "author": "Sheri S. Tepper",
+  "published": "2022-12-08",
+  "format": "tp",
+  "isfdbRecord": "921775",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "The Man Who Fell to Earth",
+  "isbn": "9781399607834",
+  "author": "Walter Tevis",
+  "published": "2022-12-08",
+  "format": "tp",
+  "isfdbRecord": "921945",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Rendezvous with Rama",
+  "isbn": "9781399617178",
+  "author": "Arthur C. Clarke",
+  "published": "2023-07-20",
+  "format": "tp",
+  "isfdbRecord": "956958",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Sarah Canary",
+  "isbn": "9781399617185",
+  "author": "Karen Joy Fowler",
+  "published": "2023-07-20",
+  "format": "tp",
+  "isfdbRecord": "956962",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "Roadside Picnic",
+  "isbn": "9781399617208",
+  "author": "Arkady & Boris Strugatsky",
+  "published": "2023-07-20",
+  "format": "tp",
+  "isfdbRecord": "956941",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ },
+ {
+  "no": null,
+  "title": "To Say Nothing of the Dog",
+  "isbn": "9781399617192",
+  "author": "Connie Willis",
+  "published": "2023-08-24",
+  "format": "tp",
+  "isfdbRecord": "962955",
+  "coverArtists": []
+ },
+ {
+  "no": null,
+  "title": "The Body Snatchers",
+  "isbn": "9781399617215",
+  "author": "Jack Finney",
+  "published": "2023-08-24",
+  "format": "tp",
+  "isfdbRecord": "962950",
+  "coverArtists": [],
+  "work": "OL19332770W",
+  "wallTitle": "The Body Snatchers"
+ },
+ {
+  "no": null,
+  "title": "The Sirens of Titan",
+  "isbn": "9781399617222",
+  "author": "Kurt Vonnegut",
+  "published": "2023-08-24",
+  "format": "tp",
+  "isfdbRecord": "962960",
+  "coverArtists": []
+ },
+ {
+  "no": null,
+  "title": "The Island of Doctor Moreau",
+  "isbn": "9781399617239",
+  "author": "H. G. Wells",
+  "published": "2023-08-24",
+  "format": "tp",
+  "isfdbRecord": "962939",
+  "coverArtists": [],
+  "work": "OL381550W",
+  "wallTitle": "The Island of Doctor Moreau"
+ },
+ {
+  "no": null,
+  "title": "The Hitchhiker's Guide to the Galaxy",
+  "isbn": "9781399617246",
+  "author": "Douglas Adams",
+  "published": "2023-08-24",
+  "format": "hc",
+  "isfdbRecord": "962184",
+  "coverArtists": []
+ },
+ {
+  "no": null,
+  "title": "Synners",
+  "isbn": "9781399617253",
+  "author": "Pat Cadigan",
+  "published": "2023-08-24",
+  "format": "tp",
+  "isfdbRecord": "963417",
+  "coverArtists": [
+   "Autun Purser"
+  ]
+ }
+]
