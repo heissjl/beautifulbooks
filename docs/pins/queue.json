@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-31",
+  "updated": "2026-11-02",
   "pins": [
     {
       "id": "collection-sf-masterworks",
@@ -134,9 +134,20 @@
       "note": "Liegt ausgefüllt, aber ohne Termin unter „Pin drafts“ in Pinterest (2026-10-31); nach Ja dort nur noch Termin setzen."
     },
     {
-      "id": "decades-OL81613W",
+      "id": "general-hugo-award-novel",
       "status": "entwurf",
       "slot": "2026-11-07 12:00",
+      "board": "Science fiction book covers",
+      "picture": "https://buyitscovers.com/collections/hugo-award-novel/pin.jpg",
+      "title": "Science fiction book covers – 74 Hugo Award winning novels",
+      "description": "Science fiction book covers of 74 Hugo Award winning novels in year order, from The Demolished Man to Dune, Neuromancer and N. K. Jemisin’s Broken Earth books. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/hugo-award-novel?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „science fiction book covers“."
+    },
+    {
+      "id": "decades-OL81613W",
+      "status": "entwurf",
+      "slot": "2026-11-07 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL81613W/pin.jpg",
       "title": "It by Stephen King – book covers by decade, 1980s to 2020s",
@@ -145,9 +156,20 @@
       "note": "Aus der ersten Liste vom 2026-10-31, noch nicht angelegt."
     },
     {
+      "id": "general-penguin-clothbound-classics",
+      "status": "entwurf",
+      "slot": "2026-11-08 12:00",
+      "board": "Classic book covers",
+      "picture": "https://buyitscovers.com/collections/penguin-clothbound-classics/pin.jpg",
+      "title": "Classic book covers – Penguin Clothbound Classics by Coralie Bickford-Smith",
+      "description": "63 classic book covers from Penguin’s clothbound series, designed by Coralie Bickford-Smith from 2008: a pattern taken from a motif of the book, stamped in foil on coloured cloth. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/penguin-clothbound-classics?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „classic book covers“, „classic book cover design“."
+    },
+    {
       "id": "decades-OL49488W",
       "status": "entwurf",
-      "slot": "2026-11-07 19:00",
+      "slot": "2026-11-08 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL49488W/pin.jpg",
       "title": "Ender's Game by Orson Scott Card – book covers by decade, 1980s to 2020s",
@@ -155,9 +177,20 @@
       "link": "https://buyitscovers.com/book/OL49488W/decades?via=pinterest"
     },
     {
+      "id": "general-tom-adams-christie",
+      "status": "entwurf",
+      "slot": "2026-11-09 12:00",
+      "board": "Vintage paperback covers",
+      "picture": "https://buyitscovers.com/collections/tom-adams-christie/pin.jpg",
+      "title": "Vintage paperback covers – Agatha Christie painted by Tom Adams",
+      "description": "42 Agatha Christie book covers that Tom Adams painted for Fontana paperbacks between 1963 and 1979: still lifes of the objects in a case, often with a clue hidden among them. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/tom-adams-christie?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „vintage paperback covers“, „agatha christie book covers vintage“."
+    },
+    {
       "id": "decades-OL66554W",
       "status": "entwurf",
-      "slot": "2026-11-08 12:00",
+      "slot": "2026-11-09 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL66554W/pin.jpg",
       "title": "Pride and Prejudice by Jane Austen – book covers by decade, 1910s to 2020s",
@@ -166,9 +199,20 @@
       "note": "Prüfen: die Seite zeigt zusätzlich eine Gruppe „1810s“ — zwei Cover von Nelson Doubleday und Fine Editions Press, also Nachdrucke mit dem Jahr der Erstausgabe im Katalog. Titel und Text nennen deshalb 1910s als Anfang; wer auf der Seite nach unten scrollt, sieht trotzdem „1810s“. Nehmen oder bis zur Korrektur zurückstellen."
     },
     {
+      "id": "general-penguin-great-ideas",
+      "status": "entwurf",
+      "slot": "2026-11-10 12:00",
+      "board": "Book cover design",
+      "picture": "https://buyitscovers.com/collections/penguin-great-ideas/pin.jpg",
+      "title": "Typography book cover design – Penguin Great Ideas",
+      "description": "89 book covers from Penguin’s Great Ideas, from 2004: cream covers set only in type, each in the manner of the time the text was written, by David Pearson, Phil Baines, Catherine Dixon and Alistair Hall. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/penguin-great-ideas?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „typography book cover design“, „book cover design“."
+    },
+    {
       "id": "decades-OL3335245W",
       "status": "entwurf",
-      "slot": "2026-11-08 19:00",
+      "slot": "2026-11-10 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL3335245W/pin.jpg",
       "title": "The Catcher in the Rye by J. D. Salinger – book covers by decade, 1950s to 2010s",
@@ -177,9 +221,20 @@
       "note": "Prüfen: die Seite beginnt mit „1940s“ (ein Cover, 39 Drucke von 26 Verlagen — das Buch erschien 1951, die Jahre im Katalog sind falsch). Titel und Text sagen 1950s."
     },
     {
+      "id": "general-gene-szafran",
+      "status": "entwurf",
+      "slot": "2026-11-11 12:00",
+      "board": "Science fiction book covers",
+      "picture": "https://buyitscovers.com/collections/gene-szafran/pin.jpg",
+      "title": "1970s book covers – science fiction paperback art by Gene Szafran",
+      "description": "88 science fiction paperback covers painted by Gene Szafran in the early 1970s for Signet, Ballantine, Bantam and Lancer: airbrushed figures in rainbow halos, mandalas and melting colour. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/gene-szafran?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „1970s book covers“, „vintage sci fi paperback“."
+    },
+    {
       "id": "decades-OL483391W",
       "status": "entwurf",
-      "slot": "2026-11-09 12:00",
+      "slot": "2026-11-11 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL483391W/pin.jpg",
       "title": "Charlotte's Web by E. B. White – book covers by decade, 1950s to 2010s",
@@ -188,9 +243,20 @@
       "note": "Garth Williams steht auf den Covern des Bildes („Pictures by Garth Williams“); die Seite selbst nennt ihn nicht."
     },
     {
+      "id": "general-ballantine-adult-fantasy",
+      "status": "entwurf",
+      "slot": "2026-11-12 12:00",
+      "board": "Fantasy book covers",
+      "picture": "https://buyitscovers.com/collections/ballantine-adult-fantasy/pin.jpg",
+      "title": "Fantasy book cover art – the Ballantine Adult Fantasy paperbacks, 1969 to 1974",
+      "description": "44 fantasy book covers from Ballantine’s Adult Fantasy series, edited by Lin Carter from 1969 to 1974, many of them painted by Gervasio Gallardo. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/ballantine-adult-fantasy?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „fantasy book cover art“."
+    },
+    {
       "id": "decades-OL455327W",
       "status": "entwurf",
-      "slot": "2026-11-09 19:00",
+      "slot": "2026-11-12 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL455327W/pin.jpg",
       "title": "Lord of the Flies by William Golding – book covers by decade, 1950s to 2020s",
@@ -198,9 +264,20 @@
       "link": "https://buyitscovers.com/book/OL455327W/decades?via=pinterest"
     },
     {
+      "id": "general-penguin-classics-the-black-band-years",
+      "status": "entwurf",
+      "slot": "2026-11-13 12:00",
+      "board": "Classic book covers",
+      "picture": "https://buyitscovers.com/collections/penguin-classics-the-black-band-years/pin.jpg",
+      "title": "Classic book covers – Penguin Classics with period paintings, 1980s to 2000s",
+      "description": "98 classic book covers from Penguin Classics between the mid-1980s and the early 2000s: a cream frame, a black panel for author and title, and a period picture chosen for each book. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/penguin-classics-the-black-band-years?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „vintage penguin paperbacks“, „classic book covers vintage“. Das Bild brauchte auf dem Dev-Server über 50 s; vor dem Hochladen einmal von der Produktion holen, die Funktion hat 30 s."
+    },
+    {
       "id": "decades-OL468431W",
       "status": "entwurf",
-      "slot": "2026-11-10 12:00",
+      "slot": "2026-11-13 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL468431W/pin.jpg",
       "title": "The Great Gatsby by F. Scott Fitzgerald – book covers by decade, 1920s to 2020s",
@@ -209,9 +286,20 @@
       "note": "Bild: zeigt sechs Cover statt neun (zwei Reihen, oben und unten leer). Brauchbar, aber schwächer als die anderen."
     },
     {
+      "id": "general-reihe-hanser-covers-by-heinz-edelmann",
+      "status": "entwurf",
+      "slot": "2026-11-14 12:00",
+      "board": "Book cover design",
+      "picture": "https://buyitscovers.com/collections/reihe-hanser-covers-by-heinz-edelmann/pin.jpg",
+      "title": "1960s and 1970s book cover design – Heinz Edelmann’s yellow Reihe Hanser",
+      "description": "102 yellow book covers of Reihe Hanser, Carl Hanser’s paperback series begun in 1967, which Heinz Edelmann designed until the mid-1970s. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/reihe-hanser-covers-by-heinz-edelmann?via=pinterest",
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „1970s book cover design“, „book cover illustration“. Das Bild brauchte auf dem Dev-Server über 50 s; vor dem Hochladen einmal von der Produktion holen, die Funktion hat 30 s."
+    },
+    {
       "id": "decades-OL46125W",
       "status": "entwurf",
-      "slot": "2026-11-10 19:00",
+      "slot": "2026-11-14 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL46125W/pin.jpg",
       "title": "Foundation by Isaac Asimov – book covers by decade, 1950s to 2010s",
@@ -221,7 +309,7 @@
     {
       "id": "decades-OL3140822W",
       "status": "entwurf",
-      "slot": "2026-11-11 12:00",
+      "slot": "2026-11-15 12:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL3140822W/pin.jpg",
       "title": "To Kill a Mockingbird by Harper Lee – book covers by decade, 1960s to 2020s",
@@ -231,7 +319,7 @@
     {
       "id": "decades-OL81633W",
       "status": "entwurf",
-      "slot": "2026-11-11 19:00",
+      "slot": "2026-11-15 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL81633W/pin.jpg",
       "title": "The Shining by Stephen King – book covers by decade, 1970s to 2020s",
@@ -241,7 +329,7 @@
     {
       "id": "decades-OL498556W",
       "status": "entwurf",
-      "slot": "2026-11-12 12:00",
+      "slot": "2026-11-16 12:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL498556W/pin.jpg",
       "title": "Metamorphosis by Franz Kafka – book covers by decade, 1940s to 2020s",
