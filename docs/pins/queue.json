@@ -1,27 +1,27 @@
 {
-  "updated": "2026-10-31",
+  "updated": "2026-11-02",
   "pins": [
     {
       "id": "collection-sf-masterworks",
-      "status": "geplant",
+      "status": "veröffentlicht",
       "slot": "2026-11-01 12:00",
       "board": "SF Masterworks",
       "picture": "https://buyitscovers.com/collections/sf-masterworks/pin.jpg",
       "title": "SF Masterworks – 75 science fiction book covers",
       "description": "75 science fiction book covers on one wall: The Forever War, I am Legend, Cities in Flight and more, with cover art by Chris Moore, Jim Thiesen and John Harris and others where ISFDB names the artist. Each cover opens the other editions of that book, with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/collections/sf-masterworks?via=pinterest",
-      "decided": "2026-10-31"
+      "decided": "2026-11-02"
     },
     {
       "id": "collection-feminist-press",
-      "status": "geplant",
+      "status": "veröffentlicht",
       "slot": "2026-11-02 12:00",
       "board": "Feminist Press",
       "picture": "https://buyitscovers.com/collections/feminist-press/pin.jpg",
       "title": "Feminist Press – 75 book covers from its list",
       "description": "75 book covers from its list on one wall: Earthsong, What Did Miss Darrington See?, Native Tongue and more. Each cover opens the other editions of that book, with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/collections/feminist-press?via=pinterest",
-      "decided": "2026-10-31"
+      "decided": "2026-11-02"
     },
     {
       "id": "collection-tiptree-award",
@@ -43,18 +43,19 @@
       "title": "Harry Potter and the Philosopher's Stone by J. K. Rowling – book covers by decade, 1990s to 2020s",
       "description": "185 book covers of Harry Potter and the Philosopher's Stone by J. K. Rowling, one group per decade from the 1990s to the 2020s, counted from 254 printings with a known year on Open Library. Publishers include Bloomsbury, Salamandra and Media Rodzina; each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL82563W/decades?via=pinterest",
+      "note": "Am 2026-11-02 abends nicht sichtbar: nicht mehr unter „Scheduled Pins“, nicht unter „Created“, aber die Pinnwand zählt 2 Pins und zeigt nur Animal Farm. Grund unbekannt, keine Benachrichtigung dazu.",
       "decided": "2026-10-31"
     },
     {
       "id": "decades-OL1168007W",
-      "status": "geplant",
+      "status": "veröffentlicht",
       "slot": "2026-11-02 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL1168007W/pin.jpg",
       "title": "Animal Farm by George Orwell – book covers by decade, 1940s to 2020s",
       "description": "156 book covers of Animal Farm by George Orwell, one group per decade from the 1940s to the 2020s, counted from 167 printings with a known year on Open Library. Publishers include Penguin, Destino and Harcourt, Brace and Co.; each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL1168007W/decades?via=pinterest",
-      "decided": "2026-10-31"
+      "decided": "2026-11-02"
     },
     {
       "id": "decades-OL1168083W",
@@ -124,14 +125,15 @@
     },
     {
       "id": "decades-OL27513W",
-      "status": "entwurf",
+      "status": "geplant",
       "slot": "2026-11-06 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL27513W/pin.jpg",
       "title": "The Fellowship of the Ring by J.R.R. Tolkien – book covers by decade, 1950s to 2020s",
       "description": "152 book covers of The Fellowship of the Ring by J.R.R. Tolkien, one group per decade from the 1950s to the 2020s, counted from 192 printings with a known year on Open Library. Publishers include HarperCollins, Houghton Mifflin and Ballantine Books; each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL27513W/decades?via=pinterest",
-      "note": "Liegt ausgefüllt, aber ohne Termin unter „Pin drafts“ in Pinterest (2026-10-31); nach Ja dort nur noch Termin setzen."
+      "note": "Am 2026-11-02 mit dem Mosaik-Bild neu angelegt. Der alte Entwurf ohne Mosaik liegt noch unter „Pin drafts“, ohne Termin, und verfällt von selbst.",
+      "decided": "2026-11-02"
     },
     {
       "id": "decades-OL81613W",
@@ -146,13 +148,14 @@
     },
     {
       "id": "decades-OL49488W",
-      "status": "entwurf",
+      "status": "geplant",
       "slot": "2026-11-07 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL49488W/pin.jpg",
       "title": "Ender's Game by Orson Scott Card – book covers by decade, 1980s to 2020s",
-      "description": "49 book covers of Ender's Game by Orson Scott Card, one group per decade from the 1980s to the 2020s, counted from 63 printings with a known year on Open Library; the 2010s alone hold 18 covers in 10 languages. Publishers include Tor, Orbit, Starscape and B de Books. Each cover opens its edition with publisher, year and ISBN.",
-      "link": "https://buyitscovers.com/book/OL49488W/decades?via=pinterest"
+      "description": "A selection of 49 book covers of Ender's Game by Orson Scott Card, one group per decade from the 1980s to the 2020s, counted from 63 printings with a known year on Open Library; the 2010s alone hold 18 covers in 10 languages. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL49488W/decades?via=pinterest",
+      "decided": "2026-11-02"
     },
     {
       "id": "decades-OL66554W",
