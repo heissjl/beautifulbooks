@@ -2,7 +2,8 @@
 last 72 h where an answer with a picture from the site would fit, and print them ranked.
 No login, no posting; `python3 -I lab/kalender/zettel_bsky.py out.json [hours]` (default 72).
 Since 2026-11-03 every row carries the poster's followers and bio (one getProfiles call per 25
-handles) and the full-size image addresses, so a reader needs no browser to judge a thread."""
+handles) and the full-size image addresses, so a reader needs no browser to judge a thread;
+at most three rows per handle, `more_from_handle` counts the rest."""
 import json, sys, time, urllib.parse, urllib.request, datetime
 QUERIES = [
   '"nine books"', '"9 books"', 'myninebooks', '"books that made me"', '"which edition"', '"best translation"',
@@ -57,6 +58,13 @@ for x in rows:
     pr = profiles.get(x['handle'], {})
     x['followers'] = pr.get('followersCount'); x['bio'] = (pr.get('description') or '').replace('\n', ' ')[:300]
 rows.sort(key=lambda x: (-(x['likes'] + 2 * x['replies'] + 2 * x['reposts']), x['age_h']))
+# at most three rows per handle (a label bot filled 20 of 189 rows on 2026-11-03); the rest is counted in `more_from_handle`
+kept, per = [], {}
+for x in rows:
+    n = per.get(x['handle'], 0); per[x['handle']] = n + 1
+    if n < 3: kept.append(x)
+for x in kept: x['more_from_handle'] = per[x['handle']] - 3 if per[x['handle']] > 3 else 0
+rows = kept
 if len(sys.argv) > 1:
     json.dump(rows, open(sys.argv[1], 'w'), ensure_ascii=False, indent=1)
 print(len(rows), 'posts in the last %g h' % HOURS)
