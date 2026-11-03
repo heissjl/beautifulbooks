@@ -29,16 +29,36 @@ Lesen: die ersten 40 bis 60 Zeilen des JSON ansehen, dazu jede weitere Zeile mit
 
 ## 2. X suchen (nur in Julians Chrome)
 
-Vorbedingung: Claude in Chrome ist verbunden und das Konto `@buyitscovers` ist eingeloggt (prüfen mit `tabs_context_mcp`, dann `x.com/home` laden; zeigt die Seite „Sign in“, aufhören und Julian sagen, dass X heute ausfällt — den Zettel mit Bluesky allein schreiben). Zwei Chrome-Instanzen: `switch_browser`, Julian klickt „Connect“.
+X ist der Kanal mit Publikum; die Suche braucht ein eingeloggtes Konto, also Julians Chrome (Claude in Chrome). Profile und einzelne Status-Seiten sind ohne Login lesbar, die Suche nicht.
 
-Zwei Suchen in der **Top**-Ansicht (`x.com/search?q=<query>`, ohne `f=live`), Datum auf heute minus vier Tage:
+**Werkzeuge laden** (ein `ToolSearch`-Aufruf, die Chrome-Werkzeuge sind aufgeschoben):
+
+```
+select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__javascript_tool,mcp__claude-in-chrome__browser_batch,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__find,mcp__claude-in-chrome__tabs_close_mcp
+```
+
+**Login prüfen:** `tabs_context_mcp {createIfEmpty: true}`, dann `navigate` nach `x.com/home` und `find "profile link or Sign in button"`. Steht da „Sign in“ oder antwortet Chrome nicht (zwei Instanzen: `switch_browser`, Julian klickt „Connect“), **aufhören und melden** — den Zettel mit Bluesky allein schreiben, X als „heute ausgefallen“ im Kopf. Ein Agent fragt Julian nicht nach dem Login und tippt nie Zugangsdaten.
+
+**Zwei Suchen in der Top-Ansicht** (`x.com/search?q=<query>&src=typed_query`, ohne `f=live`; Datum = heute minus vier Tage, die Anfrage URL-kodiert):
 
 1. Cover-Begriffe (seit dem 31.10.): `("book covers" OR "book cover" OR "nine books" OR "which edition" OR "penguin classics" OR "folio society" OR "sf masterworks" OR "clothbound") since:<JJJJ-MM-TT> min_faves:30`
 2. Hauls und Ausgaben (seit dem 2.11.): `("first edition" OR "this edition" OR "favorite edition" OR "favourite edition" OR "book haul" OR "my bookshelf" OR "cover art") (book OR novel OR paperback) since:<JJJJ-MM-TT> min_faves:40`
 
-**Befund vom 2.11.:** die Hauls mit Fotos tragen (2.000 bis 45.000 Aufrufe), und die Fotos zeigen genau die Ausgaben, die die Seite auf der Wand hat — die Antwort ist die Wand des Buchs, das im Haul liegt. Die Cover-Begriffe bringen vor allem Rechteinhaber. Was auf X nichts taugt: „best cover“ (Musik, Spiele), „this edition“ allein.
+Höchstens vier Suchen je Lauf (X drosselt die Suche); die Latest-Ansicht (`&f=live`) nur, wenn eine Welle läuft und die Top-Ansicht sie schon zeigt.
 
-Lesen: `read_page` liefert jeden Beitrag vollständig (Konto, Status-Link, Text, Alt-Text der Bilder, Zahlen im `group`-Label); `javascript_tool` wird nach rund 600 Zeichen abgeschnitten, `get_page_text` gibt nur den ersten Artikel. Zweimal nach unten scrollen reicht; X lädt nach. Jeden Kandidaten als Status-Seite öffnen und den Thread lesen. **Nichts klicken, was eine Handlung ist** (Like, Follow, Repost, Antwort) — nur Lesen und Scrollen. Am Ende die eigenen Tabs schließen.
+**Ergebnisse lesen:** `read_page` (ohne Filter) liefert jeden Beitrag vollständig — Konto, Status-Link, Text, Alt-Text der Bilder, Zitat und das `group`-Label „30 replies, 43 reposts, 928 likes, 372 bookmarks, 45778 views“; rund 30 k Zeichen je Seite, die Hälfte Seitenleiste. Zwei- bis dreimal `scroll` nach unten (`computer`, 10 Ticks) und wieder `read_page`; X lädt nach. `get_page_text` gibt auf X nur den ersten Artikel, und **`javascript_tool` wird nach rund 600 Zeichen abgeschnitten** — Listen aus dem DOM in `window.__z` legen und in Scheiben lesen (`JSON.stringify(window.__z.slice(0,4))`). Kandidaten mit Link, Handle, Text und Zahlen in eine Datei `docs/antwortzettel/<datum>/x-candidates.md` schreiben, bevor weitergelesen wird.
+
+**Befund vom 2.11.:** die Hauls mit Fotos tragen (2.000 bis 45.000 Aufrufe), und die Fotos zeigen genau die Ausgaben, die die Seite auf der Wand hat — die Antwort ist die Wand des Buchs, das im Haul liegt. Die Cover-Begriffe bringen vor allem Rechteinhaber; „best cover“ und „this edition“ allein liefern Musik, Spiele, Fußball. Auf X trägt ein laufendes Format (die Klassiker-Neun, 30.575 Aufrufe am ersten Tag) mehr als jede Suche nach Ausgaben.
+
+**Je Kandidat** (Status-Seite `x.com/<handle>/status/<id>` in Chrome öffnen, vier Sekunden warten):
+
+- **Thread lesen:** `read_page` zeigt den Beitrag und die ersten Antworten (Ton, ob jemand schon die Ausgabe nennt).
+- **Zahlen:** das `group`-Label des ersten Artikels, mit Lesezeitpunkt in den Zettel: `[...document.querySelectorAll('article')].slice(0,1).map(a=>a.querySelector('[role=group]')?.getAttribute('aria-label'))`.
+- **Bilder ansehen** (der Alt-Text reicht nicht, die Ausgaben stehen auf dem Foto): im DOM die Medien-Pfade holen — `window.__z=[...document.querySelectorAll('img')].map(i=>i.src).filter(s=>/twimg\.com\/media/.test(s)).map(s=>new URL(s).pathname)` (nur den Pfad zurückgeben: Adressen mit Abfrageteil blockt das Werkzeug als „Cookie/query string data“), dann je Pfad ohne Login `curl -s -o <datei>.jpg 'https://pbs.twimg.com/media/<id>?format=jpg&name=large'` (geprüft 3.11.: 200, image/jpeg, 335 KB) und mit `Read` ansehen. Direkt nach dem Laden sind die Bilder manchmal noch nicht im DOM — dann zwei Sekunden warten und noch einmal fragen.
+- **Profil für die Rechteinhaber-Frage:** `x.com/<handle>` im Browser-Bereich der Desktop-App (ohne Login lesbar, `get_page_text`: Bio, Follower, letzte Beiträge mit Aufrufen) — Chrome bleibt für die Suche.
+- **Nichts klicken, was eine Handlung ist:** kein Like, Follow, Repost, keine Antwort, kein „Show more“ in fremden Threads, das einen Dialog öffnet. Nur Lesen und Scrollen. Am Ende die eigenen Tabs schließen (`tabs_close_mcp`).
+
+**Ohne Chrome** (ein Agent ohne Julian): X-Status-Seiten, die Julian oder ein früherer Zettel nennt, sind im Browser-Bereich ohne Login lesbar (Text, Zahlen, Alt-Text), und die Bilder kommen über den Pfad wie oben; neue Threads finden geht nur mit Suche, also nicht.
 
 ## 3. Aussortieren
 
@@ -125,7 +145,7 @@ Erst wenn Julian einen Eintrag nennt („poste B1“, „poste du diese variante
 
 ## 8. Als Auftrag an einen Agenten
 
-Ein Agent (Agent-Tool, `general-purpose`) bekommt diesen Text als Auftrag; `bsky` geht ohne Julian, `x` nur, wenn Claude in Chrome in der Sitzung verbunden ist und Julian am Rechner sitzt:
+Ein Agent (Agent-Tool, `general-purpose`) bekommt diesen Text als Auftrag; `bsky` geht ohne Julian, `beide` nur, wenn Claude in Chrome in der Sitzung verbunden ist, Julian dort bei X eingeloggt ist und am Rechner sitzt (für `beide` im Auftrag ergänzen: „X nach §2 in Julians Chrome: Werkzeuge mit einem ToolSearch laden, Login prüfen, bei ‚Sign in‘ oder ohne Verbindung X auslassen und melden; höchstens vier Suchen; nichts anklicken, was eine Handlung ist; Tabs am Ende schließen“):
 
 > Baue den Antwortzettel für <Datum> nach `.claude/skills/antwortzettel/SKILL.md` im Projekt `/Users/claude-m1/projects/beautifulbooks`: Plattform <bsky|beide>, Fenster 72 h. Lies zuerst §0 bis §6 des Skills, dann den letzten Zettel in `docs/antwortzettel/` als Muster. Suche, lies jeden Thread selbst, sortiere Rechteinhaber aus, prüfe jede Zeile nach §4 gegen die Seite (ein Abruf je Prüfung, nie wiederholen; Open Library nie direkt bei Bursts), hole die Karten, schreibe den Zettel (git-ignoriert, bleibt lokal) und den history-Abschnitt in `docs/history.md`, committe nur die history ohne Push. Poste nichts, like nichts, folge niemandem, tippe nirgends Zugangsdaten. Reddit ist tabu. Berichte am Ende: Zahl der Einträge, der Befund, welche Prüfungen etwas gestrichen haben, und was du nicht prüfen konntest.
 
