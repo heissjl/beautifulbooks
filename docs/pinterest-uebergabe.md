@@ -8,13 +8,11 @@ Geschrieben am 2026-11-03 abends (Julian: „erstelle einen übergabezettel an e
 
 Pinterest ist der eine Kanal, der ohne Follower wachsen kann (PLAN-5.6c). Regelmäßig Pins bringen, zwei am Tag, und nach acht Wochen ehrlich messen: **um den 26.12.2026 80 Pins und mindestens 50 Besuche pro Woche** mit `via=pinterest` (K16 in `/admin/insights`), sonst einstellen, nicht automatisieren.
 
-## Wo die Arbeit liegt: zuerst klären
+## Wo die Arbeit liegt
 
-Die Warteschlange und dieser Zettel liegen auf **`claude/ecstatic-meninsky-e4fe7e`** (vier Commits vor dem letzten Merge, bis `a8b327e` und diesem Zettel), nicht auf `main`. `main` hat eine alte Fassung von `docs/pins/queue.json` ohne Julians Entscheidungen.
+Warteschlange und Zettel sind seit dem 2026-11-03 auf dem **lokalen `main`** (Julian: „Ja, mergen“, Merge `a4987bc`), **nicht gepusht**; `origin/main` ist Produktion und hat die alte Warteschlange. Eine neue Sitzung startet also vom lokalen `main`, nicht von `origin/main`. Pushen nur auf Julians Wort; eine reine Doku-Änderung fährt mit dem nächsten Inhalts-Commit mit.
 
-Auf **`claude/elated-cohen-1f0d56`** liegen zwei weitere ungemergte Commits: `313b9a6` (die acht Entwürfe, hier schon übernommen) und `78411c5` (Mess-Sonde fürs Mosaik; die Cockpit-Prüfung nimmt auch `/compare.jpg` an). **Beim Zusammenführen darf deren `queue.json` die von hier nicht überschreiben**; auch `scripts/cockpit/pins.ts` ist auf beiden geändert.
-
-Mergen und Pushen nur auf Julians Wort. Die erste Frage an ihn: Branch `claude/ecstatic-meninsky-e4fe7e` nach `main` mergen, damit die neue Sitzung von dort arbeitet?
+Auf **`claude/elated-cohen-1f0d56`** liegen zwei weitere ungemergte Commits: `313b9a6` (die acht Entwürfe, hier schon übernommen) und `78411c5` (Mess-Sonde fürs Mosaik; die Cockpit-Prüfung nimmt auch `/compare.jpg` an). **Beim Zusammenführen darf deren `queue.json` die von `main` nicht überschreiben**; auch `scripts/cockpit/pins.ts` ist auf beiden geändert. Mergen nur auf Julians Wort.
 
 ## Stand
 
@@ -24,7 +22,7 @@ Mergen und Pushen nur auf Julians Wort. Die erste Frage an ihn: Branch `claude/e
 
 **Noch anzulegen, wenn die Entwürfe ein Ja bekommen:** Science fiction book covers, Classic book covers, Vintage paperback covers, Book cover design, Fantasy book covers.
 
-**Die eine Liste:** [`docs/pins/queue.json`](pins/queue.json), 32 Pins. Julian entscheidet im Cockpit unter „Pins“ (`npm run cockpit`, Port 4320; der laufende Server gehört zur alten Sitzung und ist der Worktree `ecstatic-meninsky-e4fe7e`). Bilder im Cockpit liegen git-ignoriert in `docs/cockpit/pins/`, in einem neuen Worktree neu holen.
+**Die eine Liste:** [`docs/pins/queue.json`](pins/queue.json), 32 Pins. Julian entscheidet im Cockpit unter „Pins“ (`npm run cockpit`, Port 4320; ein laufender Server kann noch aus dem alten Worktree `ecstatic-meninsky-e4fe7e` stammen und liest dessen Datei, also den Port prüfen). Bilder im Cockpit liegen git-ignoriert in `docs/cockpit/pins/`, in einem neuen Worktree neu holen.
 
 | Zustand | Zahl | Welche |
 |---|---|---|
