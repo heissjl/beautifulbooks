@@ -87,15 +87,15 @@ export interface Edit {
 
 /**
  * Applies one edit from the Cockpit, or says why not. Text is trimmed and
- * kept on one line; a pin that is booked or out is not edited any more
- * (Pinterest takes no change to a scheduled pin, umgang §15); `ja` only for
- * a pin without problems.
+ * kept on one line; a pin that is booked or out is not edited here, because
+ * the file would then differ from Pinterest (it is changed there, on its
+ * „Edit this Pin“ page, umgang §15); `ja` only for a pin without problems.
  */
 export function applyEdit(queue: PinQueue, edit: Edit, today: string): { queue: PinQueue } | { error: string } {
   const i = queue.pins.findIndex(p => p.id === edit.id);
   if (i < 0) return { error: `kein Pin ${edit.id}` };
   const old = queue.pins[i];
-  if (!DECISIONS.includes(old.status)) return { error: `${old.status} — auf Pinterest nicht mehr änderbar` };
+  if (!DECISIONS.includes(old.status)) return { error: `${old.status} — hier gesperrt, Änderung in Pinterest („Edit this Pin“)` };
   if (edit.status !== undefined && !DECISIONS.includes(edit.status)) return { error: 'nur entwurf, ja oder nein' };
   const line = (s: string) => s.replace(/\s+/g, ' ').trim();
   const next: QueuedPin = {
