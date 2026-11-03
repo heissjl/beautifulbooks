@@ -6867,7 +6867,25 @@ Julian: „in diesem fall ist der alte name ok“ (die Pinnwand „Beautiful Boo
 
 **Acht Entwürfe in `docs/pins/queue.json`**, Status `entwurf`, nichts hochgeladen: Hugo Award und Gene Szafran auf „Science fiction book covers“, Penguin Clothbound und die Black-Band-Jahre auf „Classic book covers“, Tom Adams’ Christie auf „Vintage paperback covers“, Ballantine Adult Fantasy auf „Fantasy book covers“, Penguin Great Ideas und Edelmanns Reihe Hanser auf „Book cover design“. Alle acht Sammlungen stehen auf der Produktion im Hub, mit denselben Buchzahlen wie im Text (einmal gelesen); die Sätze stammen aus den Einleitungen der Sammlungen. Bilder aus den bestehenden Routen `/collections/<slug>/pin.jpg`, kein neuer Code: das Bild trägt den Namen der Sammlung, Pinnwand und Titel den Suchbegriff. Die sechzehn Termine der offenen Jahrzehnte-Entwürfe sind dafür verschoben, im Wechsel 12:00 allgemein, 19:00 Jahrzehnte, ab 2026-11-07 bis 2026-11-16; geplante Pins bleiben, wie sie sind.
 
-**Angesehen:** alle acht Bilder unter `next dev`, je neun Cover ohne Loch. **Zeiten dort:** 8,8–32 s, Black-Band 67 s und Reihe Hanser 55 s — über den 30 s der Funktion; beide tragen den Hinweis, das Bild vor dem Hochladen einmal von der Produktion zu holen. **Die Sonde taugt zurzeit nicht:** `scripts/measure-pins.ts` hält seit dem Mosaik-Grund (`d46aa2a`) den Grund für Tinte und meldet jedes Bild als FAIL („RUNS INTO COVERS“); die Maße dieser acht sind darum nicht gemessen, nur angesehen. **Der Cockpit-Check** (`problems` in `scripts/cockpit/pins.ts`) nimmt nur `/pin.jpg` an und würde einen Vergleichs-Pin abweisen. Beides steht als offen unter ROADMAP 5.5.
+**Angesehen:** alle acht Bilder unter `next dev`, je neun Cover ohne Loch. **Zeiten dort:** 8,8–32 s, Black-Band 67 s und Reihe Hanser 55 s — über den 30 s der Funktion; beide tragen den Hinweis, das Bild vor dem Hochladen einmal von der Produktion zu holen. `scripts/measure-pins.ts` hielt seit dem Mosaik-Grund (`d46aa2a`) den Grund für Tinte und meldete jedes Bild als FAIL, und der Cockpit-Check nahm nur `/pin.jpg` an (beides behoben, nächster Abschnitt).
 
 Geprüft: `problems` und die Pin-Wörter ohne Treffer für alle acht, Queue- und Cockpit-Tests 67 grün. Analytik: nichts betroffen — Dokumente, die Links tragen die Marke `via=pinterest`, die K14 schon zählt.
 
+## 2026-11-03 — Die Pin-Sonde misst auf dem Mosaik, das Cockpit nimmt Vergleichs-Pins (ROADMAP 5.5a, 5.5)
+
+Julian: „Ja, beheben“. **Die Sonde:** Tinte war „weit weg von #131110“; seit dem Mosaik-Grund (`d46aa2a`, 2026-10-31) traf das den Grund selbst — jeder Pin FAIL mit „RUNS INTO COVERS“ und „OVERFLOWS RIGHT“, auch die guten. Tinte ist jetzt Helligkeit, r + g + b über 400 (`lib/pinprobe.ts`, 8 Tests, darunter: die Sonde meldet ein Wort auf dem Mosaik weiter, auch rechts vom Rand). Gemessen an den acht Mosaik-Pins vom 2026-11-02: der Grund erreicht höchstens 270, rechnerisch bei 55 % Abdunklung 345; die schwächste Schrift, die Adresse in `ink2`, mindestens 544. **Das Cockpit:** `problems` nimmt neben `/pin.jpg` auch `/compare.jpg` an, mit Parametern; `compare.png` bleibt abgewiesen (Test).
+
+**Nachgemessen unter `npm run dev`**, alle sechs `ok`:
+
+| Pin | Cover | Titelzeilen | Kopf-Tinte y | Raster ab y | Fuß-Tinte y (Rand 1436) | Größe | Zeit |
+|---|---|---|---|---|---|---|---|
+| `/collections/hugo-award-novel/pin.jpg` | 9/9 | 1 | 77–190 | 207 | 1405–1436 | 486 KB | 14,4 s |
+| `/collections/ballantine-adult-fantasy/pin.jpg` (Credits) | 9/9 | 2 reserviert, 1 belegt | 77–184 | 274 | 1358–1435 | 531 KB | 9,4 s |
+| `/collections/penguin-classics-the-black-band-years/pin.jpg` (Credits) | 9/9 | 2 | 75–237 | 274 | 1358–1436 | 444 KB | 9,0 s |
+| `/collections/reihe-hanser-covers-by-heinz-edelmann/pin.jpg` | 9/9 | 2 | 75–237 | 276 | 1405–1435 | 529 KB | 10,2 s |
+| `/book/OL893414W/compare.jpg?covers=…` (einfarbiger Grund, Beschriftung bis y 1077) | 3/3 | 1 | 78–184 | 512 | 1405–1435 | 159 KB | 7,5 s |
+| `/book/OL893414W/pin.jpg` | 9/9 | 1 | 78–184 | 207 | 1405–1435 | 508 KB | 12,3 s |
+
+**Die Zeiten sagen nichts über den kalten Fall:** Black-Band und Reihe Hanser brauchten am Vortag 67 und 55 s; heute lagen ihre Cover im Fetch-Cache des Dev-Servers. Der Hinweis in den beiden Entwürfen bleibt: vor dem Hochladen einmal von der Produktion holen, dort hat die Funktion 30 s. **Aufgefallen, nicht geändert:** der Vergleichs-Pin steht noch auf dem einfarbigen Grund, die Raster-Pins auf dem Mosaik (Julian, 2026-10-31: „die nächsten entwürfe sollten den mosaik hintergrund haben“); auf einem Vergleichs-Pin bliebe viel Mosaik sichtbar, die Beschriftung müsste den dunklen Streifen bekommen.
+
+**Grün:** `npx tsc --noEmit`, ESLint auf den geänderten Dateien, `npm run build` mit der `.env.local` des Hauptordners. `npm run test:run`: 1.739 von 1.745 im vollen Lauf; die sechs roten liegen in vier Dateien, die nichts hiervon berühren (Index, Herofan, Shelf-Portrait-Brett, Simulation), und liefen bei einer Rechnerlast um 40 in die 5-s-Frist; mit `--testTimeout=60000` bestehen alle 43 Tests dieser Dateien. Analytik: nichts betroffen — Werkzeug, keine Route, kein Text der Seite.

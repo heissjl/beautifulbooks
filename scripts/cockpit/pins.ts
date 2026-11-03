@@ -72,7 +72,7 @@ export function problems(pin: Pick<QueuedPin, 'title' | 'description' | 'link' |
     if (m) out.push({ field, message: `„${m[0]}“ behauptet Vollständigkeit` });
   }
   if (!pin.link.startsWith(SITE) || !/[?&]via=pinterest(&|$)/.test(pin.link)) out.push({ field: 'link', message: 'Link muss auf buyitscovers.com zeigen und ?via=pinterest tragen' });
-  if (!pin.picture.startsWith(SITE) || !/\/pin\.jpg(\?|$)/.test(pin.picture)) out.push({ field: 'picture', message: 'Bild muss eine Pin-Route der Seite sein' });
+  if (!pin.picture.startsWith(SITE) || !/\/(pin|compare)\.jpg(\?|$)/.test(pin.picture)) out.push({ field: 'picture', message: 'Bild muss eine Pin-Route der Seite sein' });
   if (!PIN_STATUSES.includes(pin.status)) out.push({ field: 'status', message: `unbekannter Status ${String(pin.status)}` });
   return out;
 }

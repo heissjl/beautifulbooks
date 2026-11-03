@@ -21,20 +21,18 @@
  * them — ink in each label (year or publisher), and no ink in the gaps
  * between the labels (a publisher that ran into the next column).
  *
- * Ink is any pixel far from the ground colour (#131110) outside the tiles.
+ * Ink is a bright pixel outside the tiles, on the mosaic as on a plain ground
+ * (`lib/pinprobe.ts`, with the measurement behind the threshold).
  * The numbers go to docs/history.md; a measurement in the chat is none.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 import { compareLayoutSized } from '../lib/comparelayout';
-import { PIN_SIZE, pinLayout, type PinCount, type Rect } from '../lib/pinlayout';
+import { inkRows, tileFilled } from '../lib/pinprobe';
+import { PIN_SIZE, pinLayout, type PinCount } from '../lib/pinlayout';
 
 const OUT_DIR = path.join(process.cwd(), 'docs', 'tests', 'pins');
-const GROUND = [0x13, 0x11, 0x10];
-const EMPTY_TILE = [0x26, 0x22, 0x1f];
-const INK_DISTANCE = 60;
-
 interface Probe {
   url: string;
   status: number;
@@ -51,44 +49,6 @@ interface Probe {
   foot: { from: number; to: number; limit: number; clear: boolean };
   /** Comparison pins only: labels with ink, and whether ink stands between them. */
   labels?: { inked: number; of: number; between: boolean; to: number };
-}
-
-function far(px: Uint8Array, at: number, colour: number[]): boolean {
-  return Math.abs(px[at] - colour[0]) + Math.abs(px[at + 1] - colour[1]) + Math.abs(px[at + 2] - colour[2]) > INK_DISTANCE;
-}
-
-function inkRows(px: Uint8Array, width: number, x0: number, x1: number, y0: number, y1: number): { from: number; to: number } {
-  let from = -1;
-  let to = -1;
-  for (let y = y0; y < y1; y++) {
-    let ink = false;
-    for (let x = x0; x < x1 && !ink; x++) ink = far(px, (y * width + x) * 3, GROUND);
-    if (ink) {
-      if (from < 0) from = y;
-      to = y;
-    }
-  }
-  return { from, to };
-}
-
-function tileFilled(px: Uint8Array, width: number, r: Rect): boolean {
-  // The middle of the tile: a cover is never the empty colour there.
-  // A dark jacket (Gollancz's black *Dune*, 1974) sits near the empty colour, so a tile also counts
-  // as filled when its samples spread: an empty tile is one flat colour.
-  let different = 0;
-  let lo = 255 * 3;
-  let hi = 0;
-  const samples = 64;
-  for (let i = 0; i < samples; i++) {
-    const x = r.x + Math.round(((i % 8) + 0.5) * (r.width / 8));
-    const y = r.y + Math.round((Math.floor(i / 8) + 0.5) * (r.height / 8));
-    const at = (y * width + x) * 3;
-    if (far(px, at, EMPTY_TILE)) different++;
-    const sum = px[at] + px[at + 1] + px[at + 2];
-    lo = Math.min(lo, sum);
-    hi = Math.max(hi, sum);
-  }
-  return different > samples / 4 || hi - lo > 3 * INK_DISTANCE;
 }
 
 async function probe(url: string): Promise<Probe> {
