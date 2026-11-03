@@ -29,12 +29,14 @@ import {
   applyOrder,
   applyOverrides,
   collectionRecords,
+  collectionsHolding,
   draftsVisible,
   parseCollections,
   type Collection,
   type CollectionRecord,
   type ContentOverrides,
   type PublishOverrides,
+  type WorkCollectionLink,
 } from './collections';
 
 const KEY = 'collections:published';
@@ -240,4 +242,15 @@ export async function liveCollections({ includeDrafts = draftsVisible(), fresh =
 
 export async function liveCollectionBySlug(slug: string, options: { includeDrafts?: boolean; fresh?: boolean } = {}): Promise<Collection | null> {
   return (await liveCollections(options)).find(c => c.slug === slug) ?? null;
+}
+
+/**
+ * The published collections a work stands in, for the block "In these
+ * collections" under its wall (ROADMAP 6.107 Teil A): from the live records,
+ * so a collection published from /curate is linked within a minute and a
+ * draft never is. The book page passes the list down as a prop, as it passes
+ * `walls`; `lib/collections.ts` stays out of the client bundle.
+ */
+export async function collectionsOfWork(workId: string): Promise<WorkCollectionLink[]> {
+  return collectionsHolding(await liveCollections(), workId);
 }

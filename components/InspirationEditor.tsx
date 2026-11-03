@@ -389,7 +389,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
               setNameDraft(e.target.value);
               setBoard((b) => ({ ...b, by: cleanName(e.target.value) }));
             }}
-            className="mt-5 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
+            className="mt-5 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink"
           />
           {/*
             A line of the reader's own under the title (Julian, 2026-10-06), on the picture, the card and the
@@ -404,7 +404,7 @@ export default function InspirationEditor({ initialQuery, initialNames, starters
               setSubDraft(e.target.value);
               setBoard((b) => ({ ...b, sub: cleanName(e.target.value, SUB_MAX) }));
             }}
-            className="mt-2 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink placeholder:text-ink-3"
+            className="mt-2 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink"
           />
           <div className="mt-2 flex flex-wrap gap-1.5" role="group" aria-label={t('Suggestions for the line')}>
             {SUB_IDEAS.map((idea) => t(idea)).map((idea) => (
@@ -700,7 +700,7 @@ function SearchPane({ active, onPick, t }: { active: boolean; onPick: (work: { i
           placeholder={t('Search a title or author')}
           aria-label={t('Search a title or author')}
           autoComplete="off"
-          className="min-w-0 flex-1 rounded-md border border-line bg-surface px-3 py-2 text-base text-ink placeholder:text-ink-3"
+          className="min-w-0 flex-1 rounded-md border border-line bg-surface px-3 py-2 text-base text-ink"
         />
         <button type="submit" className="btn btn-accent">{t('Search')}</button>
       </form>
@@ -856,7 +856,7 @@ function BrowsePane({ lists, board, onPick, onRetry, t }: { lists: Lists; board:
         placeholder={t('Filter by title or author')}
         aria-label={t('Filter the list by title or author')}
         autoComplete="off"
-        className="mt-3 block w-full rounded-md border border-line bg-surface px-3 py-2 text-base text-ink placeholder:text-ink-3"
+        className="mt-3 block w-full rounded-md border border-line bg-surface px-3 py-2 text-base text-ink"
       />
       <p className="mt-2 text-sm text-ink-2" role="status">
         {needle

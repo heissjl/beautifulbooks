@@ -117,7 +117,7 @@ export default function HeaderSearch() {
             placeholder={t('Search a book')}
             aria-label={t('Search a book title')}
             autoComplete="off"
-            className="w-full rounded-lg border border-line bg-surface py-1.5 pl-8 pr-3 text-sm text-ink placeholder:text-ink-3 transition-colors focus:border-ink-3 focus:outline-none sm:w-44 lg:w-56"
+            className="w-full rounded-lg border border-line bg-surface py-1.5 pl-8 pr-3 text-sm text-ink transition-colors focus:border-ink-3 focus:outline-none sm:w-44 lg:w-56"
           />
         </div>
         <button

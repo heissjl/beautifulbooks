@@ -357,7 +357,7 @@ function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend:
         onBlur={(e) => e.target.value.trim() !== (wall.by ?? '') && onSend([{ op: 'by', by: e.target.value }])}
         onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
         aria-label={t('Your name')}
-        className="mt-4 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-2 placeholder:text-ink-3"
+        className="mt-4 block w-full max-w-sm rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-2"
       />
       <textarea
         defaultValue={wall.intro ?? ''}
@@ -367,7 +367,7 @@ function Arrange({ wall, onSend, onAdd, onPick, t }: { wall: PublicWall; onSend:
         placeholder={t('A few lines about this collection — what ties it together.')}
         onBlur={(e) => e.target.value.trim() !== (wall.intro ?? '') && onSend([{ op: 'intro', intro: e.target.value }])}
         aria-label={t('A few lines about this collection')}
-        className="mt-3 block w-full max-w-2xl resize-y rounded-md border border-line bg-surface px-3 py-2 text-base text-ink-2 placeholder:text-ink-3"
+        className="mt-3 block w-full max-w-2xl resize-y rounded-md border border-line bg-surface px-3 py-2 text-base text-ink-2"
       />
 
       {wall.tiles.length === 0 ? (

@@ -121,6 +121,15 @@
   ::selection {
     background: color-mix(in oklab, var(--accent) 25%, transparent);
   }
+  /*
+    Placeholders in `ink-2`, not `ink-3` (ROADMAP 6.110e): every field sits on
+    `surface`, and `ink-3` on `surface` reads 4.23 in the dark scheme — under
+    the 4.5 of WCAG AA, which exempts no placeholder. `ink-2` clears 6 on
+    both grounds in both schemes (lab/palette, contrastRows).
+  */
+  ::placeholder {
+    color: var(--ink-2);
+  }
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;

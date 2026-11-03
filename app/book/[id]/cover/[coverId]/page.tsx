@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BookDetailPage from '@/components/BookDetail';
 import { wallsEnabled } from '@/lib/walls/switch';
+import { collectionsOfWork } from '@/lib/collections-live';
 import { coverIdFromSegment } from '@/lib/coverurl';
 import { isHiddenCover } from '@/lib/hiddencovers';
 import { workDescription, workPageTitle, workUrl } from '@/lib/seo';
@@ -69,9 +70,11 @@ export default async function Page({ params }: PageProps) {
   const { id, coverId } = await params;
   // A cover taken off the site (2.18k) has no address of its own any more.
   if (!isWorkId(id) || !coverIdFromSegment(coverId) || isHiddenCover(coverIdFromSegment(coverId))) notFound();
+  // The same "In these collections" block as the work page (6.107 Teil A): the shared cover is the same wall.
+  const collections = await collectionsOfWork(id);
   return (
     <Suspense fallback={null}>
-      <BookDetailPage walls={wallsEnabled()} />
+      <BookDetailPage walls={wallsEnabled()} collections={collections} />
     </Suspense>
   );
 }

@@ -130,6 +130,13 @@ export const RATE_RULES = {
   locale: { capacity: 30, refillPerMinute: 10 },
   /** The uptime monitor (2.18g): one look every few minutes; a crawler gets little out of it. */
   health: { capacity: 10, refillPerMinute: 10 },
+  /**
+   * A Pinterest pin (ROADMAP 5.5a): one editions page from the catalogue and
+   * up to eighteen covers fetched for one picture, held a day at the edge.
+   * Pinterest fetches a batch when Julian uploads one; a crawler walking the
+   * book space gets a few a minute, not a few hundred.
+   */
+  pin: { capacity: 20, refillPerMinute: 10 },
   /** Shared by every request that can spend a Google Books request. */
   google: { capacity: 20, refillPerMinute: 5 },
 } as const satisfies Record<string, RateRule>;

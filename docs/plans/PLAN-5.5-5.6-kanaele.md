@@ -204,3 +204,14 @@ Die Frage über allem ist dieselbe wie in 5.7: **Bringt ein Kanal Leute dazu, ei
 **Was Claude dafür liefert:** eine Liste je Woche mit Seite, Bild (sobald 5.5a steht), Titel, Beschreibung und markiertem Link, als Datei unter `docs/`. Hochladen und Posten bleibt bei Julian (Grenze oben).
 
 **Messen:** Pinterests Statistik (Impressionen, ausgehende Klicks; erst nach der Bestätigung der Website) und K14 mit `via=pinterest` in `/admin/insights`. Abbruch nach §5: 80 Pins, 8 Wochen, unter 50 Besuchen pro Woche → einstellen, nicht automatisieren.
+
+
+### 7.1 Die nächsten Pins — Entwurf, wartet auf Julians Freigabe (2026-10-31)
+
+Julian, 2026-10-31: „erarbeite für zukünftige pins noch die beschreibung und schreibe sie in den plan. fange mit den nächsten 10 an, ich will sie vor dem posten noch absegnen.“ **Nichts davon ist geplant oder hochgeladen**; Julian streicht oder ändert, dann erst kommen sie in Pinterests Planung.
+
+**Woher:** die nächsten zehn Werke mit Jahrzehnte-Seite in der Reihenfolge von `data/popular-works.json` nach den 13 Pins aus [pins-2026-10-31.md](../pins-2026-10-31.md); *Le petit prince* ausgelassen, weil der Katalogtitel französisch ist (wie *O Alquimista*). **Die Zahlen** stehen so auf der jeweiligen Jahrzehnte-Seite der Produktion, einmal gelesen am 2026-10-31 abends (je Seite eine Anfrage, sieben Sekunden Abstand); `scripts/pin-list.ts` konnte nicht laufen, weil Open Library diesen Mac an dem Abend abwies. **Die Verlage** sind aus den „such as“-Namen der einzelnen Jahrzehnte gewählt, bekannte Häuser vor Print-on-Demand. **Die Bilder** einmal abgerufen und angesehen (Hinweise in der letzten Spalte). Alle Titel unter 100, alle Beschreibungen unter 500 Zeichen, keines der Wörter „every“, „all“, „complete“.
+
+**Pinnwand:** alle auf „Covers through the decades“. Damit stünden mit #4–#13 zwanzig Jahrzehnte-Pins hintereinander — Vorschlag: dazwischen Pins für „Beautiful Books with Pretty Covers“ (Julian wählt die Ausgaben) oder einen Vergleichs-Pin (5.5a, Branch `claude/elated-cohen-1f0d56`), sobald er auf der Produktion liegt. **Termine** sind ein Vorschlag im selben Takt (12:00 und 19:00), nach #12 *Fellowship* (Entwurf in Pinterest, 6.11. 19:00) und #13 *It* (7.11. 12:00), die noch nicht geplant sind.
+
+**Die Liste selbst steht seit dem 2026-10-31 abends nicht mehr hier**, sondern in [`docs/pins/queue.json`](../pins/queue.json) — der einen Liste aller Pins (geplant, offen, Ja, Nein). Julian sieht, ändert und entscheidet sie im Cockpit unter **„Pins“** (`npm run cockpit`, ROADMAP 5.5): Bild je Pin von der Produktion oder vom Dev-Server, Titel und Beschreibung mit Zeichenzähler und Wortprüfung, „Ja“, „Nein“, „Offen“ und eine eigene Anmerkung. Nur ein Pin mit „Ja“ wird hochgeladen und eingeplant; danach steht er auf „geplant“. Die Hinweise oben (1810s, 1940s, Metamorphosis, Gatsby, Garth Williams) stehen je Pin in dessen Feld `note`.

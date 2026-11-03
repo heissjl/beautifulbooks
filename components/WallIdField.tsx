@@ -72,7 +72,7 @@ export default function WallIdField({ me, onChange }: { me: MyWalls; onChange: (
           spellCheck={false}
           autoComplete="off"
           aria-label={t('Your ID')}
-          className="min-w-[16rem] flex-1 rounded-md border border-line bg-surface px-3 py-1.5 font-mono text-sm text-ink placeholder:font-sans placeholder:text-ink-3"
+          className="min-w-[16rem] flex-1 rounded-md border border-line bg-surface px-3 py-1.5 font-mono text-sm text-ink placeholder:font-sans"
         />
         <button
           type="button"

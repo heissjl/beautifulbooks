@@ -5,8 +5,8 @@
  * friend in a draft on `/curate`. No I/O here, so the rules are tested without a
  * server and without Open Library.
  */
-import type { CollectionAuthor, CollectionKind, CollectionPick, CollectionRecord } from './collections';
-import { isCollectionSlug } from './collections';
+import type { CollectionAuthor, CollectionGroup, CollectionKind, CollectionPick, CollectionRecord } from './collections';
+import { isCollectionGroup, isCollectionSlug } from './collections';
 
 /** One work from an Open Library search, as far as this tool needs it. */
 export interface SearchDoc {
@@ -90,7 +90,7 @@ export function slugify(title: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export function newCollection(input: { title: string; slug?: string; kind: CollectionKind; intro?: string }, existing: CollectionRecord[]): CollectionRecord {
+export function newCollection(input: { title: string; slug?: string; kind: CollectionKind; group?: CollectionGroup; intro?: string }, existing: CollectionRecord[]): CollectionRecord {
   const title = input.title.trim();
   if (!title) throw new Error('A title is needed.');
   const slug = (input.slug?.trim() || slugify(title));
@@ -100,6 +100,8 @@ export function newCollection(input: { title: string; slug?: string; kind: Colle
     slug,
     title,
     kind: input.kind,
+    // The hub group (6.107): what the form chose, else the kind's own (a series is a series, a list of authors a list).
+    group: isCollectionGroup(input.group) ? input.group : input.kind === 'series' ? 'series' : 'lists',
     intro: input.intro?.trim() ?? '',
     published: false,
     ...(input.kind === 'series' ? { publishers: [] } : { authors: [] }),

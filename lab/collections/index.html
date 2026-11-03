@@ -99,6 +99,14 @@
         <option value="series">Verlagsreihe</option>
       </select>
     </div>
+    <div class="row"><label>Gruppe</label>
+      <select name="group" title="Wo die Sammlung auf /collections steht (6.107)">
+        <option value="series">Reihen</option>
+        <option value="designers">Gestalter</option>
+        <option value="lists">Preise und Listen</option>
+        <option value="publishers">Verlage</option>
+      </select>
+    </div>
     <div class="row"><textarea name="intro" placeholder="Ein Absatz für die Seite (englisch, wie die Website)"></textarea></div>
     <div class="row"><button class="btn" value="ok">Anlegen</button><button class="btn" value="cancel" formnovalidate>Abbrechen</button><span class="error" id="create-error"></span></div>
   </form>
@@ -176,6 +184,10 @@ function render() {
       <h2>Seite</h2>
       <div class="row"><label>Titel</label><input type="text" id="m-title" class="grow" value="${esc(c.title)}"></div>
       <div class="row"><textarea id="m-intro">${esc(c.intro)}</textarea></div>
+      <div class="row"><label>Gruppe</label>
+        <select id="m-group" title="Wo die Sammlung auf /collections steht (6.107)">${[['series', 'Reihen'], ['designers', 'Gestalter'], ['lists', 'Preise und Listen'], ['publishers', 'Verlage']].map(([v, l]) => `<option value="${v}" ${c.group === v ? 'selected' : ''}>${l}</option>`).join('')}${c.group ? '' : '<option value="" selected>— noch keine —</option>'}</select>
+        <span class="note">Die Überschrift, unter der die Sammlung auf <code>/collections</code> steht.</span>
+      </div>
       <div class="row">
         <label><input type="checkbox" id="m-pub" ${c.published ? 'checked' : ''}> veröffentlicht</label>
         <span class="note">Ein Entwurf ist nur unter <code>npm run dev</code> zu sehen; veröffentlicht erscheint er nach dem nächsten Deploy.</span>
@@ -223,6 +235,7 @@ function render() {
   $('m-title').onchange = e => write('/api/meta', { title: e.target.value });
   $('m-intro').onchange = e => write('/api/meta', { intro: e.target.value });
   $('m-pub').onchange = e => write('/api/meta', { published: e.target.checked });
+  $('m-group').onchange = e => write('/api/meta', { group: e.target.value });
 
   for (const b of $('chips').querySelectorAll('button[data-rm]')) b.onclick = () => {
     const name = b.dataset.rm;

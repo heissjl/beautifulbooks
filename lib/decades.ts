@@ -132,25 +132,31 @@ export function worthAPage(d: Decades): boolean {
  * without a number behind it). When a decade has nothing to say beyond how
  * many covers it holds, the line says only that — a sentence that adds
  * nothing is dropped rather than padded (R3).
+ *
+ * Two sentences, not a chain of dots (ROADMAP 6.110d, SPEC §5): the first
+ * counts the covers with their publishers and languages, the second the
+ * format. Until 2026-10-26 the four facts stood with middle dots between
+ * them — the one pattern 6.84 had removed everywhere else.
  */
 export function decadeLine(g: DecadeGroup, t: Translate = english): string {
   const n = g.covers.length;
-  const parts: string[] = [n === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n })];
+  const first: string[] = [n === 1 ? t('{n} cover', { n: 1 }) : t('{n} covers', { n })];
+
+  if (g.publishers.length === 1) {
+    // Not "all from Signet": the records we hold are not the decade (R7).
+    first.push(t('from 1 publisher, {publisher}', { publisher: g.publishers[0] }));
+  } else if (g.publishers.length > 1) {
+    first.push(t('from {n} publishers such as {a} and {b}', { n: g.publishers.length, a: g.publishers[0], b: g.publishers[1] }));
+  }
+
+  if (g.languages.length > 1) first.push(t('in {n} languages', { n: g.languages.length }));
+  const sentences = [`${first.join(' ')}.`];
 
   const formats = Object.entries(g.formats).sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0));
   const [topFormat, topCount] = formats[0] ?? [];
   if (topFormat && topCount && topCount >= 2 && g.editionCount >= 2) {
     // The format is quoted as the records say it, so it stays untranslated.
-    parts.push(t('{n} of {total} printings say {format}', { n: topCount, total: g.editionCount, format: topFormat }));
+    sentences.push(t('{n} of {total} printings say {format}.', { n: topCount, total: g.editionCount, format: topFormat }));
   }
-
-  if (g.publishers.length === 1) {
-    // Not "all from Signet": the records we hold are not the decade (R7).
-    parts.push(t('1 publisher, {publisher}', { publisher: g.publishers[0] }));
-  } else if (g.publishers.length > 1) {
-    parts.push(t('{n} publishers, {a} and {b} among them', { n: g.publishers.length, a: g.publishers[0], b: g.publishers[1] }));
-  }
-
-  if (g.languages.length > 1) parts.push(t('{n} languages', { n: g.languages.length }));
-  return parts.join(' · ');
+  return sentences.join(' ');
 }

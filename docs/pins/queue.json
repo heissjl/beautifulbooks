@@ -1,0 +1,263 @@
+{
+  "updated": "2026-10-31",
+  "pins": [
+    {
+      "id": "collection-sf-masterworks",
+      "status": "geplant",
+      "slot": "2026-11-01 12:00",
+      "board": "SF Masterworks",
+      "picture": "https://buyitscovers.com/collections/sf-masterworks/pin.jpg",
+      "title": "SF Masterworks – 75 science fiction book covers",
+      "description": "75 science fiction book covers on one wall: The Forever War, I am Legend, Cities in Flight and more, with cover art by Chris Moore, Jim Thiesen and John Harris and others where ISFDB names the artist. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/sf-masterworks?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "collection-feminist-press",
+      "status": "geplant",
+      "slot": "2026-11-02 12:00",
+      "board": "Feminist Press",
+      "picture": "https://buyitscovers.com/collections/feminist-press/pin.jpg",
+      "title": "Feminist Press – 75 book covers from its list",
+      "description": "75 book covers from its list on one wall: Earthsong, What Did Miss Darrington See?, Native Tongue and more. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/feminist-press?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "collection-tiptree-award",
+      "status": "geplant",
+      "slot": "2026-11-03 12:00",
+      "board": "The Otherwise Award",
+      "picture": "https://buyitscovers.com/collections/tiptree-award/pin.jpg",
+      "title": "The Otherwise Award – 40 book covers of the award’s winners",
+      "description": "40 book covers of the award’s winners on one wall: China Mountain Zhang, Ammonite, Waking the moon and more, with cover art by Wayne Barlowe, Gary Ruddell and Trevor Scobie and others where ISFDB names the artist. Each cover opens the other editions of that book, with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/collections/tiptree-award?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL82563W",
+      "status": "geplant",
+      "slot": "2026-11-01 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL82563W/pin.jpg",
+      "title": "Harry Potter and the Philosopher's Stone by J. K. Rowling – book covers by decade, 1990s to 2020s",
+      "description": "185 book covers of Harry Potter and the Philosopher's Stone by J. K. Rowling, one group per decade from the 1990s to the 2020s, counted from 254 printings with a known year on Open Library. Publishers include Bloomsbury, Salamandra and Media Rodzina; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL82563W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL1168007W",
+      "status": "geplant",
+      "slot": "2026-11-02 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL1168007W/pin.jpg",
+      "title": "Animal Farm by George Orwell – book covers by decade, 1940s to 2020s",
+      "description": "156 book covers of Animal Farm by George Orwell, one group per decade from the 1940s to the 2020s, counted from 167 printings with a known year on Open Library. Publishers include Penguin, Destino and Harcourt, Brace and Co.; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL1168007W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL1168083W",
+      "status": "geplant",
+      "slot": "2026-11-03 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL1168083W/pin.jpg",
+      "title": "Nineteen Eighty-Four by George Orwell – book covers by decade, 1940s to 2020s",
+      "description": "343 book covers of Nineteen Eighty-Four by George Orwell, one group per decade from the 1940s to the 2020s, counted from 349 printings with a known year on Open Library. Publishers include New American Library, Penguin and Secker & Warburg; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL1168083W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL257943W",
+      "status": "geplant",
+      "slot": "2026-11-04 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL257943W/pin.jpg",
+      "title": "A Game of Thrones by George R. R. Martin – book covers by decade, 1990s to 2020s",
+      "description": "90 book covers of A Game of Thrones by George R. R. Martin, one group per decade from the 1990s to the 2020s, counted from 97 printings with a known year on Open Library. Publishers include Bantam Books, Harper Voyager and HarperCollins; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL257943W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL27482W",
+      "status": "geplant",
+      "slot": "2026-11-04 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL27482W/pin.jpg",
+      "title": "The Hobbit by J.R.R. Tolkien – book covers by decade, 1930s to 2020s",
+      "description": "211 book covers of The Hobbit by J.R.R. Tolkien, one group per decade from the 1930s to the 2020s, counted from 269 printings with a known year on Open Library. Publishers include HarperCollins, Minotauro and Houghton Mifflin; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL27482W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL64365W",
+      "status": "geplant",
+      "slot": "2026-11-05 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL64365W/pin.jpg",
+      "title": "Brave New World by Aldous Huxley – book covers by decade, 1930s to 2020s",
+      "description": "144 book covers of Brave New World by Aldous Huxley, one group per decade from the 1930s to the 2020s, counted from 185 printings with a known year on Open Library. Publishers include Bantam Books, Harper & Row and Penguin Books; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL64365W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL893414W",
+      "status": "geplant",
+      "slot": "2026-11-05 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL893414W/pin.jpg",
+      "title": "Dune by Frank Herbert – book covers by decade, 1960s to 2020s",
+      "description": "84 book covers of Dune by Frank Herbert, one group per decade from the 1960s to the 2020s, counted from 104 printings with a known year on Open Library. Publishers include Ace, Berkley and Heyne; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL893414W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL103123W",
+      "status": "geplant",
+      "slot": "2026-11-06 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL103123W/pin.jpg",
+      "title": "Fahrenheit 451 by Ray Bradbury – book covers by decade, 1950s to 2020s",
+      "description": "134 book covers of Fahrenheit 451 by Ray Bradbury, one group per decade from the 1950s to the 2020s, counted from 162 printings with a known year on Open Library. Publishers include Ballantine, Debolsillo and Corgi; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL103123W/decades?via=pinterest",
+      "decided": "2026-10-31"
+    },
+    {
+      "id": "decades-OL27513W",
+      "status": "entwurf",
+      "slot": "2026-11-06 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL27513W/pin.jpg",
+      "title": "The Fellowship of the Ring by J.R.R. Tolkien – book covers by decade, 1950s to 2020s",
+      "description": "152 book covers of The Fellowship of the Ring by J.R.R. Tolkien, one group per decade from the 1950s to the 2020s, counted from 192 printings with a known year on Open Library. Publishers include HarperCollins, Houghton Mifflin and Ballantine Books; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL27513W/decades?via=pinterest",
+      "note": "Liegt ausgefüllt, aber ohne Termin unter „Pin drafts“ in Pinterest (2026-10-31); nach Ja dort nur noch Termin setzen."
+    },
+    {
+      "id": "decades-OL81613W",
+      "status": "entwurf",
+      "slot": "2026-11-07 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL81613W/pin.jpg",
+      "title": "It by Stephen King – book covers by decade, 1980s to 2020s",
+      "description": "53 book covers of It by Stephen King, one group per decade from the 1980s to the 2020s, counted from 57 printings with a known year on Open Library. Publishers include Debolsillo, Scribner and Hodder & Stoughton; each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL81613W/decades?via=pinterest",
+      "note": "Aus der ersten Liste vom 2026-10-31, noch nicht angelegt."
+    },
+    {
+      "id": "decades-OL49488W",
+      "status": "entwurf",
+      "slot": "2026-11-07 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL49488W/pin.jpg",
+      "title": "Ender's Game by Orson Scott Card – book covers by decade, 1980s to 2020s",
+      "description": "49 book covers of Ender's Game by Orson Scott Card, one group per decade from the 1980s to the 2020s, counted from 63 printings with a known year on Open Library; the 2010s alone hold 18 covers in 10 languages. Publishers include Tor, Orbit, Starscape and B de Books. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL49488W/decades?via=pinterest"
+    },
+    {
+      "id": "decades-OL66554W",
+      "status": "entwurf",
+      "slot": "2026-11-08 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL66554W/pin.jpg",
+      "title": "Pride and Prejudice by Jane Austen – book covers by decade, 1910s to 2020s",
+      "description": "196 book covers of Pride and Prejudice by Jane Austen, one group per decade from the 1910s to the 2020s, counted from 189 printings with a known year on Open Library. Publishers include J.M. Dent, Houghton Mifflin, New American Library, the Folio Society and Wordsworth Classics. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL66554W/decades?via=pinterest",
+      "note": "Prüfen: die Seite zeigt zusätzlich eine Gruppe „1810s“ — zwei Cover von Nelson Doubleday und Fine Editions Press, also Nachdrucke mit dem Jahr der Erstausgabe im Katalog. Titel und Text nennen deshalb 1910s als Anfang; wer auf der Seite nach unten scrollt, sieht trotzdem „1810s“. Nehmen oder bis zur Korrektur zurückstellen."
+    },
+    {
+      "id": "decades-OL3335245W",
+      "status": "entwurf",
+      "slot": "2026-11-08 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL3335245W/pin.jpg",
+      "title": "The Catcher in the Rye by J. D. Salinger – book covers by decade, 1950s to 2010s",
+      "description": "74 book covers of The Catcher in the Rye by J. D. Salinger, one group per decade from the 1950s to the 2010s, counted from 135 printings with a known year on Open Library, among them the plain red covers that carry nothing but title and name. Publishers include Little, Brown and Company, Bantam Books, Penguin Books and Alianza. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL3335245W/decades?via=pinterest",
+      "note": "Prüfen: die Seite beginnt mit „1940s“ (ein Cover, 39 Drucke von 26 Verlagen — das Buch erschien 1951, die Jahre im Katalog sind falsch). Titel und Text sagen 1950s."
+    },
+    {
+      "id": "decades-OL483391W",
+      "status": "entwurf",
+      "slot": "2026-11-09 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL483391W/pin.jpg",
+      "title": "Charlotte's Web by E. B. White – book covers by decade, 1950s to 2010s",
+      "description": "90 book covers of Charlotte's Web by E. B. White, one group per decade from the 1950s to the 2010s, counted from 102 printings with a known year on Open Library, Garth Williams' drawings on many of them. Publishers include Harper & Brothers, Harper & Row, Dell Yearling, Scholastic and Puffin. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL483391W/decades?via=pinterest",
+      "note": "Garth Williams steht auf den Covern des Bildes („Pictures by Garth Williams“); die Seite selbst nennt ihn nicht."
+    },
+    {
+      "id": "decades-OL455327W",
+      "status": "entwurf",
+      "slot": "2026-11-09 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL455327W/pin.jpg",
+      "title": "Lord of the Flies by William Golding – book covers by decade, 1950s to 2020s",
+      "description": "84 book covers of Lord of the Flies by William Golding, one group per decade from the 1950s to the 2020s, counted from 95 printings with a known year on Open Library. Publishers include Faber & Faber, Capricorn Books, Penguin Books, Fischer Taschenbuch and Minotauro. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL455327W/decades?via=pinterest"
+    },
+    {
+      "id": "decades-OL468431W",
+      "status": "entwurf",
+      "slot": "2026-11-10 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL468431W/pin.jpg",
+      "title": "The Great Gatsby by F. Scott Fitzgerald – book covers by decade, 1920s to 2020s",
+      "description": "349 book covers of The Great Gatsby by F. Scott Fitzgerald, one group per decade from the 1920s to the 2020s, counted from 341 printings with a known year on Open Library; the 2010s alone hold 140 covers in 14 languages. Publishers include Charles Scribner's Sons, the Modern Library, Bantam Books and Penguin Books. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL468431W/decades?via=pinterest",
+      "note": "Bild: zeigt sechs Cover statt neun (zwei Reihen, oben und unten leer). Brauchbar, aber schwächer als die anderen."
+    },
+    {
+      "id": "decades-OL46125W",
+      "status": "entwurf",
+      "slot": "2026-11-10 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL46125W/pin.jpg",
+      "title": "Foundation by Isaac Asimov – book covers by decade, 1950s to 2010s",
+      "description": "47 book covers of Foundation by Isaac Asimov, one group per decade from the 1950s to the 2010s, counted from 61 printings with a known year on Open Library. Publishers include Panther, Avon, Plaza & Janés, Aleph and HarperCollins. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL46125W/decades?via=pinterest"
+    },
+    {
+      "id": "decades-OL3140822W",
+      "status": "entwurf",
+      "slot": "2026-11-11 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL3140822W/pin.jpg",
+      "title": "To Kill a Mockingbird by Harper Lee – book covers by decade, 1960s to 2020s",
+      "description": "95 book covers of To Kill a Mockingbird by Harper Lee, one group per decade from the 1960s to the 2020s, counted from 157 printings with a known year on Open Library; 81 of those printings date from the 1960s alone. Publishers include Popular Library, Warner Books, Arrow Books, Perennial Classics and Harper. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL3140822W/decades?via=pinterest"
+    },
+    {
+      "id": "decades-OL81633W",
+      "status": "entwurf",
+      "slot": "2026-11-11 19:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL81633W/pin.jpg",
+      "title": "The Shining by Stephen King – book covers by decade, 1970s to 2020s",
+      "description": "59 book covers of The Shining by Stephen King, one group per decade from the 1970s to the 2020s, counted from 74 printings with a known year on Open Library; 14 of them from the 1970s. Publishers include Doubleday, Signet, New English Library, Plaza & Janés and Anchor Books. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL81633W/decades?via=pinterest"
+    },
+    {
+      "id": "decades-OL498556W",
+      "status": "entwurf",
+      "slot": "2026-11-12 12:00",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL498556W/pin.jpg",
+      "title": "Metamorphosis by Franz Kafka – book covers by decade, 1940s to 2020s",
+      "description": "228 book covers of Metamorphosis by Franz Kafka, one group per decade from the 1940s to the 2020s, counted from 225 printings with a known year on Open Library. Publishers include Vanguard Press, Gallimard, Schocken Books, Bantam Classics and W. W. Norton. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL498556W/decades?via=pinterest",
+      "note": "Bild kaputt: drei Cover, drei leere Felder (die Cover luden beim Rendern nicht rechtzeitig). Nicht so posten — erst am Tag des Hochladens das Bild neu abrufen und ansehen, sonst die Reserve unten nehmen."
+    },
+    {
+      "id": "decades-OL2163649W",
+      "status": "entwurf",
+      "board": "Covers through the decades",
+      "picture": "https://buyitscovers.com/book/OL2163649W/pin.jpg",
+      "title": "The Hitchhiker's Guide to the Galaxy by Douglas Adams – book covers by decade, 1970s to 2020s",
+      "description": "66 book covers of The Hitchhiker's Guide to the Galaxy by Douglas Adams, one group per decade from the 1970s to the 2020s, counted from 65 printings with a known year on Open Library. Publishers include Harmony Books, Pan Books, Ballantine Books, Ullstein and Anagrama. Each cover opens its edition with publisher, year and ISBN.",
+      "link": "https://buyitscovers.com/book/OL2163649W/decades?via=pinterest",
+      "note": "Reserve für Metamorphosis. Bild gut; die zwei polnischen Cover oben links sind fast gleich (bekannte Lücke von 5.5a, gefaltet wird auf dem Pin noch nicht)."
+    }
+  ]
+}

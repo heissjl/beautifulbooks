@@ -21,6 +21,20 @@ import { isHiddenCover } from './hiddencovers';
 
 export type CollectionKind = 'authors' | 'series';
 
+/**
+ * Where a collection stands on the hub `/collections` (ROADMAP 6.107 Teil A,
+ * PLAN-6.107 § 5 A 3): a publisher's series, the covers of one designer, a
+ * prize or a reading list, or a publisher's whole list. Set in the data by
+ * the curation tool (`lab/collections/set-group.ts`), never derived from a
+ * slug in code. `HUB_GROUPS` is also the order of the hub.
+ */
+export type CollectionGroup = 'series' | 'designers' | 'lists' | 'publishers';
+export const HUB_GROUPS: readonly CollectionGroup[] = ['series', 'designers', 'lists', 'publishers'];
+
+export function isCollectionGroup(value: unknown): value is CollectionGroup {
+  return typeof value === 'string' && (HUB_GROUPS as readonly string[]).includes(value);
+}
+
 /** One author of an `authors` collection, with every Open Library key that is the same person. */
 export interface CollectionAuthor {
   name: string;
@@ -85,6 +99,8 @@ export interface CollectionRecord {
   slug: string;
   title: string;
   kind: CollectionKind;
+  /** The hub group (see `CollectionGroup`); every record of the file carries one (a test checks), a /curate draft may not. */
+  group?: CollectionGroup;
   intro: string;
   published: boolean;
   /**
@@ -130,6 +146,7 @@ export interface Collection {
   slug: string;
   title: string;
   kind: CollectionKind;
+  group?: CollectionGroup;
   intro: string;
   published: boolean;
   /** The names the collection is drawn from, in the tool's order: authors, or a series' publishers. */
@@ -188,9 +205,46 @@ export function parseCollections(records: CollectionRecord[], { includeDrafts }:
       works.push({ id: p.id, title: p.title, author: p.author, coverId: coverId ?? 0, ...credit, ...(p.coverWork && p.coverWork !== p.id ? { coverWork: p.coverWork } : {}), ...(image ? { image } : {}), ...(r.setSize && p.set ? { set: p.set } : {}) });
     }
     const scope = r.kind === 'series' ? (r.publishers ?? []) : (r.authors ?? []).map(a => a.name);
-    out.push({ slug: r.slug, title: r.title, kind: r.kind, intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}), ...(r.tileShape === 'tall' ? { tileShape: 'tall' as const } : {}) });
+    out.push({ slug: r.slug, title: r.title, kind: r.kind, ...(isCollectionGroup(r.group) ? { group: r.group } : {}), intro: r.intro, published: r.published, scope, works, ...(r.coverCredits ? { coverCredits: r.coverCredits } : {}), ...(r.coverSource ? { coverSource: r.coverSource } : {}), ...(r.setSize === 3 || r.setSize === 7 ? { setSize: r.setSize } : {}), ...(r.tileShape === 'tall' ? { tileShape: 'tall' as const } : {}) });
   }
   return out;
+}
+
+/**
+ * The hub group of a collection. A record without the field — a draft made on
+ * /curate and published from there, which the tool's form has no group for —
+ * goes by its kind: a series is a series, a list of authors is a list. A
+ * fallback for the gap, not a mapping: the file names a group for every record.
+ */
+export function hubGroupOf(c: Pick<Collection, 'kind' | 'group'>): CollectionGroup {
+  return c.group ?? (c.kind === 'series' ? 'series' : 'lists');
+}
+
+/** The collections of each hub group, in `HUB_GROUPS` order, groups without a collection left out. */
+export function groupCollections<T extends Pick<Collection, 'kind' | 'group'>>(collections: T[]): Array<{ group: CollectionGroup; collections: T[] }> {
+  return HUB_GROUPS
+    .map(group => ({ group, collections: collections.filter(c => hubGroupOf(c) === group) }))
+    .filter(g => g.collections.length > 0);
+}
+
+/** What a book page says about a collection its work is in (6.107 Teil A): name, size, and the address without parameters. */
+export interface WorkCollectionLink {
+  slug: string;
+  title: string;
+  /** Tiles on the wall, which is what the hub and the home page count too. */
+  count: number;
+}
+
+/**
+ * The published collections a work stands in, in the site's order — matched on
+ * the work itself or on `coverWork`, the wall a translation's cover opens
+ * (5.10i), so the page that shows the cover is the page that names the
+ * collection. Drafts are never linked: a link is a promise of a page.
+ */
+export function collectionsHolding(collections: Collection[], workId: string): WorkCollectionLink[] {
+  return collections
+    .filter(c => c.published && c.works.some(w => w.id === workId || w.coverWork === workId))
+    .map(c => ({ slug: c.slug, title: c.title, count: c.works.length }));
 }
 
 /** Drafts are for `next dev` only. */
@@ -307,8 +361,9 @@ function withFileFacts(draft: CollectionRecord, file: CollectionRecord): Collect
 
 export function applyContent(records: CollectionRecord[], content: ContentOverrides): CollectionRecord[] {
   // A /curate draft knows no wall layout, so the file's set size survives its content;
-  // nor printing facts, so the file's credits fill the covers it has too (withFileFacts).
-  const out = records.map(r => (content[r.slug] ? { ...withFileFacts(content[r.slug], r), ...(r.setSize ? { setSize: r.setSize } : {}), ...(r.tileShape ? { tileShape: r.tileShape } : {}) } : r));
+  // nor printing facts, so the file's credits fill the covers it has too (withFileFacts);
+  // nor a hub group (6.107), so the file's group stands under it.
+  const out = records.map(r => (content[r.slug] ? { ...withFileFacts(content[r.slug], r), ...(r.setSize ? { setSize: r.setSize } : {}), ...(r.tileShape ? { tileShape: r.tileShape } : {}), ...(r.group && !content[r.slug].group ? { group: r.group } : {}) } : r));
   for (const [slug, r] of Object.entries(content)) if (!records.some(x => x.slug === slug)) out.push(r);
   return out;
 }

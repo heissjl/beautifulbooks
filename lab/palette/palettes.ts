@@ -170,6 +170,10 @@ export function contrastRows(scheme: Scheme): ContrastRow[] {
     ['accent auf bg', scheme.accent, scheme.bg, CONTRAST_AA],
     ['on-accent auf accent', scheme.onAccent, scheme.accent, CONTRAST_AA],
     ['ink auf surface-2', scheme.ink, scheme.surface2, CONTRAST_AA],
+    // Platzhalter stehen auf `surface` und tragen seit 6.110e `ink-2`:
+    // `ink-3` erreicht dort dunkel 4,23 (gemessen 2026-10-22), und diese
+    // Zeile ist der Grund, warum das so bleibt.
+    ['ink-2 auf surface', scheme.ink2, scheme.surface, CONTRAST_AA],
     /*
       Eine 1-px-Trennlinie ist kein Text und keine Bedienelementgrenze, die
       etwas bedeutet; WCAG verlangt dafür nichts. Die Zeile steht hier zur

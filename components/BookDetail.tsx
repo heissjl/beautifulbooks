@@ -9,6 +9,7 @@ import AvailabilityCheck, { SHOP_STATUS_LABEL, SHOP_STATUS_TITLE } from '@/compo
 import CoverImage from '@/components/CoverImage';
 import CoverSheet from '@/components/CoverSheet';
 import AuthorWorks from '@/components/AuthorWorks';
+import InCollections from '@/components/InCollections';
 import WorkPanel from '@/components/WorkPanel';
 import ShareMenu from '@/components/ShareMenu';
 import LoadingStage from '@/components/LoadingStage';
@@ -39,6 +40,7 @@ import { useBookSignal, useReportVerdict, VerdictReport } from './useInsights';
 import { buyLinksIn, commissionNote, isWordsProvider, searchFacts, searchLinksFor, titleSearchLinksIn, trackedBuyHref, trackedSearchHref, type WordsQuery } from '@/lib/buylinks';
 import { linkPlan, orderEditionsForMarket } from '@/lib/linkplan';
 import { coverIdFromSegment, coverUrlFor } from '@/lib/coverurl';
+import type { WorkCollectionLink } from '@/lib/collections';
 import decadePages from '@/data/decade-pages.json';
 import { VERDICT_LEAD } from '@/lib/verdicts';
 import { availabilityEnabled, commerceEnabled } from '@/lib/sitemode';
@@ -65,10 +67,10 @@ import { useLocale, useT } from '@/components/i18n';
   makes an address other than `/`, and it leads to the home page with a filter
   rather than to results (caught on the dev server, 2026-09-10).
 */
-function BackLink({ href, toResults, wall }: { href: string; toResults: boolean; wall?: string }) {
+function BackLink({ href, toResults, wall, wordBelowSm }: { href: string; toResults: boolean; wall?: string; wordBelowSm: boolean }) {
   const t = useT();
   // The wall one came from, by name (Julian, 2026-10-03).
-  return <SharedBackLink href={href} label={wall ?? (toResults ? t('Results') : t('Home'))} title={wall ? t('Back to {wall}', { wall }) : undefined} truncate={!!wall} />;
+  return <SharedBackLink href={href} label={wall ?? (toResults ? t('Results') : t('Home'))} title={wall ? t('Back to {wall}', { wall }) : undefined} truncate={!!wall} wordBelowSm={wordBelowSm} />;
 }
 
 /**
@@ -85,7 +87,8 @@ function Shell({ children, backHref, toResults, right, workId }: { children: Rea
   const wall = !toResults && from ? from : null;
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} />} right={right} search={<HeaderSearch />} />
+      {/* With a page button on the right the back link keeps only its chevron below `sm` (6.110a): the row is 416 px wide at 375 otherwise. */}
+      <SiteHeader left={<BackLink href={wall ? wall.href : backHref} toResults={toResults} wall={wall?.title} wordBelowSm={!right} />} right={right} search={<HeaderSearch />} />
       {walls && <EditingBand />}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-24 pt-8 sm:px-6 lg:px-8">{children}</main>
       <SiteFooterView walls={walls} />
@@ -173,7 +176,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
   return qs ? `/?${qs}` : '/';
 }
 
-function BookDetail() {
+function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
   const t = useT();
   const locale = useLocale();
   const wallsOn = useContext(WallsOn);
@@ -181,6 +184,8 @@ function BookDetail() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  // Dev-only mockup switch for the sidebar (ROADMAP 6.110f): letters a (row under the shops), b (cover 24vh), c (= ab), d (title in the wall's column), combinable; null in production.
+  const sideMock = process.env.NODE_ENV === 'production' ? null : searchParams.get('side');
   const lang = searchParams.get('lang') ?? '';
   const backHref = backHrefFrom(searchParams);
   // A query means there is a result list behind the back link; a bare `?lang=`
@@ -387,7 +392,11 @@ function BookDetail() {
             <Link href={backHref} className="mt-4 inline-block text-sm text-accent hover:underline">{t('Back to search')}</Link>
           </div>
         ) : (
-          <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
+          <>
+            <LoadFailed httpStatus={pages.httpStatus} onRetry={pages.retry} backHref={backHref} toResults={cameFromResults} />
+            {/* The collections do not depend on the catalogue (6.107): a silent catalogue still leaves a way on. */}
+            <InCollections collections={collections} />
+          </>
         )}
       </Shell>
     );
@@ -408,6 +417,12 @@ function BookDetail() {
           hero={preview?.coverUrls[0]}
           expected={view?.covers.length}
         />
+        {/*
+          Already here, under the loading scene (6.107 Teil A): this is the branch
+          the server renders, so the HTML a crawler reads carries the links to
+          the collections before the catalogue has answered anything.
+        */}
+        <InCollections collections={collections} />
       </Shell>
     );
   }
@@ -428,6 +443,7 @@ function BookDetail() {
       market={shopped?.market ?? pages.market ?? 'us'}
       onMarketChange={setMarket}
       share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
+      mock={sideMock}
       verdictFor={isbn13 => verifyIsbnCover(
         selected,
         isbnCovers.byIsbn.get(isbn13) ?? [],
@@ -491,9 +507,10 @@ function BookDetail() {
         screen, in the phone bar next to "Details". Without one there is
         nothing beside, so the header keeps the button for the book itself.
       */
-      right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} />}
+      right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} iconBelowSm />}
     >
-      <TitleBlock title={shown.title} catalogueTitle={shown.catalogueTitle} authors={work.authors.map(readableAuthor)} meta={meta} />
+      {/* `?side=d` under next dev: the title block moves into the wall's column, so the sidebar starts at the top (ROADMAP 6.110f, Julian's idea, mockup only). */}
+      {!sideMock?.includes('d') && <TitleBlock title={shown.title} catalogueTitle={shown.catalogueTitle} authors={work.authors.map(readableAuthor)} meta={meta} />}
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
@@ -501,6 +518,7 @@ function BookDetail() {
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div className="min-w-0 lg:col-span-2">
+            {sideMock?.includes('d') && <TitleBlock title={shown.title} catalogueTitle={shown.catalogueTitle} authors={work.authors.map(readableAuthor)} meta={meta} />}
             <CoverGallery
               groups={view.groups}
               allCovers={view.all}
@@ -551,6 +569,16 @@ function BookDetail() {
         bar — only while a cover is picked, or a phone shows a dead strip from
         the moment the page opens.
       */}
+      {/*
+        "In these collections" first (ROADMAP 6.107 Teil A): it is about this
+        book, "More by …" leads away from it. Under the wall, never in the
+        sidebar, so the first shop link keeps its place on a desktop. The
+        peek-bar room moves here only when there is no author row to carry it.
+      */}
+      <InCollections
+        collections={collections}
+        className={!isDesktop && selected && !(work.authors[0] && work.authors[0] !== 'Unknown') ? 'pb-20' : ''}
+      />
       {work.authors[0] && work.authors[0] !== 'Unknown' && (
         <AuthorWorks
           key={work.id}
@@ -613,6 +641,8 @@ function ScanProgress({ checked, total, done }: { checked: number; total: number
 }
 
 interface CoverDetailsProps {
+  /** Dev-only mockup switch for the sidebar's order and cover size (ROADMAP 6.110f): 'a' or 'b', else null. */
+  mock?: string | null;
   workId: string;
   cover: Cover;
   editions: EditionView[];
@@ -689,7 +719,7 @@ function SimilarCovers({ coverId, query }: { coverId: string; query: string }) {
   );
 }
 
-function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share }: CoverDetailsProps) {
+function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, anyEditionLinks, editionsByScan, author, query, market, onMarketChange, verdictFor, share, mock }: CoverDetailsProps) {
   const t = useT();
   const wallsOn = useContext(WallsOn);
   const isDesktop = useIsDesktop();
@@ -891,7 +921,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
         picture stays the largest thing in the column, and the shops arrive
         with it (ROADMAP 1.2, candidate b).
       */}
-      <div className="cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 lg:max-w-[min(100%,31vh)]">
+      {/* `?side=b` or `c` under next dev: the cover at 24vh instead of 31vh (ROADMAP 6.110f, mockup only). */}
+      <div className={`cover-shadow relative mx-auto aspect-[2/3] max-w-[180px] overflow-hidden rounded-card bg-surface-2 sm:max-w-xs lg:mx-0 ${mock && /[bc]/.test(mock) ? 'lg:max-w-[min(100%,24vh)]' : 'lg:max-w-[min(100%,31vh)]'}`}>
         <CoverImage src={shownUrl} alt={t('Selected cover')} sizes="(max-width: 640px) 180px, (max-width: 1024px) 320px, 30vw" priority />
       </div>
       <p className="mt-2 text-xs text-ink-3">
@@ -901,7 +932,8 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
       </p>
       {shown && (
         <>
-          {scanStrip}
+          {/* `?side=a` or `c` under next dev: the printings row after the shops (ROADMAP 6.110f, mockup only). */}
+          {!(mock && /[ac]/.test(mock)) && scanStrip}
           <EditionBlock
             key={shown.id}
             gap="mt-2 lg:mt-6"
@@ -917,6 +949,7 @@ function CoverDetails({ cover, editions, coversPerEdition, workId, workTitle, an
             verdict={shown.isbn13 ? verdictFor(shown.isbn13) : { status: 'unknown' }}
             afterLead={<SimilarCovers coverId={cover.id} query={query} />}
           />
+          {mock && /[ac]/.test(mock) && scanStrip}
         </>
       )}
     </div>
@@ -1304,11 +1337,11 @@ function shopLinkTitle(link: BuyLink, t: Translate): string {
  * description, Open Graph image and structured data (SPEC §10 D10). Nothing
  * about the behaviour changed in the move.
  */
-export default function BookDetailPage({ walls = false }: { walls?: boolean }) {
+export default function BookDetailPage({ walls = false, collections = [] }: { walls?: boolean; collections?: WorkCollectionLink[] }) {
   return (
     <WallsOn.Provider value={walls}>
       <Suspense>
-        <BookDetail />
+        <BookDetail collections={collections} />
       </Suspense>
     </WallsOn.Provider>
   );

@@ -26,8 +26,18 @@ export default function SiteFooterView({ walls }: { walls: boolean }) {
     <footer className="border-t border-line">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-6 text-xs text-ink-3 sm:px-6 lg:px-8">
         <p>{t('Data from Open Library and Google Books. Cover images belong to their publishers.')}</p>
-        <p className="flex items-center gap-4">
+        <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
           {commerceEnabled() && <span>{t('Purchase links may earn us a commission.')}</span>}
+          {/*
+            The header's three ways into the site, once more (ROADMAP 6.110g):
+            below `sm` the header hides them, and a reader who lands on a book
+            page from a shared link had no way to the collections or the game
+            except through the home page. The footer names what the header
+            names, with the same words and no switch, as the header does.
+          */}
+          <Link href="/collections" className={link}>{t('Collections')}</Link>
+          <Link href="/versus" className={link}>{t('Game')}</Link>
+          <Link href="/shelfportrait" className={link}>{t('Shelf-Portrait')}</Link>
           {walls && <Link href="/create" className={link}>{t('Your collections')}</Link>}
           <Link href="/about" className={link}>{t('About')}</Link>
           {/* "Imprint & contact" (Julian, 2026-10-09, 6.72): a German reader recognises it, everyone else understands it; the page itself stays "Impressum". */}

@@ -61,6 +61,16 @@ export default function CollectionsShelf({ collections, locale = DEFAULT_LOCALE 
           </li>
         ))}
       </ul>
+      {/*
+        One more way to the hub, under the cards (ROADMAP 6.107 Teil A): the number of collections
+        the site shows now, as a link — a crawler that lands here should leave knowing where the
+        rest are, and a reader should know how many there are. Counted from the live list.
+      */}
+      <p className="mt-5 text-sm text-ink-2">
+        <Link href="/collections" className="-my-2 inline-block py-2 underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">
+          {collections.length === 1 ? t('{n} collection', { n: 1 }) : t('{n} collections', { n: collections.length })}
+        </Link>
+      </p>
     </section>
   );
 }

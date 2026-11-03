@@ -328,9 +328,10 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
         {shown
           ? shown.votes === null
             ? t('{n} covers', { n: shown.covers })
-            : shown.votes === 1 ? t('1 vote so far · {covers} covers', { covers: shown.covers }) : t('{votes} votes so far · {covers} covers', { votes: shown.votes, covers: shown.covers })
+            : shown.votes === 1 ? t('{covers} covers, 1 vote so far.', { covers: shown.covers }) : t('{covers} covers, {votes} votes so far.', { votes: shown.votes, covers: shown.covers })
           : ' '}
-        {shown?.store === 'memory' ? ` · ${t('development: votes live in memory')}` : ''}
+        {/* Sentences, not a chain of dots (6.110d). */}
+        {shown?.store === 'memory' ? ` ${t('Development: votes live in memory.')}` : ''}
       </p>
 
       {current && 'failure' in current ? (
@@ -449,10 +450,11 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
               <button type="button" disabled={!pair || busy} onClick={() => pair && report(pair.a)} className="underline underline-offset-2 hover:text-ink-2 disabled:opacity-50">
                 {t('Report the left one')}
               </button>
-              {' · '}
+              {` ${t('or')} `}
               <button type="button" disabled={!pair || busy} onClick={() => pair && report(pair.b)} className="underline underline-offset-2 hover:text-ink-2 disabled:opacity-50">
                 {t('the right one')}
               </button>
+              .
             </p>
             {lastPick && (
               <div className="flex max-w-md items-center gap-3 rounded-card border border-line px-3 py-2">
@@ -465,12 +467,13 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
                   </Link>
                   {lastPick.workId ? (
                     <>
-                      {' · '}
+                      {` ${t('or')} `}
                       <Link href={`/book/${lastPick.workId}`} target="_blank" rel="noopener" className="whitespace-nowrap text-accent underline underline-offset-2">
                         {t('all its covers')}
                       </Link>
                     </>
                   ) : null}
+                  .
                 </p>
               </div>
             )}

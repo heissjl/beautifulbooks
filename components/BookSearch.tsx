@@ -62,7 +62,7 @@ export default function BookSearch({
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t('Title or author')}
           aria-label={t('Title or author')}
-          className="min-w-0 flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink placeholder:text-ink-3"
+          className="min-w-0 flex-1 rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink"
         />
         <button className="rounded-full bg-ink px-4 py-1.5 text-sm text-bg transition-colors hover:bg-accent">{t('Search')}</button>
       </form>

@@ -13,7 +13,8 @@
     "publish:rowohlts-monographien",
     "publish:tolkien-covers-by-heinz-edelmann",
     "spiel",
-    "rechte"
+    "rechte",
+    "konto:pinterest"
   ],
   "posts": [
     {
@@ -95,8 +96,8 @@
       "channel": "pinterest",
       "kind": "setup",
       "text": "Unternehmenskonto, Website bestätigen (DNS-TXT bei INWX, PLAN-5.5-5.6 §7), Pinnwände anlegen: eine je veröffentlichter Sammlung, dazu „Covers through the decades“. Nichts pinnen vor Rechte-Entscheidung und 5.5a.",
-      "status": "vorschlag",
-      "note": ""
+      "status": "gepostet",
+      "note": "2026-10-31: Konto @buyitscovers war schon ein Unternehmenskonto; Profiltext (X-Fassung) gesetzt, Website per DNS-TXT bei INWX bestätigt („Connected“), fünf Pinnwände mit Beschreibung (SF Masterworks, Feminist Press, The Otherwise Award, Covers through the decades, Beautiful Books with Pretty Covers). Pins noch keine (Historie 2026-10-31)."
     },
     {
       "id": "setup-tiktok",

@@ -65,6 +65,15 @@ export const CLOSED_TO_ALL = ['/api/', '/go/', '/admin/'];
  */
 export const CARD_IMAGES = ['/api/inspiration/poster'];
 
+/**
+ * The pin pictures (ROADMAP 5.5a): what Pinterest's crawler fetches when a
+ * pin names one. Under `/book/` and `/collections/`, which the general rules
+ * leave open — named here so that a later rule on the book space cannot
+ * close them unnoticed. Open to `*` only, like the card. `compare.jpg` is the
+ * comparison pin, three editions side by side (second format).
+ */
+export const PIN_IMAGES = ['/book/*/pin.jpg', '/book/*/compare.jpg', '/collections/*/pin.jpg'];
+
 export interface RobotsRule {
   userAgent: string | string[];
   allow?: string | string[];
@@ -74,7 +83,7 @@ export interface RobotsRule {
 
 export function robotsRules(): RobotsRule[] {
   return [
-    { userAgent: '*', allow: ['/', ...CARD_IMAGES], disallow: CLOSED_TO_ALL },
+    { userAgent: '*', allow: ['/', ...CARD_IMAGES, ...PIN_IMAGES], disallow: CLOSED_TO_ALL },
     // The general rules, and a pause between requests (see above).
     { userAgent: [...SEARCH_CRAWLERS], allow: '/', disallow: CLOSED_TO_ALL, crawlDelay: CRAWL_DELAY },
     { userAgent: [...TRAINING_CRAWLERS, ...TOOL_CRAWLERS], disallow: '/' },
