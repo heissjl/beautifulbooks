@@ -7099,3 +7099,11 @@ Fortsetzung der Messung vom 2026-10-22 (dort die Tabelle der Suchen und der Werk
 **Nicht gemessen:** das geöffnete Suchfeld am Telefon (die Sonde sieht den Zustand beim Laden; das Feld öffnet erst ein Tipp auf die Lupe) und andere Breiten als 390 und 1280 (die 320 px aus dem Vorbefund von 6.30a gehören zu 6.68). Die andere Jahrzehnte-Seite mit vielen Ausgaben (*Gatsby*, 15 Seiten) wurde nicht kalt gerendert, um den Katalog nicht erneut zu belasten.
 
 **Analytik-Checkliste:** nichts bewegt sich — eine Messung.
+
+## 2026-10-26 — Die Checkliste vor dem Veröffentlichen (ROADMAP 6.51)
+
+Gebaut aus den verstreuten Regeln: [docs/publish.md](publish.md) mit den Schritten 0–10 (Doku-Commits, abgeleitete Dateien, Tests/`tsc`/Lint/Build samt `scripts/check-prerender.mjs`, Ansehen und Messen, Analytik-Frage, Git, Push, Deploy abwarten, einmal in Produktion prüfen, Festhalten, Sammlungen veröffentlichen) und einer Fallen-Tabelle; jeder Schritt nennt seine Quelle (CLAUDE.md, umgang §4/§9/§11/§12/§13, die Hooks `guard-push`, `stop-check`, `block-generated`, das Client-Gedächtnis). Entwurf 2026-10-22, Julians Entscheidungen: „erstes nein“ (kein `/code-review` bei reinen Doku-Commits), „zweites ja“ (eigener Abschnitt für Sammlungen), „vor großen changes und bei denen die speicher und export route berühren“ (`npm run backup`), am 2026-10-26 „skill und nein“: Form ist der Skill `/publish` (nur von Hand, wie `/abhaken` und `/messen`), und Commits tragen keine `Co-Authored-By`-Zeile — umgang §11 entsprechend geändert (`docs/plans/PLAN-11.md` nennt sie noch, ein erledigter Plan, unverändert).
+
+**Nicht geprüft:** `/publish` wurde nicht ausgelöst, die Datei nicht an einem echten Push erprobt. Zwei Stellen stehen in der Datei unter „Offen“: der doppelte SHA-Push (zwei widersprüchliche Beobachtungen in umgang §4) und der Name der Build-Variablen (`IMPRINT_*` in `.env.example`, kein echter Widerspruch).
+
+**Analytik-Checkliste:** nichts bewegt sich (Doku und ein Skill).
