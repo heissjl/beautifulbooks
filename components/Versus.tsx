@@ -441,6 +441,8 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
               )}
             </div>
           )}
+          {/* Directly under the pair (ROADMAP 6.66): the keys belong to what is being looked at. */}
+          <p className="mt-3 hidden text-center text-xs text-ink-3 [@media(hover:hover)]:block">{t('← and → choose, ↓ skips.')}</p>
           <div className="mt-6 flex flex-col items-center gap-3">
             <button type="button" disabled={!pair || busy} onClick={() => pair && skip(pair)} className="btn">
               {t('Can’t decide')}
@@ -459,7 +461,9 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
             {lastPick && (
               <div className="flex max-w-md items-center gap-3 rounded-card border border-line px-3 py-2">
                 <Image src={lastPick.src} alt="" width={28} height={42} unoptimized className="h-[42px] w-[28px] shrink-0 object-contain" />
-                <p className="min-w-0 text-[13px] leading-snug text-ink-2">
+                <p className="min-w-0 text-[13px] leading-snug text-ink-2" aria-live="polite">
+                  {/* What the vote did, in words that are true for every vote: no figure for this pair, which has hardly ever been played (ROADMAP 6.66). */}
+                  <span className="block text-ink">{t('Counted: one vote for this cover in the standings.')}</span>
                   {t('Your last pick:')} <span className="text-ink">{lastPick.title}</span>
                   {lastPick.author ? ` ${t('by {author}', { author: lastPick.author })}` : ''}.{' '}
                   <Link href={lastPick.href} target="_blank" rel="noopener" className="whitespace-nowrap text-accent underline underline-offset-2">
@@ -504,7 +508,6 @@ export default function Versus({ initialPairs = [], walls = false }: { initialPa
                 </div>
               </div>
             )}
-            <p className="hidden text-center text-xs text-ink-3 [@media(hover:hover)]:block">{t('← and → choose, ↓ skips.')}</p>
           </div>
         </>
       )}

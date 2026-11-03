@@ -86,7 +86,7 @@ export default async function MatchupPage({ params, locale = DEFAULT_LOCALE }: {
             {t('This pair has an address of its own, which is why you were sent to it. Vote, and the game goes on with pairs drawn at random.')}
           </p>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-2">
-            {rich(t('Two covers of two books, side by side, and one question: which one would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.'), {
+            {rich(t('Two covers side by side, usually from two books and now and then from two editions of the same one, and one question: which would you rather look at? The pool holds {covers} covers from {books} books, each of them a printed edition on record at Open Library or Google Books. Nobody is judging the writing here — only the picture on the front.'), {
               covers: <b className="text-ink tabular-nums">{POOL.covers.length}</b>,
               books: <b className="text-ink tabular-nums">{poolBooks().length}</b>,
             })}
