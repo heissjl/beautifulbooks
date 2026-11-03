@@ -20,19 +20,12 @@ Argumente: `$ARGUMENTS` — ohne Angabe beide Plattformen, 72 Stunden. `bsky` al
 ## 1. Bluesky suchen (ohne Login)
 
 ```bash
-python3 -I lab/kalender/zettel_bsky.py docs/antwortzettel/<datum>/bsky-candidates.json
+python3 -I lab/kalender/zettel_bsky.py docs/antwortzettel/<datum>/bsky-candidates.json [stunden]
 ```
 
-22 Begriffe, letzte 72 h, öffentliche API `api.bsky.app` (nicht `public.api.bsky.app`: die gibt der Suche 403), gewichtet nach Likes + 2 × Antworten + 2 × Reposts. Felder je Zeile: `link`, `handle`, `name`, `age_h`, `likes`, `replies`, `reposts`, `text`, `alt` (Bildbeschreibungen), `ext` (verlinkte Adresse), `queries`, `reply`. Ein anderes Zeitfenster: die Zahl `72` im Skript ist die Grenze; für einen Zettel mit anderem Fenster das Skript kopieren, nicht die Zahl im Repository ändern. Vier Begriffe laufen gern in den Timeout — das ist in Ordnung, das Skript meldet sie auf stderr und macht weiter.
+22 Begriffe, letzte 72 h (zweites Argument ändert das Fenster), öffentliche API `api.bsky.app` (nicht `public.api.bsky.app`: die gibt der Suche 403), gewichtet nach Likes + 2 × Antworten + 2 × Reposts. Felder je Zeile: `link`, `handle`, `did`, `name`, `age_h`, `likes`, `replies`, `reposts`, `text`, `alt` (Bildbeschreibungen), `images` (die Bildadressen in voller Größe), `followers`, `bio` (seit dem 3.11., eine `getProfiles`-Anfrage je 25 Konten), `ext` (verlinkte Adresse), `queries`, `reply`. Vier Begriffe laufen gern in den Timeout — das ist in Ordnung, das Skript meldet sie auf stderr und macht weiter. Die Konsole zeigt die ersten 60 Zeilen mit `F<Follower>` und `img<Anzahl>`.
 
-Lesen: die ersten 40 bis 60 Zeilen des JSON ansehen, dazu jede weitere Zeile mit Ausgaben-, Cover- oder Haul-Wörtern; dann jeden Kandidaten **selbst lesen**: wer schreibt, was die Antworten schon sagen, was auf dem Bild ist. Der Skript-Text ist der Köder, nicht die Entscheidung. **Die Bilder eines Threads zeigt der Browser-Bereich nicht** (nur den ALT-Text) — sie kommen aus der öffentlichen API:
-
-```bash
-curl -s 'https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=<handle>'   # did, followersCount, description (Rechteinhaber-Frage)
-curl -s 'https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=at://<did>/app.bsky.feed.post/<rkey>'   # thread.post.embed.images[].fullsize, replies
-```
-
-Das `fullsize`-Bild mit `curl` holen und mit `Read` ansehen (Pause zwischen den Abrufen). Der `rkey` ist das letzte Glied des `bsky.app`-Links.
+Lesen: die ersten 40 bis 60 Zeilen des JSON ansehen, dazu jede weitere Zeile mit Ausgaben-, Cover- oder Haul-Wörtern; `bio` und `followers` entscheiden die Rechteinhaber-Frage (§3) schon in der Liste, die `images` mit `curl` holen und mit `Read` ansehen (Pause zwischen den Abrufen; **der Browser-Bereich zeigt die Bilder eines Threads nicht**, nur den ALT-Text). Dann jeden verbliebenen Kandidaten **selbst lesen** — die Antworten im Thread holt `curl -s 'https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=at://<did>/app.bsky.feed.post/<rkey>'` (`thread.replies[].post.record.text`; der `rkey` ist das letzte Glied des `bsky.app`-Links), schneller als der Browser-Bereich, der je Seite 20–50 s braucht. Der Skript-Text ist der Köder, nicht die Entscheidung.
 
 ## 2. X suchen (nur in Julians Chrome)
 
