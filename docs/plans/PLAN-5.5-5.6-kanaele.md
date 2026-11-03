@@ -195,7 +195,7 @@ Die Frage über allem ist dieselbe wie in 5.7: **Bringt ein Kanal Leute dazu, ei
 
 **Ein Pin:**
 - **Titel** sachlich, mit den Wörtern, die gesucht werden: „Dune by Frank Herbert — 60 years of covers". Kein „the most beautiful", keine Rangliste (Regel aus PLAN-5 §2).
-- **Beschreibung** in zwei Sätzen: was zu sehen ist, wie viele Ausgaben, welche Verlage. Dazu die Wörter „book cover", „edition", der Reihen- oder Verlagsname. Höchstens zwei, drei Hashtags; Pinterest wertet sie kaum noch.
+- **Beschreibung** in zwei Sätzen: was zu sehen ist, wie viele Ausgaben, welche Verlage. **Für Jahrzehnte-Pins seit 2026-11-03 anders (Julian, an *Ender’s Game*):** beginnt mit „A selection of <Zahl> book covers …“, kein Satz mit Verlagen; `decadePin` in `lib/pins.ts` schreibt noch die alte Form. Dazu die Wörter „book cover", „edition", der Reihen- oder Verlagsname. Höchstens zwei, drei Hashtags; Pinterest wertet sie kaum noch.
 - **Link** mit Marke: `https://buyitscovers.com/book/OL…/decades?via=pinterest`. Ohne die Marke landet ein Besuch aus der Pinterest-App meist unter „direkt".
 - **Pinnwand** nach Thema: eine je Sammlung, dazu „Covers through the decades", „Science fiction covers", „Penguin Classics covers" usw. Gruppen-Pinnwände bringen erfahrungsgemäß wenig und kosten Pflege.
 
