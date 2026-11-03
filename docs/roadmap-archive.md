@@ -1412,3 +1412,17 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 
 
 **Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--n14-vollständig-gemessen-suche-werkseite-mit-wand-jahrzehnte-seite-roadmap-630a)
+
+## 6.17
+
+- [ ] **6.17 Die Startseite zeigt 100 Werke im Wechsel statt immer derselben zwölf.** (Julian, 2026-09-08: „ich will die 12 Startseitenbücher kuratieren. Lass uns eine Liste von 100 erstellen, die im Wechsel dort auftauchen bei einem neuen Laden, aber schon vorgeladen sind, damit es schnell geht.") Heute stehen zwölf feste Werke in `lib/curated.ts`, jedes mit einer von Hand gewählten Cover-ID.
+
+  **Die Liste gibt es schon halb:** `data/index-works.json` führt **100 Werke** (12 kuratierte, 88 nach Leser- und Ausgabenzahl gewählt), und `data/cover-index.json` kennt zu ihnen **10.362 Cover** mit Signaturen — offline, ohne eine einzige Anfrage. Daraus wird die Liste, sobald zu jedem Werk ein Cover feststeht (6.18).
+
+  **Zu bauen:** `data/curated.json` mit Werk-ID, Titel, Autor, gewählter Cover-ID (und dem geprüften Jahr aus 6.16); `lib/curated.ts` liest sie und gibt **zwölf** davon aus. Die Auswahl muss serverseitig geschehen und darf nicht bei jedem Rendern anders sein, sonst springt die Startseite beim Hydrieren; Vorschlag: ein Zeitfenster (die Reihenfolge dreht sich stündlich weiter), damit dieselbe Auslieferung stabil ist und ein Wiederkehrer trotzdem etwas Neues sieht. **Vorgeladen heißt hier zweierlei**: die Bilder der zwölf über `<link rel=preload>` oder `priority`, und der Weg nach dem Klick — die Detailseite der zwölf sollte vorgerendert sein (`generateStaticParams` macht das heute für die zwölf; mit Rotation über 100 wären es 100 vorgerenderte Seiten, was zur ISR-Frist passt, aber den Build verlängert; zu messen).
+
+  **1984 fliegt raus** (Julian, ausdrücklich). Damit sind es 99; das hundertste Werk kommt beim nächsten Bau des Cover-Index dazu, weil die App nur Cover zeigen kann, die der Index kennt.
+
+  **Teilweise erledigt am 2026-09-08 spät:** die Wand zeigt **18 Kacheln statt zwölf** (drei volle Reihen zu sechs, Julian: „ich will trotzdem eine volle Startseite"), und sie nimmt sie aus `data/curated.json` — Julians eigenen Wahlen aus der Kuratier-App —, aufgefüllt aus der alten Handliste, damit die Wand vom ersten Tag des Kuratierens an voll ist. **Was noch fehlt, ist die Rotation**, und sie hängt an einer Entscheidung, nicht an Code: die Startseite wird vorgerendert, eine hier gewürfelte Reihenfolge stünde also im HTML anders als im Browser und React risse sie wieder ein. Drei Wege: (a) stündlich über ISR (`revalidate`), dann sieht ein Wiederkehrer alle Stunde etwas Neues, jeder Aufruf innerhalb der Stunde dasselbe — billig, statisch; (b) die Auswahl in einer Server-Komponente treffen und als Prop hineinreichen, dann rotiert es je Auslieferung, aber die Seite wird dynamisch und kostet je Aufruf eine Funktion; (c) nach dem Hydrieren im Browser tauschen — dann flackert die erste Reihe. **Empfehlung: (a)**, weil „vorgeladen und schnell" Julians eigene Bedingung war und (b) genau die aufgibt.
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--die-startseite-im-stundenwechsel-roadmap-617)
