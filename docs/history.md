@@ -7010,3 +7010,78 @@ Julian: „mach eine suche für x und bsky für antwortposts“. Bluesky-Skript:
 
 **Analytik-Checkliste:** die Stimme wird wie zuvor gezählt, `/api/versus/vote` und die Antwort unverändert, nichts über den Spieler gespeichert oder gesendet; (1)–(7) nicht berührt.
 
+
+## 2026-10-22 — N14 über Suche, Werkseite und Jahrzehnte-Seite gemessen, Jahrzehnte-Seite offen (ROADMAP 6.30a)
+
+`npm run build` mit den Werten aus dem Hauptordner (`IMPRINT_*` Platzhalter), `next start -p 3118` außerhalb der Sandbox, dann `npx tsx lab/n14/measure.ts <url> --wait 12000 --json`, je eine Adresse, 8 s Pause dazwischen. Bei 390 × 844 / 1280 × 800.
+
+| Seite | Breite 390 / Seitenbreite | abgeschnitten bei 390 | Platzhalter 390 | Breite 1280 / Seitenbreite | abgeschnitten bei 1280 | Platzhalter 1280 | Bilder (leer) 390 / 1280 |
+|---|---|---|---|---|---|---|---|
+| `/?q=mumbo jumbo` | 390 / 390 | 0 | 181 px in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/?q=1984` | 390 / 390 | **2** | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 3 (0) / 9 (0) |
+| `/?q=gravity's rainbow` | 390 / 390 | 0 | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/?q=the great gatsby` | 390 / 390 | 0 | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/?q=pride and prejudice` | 390 / 390 | 0 | 181 in 212 | 1280 / 1280 | 0 | 181 in 606 | 4 (0) / 4 (0) |
+| `/book/OL468431W` | 390 / 390 | 0 | (Feld versteckt) | 1280 / 1280 | **1** | 85 in 178 | 2 (0) / 2 (0) |
+| `/book/OL1168083W/decades` | **nicht gemessen** | | | | | | |
+
+**Die beiden Fälle bei 390 auf „1984“** sind die Autorenzeile der Karte „Animal Farm / Nineteen Eighty-Four“ („George Orwell, George Orwel…“) und der Titel „'1984' i esse raznykh let …“ — beides gewollt gekürzte Zeilen (Titel zweizeilig begrenzt, Autorenzeile eine Zeile). Das „George Orwel“ ist kein Fehler der Seite: Open Library führt an dem Datensatz einen zweiten Autor mit dem Tippfehler (`OL10737793A`). Die eine Zeile bei 1280 auf der Werkseite ist der Klappentext, auf drei Zeilen begrenzt.
+
+**Neu oder bekannt.** Bekannt: die zweizeilig begrenzten Titel (6.68, gemessen 2026-09-11), die Kopfzeile bei 320 px (Vorbefund von 6.30a, hier nicht berührt: 320 gehörte nicht zu dieser Messung). **Neu: keiner, der behoben werden müsste** — keine seitliche Überbreite, kein Platzhalter, der nicht passt, kein leeres Bild auf den sechs gemessenen Seiten.
+
+**Zwei Fehler des Messwerkzeugs, einer behoben.** (1) Das Suchfeld der Kopfzeile ist auf dem Telefon `display: none`, bis das Lupen-Symbol es öffnet; die Sonde rechnete es mit Breite 0 und meldete „Platzhalter 85 px in −44 px“, ein falscher Alarm. `lab/n14/measure.ts` überspringt jetzt Felder ohne Layout (`offsetParent === null`). (2) Offen: das geöffnete Telefonfeld wird gar nicht gemessen — die Messung sieht nur den Zustand beim Laden.
+
+**Was nicht gemessen werden konnte.** Seit der ersten Werkseite antwortete `openlibrary.org` auf diesen Mac nur noch mit einem TLS-Abbruch (`curl` Exit 35 auf `/works/OL468431W.json`, während `covers.openlibrary.org` 200 gab): die Sperre aus docs/umgang.md §1, nach sieben Suchen, einer Werkseite und fünf Ausgabenseiten des Jahrzehnte-Laufs binnen einer halben Stunde. Folgen: (a) `/book/OL1168083W/decades` und die von Gatsby antworteten mit 500 („Open Library stopped answering“, 6.43/6.71: ein Fehler, nie eine halbe Seite) — die Jahrzehnte-Seite ist **nicht** gemessen; der Wert 980 px Breite bei 390, den die Sonde bei der 1984-Seite las, ist die Fehlerseite ohne Viewport-Angabe und kein Befund. (b) Die Werkseite wurde **ohne geladene Wand** gemessen (die Wand holt ihre Seiten über `/api/works`, auch das ging nicht): Kopf, Titel, Klappentext, Seitenleiste ja, die Kachelwand nein. Wiederholen, sobald `curl https://openlibrary.org/works/OL468431W.json` wieder 200 gibt; die Jahrzehnte-Seite braucht danach einmal ihre kalte Runde (≈ 15 Ausgabenseiten).
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung; im Werkzeug nur die Sonde angepasst.
+
+## 2026-10-22 — Übersetzungen als eigene Karten: Stichprobe über 18 Suchen (ROADMAP 6.15 Schritt 3)
+
+Werkzeug und Methode: `lab/translations/` (README). 18 feste Suchen, je einmal gegen die Live-Suche (7 s Pause; die Suche der Seite fragt Open Library von Vercel aus, weil `openlibrary.org` Julians Mac an diesem Tag abwies, umgang §1), 169 Karten, jede von Hand als `same` / `about` / `other` gelesen (`lab/translations/labels.json`; das Urteil ist meines und nicht gegengeprüft — die Grenzfälle sind Bearbeitungen, Sammlungen und zweisprachige Ausgaben).
+
+| | Karten |
+|---|---|
+| alle Karten | 169 |
+| das gesuchte Buch selbst (`same`) | 41 |
+| Sekundärliteratur, Lektürehilfen (`about`) | 94 |
+| ein anderes Buch (`other`) | 34 |
+
+**Das Buch steht in 12 von 18 Suchen auf mehr als einer Karte** (67 %); überzählige Karten (alle außer der mit den meisten Ausgaben): **23** — mehr als die Hälfte der 41 Karten, die das Buch zeigen. Davon **16 in einer anderen Sprache als dem Original** (die Übersetzung als eigenes Werk, in 11 von 18 Suchen), **3 in der Sprache des Originals** (zwei spanische und eine deutsche Dublette, z. B. die RAE-Ausgabe von *Cien años de soledad*, „Der Prozess“ neben „Der Proceß“), **4 ohne Sprachangabe** (zweisprachige Ausgaben, „The Transformation“). Sauber (eine Karte) sind sechs Suchen: Steppenwolf, Siddhartha, Anna Karenina, Madame Bovary, Der Fremde, Die Pest — dort trägt der Hauptdatensatz alle Sprachen. Am schlechtesten: „ansichten böll“ (vier Karten für ein Buch, drei überzählig) und *Crime and Punishment* (fünf, vier überzählig: vier englische Datensätze neben dem russischen).
+
+Die Zahl wird nicht vom Ranking verursacht: die überzähligen Karten stehen meist auf den ersten fünf Plätzen. Beim Lesen fiel nebenbei auf, dass „the trial kafka“ den *Proceß* an Platz 2 hinter *Metamorphosis* führt (derselbe Autor, zählt in `other`).
+
+**Was daraus folgt.** Die Spec-Zeile „Übersetzungen sind Ausgaben desselben Werks“ stimmt für die Suche in der Mehrheit der Fälle nicht, und das nicht als Randfall. Eine **dritte Identitätsregel ist damit weder gerechtfertigt noch ausgeschlossen**: ob LCC-Cutter oder `id_librarything` Original und Übersetzung verbinden, ließ sich nicht prüfen (kein Zugriff auf die Werk-Datensätze, s. o.); Namens- und Autorenkey-Regeln taugen nicht (der Autorenkey ist nur notwendig, Bölls ganzes Werk teilt ihn, §6.15). Die 23 überzähligen Karten sind ein fertiger Prüfsatz für diese Frage (23 Paare, 46 Werk-Datensätze, bei 6 s Pause ≈ 5 Minuten, wenn die Sperre aufgehoben ist). Bis dahin ist der **ehrliche Ausgang §2.1 umschreiben** (Werk = Datensatz bei Open Library; Übersetzungen können eigene Werke sein; die Karte sagt es nicht, die Werkseite zeigt „Auch erschienen als“) — das habe ich **nicht** getan, weil es von 3b abhängt und Julians Entscheidung ist.
+
+**Grenzen:** 18 Suchen, 11 Autoren, fast nur Kanon-Titel mit hohen Ausgabenzahlen; die Labels sind eine Lesung; die Antworten kommen aus dem CDN-Cache der Live-Seite (Stand der Datenschicht von `main`, nicht dieses Zweigs — die Zweige unterscheiden sich in der Suche nicht).
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung, kein Code der Seite.
+
+## 2026-10-26 — Übersetzungen, eigene Werke geprüft: weder LCC noch LibraryThing verbindet sie (ROADMAP 6.15 Schritt 3b)
+
+Die 23 überzähligen Karten der Stichprobe vom 2026-10-22 sind 23 Paare (Hauptkarte des Buchs, überzählige Karte), zusammen 31 verschiedene Werk-Datensätze (`lab/translations/pairs.json`). `lab/translations/probe.ts` holte jeden Datensatz einmal von `openlibrary.org/works/<id>.json`, mit 6 s Pause und Abbruch bei der ersten Weigerung; die Sperre vom 2026-10-22 war aufgehoben (ein Probeabruf am 2026-10-26: 200 in 3,4 s), alle 31 Abrufe gingen durch, keine Weigerung.
+
+| Signal | auf **beiden** Seiten eines Paars | wenn ja: gleich |
+|---|---|---|
+| `lc_classifications` (LCC-Klasse und Cutter-Basis) | **0 von 23** | — |
+| `identifiers.librarything` | **0 von 23** | — |
+
+Einzelheiten: LCC steht an nur zwei der 31 Datensätze (*Master and Margarita* OL676009W und *Il nome della rosa* OL8996439W, beide jeweils nur auf der Hauptkarte); `id_librarything` an vier Hauptkarten (*Crime and Punishment* 10072, *Le petit prince* 11883, *War and Peace* 995, dazu je eine) und an **keinem** der 23 überzähligen Datensätze. Die Hypothese aus 6.15 („die Cutter-Basis `A7`/`A513` verbindet Original und Übersetzung“) ließ sich nicht bestätigen, weil die Übersetzungs-Datensätze die Felder gar nicht tragen; an den Böll-Datensätzen aus dem Anlass (OL279833W, OL24817943W, OL27970558W, OL15394877W) steht heute weder LCC noch LibraryThing, die Angabe vom 2026-09-08 ist also nicht mehr belegbar oder wurde nie im Werk-, sondern im Ausgabensatz gesehen.
+
+**Ausgang:** keine dritte Identitätsregel. SPEC §2.1 ist umgeschrieben (Sprache steht nicht in der Regel, Übersetzungen sind aber nicht immer Ausgaben desselben Works; die Seite behauptet das nicht), und die Zeile „Auch erschienen als“ ist als 6.110 neu aufgenommen. Grenze: LCC und LibraryThing sind nur auf **Werk**-Datensätzen geprüft; die Ausgabensätze tragen LCC öfter (so sah es die Böll-Messung), aber über sie zu verbinden hieße, jede Werkseite um Ausgabenabrufe zu erweitern, die nichts Neues kosten dürfen (E10, N3).
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung und ein Spec-Absatz; kein Code der Seite.
+
+## 2026-10-26 — N14 vollständig gemessen: Suche, Werkseite mit Wand, Jahrzehnte-Seite (ROADMAP 6.30a)
+
+Fortsetzung der Messung vom 2026-10-22 (dort die Tabelle der Suchen und der Werkseite ohne Wand). Open Library antwortete wieder; lokal derselbe Build, `next start -p 3118` außerhalb der Sandbox, Anfragen einzeln mit Pause (Jahrzehnte-Seite, dann 30 s, dann die Werkseite mit Wand).
+
+| Seite | 390 × 844 | 1280 × 800 |
+|---|---|---|
+| `/book/OL2897798W/decades` (*Watchmen*, das Werk mit den wenigsten Ausgaben unter denen mit mehreren Jahrzehnten, um Open Library zu schonen; Rendern 17,5 s kalt) | Breite 390 / 390, 0 abgeschnitten, 20 Bilder, 0 leer | 1280 / 1280, 0 abgeschnitten, Platzhalter 85 px in 178, 20 Bilder, 0 leer |
+| `/book/OL468431W` (*Gatsby*) mit geladener Wand, 40 s Wartezeit | 390 / 390, 0 abgeschnitten, **91 Bilder, 0 leer** | 1280 / 1280, **1** abgeschnitten (Klappentext, auf drei Zeilen begrenzt, gewollt), Platzhalter 85 in 178, **180 Bilder, 0 leer** |
+
+**Neu oder bekannt:** nichts Neues zu beheben. Die einzige abgeschnittene Zeile ist der gewollte Klappentext; die zweizeiligen Titel der Suchkarten sind bekannt (6.68). Zusammen mit der Tabelle vom 2026-10-22 ist N14 für Startseite (6.30), fünf Suchen, Werkseite und Jahrzehnte-Seite erfüllt.
+
+**Nicht gemessen:** das geöffnete Suchfeld am Telefon (die Sonde sieht den Zustand beim Laden; das Feld öffnet erst ein Tipp auf die Lupe) und andere Breiten als 390 und 1280 (die 320 px aus dem Vorbefund von 6.30a gehören zu 6.68). Die andere Jahrzehnte-Seite mit vielen Ausgaben (*Gatsby*, 15 Seiten) wurde nicht kalt gerendert, um den Katalog nicht erneut zu belasten.
+
+**Analytik-Checkliste:** nichts bewegt sich — eine Messung.

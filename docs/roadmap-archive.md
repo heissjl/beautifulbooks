@@ -1357,3 +1357,58 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 - [ ] **5.5a Pin-Format 1000×1500 je Werk und je Sammlung.** Kommt vor dem ersten Pin; wie gepostet wird: [Plan §7](plans/PLAN-5.5-5.6-kanaele.md#7-wie-auf-pinterest-posten-julian-2026-10-04-wie-sollte-ich-auf-pinterest-posten). (Claude; [Plan §2.2](plans/PLAN-5.5-5.6-kanaele.md#22-bild-kanäle-erst-nach-julians-rechte-entscheidung-6).) Aus derselben Maschinerie wie die Vorschaukarte, kein Google-Aufruf, Titel, Autor, vier bis neun Cover; Hochladen von Hand. **Rechte-Entscheidung gefallen am 2026-10-17: (a), Cover mit Quellenangabe (PLAN-5.6c §9) — 5.5a kann gebaut werden**, danach das Pinterest-Konto (PLAN-5.5-5.6 §7).
 
 **Gebaut 2026-10-31.** → [Historie](history.md#2026-10-31--das-pin-format-für-pinterest-roadmap-55a)
+
+## 6.15
+
+- [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** *In Produktion am 2026-09-08 nachgemessen: **4 Karten statt 6**, der Roman trägt 16 statt 14 Ausgaben. Schritt 1 und 2 erledigt auf `mvp-hobby` ([Historie](history.md)): Klammerzusätze am Titelende fallen weg, der Autoren-Key führt zusammen — und trennt ausdrücklich nicht, weil Open Library Reed unter zwei Keys führt und die Trennung Mumbo Jumbo gespalten hätte. Offen: Schritt 3, die Stichprobe zu Übersetzungen.* **Stand 2026-10-22: die Stichprobe ist gelaufen** ([Historie](history.md#2026-10-22--übersetzungen-als-eigene-karten-stichprobe-über-18-suchen-roadmap-615-schritt-3), `lab/translations/`): in 12 von 18 Suchen steht das Buch auf mehr als einer Karte, 23 überzählige Karten, 16 davon Übersetzungen. **Schritt 3b (offen, Claude, ≈ 5 Min bei offener Tür):** an den 23 Paaren prüfen, ob LCC-Cutter oder `id_librarything` Original und Übersetzung verbinden; trägt eines, wird es die dritte Regel, sonst schreibt Julian-freigegeben §2.1 um. (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
+
+  **Gemessen am 2026-09-08**, Suche „ansichten böll", sechs Karten:
+
+  | Karte | Was es ist |
+  |---|---|
+  | Ansichten eines Clowns (14 Ausg.) | das Werk, aus fünf OL-Datensätzen zusammengefasst |
+  | The clown (2) | **dasselbe Buch**, englisch |
+  | Opinioni di un clown (1) | **dasselbe Buch**, italienisch |
+  | Opiniones de un payaso (2) | **dasselbe Buch**, spanisch |
+  | Ansichten eines Clowns (Methuen's Twentieth Century German Texts) (2) | **dasselbe Buch**, kommentierte Schulausgabe |
+  | Heinrich Böll–Ansichten eines Clowns, Bernd Balzer (1) | ein Buch **über** das Werk, zu Recht getrennt |
+
+  Von 22 gefundenen Ausgaben gehören 21 zu einem einzigen Roman.
+
+  **Warum die Regel nicht greift.** Identitätsregel 2 vergleicht normalisierten Titel **und** Erstautor. Eine Übersetzung hat einen anderen Titel, also greift sie nie. Der Fall der Schulausgabe scheitert an etwas Kleinerem: die Normalisierung schneidet Untertitel nach `:` ab, aber keine Klammerzusätze — „Ansichten eines Clowns (Methuen's …)" bleibt ein anderer Titel.
+
+  **Was es an Verbindungen tatsächlich gibt, geprüft:**
+
+  | Signal | Befund |
+  |---|---|
+  | Autoren-Key | **Bei allen fünf gleich** (`OL2633288A`). Notwendig, aber weit davon entfernt, hinreichend zu sein — sonst verschmölze Bölls ganzes Werk. |
+  | `id_wikidata` | auf keinem Datensatz vorhanden |
+  | Erstjahr | 1963, 1963, 1972, 1990 — Übersetzungen tragen das Jahr **ihrer** Ausgabe |
+  | ISBN | keine Überschneidung, es sind verschiedene Bücher im Regal |
+  | `id_librarything` | nur auf einem der fünf (`65736`) — LibraryThing gruppiert Übersetzungen sonst gut |
+  | **LCC** | OL279833W: `PT-2603.00000000.O394 **A7**`, The clown: `PT-2603.00000000.O394 **A513**` — **gleiche Autoren-Cutter-Basis**, und die Ziffernfolge unterscheidet Original von Übersetzung. Die italienische Ausgabe hat gar keine LCC. |
+
+  **Vorschlag, in drei Schritten und nach Sicherheit geordnet:**
+
+  1. **Klammerzusätze normalisieren** (`lib/normalize.ts`): ein Titel, dem nur ein Reihen- oder Ausgabenzusatz in Klammern anhängt, ist derselbe Titel. Fängt die Methuen-Ausgabe, ist risikoarm und in einer Stunde erledigt. **Zuerst machen.**
+
+     **Nachtrag 2026-09-09, beim Prüfen von 1.1 gesehen:** die Normalisierung wirkt nur beim *Vergleichen*, nicht beim *Anzeigen*. Überschrift und Karte lauten bei *The Great Gatsby* „**The Great Gatsby(Published In 1925)**“ — so steht der Titel wörtlich im Open-Library-Datensatz OL468431W, samt fehlendem Leerzeichen. Das trifft das meistbenutzte Testwerk der Spec und ist der erste Satz, den ein Besucher dort liest. Zwei Wege, die einander nicht ausschließen: den Klammerzusatz auch für die Anzeige abschneiden (dieselbe Regel wie in Schritt 1), und den Datensatz bei Open Library korrigieren — wozu die Seitenleiste seit 1.1 den Link anbietet.
+
+     **Am 2026-09-09 im Katalog nachgeprüft und im Code verortet** (der erste Abruf antwortete 503, der zweite 200 — eine Episode wie in 1.10 beschrieben): `openlibrary.org/works/OL468431W.json` trägt als Titel wörtlich `The Great Gatsby(Published In 1925)`. Die Bereinigung existiert bereits, aber nur für den Vergleich: `stripTrailingBrackets` ist modulprivat in `lib/normalize.ts` und wird allein von `normalizeTitle` benutzt; auf dem Anzeigeweg wird der Rohtitel durchgereicht. Der Aufwand ist damit eine exportierte Hilfsfunktion plus die Stellen, die einen Werktitel anzeigen — **eine bis zwei Stunden für den ersten Satz, den ein Besucher auf dem meistbenutzten Testwerk der Spec liest.**
+  2. **Nach Autoren-Key statt Autorennamen zusammenfassen.** Regel 2 vergleicht heute normalisierte Namen; der Key ist strenger und stabiler (Open Library führt dieselbe Person allerdings unter mehreren Keys, das bleibt zu beachten). Ändert an Böll nichts, macht aber 6.13 sicherer.
+  3. **Übersetzungen: messen, dann entscheiden — und im Zweifel nicht verschmelzen.** Es gibt **keine verlässliche maschinelle Verbindung** zwischen diesen Datensätzen. Jede Regel, die stark genug wäre, „The clown" an „Ansichten eines Clowns" zu binden, bindet auch zwei verschiedene Bücher desselben Autors aneinander, und eine falsche Verschmelzung ist schlimmer als eine verpasste. Zu messen wäre, über eine Stichprobe von etwa dreißig übersetzten Werken:
+     - wie oft die **LCC-Cutter-Basis** bei Original und Übersetzung übereinstimmt (die Hypothese, dass `A7` und `A513` systematisch zusammengehören, ist **zu prüfen**, nicht zu glauben),
+     - wie oft `id_librarything` auf beiden Seiten steht.
+
+     Trägt eines davon, wird es zur dritten Identitätsregel. Trägt keines, bleiben Übersetzungen **eigene Karten** — dann muss aber **§2.1 ehrlich umgeschrieben werden**, statt eine Regel zu behaupten, die der Code nicht einlöst, und die Werkseite bekommt eine Zeile „Auch erschienen als" mit den Karten, die denselben Autoren-Key und einen ähnlichen Erstveröffentlichungszeitraum haben.
+
+  **Zusammenhang mit 6.13:** dort geht es um Datensätze mit **demselben** Titel, die die Karte bereits zusammenfasst und die Wand nicht lädt. Hier geht es um Datensätze mit **anderem** Titel, die niemand zusammenfasst. Schritt 1 und 2 gehören zu beiden.
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--übersetzungen-eigene-werke-geprüft-weder-lcc-noch-librarything-verbindet-sie-roadmap-615-schritt-3b)
+
+## 6.30a
+
+- [ ] **6.30a Dieselbe Messung über Suche, Werkseite und Jahrzehnte-Seite (N14).** *Vorbefund 2026-09-11: auf der Werkseite bei 320 px bricht der Seitentitel „Beautiful Books“ in der Kopfzeile auf zwei Zeilen um, sobald „Share“ daneben steht. Die Überbreite der Werkseite (806 px auf 390) ist behoben, gemessen von 320 bis 768 px ([Historie](history.md#2026-09-11--die-messleiste-der-sprach-pillen-machte-die-seite-am-telefon-806-px-breit-roadmap-68-n14)); beim Messen im Browser-Panel vorher einen Frame erzwingen.* Die Startseite ist nur die, die Julian fotografiert hat. Messen bei 390 und 1280 px: abgeschnittene Zeilen, Platzhalter gegen Feld, leere Flächen, Zustände, die nur ein Gerät hat. Die Messung aus 6.30 (ein Stück JavaScript im Browser, im [Historie-Eintrag](history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) festgehalten) als wiederverwendbares Werkzeug. Zwei Stunden, Claude. **Stand 2026-10-22:** gemessen sind die fünf Abnahme-Suchen und die Werkseite von Gatsby ohne Wand ([Historie](history.md#2026-10-22--n14-über-suche-werkseite-und-jahrzehnte-seite-gemessen-jahrzehnte-seite-offen-roadmap-630a)) — keine Überbreite, kein Platzhalter, kein leeres Bild; die Kürzungen sind die gewollten (Titel, Autorenzeile, Klappentext). **Offen: Jahrzehnte-Seite und die geladene Wand der Werkseite** (Open Library sperrte den Mac mitten in der Messung), und die geöffnete Suche am Telefon, die die Sonde nicht auslöst. Das Häkchen folgt nach diesen drei.
+
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--n14-vollständig-gemessen-suche-werkseite-mit-wand-jahrzehnte-seite-roadmap-630a)
