@@ -113,6 +113,8 @@ Die Quelle, von der die Seite lebt (SPEC §3 F3). Details zu Werken, Ausgaben un
 - **Eine Messung an einem Foto ist keine** — Regalfoto-Änderungen nur gegen das Testset (`lab/shelf/evaluate.ts`); drei Fotos trugen zwei Tage eine falsche Erklärung.
 - **`tsc` rot in erzeugten Dateien:** „name 2.ts“-Kopien unter `.next` erzeugen doppelte Bezeichner; seit 2026-10-18 schließt `tsconfig.json` `**/* ?.*` aus (6.42), und die Arbeitskopie liegt nicht mehr in iCloud. Bleibt `tsc` in `.next/**/types` rot: zuerst `find . -path ./node_modules -prune -o -name '* [0-9].*' -print`, dann an gelöschte Routen denken (`rm -rf .next/dev/types`, 6.51) — nicht den Code verdächtigen. vitest und eslint kennen den Ausschluss nicht; eine Doppeldatei neben den Quellen zeigt sich dort weiter.
 
+- **Die Tageszeit von der Uhr, nie aus dem Gefühl (2026-11-04):** eine Sitzung, die morgens begann, bearbeitete die Pins abends — und schrieb, zwei Pins seien „um 9:45, vor ihrem Termin“ veröffentlicht worden; `date` sagte 21:51, die Pins kamen pünktlich. Vor jeder Aussage über „vor“ oder „nach“ einem Termin einmal `date` lesen (ein Hintergrundlauf schreibt seine Zeiten ins Log, die Sitzung selbst hat keine Uhr).
+
 ## 10. Dev-Server und Caches
 
 - **Turbopack liefert alte CSS** (2026-09-28): nach Änderungen an `app/globals.css` nur `.next/dev/cache/turbopack` löschen, **nie** `.next/dev/cache/fetch-cache` — der hält die Open-Library-Antworten, ohne die ein Dev-Server aus Bash heraus ohne Netz jede Werkseite als „unavailable“ zeigt. Gelieferte Regeln über `document.styleSheets` prüfen, nicht per grep.
