@@ -82,28 +82,6 @@ function arg(name: string, fallback: string): string {
   return i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : fallback;
 }
 
-/**
- * The publishers most often on record, at most three. Spellings of one house
- * are counted together — "Ace" and "Ace Books", "Penguin" and "Penguin Books
- * Ltd" — by dropping the words that only say it is a company; shown is the
- * shortest spelling, and a record in capitals is set in title case.
- */
-function topPublishers(editions: ReadonlyArray<{ publisher?: string }>, limit = 3): string[] {
-  const counts = new Map<string, { name: string; n: number }>();
-  for (const e of editions) {
-    const raw = e.publisher?.trim();
-    if (!raw) continue;
-    const name = raw === raw.toUpperCase() && /[A-Z]{3,}/.test(raw) ? raw.toLowerCase().replace(/(^|[\s-])\S/g, c => c.toUpperCase()) : raw;
-    const key = name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\b(books?|publishers?|publishing|press|inc|ltd|limited|co|company|gmbh|verlag|editions?|editorial)\b/g, ' ').replace(/\s+/g, ' ').trim();
-    if (!key) continue;
-    const entry = counts.get(key) ?? { name, n: 0 };
-    entry.n++;
-    if (name.length < entry.name.length) entry.name = name;
-    counts.set(key, entry);
-  }
-  return [...counts.values()].sort((a, b) => b.n - a.n).slice(0, limit).map(p => p.name);
-}
-
 /** The first books on the wall, each title once and short enough to read in a description: a printing shown twice names its book once. */
 function firstTitles(works: ReadonlyArray<{ title: string }>, limit = 3, maxLength = 36): string[] {
   const out: string[] = [];
@@ -158,7 +136,6 @@ async function decadeRow(id: string, origin: string): Promise<{ decade: Pin; com
     records: detail.editions.filter(e => e.year).length,
     from: decades.from ?? 0,
     to: decades.to ?? 0,
-    publishers: topPublishers(detail.editions),
   }, origin);
   return { decade, compare };
 }

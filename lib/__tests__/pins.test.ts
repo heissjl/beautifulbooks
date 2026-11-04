@@ -5,12 +5,10 @@ const LIVE = 'https://buyitscovers.com';
 
 const dune = decadePin({
   id: 'OL893414W', title: 'Dune', author: 'Frank Herbert', covers: 83, records: 140, from: 1960, to: 2020,
-  publishers: ['Ace', 'Hodder', 'New English Library'],
 }, LIVE);
 
 const potter = decadePin({
   id: 'OL82563W', title: "Harry Potter and the Philosopher's Stone", author: 'J. K. Rowling', covers: 176, records: 300, from: 1990, to: 2020,
-  publishers: ['Bloomsbury'],
 }, LIVE);
 
 const masterworks = collectionPin({
@@ -64,12 +62,12 @@ describe.each<[string, Pin]>([['Dune', dune], ['Harry Potter', potter], ['SF Mas
 );
 
 describe('a decade pin', () => {
-  it('carries the page’s numbers, the span and the publishers', () => {
+  it('carries the page’s numbers and the span in Julian’s words, and no publishers (2026-11-03)', () => {
     expect(dune.board).toBe('Covers through the decades');
     expect(dune.title).toBe('Dune by Frank Herbert – book covers by decade, 1960s to 2020s');
     expect(dune.description).toBe(
-      '83 book covers of Dune by Frank Herbert, one group per decade from the 1960s to the 2020s, counted from 140 printings with a known year on Open Library. ' +
-      'Publishers include Ace, Hodder and New English Library; each cover opens its edition with publisher, year and ISBN.',
+      'A selection of 83 book covers of Dune by Frank Herbert, one group per decade from the 1960s to the 2020s, counted from 140 printings with a known year on Open Library. ' +
+      'Each cover opens its edition with publisher, year and ISBN.',
     );
     expect(dune.link).toBe('https://buyitscovers.com/book/OL893414W/decades?via=pinterest');
     expect(dune.picture).toBe('https://buyitscovers.com/book/OL893414W/pin.jpg');
@@ -77,14 +75,14 @@ describe('a decade pin', () => {
 
   it('drops the span before it would cut the title', () => {
     const long = decadePin({
-      id: 'OL1W', title: 'The Life and Opinions of Tristram Shandy, Gentleman', author: 'Laurence Sterne and 2 others', covers: 30, records: 40, from: 1900, to: 2010, publishers: [],
+      id: 'OL1W', title: 'The Life and Opinions of Tristram Shandy, Gentleman', author: 'Laurence Sterne and 2 others', covers: 30, records: 40, from: 1900, to: 2010,
     }, LIVE);
     expect(long.title.length).toBeLessThanOrEqual(PIN_TITLE_MAX);
     // With the author the title would be 107 characters: the span goes first, then the author.
     expect(long.title).toBe('The Life and Opinions of Tristram Shandy, Gentleman – book covers by decade');
-    const shorter = decadePin({ id: 'OL1W', title: 'The Life and Opinions of Tristram Shandy', author: 'Laurence Sterne', covers: 30, records: 40, from: 1900, to: 2010, publishers: [] }, LIVE);
+    const shorter = decadePin({ id: 'OL1W', title: 'The Life and Opinions of Tristram Shandy', author: 'Laurence Sterne', covers: 30, records: 40, from: 1900, to: 2010 }, LIVE);
     expect(shorter.title).toBe('The Life and Opinions of Tristram Shandy by Laurence Sterne – book covers by decade, 1900s to 2010s');
-    expect(long.description).toMatch(/^30 book covers of .* Each cover opens its edition/);
+    expect(long.description).toMatch(/^A selection of 30 book covers of .* Each cover opens its edition/);
   });
 });
 

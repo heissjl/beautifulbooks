@@ -49,11 +49,14 @@ export interface DecadePinFacts {
   records: number;
   from: number;
   to: number;
-  /** The publishers most often on record, at most three, in that order. */
-  publishers: readonly string[];
 }
 
-/** A pin for a decade page: the work's pin picture, the decades board, a link to `/book/<id>/decades`. */
+/**
+ * A pin for a decade page: the work's pin picture, the decades board, a link
+ * to `/book/<id>/decades`. The words are Julian's (2026-11-03, at *Ender's
+ * Game*): „A selection of <n> book covers …", and no sentence about
+ * publishers — the publishers are on the page, the pin says what is there.
+ */
 export function decadePin(f: DecadePinFacts, origin: string = SITE_URL): Pin {
   const by = f.author ? ` by ${f.author}` : '';
   const span = f.from && f.to ? `, ${f.from}s to ${f.to}s` : '';
@@ -61,10 +64,8 @@ export function decadePin(f: DecadePinFacts, origin: string = SITE_URL): Pin {
   if (title.length > PIN_TITLE_MAX) title = `${f.title}${by} – book covers by decade`;
   if (title.length > PIN_TITLE_MAX) title = `${f.title} – book covers by decade`;
   const decades = f.from && f.to ? ` from the ${f.from}s to the ${f.to}s` : '';
-  const first = `${f.covers} book covers of ${f.title}${by}, one group per decade${decades}, counted from ${f.records} printings with a known year on Open Library.`;
-  const second = f.publishers.length > 0
-    ? `Publishers include ${listOf(f.publishers)}; each cover opens its edition with publisher, year and ISBN.`
-    : 'Each cover opens its edition with publisher, year and ISBN.';
+  const first = `A selection of ${f.covers} book covers of ${f.title}${by}, one group per decade${decades}, counted from ${f.records} printings with a known year on Open Library.`;
+  const second = 'Each cover opens its edition with publisher, year and ISBN.';
   return {
     picture: `${origin.replace(/\/$/, '')}/book/${f.id}/pin.jpg`,
     board: DECADES_BOARD,
