@@ -6889,3 +6889,23 @@ Julian: „Ja, beheben“. **Die Sonde:** Tinte war „weit weg von #131110“; 
 **Die Zeiten sagen nichts über den kalten Fall:** Black-Band und Reihe Hanser brauchten am Vortag 67 und 55 s; heute lagen ihre Cover im Fetch-Cache des Dev-Servers. Der Hinweis in den beiden Entwürfen bleibt: vor dem Hochladen einmal von der Produktion holen, dort hat die Funktion 30 s. **Aufgefallen, nicht geändert:** der Vergleichs-Pin steht noch auf dem einfarbigen Grund, die Raster-Pins auf dem Mosaik (Julian, 2026-10-31: „die nächsten entwürfe sollten den mosaik hintergrund haben“); auf einem Vergleichs-Pin bliebe viel Mosaik sichtbar, die Beschriftung müsste den dunklen Streifen bekommen.
 
 **Grün:** `npx tsc --noEmit`, ESLint auf den geänderten Dateien, `npm run build` mit der `.env.local` des Hauptordners. `npm run test:run`: 1.739 von 1.745 im vollen Lauf; die sechs roten liegen in vier Dateien, die nichts hiervon berühren (Index, Herofan, Shelf-Portrait-Brett, Simulation), und liefen bei einer Rechnerlast um 40 in die 5-s-Frist; mit `--testTimeout=60000` bestehen alle 43 Tests dieser Dateien. Analytik: nichts betroffen — Werkzeug, keine Route, kein Text der Seite.
+
+## 2026-11-04 — Der Vergleichs-Pin auf dem Mosaik (ROADMAP 5.5a)
+
+Julian: „Ja, mit Mosaik“. Der Vergleichs-Pin steht jetzt auf dem Grund der Raster-Pins: `pinGround` aus `app/pin.tsx` (bisher dort privat), je Werk derselbe Grund (Samen `pin:compare:<id>`), Cover mit Schatten. **Anders als beim Raster:** `head` und `foot` des Vergleichs-Layouts laufen durch die ganze freie Fläche bis zur Reihe; ganz abgedunkelt bliebe kein Mosaik zu sehen. Dunkel werden darum nur drei enge Kästen, `words` in `lib/comparelayout.ts` (Titel mit Autor, Beschriftungsband, Fußzeile; 2 Tests mehr, darunter: über und unter der Reihe bleibt mehr Luft als die 60 px, über die die Abdunklung ausläuft). `next.config.ts` nennt die Route jetzt wie die anderen Pin-Routen; Schriften und Mosaikbilder waren schon vorher im Build-Trace, weil sie über dieselben Module kommen (nachgelesen im `route.js.nft.json`: 6 und 20 Dateien).
+
+**Gemessen unter `npm run dev`**, alle `ok`, Kataloglesung und Cover meist aus dem Fetch-Cache des Dev-Servers:
+
+| Pin | Cover | Kopf-Tinte y | Raster ab y | Beschriftung bis y | Fuß-Tinte y (Rand 1436) | Größe | Zeit |
+|---|---|---|---|---|---|---|---|
+| *Harry Potter and the Philosopher's Stone* | 3/3 | 75–244 | 538 | 1103 | 1405–1435 | 429 KB | 12,0 s |
+| *Nineteen Eighty-Four* | 3/3 | 77–191 | 512 | 1077 | 1405–1435 | 362 KB | 5,0 s |
+| *The Hobbit* | 3/3 | 77–190 | 512 | 1077 | 1405–1435 | 393 KB | 5,1 s |
+| *Brave New World* | 3/3 | 77–190 | 512 | 1077 | 1405–1435 | 356 KB | 5,7 s |
+| *Dune* | 3/3 | 78–184 | 512 | 1077 | 1405–1436 | 372 KB | 5,5 s |
+| *It* | 3/3 | 78–191 | 512 | 1077 | 1405–1435 | 372 KB | 6,2 s |
+
+Das Mosaik macht die Bilder gut doppelt so groß (*Dune* 159 → 372 KB). Der Raster-Pin ist unverändert (*Dune* 508 KB, 9/9). Alle sechs angesehen: Titel, Jahre und Verlage lesbar, nichts abgeschnitten. **Kalt nicht gemessen:** die 27,5 s vom 2026-10-31 galten ohne Mosaik; nach dem Deploy einen kalten Vergleichs-Pin einmal abrufen und die Zeit lesen. **Beim Ansehen auch:** *The Hobbit* „1966, Mariner Books“ trägt „Now a major motion picture“ und „75th anniversary“, das Jahr passt nicht zum Bild; *Brave New World* „1950“ ist blaues Leinen ohne Umschlag. Das gehört zur offenen Wahl von Hand (`COMPARE_COVERS`); die Liste ist dafür nicht neu erzeugt.
+
+**Grün:** `npx tsc --noEmit`, ESLint, `npm run build`; `npm run test:run` mit `--testTimeout=30000` ohne Fehler. **Die Erklärung vom Vortag war zu eng:** mit der Standardfrist laufen `coverindex` und `herofan` auch bei niedriger Grundlast rot (Last 3 vor dem Lauf; drei Tests, 1.744 von 1.747 grün), allein brauchen dieselben Tests unter 1 s. Es ist der volle Lauf selbst, der sich mit seinen vielen Prozessen ausbremst; die Tests berühren nichts von hier. Analytik: nichts betroffen — dieselbe Route, kein neuer Text, nichts gezählt.
+

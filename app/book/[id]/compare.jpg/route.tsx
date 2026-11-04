@@ -50,5 +50,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     candidates: candidates.map(c => ({ url: c.cover.url, year: c.year, publisher: c.publisher })),
     explicit: requested.length > 0,
     complete: detail.complete,
+    seed: detail.work.id,
   });
 }
