@@ -46,6 +46,7 @@ export const PROBE = `(() => {
   const canvas = document.createElement('canvas').getContext('2d');
   const fields = [];
   for (const input of document.querySelectorAll('input[placeholder], textarea[placeholder]')) {
+    if (input.offsetParent === null) continue; // display:none (the header field on a phone until opened) has no room to measure
     const cs = getComputedStyle(input);
     canvas.font = cs.font || (cs.fontSize + ' ' + cs.fontFamily);
     const textWidth = Math.round(canvas.measureText(input.placeholder).width);

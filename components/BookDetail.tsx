@@ -49,6 +49,7 @@ import type { Market } from '@/lib/market';
 import type { Translate } from '@/lib/i18n/translate';
 import type { BuyLink, Cover, EditionView } from '@/lib/model';
 import { displayTitle, languageName, normalizeTitle } from '@/lib/normalize';
+import { readableAuthor, shownTitle } from '@/lib/titleshown';
 import { coverForId, leadLanguagesSettled } from '@/lib/pages';
 import { groupByDecade, worthAPage } from '@/lib/decades';
 import { shapeOf } from '@/lib/queryshape';
@@ -132,7 +133,7 @@ function LoadFailed({ httpStatus, onRetry, backHref, toResults }: {
   );
 }
 
-function TitleBlock({ title, authors, meta }: { title?: string; authors?: string[]; meta?: string }) {
+function TitleBlock({ title, catalogueTitle, authors, meta }: { title?: string; catalogueTitle?: string; authors?: string[]; meta?: string }) {
   if (!title) {
     return (
       <div className="mb-8 max-w-3xl animate-pulse" aria-hidden="true">
@@ -144,6 +145,8 @@ function TitleBlock({ title, authors, meta }: { title?: string; authors?: string
   return (
     <div className="mb-8 max-w-3xl">
       <h1 className="text-4xl leading-[1.05] text-ink sm:text-5xl">{title}</h1>
+      {/* The catalogue's own title, when the page shows an edition's instead (6.2). */}
+      {catalogueTitle && <p className="mt-2 text-sm text-ink-3">{catalogueTitle}</p>}
       {authors && authors.length > 0 && <p className="mt-3 text-lg text-ink-2">{authors.join(', ')}</p>}
       <p className="mt-1 min-h-5 text-sm text-ink-3">{meta ?? ''}</p>
     </div>
@@ -175,6 +178,7 @@ function backHrefFrom(searchParams: URLSearchParams): string {
 
 function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
   const t = useT();
+  const locale = useLocale();
   const wallsOn = useContext(WallsOn);
   const params = useParams<{ id: string; coverId?: string }>();
   const router = useRouter();
@@ -403,8 +407,9 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
     return (
       <Shell workId={params.id} backHref={backHref} toResults={cameFromResults}>
         <TitleBlock
-          title={work?.title ?? preview?.title}
-          authors={work?.authors ?? preview?.authors}
+          // The card's choice first (6.2): the title the reader clicked, until the editions are in.
+          title={preview?.title ?? work?.title}
+          authors={(work?.authors ?? preview?.authors)?.map(readableAuthor)}
           meta={work?.editionCount ? t('{n} editions', { n: work.editionCount }) : undefined}
         />
         <LoadingStage
@@ -479,6 +484,8 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
   */
   const decadesPossible = merged.done && worthAPage(groupByDecade(view.covers, merged.editions));
   const hasDecades = decadesPossible || decadePages.pages.some(p => p.id === work.id);
+  // The title in the search's language, else the reader's for a title not in Latin script (6.2).
+  const shown = shownTitle(work.title, { query: searchParams.get('q') ?? undefined, editions: merged.editions, languages: [locale] });
   const meta = [
     `${progressLabel(view.covers.length, merged, t)}.`,
     // A year two sources agree on, or Julian confirmed, is stated; the catalogue's alone is quoted (6.16).
@@ -503,7 +510,7 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
       right={selected ? undefined : <ShareMenu workId={work.id} title={work.title} author={work.authors[0]} iconBelowSm />}
     >
       {/* `?side=d` under next dev: the title block moves into the wall's column, so the sidebar starts at the top (ROADMAP 6.110f, Julian's idea, mockup only). */}
-      {!sideMock?.includes('d') && <TitleBlock title={work.title} authors={work.authors} meta={meta} />}
+      {!sideMock?.includes('d') && <TitleBlock title={shown.title} catalogueTitle={shown.catalogueTitle} authors={work.authors.map(readableAuthor)} meta={meta} />}
       <ScanProgress checked={merged.checked} total={merged.total} done={merged.done} />
 
       {view.groups.length === 0 ? (
@@ -511,7 +518,7 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
       ) : (
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div className="min-w-0 lg:col-span-2">
-            {sideMock?.includes('d') && <TitleBlock title={work.title} authors={work.authors} meta={meta} />}
+            {sideMock?.includes('d') && <TitleBlock title={shown.title} catalogueTitle={shown.catalogueTitle} authors={work.authors.map(readableAuthor)} meta={meta} />}
             <CoverGallery
               groups={view.groups}
               allCovers={view.all}

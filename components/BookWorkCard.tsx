@@ -5,6 +5,7 @@ import CoverMosaic from './CoverMosaic';
 import { useCardCovers } from './useCardCovers';
 import { storeWorkPreview } from './useWorkPreview';
 import type { WorkSummary } from '@/lib/model';
+import { readableAuthor, shownTitle } from '@/lib/titleshown';
 import { useT } from './i18n';
 
 /** The search a card was found by, carried to the detail page for its back link (SPEC F2.7). */
@@ -29,7 +30,9 @@ interface BookWorkCardProps {
  * always author + translators, so the card shows the primary author alone.
  */
 export function displayAuthors(authors: readonly string[]): string {
-  return authors.length > 2 ? authors[0] : authors.join(', ');
+  // A Cyrillic name in Latin letters (6.2): a reader who typed "bulgakov" can read "Mikhail Bulgakov".
+  const readable = authors.map(readableAuthor);
+  return readable.length > 2 ? readable[0] : readable.join(', ');
 }
 
 /**
@@ -57,6 +60,11 @@ export default function BookWorkCard({ work, origin = {}, isbn }: BookWorkCardPr
   // card nears the viewport (SPEC §9.3 step 14).
   const t = useT();
   const coverUrls = useCardCovers(work.id, work.coverUrls);
+  // The title in the search's language (6.2). An author's list asks Open Library for English
+  // editions instead, which stand in only for a title not in Latin script.
+  const shown = origin.author
+    ? shownTitle(work.title, { editions: work.matchedTitle ? [{ title: work.matchedTitle, language: 'en' }] : [] })
+    : shownTitle(work.title, { matched: work.matchedTitle, matchedLanguage: work.matchedLanguage, query: origin.query });
   const editionCount = work.editionCount ?? work.coverUrls.length;
   const href = detailHref(work.id, origin.query, origin.language, isbn, { name: origin.author, key: origin.authorKey });
   const facts = [
@@ -68,10 +76,10 @@ export default function BookWorkCard({ work, origin = {}, isbn }: BookWorkCardPr
     <Link
       href={href}
       className="group block focus-visible:outline-none"
-      onClick={() => storeWorkPreview(work.id, { title: work.title, authors: [displayAuthors(work.authors)], coverUrls })}
+      onClick={() => storeWorkPreview(work.id, { title: shown.title, authors: [displayAuthors(work.authors)], coverUrls })}
     >
       <div className="cover-shadow relative aspect-[2/3] overflow-hidden rounded-card bg-surface-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-bg">
-        <CoverMosaic coverUrls={coverUrls} title={work.title} />
+        <CoverMosaic coverUrls={coverUrls} title={shown.title} />
         {facts && (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-8 text-xs font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
             {facts}
@@ -80,8 +88,9 @@ export default function BookWorkCard({ work, origin = {}, isbn }: BookWorkCardPr
       </div>
       <div className="mt-3 space-y-0.5">
         <h3 className="line-clamp-2 font-sans text-[15px] font-medium leading-snug text-ink group-hover:text-accent transition-colors">
-          {work.title}
+          {shown.title}
         </h3>
+        {shown.catalogueTitle && <p className="line-clamp-1 text-xs text-ink-3">{shown.catalogueTitle}</p>}
         <p className="line-clamp-1 text-sm text-ink-2">{displayAuthors(work.authors)}</p>
         {work.firstPublishYear && <p className="text-xs text-ink-3">{work.firstPublishYear}</p>}
       </div>

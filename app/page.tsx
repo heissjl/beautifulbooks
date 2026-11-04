@@ -15,6 +15,8 @@ import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
 import { translator } from '@/lib/i18n/server';
 import { measure } from '@/app/api/measure';
 import { shapeOf } from '@/lib/queryshape';
+import { wallForHour, wallHour } from '@/lib/curated';
+import { isHiddenCover } from '@/lib/hiddencovers';
 
 /**
  * The URL is the single source of truth for search state (SPEC §3 F1.5):
@@ -75,6 +77,9 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
   // A collection ring on the hero only for what is published on the site now,
   // switches from /curate included; `published` is false for a dev-only draft (6.59).
   const liveSlugs = collections.filter(c => c.published).map(c => c.slug);
+
+  // The hour's eighteen (ROADMAP 6.17): a function of the clock hour, the same for every reader in it, never of the reader.
+  const wall = isHero ? wallForHour(wallHour(), undefined, undefined, w => isHiddenCover(`ol:${w.coverId}`)) : [];
 
   return (
     <div className="min-h-screen">
@@ -161,6 +166,7 @@ export default async function Home({ searchParams, locale = DEFAULT_LOCALE }: Ho
             searchQuery={searchQuery}
             language={language}
             exact={exact}
+            wall={wall}
             author={authorName || authorKey ? { name: authorName, key: authorKey || undefined } : undefined}
           />
           {/*

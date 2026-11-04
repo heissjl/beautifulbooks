@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { collectionPin, comparePin, decadePin, FORBIDDEN_PIN_WORDS, PIN_DESCRIPTION_MAX, PIN_TITLE_MAX, pinLink, type Pin } from '../pins';
+import { collectionPin, comparePin, coverPin, decadePin, FORBIDDEN_PIN_WORDS, PIN_ALT_MAX, PIN_DESCRIPTION_MAX, PIN_TITLE_MAX, pinLink, sameTitle, type Pin } from '../pins';
 
 const LIVE = 'https://buyitscovers.com';
 
@@ -28,10 +28,20 @@ const duneCompare = comparePin({
   editions: [{ coverId: 'ol:2', year: 1965, publisher: 'Chilton' }, { coverId: 'ol:5', year: 1978, publisher: 'New English Library' }, { coverId: 'ol:4', year: 1984 }],
 }, LIVE);
 
+const chilton = coverPin({
+  workId: 'OL893414W', coverId: 'ol:15244952', title: 'Dune', author: 'Frank Herbert', board: 'Science fiction book covers', what: 'Science fiction book cover',
+  year: 1965, publisher: 'Chilton', language: 'en', covers: 84,
+}, LIVE);
+
+const heyne = coverPin({
+  workId: 'OL893414W', coverId: 'ol:291296', title: 'Dune', editionTitle: 'Der Wüstenplanet', author: 'Frank Herbert', board: 'German book covers', what: 'German book cover',
+  year: 1978, publisher: 'Heyne', language: 'de', artist: 'Karel Thole', artistSource: 'ISFDB', covers: 84,
+}, LIVE);
+
 // A full stop after a word, not after an initial: "J. K. Rowling" is one name.
 const twoSentences = (text: string) => text.split(/(?<=[a-z]{2,}[.!?])\s+(?=[A-Z0-9])/).length;
 
-describe.each<[string, Pin]>([['Dune', dune], ['Harry Potter', potter], ['SF Masterworks', masterworks], ['Feminist Press', press], ['Dune, three editions', duneCompare]])(
+describe.each<[string, Pin]>([['Dune', dune], ['Harry Potter', potter], ['SF Masterworks', masterworks], ['Feminist Press', press], ['Dune, three editions', duneCompare], ['Dune, Chilton 1965', chilton], ['Dune, Heyne 1978', heyne]])(
   'the pin for %s (ROADMAP 5.5a, PLAN-5.5-5.6 §7)',
   (_, pin) => {
     it('stays inside Pinterest’s limits', () => {
@@ -41,14 +51,14 @@ describe.each<[string, Pin]>([['Dune', dune], ['Harry Potter', potter], ['SF Mas
 
     it('has two sentences, the words people search, no superlative and no completeness', () => {
       expect(twoSentences(pin.description)).toBe(2);
-      expect(pin.title).toMatch(/book covers|three editions/);
+      expect(pin.title).toMatch(/book covers?|three editions/);
       expect(pin.title).not.toMatch(FORBIDDEN_PIN_WORDS);
       expect(pin.description).not.toMatch(FORBIDDEN_PIN_WORDS);
     });
 
     it('links the live site with the mark the analytics count, and names its picture there', () => {
       expect(pin.link).toMatch(/^https:\/\/buyitscovers\.com\/.+\?via=pinterest(&cover=[a-z]+:[^&]+)?$/);
-      expect(pin.picture).toMatch(/^https:\/\/buyitscovers\.com\/.+\/(pin|compare)\.jpg/);
+      expect(pin.picture).toMatch(/^https:\/\/(buyitscovers\.com\/.+\/(pin|compare)\.jpg|covers\.openlibrary\.org\/b\/id\/\d+\.jpg$)/);
     });
   },
 );
@@ -112,6 +122,54 @@ describe('a comparison pin (second format)', () => {
     const longer = comparePin({ ...{ id: 'OL1W', board: 'Three editions', title: 'The Life and Opinions of Tristram Shandy, Gentleman, in Nine Volumes', author: 'Laurence Sterne and 2 others', covers: 30, editions: [] } }, LIVE);
     expect(longer.title).toBe('The Life and Opinions of Tristram Shandy, Gentleman, in Nine Volumes – three editions');
     expect(longer.link).toBe('https://buyitscovers.com/book/OL1W?via=pinterest');
+  });
+});
+
+describe('a cover pin (the test line, 2026-11-04)', () => {
+  it('is the cover itself, Open Library’s original scan, with the search phrase and the record’s facts', () => {
+    expect(chilton.kind).toBe('cover');
+    expect(chilton.picture).toBe('https://covers.openlibrary.org/b/id/15244952.jpg');
+    expect(coverPin({ ...{ workId: 'OL1W', coverId: 'gb:abc', title: 'Dune', author: '', board: 'B covers', what: 'B cover', covers: 1 } }, LIVE).picture).toBe('https://buyitscovers.com/img/L/gb-abc');
+    expect(chilton.board).toBe('Science fiction book covers');
+    expect(chilton.title).toBe('Dune by Frank Herbert – Chilton 1965 · Science fiction book cover');
+    expect(chilton.description).toBe(
+      "The Chilton edition of Dune by Frank Herbert, 1965; publisher, year and scan are Open Library's record of this printing. " +
+      "The link opens this cover on the book's page, among the 84 covers on record for this book, each with publisher, year and ISBN.",
+    );
+    expect(chilton.alt).toBe('Book cover: Dune by Frank Herbert, Chilton edition, 1965.');
+    expect(chilton.alt.length).toBeLessThanOrEqual(PIN_ALT_MAX);
+    expect(chilton.link).toBe('https://buyitscovers.com/book/OL893414W?via=pinterest&cover=ol:15244952');
+  });
+
+  it('names the language and the translated title, and the artist with who credits them', () => {
+    expect(heyne.title).toBe('Dune (Der Wüstenplanet) by Frank Herbert – Heyne 1978 · German book cover');
+    expect(heyne.description).toContain(
+      "The Heyne edition of Dune by Frank Herbert, 1978, in German as Der Wüstenplanet, cover art by Karel Thole; publisher, year and scan are Open Library's record of this printing, the artist is ISFDB's credit.",
+    );
+    expect(heyne.alt).toBe('Book cover: Dune by Frank Herbert, Heyne edition, 1978, German edition titled Der Wüstenplanet, cover art by Karel Thole.');
+  });
+
+  it('says what the record lacks, and drops the phrase, the author and the facts before cutting the title', () => {
+    const bare = coverPin({ workId: 'OL1W', coverId: 'ol:1', title: 'Dune', author: '', board: 'Book cover design', what: 'Book cover design', covers: 1 }, LIVE);
+    expect(bare.title).toBe('Dune · Book cover design');
+    expect(bare.description).toBe("An edition of Dune; scan is Open Library's record of this printing. The link opens this cover on the book's page, with publisher, year and ISBN.");
+    const long = coverPin({
+      workId: 'OL1W', coverId: 'ol:1', title: 'The Life and Opinions of Tristram Shandy, Gentleman', author: 'Laurence Sterne and 2 others',
+      board: 'Classic book covers', what: 'Classic book cover', year: 1912, publisher: 'J. M. Dent & Sons', covers: 30,
+    }, LIVE);
+    expect(long.title.length).toBeLessThanOrEqual(PIN_TITLE_MAX);
+    expect(long.title).toBe('The Life and Opinions of Tristram Shandy, Gentleman – J. M. Dent & Sons 1912');
+  });
+
+  it('does not put a second „The“ before a publisher that has one', () => {
+    const lustig = coverPin({ workId: 'OL468431W', coverId: 'ol:8238793', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', board: 'Classic book covers', what: 'Classic book cover', publisher: 'The New Classics (New Directions)', covers: 349 }, LIVE);
+    expect(lustig.description).toMatch(/^The New Classics \(New Directions\) edition of The Great Gatsby by F\. Scott Fitzgerald; publisher and scan are/);
+  });
+
+  it('does not repeat an edition title that is the work’s own', () => {
+    expect(sameTitle('Dune: a novel', 'Dune')).toBe(true);
+    expect(sameTitle('DUNE', 'Dune')).toBe(true);
+    expect(sameTitle('Der Wüstenplanet', 'Dune')).toBe(false);
   });
 });
 

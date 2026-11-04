@@ -8,6 +8,7 @@ import type { BuyLink, Cover, EditionView, Work } from '@/lib/model';
 import type { ImageSignature } from '@/lib/imagesig';
 import type { PageInfo } from '@/lib/pages';
 import { OL_EDITIONS_PAGE } from '@/lib/sources/openlibrary';
+import { catalogueBusyFor, isCatalogueBusy } from '@/lib/sources/olgate';
 import { displayTitle } from '@/lib/normalize';
 import { getWorkPage, isWorkId } from '@/lib/work';
 import { MOSAIC_CANDIDATES, type SiblingWork } from '@/lib/works';
@@ -177,7 +178,9 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
         Vary: 'Cookie, X-Vercel-IP-Country, Accept-Language',
       },
     });
-  } catch {
-    return NextResponse.json({ error: 'Book data source unavailable, try again shortly' }, { status: 503 });
+  } catch (err) {
+    // While the catalogue gate waits out a refusal, say how long (ROADMAP 2.18e); the page's wording stays the same.
+    const busy = isCatalogueBusy(err) ? { 'Retry-After': String(Math.ceil(catalogueBusyFor() / 1000) || 1) } : undefined;
+    return NextResponse.json({ error: 'Book data source unavailable, try again shortly' }, { status: 503, headers: busy });
   }
 }

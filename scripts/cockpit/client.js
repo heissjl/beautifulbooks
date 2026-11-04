@@ -396,12 +396,16 @@
 
   /* ---------------------------------------------------------------- Pins (docs/pins/queue.json, pins.ts) */
   // The one list of pins: Julian edits title and description, says ja or nein; pictures come from a local cache the server fills on a click.
-  const PIN_LIMITS = { title: 100, description: 500 };
+  const PIN_LIMITS = { title: 100, description: 500, alt: 500 };
   const COMPLETE = /\b(every|all|complete)\b/i;
   const PIN_FILTERS = [['offen', 'Zu entscheiden'], ['ja', 'Ja'], ['nein', 'Nein'], ['geplant', 'Geplant'], ['alle', 'Alle']];
+  // What a pin shows (the test line of 2026-11-04): as pins.ts reads it, the file's kind or the id's prefix.
+  const PIN_KINDS = [['alle', 'Alle Arten'], ['cover', 'Einzel-Cover'], ['wall', 'Wände'], ['decades', 'Jahrzehnte'], ['compare', 'Vergleich']];
+  const pinKindName = { cover: 'Einzel-Cover', wall: 'Wand', decades: 'Jahrzehnte', compare: 'Vergleich' };
+  const kindOf = p => p.kind || (p.id.startsWith('cover-') ? 'cover' : p.id.startsWith('compare-') ? 'compare' : p.id.startsWith('decades-') ? 'decades' : 'wall');
   let pinData = S ? null : { queue: D.pins.queue, pictures: {}, file: D.pins.file };
-  let pinFilter = 'offen', pinLoading = false;
-  const pinEdits = {}; // id -> {title, description, remark}, unsaved
+  let pinFilter = 'offen', pinKind = 'alle', pinLoading = false;
+  const pinEdits = {}; // id -> {title, description, alt, remark}, unsaved
   const pinShow = {};  // id -> 'prod' | 'dev'
   async function loadPins() {
     if (!S || pinLoading) return;
@@ -418,7 +422,9 @@
     if (t.length > PIN_LIMITS.title) out.push(`Titel ${t.length} von ${PIN_LIMITS.title}`);
     if (!d) out.push('Beschreibung fehlt');
     if (d.length > PIN_LIMITS.description) out.push(`Beschreibung ${d.length} von ${PIN_LIMITS.description}`);
-    for (const x of [t, d]) { const m = x.match(COMPLETE); if (m) out.push(`„${m[0]}“ behauptet Vollständigkeit`); }
+    const a = pinValue(p, 'alt').trim();
+    if (a.length > PIN_LIMITS.alt) out.push(`Alt-Text ${a.length} von ${PIN_LIMITS.alt}`);
+    for (const x of [t, d, a]) { const m = x.match(COMPLETE); if (m) out.push(`„${m[0]}“ behauptet Vollständigkeit`); }
     return out;
   }
   const pinStatusName = { entwurf: 'zu entscheiden', ja: 'ja', nein: 'nein', geplant: 'geplant', 'veröffentlicht': 'veröffentlicht' };
@@ -436,15 +442,16 @@
     const fields = editable
       ? `<label class="pin-field">Titel ${counter(t.trim().length, PIN_LIMITS.title)}<input data-pin-field="title" data-pin="${esc(p.id)}" value="${esc(t)}"></label>
          <label class="pin-field">Beschreibung ${counter(d.trim().length, PIN_LIMITS.description)}<textarea rows="6" data-pin-field="description" data-pin="${esc(p.id)}">${esc(d)}</textarea></label>
+         <label class="pin-field">Alt-Text (Pinterest, „More options“) ${counter(pinValue(p, 'alt').trim().length, PIN_LIMITS.alt)}<textarea rows="2" data-pin-field="alt" data-pin="${esc(p.id)}" placeholder="bei Einzel-Covern gefüllt, sonst optional">${esc(pinValue(p, 'alt'))}</textarea></label>
          <label class="pin-field">Deine Anmerkung<input data-pin-field="remark" data-pin="${esc(p.id)}" value="${esc(pinValue(p, 'remark'))}" placeholder="optional"></label>`
-      : `<div class="pin-title">${esc(p.title)}</div><p class="small">${esc(p.description)}</p>${p.remark ? `<p class="small"><b>Anmerkung:</b> ${esc(p.remark)}</p>` : ''}`;
+      : `<div class="pin-title">${esc(p.title)}</div><p class="small">${esc(p.description)}</p>${p.alt ? `<p class="small muted"><b>Alt:</b> ${esc(p.alt)}</p>` : ''}${p.remark ? `<p class="small"><b>Anmerkung:</b> ${esc(p.remark)}</p>` : ''}`;
     const acts = editable && S
       ? `<div class="pin-acts"><button class="btn yes ${p.status === 'ja' ? 'on' : ''}" data-pin-act="ja" data-pin="${esc(p.id)}" ${probs.length ? 'disabled title="erst die Hinweise oben lösen"' : ''}>Ja</button><button class="btn no ${p.status === 'nein' ? 'on' : ''}" data-pin-act="nein" data-pin="${esc(p.id)}">Nein</button><button class="btn ghost ${p.status === 'entwurf' ? 'on' : ''}" data-pin-act="entwurf" data-pin="${esc(p.id)}">Offen</button><button class="btn ghost" data-pin-act="save" data-pin="${esc(p.id)}" ${dirty ? '' : 'disabled'}>Text speichern</button></div>`
       : editable ? '<p class="small muted">Entscheiden geht nur über <code>npm run cockpit</code> (mit Server).</p>' : '';
     return `<article class="pin-card st-${esc(p.status)}" id="pin-${esc(p.id)}">
       <div class="pin-pic">${img}<div class="pin-src">${srcSeg}</div><div class="pin-fetch">${fetchBtns}</div></div>
       <div class="pin-body">
-        <div class="pin-head"><span class="pill pin-st-${esc(p.status)}">${esc(pinStatusName[p.status] || p.status)}</span> <span class="small muted">${esc(p.slot || 'ohne Termin')} · ${esc(p.board)}${p.decided ? ' · entschieden ' + esc(p.decided) : ''}</span></div>
+        <div class="pin-head"><span class="pill pin-st-${esc(p.status)}">${esc(pinStatusName[p.status] || p.status)}</span> <span class="pill">${esc(pinKindName[kindOf(p)] || kindOf(p))}</span> <span class="small muted">${esc(p.slot || 'ohne Termin')} · ${esc(p.board)}${p.decided ? ' · entschieden ' + esc(p.decided) : ''}</span></div>
         ${p.note ? `<div class="pin-note small"><b>Hinweis:</b> ${esc(p.note)}</div>` : ''}
         ${fields}
         ${probs.length ? `<ul class="pin-probs small">${probs.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
@@ -459,9 +466,11 @@
     const inFilter = p => pinFilter === 'alle' || (pinFilter === 'offen' ? p.status === 'entwurf' : pinFilter === 'geplant' ? ['geplant', 'veröffentlicht'].includes(p.status) : p.status === pinFilter);
     const n = k => all.filter(p => k === 'alle' || (k === 'offen' ? p.status === 'entwurf' : k === 'geplant' ? ['geplant', 'veröffentlicht'].includes(p.status) : p.status === k)).length;
     const seg = `<div class="seg" data-pinfilter>${PIN_FILTERS.map(([k, label]) => `<button data-val="${k}" class="${pinFilter === k ? 'on' : ''}">${label} <span class="count">${n(k)}</span></button>`).join('')}</div>`;
-    const shown = all.filter(inFilter);
+    const inKind = p => pinKind === 'alle' || kindOf(p) === pinKind;
+    const kinds = `<div class="seg" data-pinkind>${PIN_KINDS.map(([k, label]) => `<button data-val="${k}" class="${pinKind === k ? 'on' : ''}">${label} <span class="count">${all.filter(p => inFilter(p) && (k === 'alle' || kindOf(p) === k)).length}</span></button>`).join('')}</div>`;
+    const shown = all.filter(p => inFilter(p) && inKind(p));
     return topbar('Pins', `${esc(pinData.file)} · zuletzt geändert ${esc(pinData.queue.updated)} · Ja heißt: Claude plant ihn in Pinterest ein`, false) +
-      `<div class="pin-bar">${seg}${S ? `<button class="btn ghost" data-pin-act="reload">neu laden</button>` : ''}</div>` +
+      `<div class="pin-bar">${seg}${kinds}${S ? `<button class="btn ghost" data-pin-act="reload">neu laden</button>` : ''}</div>` +
       (shown.length ? shown.map(pinCard).join('') : '<p class="muted">Nichts in dieser Auswahl.</p>');
   }
 
@@ -512,6 +521,8 @@
   document.addEventListener('click', async e => {
     const seg = e.target.closest('[data-pinfilter] button');
     if (seg) { e.preventDefault(); pinFilter = seg.dataset.val; render(); return; }
+    const kind = e.target.closest('[data-pinkind] button');
+    if (kind) { e.preventDefault(); pinKind = kind.dataset.val; render(); return; }
     const b = e.target.closest('[data-pin-act]');
     if (!b) return;
     e.preventDefault();

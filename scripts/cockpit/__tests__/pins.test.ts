@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { applyEdit, parseQueue, pictureFile, pictureUrl, problems, serializeQueue, type PinQueue, type QueuedPin } from '../pins';
+import { applyEdit, kindOf, parseQueue, pictureFile, pictureUrl, problems, serializeQueue, withKinds, type PinQueue, type QueuedPin } from '../pins';
 
 const pin = (over: Partial<QueuedPin> = {}): QueuedPin => ({
   id: 'decades-OL49488W',
@@ -36,6 +36,15 @@ describe('problems', () => {
     expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL893414W/compare.jpg?covers=ol:1,ol:2,ol:3' }))).toEqual([]);
     expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL893414W/compare.png' }))[0].field).toBe('picture');
   });
+  it('accepts the comparison picture and one cover from the image route, and checks the alt text (the cover pins, 2026-11-04)', () => {
+    expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL49488W/compare.jpg?covers=ol:1,ol:2,ol:3' }))).toEqual([]);
+    expect(problems(pin({ picture: 'https://buyitscovers.com/img/L/ol-15244952', alt: 'Book cover: Dune, Chilton edition, 1965.' }))).toEqual([]);
+    expect(problems(pin({ picture: 'https://buyitscovers.com/img/M/ol-15244952' }))[0].field).toBe('picture');
+    expect(problems(pin({ picture: 'https://covers.openlibrary.org/b/id/15244952.jpg' }))).toEqual([]);
+    expect(problems(pin({ picture: 'https://covers.openlibrary.org/b/id/15244952-L.jpg' }))[0].field).toBe('picture');
+    expect(problems(pin({ alt: 'x'.repeat(501) })).map(p => p.field)).toEqual(['alt']);
+    expect(problems(pin({ alt: 'Every cover.' }))[0].field).toBe('alt');
+  });
 });
 
 describe('applyEdit', () => {
@@ -61,6 +70,12 @@ describe('applyEdit', () => {
     expect(applyEdit(queue(pin()), { id: 'decades-OL49488W', status: 'geplant' }, '2026-11-01')).toEqual({ error: 'nur entwurf, ja oder nein' });
     expect(applyEdit(queue(pin()), { id: 'nope' }, '2026-11-01')).toEqual({ error: 'kein Pin nope' });
   });
+  it('edits the alt text and drops it when emptied', () => {
+    const r = applyEdit(queue(pin()), { id: 'decades-OL49488W', alt: ' Book cover:  Dune. ' }, '2026-11-04');
+    expect('queue' in r && r.queue.pins[0].alt).toBe('Book cover: Dune.');
+    const gone = applyEdit(queue(pin({ alt: 'x' })), { id: 'decades-OL49488W', alt: '' }, '2026-11-04');
+    expect('queue' in gone && 'alt' in gone.queue.pins[0]).toBe(false);
+  });
   it('does not change the queue it was given', () => {
     const q = queue(pin());
     applyEdit(q, { id: 'decades-OL49488W', status: 'nein' }, '2026-11-01');
@@ -81,6 +96,20 @@ describe('file', () => {
   });
 });
 
+describe('kinds', () => {
+  it('reads the kind from the file or the id, and writes it out for every pin, before the status', () => {
+    expect(kindOf(pin())).toBe('decades');
+    expect(kindOf({ id: 'collection-sf-masterworks' })).toBe('wall');
+    expect(kindOf({ id: 'general-hugo-award-novel' })).toBe('wall');
+    expect(kindOf({ id: 'compare-OL1W' })).toBe('compare');
+    expect(kindOf({ id: 'cover-OL1W-ol1', kind: 'cover' })).toBe('cover');
+    const q = withKinds(queue(pin(), pin({ id: 'cover-OL1W-ol1', kind: 'cover' })));
+    expect(q.pins.map(p => p.kind)).toEqual(['decades', 'cover']);
+    const text = serializeQueue(q);
+    expect(text.indexOf('"kind"')).toBeLessThan(text.indexOf('"status"'));
+  });
+});
+
 describe('pictures', () => {
   it('names the cached file from the id only', () => {
     expect(pictureFile('decades-OL49488W', 'dev')).toBe('decades-OL49488W-dev.jpg');
@@ -91,5 +120,7 @@ describe('pictures', () => {
     expect(pictureUrl(pin(), 'dev')).toBe('http://localhost:3000/book/OL49488W/pin.jpg');
     expect(pictureUrl(pin({ picture: 'https://evil.example/pin.jpg' }), 'prod')).toBeNull();
     expect(pictureUrl(pin({ picture: 'https://buyitscovers.com/book/OL1W/compare.jpg?covers=ol:1,ol:2,ol:3' }), 'dev')).toBe('http://localhost:3000/book/OL1W/compare.jpg?covers=ol:1,ol:2,ol:3');
+    expect(pictureUrl(pin({ picture: 'https://covers.openlibrary.org/b/id/1.jpg' }), 'prod')).toBe('https://covers.openlibrary.org/b/id/1.jpg');
+    expect(pictureUrl(pin({ picture: 'https://covers.openlibrary.org/b/id/1.jpg' }), 'dev')).toBeNull();
   });
 });

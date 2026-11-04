@@ -11,6 +11,7 @@
 import type { WorkSummary } from './model';
 import { looksLikeNonBook, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle } from './normalize';
 import { mergeWorks } from './works';
+import { shownTitle } from './titleshown';
 import { english, type Translate } from './i18n/translate';
 
 /** One tile of the row: one cover, a title, the way to its wall. */
@@ -32,6 +33,8 @@ export interface AuthorSearchDoc {
   author_key?: string[];
   edition_count?: number;
   cover_i?: number;
+  /** An English edition (the request asks with `lang=en`), for a title not in Latin script (6.2). */
+  editions?: { docs?: Array<{ title?: string }> };
 }
 
 /** Tiles on a wide screen and on a phone (Julian, 2026-09-26: „6 am desktop, 3 am handy"). */
@@ -100,6 +103,7 @@ export function otherWorksByAuthor(
   const floor = minEditions(largest);
 
   const coverOf = new Map<string, number>();
+  const englishOf = new Map<string, string>();
   const kept: WorkSummary[] = [];
   for (const d of own) {
     const title = d.title?.trim();
@@ -110,6 +114,8 @@ export function otherWorksByAuthor(
     if ((d.edition_count ?? 0) < floor) continue;
     const id = d.key.replace('/works/', '');
     coverOf.set(id, d.cover_i);
+    const englishTitle = d.editions?.docs?.[0]?.title;
+    if (englishTitle) englishOf.set(id, englishTitle);
     kept.push({
       id,
       title,
@@ -122,7 +128,12 @@ export function otherWorksByAuthor(
   }
 
   return mergeWorks(kept)
-    .map(w => ({ id: w.id, title: w.title, coverId: coverOf.get(w.id) ?? 0, editionCount: w.editionCount ?? 0 }))
+    // A Latin title stays as the catalogue has it (Der Proceß); «Собачье сердце» becomes "The Heart of a Dog" (6.2).
+    .map(w => {
+      const englishTitle = englishOf.get(w.id);
+      const title = shownTitle(w.title, { editions: englishTitle ? [{ title: englishTitle, language: 'en' }] : [] }).title;
+      return { id: w.id, title, coverId: coverOf.get(w.id) ?? 0, editionCount: w.editionCount ?? 0 };
+    })
     .filter(w => w.coverId > 0)
     .sort((a, b) => b.editionCount - a.editionCount)
     .slice(0, limit);

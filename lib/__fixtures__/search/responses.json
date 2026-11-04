@@ -1,9 +1,9 @@
 {
- "https://openlibrary.org/search.json?q=gatsbee&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=gatsbee&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 0,
   "docs": []
  },
- "https://openlibrary.org/search.json?q=gatsby&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=gatsby&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 1404,
   "docs": [
    {
@@ -586,11 +586,11 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=pride%20and%20prejudise&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=pride%20and%20prejudise&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 0,
   "docs": []
  },
- "https://openlibrary.org/search.json?q=pride%20and%20prejudice&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=pride%20and%20prejudice&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 2363,
   "docs": [
    {
@@ -1306,7 +1306,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=Tolkein&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=Tolkein&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 26,
   "docs": [
    {
@@ -1695,7 +1695,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=Tolkien&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=Tolkien&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 2067,
   "docs": [
    {
@@ -2914,7 +2914,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=Hemmingway&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=Hemmingway&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 64,
   "docs": [
    {
@@ -3263,7 +3263,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=Hemingway&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=Hemingway&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 6358,
   "docs": [
    {
@@ -4364,7 +4364,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=harry%20poter&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=harry%20poter&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 19,
   "docs": [
    {
@@ -5161,7 +5161,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=piranesi&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=piranesi&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 759,
   "docs": [
    {
@@ -5719,7 +5719,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=author_key%3AOL498120A&sort=editions&limit=50&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=author_key%3AOL498120A&sort=editions&limit=50&lang=en&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 45,
   "docs": [
    {
@@ -6707,7 +6707,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=author_key%3A(OL118077A%20OR%20OL16029200A%20OR%20OL16230010A%20OR%20OL15318546A)&sort=editions&limit=50&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=author_key%3A(OL118077A%20OR%20OL16029200A%20OR%20OL16230010A%20OR%20OL15318546A)&sort=editions&limit=50&lang=en&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 652,
   "docs": [
    {
@@ -8759,7 +8759,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=author_key%3A(OL151749A%20OR%20OL6806079A%20OR%20OL15306211A%20OR%20OL15304312A)&sort=editions&limit=50&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=author_key%3A(OL151749A%20OR%20OL6806079A%20OR%20OL15306211A%20OR%20OL15304312A)&sort=editions&limit=50&lang=en&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 89,
   "docs": [
    {
@@ -9910,7 +9910,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=author_key%3AOL22242A&sort=editions&limit=50&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=author_key%3AOL22242A&sort=editions&limit=50&lang=en&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 2825,
   "docs": [
    {
@@ -12393,7 +12393,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=author_key%3AOL6000740A&sort=editions&limit=50&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=author_key%3AOL6000740A&sort=editions&limit=50&lang=en&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 1,
   "docs": [
    {
@@ -12495,7 +12495,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=author_key%3AOL26320A&sort=editions&limit=50&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=author_key%3AOL26320A&sort=editions&limit=50&lang=en&fields=key,title,author_name,author_key,edition_count,cover_i,first_publish_year,publish_year,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 346,
   "docs": [
    {
@@ -14624,7 +14624,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=judt&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=judt&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 99,
   "docs": [
    {
@@ -15113,7 +15113,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=the%20memory%20chalet&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=the%20memory%20chalet&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 2,
   "docs": [
    {
@@ -15162,7 +15162,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=jude&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=jude&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 7237,
   "docs": [
    {
@@ -15810,7 +15810,7 @@
    }
   ]
  },
- "https://openlibrary.org/search.json?q=the%20memory%20charles&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count": {
+ "https://openlibrary.org/search.json?q=the%20memory%20charles&limit=20&fields=key,title,subtitle,author_name,author_key,first_publish_year,publish_year,edition_count,cover_i,cover_edition_key,language,readinglog_count,want_to_read_count,ratings_count,editions,editions.title,editions.language": {
   "numFound": 3167,
   "docs": [
    {

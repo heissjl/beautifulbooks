@@ -6,7 +6,11 @@ import { english, type Translate } from './i18n/translate';
 import type { Cover, Edition, LanguageGroup, SourceEdition, Work, WorkSummary } from './model';
 import type { EditionCandidate } from './sources/googlebooks-parse';
 import { authorMatchKey, looksLikeSecondaryLiterature, MARKED_DERIVATIVE, normalizeTitle, titleAuthorKey } from './normalize';
-import { colourDistance, hamming, looksLikeScannedPage, type ImageSignature } from './imagesig';
+import { colourDistance, hamming, looksLikeScannedPage, looksMisshapen, type ImageSignature } from './imagesig';
+
+function notCoverLike(signature: ImageSignature | undefined): boolean {
+  return looksLikeScannedPage(signature) || looksMisshapen(signature);
+}
 import { isHiddenCover, isHiddenCoverUrl } from './hiddencovers';
 
 export const MOSAIC_COVERS = 4;
@@ -494,8 +498,9 @@ function newestFirstOrder(
   return (a, b) => {
     const byArrival = loadedOn(a) - loadedOn(b);
     if (byArrival !== 0) return byArrival;
-    const pageA = looksLikeScannedPage(signatures?.get(a.id)) ? 1 : 0;
-    const pageB = looksLikeScannedPage(signatures?.get(b.id)) ? 1 : 0;
+    // A scanned page and an image of no cover's shape (6.70b) go to the end; nothing is dropped.
+    const pageA = notCoverLike(signatures?.get(a.id)) ? 1 : 0;
+    const pageB = notCoverLike(signatures?.get(b.id)) ? 1 : 0;
     return pageA - pageB || coverYear(b, editionsById) - coverYear(a, editionsById);
   };
 }
