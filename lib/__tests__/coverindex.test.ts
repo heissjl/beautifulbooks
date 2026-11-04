@@ -109,7 +109,7 @@ describe('the index that is committed', () => {
       }
     }
     expect(checked).toBeGreaterThan(0);
-  }, 30_000); // walks the committed data; under a full parallel run the 5 s default timed out (2026-11-01 to 11-04)
+  });
 
   it('can be asked for the same book on purpose', () => {
     const file = JSON.parse(

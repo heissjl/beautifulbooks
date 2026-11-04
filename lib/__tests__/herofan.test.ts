@@ -43,7 +43,7 @@ describe('the home page rings (ROADMAP 1.9)', () => {
   it('are exactly what the rules give for the committed index and curated list', () => {
     // Rebuilt with `npx tsx scripts/build-hero-rings.ts`; a stale file fails here, not on the home page.
     expect(HERO_RINGS).toEqual(ringsFor(raw, CURATED_LIST));
-  }, 30_000); // walks the committed data; under a full parallel run the 5 s default timed out (2026-11-01 to 11-04)
+  });
 
   it('leave plenty of books to draw from', () => {
     expect(HERO_RINGS.length).toBeGreaterThan(10);
