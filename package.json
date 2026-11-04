@@ -19,13 +19,13 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
-    "isbn3": "^2.0.12",
+    "isbn3": "^2.0.13",
     "jpeg-js": "^0.4.4",
-    "next": "16.4.2",
+    "next": "16.4.3",
     "pngjs": "^7.0.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "redis": "^6.3.0",
+    "redis": "^6.3.1",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "@vitest/ui": "^4.0.18",
     "esbuild": "^0.28.2",
     "eslint": "^9",
-    "eslint-config-next": "16.4.2",
+    "eslint-config-next": "16.4.3",
     "heic-decode": "^2.1.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5",
