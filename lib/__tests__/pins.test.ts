@@ -161,6 +161,11 @@ describe('a cover pin (the test line, 2026-11-04)', () => {
     expect(long.title).toBe('The Life and Opinions of Tristram Shandy, Gentleman – J. M. Dent & Sons 1912');
   });
 
+  it('does not put a second „The“ before a publisher that has one', () => {
+    const lustig = coverPin({ workId: 'OL468431W', coverId: 'ol:8238793', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', board: 'Classic book covers', what: 'Classic book cover', publisher: 'The New Classics (New Directions)', covers: 349 }, LIVE);
+    expect(lustig.description).toMatch(/^The New Classics \(New Directions\) edition of The Great Gatsby by F\. Scott Fitzgerald; publisher and scan are/);
+  });
+
   it('does not repeat an edition title that is the work’s own', () => {
     expect(sameTitle('Dune: a novel', 'Dune')).toBe(true);
     expect(sameTitle('DUNE', 'Dune')).toBe(true);

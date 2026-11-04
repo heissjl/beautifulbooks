@@ -235,7 +235,8 @@ export function coverPin(f: CoverPinFacts, origin: string = SITE_URL): CoverPin 
   ];
   const title = titles.find(t => t.length <= PIN_TITLE_MAX) ?? f.title.slice(0, PIN_TITLE_MAX);
 
-  const edition = f.publisher ? `The ${f.publisher} edition` : 'An edition';
+  // "The New Classics (New Directions)" is not "The The New Classics".
+  const edition = f.publisher ? (/^the\s/i.test(f.publisher) ? `${f.publisher} edition` : `The ${f.publisher} edition`) : 'An edition';
   const year = f.year ? `, ${f.year}` : '';
   const lang = foreign ? `, in ${foreign}${translated ? ` as ${translated}` : ''}` : '';
   const art = f.artist ? `, cover art by ${f.artist}` : '';

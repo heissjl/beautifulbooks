@@ -1,8 +1,9 @@
 {
-  "updated": "2026-11-03",
+  "updated": "2026-11-04",
   "pins": [
     {
       "id": "collection-sf-masterworks",
+      "kind": "wall",
       "status": "veröffentlicht",
       "slot": "2026-11-01 12:00",
       "board": "SF Masterworks",
@@ -14,6 +15,7 @@
     },
     {
       "id": "collection-feminist-press",
+      "kind": "wall",
       "status": "veröffentlicht",
       "slot": "2026-11-02 12:00",
       "board": "Feminist Press",
@@ -25,6 +27,7 @@
     },
     {
       "id": "collection-tiptree-award",
+      "kind": "wall",
       "status": "veröffentlicht",
       "slot": "2026-11-03 12:00",
       "board": "The Otherwise Award",
@@ -36,6 +39,7 @@
     },
     {
       "id": "decades-OL82563W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-01 19:00",
       "board": "Covers through the decades",
@@ -48,6 +52,7 @@
     },
     {
       "id": "decades-OL1168007W",
+      "kind": "decades",
       "status": "veröffentlicht",
       "slot": "2026-11-02 19:00",
       "board": "Covers through the decades",
@@ -59,6 +64,7 @@
     },
     {
       "id": "decades-OL1168083W",
+      "kind": "decades",
       "status": "veröffentlicht",
       "slot": "2026-11-03 19:00",
       "board": "Covers through the decades",
@@ -70,6 +76,7 @@
     },
     {
       "id": "decades-OL257943W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-04 12:00",
       "board": "Covers through the decades",
@@ -81,6 +88,7 @@
     },
     {
       "id": "decades-OL27482W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-04 19:00",
       "board": "Covers through the decades",
@@ -92,6 +100,7 @@
     },
     {
       "id": "decades-OL64365W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-05 12:00",
       "board": "Covers through the decades",
@@ -103,6 +112,7 @@
     },
     {
       "id": "decades-OL893414W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-05 19:00",
       "board": "Covers through the decades",
@@ -114,6 +124,7 @@
     },
     {
       "id": "decades-OL103123W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-06 12:00",
       "board": "Covers through the decades",
@@ -125,6 +136,7 @@
     },
     {
       "id": "decades-OL27513W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-06 19:00",
       "board": "Covers through the decades",
@@ -137,6 +149,7 @@
     },
     {
       "id": "decades-OL81613W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-08 19:00",
       "board": "Covers through the decades",
@@ -148,6 +161,7 @@
     },
     {
       "id": "decades-OL49488W",
+      "kind": "decades",
       "status": "geplant",
       "slot": "2026-11-07 19:00",
       "board": "Covers through the decades",
@@ -159,6 +173,7 @@
     },
     {
       "id": "decades-OL66554W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-09 19:00",
       "board": "Covers through the decades",
@@ -170,6 +185,7 @@
     },
     {
       "id": "decades-OL3335245W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-10 19:00",
       "board": "Covers through the decades",
@@ -181,6 +197,7 @@
     },
     {
       "id": "decades-OL483391W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-11 19:00",
       "board": "Covers through the decades",
@@ -192,6 +209,7 @@
     },
     {
       "id": "decades-OL455327W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-12 19:00",
       "board": "Covers through the decades",
@@ -202,6 +220,7 @@
     },
     {
       "id": "decades-OL468431W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-13 19:00",
       "board": "Covers through the decades",
@@ -213,6 +232,7 @@
     },
     {
       "id": "decades-OL46125W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-14 19:00",
       "board": "Covers through the decades",
@@ -223,6 +243,7 @@
     },
     {
       "id": "decades-OL3140822W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-15 12:00",
       "board": "Covers through the decades",
@@ -233,6 +254,7 @@
     },
     {
       "id": "decades-OL81633W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-15 19:00",
       "board": "Covers through the decades",
@@ -243,6 +265,7 @@
     },
     {
       "id": "decades-OL498556W",
+      "kind": "decades",
       "status": "entwurf",
       "slot": "2026-11-16 12:00",
       "board": "Covers through the decades",
@@ -254,6 +277,7 @@
     },
     {
       "id": "decades-OL2163649W",
+      "kind": "decades",
       "status": "entwurf",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL2163649W/pin.jpg",
@@ -264,6 +288,7 @@
     },
     {
       "id": "general-hugo-award-novel",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-07 12:00",
       "board": "Science fiction book covers",
@@ -275,6 +300,7 @@
     },
     {
       "id": "general-penguin-clothbound-classics",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-08 12:00",
       "board": "Classic book covers",
@@ -286,6 +312,7 @@
     },
     {
       "id": "general-tom-adams-christie",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-09 12:00",
       "board": "Vintage paperback covers",
@@ -297,6 +324,7 @@
     },
     {
       "id": "general-penguin-great-ideas",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-10 12:00",
       "board": "Book cover design",
@@ -308,6 +336,7 @@
     },
     {
       "id": "general-gene-szafran",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-11 12:00",
       "board": "Science fiction book covers",
@@ -319,6 +348,7 @@
     },
     {
       "id": "general-ballantine-adult-fantasy",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-12 12:00",
       "board": "Fantasy book covers",
@@ -330,6 +360,7 @@
     },
     {
       "id": "general-penguin-classics-the-black-band-years",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-13 12:00",
       "board": "Classic book covers",
@@ -341,6 +372,7 @@
     },
     {
       "id": "general-reihe-hanser-covers-by-heinz-edelmann",
+      "kind": "wall",
       "status": "entwurf",
       "slot": "2026-11-14 12:00",
       "board": "Book cover design",
@@ -349,6 +381,292 @@
       "description": "102 yellow book covers of Reihe Hanser, Carl Hanser’s paperback series begun in 1967, which Heinz Edelmann designed until the mid-1970s. Each cover opens the other editions of that book, with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/collections/reihe-hanser-covers-by-heinz-edelmann?via=pinterest",
       "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „1970s book cover design“, „book cover illustration“. Das Bild brauchte auf dem Dev-Server über 50 s; vor dem Hochladen einmal von der Produktion holen, die Funktion hat 30 s."
+    },
+    {
+      "id": "cover-OL893414W-ol15092781",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-05 09:00",
+      "board": "Science fiction book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15092781.jpg",
+      "title": "Dune by Frank Herbert – Ace Books · Science fiction book cover",
+      "description": "The Ace Books edition of Dune by Frank Herbert; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 85 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Dune by Frank Herbert, Ace Books edition.",
+      "link": "https://buyitscovers.com/book/OL893414W?via=pinterest&cover=ol:15092781",
+      "note": "Einzel-Cover-Testlinie (Druck von 1965). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1080 × 1833 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Ace-Taschenbuch mit „Winner of SF’s Hugo and Nebula Awards“ und Preis 2,25 $ — ein Druck der späten 1970er, nicht 1965; Jahr genommen."
+    },
+    {
+      "id": "cover-OL103123W-ol14912671",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-05 15:00",
+      "board": "Science fiction book covers",
+      "picture": "https://covers.openlibrary.org/b/id/14912671.jpg",
+      "title": "Fahrenheit 451 by Ray Bradbury – Ballantine Books, Inc. · Science fiction book cover",
+      "description": "The Ballantine Books, Inc. edition of Fahrenheit 451 by Ray Bradbury; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 134 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Fahrenheit 451 by Ray Bradbury, Ballantine Books, Inc. edition.",
+      "link": "https://buyitscovers.com/book/OL103123W?via=pinterest&cover=ol:14912671",
+      "note": "Einzel-Cover-Testlinie (Druck von 1953). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1080 × 2009 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: das Flammengesicht mit Bibliotheksaufkleber, das schon der Vergleichs-Pin zeigte — ein Ballantine-Druck der 1960er/70er, nicht Mugnainis Umschlag von 1953; Jahr genommen."
+    },
+    {
+      "id": "cover-OL103123W-ol14809927",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-05 21:00",
+      "board": "Science fiction book covers",
+      "picture": "https://covers.openlibrary.org/b/id/14809927.jpg",
+      "title": "Fahrenheit 451 by Ray Bradbury – Ballantine Books · Science fiction book cover",
+      "description": "The Ballantine Books edition of Fahrenheit 451 by Ray Bradbury; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 134 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Fahrenheit 451 by Ray Bradbury, Ballantine Books edition.",
+      "link": "https://buyitscovers.com/book/OL103123W?via=pinterest&cover=ol:14809927",
+      "note": "Einzel-Cover-Testlinie (Druck von 1953). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 905 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Del-Rey/Ballantine-Taschenbuch der 1990er („The classic bestseller about censorship“, ISBN 0-345-34296-8), nicht 1953 — Jahr aus Titel, Beschreibung und Alt-Text genommen."
+    },
+    {
+      "id": "cover-OL64365W-ol15170942",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-06 09:00",
+      "board": "Science fiction book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15170942.jpg",
+      "title": "Brave New World by Aldous Huxley – Harper & Row, Publishers 1946 · Science fiction book cover",
+      "description": "The Harper & Row, Publishers edition of Brave New World by Aldous Huxley, 1946; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 144 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Brave New World by Aldous Huxley, Harper & Row, Publishers edition, 1946.",
+      "link": "https://buyitscovers.com/book/OL64365W?via=pinterest&cover=ol:15170942",
+      "note": "Einzel-Cover-Testlinie (Druck von 1946). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1860 × 2884 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: dieselbe Gestaltung wie der andere Brave-New-World-Pin, ohne Banner — nur einen von beiden nehmen."
+    },
+    {
+      "id": "cover-OL64365W-ol15170710",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-06 15:00",
+      "board": "Science fiction book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15170710.jpg",
+      "title": "Brave New World by Aldous Huxley – Harper & Row, Publishers 1946 · Science fiction book cover",
+      "description": "The Harper & Row, Publishers edition of Brave New World by Aldous Huxley, 1946; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 144 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Brave New World by Aldous Huxley, Harper & Row, Publishers edition, 1946.",
+      "link": "https://buyitscovers.com/book/OL64365W?via=pinterest&cover=ol:15170710",
+      "note": "Einzel-Cover-Testlinie (Druck von 1946). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1915 × 3044 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: gelb-schwarze Jacke der Harper-Ausgabe von 1946 („a new edition … with a special introduction by the author“); der Verlagsname Harper & Row gilt erst ab 1962 — er steht im Datensatz, nicht auf dem Bild."
+    },
+    {
+      "id": "cover-OL49488W-ol8186414",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-06 21:00",
+      "board": "Dutch book covers",
+      "picture": "https://covers.openlibrary.org/b/id/8186414.jpg",
+      "title": "Ender's Game by Orson Scott Card – Boekerij · Dutch book cover",
+      "description": "The Boekerij edition of Ender's Game by Orson Scott Card, in Dutch; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 49 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Ender's Game by Orson Scott Card, Boekerij edition, Dutch edition.",
+      "link": "https://buyitscovers.com/book/OL49488W?via=pinterest&cover=ol:8186414",
+      "note": "Einzel-Cover-Testlinie (Niederländisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 64 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 500 × 768 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Filmcover („Nu ook een bioscoopfilm“, 2013), nicht 1991; Jahr genommen. Nur 500 px breit."
+    },
+    {
+      "id": "cover-OL27258W-ol14538056",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-07 09:00",
+      "board": "Science fiction book covers",
+      "picture": "https://covers.openlibrary.org/b/id/14538056.jpg",
+      "title": "Neuromancer by William Gibson – Ace 1984 · Science fiction book cover",
+      "description": "The Ace edition of Neuromancer by William Gibson, 1984; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 39 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Neuromancer by William Gibson, Ace edition, 1984.",
+      "link": "https://buyitscovers.com/book/OL27258W?via=pinterest&cover=ol:14538056",
+      "note": "Einzel-Cover-Testlinie (Druck von 1984). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 916 × 1568 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: die Ace Science Fiction Special von 1984, Bild gut."
+    },
+    {
+      "id": "cover-OL27258W-ol12685227",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-07 15:00",
+      "board": "German book covers",
+      "picture": "https://covers.openlibrary.org/b/id/12685227.jpg",
+      "title": "Neuromancer by William Gibson – Wilhelm Heyne Verlag 1991 · German book cover",
+      "description": "The Wilhelm Heyne Verlag edition of Neuromancer by William Gibson, 1991, in German; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 39 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Neuromancer by William Gibson, Wilhelm Heyne Verlag edition, 1991, German edition.",
+      "link": "https://buyitscovers.com/book/OL27258W?via=pinterest&cover=ol:12685227",
+      "note": "Einzel-Cover-Testlinie (Deutsch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 650 × 1024 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Heyne-Taschenbuch, Bild gut."
+    },
+    {
+      "id": "cover-OL1168083W-ol15256129",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-07 21:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15256129.jpg",
+      "title": "Nineteen Eighty-Four by George Orwell – Harcourt, Brace & World 1949 · Classic book cover",
+      "description": "The Harcourt, Brace & World edition of Nineteen Eighty-Four by George Orwell, 1949; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 343 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Nineteen Eighty-Four by George Orwell, Harcourt, Brace & World edition, 1949.",
+      "link": "https://buyitscovers.com/book/OL1168083W?via=pinterest&cover=ol:15256129",
+      "note": "Einzel-Cover-Testlinie (Druck von 1949). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 83 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1781 × 2808 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: vergilbter Bibliothekseinband mit Stempel und Strichcode, kein Umschlag; dazu hieß der Verlag erst ab 1960 Harcourt, Brace & World — Vorschlag Nein."
+    },
+    {
+      "id": "cover-OL1168007W-ol14870112",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-08 09:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/14870112.jpg",
+      "title": "Animal Farm by George Orwell – Penguin Books 1952 · Classic book cover",
+      "description": "The Penguin Books edition of Animal Farm by George Orwell, 1952; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 156 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Animal Farm by George Orwell, Penguin Books edition, 1952.",
+      "link": "https://buyitscovers.com/book/OL1168007W?via=pinterest&cover=ol:14870112",
+      "note": "Einzel-Cover-Testlinie (Druck von 1952). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1080 × 1755 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: orangefarbener Penguin-Dreistreifen, Preis 1/6 — passt zu 1952, Bild gut."
+    },
+    {
+      "id": "cover-OL1168007W-ol15152948",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-08 15:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15152948.jpg",
+      "title": "Animal Farm by George Orwell – Harcourt, Brace and Company 1946 · Classic book cover",
+      "description": "The Harcourt, Brace and Company edition of Animal Farm by George Orwell, 1946; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 156 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Animal Farm by George Orwell, Harcourt, Brace and Company edition, 1946.",
+      "link": "https://buyitscovers.com/book/OL1168007W?via=pinterest&cover=ol:15152948",
+      "note": "Einzel-Cover-Testlinie (Druck von 1946). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 75 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 2287 × 3410 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: grauer Leineneinband ohne Umschlag (die Einfarbigkeitsprüfung griff bei der Stoffstruktur nicht) — als Pin nichts; Vorschlag Nein."
+    },
+    {
+      "id": "cover-OL66554W-ol15043395",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-08 21:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15043395.jpg",
+      "title": "Pride and Prejudice by Jane Austen – Dodd, Mead & Company 1945 · Classic book cover",
+      "description": "The Dodd, Mead & Company edition of Pride and Prejudice by Jane Austen, 1945; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 196 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Pride and Prejudice by Jane Austen, Dodd, Mead & Company edition, 1945.",
+      "link": "https://buyitscovers.com/book/OL66554W?via=pinterest&cover=ol:15043395",
+      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 65 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1080 × 1550 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: dieselbe Gestaltung wie der andere Pride-and-Prejudice-Pin, dazu Strichcode (die Faltung hielt beide Scans getrennt) — Vorschlag Nein."
+    },
+    {
+      "id": "cover-OL66554W-ol12775499",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-09 09:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/12775499.jpg",
+      "title": "Pride and Prejudice by Jane Austen – Dodd, Mead and Company 1945 · Classic book cover",
+      "description": "The Dodd, Mead and Company edition of Pride and Prejudice by Jane Austen, 1945; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 196 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: Pride and Prejudice by Jane Austen, Dodd, Mead and Company edition, 1945.",
+      "link": "https://buyitscovers.com/book/OL66554W?via=pinterest&cover=ol:12775499",
+      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 64 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 509 × 706 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Dodd-Mead-Jacke der Great Illustrated Classics, passt zu 1945; Bild gut."
+    },
+    {
+      "id": "cover-OL468431W-ol8238793",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-09 15:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/8238793.jpg",
+      "title": "The Great Gatsby by F. Scott Fitzgerald – The New Classics (New Directions)",
+      "description": "The New Classics (New Directions) edition of The Great Gatsby by F. Scott Fitzgerald; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 349 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Great Gatsby by F. Scott Fitzgerald, The New Classics (New Directions) edition.",
+      "link": "https://buyitscovers.com/book/OL468431W?via=pinterest&cover=ol:8238793",
+      "note": "Einzel-Cover-Testlinie (Druck von 1925). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 81 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 887 × 1304 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Alvin Lustigs Jacke für die New Classics von New Directions (1945), nicht 1925; Jahr genommen — Gestaltung stark."
+    },
+    {
+      "id": "cover-OL468431W-ol14811160",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-09 21:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/14811160.jpg",
+      "title": "The Great Gatsby by F. Scott Fitzgerald – C. Scribner's Sons · Classic book cover",
+      "description": "The C. Scribner's Sons edition of The Great Gatsby by F. Scott Fitzgerald; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 349 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Great Gatsby by F. Scott Fitzgerald, C. Scribner's Sons edition.",
+      "link": "https://buyitscovers.com/book/OL468431W?via=pinterest&cover=ol:14811160",
+      "note": "Einzel-Cover-Testlinie (Druck von 1925). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 61 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 996 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Francis Cugats Jacke von 1925 als saubere, moderne Reproduktion (Scribner-Nachdruck), kein Scan von 1925; Jahr genommen."
+    },
+    {
+      "id": "cover-OL3335245W-ol14813205",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-10 09:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/14813205.jpg",
+      "title": "The Catcher in the Rye by J. D. Salinger – Little, Brown and Co. · Classic book cover",
+      "description": "The Little, Brown and Co. edition of The Catcher in the Rye by J. D. Salinger; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 74 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Catcher in the Rye by J. D. Salinger, Little, Brown and Co. edition.",
+      "link": "https://buyitscovers.com/book/OL3335245W?via=pinterest&cover=ol:14813205",
+      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 932 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: die Karussellpferd-Jacke der Erstausgabe von 1951 (Michael Mitchell) als saubere Reproduktion — der Datensatz sagt 1945, das Buch erschien 1951; Jahr genommen."
+    },
+    {
+      "id": "cover-OL3335245W-ol15172532",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-10 15:00",
+      "board": "Classic book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15172532.jpg",
+      "title": "The Catcher in the Rye by J. D. Salinger – Modern Library 1951 · Classic book cover",
+      "description": "The Modern Library edition of The Catcher in the Rye by J. D. Salinger, 1951; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 74 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Catcher in the Rye by J. D. Salinger, Modern Library edition, 1951.",
+      "link": "https://buyitscovers.com/book/OL3335245W?via=pinterest&cover=ol:15172532",
+      "note": "Einzel-Cover-Testlinie (Druck von 1951). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 82 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1594 × 2498 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: typografische Modern-Library-Jacke, plausibel für 1951."
+    },
+    {
+      "id": "cover-OL27482W-ol15254146",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-10 21:00",
+      "board": "Fantasy book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15254146.jpg",
+      "title": "The Hobbit by J.R.R. Tolkien – Ballantine Books · Fantasy book cover",
+      "description": "The Ballantine Books edition of The Hobbit by J.R.R. Tolkien; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 211 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Hobbit by J.R.R. Tolkien, Ballantine Books edition.",
+      "link": "https://buyitscovers.com/book/OL27482W?via=pinterest&cover=ol:15254146",
+      "note": "Einzel-Cover-Testlinie (Druck von 1966). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 70 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1433 × 2443 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Ballantine-Taschenbuch mit Tolkiens Aquarell (Gestaltung ab 1973) und Preis 2,50 $ — ein Druck um 1979, nicht 1966; Jahr genommen."
+    },
+    {
+      "id": "cover-OL27513W-ol8171445",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-11 09:00",
+      "board": "Fantasy book covers",
+      "picture": "https://covers.openlibrary.org/b/id/8171445.jpg",
+      "title": "The Fellowship of the Ring by J.R.R. Tolkien – Houghton Mifflin Company · Fantasy book cover",
+      "description": "The Houghton Mifflin Company edition of The Fellowship of the Ring by J.R.R. Tolkien; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 152 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Fellowship of the Ring by J.R.R. Tolkien, Houghton Mifflin Company edition.",
+      "link": "https://buyitscovers.com/book/OL27513W?via=pinterest&cover=ol:8171445",
+      "note": "Einzel-Cover-Testlinie (Druck von 1954). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 75 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 787 × 1188 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Jacke mit Barbara Remingtons Zeichnung („looking-glass landscape“), die Houghton Mifflin ab Mitte der 1960er nutzte — nicht die Erstausgabe von 1954; Jahr genommen."
+    },
+    {
+      "id": "cover-OL27513W-ol8171449",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-11 15:00",
+      "board": "Fantasy book covers",
+      "picture": "https://covers.openlibrary.org/b/id/8171449.jpg",
+      "title": "The Fellowship of the Ring by J.R.R. Tolkien – George Allen & Unwin 1959 · Fantasy book cover",
+      "description": "The George Allen & Unwin edition of The Fellowship of the Ring by J.R.R. Tolkien, 1959; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 152 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: The Fellowship of the Ring by J.R.R. Tolkien, George Allen & Unwin edition, 1959.",
+      "link": "https://buyitscovers.com/book/OL27513W?via=pinterest&cover=ol:8171449",
+      "note": "Einzel-Cover-Testlinie (Druck von 1959). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 997 × 1490 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Tolkiens eigene Jacke (Ring und Auge), Allen & Unwin — passt zu einem Druck der 1950er, Bild gut."
+    },
+    {
+      "id": "cover-OL257943W-ol15127373",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-11 21:00",
+      "board": "Italian book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15127373.jpg",
+      "title": "A Game of Thrones (Il Grande Inverno) by George R. R. Martin – Mondadori 2000 · Italian book cover",
+      "description": "The Mondadori edition of A Game of Thrones by George R. R. Martin, 2000, in Italian as Il Grande Inverno; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 90 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: A Game of Thrones by George R. R. Martin, Mondadori edition, 2000, Italian edition titled Il Grande Inverno.",
+      "link": "https://buyitscovers.com/book/OL257943W?via=pinterest&cover=ol:15127373",
+      "note": "Einzel-Cover-Testlinie (Italienisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 70 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1986 × 3034 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Mondadori-Hardcover, Bild gut."
+    },
+    {
+      "id": "cover-OL257943W-ol15076208",
+      "kind": "cover",
+      "status": "entwurf",
+      "slot": "2026-11-12 09:00",
+      "board": "Chinese book covers",
+      "picture": "https://covers.openlibrary.org/b/id/15076208.jpg",
+      "title": "A Game of Thrones (Mo huan yuan bing) by George R. R. Martin – Golden Rich 2002 · Chinese book cover",
+      "description": "The Golden Rich edition of A Game of Thrones by George R. R. Martin, 2002, in Chinese as Mo huan yuan bing; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 90 covers on record for this book, each with publisher, year and ISBN.",
+      "alt": "Book cover: A Game of Thrones by George R. R. Martin, Golden Rich edition, 2002, Chinese edition titled Mo huan yuan bing.",
+      "link": "https://buyitscovers.com/book/OL257943W?via=pinterest&cover=ol:15076208",
+      "note": "Einzel-Cover-Testlinie (Chinesisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 575 × 843 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: taiwanische Ausgabe; der Katalog führt den Titel in Pinyin („Mo huan yuan bing“), so stünde er im Pin — Bild gut, nur 575 px breit."
     }
   ]
 }
