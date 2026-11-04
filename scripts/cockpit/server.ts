@@ -179,7 +179,7 @@ export async function startServer(deps: ServerDeps, first: { data: CockpitData; 
       const queue = readQueue(deps.root);
       if (!queue) return send(res, 404, { error: `${QUEUE_FILE} fehlt` });
       const str = (v: unknown) => (typeof v === 'string' ? v : undefined);
-      const edit: Edit = { id: String(input.id ?? ''), title: str(input.title), description: str(input.description), remark: str(input.remark), status: str(input.status) as PinStatus | undefined };
+      const edit: Edit = { id: String(input.id ?? ''), title: str(input.title), description: str(input.description), alt: str(input.alt), remark: str(input.remark), status: str(input.status) as PinStatus | undefined };
       const r = applyEdit(queue, edit, today());
       if ('error' in r) return send(res, 400, { error: r.error });
       writeQueue(deps.root, r.queue);

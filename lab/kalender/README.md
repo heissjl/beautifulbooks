@@ -14,6 +14,8 @@ npx tsx lab/kalender/serve.ts     # dann http://localhost:4325
 
 **Stand 2026-10-04:** gebaut, 70 Einträge (davon sieben Gestalter-Galerien, PLAN-5.6b §4a) vom 5.10. bis 1.12.2026, nichts gepostet; im Browser geprüft (Karte öffnen, freigeben, Voraussetzung abhaken, einen Kanal um eine Woche verschieben).
 
+**Antwortzettel, Bluesky-Hälfte (ROADMAP 5.6c §5.2):** `python3 -I lab/kalender/zettel_bsky.py out.json [stunden]` sucht die öffentliche API ohne Login nach Threads der letzten 72 h (22 Begriffe) und schreibt sie gewichtet als JSON — seit dem 3.11. mit Follower, Bio und den Bildadressen je Zeile, damit der Leser (Mensch oder Agent nach `.claude/skills/antwortzettel/`) keinen Browser braucht. Sucht nur, postet nie.
+
 **Bilder:** `python3 lab/kalender/render_gemeinfrei.py` rendert das Instagram-Karussell und den ersten Pin aus fünf gemeinfreien Einbänden nach `out/` (git-ignoriert, Cache unter `out/cache`). Grundlage: docs/plans/research-gemeinfreie-cover.md.
 
 **Mosaike** (Julian, 2026-10-05, freigegeben): die Porträts aus `lab/loading/templates.json`, zugeschnitten auf 1080×1170 nach `out/portraits/<id>-ig.png`, dann je Autor

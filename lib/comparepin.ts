@@ -39,7 +39,7 @@ export function coverFacts(cover: Cover, editionsById: ReadonlyMap<string, Editi
 }
 
 /** What a catalogue writes where it has no publisher: "[publisher not identified]", "[s.n.]", "Unknown". */
-const PLACEHOLDER = /^\[.*\]$|^(unknown|n\/a|s\.\s?n\.?)$|not identified/i;
+export const PLACEHOLDER = /^\[.*\]$|^(unknown|n\/a|s\.\s?n\.?)$|not identified/i;
 
 /** A cover by its id, or the cover another id was folded into. */
 export function findCover(covers: readonly Cover[], id: string): Cover | undefined {
