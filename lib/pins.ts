@@ -180,8 +180,8 @@ export interface CoverPinFacts {
   /** The cover artist where a record names one, and who says so. */
   artist?: string;
   artistSource?: string;
-  /** How many covers the site showed for the book that day. */
-  covers: number;
+  /** How many covers the site showed for the book that day; unknown when the pin was made from a collection file alone. */
+  covers?: number;
 }
 
 export interface CoverPin extends Pin {
@@ -245,9 +245,11 @@ export function coverPin(f: CoverPinFacts, origin: string = SITE_URL): CoverPin 
   const source = `; ${listOf(recorded)} ${recorded.length > 1 ? 'are' : 'is'} Open Library's record of this printing`;
   const credit = f.artist ? `, the artist is ${f.artistSource ?? 'the record'}'s credit` : '';
   const first = `${edition} of ${f.title}${by}${year}${lang}${art}${source}${credit}.`;
-  const second = f.covers > 1
-    ? `The link opens this cover on the book's page, among the ${f.covers} covers on record for this book, each with publisher, year and ISBN.`
-    : "The link opens this cover on the book's page, with publisher, year and ISBN.";
+  const second = f.covers === undefined
+    ? "The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN."
+    : f.covers > 1
+      ? `The link opens this cover on the book's page, among the ${f.covers} covers on record for this book, each with publisher, year and ISBN.`
+      : "The link opens this cover on the book's page, with publisher, year and ISBN.";
   const alt = `Book cover: ${f.title}${by}${f.publisher ? `, ${f.publisher} edition` : ''}${f.year ? `, ${f.year}` : ''}${foreign ? `, ${foreign} edition${translated ? ` titled ${translated}` : ''}` : ''}${f.artist ? `, cover art by ${f.artist}` : ''}.`;
   return {
     kind: 'cover',

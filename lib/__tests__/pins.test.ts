@@ -159,6 +159,16 @@ describe('a cover pin (the test line, 2026-11-04)', () => {
     expect(long.title).toBe('The Life and Opinions of Tristram Shandy, Gentleman – J. M. Dent & Sons 1912');
   });
 
+  it('says „beside the other covers“ when the count is not known (a pin from a collection file)', () => {
+    const adams = coverPin({ workId: 'OL472145W', coverId: 'ol:15130644', title: 'Ordeal by Innocence', author: 'Agatha Christie', board: 'Tom Adams – Agatha Christie covers', what: 'Tom Adams cover art', publisher: 'Fontana', year: 1970, artist: 'Tom Adams', artistSource: 'collectingchristie.com' }, LIVE);
+    expect(adams.title).toBe('Ordeal by Innocence by Agatha Christie – Fontana 1970 · Tom Adams cover art');
+    expect(adams.description).toBe(
+      "The Fontana edition of Ordeal by Innocence by Agatha Christie, 1970, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. " +
+      "The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
+    );
+    expect(adams.alt).toBe('Book cover: Ordeal by Innocence by Agatha Christie, Fontana edition, 1970, cover art by Tom Adams.');
+  });
+
   it('does not put a second „The“ before a publisher that has one', () => {
     const lustig = coverPin({ workId: 'OL468431W', coverId: 'ol:8238793', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', board: 'Classic book covers', what: 'Classic book cover', publisher: 'The New Classics (New Directions)', covers: 349 }, LIVE);
     expect(lustig.description).toMatch(/^The New Classics \(New Directions\) edition of The Great Gatsby by F\. Scott Fitzgerald; publisher and scan are/);
