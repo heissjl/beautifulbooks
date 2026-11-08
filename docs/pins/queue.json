@@ -53,14 +53,15 @@
     {
       "id": "decades-OL1168007W",
       "kind": "decades",
-      "status": "veröffentlicht",
+      "status": "nein",
       "slot": "2026-11-02 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL1168007W/pin.jpg",
       "title": "Animal Farm by George Orwell – book covers by decade, 1940s to 2020s",
       "description": "156 book covers of Animal Farm by George Orwell, one group per decade from the 1940s to the 2020s, counted from 167 printings with a known year on Open Library. Publishers include Penguin, Destino and Harcourt, Brace and Co.; each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL1168007W/decades?via=pinterest",
-      "decided": "2026-11-02"
+      "remark": "Von Julian in Pinterest gelöscht (2026-11-08): dasselbe Motiv zweimal im Bild.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL1168083W",
@@ -77,7 +78,7 @@
     {
       "id": "decades-OL257943W",
       "kind": "decades",
-      "status": "veröffentlicht",
+      "status": "nein",
       "slot": "2026-11-04 12:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL257943W/pin.jpg",
@@ -85,12 +86,13 @@
       "description": "A selection of 90 book covers of A Game of Thrones by George R. R. Martin, one group per decade from the 1990s to the 2020s, counted from 97 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL257943W/decades?via=pinterest",
       "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), war zu seinem Termin am 2026-11-04 veröffentlicht worden und wurde abends am veröffentlichten Pin über „Edit Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund.",
-      "decided": "2026-11-04"
+      "remark": "Von Julian in Pinterest gelöscht (2026-11-08): dasselbe Motiv zweimal im Bild.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL27482W",
       "kind": "decades",
-      "status": "veröffentlicht",
+      "status": "nein",
       "slot": "2026-11-04 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL27482W/pin.jpg",
@@ -98,7 +100,8 @@
       "description": "A selection of 211 book covers of The Hobbit by J.R.R. Tolkien, one group per decade from the 1930s to the 2020s, counted from 269 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL27482W/decades?via=pinterest",
       "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), war zu seinem Termin am 2026-11-04 veröffentlicht worden und wurde abends am veröffentlichten Pin über „Edit Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund.",
-      "decided": "2026-11-04"
+      "remark": "Von Julian in Pinterest gelöscht (2026-11-08): dasselbe Motiv zweimal im Bild.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL64365W",
@@ -116,7 +119,7 @@
     {
       "id": "decades-OL893414W",
       "kind": "decades",
-      "status": "veröffentlicht",
+      "status": "nein",
       "slot": "2026-11-05 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL893414W/pin.jpg",
@@ -124,6 +127,7 @@
       "description": "A selection of 84 book covers of Dune by Frank Herbert, one group per decade from the 1960s to the 2020s, counted from 104 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL893414W/decades?via=pinterest",
       "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), in der Planung über „Edit this Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund.",
+      "remark": "Von Julian in Pinterest gelöscht (2026-11-08): dasselbe Motiv zweimal im Bild.",
       "decided": "2026-11-08"
     },
     {
@@ -392,7 +396,7 @@
     {
       "id": "cover-OL893414W-ol15092781",
       "kind": "cover",
-      "status": "geplant",
+      "status": "veröffentlicht",
       "slot": "2026-11-08 15:00",
       "board": "Science fiction book covers",
       "picture": "https://covers.openlibrary.org/b/id/15092781.jpg",
@@ -595,15 +599,16 @@
     {
       "id": "cover-OL3335245W-ol14813205",
       "kind": "cover",
-      "status": "entwurf",
-      "slot": "2026-11-10 09:00",
+      "status": "geplant",
+      "slot": "2026-11-10 15:00",
       "board": "Classic book covers",
       "picture": "https://covers.openlibrary.org/b/id/14813205.jpg",
       "title": "The Catcher in the Rye by J. D. Salinger – Little, Brown and Co. · Classic book cover",
       "description": "The Little, Brown and Co. edition of The Catcher in the Rye by J. D. Salinger; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 74 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Catcher in the Rye by J. D. Salinger, Little, Brown and Co. edition.",
       "link": "https://buyitscovers.com/book/OL3335245W?via=pinterest&cover=ol:14813205",
-      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 932 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: die Karussellpferd-Jacke der Erstausgabe von 1951 (Michael Mitchell) als saubere Reproduktion — der Datensatz sagt 1945, das Buch erschien 1951; Jahr genommen."
+      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 932 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: die Karussellpferd-Jacke der Erstausgabe von 1951 (Michael Mitchell) als saubere Reproduktion — der Datensatz sagt 1945, das Buch erschien 1951; Jahr genommen. Termin vom Vorschlag 2026-11-10 09:00 verschoben (dort lag schon ein anderer Pin).",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL3335245W-ol15172532",
@@ -622,7 +627,7 @@
     {
       "id": "cover-OL27482W-ol15254146",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "geplant",
       "slot": "2026-11-10 21:00",
       "board": "Fantasy book covers",
       "picture": "https://covers.openlibrary.org/b/id/15254146.jpg",
@@ -630,12 +635,13 @@
       "description": "The Ballantine Books edition of The Hobbit by J.R.R. Tolkien; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 211 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Hobbit by J.R.R. Tolkien, Ballantine Books edition.",
       "link": "https://buyitscovers.com/book/OL27482W?via=pinterest&cover=ol:15254146",
-      "note": "Einzel-Cover-Testlinie (Druck von 1966). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 70 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1433 × 2443 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Ballantine-Taschenbuch mit Tolkiens Aquarell (Gestaltung ab 1973) und Preis 2,50 $ — ein Druck um 1979, nicht 1966; Jahr genommen."
+      "note": "Einzel-Cover-Testlinie (Druck von 1966). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 70 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1433 × 2443 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Ballantine-Taschenbuch mit Tolkiens Aquarell (Gestaltung ab 1973) und Preis 2,50 $ — ein Druck um 1979, nicht 1966; Jahr genommen.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL27513W-ol8171445",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "geplant",
       "slot": "2026-11-11 09:00",
       "board": "Fantasy book covers",
       "picture": "https://covers.openlibrary.org/b/id/8171445.jpg",
@@ -643,7 +649,8 @@
       "description": "The Houghton Mifflin Company edition of The Fellowship of the Ring by J.R.R. Tolkien; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 152 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Fellowship of the Ring by J.R.R. Tolkien, Houghton Mifflin Company edition.",
       "link": "https://buyitscovers.com/book/OL27513W?via=pinterest&cover=ol:8171445",
-      "note": "Einzel-Cover-Testlinie (Druck von 1954). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 75 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 787 × 1188 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Jacke mit Barbara Remingtons Zeichnung („looking-glass landscape“), die Houghton Mifflin ab Mitte der 1960er nutzte — nicht die Erstausgabe von 1954; Jahr genommen."
+      "note": "Einzel-Cover-Testlinie (Druck von 1954). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 75 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 787 × 1188 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Jacke mit Barbara Remingtons Zeichnung („looking-glass landscape“), die Houghton Mifflin ab Mitte der 1960er nutzte — nicht die Erstausgabe von 1954; Jahr genommen.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL27513W-ol8171449",
@@ -687,7 +694,7 @@
     {
       "id": "cover-OL472145W-ol15130644",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-12 15:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/15130644.jpg",
@@ -695,7 +702,8 @@
       "description": "The Fontana edition of Ordeal by Innocence by Agatha Christie, 1967, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Ordeal by Innocence by Agatha Christie, Fontana edition, 1967, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472145W?via=pinterest&cover=ol:15130644",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL47840205M. Quelle der Sammlung: fontana:798 (collectingchristie.com). Scan 795 × 1349 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Taschenbuch mit Preis 3/6, Dolch und zerbrochene Tasse — passt zu 1967, Bild gut."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL47840205M. Quelle der Sammlung: fontana:798 (collectingchristie.com). Scan 795 × 1349 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Taschenbuch mit Preis 3/6, Dolch und zerbrochene Tasse — passt zu 1967, Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472416W-ol15263581",
@@ -713,7 +721,7 @@
     {
       "id": "cover-OL472572W-ol10555802",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-13 09:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/10555802.jpg",
@@ -721,7 +729,8 @@
       "description": "The Fontana/Collins edition of Murder in Mesopotamia by Agatha Christie, 1973, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Murder in Mesopotamia by Agatha Christie, Fontana/Collins edition, 1973, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472572W?via=pinterest&cover=ol:10555802",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL31880140M. Quelle der Sammlung: fontana:939 (collectingchristie.com). Scan 1476 × 2502 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Logo der 1970er, Strick und Totenkopf — passt zu 1973, Bild gut."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL31880140M. Quelle der Sammlung: fontana:939 (collectingchristie.com). Scan 1476 × 2502 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Logo der 1970er, Strick und Totenkopf — passt zu 1973, Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472043W-ol14586400",
@@ -739,7 +748,7 @@
     {
       "id": "cover-OL471990W-ol6539918",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-13 21:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/6539918.jpg",
@@ -747,12 +756,13 @@
       "description": "The Fontana edition of The Mirror Crack'd from Side to Side by Agatha Christie, 1971, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Mirror Crack'd from Side to Side by Agatha Christie, Fontana edition, 1971, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL471990W?via=pinterest&cover=ol:6539918",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL24214111M. Quelle der Sammlung: fontana:1077 (collectingchristie.com). Scan 2054 × 3449 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana Books mit Preisaufkleber 95¢ (Exportausgabe) — Bild gut, 1971 plausibel."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL24214111M. Quelle der Sammlung: fontana:1077 (collectingchristie.com). Scan 2054 × 3449 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana Books mit Preisaufkleber 95¢ (Exportausgabe) — Bild gut, 1971 plausibel.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472458W-ol11477286",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-14 09:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/11477286.jpg",
@@ -760,12 +770,13 @@
       "description": "The Fontana Books edition of A Caribbean Mystery by Agatha Christie, cover art by Tom Adams; publisher and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: A Caribbean Mystery by Agatha Christie, Fontana Books edition, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472458W?via=pinterest&cover=ol:11477286",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL32844426M. VERDACHT: der Datensatz nennt „Collins“, die Sammlung Fontana — das Bild kann trotzdem der Fontana-Druck sein, oder der Eintrag ist ein anderer. Quelle der Sammlung: fontana:1418.r (collectingchristie.com). Scan 1428 × 2374 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Cover mit dem Balken „FONTANA BOOKS“ der 1960er; der Datensatz sagt Collins 1973 — Verlag nach dem Bild auf Fontana Books gesetzt, Jahr genommen."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL32844426M. VERDACHT: der Datensatz nennt „Collins“, die Sammlung Fontana — das Bild kann trotzdem der Fontana-Druck sein, oder der Eintrag ist ein anderer. Quelle der Sammlung: fontana:1418.r (collectingchristie.com). Scan 1428 × 2374 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Cover mit dem Balken „FONTANA BOOKS“ der 1960er; der Datensatz sagt Collins 1973 — Verlag nach dem Bild auf Fontana Books gesetzt, Jahr genommen.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472324W-ol14895285",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-14 15:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/14895285.jpg",
@@ -773,12 +784,13 @@
       "description": "The Fontana edition of Death in the Clouds by Agatha Christie, 1969, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Death in the Clouds by Agatha Christie, Fontana edition, 1969, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472324W?via=pinterest&cover=ol:14895285",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL43378335M. Quelle der Sammlung: fontana:1923 (collectingchristie.com). Scan 1080 × 1801 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Wespe über dem Doppeldecker, Preis 3/6 mit neuem Fontana-Logo — passt zu 1969, Bild gut."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL43378335M. Quelle der Sammlung: fontana:1923 (collectingchristie.com). Scan 1080 × 1801 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Wespe über dem Doppeldecker, Preis 3/6 mit neuem Fontana-Logo — passt zu 1969, Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL471664W-ol15218253",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-14 21:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/15218253.jpg",
@@ -786,12 +798,13 @@
       "description": "The Fontana edition of The Sittaford Mystery by Agatha Christie, 1971, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Sittaford Mystery by Agatha Christie, Fontana edition, 1971, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL471664W?via=pinterest&cover=ol:15218253",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL9212466M. Quelle der Sammlung: fontana:2550 (collectingchristie.com). Scan 632 × 1049 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Logo der 1970er, Bullterrier und Geister — passt zu 1971, Bild gut."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL9212466M. Quelle der Sammlung: fontana:2550 (collectingchristie.com). Scan 632 × 1049 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Logo der 1970er, Bullterrier und Geister — passt zu 1971, Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472165W-ol10767288",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-15 09:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/10767288.jpg",
@@ -799,7 +812,8 @@
       "description": "The Fontana/Collins edition of Peril at End House by Agatha Christie, 1977, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Peril at End House by Agatha Christie, Fontana/Collins edition, 1977, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472165W?via=pinterest&cover=ol:10767288",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL32108953M. Quelle der Sammlung: fontana:2615 (collectingchristie.com). Scan 1426 × 2444 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Logo der 1970er, Flieger — passt zu 1977; Schreibweise „Fontana/ Collins“ auf „Fontana/Collins“ gebracht."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL32108953M. Quelle der Sammlung: fontana:2615 (collectingchristie.com). Scan 1426 × 2444 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Fontana-Logo der 1970er, Flieger — passt zu 1977; Schreibweise „Fontana/ Collins“ auf „Fontana/Collins“ gebracht.",
+      "decided": "2026-11-08"
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
 import { asJpeg, DISPLAY, loadCovers, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
+import { ARTWORK_HEIGHT, ARTWORK_WIDTH, distinctArtwork } from '@/lib/artwork';
 import { mosaicGround } from '@/lib/inspiration/mosaicground';
 import { PIN_SIZE, pinCount, pinLayout, pinTitleLines, pinTitleSize, type PinCount, type Rect } from '@/lib/pinlayout';
 import { SITE_URL } from '@/lib/seo';
@@ -45,6 +46,8 @@ export const PIN_ADDRESS = 'BuyItsCovers.com';
  */
 const BUDGET_MS = 16000;
 const CANDIDATES = 12;
+/** A work's pin drops repeated pictures, so it asks for more: the route hands eighteen. */
+const DISTINCT_CANDIDATES = 18;
 
 const HELD = 'public, max-age=3600, s-maxage=86400';
 const HOLE = 'public, max-age=0, s-maxage=300';
@@ -65,6 +68,11 @@ export interface PinInput {
   creditSource?: string;
   /** What seeds the mosaic ground: the work's id or the collection's slug. */
   seed: string;
+  /**
+   * No picture twice, across languages too (`lib/artwork.ts`): a work's pin,
+   * never a collection's — a series' covers are meant to look alike.
+   */
+  distinctArtwork?: boolean;
 }
 
 /** How dark the mosaic is where no word stands (the poster's board picture uses half). */
@@ -85,15 +93,34 @@ async function ground(seed: string, L: { width: number; height: number; head: Re
 }
 
 /** The covers in the wall's order, each cut to its tile: every candidate asked at once (see `BUDGET_MS`), a credit staying with its cover. */
-async function loadTiles(covers: readonly PinCover[], want: number, tile: Rect): Promise<Tile[]> {
-  const got = await Promise.all(covers.slice(0, CANDIDATES).map(async (c): Promise<Tile | null> => {
+async function loadTiles(covers: readonly PinCover[], want: number, tile: Rect, distinct: boolean): Promise<{ tiles: Tile[]; failed: number }> {
+  const asked = covers.slice(0, distinct ? DISTINCT_CANDIDATES : CANDIDATES);
+  const got = await Promise.all(asked.map(async (c): Promise<Tile | null> => {
     const [src] = await loadCovers([c.url], 1, BUDGET_MS);
-    return src ? { src: await cut(src, tile), credit: c.credit } : null;
+    if (!src) return null;
+    return { src: await cut(src, tile), credit: c.credit, raster: distinct ? await artworkRaster(src) : undefined };
   }));
-  return got.filter((g): g is Tile => g !== null).slice(0, want);
+  const tiles = got.filter((g): g is Tile => g !== null);
+  return { tiles: (distinct ? distinctArtwork(tiles, t => t.raster) : tiles).slice(0, want), failed: asked.length - tiles.length };
 }
 
-interface Tile { src: string; credit?: string }
+interface Tile { src: string; credit?: string; raster?: Uint8Array }
+
+/** The small raster `lib/artwork.ts` compares, a scan's plain margin trimmed first; none when the picture does not decode. */
+async function artworkRaster(dataUrl: string): Promise<Uint8Array | undefined> {
+  try {
+    const bytes = Buffer.from(dataUrl.slice(dataUrl.indexOf(',') + 1), 'base64');
+    let source: Buffer = bytes;
+    try {
+      const trimmed = await sharp(bytes).removeAlpha().trim({ threshold: 25 }).toBuffer();
+      const { width = 0, height = 0 } = await sharp(trimmed).metadata();
+      if (width > 60 && height > 90) source = trimmed;
+    } catch { /* nothing to trim */ }
+    return new Uint8Array(await sharp(source).removeAlpha().resize(ARTWORK_WIDTH, ARTWORK_HEIGHT, { fit: 'fill' }).raw().toBuffer());
+  } catch {
+    return undefined;
+  }
+}
 
 /** A cover scaled to its tile before the generator sees it: a smaller picture to draw, and a scan that is not exactly 2:3 trimmed rather than letterboxed. */
 async function cut(dataUrl: string, tile: Rect): Promise<string> {
@@ -127,13 +154,13 @@ export async function pinPicture(input: PinInput): Promise<Response> {
   const titleSize = pinTitleSize(input.title);
   const titleLines = pinTitleLines(input.title, titleSize);
   const probe = pinLayout(wanted, { credits: input.covers.some(c => c.credit), titleLines });
-  const loaded = await loadTiles(input.covers, wanted, probe.tiles[0]);
+  const { tiles: loaded, failed } = await loadTiles(input.covers, wanted, probe.tiles[0], input.distinctArtwork === true);
   const count = pinCount(loaded.length);
   const credits = creditsLine(loaded.map(t => t.credit), input.creditSource);
   // Fewer than six: the six-layout with what came, and a short hold.
   const L = pinLayout(count || 6, { credits: credits !== '', titleLines });
   // Every tile filled — or the wall itself has fewer than nine and six came.
-  const whole = loaded.length >= 9 || (loaded.length >= 6 && input.covers.length < 9);
+  const whole = loaded.length >= 9 || (loaded.length >= 6 && (input.covers.length < 9 || (input.distinctArtwork === true && failed === 0)));
   const tiles = loaded.slice(0, count || 6);
   const field = await ground(input.seed, L);
 
