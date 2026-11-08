@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import sharp from 'sharp';
 import { asJpeg, DISPLAY, loadCovers, OG, ogFonts, TEXT, Wordmark } from '@/app/og';
-import { PIN_ADDRESS } from '@/app/pin';
+import { PIN_ADDRESS, pinGround } from '@/app/pin';
 import { COMPARE_COUNT, compareLayout, fitLabel } from '@/lib/comparelayout';
 import { compareOrder } from '@/lib/comparepin';
 import { PIN_SIZE, type Rect } from '@/lib/pinlayout';
@@ -14,6 +14,10 @@ import { PIN_SIZE, type Rect } from '@/lib/pinlayout';
  * zip files takes 15 s with Node's fetch), the first three that come are
  * drawn; a spare that stands in for a chosen cover makes the picture a
  * short-held one, as a hole does on the grid pin.
+ *
+ * The ground is the grid pin's mosaic (Julian, 2026-11-04: „Ja, mit Mosaik"),
+ * darker only right behind the type (`compareLayout().words`): a row of three
+ * leaves far more of the field open than nine covers do, and that is the point.
  */
 const BUDGET_MS = 16000;
 const HELD = 'public, max-age=3600, s-maxage=86400';
@@ -28,6 +32,8 @@ export interface CompareInput {
   explicit: boolean;
   /** The catalogue answered whole; a part-way answer is drawn but held briefly. */
   complete: boolean;
+  /** What seeds the mosaic: the work's id, so one book always gets the same field. */
+  seed: string;
 }
 
 interface Shown { src: string; year?: number; publisher?: string }
@@ -55,15 +61,21 @@ export async function comparePicture(input: CompareInput): Promise<Response> {
   const shown = compareOrder([...chosen, ...spares].slice(0, COMPARE_COUNT), input.explicit);
   const whole = shown.length === COMPARE_COUNT && !substituted && input.complete;
 
+  const field = await pinGround(`compare:${input.seed}`, L.width, L.height, L.words);
+
   const picture = await asJpeg(new ImageResponse(
     (
       <div style={{ position: 'relative', width: L.width, height: L.height, display: 'flex', background: OG.bg }}>
+        {field && (
+          // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
+          <img src={field} alt="" width={L.width} height={L.height} style={{ position: 'absolute', left: 0, top: 0 }} />
+        )}
         <div style={{ position: 'absolute', left: L.head.x, top: L.head.y, width: L.head.width, display: 'flex', flexDirection: 'column' }}>
           <div style={{ ...DISPLAY, display: 'flex', fontSize: L.titleSize, lineHeight: 1.1, color: OG.ink }}>{input.title}</div>
           {input.line && <div style={{ ...TEXT, display: 'flex', fontSize: L.type.line, lineHeight: 1.3, marginTop: 12, color: OG.ink2 }}>{input.line}</div>}
         </div>
         {L.tiles.map((r, i) => (
-          <div key={i} style={{ position: 'absolute', left: r.x, top: r.y, width: r.width, height: r.height, display: 'flex', background: '#26221f', borderRadius: 6, overflow: 'hidden' }}>
+          <div key={i} style={{ position: 'absolute', left: r.x, top: r.y, width: r.width, height: r.height, display: 'flex', background: '#26221f', borderRadius: 6, overflow: 'hidden', boxShadow: field ? '0 10px 28px rgba(0, 0, 0, 0.62)' : undefined }}>
             {shown[i] && (
               // eslint-disable-next-line @next/next/no-img-element -- next/og draws plain <img>
               <img src={shown[i].src} alt="" width={r.width} height={r.height} />

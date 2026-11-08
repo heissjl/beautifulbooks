@@ -7,7 +7,11 @@ import BookWorkCard, { type ResultOrigin } from './BookWorkCard';
 import { shapeOf } from '@/lib/queryshape';
 import { groupByAuthor } from '@/lib/searchgroups';
 import CuratedWall from './CuratedWall';
+import type { CuratedWork } from '@/lib/curated';
 import MosaicLoader from './MosaicLoader';
+import { useSuggestWorks } from './useSuggestWorks';
+import { suggestWorks } from '@/lib/suggest';
+import { coverProxyPath } from '@/lib/coverurl';
 import type { AuthorSearchResult, SearchCorrection, SearchResult } from '@/lib/search';
 import { rich, useT } from './i18n';
 import type { Translate } from '@/lib/i18n/translate';
@@ -20,6 +24,8 @@ interface BookGridProps {
   exact?: boolean;
   /** The author mode, `?author=<name>[&key=OL…A]` (ROADMAP 6.60, SPEC F1.10). */
   author?: { name: string; key?: string };
+  /** The hour's wall for the empty state, picked on the server (ROADMAP 6.17). */
+  wall?: CuratedWork[];
 }
 
 type AnyResult = SearchResult | AuthorSearchResult;
@@ -52,10 +58,16 @@ type Outcome = { key: string; result?: AnyResult; failure?: Failure };
  */
 async function failureFor(res: Response, t: Translate): Promise<Failure> {
   // The route's own sentence is translated where the catalogue knows it, and shown as it came otherwise.
-  const detail = await res
-    .json()
-    .then((body: { error?: string }) => (body.error ? t(body.error) : undefined))
-    .catch(() => undefined);
+  const body = await res.json().catch(() => undefined) as { error?: string; busy?: boolean } | undefined;
+  const detail = body?.error ? t(body.error) : undefined;
+  if (res.status === 503 && body?.busy) {
+    // Open Library turned the site away a moment ago; the server waits it out instead of asking again (ROADMAP 2.18e).
+    return {
+      title: t('The catalogue is busy'),
+      detail: t('Open Library is turning requests away just now. Try again in a minute or two. This says nothing about the book you looked for.'),
+      retryable: true,
+    };
+  }
   if (res.status === 503) {
     return {
       title: t('The catalogue did not answer'),
@@ -100,9 +112,38 @@ function Notice({
  * query named over it. Until the picture is there, the heading stands over a
  * field of its size that breathes as the picture will (ROADMAP 6.33).
  */
-export function GridSkeleton({ query }: { query?: string }) {
+export function GridSkeleton({ query, titleSearch = false }: { query?: string; titleSearch?: boolean }) {
   const t = useT();
-  return <MosaicLoader caption={query ? t('Looking for “{query}” in Open Library', { query }) : t('Searching')} />;
+  /*
+    While Open Library looks, the works of the site's own list that match are
+    there at once (ROADMAP 6.69, Teil A A1c) — the list the field loaded while
+    the reader typed; a search opened from a link waits as before. The cards
+    of the search replace the row when they come.
+  */
+  const [works] = useSuggestWorks();
+  const now = titleSearch && query && works ? suggestWorks(query, works) : [];
+  return (
+    <>
+      {now.length > 0 && (
+        <section className="mb-8" aria-label={t('Right away')}>
+          <p className="kicker mb-3">{t('Right away')}</p>
+          <ul className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+            {now.map(w => (
+              <li key={w.id}>
+                <Link href={`/book/${w.id}?q=${encodeURIComponent(query ?? '')}`} className="group block">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- our own /img route, as on the cards */}
+                  <img src={coverProxyPath(w.coverId, 'M')} alt="" className="cover-shadow aspect-[2/3] w-full rounded-card bg-surface-2 object-cover transition-transform duration-300 group-hover:-translate-y-1" />
+                  <span className="mt-2 block truncate text-sm text-ink group-hover:text-accent">{w.title}</span>
+                  <span className="block truncate text-xs text-ink-3">{w.author}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      <MosaicLoader caption={query ? t('Looking for “{query}” in Open Library', { query }) : t('Searching')} />
+    </>
+  );
 }
 
 const GRID = 'grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
@@ -139,7 +180,7 @@ function CorrectionLine({ correction, language, authorName }: { correction: Sear
   );
 }
 
-export default function BookGrid({ searchQuery, language, exact = false, author }: BookGridProps) {
+export default function BookGrid({ searchQuery, language, exact = false, author, wall = [] }: BookGridProps) {
   const t = useT();
   // A retry has to change the request key, or the effect would not run again
   // and the reader would press a button that does nothing.
@@ -220,11 +261,11 @@ export default function BookGrid({ searchQuery, language, exact = false, author 
     hrefs: () => [...document.querySelectorAll('[data-results] a[href^="/book/"]')].map(a => a.getAttribute('href') ?? ''),
   });
 
-  if (!key) return <CuratedWall />;
+  if (!key) return <CuratedWall works={wall} />;
 
   // Loading = the latest outcome does not answer the current request.
   const current = outcome?.key === key ? outcome : null;
-  if (!current) return <GridSkeleton query={authorName || searchQuery} />;
+  if (!current) return <GridSkeleton query={authorName || searchQuery} titleSearch={!author && pasted.kind !== 'isbn'} />;
 
   // An outcome carries a result or a failure, never both and never neither.
   if (!current.result) {

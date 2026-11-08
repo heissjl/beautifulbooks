@@ -1323,8 +1323,119 @@ Meine Neigung: **(1)**, weil nur sie die Zahl auf der Karte und die Wand in Eink
 
 **Gebaut 2026-10-18.** → [Historie](history.md#2026-10-18--nur-zählen-was-ein-mensch-sein-kann-die-wächter-regel-für-go-und-apiseen-bot-tage-markiert-roadmap-31i)
 
+## 2.9
+
+**2.9 Next.js und `sharp` auf den aktuellen Stand.** (Aus der [Sicherheits-Durchsicht](sicherheit-2026-10-02.md) vom 2026-10-02.) `next` 16.1.4 liegt drei Unterversionen hinter 16.3.8; `npm audit --omit=dev` nennt dafür **33 Hinweise, zwei „critical"** (darunter „Unauthenticated Remote Code Execution in Image Optimization API when AVIF files are used", behoben in 16.3.3), dazu vier für `sharp` 0.34.5 (libvips, libheif; aktuell 0.35.5). Welche davon diese Seite auf Vercel treffen, ist nicht geprüft — Vercel rechnet Bilder selbst, eine Middleware gibt es nicht. **Claude:** heben, Tests, Build, die fünf Abnahme-Suchen bei 390 und 1280, `npm audit` danach ohne critical und high; ein Deploy. Halber Tag.
+
+**Erledigt 2026-10-18** (16.4.2 und sharp 0.35.5, audit 0 statt 6, fünf Suchen lokal, deployt mit cea48d8). → [Historie](history.md#2026-10-18--nextjs-1642-und-sharp-0355-roadmap-29)
+
+## 2.18e
+
+**2.18e Der Katalog wird geschont.** Höchstens vier gleichzeitige Anfragen an `openlibrary.org` je Instanz, ein Automat nach abgewiesenen Verbindungen oder 403/429 (wie `lib/googlequota.ts`) mit dem Satz „The catalogue is busy", `stale-if-error` an Suche, Werk und ISBN. Claude, 1 Tag. Thema: Betrieb. **[Red-Team 2026-10-09](red-team-2026-10-09.md) B3:** `/api/isbn` cacht `{unavailable: true}` 24 h an der CDN (`app/api/isbn/[isbn]/route.ts:32`), Seite 0 von `/api/works` einen Google-Ausfall als `[]` — `no-store` oder `s-maxage=60` bei `unavailable`/leerem Google, `stale-if-error`; der Build rendert 260 kuratierte Werke mit ~3 OL-Anfragen parallel: eine Build-Prüfung, die bei zu vielen `null`-Seiten abbricht. Halber Tag. **Weg festgelegt 2026-10-10 (Julian: „ok“):** `no-store` bei `covers.unavailable`; Seite 0 ohne Google-Antwort mit `s-maxage=60` (dafür ein Feld `degraded` aus `getWorkPage`); `stale-if-error=86400` auf Suche, Works, ISBN. Halber Tag mit Tests. **Teil B3 gebaut 2026-10-10:** `lib/cachepolicy.ts` — `/api/isbn` mit `unavailable` `no-store`, mit der Katalog-Antwort (1.12) eine Stunde, mit Googles Antwort einen Tag; Seite 0 von `/api/works` mit `googleSilent` (neu in `WorkPage`, gesetzt von `searchEditionCandidatesChecked`) eine Minute; Suche, Works, ISBN mit `stale-if-error=86400`. Dabei gefunden und behoben: ein Prüfstein, der selbst scheitert (Google 503), ließ eine alte leere Antwort aus Nexts Daten-Cache als „kein Verlagsbild“ stehen — jetzt kann ein scheiternder Prüfstein eine leere Antwort nicht bestätigen (`lib/googlefields.ts`), ohne den Schalter zu öffnen. **Offen in 2.18e:** der Build-Check gegen 260 Seiten ohne Metadaten; und Nexts Daten-Cache hält leere Google-Antworten aus der Zeit von 1.13 bis zu 7 Tage (Titelsuche) bzw. 24 h (ISBN) — werden geglaubt, sobald die Prüfsteine wieder antworten.
+
+**Erledigt 2026-10-19** (Tor zum Katalog, Pause nach Abweisung, Prüfung im Build). → [Historie](history.md#2026-10-19--der-katalog-wird-geschont-roadmap-218e)
+
+## 6.73
+
+**6.73 Die Wand am Telefon messen, bevor etwas gebaut wird.** (Aus der [Durchsicht von außen](tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): „images pop in over several seconds … the dominant impression of the site“, Vorschlag 36er-Seiten.) Seiten zu 36 widersprechen §1 und E17/6.31; erst messen: bei 390 × 844 und Fast 4G auf dem Dev-Server die Zeit bis zur ersten vollen Bildschirmseite, Bildanfragen vor dem ersten Scrollen, ob `loading="lazy"` greift (Headless-Chrome mit hohem Fenster, das Browser-Panel lädt verborgen alles). Dazu aus [Teil A des Berichts](tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev): bei warmem Cache nach 11–13 s noch graue Kacheln und leere Mosaike — Wasserfall der ersten 20 Bildanfragen, und ob ein atmender Platzhalter wie auf der Startwand (6.33) nötig ist. Gehört zu 6.26 und zum `priority`-Teil von 6.5 — der liegt seit 2026-10-18 ganz hier: ob die ersten Kacheln `priority` bekommen (höchstens eine je Seite, Recherche 2026-09-12), entscheidet diese Messung. Zwei Stunden, Claude. [Plan](plans/PLAN-6.63-alltag.md)
+
+**Erledigt 2026-10-19** (gemessen, `priority` nein, Vorschläge 6.73a–c). → [Historie](history.md#2026-10-19--die-wand-am-telefon-gemessen-roadmap-673)
+
+## 6.2
+
+**6.2 Den Titel zeigen, nach dem gesucht wurde. [T13]** `crime and punishment` zeigt «Преступление и наказание» von „Fiódor Dostoievski“, `die verwandlung` zeigt „Metamorphosis“, `the master and margarita` zeigt «Мастер и Маргарита». Jeweils das richtige Werk, aber in einer Sprache, die der Leser nicht gesucht hat, und bei Dostojewski steht auf Platz 2 ein Übersetzer als Autor. Billigste Lösung ohne Eingriff ins Ranking: die Karte zeigt den Katalogtitel und darunter den Titel der Ausgabe, die zur Suchsprache passt („Metamorphosis · Die Verwandlung“). Die Ausgabentitel liegen auf der Detailseite ohnehin vor; für die Karte wären sie neu und müssten aus der ohnehin geladenen Seite 0 kommen. **[Red-Team 2026-10-09](red-team-2026-10-09.md) U1:** am 2026-10-09 in Chrome gespielt — „the master and margarita“ zeigt Werktitel, Autor, Beschreibung **und** „More by“ kyrillisch, bei 42 englischen Covern; das Item muss Autor und Beschreibung mit umfassen, nicht nur den Titel. **Weg festgelegt 2026-10-10 (Julian: „ok“):** Titel und Autor der Ausgabe in der Suchsprache (sonst der Sprache des Lesers), wenn es eine gibt; sonst Transkription Kyrillisch→Lateinisch als Rückfall (eine Stunde, Tabelle in `lib/`); der Katalogtitel klein darunter; Beschreibung und „More by“ ebenso. Halber Tag plus eine Stunde. Auch Schritt 3 von [PLAN-6.107-seo](plans/PLAN-6.107-seo.md).
+
+**Erledigt 2026-10-19.** → [Historie](history.md#2026-10-19--der-titel-in-der-sprache-der-suche-roadmap-62)
+
+## 6.69
+
+**6.69 Vorschläge beim Tippen aus dem Index, das Werk vor dem Buch über das Werk.** (Aus der [Durchsicht von außen](tests/2026-09-28-alltagstauglichkeit.md#teil-b-durchsicht-von-außen): die Liste zeigt einen „Popular“-Treffer.) Es gibt keine Autovervollständigung, nur die feste Liste `POPULAR_SEARCHES` (`components/SearchBar.tsx:86`); Open Library je Tastendruck zu fragen verbietet die Latenz. Vorschlag: bis zu sechs Treffer mit Miniatur aus einer gebauten, kleinen Liste der veröffentlichten Werke (Titel, Autorin, Werk-ID, ein Cover; nicht `data/cover-index.json`, das server only ist), Ziel unter 40 KB gzip. Dieselbe Liste zeigt, während Open Library sucht, die passenden Werke sofort (A1c aus [Teil A des Berichts](tests/2026-09-28-alltagstauglichkeit.md#teil-a-durchklick-unter-npm-run-dev)). Die Unterscheidung Werk / Buch über das Werk kommt aus 6.81. Ein halber Tag, Claude. [Plan](plans/PLAN-6.63-alltag.md) **Julian, 2026-10-10: „ok“** zu Vorschlägen beim Tippen aus dem Index — bereit zum Bau.
+
+**Erledigt 2026-10-19.** → [Historie](history.md#2026-10-19--vorschläge-beim-tippen-roadmap-669)
 ## 5.5a
 
 - [ ] **5.5a Pin-Format 1000×1500 je Werk und je Sammlung.** Kommt vor dem ersten Pin; wie gepostet wird: [Plan §7](plans/PLAN-5.5-5.6-kanaele.md#7-wie-auf-pinterest-posten-julian-2026-10-04-wie-sollte-ich-auf-pinterest-posten). (Claude; [Plan §2.2](plans/PLAN-5.5-5.6-kanaele.md#22-bild-kanäle-erst-nach-julians-rechte-entscheidung-6).) Aus derselben Maschinerie wie die Vorschaukarte, kein Google-Aufruf, Titel, Autor, vier bis neun Cover; Hochladen von Hand. **Rechte-Entscheidung gefallen am 2026-10-17: (a), Cover mit Quellenangabe (PLAN-5.6c §9) — 5.5a kann gebaut werden**, danach das Pinterest-Konto (PLAN-5.5-5.6 §7).
 
 **Gebaut 2026-10-31.** → [Historie](history.md#2026-10-31--das-pin-format-für-pinterest-roadmap-55a)
+
+## 6.15
+
+- [ ] **6.15 Fünf von sechs Karten sind dasselbe Buch. [Testfall „ansichten böll"]** *In Produktion am 2026-09-08 nachgemessen: **4 Karten statt 6**, der Roman trägt 16 statt 14 Ausgaben. Schritt 1 und 2 erledigt auf `mvp-hobby` ([Historie](history.md)): Klammerzusätze am Titelende fallen weg, der Autoren-Key führt zusammen — und trennt ausdrücklich nicht, weil Open Library Reed unter zwei Keys führt und die Trennung Mumbo Jumbo gespalten hätte. Offen: Schritt 3, die Stichprobe zu Übersetzungen.* **Stand 2026-10-22: die Stichprobe ist gelaufen** ([Historie](history.md#2026-10-22--übersetzungen-als-eigene-karten-stichprobe-über-18-suchen-roadmap-615-schritt-3), `lab/translations/`): in 12 von 18 Suchen steht das Buch auf mehr als einer Karte, 23 überzählige Karten, 16 davon Übersetzungen. **Schritt 3b (offen, Claude, ≈ 5 Min bei offener Tür):** an den 23 Paaren prüfen, ob LCC-Cutter oder `id_librarything` Original und Übersetzung verbinden; trägt eines, wird es die dritte Regel, sonst schreibt Julian-freigegeben §2.1 um. (Julian, 2026-09-08: „von 5 Ergebnissen sind 4 das richtige Buch, nur in einer anderen Sprache, das sollte so auch nicht passieren.") **Das widerspricht der Spec ausdrücklich**: §2.1 sagt, Sprache sei kein Teil der Werk-Identität und Übersetzungen seien Ausgaben desselben Werks. Die Umsetzung hält das nicht ein.
+
+  **Gemessen am 2026-09-08**, Suche „ansichten böll", sechs Karten:
+
+  | Karte | Was es ist |
+  |---|---|
+  | Ansichten eines Clowns (14 Ausg.) | das Werk, aus fünf OL-Datensätzen zusammengefasst |
+  | The clown (2) | **dasselbe Buch**, englisch |
+  | Opinioni di un clown (1) | **dasselbe Buch**, italienisch |
+  | Opiniones de un payaso (2) | **dasselbe Buch**, spanisch |
+  | Ansichten eines Clowns (Methuen's Twentieth Century German Texts) (2) | **dasselbe Buch**, kommentierte Schulausgabe |
+  | Heinrich Böll–Ansichten eines Clowns, Bernd Balzer (1) | ein Buch **über** das Werk, zu Recht getrennt |
+
+  Von 22 gefundenen Ausgaben gehören 21 zu einem einzigen Roman.
+
+  **Warum die Regel nicht greift.** Identitätsregel 2 vergleicht normalisierten Titel **und** Erstautor. Eine Übersetzung hat einen anderen Titel, also greift sie nie. Der Fall der Schulausgabe scheitert an etwas Kleinerem: die Normalisierung schneidet Untertitel nach `:` ab, aber keine Klammerzusätze — „Ansichten eines Clowns (Methuen's …)" bleibt ein anderer Titel.
+
+  **Was es an Verbindungen tatsächlich gibt, geprüft:**
+
+  | Signal | Befund |
+  |---|---|
+  | Autoren-Key | **Bei allen fünf gleich** (`OL2633288A`). Notwendig, aber weit davon entfernt, hinreichend zu sein — sonst verschmölze Bölls ganzes Werk. |
+  | `id_wikidata` | auf keinem Datensatz vorhanden |
+  | Erstjahr | 1963, 1963, 1972, 1990 — Übersetzungen tragen das Jahr **ihrer** Ausgabe |
+  | ISBN | keine Überschneidung, es sind verschiedene Bücher im Regal |
+  | `id_librarything` | nur auf einem der fünf (`65736`) — LibraryThing gruppiert Übersetzungen sonst gut |
+  | **LCC** | OL279833W: `PT-2603.00000000.O394 **A7**`, The clown: `PT-2603.00000000.O394 **A513**` — **gleiche Autoren-Cutter-Basis**, und die Ziffernfolge unterscheidet Original von Übersetzung. Die italienische Ausgabe hat gar keine LCC. |
+
+  **Vorschlag, in drei Schritten und nach Sicherheit geordnet:**
+
+  1. **Klammerzusätze normalisieren** (`lib/normalize.ts`): ein Titel, dem nur ein Reihen- oder Ausgabenzusatz in Klammern anhängt, ist derselbe Titel. Fängt die Methuen-Ausgabe, ist risikoarm und in einer Stunde erledigt. **Zuerst machen.**
+
+     **Nachtrag 2026-09-09, beim Prüfen von 1.1 gesehen:** die Normalisierung wirkt nur beim *Vergleichen*, nicht beim *Anzeigen*. Überschrift und Karte lauten bei *The Great Gatsby* „**The Great Gatsby(Published In 1925)**“ — so steht der Titel wörtlich im Open-Library-Datensatz OL468431W, samt fehlendem Leerzeichen. Das trifft das meistbenutzte Testwerk der Spec und ist der erste Satz, den ein Besucher dort liest. Zwei Wege, die einander nicht ausschließen: den Klammerzusatz auch für die Anzeige abschneiden (dieselbe Regel wie in Schritt 1), und den Datensatz bei Open Library korrigieren — wozu die Seitenleiste seit 1.1 den Link anbietet.
+
+     **Am 2026-09-09 im Katalog nachgeprüft und im Code verortet** (der erste Abruf antwortete 503, der zweite 200 — eine Episode wie in 1.10 beschrieben): `openlibrary.org/works/OL468431W.json` trägt als Titel wörtlich `The Great Gatsby(Published In 1925)`. Die Bereinigung existiert bereits, aber nur für den Vergleich: `stripTrailingBrackets` ist modulprivat in `lib/normalize.ts` und wird allein von `normalizeTitle` benutzt; auf dem Anzeigeweg wird der Rohtitel durchgereicht. Der Aufwand ist damit eine exportierte Hilfsfunktion plus die Stellen, die einen Werktitel anzeigen — **eine bis zwei Stunden für den ersten Satz, den ein Besucher auf dem meistbenutzten Testwerk der Spec liest.**
+  2. **Nach Autoren-Key statt Autorennamen zusammenfassen.** Regel 2 vergleicht heute normalisierte Namen; der Key ist strenger und stabiler (Open Library führt dieselbe Person allerdings unter mehreren Keys, das bleibt zu beachten). Ändert an Böll nichts, macht aber 6.13 sicherer.
+  3. **Übersetzungen: messen, dann entscheiden — und im Zweifel nicht verschmelzen.** Es gibt **keine verlässliche maschinelle Verbindung** zwischen diesen Datensätzen. Jede Regel, die stark genug wäre, „The clown" an „Ansichten eines Clowns" zu binden, bindet auch zwei verschiedene Bücher desselben Autors aneinander, und eine falsche Verschmelzung ist schlimmer als eine verpasste. Zu messen wäre, über eine Stichprobe von etwa dreißig übersetzten Werken:
+     - wie oft die **LCC-Cutter-Basis** bei Original und Übersetzung übereinstimmt (die Hypothese, dass `A7` und `A513` systematisch zusammengehören, ist **zu prüfen**, nicht zu glauben),
+     - wie oft `id_librarything` auf beiden Seiten steht.
+
+     Trägt eines davon, wird es zur dritten Identitätsregel. Trägt keines, bleiben Übersetzungen **eigene Karten** — dann muss aber **§2.1 ehrlich umgeschrieben werden**, statt eine Regel zu behaupten, die der Code nicht einlöst, und die Werkseite bekommt eine Zeile „Auch erschienen als" mit den Karten, die denselben Autoren-Key und einen ähnlichen Erstveröffentlichungszeitraum haben.
+
+  **Zusammenhang mit 6.13:** dort geht es um Datensätze mit **demselben** Titel, die die Karte bereits zusammenfasst und die Wand nicht lädt. Hier geht es um Datensätze mit **anderem** Titel, die niemand zusammenfasst. Schritt 1 und 2 gehören zu beiden.
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--übersetzungen-eigene-werke-geprüft-weder-lcc-noch-librarything-verbindet-sie-roadmap-615-schritt-3b)
+
+## 6.30a
+
+- [ ] **6.30a Dieselbe Messung über Suche, Werkseite und Jahrzehnte-Seite (N14).** *Vorbefund 2026-09-11: auf der Werkseite bei 320 px bricht der Seitentitel „Beautiful Books“ in der Kopfzeile auf zwei Zeilen um, sobald „Share“ daneben steht. Die Überbreite der Werkseite (806 px auf 390) ist behoben, gemessen von 320 bis 768 px ([Historie](history.md#2026-09-11--die-messleiste-der-sprach-pillen-machte-die-seite-am-telefon-806-px-breit-roadmap-68-n14)); beim Messen im Browser-Panel vorher einen Frame erzwingen.* Die Startseite ist nur die, die Julian fotografiert hat. Messen bei 390 und 1280 px: abgeschnittene Zeilen, Platzhalter gegen Feld, leere Flächen, Zustände, die nur ein Gerät hat. Die Messung aus 6.30 (ein Stück JavaScript im Browser, im [Historie-Eintrag](history.md#2026-09-11--vier-befunde-vom-telefon-behoben-roadmap-630-bis-633) festgehalten) als wiederverwendbares Werkzeug. Zwei Stunden, Claude. **Stand 2026-10-22:** gemessen sind die fünf Abnahme-Suchen und die Werkseite von Gatsby ohne Wand ([Historie](history.md#2026-10-22--n14-über-suche-werkseite-und-jahrzehnte-seite-gemessen-jahrzehnte-seite-offen-roadmap-630a)) — keine Überbreite, kein Platzhalter, kein leeres Bild; die Kürzungen sind die gewollten (Titel, Autorenzeile, Klappentext). **Offen: Jahrzehnte-Seite und die geladene Wand der Werkseite** (Open Library sperrte den Mac mitten in der Messung), und die geöffnete Suche am Telefon, die die Sonde nicht auslöst. Das Häkchen folgt nach diesen drei.
+
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--n14-vollständig-gemessen-suche-werkseite-mit-wand-jahrzehnte-seite-roadmap-630a)
+
+## 6.17
+
+- [ ] **6.17 Die Startseite zeigt 100 Werke im Wechsel statt immer derselben zwölf.** (Julian, 2026-09-08: „ich will die 12 Startseitenbücher kuratieren. Lass uns eine Liste von 100 erstellen, die im Wechsel dort auftauchen bei einem neuen Laden, aber schon vorgeladen sind, damit es schnell geht.") Heute stehen zwölf feste Werke in `lib/curated.ts`, jedes mit einer von Hand gewählten Cover-ID.
+
+  **Die Liste gibt es schon halb:** `data/index-works.json` führt **100 Werke** (12 kuratierte, 88 nach Leser- und Ausgabenzahl gewählt), und `data/cover-index.json` kennt zu ihnen **10.362 Cover** mit Signaturen — offline, ohne eine einzige Anfrage. Daraus wird die Liste, sobald zu jedem Werk ein Cover feststeht (6.18).
+
+  **Zu bauen:** `data/curated.json` mit Werk-ID, Titel, Autor, gewählter Cover-ID (und dem geprüften Jahr aus 6.16); `lib/curated.ts` liest sie und gibt **zwölf** davon aus. Die Auswahl muss serverseitig geschehen und darf nicht bei jedem Rendern anders sein, sonst springt die Startseite beim Hydrieren; Vorschlag: ein Zeitfenster (die Reihenfolge dreht sich stündlich weiter), damit dieselbe Auslieferung stabil ist und ein Wiederkehrer trotzdem etwas Neues sieht. **Vorgeladen heißt hier zweierlei**: die Bilder der zwölf über `<link rel=preload>` oder `priority`, und der Weg nach dem Klick — die Detailseite der zwölf sollte vorgerendert sein (`generateStaticParams` macht das heute für die zwölf; mit Rotation über 100 wären es 100 vorgerenderte Seiten, was zur ISR-Frist passt, aber den Build verlängert; zu messen).
+
+  **1984 fliegt raus** (Julian, ausdrücklich). Damit sind es 99; das hundertste Werk kommt beim nächsten Bau des Cover-Index dazu, weil die App nur Cover zeigen kann, die der Index kennt.
+
+  **Teilweise erledigt am 2026-09-08 spät:** die Wand zeigt **18 Kacheln statt zwölf** (drei volle Reihen zu sechs, Julian: „ich will trotzdem eine volle Startseite"), und sie nimmt sie aus `data/curated.json` — Julians eigenen Wahlen aus der Kuratier-App —, aufgefüllt aus der alten Handliste, damit die Wand vom ersten Tag des Kuratierens an voll ist. **Was noch fehlt, ist die Rotation**, und sie hängt an einer Entscheidung, nicht an Code: die Startseite wird vorgerendert, eine hier gewürfelte Reihenfolge stünde also im HTML anders als im Browser und React risse sie wieder ein. Drei Wege: (a) stündlich über ISR (`revalidate`), dann sieht ein Wiederkehrer alle Stunde etwas Neues, jeder Aufruf innerhalb der Stunde dasselbe — billig, statisch; (b) die Auswahl in einer Server-Komponente treffen und als Prop hineinreichen, dann rotiert es je Auslieferung, aber die Seite wird dynamisch und kostet je Aufruf eine Funktion; (c) nach dem Hydrieren im Browser tauschen — dann flackert die erste Reihe. **Empfehlung: (a)**, weil „vorgeladen und schnell" Julians eigene Bedingung war und (b) genau die aufgibt.
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--die-startseite-im-stundenwechsel-roadmap-617)
+
+## 6.51
+
+**6.51 Eine Checkliste vor jedem Veröffentlichen, in der Reihenfolge, in der sie abzuarbeiten ist.** (Julian, 2026-09-25, als nach dem Tausch *To the Lighthouse* → *Mrs Dalloway* auf der Startseite der Test der Ringe fehlschlug: „maybe we need to have a claude file for what to do and check in which order before publishing".) Heute steht das Wissen verstreut in CLAUDE.md, in Skript-Kommentaren und in der Historie, und jede Sitzung findet einen Teil davon erst, wenn etwas bricht. **Zu bauen:** eine Datei (Vorschlag: `docs/publish.md`, von CLAUDE.md oben verlinkt; oder ein Projekt-Skill `.claude/skills/publish/`, den Claude von selbst lädt), die in dieser Reihenfolge führt:
+  1. **Welche abgeleiteten Dateien die Änderung berührt** und mit welchem Skript sie neu entstehen: `data/curated.json` → `npx tsx scripts/build-hero-rings.ts` (1.9); Index-Werke → `build-cover-index.ts`, dann `find-decade-pages.ts` und `build-hero-rings.ts`; Spielvorrat → `build-versus-pool.ts`; Sammlungen → nichts, aber die laufende Sammlungs-App liest die Datei neu.
+  2. `npm run test:run`, `npx tsc --noEmit`, `npx eslint .`, `npm run build` mit der Umgebung aus dem Hauptordner (IMPRINT_*); `.next/dev/types` vorher löschen, wenn `tsc` über gelöschte Routen stolpert.
+  3. **Ansehen** bei 1280 × 800 und 390 × 844 gegen `npm run dev`, was sich geändert hat; Messung statt Blick, wo Text oder Kacheln sich ändern (N14).
+  4. `npm run worktrees -- --fetch`, `origin/main` hineinmergen, **ein Commit je Roadmap-Punkt**, dann `git push origin HEAD:main`.
+  5. Auf den Deploy warten (`vercel ls --prod`, `vercel inspect`), dann **einmal** in Produktion prüfen, nie in Schleife (2.4).
+  6. Festhalten: Historie (Messung), Roadmap (Haken, kurz), features.md, SPEC wenn sich Verhalten ändert.
+  Dazu eine Liste der Fallen, die in dieser Sitzung aufgefallen sind: veralteter Typ-Cache in `.next`, der Sperr-Lock eines zweiten `next dev`, der Test auf `hero-rings.json`, und dass eine reine Doku-Änderung nicht eigens deployt wird, sondern mit dem nächsten Push mitgeht. **Wer:** Claude baut, Julian entscheidet Datei oder Skill. **Stand 2026-10-22:** Inhalt als Entwurf geschrieben in [docs/publish.md](publish.md) (Schritte 0–10 mit Quelle je Schritt, Fallen-Tabelle); die Kopfnotiz dort stellt Datei, Skill oder beides zur Wahl. **Entschieden 2026-10-22 (Julian):** `/code-review` vor dem Merge nicht bei reinen Doku-Commits („erstes nein“); das Veröffentlichen von Sammlungen bekommt einen eigenen Abschnitt („zweites ja“, Schritt 10); `npm run backup` „vor großen changes und bei denen die speicher und export route berühren“ (Schritt 6 davor, Schritt 8 danach). **Offen:** Datei oder Skill (Julian fragte nach dem Kontextpreis eines Skills) und die `Co-Authored-By`-Zeile. Noch nicht von CLAUDE.md verlinkt, nicht abgehakt.
+
+**Erledigt 2026-10-26.** → [Historie](history.md#2026-10-26--die-checkliste-vor-dem-veröffentlichen-roadmap-651)

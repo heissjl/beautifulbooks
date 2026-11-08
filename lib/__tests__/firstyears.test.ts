@@ -25,14 +25,29 @@ describe('checked first-publication years', () => {
     expect(checkedFirstYear('OL0W')).toBeUndefined();
   });
 
+  it('takes the differences Julian confirmed after the web check (2026-10-19)', () => {
+    expect(withCheckedYear(work('OL893707W', 1876)).firstPublishYear).toBe(1857); // Madame Bovary
+    expect(withCheckedYear(work('OL1992198W', 1965)).firstPublishYear).toBe(1966); // In Cold Blood, not the New Yorker year
+    expect(withCheckedYear(work('OL49488W', 1985)).firstPublishYear).toBe(1985); // Ender's Game, the novel
+    expect(withCheckedYear(work('OL1003040W', 1982)).firstPublishYear).toBe(1899); // Dom Casmurro, the title page
+  });
+
+  it('withholds the year where none fits, rather than quote the catalogue', () => {
+    const tales = withCheckedYear({ ...work('OL531767W', 1970), firstPublishYearSource: 'openlibrary' }); // The Canterbury Tales
+    expect(tales.firstPublishYear).toBeUndefined();
+    expect(tales.firstPublishYearSource).toBeUndefined();
+    expect(tales.title).toBe('OL531767W');
+  });
+
   it('names a source and a plausible year on every row', () => {
-    const rows = Object.entries(firstYears as Record<string, { year: number; source: string }>);
+    const rows = Object.entries(firstYears as Record<string, { year: number | null; source: string }>);
     expect(rows.length).toBeGreaterThan(50);
     for (const [id, row] of rows) {
       expect(id, id).toMatch(/^OL\d+W$/);
+      expect(row.source.length, id).toBeGreaterThan(10);
+      if (row.year === null) continue;
       expect(row.year, id).toBeGreaterThan(1300);
       expect(row.year, id).toBeLessThanOrEqual(new Date().getFullYear());
-      expect(row.source.length, id).toBeGreaterThan(10);
     }
   });
 });

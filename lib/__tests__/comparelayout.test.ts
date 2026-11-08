@@ -45,10 +45,29 @@ describe.each(['Dune', "Harry Potter and the Philosopher's Stone"])('the compari
     expect(L.head.height).toBeGreaterThanOrEqual(L.titleLines * L.titleSize * 1.1 + L.type.line * 1.3);
     expect(L.foot.y + L.foot.height).toBe(L.height - L.head.y);
     expect(L.foot.height).toBeGreaterThanOrEqual(L.type.site * 1.4);
-    const airAbove = L.tiles[0].y - (L.head.y + L.head.height);
-    const airBelow = L.foot.height - 128 + 0; // the foot begins at the labels' end; what it holds beyond the site line is air
-    expect(airAbove).toBeGreaterThanOrEqual(0);
-    expect(airBelow).toBeGreaterThanOrEqual(0);
+  });
+
+  it('darkens the mosaic behind the type only: title, labels and foot, none over a cover, the air left open', () => {
+    const [title, labels, foot] = L.words;
+    expect(L.words).toHaveLength(3);
+    for (const w of L.words) {
+      expect(w.x).toBeGreaterThanOrEqual(0);
+      expect(w.x + w.width).toBeLessThanOrEqual(L.width);
+      for (const t of L.tiles) expect(overlaps(w, t)).toBe(false);
+    }
+    expect(title.y).toBe(L.head.y);
+    expect(title.height).toBeGreaterThanOrEqual(L.titleLines * L.titleSize * 1.1 + L.type.line * 1.3);
+    for (const l of L.labels) {
+      expect(l.x).toBeGreaterThanOrEqual(labels.x);
+      expect(l.x + l.width).toBeLessThanOrEqual(labels.x + labels.width);
+      expect(l.y).toBeGreaterThanOrEqual(labels.y);
+      expect(l.y + l.height).toBeLessThanOrEqual(labels.y + labels.height);
+    }
+    expect(foot.y + foot.height).toBe(L.foot.y + L.foot.height);
+    expect(foot.height).toBeGreaterThanOrEqual(L.type.site * 1.4);
+    // Air stays above the row and below the labels, wider than the 60 px the darkening fades over.
+    expect(L.tiles[0].y - (title.y + title.height)).toBeGreaterThan(60);
+    expect(foot.y - (labels.y + labels.height)).toBeGreaterThan(60);
   });
 });
 

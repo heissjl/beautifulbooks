@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    setupFiles: ['./vitest.setup.ts'],
     /*
       A worktree under `.claude/worktrees/` carries a second copy of this
       repository, tests and node_modules included. Without this line vitest

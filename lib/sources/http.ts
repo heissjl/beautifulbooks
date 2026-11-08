@@ -4,6 +4,7 @@
  */
 import { debug } from '../debug';
 import { userAgent } from '../seo';
+import { CatalogueBusyError, throughCatalogueGate } from './olgate';
 
 /** How much of an error response to keep; enough to read a reason code. */
 export const ERROR_BODY_MAX = 500;
@@ -66,7 +67,34 @@ const USER_AGENT = userAgent();
  * Fetches JSON with a timeout. Throws HttpError for non-2xx, and the
  * underlying error (AbortError / TypeError) for timeouts and network failures.
  */
-export async function fetchJson<T>(url: string, { timeoutMs, revalidate }: FetchJsonOptions): Promise<T> {
+export async function fetchJson<T>(url: string, options: FetchJsonOptions): Promise<T> {
+  // The catalogue goes through its gate: four at a time, and quiet after a refusal (ROADMAP 2.18e).
+  if (isCatalogueUrl(url)) {
+    return throughCatalogueGate(options.timeoutMs, ms => fetchJsonOnce<T>(url, { ...options, timeoutMs: ms }), catalogueRefusal);
+  }
+  return fetchJsonOnce<T>(url, options);
+}
+
+function isCatalogueUrl(url: string): boolean {
+  try {
+    return new URL(url).hostname === 'openlibrary.org';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Open Library turning us away, as opposed to being slow: a 403 or 429, or a
+ * connection refused outright (what this Mac saw after a bulk run, umgang §1).
+ * Returns the reason for the log, undefined for anything else.
+ */
+export function catalogueRefusal(err: unknown): string | undefined {
+  if (err instanceof HttpError) return err.status === 403 || err.status === 429 ? `http ${err.status}` : undefined;
+  const code = err instanceof Error && typeof err.cause === 'object' && err.cause !== null && 'code' in err.cause ? err.cause.code : undefined;
+  return code === 'ECONNREFUSED' ? 'connection refused' : undefined;
+}
+
+async function fetchJsonOnce<T>(url: string, { timeoutMs, revalidate }: FetchJsonOptions): Promise<T> {
   const started = Date.now();
   const res = await fetch(url, {
     signal: AbortSignal.timeout(timeoutMs),
@@ -94,6 +122,8 @@ export function isTimeout(err: unknown): boolean {
  */
 export function isSilence(err: unknown): boolean {
   if (err instanceof HttpError) return err.status >= 500;
+  // The gate did not send it; asking again inside the pause is refused the same way.
+  if (err instanceof CatalogueBusyError) return false;
   return true;
 }
 

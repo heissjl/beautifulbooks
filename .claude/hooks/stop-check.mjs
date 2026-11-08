@@ -18,7 +18,7 @@ process.stdin.on('end', () => {
   let input;
   try { input = JSON.parse(raw); } catch { process.exit(0); }
   if (input?.stop_hook_active) process.exit(0);
-  const root = process.env.CLAUDE_PROJECT_DIR || process.cwd();
+  const root = input?.cwd ? execSync('git rev-parse --show-toplevel', { cwd: input.cwd, encoding: 'utf8' }).trim() : (process.env.CLAUDE_PROJECT_DIR || process.cwd());
   const session = String(input?.session_id ?? 'unknown').replace(/[^\w-]/g, '');
   const stateDir = join(root, '.claude', 'hooks', 'state');
   mkdirSync(stateDir, { recursive: true });

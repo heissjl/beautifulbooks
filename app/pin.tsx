@@ -80,10 +80,13 @@ const GROUND_BASE = 0.55;
 /** How dark right behind the title and the foot. */
 const GROUND_WORDS = 0.86;
 
-/** The mosaic ground as a JPEG data URL for the generator: smaller to draw than the PNG it comes as. */
-async function ground(seed: string, L: { width: number; height: number; head: Rect; foot: Rect }): Promise<string | null> {
+/**
+ * The mosaic ground as a JPEG data URL for the generator: smaller to draw than the PNG it comes as.
+ * `words` are the boxes that get darker for the type; the comparison pin passes its own (`app/comparepin.tsx`).
+ */
+export async function pinGround(seed: string, width: number, height: number, words: readonly Rect[]): Promise<string | null> {
   try {
-    const png = await mosaicGround(L.width, L.height, `pin:${seed}`, [{ ...L.head, dark: GROUND_WORDS }, { ...L.foot, dark: GROUND_WORDS }], [], GROUND_BASE);
+    const png = await mosaicGround(width, height, `pin:${seed}`, words.map(w => ({ ...w, dark: GROUND_WORDS })), [], GROUND_BASE);
     const jpeg = await sharp(png).jpeg({ quality: 82 }).toBuffer();
     return `data:image/jpeg;base64,${jpeg.toString('base64')}`;
   } catch {
@@ -162,7 +165,7 @@ export async function pinPicture(input: PinInput): Promise<Response> {
   // Every tile filled — or the wall itself has fewer than nine and six came.
   const whole = loaded.length >= 9 || (loaded.length >= 6 && (input.covers.length < 9 || (input.distinctArtwork === true && failed === 0)));
   const tiles = loaded.slice(0, count || 6);
-  const field = await ground(input.seed, L);
+  const field = await pinGround(input.seed, L.width, L.height, [L.head, L.foot]);
 
   const picture = await asJpeg(new ImageResponse(
     (

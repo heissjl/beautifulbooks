@@ -41,6 +41,14 @@ function hash(s: string): number {
 }
 
 describe('otherWorksByAuthor — rules', () => {
+  it('names a work not in Latin script after its English edition, and leaves a Latin title as it is (6.2)', () => {
+    const out = otherWorksByAuthor([
+      doc('Собачье сердце', 70, { editions: { docs: [{ title: 'The Heart of a Dog' }] } }),
+      doc('Der Proceß', 60, { editions: { docs: [{ title: 'The Trial' }] } }),
+    ], 'OL1A');
+    expect(titles(out)).toEqual(['The Heart of a Dog', 'Der Proceß']);
+  });
+
   it('keeps only records whose first author is the one asked for', () => {
     const out = otherWorksByAuthor([
       doc('Her Novel', 50),
