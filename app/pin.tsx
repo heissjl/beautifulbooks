@@ -104,7 +104,7 @@ async function loadTiles(covers: readonly PinCover[], want: number, tile: Rect, 
     return { src: await cut(src, tile), credit: c.credit, raster: distinct ? await artworkRaster(src) : undefined };
   }));
   const tiles = got.filter((g): g is Tile => g !== null);
-  return { tiles: (distinct ? distinctArtwork(tiles, t => t.raster) : tiles).slice(0, want), failed: asked.length - tiles.length };
+  return { tiles: (distinct ? distinctArtwork(tiles, t => t.raster, 6) : tiles).slice(0, want), failed: asked.length - tiles.length };
 }
 
 interface Tile { src: string; credit?: string; raster?: Uint8Array }

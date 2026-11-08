@@ -37,4 +37,9 @@ describe('distinctArtwork', () => {
     const items = [{ n: 'a', r: picture(1) }, { n: 'x' }, { n: 'b', r: picture(5) }, { n: 'a again', r: picture(1) }, { n: 'y' }];
     expect(distinctArtwork<{ n: string; r?: number[] }>(items, i => i.r).map(i => i.n)).toEqual(['a', 'x', 'b', 'y']);
   });
+  it('brings repeats back rather than leave a tile empty', () => {
+    const same = [1, 2, 3, 4].map(n => ({ n, r: picture(1) }));
+    expect(distinctArtwork(same, i => i.r, 3).map(i => i.n)).toEqual([1, 2, 3]);
+    expect(distinctArtwork(same, i => i.r).map(i => i.n)).toEqual([1]);
+  });
 });

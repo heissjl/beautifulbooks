@@ -57,8 +57,13 @@ export function artworkScore(a: ArrayLike<number>, b: ArrayLike<number>): number
   return best;
 }
 
-/** In the order given, each item unless an earlier kept one has the same artwork. An item without a raster stays. */
-export function distinctArtwork<T>(items: readonly T[], raster: (item: T) => ArrayLike<number> | undefined): T[] {
+/**
+ * In the order given, each item unless an earlier kept one has the same
+ * artwork. An item without a raster stays. Fewer than `atLeast` kept: the
+ * repeats come back at the end, because a pin with an empty tile is worse
+ * than one with a picture twice.
+ */
+export function distinctArtwork<T>(items: readonly T[], raster: (item: T) => ArrayLike<number> | undefined, atLeast = 0): T[] {
   const kept: T[] = [];
   const rasters: Array<ArrayLike<number>> = [];
   for (const item of items) {
@@ -67,5 +72,6 @@ export function distinctArtwork<T>(items: readonly T[], raster: (item: T) => Arr
     kept.push(item);
     if (r) rasters.push(r);
   }
+  if (kept.length < atLeast) kept.push(...items.filter(i => !kept.includes(i)).slice(0, atLeast - kept.length));
   return kept;
 }
