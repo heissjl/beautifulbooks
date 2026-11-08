@@ -7221,3 +7221,15 @@ Das Mosaik macht die Bilder gut doppelt so groß (*Dune* 159 → 372 KB). Der Ra
 
 **Grün:** `npx tsc --noEmit`, ESLint, `npm run build`; `npm run test:run` mit `--testTimeout=30000` ohne Fehler. **Die Erklärung vom Vortag war zu eng:** mit der Standardfrist laufen `coverindex` und `herofan` auch bei niedriger Grundlast rot (Last 3 vor dem Lauf; drei Tests, 1.744 von 1.747 grün), allein brauchen dieselben Tests unter 1 s. Es ist der volle Lauf selbst, der sich mit seinen vielen Prozessen ausbremst; die Tests berühren nichts von hier. Analytik: nichts betroffen — dieselbe Route, kein neuer Text, nichts gezählt.
 
+
+## 2026-11-08 — Deploy 799c1f0a: Stop-Hook, Next 16.4.3, zod
+
+Julian: „Ja, deployen“. Live gingen die Zeile im Stop-Hook (prüft den Ordner der Sitzung, nicht den Hauptordner; am 2026-11-05 sah man es sofort: seine Meldung nannte diesen Worktree), die Updates aus Dependabot #10 (Next und `eslint-config-next` 16.4.3, `isbn3` 2.0.13, `redis` 6.3.1, `@types/node` 20.19.43), zod 4.6.7 gegen GHSA-mrhx-c7xc-m3w5, die Dependabot-Regel für eslint-Majors. `origin/main` (vier Commits, 5.5) vorher hereingeholt, Konflikt nur in der Historie, beide Seiten.
+
+**Vor dem Push:** 1.812 Tests (mit 60-s-Limit; bei 5 s brachen `coverindex` und `herofan` ab, einzeln grün), tsc, Lint, Build 18 von 18, `npm audit` 0. Keine Sicherung vorab und kein `/code-review`: Patch-Versionen und ein Hook, weder Speicher noch Export-Route geändert; das `redis`-Paket ist nur ein Patch.
+
+**Produktion, einmal geprüft** (`beautifulbooks-jdxhrbif4`, Ready): Startseite 200, `/api/search?q=die+verwandlung` 200 mit „Die Verwandlung“, `/book/OL893707W` 200. Nicht geprüft: das Foto-Lesen, das Spiel, die Sammlungen unter Next 16.4.3.
+
+**Offen bei Julian:** #5 schließen (`gh pr close 5` wurde von hier abgelehnt, GitHub-Schreibzugriff), die Alarme in Settings → Code security.
+
+**Analytik-Checkliste:** keine neue Änderung — die der einzelnen Punkte stehen in ihren Commits.
