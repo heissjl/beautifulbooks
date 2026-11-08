@@ -29,7 +29,7 @@ export type CollectionKind = 'authors' | 'series';
  * slug in code. `HUB_GROUPS` is also the order of the hub.
  */
 export type CollectionGroup = 'series' | 'designers' | 'lists' | 'publishers';
-export const HUB_GROUPS: readonly CollectionGroup[] = ['series', 'designers', 'lists', 'publishers'];
+export const HUB_GROUPS: readonly CollectionGroup[] = ['designers', 'series', 'lists', 'publishers'];
 
 export function isCollectionGroup(value: unknown): value is CollectionGroup {
   return typeof value === 'string' && (HUB_GROUPS as readonly string[]).includes(value);

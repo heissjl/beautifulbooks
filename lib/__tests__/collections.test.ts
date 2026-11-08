@@ -174,9 +174,9 @@ describe('the hub groups (6.107 Teil A)', () => {
       { kind: 'series' as const, group: 'designers' as const, slug: 'd' },
       { kind: 'series' as const, group: 'series' as const, slug: 's2' },
     ]);
-    expect(groups.map(g => g.group)).toEqual(['series', 'designers', 'publishers']);
-    expect(groups[0].collections.map(c => c.slug)).toEqual(['s1', 's2']);
-    expect(HUB_GROUPS).toEqual(['series', 'designers', 'lists', 'publishers']);
+    expect(groups.map(g => g.group)).toEqual(['designers', 'series', 'publishers']);
+    expect(groups[1].collections.map(c => c.slug)).toEqual(['s1', 's2']);
+    expect(HUB_GROUPS).toEqual(['designers', 'series', 'lists', 'publishers']);
     expect(isCollectionGroup('lists')).toBe(true);
     expect(isCollectionGroup('')).toBe(false);
   });
