@@ -7233,3 +7233,7 @@ Julian: „Ja, deployen“. Live gingen die Zeile im Stop-Hook (prüft den Ordne
 **Offen bei Julian:** #5 schließen (`gh pr close 5` wurde von hier abgelehnt, GitHub-Schreibzugriff), die Alarme in Settings → Code security.
 
 **Analytik-Checkliste:** keine neue Änderung — die der einzelnen Punkte stehen in ihren Commits.
+
+## 2026-11-08 — Der Hub: Gestalter vor Reihen
+
+Julian: „im colletions hub sollten die designer zuerst kommen und erst dann die series collections“. `HUB_GROUPS` in `lib/collections.ts` bestimmt die Reihenfolge von Hub und Gruppenlinks: jetzt Gestalter, Reihen, Preise und Listen, Verlage. Tests, tsc, Lint, Build grün; im Browser nicht angesehen, weil sich nur die Reihenfolge ändert. Neu in der Roadmap: 5.10u, Julians Kuratieren der ersten sieben Bücher jeder Sammlung.
