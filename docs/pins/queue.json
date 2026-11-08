@@ -78,15 +78,13 @@
     {
       "id": "decades-OL257943W",
       "kind": "decades",
-      "status": "nein",
-      "slot": "2026-11-04 12:00",
+      "status": "entwurf",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL257943W/pin.jpg",
       "title": "A Game of Thrones by George R. R. Martin – book covers by decade, 1990s to 2020s",
       "description": "A selection of 90 book covers of A Game of Thrones by George R. R. Martin, one group per decade from the 1990s to the 2020s, counted from 97 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL257943W/decades?via=pinterest",
-      "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), war zu seinem Termin am 2026-11-04 veröffentlicht worden und wurde abends am veröffentlichten Pin über „Edit Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund.",
-      "remark": "Von Julian in Pinterest gelöscht (2026-11-08): dasselbe Motiv zweimal im Bild.",
+      "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), war zu seinem Termin am 2026-11-04 veröffentlicht worden und wurde abends am veröffentlichten Pin über „Edit Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund. Wieder offen: der veröffentlichte Pin wurde von Julian wegen eines doppelten Motivs gelöscht. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“. Angesehen: keine Doppel. Vor einem Ja ansehen.",
       "decided": "2026-11-08"
     },
     {
@@ -119,15 +117,13 @@
     {
       "id": "decades-OL893414W",
       "kind": "decades",
-      "status": "nein",
-      "slot": "2026-11-05 19:00",
+      "status": "entwurf",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL893414W/pin.jpg",
       "title": "Dune by Frank Herbert – book covers by decade, 1960s to 2020s",
       "description": "A selection of 84 book covers of Dune by Frank Herbert, one group per decade from the 1960s to the 2020s, counted from 104 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL893414W/decades?via=pinterest",
-      "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), in der Planung über „Edit this Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund.",
-      "remark": "Von Julian in Pinterest gelöscht (2026-11-08): dasselbe Motiv zweimal im Bild.",
+      "note": "Text am 2026-11-04 in Pinterest auf Julians Wortlaut gebracht („Text ändern“), in der Planung über „Edit this Pin“ geändert; das Bild bleibt das alte ohne Mosaik-Grund. Wieder offen: der veröffentlichte Pin wurde von Julian wegen eines doppelten Motivs gelöscht. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“. Angesehen: keine Doppel. Vor einem Ja ansehen.",
       "decided": "2026-11-08"
     },
     {
@@ -159,14 +155,15 @@
     {
       "id": "decades-OL81613W",
       "kind": "decades",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-08 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL81613W/pin.jpg",
       "title": "It by Stephen King – book covers by decade, 1980s to 2020s",
       "description": "A selection of 53 book covers of It by Stephen King, one group per decade from the 1980s to the 2020s, counted from 57 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL81613W/decades?via=pinterest",
-      "note": "Aus der ersten Liste vom 2026-10-31, noch nicht angelegt."
+      "note": "Aus der ersten Liste vom 2026-10-31, noch nicht angelegt. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL49488W",
@@ -190,19 +187,20 @@
       "title": "Pride and Prejudice by Jane Austen – book covers by decade, 1910s to 2020s",
       "description": "A selection of 196 book covers of Pride and Prejudice by Jane Austen, one group per decade from the 1910s to the 2020s, counted from 189 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL66554W/decades?via=pinterest",
-      "note": "Prüfen: die Seite zeigt zusätzlich eine Gruppe „1810s“ — zwei Cover von Nelson Doubleday und Fine Editions Press, also Nachdrucke mit dem Jahr der Erstausgabe im Katalog. Titel und Text nennen deshalb 1910s als Anfang; wer auf der Seite nach unten scrollt, sieht trotzdem „1810s“. Nehmen oder bis zur Korrektur zurückstellen."
+      "note": "Prüfen: die Seite zeigt zusätzlich eine Gruppe „1810s“ — zwei Cover von Nelson Doubleday und Fine Editions Press, also Nachdrucke mit dem Jahr der Erstausgabe im Katalog. Titel und Text nennen deshalb 1910s als Anfang; wer auf der Seite nach unten scrollt, sieht trotzdem „1810s“. Nehmen oder bis zur Korrektur zurückstellen. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“. Zwei Kacheln sind einfarbige Einbände."
     },
     {
       "id": "decades-OL3335245W",
       "kind": "decades",
-      "status": "entwurf",
+      "status": "nein",
       "slot": "2026-11-10 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL3335245W/pin.jpg",
       "title": "The Catcher in the Rye by J. D. Salinger – book covers by decade, 1950s to 2010s",
       "description": "A selection of 74 book covers of The Catcher in the Rye by J. D. Salinger, one group per decade from the 1950s to the 2010s, counted from 135 printings with a known year on Open Library, among them the plain red covers that carry nothing but title and name. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL3335245W/decades?via=pinterest",
-      "note": "Prüfen: die Seite beginnt mit „1940s“ (ein Cover, 39 Drucke von 26 Verlagen — das Buch erschien 1951, die Jahre im Katalog sind falsch). Titel und Text sagen 1950s."
+      "note": "Prüfen: die Seite beginnt mit „1940s“ (ein Cover, 39 Drucke von 26 Verlagen — das Buch erschien 1951, die Jahre im Katalog sind falsch). Titel und Text sagen 1950s.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL483391W",
@@ -214,7 +212,7 @@
       "title": "Charlotte's Web by E. B. White – book covers by decade, 1950s to 2010s",
       "description": "A selection of 90 book covers of Charlotte's Web by E. B. White, one group per decade from the 1950s to the 2010s, counted from 102 printings with a known year on Open Library, Garth Williams' drawings on many of them. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL483391W/decades?via=pinterest",
-      "note": "Garth Williams steht auf den Covern des Bildes („Pictures by Garth Williams“); die Seite selbst nennt ihn nicht."
+      "note": "Garth Williams steht auf den Covern des Bildes („Pictures by Garth Williams“); die Seite selbst nennt ihn nicht. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“. Mehrere Kacheln zeigen dieselbe Garth-Williams-Zeichnung in anderen Farben; die Prüfung fängt das nicht — Vorschlag Nein."
     },
     {
       "id": "decades-OL455327W",
@@ -225,19 +223,21 @@
       "picture": "https://buyitscovers.com/book/OL455327W/pin.jpg",
       "title": "Lord of the Flies by William Golding – book covers by decade, 1950s to 2020s",
       "description": "A selection of 84 book covers of Lord of the Flies by William Golding, one group per decade from the 1950s to the 2020s, counted from 95 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
-      "link": "https://buyitscovers.com/book/OL455327W/decades?via=pinterest"
+      "link": "https://buyitscovers.com/book/OL455327W/decades?via=pinterest",
+      "note": "Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“."
     },
     {
       "id": "decades-OL468431W",
       "kind": "decades",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-13 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL468431W/pin.jpg",
       "title": "The Great Gatsby by F. Scott Fitzgerald – book covers by decade, 1920s to 2020s",
       "description": "A selection of 349 book covers of The Great Gatsby by F. Scott Fitzgerald, one group per decade from the 1920s to the 2020s, counted from 341 printings with a known year on Open Library; the 2010s alone hold 140 covers in 14 languages. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL468431W/decades?via=pinterest",
-      "note": "Bild: zeigt sechs Cover statt neun (zwei Reihen, oben und unten leer). Brauchbar, aber schwächer als die anderen."
+      "note": "Bild: zeigt sechs Cover statt neun (zwei Reihen, oben und unten leer). Brauchbar, aber schwächer als die anderen. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“. Es sind sechs Cover, nicht neun.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL46125W",
@@ -248,7 +248,8 @@
       "picture": "https://buyitscovers.com/book/OL46125W/pin.jpg",
       "title": "Foundation by Isaac Asimov – book covers by decade, 1950s to 2010s",
       "description": "A selection of 47 book covers of Foundation by Isaac Asimov, one group per decade from the 1950s to the 2010s, counted from 61 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
-      "link": "https://buyitscovers.com/book/OL46125W/decades?via=pinterest"
+      "link": "https://buyitscovers.com/book/OL46125W/decades?via=pinterest",
+      "note": "Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“."
     },
     {
       "id": "decades-OL3140822W",
@@ -259,18 +260,21 @@
       "picture": "https://buyitscovers.com/book/OL3140822W/pin.jpg",
       "title": "To Kill a Mockingbird by Harper Lee – book covers by decade, 1960s to 2020s",
       "description": "A selection of 95 book covers of To Kill a Mockingbird by Harper Lee, one group per decade from the 1960s to the 2020s, counted from 157 printings with a known year on Open Library; 81 of those printings date from the 1960s alone. Each cover opens its edition with publisher, year and ISBN.",
-      "link": "https://buyitscovers.com/book/OL3140822W/decades?via=pinterest"
+      "link": "https://buyitscovers.com/book/OL3140822W/decades?via=pinterest",
+      "note": "Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“."
     },
     {
       "id": "decades-OL81633W",
       "kind": "decades",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-15 19:00",
       "board": "Covers through the decades",
       "picture": "https://buyitscovers.com/book/OL81633W/pin.jpg",
       "title": "The Shining by Stephen King – book covers by decade, 1970s to 2020s",
       "description": "A selection of 59 book covers of The Shining by Stephen King, one group per decade from the 1970s to the 2020s, counted from 74 printings with a known year on Open Library; 14 of them from the 1970s. Each cover opens its edition with publisher, year and ISBN.",
-      "link": "https://buyitscovers.com/book/OL81633W/decades?via=pinterest"
+      "link": "https://buyitscovers.com/book/OL81633W/decades?via=pinterest",
+      "note": "Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“.",
+      "decided": "2026-11-08"
     },
     {
       "id": "decades-OL498556W",
@@ -282,7 +286,7 @@
       "title": "Metamorphosis by Franz Kafka – book covers by decade, 1940s to 2020s",
       "description": "A selection of 228 book covers of Metamorphosis by Franz Kafka, one group per decade from the 1940s to the 2020s, counted from 225 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL498556W/decades?via=pinterest",
-      "note": "Bild kaputt: drei Cover, drei leere Felder (die Cover luden beim Rendern nicht rechtzeitig). Nicht so posten — erst am Tag des Hochladens das Bild neu abrufen und ansehen, sonst die Reserve unten nehmen."
+      "note": "Bild kaputt: drei Cover, drei leere Felder (die Cover luden beim Rendern nicht rechtzeitig). Nicht so posten — erst am Tag des Hochladens das Bild neu abrufen und ansehen, sonst die Reserve unten nehmen. Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“. Nur drei Cover geladen, drei leere Felder — so nicht hochladen; sonst die Reserve The Hitchhiker’s Guide."
     },
     {
       "id": "decades-OL2163649W",
@@ -293,7 +297,7 @@
       "title": "The Hitchhiker's Guide to the Galaxy by Douglas Adams – book covers by decade, 1970s to 2020s",
       "description": "A selection of 66 book covers of The Hitchhiker's Guide to the Galaxy by Douglas Adams, one group per decade from the 1970s to the 2020s, counted from 65 printings with a known year on Open Library. Each cover opens its edition with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/book/OL2163649W/decades?via=pinterest",
-      "note": "Reserve für Metamorphosis. Bild gut; die zwei polnischen Cover oben links sind fast gleich (bekannte Lücke von 5.5a, gefaltet wird auf dem Pin noch nicht)."
+      "note": "Reserve für Metamorphosis. Bild gut; die zwei polnischen Cover oben links sind fast gleich (bekannte Lücke von 5.5a, gefaltet wird auf dem Pin noch nicht). Neues Bild vom 2026-11-08 mit der Motiv-Prüfung: im Cockpit unter „Dev-Server“."
     },
     {
       "id": "general-hugo-award-novel",
@@ -311,14 +315,15 @@
     {
       "id": "general-penguin-clothbound-classics",
       "kind": "wall",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-08 12:00",
       "board": "Classic book covers",
       "picture": "https://buyitscovers.com/collections/penguin-clothbound-classics/pin.jpg",
       "title": "Classic book covers – Penguin Clothbound Classics by Coralie Bickford-Smith",
       "description": "63 classic book covers from Penguin’s clothbound series, designed by Coralie Bickford-Smith from 2008: a pattern taken from a motif of the book, stamped in foil on coloured cloth. Each cover opens the other editions of that book, with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/collections/penguin-clothbound-classics?via=pinterest",
-      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „classic book covers“, „classic book cover design“."
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „classic book covers“, „classic book cover design“.",
+      "decided": "2026-11-08"
     },
     {
       "id": "general-tom-adams-christie",
@@ -336,26 +341,28 @@
     {
       "id": "general-penguin-great-ideas",
       "kind": "wall",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-10 12:00",
       "board": "Book cover design",
       "picture": "https://buyitscovers.com/collections/penguin-great-ideas/pin.jpg",
       "title": "Typography book cover design – Penguin Great Ideas",
       "description": "89 book covers from Penguin’s Great Ideas, from 2004: cream covers set only in type, each in the manner of the time the text was written, by David Pearson, Phil Baines, Catherine Dixon and Alistair Hall. Each cover opens the other editions of that book, with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/collections/penguin-great-ideas?via=pinterest",
-      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „typography book cover design“, „book cover design“."
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „typography book cover design“, „book cover design“.",
+      "decided": "2026-11-08"
     },
     {
       "id": "general-gene-szafran",
       "kind": "wall",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-11 12:00",
       "board": "Science fiction book covers",
       "picture": "https://buyitscovers.com/collections/gene-szafran/pin.jpg",
       "title": "1970s book covers – science fiction paperback art by Gene Szafran",
       "description": "88 science fiction paperback covers painted by Gene Szafran in the early 1970s for Signet, Ballantine, Bantam and Lancer: airbrushed figures in rainbow halos, mandalas and melting colour. Each cover opens the other editions of that book, with publisher, year and ISBN.",
       "link": "https://buyitscovers.com/collections/gene-szafran?via=pinterest",
-      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „1970s book covers“, „vintage sci fi paperback“."
+      "note": "Allgemeiner Name fürs Suchen: Pinnwand und Titel tragen den Suchbegriff, das Bild den Namen der Sammlung. Pinterest schlägt vor: „1970s book covers“, „vintage sci fi paperback“.",
+      "decided": "2026-11-08"
     },
     {
       "id": "general-ballantine-adult-fantasy",
@@ -451,7 +458,7 @@
     {
       "id": "cover-OL64365W-ol15170710",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "nein",
       "slot": "2026-11-06 15:00",
       "board": "Science fiction book covers",
       "picture": "https://covers.openlibrary.org/b/id/15170710.jpg",
@@ -459,12 +466,13 @@
       "description": "The Harper & Row, Publishers edition of Brave New World by Aldous Huxley, 1946; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 144 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Brave New World by Aldous Huxley, Harper & Row, Publishers edition, 1946.",
       "link": "https://buyitscovers.com/book/OL64365W?via=pinterest&cover=ol:15170710",
-      "note": "Einzel-Cover-Testlinie (Druck von 1946). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1915 × 3044 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: gelb-schwarze Jacke der Harper-Ausgabe von 1946 („a new edition … with a special introduction by the author“); der Verlagsname Harper & Row gilt erst ab 1962 — er steht im Datensatz, nicht auf dem Bild."
+      "note": "Einzel-Cover-Testlinie (Druck von 1946). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1915 × 3044 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: gelb-schwarze Jacke der Harper-Ausgabe von 1946 („a new edition … with a special introduction by the author“); der Verlagsname Harper & Row gilt erst ab 1962 — er steht im Datensatz, nicht auf dem Bild.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL49488W-ol8186414",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "nein",
       "slot": "2026-11-06 21:00",
       "board": "Dutch book covers",
       "picture": "https://covers.openlibrary.org/b/id/8186414.jpg",
@@ -472,7 +480,8 @@
       "description": "The Boekerij edition of Ender's Game by Orson Scott Card, in Dutch; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 49 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Ender's Game by Orson Scott Card, Boekerij edition, Dutch edition.",
       "link": "https://buyitscovers.com/book/OL49488W?via=pinterest&cover=ol:8186414",
-      "note": "Einzel-Cover-Testlinie (Niederländisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 64 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 500 × 768 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Filmcover („Nu ook een bioscoopfilm“, 2013), nicht 1991; Jahr genommen. Nur 500 px breit."
+      "note": "Einzel-Cover-Testlinie (Niederländisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 64 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 500 × 768 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Filmcover („Nu ook een bioscoopfilm“, 2013), nicht 1991; Jahr genommen. Nur 500 px breit.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL27258W-ol14538056",
@@ -505,7 +514,7 @@
     {
       "id": "cover-OL1168083W-ol15256129",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "nein",
       "slot": "2026-11-07 21:00",
       "board": "Classic book covers",
       "picture": "https://covers.openlibrary.org/b/id/15256129.jpg",
@@ -513,12 +522,13 @@
       "description": "The Harcourt, Brace & World edition of Nineteen Eighty-Four by George Orwell, 1949; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 343 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Nineteen Eighty-Four by George Orwell, Harcourt, Brace & World edition, 1949.",
       "link": "https://buyitscovers.com/book/OL1168083W?via=pinterest&cover=ol:15256129",
-      "note": "Einzel-Cover-Testlinie (Druck von 1949). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 83 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1781 × 2808 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: vergilbter Bibliothekseinband mit Stempel und Strichcode, kein Umschlag; dazu hieß der Verlag erst ab 1960 Harcourt, Brace & World — Vorschlag Nein."
+      "note": "Einzel-Cover-Testlinie (Druck von 1949). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 83 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1781 × 2808 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: vergilbter Bibliothekseinband mit Stempel und Strichcode, kein Umschlag; dazu hieß der Verlag erst ab 1960 Harcourt, Brace & World — Vorschlag Nein.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL1168007W-ol14870112",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "nein",
       "slot": "2026-11-08 09:00",
       "board": "Classic book covers",
       "picture": "https://covers.openlibrary.org/b/id/14870112.jpg",
@@ -526,7 +536,8 @@
       "description": "The Penguin Books edition of Animal Farm by George Orwell, 1952; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 156 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Animal Farm by George Orwell, Penguin Books edition, 1952.",
       "link": "https://buyitscovers.com/book/OL1168007W?via=pinterest&cover=ol:14870112",
-      "note": "Einzel-Cover-Testlinie (Druck von 1952). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1080 × 1755 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: orangefarbener Penguin-Dreistreifen, Preis 1/6 — passt zu 1952, Bild gut."
+      "note": "Einzel-Cover-Testlinie (Druck von 1952). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 1080 × 1755 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: orangefarbener Penguin-Dreistreifen, Preis 1/6 — passt zu 1952, Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL1168007W-ol15152948",
@@ -559,7 +570,7 @@
     {
       "id": "cover-OL66554W-ol12775499",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "nein",
       "slot": "2026-11-09 09:00",
       "board": "Classic book covers",
       "picture": "https://covers.openlibrary.org/b/id/12775499.jpg",
@@ -567,7 +578,8 @@
       "description": "The Dodd, Mead and Company edition of Pride and Prejudice by Jane Austen, 1945; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 196 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: Pride and Prejudice by Jane Austen, Dodd, Mead and Company edition, 1945.",
       "link": "https://buyitscovers.com/book/OL66554W?via=pinterest&cover=ol:12775499",
-      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 64 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 509 × 706 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Dodd-Mead-Jacke der Great Illustrated Classics, passt zu 1945; Bild gut."
+      "note": "Einzel-Cover-Testlinie (Druck von 1945). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 64 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 509 × 706 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Dodd-Mead-Jacke der Great Illustrated Classics, passt zu 1945; Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL468431W-ol8238793",
@@ -586,7 +598,7 @@
     {
       "id": "cover-OL468431W-ol14811160",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-09 21:00",
       "board": "Classic book covers",
       "picture": "https://covers.openlibrary.org/b/id/14811160.jpg",
@@ -594,7 +606,8 @@
       "description": "The C. Scribner's Sons edition of The Great Gatsby by F. Scott Fitzgerald; publisher and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 349 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Great Gatsby by F. Scott Fitzgerald, C. Scribner's Sons edition.",
       "link": "https://buyitscovers.com/book/OL468431W?via=pinterest&cover=ol:14811160",
-      "note": "Einzel-Cover-Testlinie (Druck von 1925). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 61 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 996 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Francis Cugats Jacke von 1925 als saubere, moderne Reproduktion (Scribner-Nachdruck), kein Scan von 1925; Jahr genommen."
+      "note": "Einzel-Cover-Testlinie (Druck von 1925). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 61 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 996 × 1500 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Francis Cugats Jacke von 1925 als saubere, moderne Reproduktion (Scribner-Nachdruck), kein Scan von 1925; Jahr genommen.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL3335245W-ol14813205",
@@ -668,7 +681,7 @@
     {
       "id": "cover-OL257943W-ol15127373",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-11 21:00",
       "board": "Italian book covers",
       "picture": "https://covers.openlibrary.org/b/id/15127373.jpg",
@@ -676,12 +689,13 @@
       "description": "The Mondadori edition of A Game of Thrones by George R. R. Martin, 2000, in Italian as Il Grande Inverno; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 90 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: A Game of Thrones by George R. R. Martin, Mondadori edition, 2000, Italian edition titled Il Grande Inverno.",
       "link": "https://buyitscovers.com/book/OL257943W?via=pinterest&cover=ol:15127373",
-      "note": "Einzel-Cover-Testlinie (Italienisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 70 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1986 × 3034 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Mondadori-Hardcover, Bild gut."
+      "note": "Einzel-Cover-Testlinie (Italienisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Das Bild ist zu 70 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1986 × 3034 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: Mondadori-Hardcover, Bild gut.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL257943W-ol15076208",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-12 09:00",
       "board": "Chinese book covers",
       "picture": "https://covers.openlibrary.org/b/id/15076208.jpg",
@@ -689,12 +703,13 @@
       "description": "The Golden Rich edition of A Game of Thrones by George R. R. Martin, 2002, in Chinese as Mo huan yuan bing; publisher, year and scan are Open Library's record of this printing. The link opens this cover on the book's page, among the 90 covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: A Game of Thrones by George R. R. Martin, Golden Rich edition, 2002, Chinese edition titled Mo huan yuan bing.",
       "link": "https://buyitscovers.com/book/OL257943W?via=pinterest&cover=ol:15076208",
-      "note": "Einzel-Cover-Testlinie (Chinesisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 575 × 843 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: taiwanische Ausgabe; der Katalog führt den Titel in Pinyin („Mo huan yuan bing“), so stünde er im Pin — Bild gut, nur 575 px breit."
+      "note": "Einzel-Cover-Testlinie (Chinesisch, nicht Englisch). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Scan 575 × 843 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: taiwanische Ausgabe; der Katalog führt den Titel in Pinyin („Mo huan yuan bing“), so stünde er im Pin — Bild gut, nur 575 px breit.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472145W-ol15130644",
       "kind": "cover",
-      "status": "ja",
+      "status": "geplant",
       "slot": "2026-11-12 15:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/15130644.jpg",
@@ -708,7 +723,7 @@
     {
       "id": "cover-OL472416W-ol15263581",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "geplant",
       "slot": "2026-11-12 21:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/15263581.jpg",
@@ -716,7 +731,8 @@
       "description": "The Fontana Books edition of The Adventure of the Christmas Pudding by Agatha Christie, cover art by Tom Adams; publisher and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Adventure of the Christmas Pudding by Agatha Christie, Fontana Books edition, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472416W?via=pinterest&cover=ol:15263581",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL58543106M. VERDACHT: 1960 liegt außerhalb der Jahre der Reihe (1963–1979) — der Eintrag ist wohl ein anderer Druck als das Bild. Quelle der Sammlung: fontana:896 (collectingchristie.com). Das Bild ist zu 73 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1442 × 2524 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: echtes Adams-Stillleben (Weihnachtsschmuck), Schriftzug „fontana books“ der frühen 1960er; der Datensatz sagt 1960, vor Adams’ ersten Christie-Covern — Jahr genommen."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL58543106M. VERDACHT: 1960 liegt außerhalb der Jahre der Reihe (1963–1979) — der Eintrag ist wohl ein anderer Druck als das Bild. Quelle der Sammlung: fontana:896 (collectingchristie.com). Das Bild ist zu 73 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 1442 × 2524 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: echtes Adams-Stillleben (Weihnachtsschmuck), Schriftzug „fontana books“ der frühen 1960er; der Datensatz sagt 1960, vor Adams’ ersten Christie-Covern — Jahr genommen.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL472572W-ol10555802",
@@ -735,7 +751,7 @@
     {
       "id": "cover-OL472043W-ol14586400",
       "kind": "cover",
-      "status": "entwurf",
+      "status": "ja",
       "slot": "2026-11-13 15:00",
       "board": "Tom Adams – Agatha Christie covers",
       "picture": "https://covers.openlibrary.org/b/id/14586400.jpg",
@@ -743,7 +759,8 @@
       "description": "The Collins/Fontana Books edition of The Mysterious Mr. Quin by Agatha Christie, 1965, cover art by Tom Adams; publisher, year and scan are Open Library's record of this printing, the artist is collectingchristie.com's credit. The link opens this cover on the book's page, beside the other covers on record for this book, each with publisher, year and ISBN.",
       "alt": "Book cover: The Mysterious Mr. Quin by Agatha Christie, Collins/Fontana Books edition, 1965, cover art by Tom Adams.",
       "link": "https://buyitscovers.com/book/OL472043W?via=pinterest&cover=ol:14586400",
-      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL51122700M. Quelle der Sammlung: fontana:1050 (collectingchristie.com). Das Bild ist zu 67 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 509 × 796 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: roter Umschlag mit Revolver und Falter, Kopfzeile der 1960er — passt zu 1965; nur 509 px breit."
+      "note": "Einzel-Cover-Testlinie, Pinnwand nur aus der Sammlung „Tom Adams' Agatha Christie“ (Julian, 2026-11-04). Jahr und Verlag sind die des frühesten widerspruchsfreien Katalogeintrags mit diesem Bild (1 Eintrag trägt es) — Bild ansehen, ob es dazu passt. Datensatz OL51122700M. Quelle der Sammlung: fontana:1050 (collectingchristie.com). Das Bild ist zu 67 % eine Farbe — vielleicht ein Einband ohne Umschlag. Scan 509 × 796 px, Open Librarys Original (die Seite zeigt höchstens 500 px). Pinnwand ist ein Vorschlag. Angesehen am 2026-11-04: roter Umschlag mit Revolver und Falter, Kopfzeile der 1960er — passt zu 1965; nur 509 px breit.",
+      "decided": "2026-11-08"
     },
     {
       "id": "cover-OL471990W-ol6539918",
