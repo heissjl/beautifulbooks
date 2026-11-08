@@ -110,7 +110,9 @@ Der Zettel liefert je Eintrag **geprüfte Fakten und genau eine Bildunterschrift
 - **Nichts über das Exemplar des Posters** („yours is here“): ob es auf der Seite steht, gehört in die Fakten.
 - **Form:** englisch, deutsche Threads deutsch (17.10. B5, 31.10. B1); kein Gedankenstrich, keine Hashtags, keine Quellenangabe, kein Disclaimer, keine Zahl von Covern (der Zähler fällt beim Laden); kein Fragment wie „the pulp one, and the 35 others“.
 
-Passt keine Unterschrift zum Bild, ist das Bild falsch: ein besseres holen (§4.5) oder den Eintrag streichen.
+**Das Bild muss zeigen, worüber der Thread redet** (8.11.): das Cover vom Foto, dieselbe Reihe oder wenigstens die Sprache des Threads. Die Karte zeigt oft vier fremdsprachige Ausgaben; unter einem englischen Haul ist sie dann das falsche Bild, auch wenn die Unterschrift stimmt. Besser: eine Reihe des passenden Sprachreiters als Ausschnitt (`sips -c <höhe> <breite> --cropOffset <y> <x> <datei>`, vorher ansehen, ob alle Kacheln geladen sind). Lobt der Thread eine bestimmte Ausgabe und die Seite hat sie nicht, entfällt der Eintrag.
+
+Passt keine Unterschrift zum Bild, ist das Bild falsch: ein besseres holen (§4.5) oder den Eintrag streichen. Eine Sprache steht nur in der Unterschrift, wenn der Reiter der Seite sie nennt; Titel, die auf dem Bild zu lesen sind, genügen als Beleg. Keine Unterschrift zweimal posten. Eine Aufzählung von Verlagen ist noch keine Unterschrift: lieber `<Titel>, English editions since <Jahr>.`
 
 **Links:** auf X nie in der ersten Antwort, sondern als zweite darunter, allein; auf Bluesky hinter der Unterschrift. Buch `buyitscovers.com/book/<id>?via=bluesky` bzw. `?via=x`, Sammlung `buyitscovers.com/collections/<slug>?via=…`, Jahrzehnte `buyitscovers.com/book/<id>/decades?via=…`.
 
