@@ -7171,3 +7171,53 @@ Julian: „ich habe keine zeit zu prüfen, pushe es“. Zusammengeführt in `wor
 **Offen:** die Zeile in `.claude/hooks/stop-check.mjs` (Julians Änderung vom 2026-11-03) liegt ungecommittet im Hauptordner; 6.45; die 29.087 Index-Cover (6.70b); das Wort für „Unknown“.
 
 **Analytik-Checkliste:** keine neue Änderung — die der einzelnen Punkte stehen in ihren Commits.
+## 2026-11-02 — Pins mit allgemeinen Namen (ROADMAP 5.5, PLAN-5.5-5.6 §7.2)
+
+Julian: „in diesem fall ist der alte name ok“ (die Pinnwand „Beautiful Books with Pretty Covers“; umgang.md §15) und „wir sollten im SEO sinne ein paar pins mit allgemeinen namen haben, nicht nur nach collections benannt?“ — dann, als Pinterest im eingebauten Browser leer blieb: „benutze chrome“.
+
+**Gelesen in Julians Chrome** (angemeldet, nur Suchfeld, nichts abgeschickt): Pinterest schlägt unter anderem vor „science fiction book covers“, „science fiction book cover art“, „classic book covers“, „classic book cover design“, „fantasy book cover art“, „vintage paperback covers“, „vintage penguin paperbacks“, „vintage sci fi paperback“, „typography book cover design“, „book cover design“, „1970s book covers“, „1970s book cover design“, „agatha christie book covers vintage“. Das sagt, was gesucht wird, nicht wie oft.
+
+**Acht Entwürfe in `docs/pins/queue.json`**, Status `entwurf`, nichts hochgeladen: Hugo Award und Gene Szafran auf „Science fiction book covers“, Penguin Clothbound und die Black-Band-Jahre auf „Classic book covers“, Tom Adams’ Christie auf „Vintage paperback covers“, Ballantine Adult Fantasy auf „Fantasy book covers“, Penguin Great Ideas und Edelmanns Reihe Hanser auf „Book cover design“. Alle acht Sammlungen stehen auf der Produktion im Hub, mit denselben Buchzahlen wie im Text (einmal gelesen); die Sätze stammen aus den Einleitungen der Sammlungen. Bilder aus den bestehenden Routen `/collections/<slug>/pin.jpg`, kein neuer Code: das Bild trägt den Namen der Sammlung, Pinnwand und Titel den Suchbegriff. Die sechzehn Termine der offenen Jahrzehnte-Entwürfe sind dafür verschoben, im Wechsel 12:00 allgemein, 19:00 Jahrzehnte, ab 2026-11-07 bis 2026-11-16; geplante Pins bleiben, wie sie sind.
+
+**Angesehen:** alle acht Bilder unter `next dev`, je neun Cover ohne Loch. **Zeiten dort:** 8,8–32 s, Black-Band 67 s und Reihe Hanser 55 s — über den 30 s der Funktion; beide tragen den Hinweis, das Bild vor dem Hochladen einmal von der Produktion zu holen. `scripts/measure-pins.ts` hielt seit dem Mosaik-Grund (`d46aa2a`) den Grund für Tinte und meldete jedes Bild als FAIL, und der Cockpit-Check nahm nur `/pin.jpg` an (beides behoben, nächster Abschnitt).
+
+Geprüft: `problems` und die Pin-Wörter ohne Treffer für alle acht, Queue- und Cockpit-Tests 67 grün. Analytik: nichts betroffen — Dokumente, die Links tragen die Marke `via=pinterest`, die K14 schon zählt.
+
+## 2026-11-03 — Die Pin-Sonde misst auf dem Mosaik, das Cockpit nimmt Vergleichs-Pins (ROADMAP 5.5a, 5.5)
+
+Julian: „Ja, beheben“. **Die Sonde:** Tinte war „weit weg von #131110“; seit dem Mosaik-Grund (`d46aa2a`, 2026-10-31) traf das den Grund selbst — jeder Pin FAIL mit „RUNS INTO COVERS“ und „OVERFLOWS RIGHT“, auch die guten. Tinte ist jetzt Helligkeit, r + g + b über 400 (`lib/pinprobe.ts`, 8 Tests, darunter: die Sonde meldet ein Wort auf dem Mosaik weiter, auch rechts vom Rand). Gemessen an den acht Mosaik-Pins vom 2026-11-02: der Grund erreicht höchstens 270, rechnerisch bei 55 % Abdunklung 345; die schwächste Schrift, die Adresse in `ink2`, mindestens 544. **Das Cockpit:** `problems` nimmt neben `/pin.jpg` auch `/compare.jpg` an, mit Parametern; `compare.png` bleibt abgewiesen (Test).
+
+**Nachgemessen unter `npm run dev`**, alle sechs `ok`:
+
+| Pin | Cover | Titelzeilen | Kopf-Tinte y | Raster ab y | Fuß-Tinte y (Rand 1436) | Größe | Zeit |
+|---|---|---|---|---|---|---|---|
+| `/collections/hugo-award-novel/pin.jpg` | 9/9 | 1 | 77–190 | 207 | 1405–1436 | 486 KB | 14,4 s |
+| `/collections/ballantine-adult-fantasy/pin.jpg` (Credits) | 9/9 | 2 reserviert, 1 belegt | 77–184 | 274 | 1358–1435 | 531 KB | 9,4 s |
+| `/collections/penguin-classics-the-black-band-years/pin.jpg` (Credits) | 9/9 | 2 | 75–237 | 274 | 1358–1436 | 444 KB | 9,0 s |
+| `/collections/reihe-hanser-covers-by-heinz-edelmann/pin.jpg` | 9/9 | 2 | 75–237 | 276 | 1405–1435 | 529 KB | 10,2 s |
+| `/book/OL893414W/compare.jpg?covers=…` (einfarbiger Grund, Beschriftung bis y 1077) | 3/3 | 1 | 78–184 | 512 | 1405–1435 | 159 KB | 7,5 s |
+| `/book/OL893414W/pin.jpg` | 9/9 | 1 | 78–184 | 207 | 1405–1435 | 508 KB | 12,3 s |
+
+**Die Zeiten sagen nichts über den kalten Fall:** Black-Band und Reihe Hanser brauchten am Vortag 67 und 55 s; heute lagen ihre Cover im Fetch-Cache des Dev-Servers. Der Hinweis in den beiden Entwürfen bleibt: vor dem Hochladen einmal von der Produktion holen, dort hat die Funktion 30 s. **Aufgefallen, nicht geändert:** der Vergleichs-Pin steht noch auf dem einfarbigen Grund, die Raster-Pins auf dem Mosaik (Julian, 2026-10-31: „die nächsten entwürfe sollten den mosaik hintergrund haben“); auf einem Vergleichs-Pin bliebe viel Mosaik sichtbar, die Beschriftung müsste den dunklen Streifen bekommen.
+
+**Grün:** `npx tsc --noEmit`, ESLint auf den geänderten Dateien, `npm run build` mit der `.env.local` des Hauptordners. `npm run test:run`: 1.739 von 1.745 im vollen Lauf; die sechs roten liegen in vier Dateien, die nichts hiervon berühren (Index, Herofan, Shelf-Portrait-Brett, Simulation), und liefen bei einer Rechnerlast um 40 in die 5-s-Frist; mit `--testTimeout=60000` bestehen alle 43 Tests dieser Dateien. Analytik: nichts betroffen — Werkzeug, keine Route, kein Text der Seite.
+
+## 2026-11-04 — Der Vergleichs-Pin auf dem Mosaik (ROADMAP 5.5a)
+
+Julian: „Ja, mit Mosaik“. Der Vergleichs-Pin steht jetzt auf dem Grund der Raster-Pins: `pinGround` aus `app/pin.tsx` (bisher dort privat), je Werk derselbe Grund (Samen `pin:compare:<id>`), Cover mit Schatten. **Anders als beim Raster:** `head` und `foot` des Vergleichs-Layouts laufen durch die ganze freie Fläche bis zur Reihe; ganz abgedunkelt bliebe kein Mosaik zu sehen. Dunkel werden darum nur drei enge Kästen, `words` in `lib/comparelayout.ts` (Titel mit Autor, Beschriftungsband, Fußzeile; 2 Tests mehr, darunter: über und unter der Reihe bleibt mehr Luft als die 60 px, über die die Abdunklung ausläuft). `next.config.ts` nennt die Route jetzt wie die anderen Pin-Routen; Schriften und Mosaikbilder waren schon vorher im Build-Trace, weil sie über dieselben Module kommen (nachgelesen im `route.js.nft.json`: 6 und 20 Dateien).
+
+**Gemessen unter `npm run dev`**, alle `ok`, Kataloglesung und Cover meist aus dem Fetch-Cache des Dev-Servers:
+
+| Pin | Cover | Kopf-Tinte y | Raster ab y | Beschriftung bis y | Fuß-Tinte y (Rand 1436) | Größe | Zeit |
+|---|---|---|---|---|---|---|---|
+| *Harry Potter and the Philosopher's Stone* | 3/3 | 75–244 | 538 | 1103 | 1405–1435 | 429 KB | 12,0 s |
+| *Nineteen Eighty-Four* | 3/3 | 77–191 | 512 | 1077 | 1405–1435 | 362 KB | 5,0 s |
+| *The Hobbit* | 3/3 | 77–190 | 512 | 1077 | 1405–1435 | 393 KB | 5,1 s |
+| *Brave New World* | 3/3 | 77–190 | 512 | 1077 | 1405–1435 | 356 KB | 5,7 s |
+| *Dune* | 3/3 | 78–184 | 512 | 1077 | 1405–1436 | 372 KB | 5,5 s |
+| *It* | 3/3 | 78–191 | 512 | 1077 | 1405–1435 | 372 KB | 6,2 s |
+
+Das Mosaik macht die Bilder gut doppelt so groß (*Dune* 159 → 372 KB). Der Raster-Pin ist unverändert (*Dune* 508 KB, 9/9). Alle sechs angesehen: Titel, Jahre und Verlage lesbar, nichts abgeschnitten. **Kalt nicht gemessen:** die 27,5 s vom 2026-10-31 galten ohne Mosaik; nach dem Deploy einen kalten Vergleichs-Pin einmal abrufen und die Zeit lesen. **Beim Ansehen auch:** *The Hobbit* „1966, Mariner Books“ trägt „Now a major motion picture“ und „75th anniversary“, das Jahr passt nicht zum Bild; *Brave New World* „1950“ ist blaues Leinen ohne Umschlag. Das gehört zur offenen Wahl von Hand (`COMPARE_COVERS`); die Liste ist dafür nicht neu erzeugt.
+
+**Grün:** `npx tsc --noEmit`, ESLint, `npm run build`; `npm run test:run` mit `--testTimeout=30000` ohne Fehler. **Die Erklärung vom Vortag war zu eng:** mit der Standardfrist laufen `coverindex` und `herofan` auch bei niedriger Grundlast rot (Last 3 vor dem Lauf; drei Tests, 1.744 von 1.747 grün), allein brauchen dieselben Tests unter 1 s. Es ist der volle Lauf selbst, der sich mit seinen vielen Prozessen ausbremst; die Tests berühren nichts von hier. Analytik: nichts betroffen — dieselbe Route, kein neuer Text, nichts gezählt.
+

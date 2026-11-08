@@ -31,6 +31,7 @@ const nextConfig: NextConfig = {
     "/shelfportrait/opengraph-image": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
     // The Pinterest pins stand on the same mosaic ground (app/pin.tsx).
     "/book/[id]/pin.jpg": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
+    "/book/[id]/compare.jpg": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
     "/collections/[slug]/pin.jpg": ["./assets/og/*.woff", "./assets/fonts/*.woff", "./public/loading/*-640.jpg"],
   },
   // What the browser may not do with the site (ROADMAP 2.12, lib/securityheaders.ts): on every route.

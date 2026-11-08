@@ -9,7 +9,8 @@
  * at the bottom. Three across is what the width allows — a cover is 2:3,
  * so the row is sized from the width and the rest of the height is air
  * above and below the row, split evenly. The years are set large in the
- * display face: on a pin that compares decades they carry the point.
+ * display face: on a pin that compares decades they carry the point. That air
+ * shows the mosaic ground (`words` are the only boxes darkened for the type).
  */
 import { PIN_MARGIN, PIN_SIZE, pinTitleLines, pinTitleSize, type Rect } from './pinlayout';
 
@@ -29,6 +30,12 @@ export interface CompareLayout {
   head: Rect;
   /** The site's name and address: from the labels down to the bottom margin. */
   foot: Rect;
+  /**
+   * The boxes the mosaic darkens for the type. Tight, unlike `head` and `foot`,
+   * which run through the air up to the covers: darkened whole, they would
+   * leave no mosaic to see above and below the row.
+   */
+  words: Rect[];
   type: { title: number; line: number; year: number; publisher: number; site: number; address: number };
 }
 
@@ -75,6 +82,8 @@ export function compareLayoutSized(titleSize: number, titleLines: 1 | 2): Compar
     labels.push({ x, y: y0 + tileH + LABEL_GAP, width: tileW, height: labelH });
   }
   const blockEnd = y0 + blockH;
+  const titleH = titleLines * Math.round(titleSize * TITLE_LEADING) + 12 + 39;
+  const footWords = Math.round(TYPE.site * 1.4);
   return {
     width,
     height,
@@ -84,6 +93,11 @@ export function compareLayoutSized(titleSize: number, titleLines: 1 | 2): Compar
     labels,
     head: { x: PIN_MARGIN, y: TOP, width: width - 2 * PIN_MARGIN, height: y0 - TOP },
     foot: { x: PIN_MARGIN, y: blockEnd, width: width - 2 * PIN_MARGIN, height: height - TOP - blockEnd },
+    words: [
+      { x: PIN_MARGIN, y: TOP, width: width - 2 * PIN_MARGIN, height: titleH },
+      { x: x0, y: y0 + tileH + LABEL_GAP, width: rowW, height: labelH },
+      { x: PIN_MARGIN, y: height - TOP - footWords, width: width - 2 * PIN_MARGIN, height: footWords },
+    ],
     type: TYPE,
   };
 }

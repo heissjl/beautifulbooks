@@ -32,6 +32,9 @@ describe('problems', () => {
     expect(problems(pin({ link: 'https://buyitscovers.com/book/OL49488W/decades' }))[0].field).toBe('link');
     expect(problems(pin({ link: 'https://example.com/?via=pinterest' }))[0].field).toBe('link');
     expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL49488W/opengraph-image' }))[0].field).toBe('picture');
+    // The comparison pin is a pin route too; its covers stand in the address.
+    expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL893414W/compare.jpg?covers=ol:1,ol:2,ol:3' }))).toEqual([]);
+    expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL893414W/compare.png' }))[0].field).toBe('picture');
   });
   it('accepts the comparison picture and one cover from the image route, and checks the alt text (the cover pins, 2026-11-04)', () => {
     expect(problems(pin({ picture: 'https://buyitscovers.com/book/OL49488W/compare.jpg?covers=ol:1,ol:2,ol:3' }))).toEqual([]);
@@ -116,6 +119,7 @@ describe('pictures', () => {
     expect(pictureUrl(pin(), 'prod')).toBe('https://buyitscovers.com/book/OL49488W/pin.jpg');
     expect(pictureUrl(pin(), 'dev')).toBe('http://localhost:3000/book/OL49488W/pin.jpg');
     expect(pictureUrl(pin({ picture: 'https://evil.example/pin.jpg' }), 'prod')).toBeNull();
+    expect(pictureUrl(pin({ picture: 'https://buyitscovers.com/book/OL1W/compare.jpg?covers=ol:1,ol:2,ol:3' }), 'dev')).toBe('http://localhost:3000/book/OL1W/compare.jpg?covers=ol:1,ol:2,ol:3');
     expect(pictureUrl(pin({ picture: 'https://covers.openlibrary.org/b/id/1.jpg' }), 'prod')).toBe('https://covers.openlibrary.org/b/id/1.jpg');
     expect(pictureUrl(pin({ picture: 'https://covers.openlibrary.org/b/id/1.jpg' }), 'dev')).toBeNull();
   });
