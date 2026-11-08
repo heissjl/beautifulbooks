@@ -5,7 +5,7 @@ description: Den Antwortzettel bauen (ROADMAP 5.6c §5.2) — Bluesky und X nach
 
 # /antwortzettel [bsky|x|beide] [stunden]
 
-Ein Zettel ist eine Liste von höchstens acht fremden Threads, je mit Link, Reichweite, dem Antwortentwurf in Julians Stimme, dem Bild und dem gebauten `?via=`-Link. **Der Zettel wird geschrieben, nicht gepostet.** Posten ist Julians Wort je Eintrag (§7). Vier Zettel liegen als Muster in `docs/antwortzettel/` (2026-10-17 der erste, mit der Neuner-Welle; 2026-10-24 ein Zettel auf Zuruf zu einem einzigen Thread, mit Brett; 2026-10-31 und 2026-11-02 die Form, die gilt); der Ordner ist git-ignoriert, weil er fremde Handles hält.
+Ein Zettel ist eine Liste von höchstens acht fremden Threads, je mit Link, Reichweite, den geprüften Fakten, einer Bildunterschrift (§5), dem Bild und dem gebauten `?via=`-Link. **Der Zettel wird geschrieben, nicht gepostet.** Posten ist Julians Wort je Eintrag (§7). Vier Zettel liegen als Muster in `docs/antwortzettel/` (2026-10-17 der erste, mit der Neuner-Welle; 2026-10-24 ein Zettel auf Zuruf zu einem einzigen Thread, mit Brett; 2026-10-31 und 2026-11-02 die Form, die gilt); der Ordner ist git-ignoriert, weil er fremde Handles hält.
 
 Argumente: `$ARGUMENTS` — ohne Angabe beide Plattformen, 72 Stunden. `bsky` allein braucht kein Chrome und taugt für einen Agenten ohne Julian; `x` braucht sein eingeloggtes Chrome (§3).
 
@@ -92,21 +92,27 @@ Am 31.10. hätte der Zettel zwei gelbe Gollancz-Bände von 2022 mit „the numbe
    - Jahrzehnte-Seite oder Wand als Screenshot im hellen Schema: `npx tsx lab/video/screen/shot-light.ts <url> <out.png> 1200 675 2` (umgang.md §6; „Chrome did not start“ heißt ein alter headless Chrome auf Port 9353). **Aus einer Agenten-Sandbox läuft das nicht** (der DevTools-Client erreicht Chrome nicht, auch auf einem frischen Port): ein Agent nimmt `chrome --headless=new --screenshot=<out> --window-size=1200,900 --force-device-scale-factor=2 --virtual-time-budget=9000 <url>` (dunkel, 45 s) und sagt im Zettel, dass das helle Bild die Hauptsitzung macht, bevor gepostet wird.
    Eine Karte, die ein Zettel desselben Tages schon geholt hat, wird kopiert, nicht neu geholt. Jede Karte mit `Read` ansehen und im Zettel sagen, was sie zeigt (vier verschiedene Cover sind gut; ein Leineneinband, eine „No image available“-Kachel oder drei Übersetzungen sind schwach — dann die Wand als Screenshot). Der Screenshot mit 1200 × 675 zeigt Kopf und erste Reihe; liegt das gemeinte Cover darunter, die Höhe erhöhen (1200 × 1200) oder im Zettel sagen, dass es unter dem Falz liegt. Zeigt die Karte Übersetzungen und das gemeinte Cover steht nur auf der Wand, sagt der Zettel genau das; eine Wand, die das Cover vom Foto nicht hält, wird nie als „his cover“ angeboten.
 6. **Meinung von Befund trennen:** „best-dressed“, „near the top of the wall“, „the paperbacks put the devil on the front“ sind Meinung und stehen im Zettel als solche in der Notiz; „97 printings on record“ ist Befund mit Datum. Was der fremde Post behauptet (Erstausgabe 1927) und die Seite anders sagt (1928), wird nicht übernommen und nicht korrigiert — im Zettel vermerkt als „nicht geprüft, welches stimmt“.
-7. **Erst das Bild, dann die Frage:** eine Zeile, die nach der Ausgabe fragt („which one?“), ist nur erlaubt, wenn das Foto sie nicht schon beantwortet — sonst sagt die Zeile, was auf dem Foto ist (31.10., B5: die Frage gestrichen, weil der Umschlag erkennbar war).
+7. **Erst das Bild:** was auf dem Foto erkennbar ist, steht in den Fakten; „which one?“ fragt der Zettel nicht (31.10., B5: der Umschlag war erkennbar).
 
-## 5. Die Zeile schreiben
+## 5. Fakten und Bildunterschrift (seit 2026-11-08)
 
-Stilblatt §4, kurz: **Bildunterschrift, nicht Erklärung** (S1); **ein Gedanke, eine Zeile** (S2); trockener Witz über die Lesekultur, nie über das Buch (S3); „we“ als kleiner Laden mit Meinung (S4); **keine Quellenangabe, kein Disclaimer** (S5); **der Link zuletzt — auf X nie in der ersten Antwort mit Bild**, sondern als zweite Antwort darunter (S7); englisch, Kleinschreibung erlaubt, keine Hashtags (S8). Julians eigene Zeilen als Maß: „Tom Adams' Agatha Christie covers for Fontana, 1963–1979“, „don't gatekeep the editions“, „The Great Gatsby, decade by decade since 1925.“ Sieben Entwürfe mit Pointe hat er einmal am Stück verworfen („none of these sound organic“) — die schlichte Unterschrift gewinnt.
+Der Zettel liefert je Eintrag **geprüfte Fakten und genau eine Bildunterschrift, keine Varianten, keine Pointe**. Die Zeile mit Haltung schreibt Julian, oder er nimmt die Unterschrift. Grund: von fünf Zetteln hat er keine geschriebene Pointe genommen („none of these sound organic“, 17.10.; „keiner außer uns wird verstehen was hier ‚folden‘ heißt und es interessiert auch niemanden. ein guter witz ist es auch nicht … die antworten sind einfach nicht auf dem niveau“, 4.11.), seine eigenen Zeilen dagegen trugen: „Tom Adams' Agatha Christie covers for Fontana, 1963–1979“, „The Great Gatsby, decade by decade since 1925.“, „don't gatekeep the editions“.
 
-**Julian, 2026-11-04, zu den Zeilen des fünften Zettels:** „keiner außer uns wird verstehen was hier ‚folden‘ heißt und es interessiert auch niemanden. ein guter witz ist es auch nicht … die antworten sind einfach nicht auf dem niveau“. Daraus drei Regeln, die vor S1–S8 gelten:
+**Die Fakten** (für Julian, nicht zum Posten): was auf dem Foto liegt (Titel, Verlag oder Reihe, Jahr, Gestalter, wenn belegt), ob genau dieses Cover auf der Seite steht und mit welcher Kachel, was das mitgeschickte Bild zeigt, worüber der Thread gerade redet.
 
-- **Keine Innenwörter.** „wall“, „fold/folded“, „tiles“, „on record“, „editions checked“, „our wall“, „the counter“ — das ist die Sprache der Seite und des Zettels, nicht des Lesers. Die Zeile spricht von dem, was auf dem Bild ist: Buch, Verlag, Jahr, Gestalter (wenn belegt), Reihe.
-- **Kein Witz auf Bestellung.** Eine Pointe steht nur, wenn sie sich beim Schreiben von selbst ergeben hat; im Zweifel die schlichte Bildunterschrift (Julians „Tom Adams' Agatha Christie covers for Fontana, 1963–1979“ ist das Maß). Ein Agent schreibt **keine** Pointen — er liefert die Bildunterschrift aus Fakten und darunter die geprüften Fakten (Ausgabe auf dem Foto, Jahr, Verlag, Gestalter, was die Seite dazu hat); die Zeile mit Haltung ist Julians.
-- **Nicht zu kurz.** „the pulp one, and the 35 others“ ist ein Fragment, kein Satz; eine Bildunterschrift hat Subjekt und Jahr.
+**Die Unterschrift** beschreibt das Bild, das mitgeht, nicht den Post und nicht die Seite:
 
-Zu jedem Eintrag eine Zeile, bei Unsicherheit zwei bis drei Fassungen (a/b/c), „nur eine, Julian streicht“ — nie sieben. Eine Variante „ohne Witz“ gewinnt öfter, als man denkt. **Deutsche Threads bekommen deutsche Zeilen** (die Seite spricht Deutsch; 17.10. B5, 31.10. B1), gleiche Regeln. Ein reiner Spaß ohne Link ist erlaubt, wenn er für ein Publikum sichtbar ist, das die Seite noch nicht kennt („Dann sind wir wohl raus. Wir haben nur Cover.“).
+- **Muster:** `<Titel oder Reihe>, <was zu sehen ist>, <Verlag und Jahr, wenn belegt>.` Ein ganzer, schlichter Satz oder eine Bildunterschrift mit Subjekt. Wer das Buch nicht kennt und die Seite nie gesehen hat, versteht ihn.
+- **Beispiele, geprüft:** `The New York Trilogy, editions since 1987. Art Spiegelman's Penguin cover is in the top row.` · `Penguin Classics, mid-1980s to early 2000s: cream frame, black panel, a period picture for each book.`
+- **Nur Belegtes:** jedes Wort kommt vom Foto, aus dem Post oder von der Seite (§4). Ein Gestaltername nur mit Quelle, ein Jahr nur, wenn die Seite nicht widerspricht (die Seite sagt „Editions here run from 1982“ → kein „since 1976“; ein Jahr aus 6.16 wie *War and Peace* 1845 → gar keins).
+- **Keine Innenwörter:** wall, fold/folded, tile, tab, on record, printings, editions checked, our wall, the counter, „at last count“.
+- **Kein Witz und keine Metapher:** nichts mit wardrobe, uniform, outfit, clothes, dressed, worn; keine Anspielung auf den Post, keine Frage ans Publikum, kein „we“.
+- **Nichts über das Exemplar des Posters** („yours is here“): ob es auf der Seite steht, gehört in die Fakten.
+- **Form:** englisch, deutsche Threads deutsch (17.10. B5, 31.10. B1); kein Gedankenstrich, keine Hashtags, keine Quellenangabe, kein Disclaimer, keine Zahl von Covern (der Zähler fällt beim Laden); kein Fragment wie „the pulp one, and the 35 others“.
 
-Links: Buch `buyitscovers.com/book/<id>?via=bluesky` bzw. `?via=x`, Sammlung `buyitscovers.com/collections/<slug>?via=…`, Jahrzehnte `buyitscovers.com/book/<id>/decades?via=…`. Keine Antwort nennt eine Ausgabe, die §4 nicht bestätigt hat. Eine Zeile, die nur fragt („the viking jacket or the NYRB one? asking for the wall“), darf ohne Link stehen — der Link kommt, wenn sie antworten.
+Passt keine Unterschrift zum Bild, ist das Bild falsch: ein besseres holen (§4.5) oder den Eintrag streichen.
+
+**Links:** auf X nie in der ersten Antwort, sondern als zweite darunter, allein; auf Bluesky hinter der Unterschrift. Buch `buyitscovers.com/book/<id>?via=bluesky` bzw. `?via=x`, Sammlung `buyitscovers.com/collections/<slug>?via=…`, Jahrzehnte `buyitscovers.com/book/<id>/decades?via=…`.
 
 ## 6. Den Zettel schreiben
 
@@ -116,11 +122,12 @@ Datei `docs/antwortzettel/<JJJJ-MM-TT>.md`, Bilder in `docs/antwortzettel/<JJJJ-
 # Antwortzettel, <Wochentag> <Datum> (Julian: „<sein Auftrag>“ — bei einem Agentenlauf der Anfang des Auftragstexts)
 <Wie gesucht: Skript, Fenster, Trefferzahl; X-Suchen mit since/min_faves; Regeln in einem Satz; wer aussortiert wurde (Rolle, nicht nur Name).>
 **Befund:** <ein Absatz: was diese Woche trägt>
-## X (Bild und Satz, Link als zweite Antwort, `?via=x`)
+## X (Bild und Unterschrift, Link als zweite Antwort, `?via=x`)
 ### X1 · @handle — „<Thema>“
 - <Link> · <Datum> · **<Aufrufe>, <Likes>, <Antworten>**
-- Geprüft: *<Titel>* <Werk-ID>, <editionCount> Ausgaben; die Karte zeigt <…> (`<datei>`).
-- **Antwort (mit Bild):** `<zeile>`
+- **Fakten:** auf dem Foto <Titel, Verlag, Jahr>; *<Titel>* <Werk-ID>, <editionCount> Ausgaben; das Cover vom Foto steht <ja mit Kachel / nein / nicht geprüft> auf der Seite; im Thread <worum es geht>.
+- **Bild:** `<datei>`, zeigt <…>.
+- **Unterschrift:** `<genau eine, nach §5>`
 - **Zweite Antwort:** `buyitscovers.com/book/<id>?via=x`
 **Nicht:** <aussortierte Kandidaten mit Grund>
 ## Bluesky (Link darf in die Antwort, `?via=bluesky`)
@@ -140,7 +147,7 @@ Nennt Julian selbst einen Thread (auch einen von Reddit — den baut er, Claude 
 - **Die neun in der Reihenfolge der Liste**, Zeile für Zeile; je Buch die Ausgabe, mit der man anfangen sollte oder die der Thread meint, über die ISBN-Suche der Seite (`/api/search?q=<isbn>`, `/api/isbn/<isbn>`) oder Open Librarys Editionsliste des Werks (fünf Sekunden Abstand, Kontaktbogen der Cover ansehen). **Titel im Ergebnis prüfen** — eine ISBN aus dem Gedächtnis traf schon *Untouchable* statt Penguin. Verworfene Alternativen mit Cover-ID im Zettel nennen, damit Julian tauschen kann.
 - Das Brett in der Adresse (`lib/inspiration/board.ts`), **nur volle Bretter** haben Poster und Karte (`?b=` mit neun Paaren, sonst 400); die Unterzeile (`sub=`) darf nichts behaupten, was ein Buch des Bretts nicht erfüllt („in German paperbacks“ war falsch, als die NYRB-Ausgabe darin lag). Ein Cover, das in Open Library an einem Doppel-Werk hängt, bekommt im Brett das richtige Werk.
 - **Das Bild zum Posten kommt aus der Produktion:** Editor-Link öffnen, „Share“ — unter `next dev` liefen die neun L-Bilder vom Internet Archive ins Zeitlimit. Alt-Text: die neun Titel in Brett-Reihenfolge, „Made on buyitscovers.com.“
-- Zeile ohne Link unter dem Post, der Link in der zweiten Antwort („Made with buyitscovers.com/shelfportrait?via=x — pick the book, then pick its cover.“); ein eigener Zitat-Post höchstens einer am Tag.
+- Unterschrift oder Julians Zeile ohne Link unter dem Post, der Link in der zweiten Antwort („Made with buyitscovers.com/shelfportrait?via=x — pick the book, then pick its cover.“); ein eigener Zitat-Post höchstens einer am Tag.
 
 ## 7. Posten auf Zuruf (nur mit Julians Wort je Eintrag)
 
@@ -155,6 +162,6 @@ Erst wenn Julian einen Eintrag nennt („poste B1“, „poste du diese variante
 
 Ein Agent (Agent-Tool, `general-purpose`) bekommt diesen Text als Auftrag; `bsky` geht ohne Julian, `beide` nur, wenn Claude in Chrome in der Sitzung verbunden ist, Julian dort bei X eingeloggt ist und am Rechner sitzt (für `beide` im Auftrag ergänzen: „X nach §2 in Julians Chrome: Werkzeuge mit einem ToolSearch laden, Login prüfen, bei ‚Sign in‘ oder ohne Verbindung X auslassen und melden; höchstens vier Suchen; nichts anklicken, was eine Handlung ist; Tabs am Ende schließen“):
 
-> Baue den Antwortzettel für <Datum> nach `.claude/skills/antwortzettel/SKILL.md` im Projekt `/Users/claude-m1/projects/beautifulbooks`: Plattform <bsky|beide>, Fenster 72 h. Lies zuerst §0 bis §6 des Skills, dann den letzten Zettel in `docs/antwortzettel/` als Muster. Suche, lies jeden Thread selbst, sortiere Rechteinhaber aus, prüfe jede Zeile nach §4 gegen die Seite (ein Abruf je Prüfung, nie wiederholen; Open Library nie direkt bei Bursts), hole die Karten, schreibe den Zettel (git-ignoriert, bleibt lokal) und den history-Abschnitt in `docs/history.md`, committe nur die history ohne Push. Poste nichts, like nichts, folge niemandem, tippe nirgends Zugangsdaten. Reddit ist tabu. Berichte am Ende: Zahl der Einträge, der Befund, welche Prüfungen etwas gestrichen haben, und was du nicht prüfen konntest.
+> Baue den Antwortzettel für <Datum> nach `.claude/skills/antwortzettel/SKILL.md` im Projekt `/Users/claude-m1/projects/beautifulbooks`: Plattform <bsky|beide>, Fenster 72 h. Lies zuerst §0 bis §6 des Skills, dann den letzten Zettel in `docs/antwortzettel/` als Muster. Suche, lies jeden Thread selbst, sortiere Rechteinhaber aus, prüfe jede Zeile nach §4 gegen die Seite (ein Abruf je Prüfung, nie wiederholen; Open Library nie direkt bei Bursts), hole die Karten, schreibe je Eintrag die Fakten und genau eine Bildunterschrift nach §5 (keine Varianten, keine Pointe, keine Innenwörter), schreibe den Zettel (git-ignoriert, bleibt lokal) und den history-Abschnitt in `docs/history.md`, committe nur die history ohne Push. Poste nichts, like nichts, folge niemandem, tippe nirgends Zugangsdaten. Reddit ist tabu. Berichte am Ende: Zahl der Einträge, der Befund, welche Prüfungen etwas gestrichen haben, und was du nicht prüfen konntest.
 
-Was der Agent **nicht** darf, steht in §0; was er zurückmeldet, prüft die Hauptsitzung gegen den Zettel (N12: ein Timeout ist kein „nichts gefunden“), bevor Julian ihn bekommt — vor allem die Zeilen auf Vollständigkeitswörter („everything that replaced it“), auf Versprechen („yet“) und auf Behauptungen, die niemand geprüft hat („the current penguin“); der erste Testlauf am 2.11. (fünf Einträge in 16 Minuten, Bluesky allein) hatte je eine davon in drei Einträgen, jeweils als Variante neben einer sauberen Zeile.
+Was der Agent **nicht** darf, steht in §0; was er zurückmeldet, prüft die Hauptsitzung gegen den Zettel (N12: ein Timeout ist kein „nichts gefunden“), bevor Julian ihn bekommt — vor allem die Unterschriften auf die Verbote aus §5, auf Vollständigkeitswörter („everything that replaced it“), auf Versprechen („yet“) und auf Behauptungen, die niemand geprüft hat („the current penguin“); der erste Testlauf am 2.11. (fünf Einträge in 16 Minuten, Bluesky allein) hatte je eine davon in drei Einträgen.
