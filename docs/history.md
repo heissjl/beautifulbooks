@@ -6951,3 +6951,22 @@ Julian: „lass uns testweise ein pin board erstellen, dass einzelbilder hat, ab
 ## 2026-11-08 — Antwortzettel: Fakten und Bildunterschrift statt Pointen (ROADMAP 5.6c)
 
 Julian zu den Zeilen des fünften Zettels (4.11.): „keiner außer uns wird verstehen was hier ‚folden‘ heißt und es interessiert auch niemanden. ein guter witz ist es auch nicht“, „antwort c) ist zu kurz geschrieben“, „die antworten sind einfach nicht auf dem niveau dass man das hier automatisiert posten könnte. ich weiß nicht wie man das verbessern könnte“. Auf den Vorschlag, dem Agenten die Pointe abzunehmen: „ok, überarbeite“. Skill §5 neu: je Eintrag geprüfte Fakten und genau eine Bildunterschrift, die das mitgeschickte Bild beschreibt; keine Varianten; verboten sind Innenwörter der Seite (wall, fold, tile, on record), Witz, Kleider-Metaphern (wardrobe, uniform, outfit, dressed, worn), Fragen ans Publikum, Sätze über das Exemplar des Posters, Coverzahlen, Gedankenstriche. Vorlage in §6 und Auftrag in §8 nachgezogen, PLAN-5.6c §5.2 ergänzt. Der Zettel vom 4.11. ist in die neue Form gebracht, weil die Agenten den letzten Zettel als Muster lesen; die alten Zeilen stehen durchgestrichen am Ende. Seine Threads sind eine Woche alt, gepostet wird daraus nichts. **Nicht geprüft:** ob die Unterschriften Julian tragen; ein Agent ist in der neuen Form noch nicht gelaufen. Zettel und Skill: `docs/antwortzettel/2026-11-04.md` (git-ignoriert), `.claude/skills/antwortzettel/SKILL.md`.
+
+## 2026-11-08 — Die acht Ja-Pins eingeplant, vier neue Pinnwände (ROADMAP 5.5)
+
+Julian: „Ja, einplanen“. In seinem Chrome, Uhr 13:19 CET zu Beginn. **Neue Pinnwände**, öffentlich, nur mit Namen (eine Beschreibung ist öffentlicher Text und wartet auf Julian): Science fiction book covers, Classic book covers, Vintage paperback covers, German book covers.
+
+**Eingeplant, jedes Formular vor „Schedule“ gegen `docs/pins/queue.json` verglichen, danach Pinterests Liste gelesen (8 Pins, Titel, Termin und Pinnwand stimmen):**
+
+| Termin | Pin | Pinnwand |
+|---|---|---|
+| 8.11. 15:00 | *Dune*, Ace | Science fiction |
+| 8.11. 19:00 | Hugo-Wand | Science fiction |
+| 8.11. 21:00 | *Fahrenheit 451*, Ballantine | Science fiction |
+| 9.11. 09:00 | *Brave New World*, Harper 1946 | Science fiction |
+| 9.11. 12:00 | Tom-Adams-Wand | Vintage paperback |
+| 9.11. 15:00 | *The Great Gatsby*, New Classics | Classic |
+| 9.11. 21:00 | *Neuromancer*, Ace 1984 | Science fiction |
+| 10.11. 09:00 | *Neuromancer*, Heyne 1991 | German |
+
+Sechs Terminvorschläge vom 4.11. waren vorbei und sind im selben Raster neu vergeben; die sechs Einzel-Cover tragen ihren Alt-Text. Die Bilder sind die ins Cockpit gelegten Dateien. **Warteschlange nachgezogen:** die acht auf `geplant`; *Brave New World*, *Dune*, *Fahrenheit 451*, *Fellowship* und *Ender's Game* (Jahrzehnte) auf `veröffentlicht`, sie stehen auf der Pinnwand. **Weiter ungeklärt:** *Harry Potter* — „Covers through the decades“ zählt 10 Pins und zeigt 9; dieser Pin fehlt. Die Terminvorschläge der übrigen Entwürfe sind teils vorbei und werden beim nächsten Einplanen neu vergeben. Der Rechenweg steht in umgang §15. **Analytik:** nichts geändert, `via=pinterest` wie bisher.
