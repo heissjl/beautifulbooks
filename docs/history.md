@@ -7290,3 +7290,32 @@ Das Mosaik macht die Bilder gut doppelt so groß (*Dune* 159 → 372 KB). Der Ra
 
 **Grün:** `npx tsc --noEmit`, ESLint, `npm run build`; `npm run test:run` mit `--testTimeout=30000` ohne Fehler. **Die Erklärung vom Vortag war zu eng:** mit der Standardfrist laufen `coverindex` und `herofan` auch bei niedriger Grundlast rot (Last 3 vor dem Lauf; drei Tests, 1.744 von 1.747 grün), allein brauchen dieselben Tests unter 1 s. Es ist der volle Lauf selbst, der sich mit seinen vielen Prozessen ausbremst; die Tests berühren nichts von hier. Analytik: nichts betroffen — dieselbe Route, kein neuer Text, nichts gezählt.
 
+
+
+## 2026-11-08 — Der Klick-Ausschlag vom 4.11.: ein verteilter Browser-Scraper (ROADMAP 2.18s)
+
+Julian: „check in vercel what caused the spike in clicks in the last week and what we can do to stop bots like this". Gelesen mit `vercel metrics` (`vercel.request.count`, `vercel.external_api_request.count`) und `vercel firewall overview`; an der Firewall nichts geändert.
+
+| Messung, 2026-11-04 UTC | Wert |
+|---|---|
+| `/go/` an dem Tag / in 14 Tagen | 93.363 / 93.391; 5.–8.11. zusammen 3 |
+| Zeitraum, Spitze | 06–12 Uhr, 16.429 um 10 Uhr |
+| verschiedene IPs auf `/go/`, meiste je IP | 84.702, höchstens 7 |
+| Netze, Länder | Mobilfunk- und Heimanschlüsse (Orange, Turk Telekom, SFR, Etisalat …), BR 7.872, ES 6.064, CA 3.845 … |
+| User-Agents | aktuelle Chrome/Edge (Chrome 153: 30.213), Windows und Mac |
+| JA4 | ein Wert 67.973, zweiter 13.145 |
+| Referrer, Status, Pfad | alle `buyitscovers.com`, alle 302, fast nur Wortsuchen `/go/*/title` (bookshop 15.013, ebay 12.531) |
+| Vercels Bot-Regel (`managed_bot_filter`, nur *Log*) | 60.170 von 93.363 auf `/go/`, 17.911 von 25.730 auf `/book/[id]` |
+| Web Analytics | 12 Besucher, 24 Seitenaufrufe |
+| Open Library | 80.239 Anfragen (76.628 aus `/book/[id]`): 200 51.916, 404 26.252, ohne Antwort 2.065, 429 fünfmal |
+| Google | 34 an googleapis.com |
+| `/book/[id]` | 18.714 HIT, 6.875 MISS, 3,6 GB-h; `/go/` 0,38 GB-h |
+
+Danach: `/book/[id]` am 5.11. 14.126 Aufrufe, 9.608 davon über alle vier Tage von der Bot-Regel markiert (14.740 von 19.374); am 8.11. um 14 Uhr UTC 1,8 k protokolliert. **Deutung:** dasselbe Muster wie 2.18f/3.1i (Wohnungs-Proxys, echter Browser), diesmal mit aktuellen Browser-Kennungen. **Nicht geprüft:** ob `humanRequest` (3.1i) die Klicks abgewiesen hat — die Kennungen bestehen die Versionsschwelle, entschieden hat also `Sec-Fetch-User`; `bb.bot`-Zeilen sind nach einer Stunde weg, `/admin/insights` hat Claude nicht gelesen. Ein Rate-Limit je IP greift bei höchstens 7 Klicks je Adresse nicht. Ob der häufige JA4-Wert auch echte Chrome-Leser trägt, ist nicht gemessen; der mittlere Teil `8daaf6152771` sieht nach gewöhnlichem Chrome aus, darum kein *deny* darauf. Maßnahmen: ROADMAP 2.18s.
+
+**Nachtrag 2.18s, Schritt 1 (2026-11-08):** Julian: „Ja, umstellen". Vorher gelesen, 5.–8.11.: unter den 15 häufigsten von der Bot-Regel markierten User-Agents steht kein UptimeRobot (ein Monitor macht rund 1.060 Aufrufe in vier Tagen, die Liste endet bei 194), `/api/health` wurde nie markiert; obenan ElevenLabs (9.395) und ExaSearchBot-Images (3.136), dazu Browser-Kennungen. Nicht ausgeschlossen: 640 markierte Aufrufe mit iPhone-Kennung können Leser sein; sie bekommen die Prüfseite, nicht eine Sperre. Bot Protection per CLI auf *Challenge* gestellt und veröffentlicht, `vercel firewall status` bestätigt es. Einmal geprüft: Startseite und eine Suche nach „dune" laufen im Browser-Bereich (20 Bücher, keine Konsolenfehler). Mein eigenes `curl` auf `/api/health` bekam 429; die Metrik weist genau diese eine Anfrage als `wafAction challenge` aus, die Regel greift also. Der erste UptimeRobot-Lauf nach der Umstellung ist zum Zeitpunkt dieses Eintrags nicht beobachtet.
+
+## 2026-11-08 — Deploy: Neuner-Bilder ohne doppeltes Motiv (ROADMAP 5.5)
+
+Julian: „Ja, pushen“. Vor dem Push lag die Produktion 45 und dann 3 Commits vorn; beides zusammengeführt (die zweite Runde in einem temporären Worktree, weil im Hauptordner uncommittete Notizen der Sitzung zu 2.18s lagen). Der erste Build scheiterte an `check-prerender`, 0 von 18 Seiten mit Daten, weil Open Library diesen Rechner abwies (`openlibrary.org` Code 000 nach 0,2 s); zehn Minuten später 18 von 18. 1.818 Tests, tsc, Lint grün. Eine Durchsicht in frischem Kontext fand einen Fall: bei Werken mit wenigen Covern konnte die Prüfung unter sechs Kacheln rutschen und leere Felder lassen; behoben (`distinctArtwork(…, 6)`, d4462adf). Push `9059da47`, Deployment `beautifulbooks-d5m98tzc6`, Ready um 18:55. Einmaliger Abruf per `curl`: 429 — die Firewall-Regel der Sitzung zu 2.18s, kein Fehler der Route. Dasselbe in Julians Chrome: `/book/OL257943W/pin.jpg` lädt, 1000 × 1500. Der Knopf „Bild von Produktion“ im Cockpit ruft die Seite aus einem Skript und kann darum ebenfalls 429 bekommen; dann „vom Dev-Server“. **Analytik:** nicht betroffen.
+
