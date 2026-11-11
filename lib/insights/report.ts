@@ -7,7 +7,7 @@ import { buyLinksFor, isWordsProvider, searchLinksFor, titleSearchLinksFor } fro
 import type { RedisCommands } from '../redis';
 import { LOCAL_COUNTRIES, localShopLinks } from '../localshops';
 import type { Market } from '../market';
-import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeGuard, summarizeOps, type ClickSummary, type DayHash, type GuardSummary, type OpsSummary } from './model';
+import { change, FEW_CLICKS, lastDays, MAX_RANGE_DAYS, summarizeClicks, summarizeGuard, summarizeOps, withoutDays, type ClickSummary, type DayHash, type GuardSummary, type OpsSummary } from './model';
 import { readDays } from './store';
 import { emptySearches, summarizeChannels, summarizePhotos, summarizeBooks, summarizeSearches, topWorks, type BookSummary, type ChannelSummary, type PhotoSummary, type SearchSummary, type WorkRow } from './visits';
 import { costUsd } from './prices';
@@ -56,7 +56,7 @@ export type InsightsReport =
       costs: CostSummary;
       /** K16 (5.6a): channels, their entries and what their readers did. */
       channels: ChannelSummary;
-      /** 3.1i: what the guard turned away per day, and which days are bot days. */
+      /** 3.1i: what the guard turned away per day, and which days are bot days — left out of every reader number above (2.18t). */
       guard: GuardSummary;
     }
   | { ok: false; reason: 'no-store' | 'failed' };
@@ -103,13 +103,28 @@ export async function buildReport(
     readDays(current, 'cpu', commands),
     readDays(current, 'landing', commands),
     readDays(current, 'guard', commands),
+    readDays(previous, 'guard', commands),
+    readDays(previous, 'search', commands),
+    readDays(previous, 'landing', commands),
   ]);
   const failed = reads.find(r => !r.ok);
   if (failed && !failed.ok) return { ok: false, reason: failed.reason };
-  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead, cpuRead, landingRead, guardRead] = reads.map(r => (r.ok ? r.hashes : []));
-  const clicks = summarizeClicks(current, clickRead, market);
-  const allClicks = market ? summarizeClicks(current, clickRead) : clicks;
-  const previousTotal = summarizeClicks(previous, previousRead, market).total;
+  const [clickRead, previousRead, opsRead, bookRead, previousBookRead, searchRead, worksRead, emptyRead, photoRead, cpuRead, landingRead, guardRead, previousGuardRead, previousSearchRead, previousLandingRead] = reads.map(r => (r.ok ? r.hashes : []));
+  // What was counted decides which days are bot days, so the guard reads the raw days, every market's clicks:
+  // a bot day is one whatever the view is narrowed to.
+  const guardOf = (days: string[], guardDays: DayHash[], clickDays: DayHash[], ...signalDays: DayHash[][]) => {
+    const perDay = summarizeClicks(days, clickDays).perDay;
+    return summarizeGuard(days, guardDays, days.map((_, i) => ({
+      go: perDay[i]?.clicks ?? 0,
+      seen: signalDays.reduce((sum, hashes) => sum + signalsOn(hashes[i]), 0),
+    })));
+  };
+  const guard = guardOf(current, guardRead, clickRead, bookRead, searchRead, landingRead);
+  const before = guardOf(previous, previousGuardRead, previousRead, previousBookRead, previousSearchRead, previousLandingRead);
+  const signals = (hashes: DayHash[]) => withoutDays(current, hashes, guard.botDaysOn.seen);
+  const clicks = summarizeClicks(current, withoutDays(current, clickRead, guard.botDaysOn.go), market);
+  const previousTotal = summarizeClicks(previous, withoutDays(previous, previousRead, before.botDaysOn.go), market).total;
+  const books = signals(bookRead);
   const photos = summarizePhotos(current, photoRead, costUsd);
   const cpu = summarizeCpu(current, cpuRead);
   const titles = new Map(PUBLISHED_WORKS.map(w => [w.id, w.title]));
@@ -125,21 +140,16 @@ export async function buildReport(
     few: clicks.total < FEW_CLICKS,
     ops: summarizeOps(current, opsRead),
     labels: labelsFor(),
-    books: summarizeBooks(bookRead, market),
-    previousBooks: summarizeBooks(previousBookRead, market),
-    searches: summarizeSearches(searchRead),
-    works: topWorks(worksRead).map(w => ({ ...w, title: titles.get(w.work) })),
-    empty: emptySearches(emptyRead),
+    books: summarizeBooks(books, market),
+    previousBooks: summarizeBooks(withoutDays(previous, previousBookRead, before.botDaysOn.seen), market),
+    searches: summarizeSearches(signals(searchRead)),
+    works: topWorks(signals(worksRead)).map(w => ({ ...w, title: titles.get(w.work) })),
+    empty: emptySearches(signals(emptyRead)),
     photos,
     cpu,
     costs: summarizeCosts(current, cpu, photos.costUsd),
-    channels: summarizeChannels(current, bookRead, landingRead),
-    guard: summarizeGuard(
-      current,
-      guardRead,
-      // Against every market's clicks: a bot day is one whatever the view is narrowed to.
-      current.map((_, i) => ({ go: allClicks.perDay[i]?.clicks ?? 0, seen: signalsOn(bookRead[i]) + signalsOn(searchRead[i]) + signalsOn(landingRead[i]) })),
-    ),
+    channels: summarizeChannels(current, books, signals(landingRead)),
+    guard,
   };
 }
 

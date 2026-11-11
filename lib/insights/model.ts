@@ -179,8 +179,9 @@ export const FEW_CLICKS = 30;
 /**
  * What the guard turned away (ROADMAP 3.1i): per day, per route, per reason —
  * `go|old-browser`, `seen|not-own-page`. A class and a count, nothing else.
- * Days on which more was turned away than counted are "bot days"; their
- * numbers stay in the store and the view says what they are.
+ * Days on which clearly more was turned away than counted are "bot days";
+ * their numbers stay in the store, and the report leaves them out of what it
+ * shows (ROADMAP 2.18t).
  */
 export function guardField(route: GuardRoute, reason: Rejection): string {
   return `${route}|${reason}`;
@@ -196,13 +197,30 @@ export function parseGuardField(field: string): { route: GuardRoute; reason: Rej
 }
 
 /**
- * Days the scraper of 2.18f filled before the guard existed (2026-10-16 to
- * the deploy of 3.1i; measured by user agent with `vercel metrics`, history
- * 2026-10-17 and 2026-10-18). The guard could not count what it had not seen,
- * so these days are marked from the record, not from the store. The list can
- * go when the days have left the 400-day retention.
+ * Days a scraper is known to have filled, and which of the two counts it
+ * filled, measured per route with `vercel metrics` (history 2026-10-17,
+ * 2026-10-18 and 2026-11-08). The first three came before the guard existed.
+ * The later ones are listed because a real browser clicking real links can
+ * pass the guard: 39,000 and 93,000 `/go/` requests on days with a handful of
+ * readers, while `/api/seen` stayed normal, so only the clicks are left out.
+ * The list can go when the days have left the 400-day retention.
  */
-export const BOT_DAYS_BEFORE_GUARD: ReadonlyArray<string> = ['2026-10-16', '2026-10-17', '2026-10-18'];
+export const KNOWN_BOT_DAYS: Readonly<Record<string, ReadonlyArray<GuardRoute>>> = {
+  '2026-10-16': ['go', 'seen'],
+  '2026-10-17': ['go', 'seen'],
+  '2026-10-18': ['go', 'seen'],
+  '2026-10-19': ['go'],
+  '2026-10-20': ['go'],
+  '2026-11-04': ['go'],
+};
+
+/**
+ * Fewer rejections than this never make a bot day, because a bot day's numbers
+ * leave the view: on a site with a few readers, two stray scripts against one
+ * real click must not erase the click. The smallest scraper day measured had
+ * 406 requests on one route.
+ */
+export const BOT_DAY_MIN_REJECTED = 50;
 
 export interface GuardDay {
   day: string;
@@ -210,7 +228,7 @@ export interface GuardDay {
   rejected: Record<GuardRoute, number>;
   /** What was counted that day: clicks through `/go/`, signals through `/api/seen`. */
   counted: Record<GuardRoute, number>;
-  /** More turned away than counted on either route — or a day from before the guard that is known to be one. */
+  /** At least BOT_DAY_MIN_REJECTED turned away and more than counted on either route, or a day in KNOWN_BOT_DAYS. */
   bot: boolean;
 }
 
@@ -220,6 +238,8 @@ export interface GuardSummary {
   byReason: Record<Rejection, number>;
   /** The bot days of the range, in order. */
   botDays: string[];
+  /** The same days per count: a scraper can fill the clicks and leave the signals alone. */
+  botDaysOn: Record<GuardRoute, string[]>;
 }
 
 /**
@@ -230,6 +250,7 @@ export interface GuardSummary {
 export function summarizeGuard(days: string[], hashes: ReadonlyArray<DayHash | null>, counted: ReadonlyArray<Record<GuardRoute, number>>): GuardSummary {
   const rejected: Record<GuardRoute, number> = { go: 0, seen: 0 };
   const byReason = Object.fromEntries(REJECTIONS.map(r => [r, 0])) as Record<Rejection, number>;
+  const botDaysOn: Record<GuardRoute, string[]> = { go: [], seen: [] };
   const perDay = days.map((day, i) => {
     const dayRejected: Record<GuardRoute, number> = { go: 0, seen: 0 };
     for (const [field, value] of Object.entries(hashes[i] ?? {})) {
@@ -241,11 +262,17 @@ export function summarizeGuard(days: string[], hashes: ReadonlyArray<DayHash | n
       byReason[f.reason] += k;
     }
     const dayCounted = counted[i] ?? { go: 0, seen: 0 };
-    const bot =
-      BOT_DAYS_BEFORE_GUARD.includes(day) ||
-      (dayRejected.go > 0 && dayRejected.go > dayCounted.go) ||
-      (dayRejected.seen > 0 && dayRejected.seen > dayCounted.seen);
+    for (const route of ['go', 'seen'] as const) {
+      const flooded = dayRejected[route] >= BOT_DAY_MIN_REJECTED && dayRejected[route] > dayCounted[route];
+      if (flooded || KNOWN_BOT_DAYS[day]?.includes(route)) botDaysOn[route].push(day);
+    }
+    const bot = botDaysOn.go.includes(day) || botDaysOn.seen.includes(day);
     return { day, rejected: dayRejected, counted: dayCounted, bot };
   });
-  return { perDay, rejected, byReason, botDays: perDay.filter(d => d.bot).map(d => d.day) };
+  return { perDay, rejected, byReason, botDays: perDay.filter(d => d.bot).map(d => d.day), botDaysOn };
+}
+
+/** The hashes of `days` with those of `leftOut` emptied, for the sums the view shows; the store is not touched. */
+export function withoutDays(days: string[], hashes: ReadonlyArray<DayHash | null>, leftOut: ReadonlyArray<string>): Array<DayHash | null> {
+  return days.map((day, i) => (leftOut.includes(day) ? null : (hashes[i] ?? null)));
 }

@@ -1,7 +1,7 @@
 /** The analytics' server counters and report (ROADMAP 3.1a, docs/plans/PLAN-3.1-analyse.md). */
 import { describe, expect, it } from 'vitest';
 import type { RedisCommands } from '../hotornot/store';
-import { BOT_DAYS_BEFORE_GUARD, change, clickField, dayOf, guardField, insightsKey, lastDays, parseClickField, parseGuardField, RETENTION_SECONDS, summarizeClicks, summarizeGuard, summarizeOps } from '../insights/model';
+import { BOT_DAY_MIN_REJECTED, change, KNOWN_BOT_DAYS, clickField, dayOf, guardField, insightsKey, lastDays, parseClickField, parseGuardField, RETENTION_SECONDS, summarizeClicks, summarizeGuard, summarizeOps } from '../insights/model';
 import { buildReport, parseMarket, parseRange } from '../insights/report';
 import { countClick, countOp, countRejected, countSignal, readDays } from '../insights/store';
 import { adminSessionToken, adminSessionValid, adminTokenValid } from '../suggest/auth';
@@ -228,7 +228,7 @@ describe('the guard (ROADMAP 3.1i)', () => {
   });
 
   it('marks the scraper days from before the guard from the record, since the store cannot say', () => {
-    expect(BOT_DAYS_BEFORE_GUARD).toEqual(['2026-10-16', '2026-10-17', '2026-10-18']);
+    expect(Object.keys(KNOWN_BOT_DAYS)).toEqual(['2026-10-16', '2026-10-17', '2026-10-18', '2026-10-19', '2026-10-20', '2026-11-04']);
     const s = summarizeGuard(['2026-10-15', '2026-10-17'], [{}, {}], [{ go: 3, seen: 40 }, { go: 406, seen: 974 }]);
     expect(s.botDays).toEqual(['2026-10-17']);
   });
@@ -238,13 +238,53 @@ describe('the guard (ROADMAP 3.1i)', () => {
     const opts = { env: PROD, commands: redis.commands, now: NOW };
     await countClick({ provider: 'bookshop', market: 'us', kind: 'product' }, opts);
     await countSignal({ t: 'landing', page: 'home', entry: 'reddit', first: true, opened: false }, opts);
-    for (let i = 0; i < 3; i++) await countRejected('go', 'old-browser', opts);
+    for (let i = 0; i < BOT_DAY_MIN_REJECTED; i++) await countRejected('go', 'old-browser', opts);
     await countRejected('seen', 'not-own-page', opts);
     const report = await buildReport(7, 'de', redis.commands, NOW);
     if (!report.ok) throw new Error('expected a report');
     expect(report.clicks.total).toBe(0);
     expect(report.guard.botDays).toEqual(['2026-10-04']);
-    expect(report.guard.perDay[6]).toEqual({ day: '2026-10-04', rejected: { go: 3, seen: 1 }, counted: { go: 1, seen: 1 }, bot: true });
-    expect(report.guard.rejected).toEqual({ go: 3, seen: 1 });
+    expect(report.guard.perDay[6]).toEqual({ day: '2026-10-04', rejected: { go: BOT_DAY_MIN_REJECTED, seen: 1 }, counted: { go: 1, seen: 1 }, bot: true });
+    expect(report.guard.rejected).toEqual({ go: BOT_DAY_MIN_REJECTED, seen: 1 });
+  });
+
+  it('leaves a bot day out of the count it filled and keeps the other (2.18t)', async () => {
+    const redis = fakeRedis();
+    const opts = { env: PROD, commands: redis.commands, now: NOW };
+    await countClick({ provider: 'bookshop', market: 'us', kind: 'product' }, opts);
+    await countSignal({ t: 'landing', page: 'home', entry: 'reddit', first: true, opened: false }, opts);
+    for (let i = 0; i < BOT_DAY_MIN_REJECTED; i++) await countRejected('go', 'old-browser', opts);
+    const report = await buildReport(7, undefined, redis.commands, NOW);
+    if (!report.ok) throw new Error('expected a report');
+    expect(report.guard.botDaysOn).toEqual({ go: ['2026-10-04'], seen: [] });
+    expect(report.clicks.total).toBe(0);
+    expect(report.clicks.rows).toEqual([]);
+    expect(report.channels.perDay[6]?.clicks).toBe(1);
+    // The store is not touched: the click is still there.
+    expect(redis.hashes.get('ins:2026-10-04:clicks')?.size).toBe(1);
+  });
+
+  it('does not let a few stray rejections erase a real click (2.18t)', async () => {
+    const redis = fakeRedis();
+    const opts = { env: PROD, commands: redis.commands, now: NOW };
+    await countClick({ provider: 'bookshop', market: 'us', kind: 'product' }, opts);
+    for (let i = 0; i < 3; i++) await countRejected('go', 'old-browser', opts);
+    const report = await buildReport(7, undefined, redis.commands, NOW);
+    if (!report.ok) throw new Error('expected a report');
+    expect(report.guard.botDays).toEqual([]);
+    expect(report.clicks.total).toBe(1);
+  });
+
+  it('leaves a known scraper day out of the range before, too (2.18t)', async () => {
+    const redis = fakeRedis();
+    const at = new Date('2026-11-05T12:00:00Z');
+    await countClick({ provider: 'bookshop', market: 'us', kind: 'product' }, { env: PROD, commands: redis.commands, now: new Date('2026-11-04T08:00:00Z') });
+    const report = await buildReport(7, undefined, redis.commands, at);
+    if (!report.ok) throw new Error('expected a report');
+    expect(report.guard.botDaysOn.go).toEqual(['2026-11-04']);
+    expect(report.clicks.total).toBe(0);
+    const week = await buildReport(7, undefined, redis.commands, new Date('2026-11-09T12:00:00Z'));
+    if (!week.ok) throw new Error('expected a report');
+    expect(week.previousTotal).toBe(0);
   });
 });

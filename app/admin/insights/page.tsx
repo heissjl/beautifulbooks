@@ -202,7 +202,7 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           </Note>
         </Card>
         <Card title="Je Tag" sub={`Klicks zum Händler, ${shortDay(report.from)} bis ${shortDay(report.to)} (UTC).`}>
-          <DayColumns perDay={clicks.perDay} botDays={report.guard.botDays} />
+          <DayColumns perDay={clicks.perDay} botDays={report.guard.botDaysOn.go} />
         </Card>
       </section>
 
@@ -311,7 +311,7 @@ function Report({ report }: { report: Extract<InsightsReport, { ok: true }> }) {
           title="Kanäle"
           sub="Womit ein Besuch begann — Plattform aus dem Referrer oder die Marke ?via= eines selbst gesetzten Links — und was diese Leser taten (K17). Alle Märkte."
         >
-          <ChannelSection channels={report.channels} botDays={report.guard.botDays} />
+          <ChannelSection channels={report.channels} botDays={report.guard.botDaysOn.seen} />
         </Card>
       </section>
 
@@ -512,7 +512,6 @@ function ChannelSection({ channels, botDays }: { channels: Extract<InsightsRepor
       <DayColumns perDay={perDay} botDays={botDays} format={v => plural(v, 'Einstieg', 'Einstiege')} label="Einstiege von außen je Tag" />
       <p className="mt-1 text-xs text-ink-3">
         Einstiege von außen: alles außer direkt und anderem Tab dieser Seite. Ein Launch-Tag zeigt sich als Spitze.
-        {botDays.length > 0 && ' Graue Säulen sind Bot-Tage (siehe oben): ihre Einstiege stehen in der Tabelle mit drin.'}
       </p>
       {rows.length === 0 ? (
         <p className="mt-4 text-sm text-ink-2">Noch kein Einstieg mit Kanal gezählt.</p>
@@ -721,39 +720,18 @@ function OperationsSection({ facts }: { facts: OperationsFacts }) {
   );
 }
 
-const REJECTION_NAMES: Record<string, string> = {
-  'old-browser': 'Browser von vorletztem Jahr oder älter',
-  headless: 'headless',
-  'not-a-click': 'kein Klick',
-  'not-own-page': 'nicht von einer eigenen Seite',
-};
-
 /**
- * What the guard turned away and which days it makes bot days (ROADMAP
- * 3.1i). The numbers of those days stay in every sum above and below — the
- * reader is told, nothing is taken out.
+ * Which days are left out of the numbers on this page, and of which count
+ * (ROADMAP 2.18t). The store keeps them; only the view does not add them up.
  */
 function GuardNote({ guard }: { guard: Extract<InsightsReport, { ok: true }>['guard'] }) {
-  const reasons = Object.entries(guard.byReason)
-    .filter(([, n]) => n > 0)
-    .map(([reason, n]) => `${REJECTION_NAMES[reason] ?? reason} ${nf.format(n)}`)
-    .join(', ');
-  const rejected = guard.rejected.go + guard.rejected.seen;
-  return (
-    <p className={`mt-3 text-xs ${guard.botDays.length > 0 ? 'text-ink-2' : 'text-ink-3'}`}>
-      {guard.botDays.length > 0 ? (
-        <>
-          <strong className="font-medium">Bot-Tage: {guard.botDays.map(shortDay).join(', ')}.</strong> An diesen Tagen wies die Regel aus 3.1i mehr Anfragen ab, als sie
-          zählte — oder sie lagen vor der Regel und sind nach User-Agent als Scraper-Tage bekannt (16.–18.10.). Ihre Zahlen stehen in jeder Summe hier mit drin; gelöscht wird nichts.{' '}
-        </>
-      ) : (
-        <>Kein Bot-Tag im Zeitraum. </>
-      )}
-      Abgewiesen: {plural(guard.rejected.go, 'Klick', 'Klicks')}, {plural(guard.rejected.seen, 'Signal', 'Signale')}
-      {rejected > 0 ? ` (${reasons})` : ''}. Gezählt wird nur eine Navigation, die ein Leser auslöst, aus einem Browser von diesem oder dem letzten Jahr; ein Signal nur von einer
-      eigenen Seite.
-    </p>
-  );
+  const { go, seen } = guard.botDaysOn;
+  if (guard.botDays.length === 0) return null;
+  const parts = [
+    go.length > 0 ? `Klicks vom ${go.map(shortDay).join(', ')}` : '',
+    seen.length > 0 ? `Signale vom ${seen.map(shortDay).join(', ')}` : '',
+  ].filter(Boolean);
+  return <p className="mt-3 text-xs text-ink-3">Wegen Bots nicht mitgezählt: {parts.join('; ')}.</p>;
 }
 
 function Card({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
@@ -808,7 +786,7 @@ function DayColumns({
   label = 'Klicks zum Händler je Tag',
 }: {
   perDay: Array<{ day: string; clicks: number }>;
-  /** Days the guard (3.1i) marks as bot days: drawn grey, named in the tooltip, left in the scale. */
+  /** Bot days, whose value is left out (2.18t): a grey stub instead of a column, so an absent number does not read as zero. */
   botDays?: string[];
   /** How one day's value reads in the tooltip and the caption. */
   format?: (value: number) => string;
@@ -828,10 +806,10 @@ function DayColumns({
       <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="h-36 w-full" role="img" aria-label={label}>
         <line x1={0} x2={w} y1={h} y2={h} stroke="var(--line)" strokeWidth={1} />
         {perDay.map((d, i) => {
-          const bh = (d.clicks / max) * (h - 8);
-          const x = band * i + (band - bar) / 2;
-          const r = Math.min(4, bh);
           const bot = bots.has(d.day);
+          const bh = bot ? 4 : (d.clicks / max) * (h - 8);
+          const x = band * i + (band - bar) / 2;
+          const r = bot ? 0 : Math.min(4, bh);
           return (
             <g key={d.day}>
               <path
@@ -839,7 +817,7 @@ function DayColumns({
                 fill={bot ? 'var(--ink-3)' : 'var(--accent)'}
               />
               <rect x={band * i} y={0} width={band} height={h} fill="transparent">
-                <title>{`${shortDay(d.day)}: ${format(d.clicks)}${bot ? ' — Bot-Tag' : ''}`}</title>
+                <title>{bot ? `${shortDay(d.day)}: Bot-Tag, nicht mitgezählt` : `${shortDay(d.day)}: ${format(d.clicks)}`}</title>
               </rect>
             </g>
           );
@@ -851,7 +829,7 @@ function DayColumns({
           <span key={i}>{shortDay(perDay[i]?.day ?? '')}</span>
         ))}
       </div>
-      <figcaption className="mt-1 text-xs text-ink-3">Höchster Tag: {format(peak)}. Werte beim Darüberfahren.</figcaption>
+      <figcaption className="mt-1 text-xs text-ink-3">Höchster Tag: {format(peak)}. Werte beim Darüberfahren.{perDay.some(d => bots.has(d.day)) && ' Grauer Strich: Bot-Tag, nicht mitgezählt.'}</figcaption>
     </figure>
   );
 }
