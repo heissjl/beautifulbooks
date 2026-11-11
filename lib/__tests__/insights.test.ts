@@ -264,6 +264,20 @@ describe('the guard (ROADMAP 3.1i)', () => {
     expect(redis.hashes.get('ins:2026-10-04:clicks')?.size).toBe(1);
   });
 
+  it('leaves a signals bot day out of visits and channels, and keeps its clicks (2.18t)', async () => {
+    const redis = fakeRedis();
+    const opts = { env: PROD, commands: redis.commands, now: NOW };
+    await countClick({ provider: 'bookshop', market: 'us', kind: 'product' }, opts);
+    await countSignal({ t: 'landing', page: 'home', entry: 'reddit', first: true, opened: false }, opts);
+    for (let i = 0; i < BOT_DAY_MIN_REJECTED; i++) await countRejected('seen', 'not-own-page', opts);
+    const report = await buildReport(7, undefined, redis.commands, NOW);
+    if (!report.ok) throw new Error('expected a report');
+    expect(report.guard.botDaysOn).toEqual({ go: [], seen: ['2026-10-04'] });
+    expect(report.channels.perDay[6]?.clicks).toBe(0);
+    expect(report.channels.rows).toEqual([]);
+    expect(report.clicks.total).toBe(1);
+  });
+
   it('does not let a few stray rejections erase a real click (2.18t)', async () => {
     const redis = fakeRedis();
     const opts = { env: PROD, commands: redis.commands, now: NOW };
