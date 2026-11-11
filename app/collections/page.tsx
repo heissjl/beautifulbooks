@@ -26,7 +26,7 @@ import { measure } from '@/app/api/measure';
  * so the footer never points at an empty shelf.
  *
  * A hub since 6.107 Teil A (PLAN-6.107 § 5 A 3): the cards stand under four
- * headings — series, designers, prizes and lists, publishers — each with
+ * headings — designers, series, prizes and lists, publishers — each with
  * three sentences of the site's own text (`lib/hubcopy.ts`), the group taken
  * from the record's `group` field, never from a slug; and at the foot a plain
  * list of the published collections with name, size and link, the surest
