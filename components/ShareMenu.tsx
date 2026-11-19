@@ -109,7 +109,7 @@ export default function ShareMenu({
   };
 
   return (
-    <div className="relative" ref={box}>
+    <div className="relative" ref={box} data-share-open={open || undefined}>
       <button
         type="button"
         className={`btn whitespace-nowrap ${compact ? 'py-1.5 text-xs' : 'py-1.5'} ${iconBelowSm && !copied ? 'px-2 sm:px-4' : ''}`}

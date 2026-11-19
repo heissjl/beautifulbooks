@@ -96,6 +96,8 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
     setSearchQuery(q, asMode);
     saveRecentSearch(q);
     setShowSuggestions(false);
+    // The list keeps focus in the field on a tap (6.113), so let go here: on a phone the keyboard would cover the results.
+    inputRef.current?.blur();
   };
 
   /*
@@ -189,6 +191,13 @@ export default function SearchBar({ searchQuery, setSearchQuery, mode, hero }: S
         {showDropdown && (
           <div
             ref={suggestionsRef}
+            /*
+              Keeps focus in the field while a suggestion is pressed (Julian,
+              2026-11-19): Safari on iOS does not focus a tapped button, so the
+              field's blur came with no relatedTarget, the list closed before
+              the click and the tap landed on nothing.
+            */
+            onMouseDown={e => e.preventDefault()}
             className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-lg border border-line bg-surface shadow-[0_12px_32px_-12px_rgb(0_0_0/0.35)]"
           >
             {bookSuggestions.length > 0 && (

@@ -291,6 +291,14 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
   // What a shop shows for that ISBN, asked on selection rather than while the
   // work loads: 7-11 Google requests per page view become 2 (SPEC §9.3 13a).
   const isbnCovers = useIsbnCovers(requestKey, lookupIsbns, editionIdsByIsbn);
+  /*
+    The phone sheet's open state lives here so a tap on a tile can open it
+    (Julian, 2026-11-19). It holds the cover it was opened for, and the sheet
+    shows only once that cover is the selected one: the selection comes from
+    the URL a moment after the tap, and opening at once showed — and shared —
+    the cover selected before. Back to a URL without that cover closes it.
+  */
+  const [sheetFor, setSheetFor] = useState<string | null>(null);
   const selectCover = (coverId: string) => {
     const next = new URLSearchParams(searchParams.toString());
     next.set('cover', coverId);
@@ -376,7 +384,7 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
       nextCaption: next ? view.captions.get(next) : undefined,
       n: at + 1,
       total: order.length,
-      onStep: selectCover,
+      onStep: (coverId: string) => { selectCover(coverId); setSheetFor(coverId); },
     };
   })();
   // One summary of this visit when the reader leaves (ROADMAP 3.1b); nothing is kept on the device.
@@ -428,6 +436,8 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
   }
 
   const { work, merged } = view;
+  // What every share control for the selected cover passes: the sidebar's, the phone bar's and the sheet's.
+  const coverShare = (c: Cover) => ({ workId: work.id, coverId: c.id, title: work.title, author: work.authors[0] });
   // One instance, placed either in the sidebar or in the sheet.
   const details = selected && (
     <CoverDetails
@@ -442,7 +452,7 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
       query={searchParams.get('q') ?? ''}
       market={shopped?.market ?? pages.market ?? 'us'}
       onMarketChange={setMarket}
-      share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} />}
+      share={<ShareMenu {...coverShare(selected)} />}
       mock={sideMock}
       verdictFor={isbn13 => verifyIsbnCover(
         selected,
@@ -523,7 +533,7 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
               groups={view.groups}
               allCovers={view.all}
               selectedCover={selected}
-              onSelectCover={c => selectCover(c.id)}
+              onSelectCover={c => { selectCover(c.id); if (!isDesktop) setSheetFor(c.id); }}
               captions={view.captions}
               belowTabs={hasDecades ? <DecadeLink workId={work.id} /> : undefined}
               settled={merged.done}
@@ -597,7 +607,10 @@ function BookDetail({ collections }: { collections: WorkCollectionLink[] }) {
           caption={view.captions.get(selected.id) ?? ''}
           selectedId={selected.id}
           step={sheetStep}
-          share={<ShareMenu workId={work.id} coverId={selected.id} title={work.title} author={work.authors[0]} placement="up" compact />}
+          share={<ShareMenu {...coverShare(selected)} placement="up" compact />}
+          sheetShare={<ShareMenu {...coverShare(selected)} compact iconBelowSm />}
+          open={sheetFor === selected.id}
+          onOpenChange={o => setSheetFor(o ? selected.id : null)}
           /*
             On a phone "Add to collection" sits in the sheet's header beside
             "Close" (ROADMAP 6.77), where it costs the body no height.

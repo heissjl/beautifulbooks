@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import CoverImage from './CoverImage';
 import MoreBelow from './MoreBelow';
 import { useOverflowsY } from './useOverflowsY';
@@ -12,6 +12,8 @@ interface CoverSheetProps {
   caption: string;
   /** Sits beside "Details" in the bar: sharing belongs where the cover is. */
   share?: React.ReactNode;
+  /** The same control for the open sheet's header, beside "Close" (its panel opens downward). */
+  sheetShare?: React.ReactNode;
   /**
    * In the sheet's header beside "Close", in place of the "Selected cover"
    * line (ROADMAP 6.77: "Add to collection"). The dialog keeps its
@@ -34,6 +36,13 @@ interface CoverSheetProps {
     total: number;
     onStep: (coverId: string) => void;
   };
+  /**
+   * Open state, held by the page: a tap on a tile opens the sheet at once
+   * (Julian, 2026-11-19 — many readers never noticed the bar at the bottom),
+   * a shared link with a cover still opens on the wall with only the bar.
+   */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   children: React.ReactNode;
 }
 
@@ -50,9 +59,8 @@ interface CoverSheetProps {
  * So: a bar pinned to the bottom answers "did my tap do anything?" without a
  * single scroll, and doubles as the handle of a sheet holding the details.
  */
-export default function CoverSheet({ coverUrl, caption, share, headerAction, selectedId, step, children }: CoverSheetProps) {
+export default function CoverSheet({ coverUrl, caption, share, headerAction, sheetShare, selectedId, step, open, onOpenChange: setOpen, children }: CoverSheetProps) {
   const t = useT();
-  const [open, setOpen] = useState(false);
   const prevButton = useRef<HTMLButtonElement>(null);
   const nextButton = useRef<HTMLButtonElement>(null);
   // `bodyScroller` is a callback ref; this one keeps the element for the scroll back to the top on a step.
@@ -89,6 +97,9 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, sel
   const opener = useRef<HTMLButtonElement>(null);
   const bar = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDivElement>(null);
+  // The cover selected now, for the effect's cleanup (its closure holds the one from when the sheet opened).
+  const selectedRef = useRef(selectedId);
+  useEffect(() => { selectedRef.current = selectedId; }, [selectedId]);
 
   /*
     The bar is fixed to the bottom and covered the footer — About, Impressum,
@@ -117,6 +128,8 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, sel
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        // An open share panel takes this Escape for itself (ShareMenu closes it); the sheet stays.
+        if (dialog.current?.querySelector('[data-share-open]')) return;
         // The same path as the Close button, including the jump to the tile (6.5).
         closeButton.current?.click();
         return;
@@ -151,6 +164,8 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, sel
     // The sheet covers the page; letting the wall scroll behind it means
     // closing the sheet lands somewhere else than where it was opened.
     document.body.style.overflow = 'hidden';
+    // Opened from a tile (keyboard, 6.113): focus goes back to the wall, to the tile of the cover now selected.
+    const fromTile = document.activeElement instanceof HTMLElement && !!document.activeElement.closest('[data-cover-id]');
     closeButton.current?.focus();
     const returnTo = opener.current;
     return () => {
@@ -158,7 +173,10 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, sel
       document.removeEventListener('focusin', onFocusIn);
       document.body.style.overflow = '';
       // Back to the bar that opened it, not to <body> (6.57).
-      returnTo?.focus();
+      const tile = fromTile && selectedRef.current
+        ? document.querySelector<HTMLElement>(`[data-cover-id="${CSS.escape(selectedRef.current)}"] button, [data-cover-id="${CSS.escape(selectedRef.current)}"]`)
+        : null;
+      (tile ?? returnTo)?.focus({ preventScroll: !!tile });
     };
   }, [open]);
 
@@ -202,6 +220,12 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, sel
           <div className="absolute inset-x-0 bottom-0 top-12 flex flex-col rounded-t-2xl bg-bg shadow-2xl">
             <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
               {headerAction ? <div className="min-w-0">{headerAction}</div> : <p className="kicker">{t('Selected cover')}</p>}
+              {/*
+                Share stays in reach while the sheet is open (Julian,
+                2026-11-19): the bar that carries it lies under the backdrop.
+              */}
+              <div className="flex shrink-0 items-center gap-2">
+                {sheetShare}
               <button
                 ref={closeButton}
                 type="button"
@@ -210,6 +234,7 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, sel
               >
                 {t('Close')}
               </button>
+              </div>
             </div>
             {/*
               One thin row of its own (6.5): the header already carries "Add to
