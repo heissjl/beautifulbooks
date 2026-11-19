@@ -274,8 +274,14 @@ export default function CoverSheet({ coverUrl, caption, share, headerAction, she
                 bodyEl.current = el;
                 return bodyScroller(el);
               }}
-              onScroll={measureBody} className="min-h-0 flex-1 overflow-y-auto px-4 pb-10 pt-5">
-              <div ref={bodyContent}>{children}</div>
+              onScroll={measureBody} className="min-h-0 flex-1 overflow-y-auto px-4 pt-5">
+              {/*
+                The room at the end sits on the content, not the scroller: a sticky
+                hint keeps clear of the scroller's padding, so "More" floated 40 px
+                up in the text with lines running on beneath it (Julian, iPhone,
+                2026-11-19).
+              */}
+              <div ref={bodyContent} className="pb-10">{children}</div>
               <MoreBelow show={bodyOverflows && !bodyAtEnd} onMore={bodyMore} />
             </div>
           </div>

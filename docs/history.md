@@ -1,3 +1,9 @@
+## 2026-11-19 · „More ↓“ im Telefon-Sheet schwebt mitten im Text (ROADMAP 6.115)
+
+Julian schickte ein iPhone-Bild des offenen Sheets (*Dom Casmurro*, Landmark 2022, „2 of 9“) mit dem Satz „Die more Zeile ist buggy“. Zu sehen: der Verlauf und „More ↓“ liegen über dem Hinweistext zur ISBN, darunter stehen noch „checked.“ und die Trennlinie. **Ursache:** `MoreBelow` ist `sticky` mit `bottom: 0` im Scrollbereich des Sheets, und ein klebendes Element hält den Innenabstand seines Scrollcontainers ein — der hatte `pb-10`. Nachgemessen bei 375 × 812: Unterkante des Hinweises 40 px über der des Bereichs. **Behoben** (`components/CoverSheet.tsx`): der Abstand sitzt am Inhalt statt am Scrollbereich; nachgemessen 0 px, ganz unten verschwindet der Hinweis, unter der letzten Zeile bleiben 40 px. Die Seitenleiste auf dem Desktop hat keinen unteren Innenabstand und war nicht betroffen.
+
+Analytik: nichts betroffen — nur Abstände.
+
 ## 2026-11-19 · „Collections“ auf der Startseite reagiert am Handy nicht (ROADMAP 6.114)
 
 Julian: „am Handy nach wie vor Probleme mit dem collections button auf der Startseite“; auf Nachfrage „See all“ und die Überschrift „Collections“, beim Antippen passiert „gar nichts“.
