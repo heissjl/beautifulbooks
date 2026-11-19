@@ -8,11 +8,7 @@ import { wallCover } from '@/lib/curated';
 import type { WallWork } from '@/lib/collections';
 import { coverProxyPath } from '@/lib/coverurl';
 import { useT } from './i18n';
-
-/** Covers a card can show before the mosaic: two rows of five. */
-export const GRID_SHOWN = 9;
-/** Minis in the mosaic tile, a 3 × 3 square of the covers that come next. */
-const MOSAIC = 9;
+import { GRID_SHOWN, MOSAIC } from './collectionGridSize';
 
 /**
  * One collection on /collections as two rows of covers with a mosaic of the

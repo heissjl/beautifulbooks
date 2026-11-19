@@ -1,5 +1,6 @@
 import Link from '@/components/Link';
 import CoverImage from './CoverImage';
+import LinkPending from './LinkPending';
 import { wallCover } from '@/lib/curated';
 import type { Collection } from '@/lib/collections';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
@@ -37,8 +38,11 @@ export default function CollectionsShelf({ collections, locale = DEFAULT_LOCALE 
           startseite sollte das "see all" doch wieder zurück"); 6.84 had folded it into the heading.
           No arrow after it, as 6.84 set for links. The padding makes it a thumb's size on a phone.
         */}
-        <h2 id="collections-heading" className="text-2xl text-ink">{t('Collections')}</h2>
-        <Link href="/collections" className="-my-2 py-2 text-sm text-ink-2 underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">{t('See all')}</Link>
+        {/* The heading leads to the hub as well (Julian, 2026-11-19: on a phone readers tap the word, not "See all"). */}
+        <h2 id="collections-heading" className="text-2xl text-ink">
+          <Link href="/collections" className="transition-colors hover:text-accent">{t('Collections')}<LinkPending /></Link>
+        </h2>
+        <Link href="/collections" className="-my-2 py-2 text-sm text-ink-2 underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"><LinkPending before />{t('See all')}</Link>
       </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
         {shown.map(c => (
@@ -69,6 +73,7 @@ export default function CollectionsShelf({ collections, locale = DEFAULT_LOCALE 
       <p className="mt-5 text-sm text-ink-2">
         <Link href="/collections" className="-my-2 inline-block py-2 underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">
           {collections.length === 1 ? t('{n} collection', { n: 1 }) : t('{n} collections', { n: collections.length })}
+          <LinkPending />
         </Link>
       </p>
     </section>

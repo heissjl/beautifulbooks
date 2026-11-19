@@ -20,3 +20,6 @@ import type { ComponentProps } from 'react';
 export default function Link(props: ComponentProps<typeof NextLink>) {
   return <NextLink prefetch={false} {...props} />;
 }
+
+// For a pending sign inside a link (components/LinkPending.tsx); re-exported so next/link keeps one importer.
+export { useLinkStatus } from 'next/link';

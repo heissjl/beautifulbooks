@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from '@/components/Link';
 import { notFound } from 'next/navigation';
 import CollectionGrid from '@/components/CollectionGrid';
+import { GRID_WORKS } from '@/components/collectionGridSize';
 import WallsInvite from '@/components/WallsInvite';
 import ReaderWallCard from '@/components/ReaderWallCard';
 import { POPULAR_VIEWS, toPublic } from '@/lib/walls/model';
@@ -11,7 +12,7 @@ import HeaderSearch from '@/components/HeaderSearch';
 import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 import { liveCollections } from '@/lib/collections-live';
-import { groupCollections, type Collection } from '@/lib/collections';
+import { groupCollections, type Collection, type WallWork } from '@/lib/collections';
 import { groupHeading, groupText } from '@/lib/hubcopy';
 import { SITE_URL } from '@/lib/seo';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n/locale';
@@ -113,6 +114,20 @@ export default async function CollectionsPage({ locale = DEFAULT_LOCALE }: { loc
   );
 }
 
+/**
+ * What a card's grid needs and nothing more (ROADMAP 6.114): `CollectionGrid`
+ * runs in the browser, so every work passed to it travels in the page's
+ * payload. It shows nine covers and a mosaic of the next nine; the hub passed
+ * every work of every collection with every field — about 1 MB for a
+ * navigation, measured 2026-11-19, most of it never drawn.
+ */
+function gridWorks(works: WallWork[]): WallWork[] {
+  // Absent fields stay absent: an undefined would still travel as a marker.
+  return works.slice(0, GRID_WORKS).map(({ id, coverId, coverWork, image, title, author }) => ({
+    id, coverId, title, author, ...(coverWork && { coverWork }), ...(image && { image }),
+  }));
+}
+
 /** One collection on the hub: title link with the count, two lines of intro, the first rows of its wall. */
 function CollectionCard({ c, t }: { c: Collection; t: Translate }) {
   return (
@@ -129,7 +144,7 @@ function CollectionCard({ c, t }: { c: Collection; t: Translate }) {
         </div>
         <p className="mt-3 line-clamp-2 max-w-2xl text-sm text-ink-2">{introText(c.intro)}</p>
       </Link>
-      <CollectionGrid slug={c.slug} title={c.title} works={c.works} total={c.works.length} />
+      <CollectionGrid slug={c.slug} title={c.title} works={gridWorks(c.works)} total={c.works.length} />
     </li>
   );
 }
