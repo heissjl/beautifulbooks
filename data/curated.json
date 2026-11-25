@@ -1,5 +1,5 @@
 {
-  "curatedAt": "2026-10-09",
+  "curatedAt": "2026-11-25",
   "works": [
     {
       "id": "OL39349W",
@@ -2054,6 +2054,14 @@
       "coverId": "ol:12621856",
       "firstPublished": 1893,
       "pickedAt": "2026-10-09T04:15:22.429Z"
+    },
+    {
+      "id": "OL274539W",
+      "title": "La mala hora",
+      "author": "Gabriel García Márquez",
+      "coverId": "ol:6638089",
+      "firstPublished": 1962,
+      "pickedAt": "2026-11-25T09:00:00.000Z"
     }
   ]
 }
